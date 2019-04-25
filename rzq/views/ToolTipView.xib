@@ -1,0 +1,66 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.XIB" version="3.0" toolsVersion="14490.70" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" useSafeAreas="YES" colorMatched="YES">
+    <device id="retina4_7" orientation="portrait">
+        <adaptation id="fullscreen"/>
+    </device>
+    <dependencies>
+        <deployment identifier="iOS"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="14490.49"/>
+        <capability name="Safe area layout guides" minToolsVersion="9.0"/>
+        <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
+    </dependencies>
+    <objects>
+        <placeholder placeholderIdentifier="IBFilesOwner" id="-1" userLabel="File's Owner"/>
+        <placeholder placeholderIdentifier="IBFirstResponder" id="-2" customClass="UIResponder"/>
+        <view contentMode="scaleToFill" id="iN0-l3-epB" customClass="ToolTipView" customModule="rzq" customModuleProvider="target">
+            <rect key="frame" x="0.0" y="0.0" width="200" height="50"/>
+            <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+            <subviews>
+                <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="251" translatesAutoresizingMaskIntoConstraints="NO" id="jMc-88-7yS">
+                    <rect key="frame" x="15" y="7.5" width="35" height="35"/>
+                    <constraints>
+                        <constraint firstAttribute="width" constant="35" id="d4L-Kl-daQ"/>
+                        <constraint firstAttribute="height" constant="35" id="vMR-ab-oZ6"/>
+                    </constraints>
+                </imageView>
+                <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Label" textAlignment="natural" lineBreakMode="tailTruncation" numberOfLines="2" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="PyZ-P9-fhO" customClass="MyUILabel" customModule="rzq" customModuleProvider="target">
+                    <rect key="frame" x="55" y="4" width="140" height="16"/>
+                    <fontDescription key="fontDescription" type="system" pointSize="13"/>
+                    <nil key="textColor"/>
+                    <nil key="highlightedColor"/>
+                    <userDefinedRuntimeAttributes>
+                        <userDefinedRuntimeAttribute type="string" keyPath="font_type" value="13,4"/>
+                    </userDefinedRuntimeAttributes>
+                </label>
+                <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Label" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="guo-kd-alj" customClass="MyUILabel" customModule="rzq" customModuleProvider="target">
+                    <rect key="frame" x="55" y="32" width="140" height="14"/>
+                    <fontDescription key="fontDescription" type="system" pointSize="11"/>
+                    <color key="textColor" red="0.49411764705882355" green="0.49411764705882355" blue="0.49411764705882355" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                    <nil key="highlightedColor"/>
+                    <userDefinedRuntimeAttributes>
+                        <userDefinedRuntimeAttribute type="string" keyPath="font_type" value="11,2"/>
+                    </userDefinedRuntimeAttributes>
+                </label>
+            </subviews>
+            <color key="backgroundColor" red="1" green="1" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+            <constraints>
+                <constraint firstItem="jMc-88-7yS" firstAttribute="leading" secondItem="iN0-l3-epB" secondAttribute="leading" constant="15" id="7cf-17-gnc"/>
+                <constraint firstItem="vUN-kp-3ea" firstAttribute="bottom" secondItem="guo-kd-alj" secondAttribute="bottom" constant="4" id="8Zu-4t-TF1"/>
+                <constraint firstItem="guo-kd-alj" firstAttribute="leading" secondItem="jMc-88-7yS" secondAttribute="trailing" constant="5" id="L3h-hy-07D"/>
+                <constraint firstItem="jMc-88-7yS" firstAttribute="centerY" secondItem="iN0-l3-epB" secondAttribute="centerY" id="Ncm-1T-9Ab"/>
+                <constraint firstItem="PyZ-P9-fhO" firstAttribute="top" secondItem="vUN-kp-3ea" secondAttribute="top" constant="4" id="W84-ry-QqS"/>
+                <constraint firstItem="PyZ-P9-fhO" firstAttribute="leading" secondItem="jMc-88-7yS" secondAttribute="trailing" constant="5" id="WEz-tw-5lK"/>
+                <constraint firstItem="vUN-kp-3ea" firstAttribute="trailing" secondItem="guo-kd-alj" secondAttribute="trailing" constant="5" id="ePZ-HV-haB"/>
+                <constraint firstItem="vUN-kp-3ea" firstAttribute="trailing" secondItem="PyZ-P9-fhO" secondAttribute="trailing" constant="5" id="g1m-GS-tL7"/>
+            </constraints>
+            <freeformSimulatedSizeMetrics key="simulatedDestinationMetrics"/>
+            <viewLayoutGuide key="safeArea" id="vUN-kp-3ea"/>
+            <connections>
+                <outlet property="ivLogo" destination="jMc-88-7yS" id="GPw-vQ-YHo"/>
+                <outlet property="lblDescription" destination="guo-kd-alj" id="qgf-a7-xGE"/>
+                <outlet property="lblTitle" destination="PyZ-P9-fhO" id="1mr-5X-5sc"/>
+            </connections>
+            <point key="canvasLocation" x="137.59999999999999" y="142.1289355322339"/>
+        </view>
+    </objects>
+</document>

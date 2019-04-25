@@ -1,0 +1,665 @@
+//
+//  AppDelegate.swift
+//  rzq
+//
+//  Created by Zaid najjar on 3/30/19.
+//  Copyright © 2019 technzone. All rights reserved.
+//
+
+import UIKit
+import MOLH
+import IQKeyboardManagerSwift
+import GoogleMaps
+import GooglePlaces
+import Firebase
+import FirebaseMessaging
+import FirebaseInstanceID
+import UserNotifications
+import BRYXBanner
+import Alamofire
+import Branch
+
+var AFManager = SessionManager()
+@UIApplicationMain
+class AppDelegate: UIResponder, UIApplicationDelegate, MOLHResetable,MessagingDelegate ,UNUserNotificationCenterDelegate {
+    let gcmMessageIDKey = "gcm.message_id"
+    var window: UIWindow?
+    
+    func application(_ application: UIApplication, didFinishLaunchingWithOptions launchOptions: [UIApplication.LaunchOptionsKey: Any]?) -> Bool {
+        // Override point for customization after application launch.
+        
+        //maps
+        GMSServices.provideAPIKey("AIzaSyBdPdoBTk2e1KE1s9XxBB8B4a7upqSL_GU")
+        GMSPlacesClient.provideAPIKey("AIzaSyBdPdoBTk2e1KE1s9XxBB8B4a7upqSL_GU")
+        
+        MOLH.shared.activate(true)
+        
+        IQKeyboardManager.shared.enable = true
+        
+        
+        //firebase
+        FirebaseApp.configure()
+        Messaging.messaging().delegate = self
+        Messaging.messaging().shouldEstablishDirectChannel = true
+        
+        if #available(iOS 10.0, *) {
+            
+            UNUserNotificationCenter.current().delegate = self
+            
+            let authOptions: UNAuthorizationOptions = [.alert, .badge, .sound]
+            UNUserNotificationCenter.current().requestAuthorization(
+                options: authOptions,
+                completionHandler: {_, _ in })
+        } else {
+            let settings: UIUserNotificationSettings =
+                UIUserNotificationSettings(types: [.alert, .badge, .sound], categories: nil)
+            application.registerUserNotificationSettings(settings)
+        }
+        
+        
+        application.registerForRemoteNotifications()
+        
+        
+        //branch
+        
+        // Branch.setUseTestBranchKey(true)
+        // listener for Branch Deep Link data
+        Branch.getInstance().initSession(launchOptions: launchOptions) { (params, error) in
+            print(params as? [String: AnyObject] ?? {})
+            let shopId = params?["ShopId"] as? String ?? "0"
+            App.shared.deepLinkShopId = shopId
+        }
+        
+        
+        if let userInfo = launchOptions?[UIApplication.LaunchOptionsKey.remoteNotification] as? [String: AnyObject]{
+            // your logic here!
+            let type = userInfo["Type"] as? String ?? "0"
+            let chatId = userInfo["Id"] as? String ?? "0"
+            
+            App.shared.notificationType = type
+            App.shared.notificationValue = chatId
+            
+        }
+        
+        let configuration = URLSessionConfiguration.default
+        configuration.timeoutIntervalForRequest = 120 // seconds
+        configuration.timeoutIntervalForResource = 120 //seconds
+        AFManager = Alamofire.SessionManager(configuration: configuration)
+        
+        
+        return true
+    }
+    
+    //branch
+    func application(_ app: UIApplication, open url: URL, options: [UIApplication.OpenURLOptionsKey : Any] = [:]) -> Bool {
+        Branch.getInstance().application(app, open: url, options: options)
+        return true
+    }
+    //branch
+    func application(_ application: UIApplication, continue userActivity: NSUserActivity, restorationHandler: @escaping ([UIUserActivityRestoring]?) -> Void) -> Bool {
+        // handler for Universal Links
+        Branch.getInstance().continue(userActivity)
+        return true
+    }
+    
+    // Respond to URI scheme links
+    func application(_ application: UIApplication, open url: URL, sourceApplication: String?, annotation: Any) -> Bool {
+        // pass the url to the handle deep link call
+        let branchHandled = Branch.getInstance().application(application,
+                                                             open: url,
+                                                             sourceApplication: sourceApplication,
+                                                             annotation: annotation
+        )
+        if (!branchHandled) {
+            // If not handled by Branch, do other deep link routing for the Facebook SDK, Pinterest SDK, etc
+        }
+        
+        // do other deep link routing for the Facebook SDK, Pinterest SDK, etc
+        return true
+    }
+    
+    
+    
+    //notifications
+    func messaging(_ messaging: Messaging, didReceive remoteMessage: MessagingRemoteMessage) {
+        var title = ""
+        var body = ""
+        var type = ""
+        var itemId = ""
+        
+        if MOLHLanguage.isRTLLanguage() {
+            title = remoteMessage.appData[AnyHashable("ArabicTitle")] as? String ?? ""
+            body = remoteMessage.appData[AnyHashable("ArabicBody")] as? String ?? ""
+        } else {
+            title = remoteMessage.appData[AnyHashable("EnglishTitle")] as? String ?? ""
+            body = remoteMessage.appData[AnyHashable("EnglishBody")] as? String ?? ""
+        }
+        type = remoteMessage.appData[AnyHashable("Type")] as? String ?? "0"
+        itemId = remoteMessage.appData[AnyHashable("Id")] as? String ?? "0"
+        
+        App.shared.notificationType = type
+        App.shared.notificationValue = itemId
+        
+        scheduleNotifications(title: title , message: body, type : type, itemId: itemId)
+        
+    }
+    
+    func userNotificationCenter(_ center: UNUserNotificationCenter, didReceive response: UNNotificationResponse, withCompletionHandler completionHandler: @escaping () -> Void) {
+        let application = UIApplication.shared
+        
+        if(application.applicationState == .active) {
+            print("user tapped the notification bar when the app is in foreground")
+            let type = response.notification.request.content.userInfo["Type"] as? String ?? "0"
+            let itemId = response.notification.request.content.userInfo["Id"] as? String ?? "0"
+            
+            App.shared.notificationType = type
+            App.shared.notificationValue = itemId
+            
+            
+        }
+        
+        if(application.applicationState == .inactive)
+        {
+            print("user tapped the notification bar when the app is in background")
+            let type = response.notification.request.content.userInfo["Type"] as? String ?? "0"
+            let itemId = response.notification.request.content.userInfo["Id"] as? String ?? "0"
+            
+            App.shared.notificationType = type
+            App.shared.notificationValue = itemId
+            
+            
+        }
+        
+        /* Change root view controller to a specific viewcontroller */
+        // let storyboard = UIStoryboard(name: "Main", bundle: nil)
+        // let vc = storyboard.instantiateViewController(withIdentifier: "ViewControllerStoryboardID") as? ViewController
+        // self.window?.rootViewController = vc
+        
+        completionHandler()
+    }
+    
+    
+    func application(_ application: UIApplication, didReceiveRemoteNotification userInfo: [AnyHashable: Any]) {
+        // If you are receiving a notification message while your app is in the background,
+        // this callback will not be fired till the user taps on the notification launching the application.
+        // TODO: Handle data of notification
+        // With swizzling disabled you must let Messaging know about the message, for Analytics
+        // Messaging.messaging().appDidReceiveMessage(userInfo)
+        // Print message ID.
+        
+        Branch.getInstance().handlePushNotification(userInfo)
+        
+        
+        if let messageID = userInfo[gcmMessageIDKey] {
+            print("Message ID: \(messageID)")
+        }
+        
+        //  LabasNotificationsManager.shared.addNotification(userInfo: userInfo)
+        
+        
+        var title = ""
+        var body = ""
+        var type = ""
+        var ItemId = ""
+        
+        if MOLHLanguage.isRTLLanguage() {
+            title = userInfo["ArabicTitle"] as? String ?? ""
+            body = userInfo["ArabicBody"] as? String ?? ""
+        } else {
+            title = userInfo["EnglishTitle"] as? String ?? ""
+            body = userInfo["EnglishBody"] as? String ?? ""
+        }
+        type = userInfo["Type"] as? String ?? "0"
+        ItemId = userInfo["Id"] as? String ?? "0"
+        
+        
+        App.shared.notificationType = type
+        App.shared.notificationValue = ItemId
+        
+        scheduleNotifications(title: title , message: body, type : type, itemId: ItemId)
+        if let messageID = userInfo[gcmMessageIDKey] {
+            print("Message ID: \(messageID)")
+        }
+        
+        // Print full message.
+        print(userInfo)
+    }
+    
+    func SBName() -> String{
+        if (MOLHLanguage.currentAppleLanguage() == "ar") {
+            return "MainAr"
+        }else {
+            return "Main"
+        }
+    }
+    
+    func application(_ application: UIApplication, didReceiveRemoteNotification userInfo: [AnyHashable: Any], fetchCompletionHandler completionHandler: @escaping (UIBackgroundFetchResult) -> Void) {
+        // If you are receiving a notification message while your app is in the background,
+        // this callback will not be fired till the user taps on the notification launching the application.
+        // TODO: Handle data of notification
+        // With swizzling disabled you must let Messaging know about the message, for Analytics
+        // Messaging.messaging().appDidReceiveMessage(userInfo)
+        // Print message ID.
+        
+        if let messageID = userInfo[gcmMessageIDKey] {
+            print("Message ID: \(messageID)")
+        }
+        
+        var title = ""
+        var body = ""
+        var type = ""
+        var itemId = ""
+        
+        let whole : [AnyHashable: Any] = userInfo["aps"] as! [AnyHashable : Any]
+        let data : [AnyHashable: Any] = whole["alert"] as! [AnyHashable : Any]
+        
+        let notificationType = userInfo["Type"] as? String ?? ""
+        if (notificationType == "5") {
+            //close chat
+            self.closeChat()
+        }
+        
+        if MOLHLanguage.currentAppleLanguage() == "ar" {
+            title = userInfo["ArabicTitle"] as? String ?? ""
+            body = userInfo["ArabicBody"] as? String ?? ""
+        } else {
+            title = userInfo["EnglishTitle"] as? String ?? ""
+            body = userInfo["EnglishBody"] as? String ?? ""
+        }
+        
+        type = data["Type"] as? String ?? "0"
+        itemId = data["Id"] as? String ?? "0"
+        
+        
+        App.shared.notificationType = type
+        App.shared.notificationValue = itemId
+        
+        let state: UIApplication.State = UIApplication.shared.applicationState // or use  let state =  UIApplication.sharedApplication().applicationState
+        
+        if state == .background {
+            scheduleNotifications(title: title , message: body,type: type,itemId: itemId)
+        }else if state == .active {
+                self.updateChat()
+                self.updateNotifications()
+                self.showBanner(title: title, message: body, style: UIColor.colorPrimary)
+        }
+        
+        
+        // Print full message.
+        print(userInfo)
+        
+        completionHandler(UIBackgroundFetchResult.newData)
+    }
+    
+    func showBanner(title:String, message:String,style: UIColor) {
+        let banner = Banner(title: title, subtitle: message, image: nil, backgroundColor: style)
+        banner.dismissesOnTap = true
+        banner.textColor = UIColor.white
+        banner.titleLabel.font = UIFont(name: getFontName(), size: 16)
+        banner.detailLabel.font = UIFont(name: getFontName(), size: 14)
+        banner.show(duration: 2.0)
+    }
+    
+    func getFontName() -> String {
+        if (MOLHLanguage.currentAppleLanguage() == "ar") {
+            return Constants.ARABIC_FONT_REGULAR
+        }else {
+            return Constants.ENGLISH_FONT_REGULAR
+        }
+    }
+    
+    
+    func scheduleNotifications(title : String, message : String, type : String, itemId : String) {
+        let requestIdentifier = "Notification"
+        if #available(iOS 10.0, *) {
+            let content = UNMutableNotificationContent()
+            
+            content.badge = 1
+            content.title = title
+            content.subtitle = "appname".localized
+            content.body = message
+            content.categoryIdentifier = "actionCategory"
+            content.sound = UNNotificationSound.default
+            
+            
+            self.updateChat()
+            
+            let trigger = UNTimeIntervalNotificationTrigger.init(timeInterval: 3.0, repeats: false)
+            let request = UNNotificationRequest(identifier: requestIdentifier, content: content, trigger: trigger)
+            
+            let notificationFlag = UserDefaults.standard.value(forKey: Constants.IS_NOTIFICATION_ACTIVE) as? Bool ?? true
+            if (notificationFlag) {
+                UNUserNotificationCenter.current().add(request) { (error:Error?) in
+                    
+                    if error != nil {
+                        print(error?.localizedDescription ?? "not localized")
+                    }
+                    print("Notification Register Success")
+                }
+            }
+            
+        } else {
+            // Fallback on earlier versions
+            let content = UILocalNotification()
+            
+            content.alertTitle = title
+            content.alertBody = message
+            content.category = ""
+            
+        }
+        
+    }
+    
+    func getHomeView() -> String {
+        if (App.shared.config?.configSettings?.isMapView ?? true) {
+            // return "HomeMapVC"
+            return "MapNavigationController"
+        }else {
+            //  return "HomeListVC"
+            return "ListNavigationController"
+        }
+    }
+    
+    
+    func updateChat() {
+        if let rootViewController = UIApplication.topViewController() {
+            if rootViewController is ZHCDemoMessagesViewController {
+                let vc = rootViewController as! ZHCDemoMessagesViewController
+                vc.getChatMessages()
+            }
+        }
+    }
+    
+    func closeChat() {
+        if let rootViewController = UIApplication.topViewController() {
+            if rootViewController is ZHCDemoMessagesViewController {
+                let vc = rootViewController as! ZHCDemoMessagesViewController
+                vc.closeChat()
+            }
+        }
+    }
+    func updateNotifications() {
+        if let rootViewController = UIApplication.topViewController() {
+            if rootViewController is NotificationsVC {
+                let vc = rootViewController as! NotificationsVC
+                vc.updateNotifications()
+            }
+        }
+    }
+    
+    
+    func reset() {
+        let check = UserDefaults.standard.value(forKey: Constants.DID_SEE_INTRO) as? Bool ?? false
+        if (check) {
+            let mainStoryboardIpad : UIStoryboard = UIStoryboard(name: "Main", bundle: nil)
+            let initialViewControlleripad : UIViewController = mainStoryboardIpad.instantiateViewController(withIdentifier: self.getHomeView()) as! UINavigationController
+            self.window = UIWindow(frame: UIScreen.main.bounds)
+            self.window?.rootViewController = initialViewControlleripad
+            self.window?.makeKeyAndVisible()
+        }else {
+            let mainStoryboardIpad : UIStoryboard = UIStoryboard(name: "Main", bundle: nil)
+            let initialViewControlleripad : UIViewController = mainStoryboardIpad.instantiateViewController(withIdentifier: "IntroNavigationController") as! UINavigationController
+            self.window = UIWindow(frame: UIScreen.main.bounds)
+            self.window?.rootViewController = initialViewControlleripad
+            self.window?.makeKeyAndVisible()
+        }
+    }
+    
+    func applicationWillResignActive(_ application: UIApplication) {
+        // Sent when the application is about to move from active to inactive state. This can occur for certain types of temporary interruptions (such as an incoming phone call or SMS message) or when the user quits the application and it begins the transition to the background state.
+        // Use this method to pause ongoing tasks, disable timers, and invalidate graphics rendering callbacks. Games should use this method to pause the game.
+    }
+    
+    func applicationDidEnterBackground(_ application: UIApplication) {
+        // Use this method to release shared resources, save user data, invalidate timers, and store enough application state information to restore your application to its current state in case it is terminated later.
+        // If your application supports background execution, this method is called instead of applicationWillTerminate: when the user quits.
+    }
+    
+    func applicationWillEnterForeground(_ application: UIApplication) {
+        // Called as part of the transition from the background to the active state; here you can undo many of the changes made on entering the background.
+    }
+    
+    func applicationDidBecomeActive(_ application: UIApplication) {
+        // Restart any tasks that were paused (or not yet started) while the application was inactive. If the application was previously in the background, optionally refresh the user interface.
+    }
+    
+    func applicationWillTerminate(_ application: UIApplication) {
+        // Called when the application is about to terminate. Save data if appropriate. See also applicationDidEnterBackground:.
+    }
+    
+}
+
+extension UITextField {
+    func addDoneButtonOnKeyboard()
+    {
+        let doneToolbar: UIToolbar = UIToolbar(frame: CGRect.init(x: 0, y: 0, width: UIScreen.main.bounds.width, height: 50))
+        doneToolbar.barStyle = .default
+        
+        let flexSpace = UIBarButtonItem(barButtonSystemItem: .flexibleSpace, target: nil, action: nil)
+        let done: UIBarButtonItem = UIBarButtonItem(title: "done".localized, style: .done, target: self, action: #selector(self.doneButtonAction))
+        
+        let items = [flexSpace, done]
+        doneToolbar.items = items
+        doneToolbar.sizeToFit()
+        
+        self.inputAccessoryView = doneToolbar
+    }
+    
+    @objc func doneButtonAction()
+    {
+        self.resignFirstResponder()
+    }
+    
+}
+
+extension UISearchBar{
+    
+    @IBInspectable var doneAccessory: Bool{
+        get{
+            return self.doneAccessory
+        }
+        set (hasDone) {
+            if true{
+                addDoneButtonOnKeyboard()
+            }
+        }
+    }
+    
+    func addDoneButtonOnKeyboard()
+    {
+        let doneToolbar: UIToolbar = UIToolbar(frame: CGRect.init(x: 0, y: 0, width: UIScreen.main.bounds.width, height: 50))
+        doneToolbar.barStyle = .default
+        
+        let flexSpace = UIBarButtonItem(barButtonSystemItem: .flexibleSpace, target: nil, action: nil)
+        let done: UIBarButtonItem = UIBarButtonItem(title: "done".localized, style: .done, target: self, action: #selector(self.doneButtonAction))
+        
+        let items = [flexSpace, done]
+        doneToolbar.items = items
+        doneToolbar.sizeToFit()
+        
+        self.inputAccessoryView = doneToolbar
+    }
+    
+    @objc func doneButtonAction()
+    {
+        self.resignFirstResponder()
+    }
+}
+
+extension String {
+    func trim() -> String
+    {
+        return self.trimmingCharacters(in: CharacterSet.whitespaces)
+    }
+    
+    func convertToDictionary() -> [String: Any]? {
+        if let data = self.data(using: .utf8) {
+            do {
+                return try JSONSerialization.jsonObject(with: data, options: []) as? [String: Any]
+            } catch {
+                print(error.localizedDescription)
+            }
+        }
+        return nil
+    }
+    
+    func isValidEmail() -> Bool {
+        // here, `try!` will always succeed because the pattern is valid
+        let regex = try! NSRegularExpression(pattern: "^[a-zA-Z0-9.!#$%&'*+/=?^_`{|}~-]+@[a-zA-Z0-9](?:[a-zA-Z0-9-]{0,61}[a-zA-Z0-9])?(?:\\.[a-zA-Z0-9](?:[a-zA-Z0-9-]{0,61}[a-zA-Z0-9])?)*$", options: .caseInsensitive)
+        return regex.firstMatch(in: self, options: [], range: NSRange(location: 0, length: count)) != nil
+    }
+    
+    var localized: String {
+        return NSLocalizedString(self, comment: "")
+    }
+    
+    var hex: Int? {
+        return Int(self, radix: 16)
+    }
+    func contains(find: String) -> Bool{
+        return self.range(of: find) != nil
+    }
+    func containsIgnoringCase(find: String) -> Bool{
+        return self.range(of: find, options: .caseInsensitive) != nil
+    }
+    func convertToEnglishNumber()->String{
+        let format = NumberFormatter()
+        format.locale = Locale(identifier: "en")
+        if let number = format.number(from: self) {
+            let faNumber = format.string(from: number)
+            return faNumber ?? ""
+        }
+        return ""
+    }
+    public var replacedArabicDigitsWithEnglish: String {
+        var str = self
+        let map = ["٠": "0",
+                   "١": "1",
+                   "٢": "2",
+                   "٣": "3",
+                   "٤": "4",
+                   "٥": "5",
+                   "٦": "6",
+                   "٧": "7",
+                   "٨": "8",
+                   "٩": "9"]
+        map.forEach { str = str.replacingOccurrences(of: $0, with: $1) }
+        return str
+    }
+}
+extension UIViewController {
+    func popBack(_ nb: Int) {
+        if let viewControllers: [UIViewController] = self.navigationController?.viewControllers {
+            guard viewControllers.count < nb else {
+                self.navigationController?.popToViewController(viewControllers[viewControllers.count - nb], animated: true)
+                return
+            }
+        }
+    }
+}
+extension UIColor {
+    static var colorPrimary:UIColor {
+        return #colorLiteral(red: 0.5137254902, green: 0.5019607843, blue: 0.968627451, alpha: 1)
+    }
+    static var appDarkBlue:UIColor {
+          return #colorLiteral(red: 0.2431372549, green: 0.05490196078, blue: 0.4039215686, alpha: 1)
+    }
+    static var appLightGray:UIColor {
+        return #colorLiteral(red: 0.7333333333, green: 0.7333333333, blue: 0.7333333333, alpha: 1)
+    }
+    
+    static var ERROR:UIColor{
+        return #colorLiteral(red: 0.9568627451, green: 0.262745098, blue: 0.2117647059, alpha: 1)
+    }
+    static var SUCCESS:UIColor{
+        return #colorLiteral(red: 0.5450980392, green: 0.7647058824, blue: 0.2901960784, alpha: 1)
+    }
+    static var INFO:UIColor{
+        return #colorLiteral(red: 0.3764705882, green: 0.4901960784, blue: 0.5450980392, alpha: 1)
+    }
+    static var WARNING:UIColor{
+        return #colorLiteral(red: 0.7764705882, green: 1, blue: 0, alpha: 1)
+    }
+    
+    static var facebookColor:UIColor {
+        return #colorLiteral(red: 0.231372549, green: 0.3490196078, blue: 0.5960784314, alpha: 1)
+    }
+    static var instagramColor:UIColor {
+        return #colorLiteral(red: 0.8039215686, green: 0.2823529412, blue: 0.4196078431, alpha: 1)
+    }
+    static var twitterColor:UIColor {
+        return #colorLiteral(red: 0.2549019608, green: 0.5647058824, blue: 0.8039215686, alpha: 1)
+    }
+    static var linkedinColor:UIColor {
+        return #colorLiteral(red: 0, green: 0.4666666667, blue: 0.7098039216, alpha: 1)
+    }
+    static var technzoneRed:UIColor {
+        return #colorLiteral(red: 0.968627451, green: 0.2784313725, blue: 0.368627451, alpha: 1)
+    }
+    static var appLightBlue:UIColor {
+        return #colorLiteral(red: 0.2235294118, green: 0.631372549, blue: 0.968627451, alpha: 1)
+    }
+    
+    static var pending:UIColor {
+        return #colorLiteral(red: 0.5019607843, green: 0.5019607843, blue: 0.5019607843, alpha: 1)
+    }
+    static var processing:UIColor {
+        return #colorLiteral(red: 0.9607843137, green: 0.6509803922, blue: 0.137254902, alpha: 1)
+    }
+    static var on_the_way:UIColor {
+        return #colorLiteral(red: 0.4745098039, green: 0.5176470588, blue: 0.9529411765, alpha: 1)
+    }
+    static var cancelled:UIColor {
+        return #colorLiteral(red: 0.7137254902, green: 0.06274509804, blue: 0.2705882353, alpha: 1)
+    }
+    static var delivered:UIColor {
+        return #colorLiteral(red: 0.4941176471, green: 0.8274509804, blue: 0.1294117647, alpha: 1)
+    }
+    static var uncheckedView:UIColor {
+        return #colorLiteral(red: 0.9490196078, green: 0.9568627451, blue: 0.968627451, alpha: 1)
+    }
+    static var uncheckedText:UIColor {
+        return #colorLiteral(red: 0.1960784314, green: 0.231372549, blue: 0.2705882353, alpha: 1)
+    }
+}
+
+extension UIView {
+    class func fromNib<T: UIView>() -> T {
+        return Bundle.main.loadNibNamed(String(describing: T.self), owner: nil, options: nil)![0] as! T
+    }
+    func bindFrameToSuperviewBounds() {
+        guard let superview = self.superview else {
+            print("Error! `superview` was nil – call `addSubview(view: UIView)` before calling `bindFrameToSuperviewBounds()` to fix this.")
+            return
+        }
+        
+        self.translatesAutoresizingMaskIntoConstraints = false
+        self.topAnchor.constraint(equalTo: superview.topAnchor, constant: 0).isActive = true
+        self.bottomAnchor.constraint(equalTo: superview.bottomAnchor, constant: 0).isActive = true
+        self.leadingAnchor.constraint(equalTo: superview.leadingAnchor, constant: 0).isActive = true
+        self.trailingAnchor.constraint(equalTo: superview.trailingAnchor, constant: 0).isActive = true
+        
+    }
+}
+extension UIImage {
+    func toBase64() -> String? {
+        guard let imageData = self.jpegData(compressionQuality: 0.1) else { return nil }
+        return imageData.base64EncodedString(options: Data.Base64EncodingOptions.lineLength64Characters)
+    }
+}
+extension UIApplication {
+    class func topViewController(base: UIViewController? = UIApplication.shared.keyWindow?.rootViewController) -> UIViewController? {
+        if let nav = base as? UINavigationController {
+            return topViewController(base: nav.visibleViewController)
+        }
+        if let tab = base as? UITabBarController {
+            if let selected = tab.selectedViewController {
+                return topViewController(base: selected)
+            }
+        }
+        if let presented = base?.presentedViewController {
+            return topViewController(base: presented)
+        }
+        return base
+    }
+}

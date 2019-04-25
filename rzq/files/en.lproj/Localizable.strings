@@ -1,0 +1,115 @@
+/* 
+  Localizable.strings
+  rzq
+
+  Created by Zaid najjar on 4/1/19.
+  Copyright © 2019 technzone. All rights reserved.
+*/
+"km" = "Km";
+"Loading" = "Loading";
+
+"add_image_pic_title" = "Add Pictures";
+"add_salon_pic_message" = "Pick pictures from Gallery, or take new photos by Camera.";
+"camera" = "Camera";
+"gallery" = "Gallery";
+"images" = "images";
+"choose_time" = "Choose Delivery Time";
+"1_hour" = "1 Hour";
+"2_hour" = "2 Hours";
+"3_hour" = "3 Hours";
+"1_day" = "1 Day";
+"2_day" = "2 Days";
+"3_day" = "3 Days";
+
+"choose_date" = "Choose Date";
+"done" = "Done";
+"cancel" = "Cancel";
+"alert" = "Alert";
+"enter_name_first" = "Enter your name first!";
+"enter_mobile_first" = "Enter your mobile number first!";
+"wrong_verification_code" = "Enter a valid verification code!";
+"choose_shop_or_pickup" = "Choose a shop or put your own pick up location on map first.";
+"choose_drop_location" = "Choose drop off location on map first.";
+"enter_order_details" = "Enter order details first!";
+"enter_order_cost" = "Enter order estimated cost first!";
+
+"currency" = "KWD";
+"hours" = "Hour";
+
+"bid_sent_to_user" = "Your bid has been sent to the client successfully.";
+
+"enter_email_first" = "Enter a valid email address first!";
+
+"add_profile_image_first" = "Add profile picture first!";
+"add_civil_image_first" = "Add civil ID/ Passport image first!";
+"add_license_first" = "Add license image first!";
+
+"driver_registered" = "Your driver registration is now pending, thank you.";
+"enter_subject_first" = "Enter subject first!";
+"enter_message_first" = "Enter message first!";
+"message_sent_successfully" = "Your message has been sent successfully, thank you.";
+
+"drivers" = "Drivers";
+"select_country" = "Select Country";
+
+"app_restart" = "App with restart to setup the language";
+"yes" = "Yes";
+"no" = "No";
+"delivery_date" = "Delivery Date:";
+"from" = "From:";
+"to" = "To:";
+"order_number" = "Order Number:";
+"orders" = "Orders";
+"bid_accepted_successfully" = "Bid accepted successfully, your offer has been sent to the client, thank you.";
+"cash" = "Cash";
+"location" = "Location";
+"RZQ" = "RZQ";
+"cancel_order" = "Cancel Order";
+"on_my_way" = "On my Way";
+"minutes" = "Min";
+
+"order_cost" = "Order Cost";
+"delivery_cost" = "Delivery Cost";
+"total_cost" = "Total Cost";
+"delivery_started" = "Delivery has been started successfully.";
+"registered_to_shop" = "You have registered to shop successfully.";
+"unregistered_to_shop" = "You have unregistered to this shop.";
+"profile_updated_successfully" = "Profile has been updated successfully.";
+
+"register_as_driver" = "Register As Driver";
+"working_orders" = "Working Orders";
+
+"not_logged_in" = "You're not logged in to RZQ.";
+"login" = "Login";
+"enter_pickup_details" = "Enter pickup location details (Floor, Apartment).";
+"enter_dropoff_details" = "Enter drop off location details (Floor, Apartment).";
+"enter_order_actual_cost" = "Enter order actual cost first!";
+
+"bakery" = "Bakery";
+"book_store" = "Book Store";
+"cafe" = "Cafe";
+"meal_delivery" = "Food Delivery";
+"meal_takeaway" = "Food Takeaway";
+"pharmacy" = "Pharmacy";
+"restaurant" = "Restaurant";
+"shopping_mall" = "Shopping Mall";
+"store" = "Store";
+"super_market" = "Super Market";
+"shop" = "Shop";
+"confirm_cancel_delivery" = "Are you sure you want to cancel this delivery?";
+
+"no_notifications" = "No Notifications";
+"no_notifications_desc" = "Notifications will appear here.";
+
+"continueUsing" = "Select application";
+"googleMaps" = "Google Maps";
+"appleMaps" = "Maps";
+"location" = "Location";
+"navigate_to_us" = "Navigate to us";
+"bid_declined_successfully" = "Bid declined successfully.";
+"complete_delivery" = "Complete Delivery";
+"delivery_completed" = "Delivery is completed, please rate the client.";
+"delivery_completed_user" = "Delivery is completed.";
+"thank_you_for_rating" = "Thank you for rating.";
+"shop_on_rzq" = "Shop on Rzq";
+"thank_you_for_rating" = "Thank you for rating.";

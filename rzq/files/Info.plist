@@ -1,0 +1,104 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
+<plist version="1.0">
+<dict>
+	<key>CFBundleDevelopmentRegion</key>
+	<string>$(DEVELOPMENT_LANGUAGE)</string>
+	<key>CFBundleDisplayName</key>
+	<string>Rzq</string>
+	<key>CFBundleExecutable</key>
+	<string>$(EXECUTABLE_NAME)</string>
+	<key>CFBundleIdentifier</key>
+	<string>$(PRODUCT_BUNDLE_IDENTIFIER)</string>
+	<key>CFBundleInfoDictionaryVersion</key>
+	<string>6.0</string>
+	<key>CFBundleName</key>
+	<string>$(PRODUCT_NAME)</string>
+	<key>CFBundlePackageType</key>
+	<string>APPL</string>
+	<key>CFBundleShortVersionString</key>
+	<string>1.0</string>
+    <key>CFBundleURLTypes</key>
+    <array>
+        <dict>
+            <key>CFBundleURLSchemes</key>
+            <array>
+                <string>com.rzqapp.link</string>
+            </array>
+        </dict>
+    </array>
+	<key>CFBundleVersion</key>
+	<string>1</string>
+	<key>LSApplicationQueriesSchemes</key>
+	<array>
+		<string>tel</string>
+		<string>telprompt</string>
+		<string>googlechromes</string>
+		<string>comgooglemaps</string>
+		<string>instagram</string>
+		<string>fb</string>
+		<string>linkedin</string>
+	</array>
+	<key>LSRequiresIPhoneOS</key>
+	<true/>
+	<key>NSAppTransportSecurity</key>
+	<dict>
+		<key>NSAllowsArbitraryLoads</key>
+		<true/>
+	</dict>
+	<key>NSCameraUsageDescription</key>
+	<string>This app will use camera to take photos for your order.</string>
+	<key>NSLocationWhenInUseUsageDescription</key>
+	<string>RZQ needs to access your location to show you nearby shops.</string>
+	<key>NSMicrophoneUsageDescription</key>
+	<string>RZQ needs to access your microphone to add voice notes to your order.</string>
+	<key>NSPhotoLibraryUsageDescription</key>
+	<string>You can select photos to attach to your order.</string>
+	<key>UIAppFonts</key>
+	<array>
+		<string>arabic_semibold.ttf</string>
+		<string>arabic_regular.ttf</string>
+		<string>arabic_medium.ttf</string>
+		<string>arabic_light.ttf</string>
+		<string>arabic_bold.ttf</string>
+		<string>english_semibold.ttf</string>
+		<string>english_regular.ttf</string>
+		<string>english_medium.ttf</string>
+		<string>english_light.ttf</string>
+		<string>english_bold.ttf</string>
+	</array>
+	<key>UIBackgroundModes</key>
+	<array>
+		<string>fetch</string>
+		<string>location</string>
+		<string>remote-notification</string>
+	</array>
+	<key>UILaunchStoryboardName</key>
+	<string>LaunchScreen</string>
+	<key>UIMainStoryboardFile</key>
+	<string>Main</string>
+	<key>UIRequiredDeviceCapabilities</key>
+	<array>
+		<string>armv7</string>
+	</array>
+	<key>UISupportedInterfaceOrientations</key>
+	<array>
+		<string>UIInterfaceOrientationPortrait</string>
+	</array>
+	<key>UISupportedInterfaceOrientations~ipad</key>
+	<array>
+		<string>UIInterfaceOrientationPortrait</string>
+		<string>UIInterfaceOrientationPortraitUpsideDown</string>
+		<string>UIInterfaceOrientationLandscapeLeft</string>
+		<string>UIInterfaceOrientationLandscapeRight</string>
+	</array>
+    <key>branch_key</key>
+    <dict>
+        <key>live</key>
+        <string>key_live_bjSAlghqpP3uu9tvkFqKXpikDCfw07H5</string>
+        <key>test</key>
+        <string>key_test_hlxrWC5Zx16DkYmWu4AHiimdqugRYMr</string>
+    </dict>
+</dict>
+
+</plist>
