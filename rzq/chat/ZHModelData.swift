@@ -26,9 +26,11 @@ class ZHModelData: NSObject {
     var delegate : ChatDelegate?
     
     var messages: NSMutableArray = [];
-    var avatars: NSDictionary = [:];
+    var avatars: NSMutableDictionary = [:];
     var users: NSDictionary = [:];
     
+    var senderImage : ZHCMessagesAvatarImage?
+    var receiverImage : ZHCMessagesAvatarImage?
     
     var outgoingBubbleImageData: ZHCMessagesBubbleImage?;
     var incomingBubbleImageData: ZHCMessagesBubbleImage?;
@@ -72,23 +74,22 @@ class ZHModelData: NSObject {
 //
 //    }
     
-    
     func loadMessages() -> Void {
         
         ApiService.getChatData(Authorization: self.user?.data?.accessToken ?? "", id: self.order?.chatId ?? 0) { (response) in
-            
+            self.messages.removeAllObjects()
             let avatarFactory: ZHCMessagesAvatarImageFactory = ZHCMessagesAvatarImageFactory.init(diameter: UInt(kZHCMessagesTableViewCellAvatarSizeDefault));
-            let cookImage: ZHCMessagesAvatarImage = avatarFactory.avatarImage(with: UIImage.init(named: "splash_logo"))
             
-            self.avatars = [kZHCDemoAvatarIdCook : cookImage,kZHCDemoAvatarIdJobs : cookImage]
-            self.users = [kZHCDemoAvatarIdJobs : kZHCDemoAvatarDisplayNameJobs,kZHCDemoAvatarIdCook : kZHCDemoAvatarDisplayNameCook]
+//            let cookImage: ZHCMessagesAvatarImage = avatarFactory.avatarImage(with: UIImage.init(named: "ic_back"))
+//            self.avatars = [kZHCDemoAvatarIdCook : cookImage,kZHCDemoAvatarIdJobs : cookImage]
+//            self.users = [kZHCDemoAvatarIdJobs : kZHCDemoAvatarDisplayNameJobs,kZHCDemoAvatarIdCook : kZHCDemoAvatarDisplayNameCook]
             
             let bubbleFactory: ZHCMessagesBubbleImageFactory = ZHCMessagesBubbleImageFactory.init();
-            self.outgoingBubbleImageData = bubbleFactory.outgoingMessagesBubbleImage(with: UIColor.appLightBlue)
-            self.incomingBubbleImageData = bubbleFactory.incomingMessagesBubbleImage(with: UIColor.zhc_messagesBubbleGreen())
+            self.outgoingBubbleImageData = bubbleFactory.outgoingMessagesBubbleImage(with: UIColor.colorPrimary)
+            self.incomingBubbleImageData = bubbleFactory.incomingMessagesBubbleImage(with: UIColor.processing)
             
-            let arr = response.chatData?.messages ?? [Message]()
             let muArray: NSMutableArray = [];
+            let arr = response.chatData?.messages ?? [Message]()
             for message in arr {
                 let model: ZHUserModel = ZHUserModel.init()
                 model.id = message.id ?? 0
@@ -100,8 +101,15 @@ class ZHModelData: NSObject {
                 model.userName = message.userName ?? ""
                 model.userImage = message.userImage ?? ""
                 model.createDate = message.createdDate ?? ""
+                
+                if (model.userImage?.count ?? 0 > 0) {
+                let url = URL(string: "\(Constants.IMAGE_URL)\(model.userImage ?? "")")
+                    self.loadAvatarImage(url: url!, userId: model.userId ?? "")
+                }
+                
                 muArray.add(model)
             }
+            
             for i in 0 ..< muArray.count{
                 let model: ZHUserModel = muArray.object(at: i) as! ZHUserModel
                 let avatarId: String?
@@ -185,6 +193,26 @@ class ZHModelData: NSObject {
         messages.add(audioMessage)
     }
     
+    func loadAvatarImage(url : URL, userId : String) {
+        KingfisherManager.shared.retrieveImage(with: url, options: nil, progressBlock: nil, completionHandler: { image, error, cacheType, imageURL in
+             let avatarFactory: ZHCMessagesAvatarImageFactory = ZHCMessagesAvatarImageFactory.init(diameter: UInt(kZHCMessagesTableViewCellAvatarSizeDefault));
+            
+            let loadedImage: ZHCMessagesAvatarImage = avatarFactory.avatarImage(with: image)
+            
+          //  self.avatars.setNilValueForKey(userId)
+            
+            if (userId == self.user?.data?.userID ?? "") {
+                self.senderImage = loadedImage
+            }else {
+                self.receiverImage = loadedImage
+            }
+            
+            self.avatars[userId] = loadedImage
+            
+            self.delegate?.reloadChat()
+           
+        })
+    }
     
 
 }

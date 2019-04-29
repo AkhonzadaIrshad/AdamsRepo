@@ -17,6 +17,7 @@ class NotificationsVC: BaseViewController, UITableViewDelegate, UITableViewDataS
     
     @IBOutlet weak var containerView: UIView!
     
+    @IBOutlet weak var emptyView: EmptyView!
     
     @IBOutlet weak var btnAbout: UIButton!
     
@@ -48,31 +49,14 @@ class NotificationsVC: BaseViewController, UITableViewDelegate, UITableViewDataS
             self.items.removeAll()
             self.items.append(contentsOf: response.data ?? [DatumNot]())
             if (self.items.count > 0) {
-                //  self.showEmptyView(show: false)
+                self.emptyView.isHidden = true
                 self.tableView.delegate = self
                 self.tableView.dataSource = self
                 self.tableView.reloadData()
             }else {
-                //  self.showEmptyView(show: true)
+                self.emptyView.isHidden = false
             }
       }
-    }
-    
-    
-    func showEmptyView(show : Bool) {
-        self.containerView.subviews.forEach({ $0.removeFromSuperview() })
-        if (show) {
-            self.tableView.isHidden = true
-            let emptyView: EmptyView = UIView.fromNib()
-            emptyView.lblTitle.text = "no_notifications".localized
-            emptyView.lblDescription.text = "no_notifications_desc".localized
-            emptyView.ivEmpty.image = UIImage(named: "empty_notifications")
-            //  emptyView.frame = self.containerView.frame
-            self.containerView.addSubview(emptyView)
-            emptyView.bindFrameToSuperviewBounds()
-        } else {
-            self.tableView.isHidden = false
-        }
     }
     
     
@@ -89,14 +73,13 @@ class NotificationsVC: BaseViewController, UITableViewDelegate, UITableViewDataS
             self.items.removeAll()
             self.items.append(contentsOf: response.data ?? [DatumNot]())
             if (self.items.count > 0) {
-              //  self.showEmptyView(show: false)
+              self.emptyView.isHidden = true
                 self.tableView.delegate = self
                 self.tableView.dataSource = self
                 self.tableView.reloadData()
             }else {
-              //  self.showEmptyView(show: true)
+              self.emptyView.isHidden = false
             }
-            
             
         }
     }
@@ -207,7 +190,7 @@ class NotificationsVC: BaseViewController, UITableViewDelegate, UITableViewDataS
             cell.lblMoney.text = "\(dict?["Price"] as? Double ?? 0.0) \("currency".localized)"
             cell.lblTime.text = "\(dict?["Time"] as? Int ?? 0) \("hours".localized)"
             
-            let distanceStr = String(format: "%.2f", distance)
+            let distanceStr = String(format: "%.2f", (distance / 1000.0))
             
             cell.lblDistance.text = "\(distanceStr) \("km".localized)"
             
@@ -216,8 +199,9 @@ class NotificationsVC: BaseViewController, UITableViewDelegate, UITableViewDataS
                 self.definesPresentationContext = true
                 vc.modalPresentationStyle = UIModalPresentationStyle.overCurrentContext
                 vc.view.backgroundColor = UIColor.clear
-              
+              let notificationId = dict?["Id"] as? Int ?? 0
                 vc.item = item
+                vc.notificationId = notificationId
                 
                 self.present(vc, animated: true, completion: nil)
             }

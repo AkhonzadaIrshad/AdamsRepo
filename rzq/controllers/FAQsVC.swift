@@ -39,18 +39,23 @@ class FAQsVC: BaseViewController, UITableViewDelegate, UITableViewDataSource {
     }
     
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
-        let sheetContent = UIStoryboard(name: "Main", bundle: nil).instantiateViewController(withIdentifier: "QuestionAnswerVC") as! QuestionAnswerVC
-      
-        sheetContent.faq = self.items[indexPath.row]
-        let sheet = SheetViewController(controller: sheetContent, sizes: [.halfScreen, .fullScreen])
-        sheet.willDismiss = { _ in
-            // This is called just before the sheet is dismissed
+//        let sheetContent = UIStoryboard(name: "Main", bundle: nil).instantiateViewController(withIdentifier: "QuestionAnswerVC") as! QuestionAnswerVC
+//
+//        sheetContent.faq = self.items[indexPath.row]
+//        let sheet = SheetViewController(controller: sheetContent, sizes: [.halfScreen, .fullScreen])
+//        sheet.willDismiss = { _ in
+//            // This is called just before the sheet is dismissed
+//        }
+//        sheet.didDismiss = { _ in
+//            // This is called after the sheet is dismissed
+//        }
+//
+//        self.present(sheet, animated: false, completion: nil)
+        if let vc = UIStoryboard(name: "Main", bundle: nil).instantiateViewController(withIdentifier: "AnswersVC") as? AnswersVC
+        {
+            vc.item = self.items[indexPath.row]
+            self.navigationController?.pushViewController(vc, animated: true)
         }
-        sheet.didDismiss = { _ in
-            // This is called after the sheet is dismissed
-        }
-        
-        self.present(sheet, animated: false, completion: nil)
     }
     
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {

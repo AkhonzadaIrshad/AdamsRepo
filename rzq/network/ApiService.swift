@@ -240,7 +240,8 @@ class ApiService : NSObject {
                                     "FromAddress" : fromAddress,
                                     "ToAddress" : toAddress,
                                     "Time" : time,
-                                    "EstimatedPrice" : estimatedPrice]
+                                    "EstimatedPrice" : estimatedPrice,
+                                    "ShopId" : shopId]
         // "ShopId" : shopId]
         
         AFManager.request("\(Constants.BASE_URL)Delivery/Create", method: .post, parameters: all ,encoding: JSONEncoding.default, headers: headers)

@@ -92,17 +92,12 @@ class ZHCDemoMessagesViewController: ZHCMessagesViewController, BillDelegate, Ch
         item.action = { item in
             
             //cancel order
-            self.showAlert(title: "alert".localized, message: "confirm_cancel_delivery".localized, actionTitle: "cancel".localized, cancelTitle: "no".localized, actionHandler: {
-                ApiService.cancelDelivery(Authorization: self.user?.data?.accessToken ?? "", deliveryId: self.order?.id ?? 0, completion: { (response) in
-                    if (response.errorCode == 0) {
-                        self.showBanner(title: "alert".localized, message: "delivery_cancelled".localized, style: UIColor.SUCCESS)
-                        DispatchQueue.main.asyncAfter(deadline: .now() + 2, execute: {
-                            self.dismiss(animated: true, completion: nil)
-                        })
-                    }else {
-                        self.showBanner(title: "alert".localized, message: response.errorMessage ?? "", style: UIColor.INFO)
-                    }
-                })
+            self.showAlert(title: "alert".localized, message: "confirm_cancel_delivery".localized, actionTitle: "yes".localized, cancelTitle: "no".localized, actionHandler: {
+                if ((self.user?.data?.roles?.contains(find: "Driver"))!) {
+                    self.cancelDeliveryByDriver()
+                }else {
+                    self.cancelDeliveryByUser()
+                }
             })
             
         }
@@ -159,7 +154,8 @@ class ZHCDemoMessagesViewController: ZHCMessagesViewController, BillDelegate, Ch
             // Fallback on earlier versions
         }
         if #available(iOS 11.0, *) {
-            actionButton.bottomAnchor.constraint(equalTo: view.safeAreaLayoutGuide.bottomAnchor, constant: -56).isActive = true
+//            actionButton.bottomAnchor.constraint(equalTo: view.safeAreaLayoutGuide.bottomAnchor, constant: -56).isActive = true
+              actionButton.bottomAnchor.constraint(equalTo: self.inputMessageBarView.safeAreaLayoutGuide.bottomAnchor, constant: -56).isActive = true
         } else {
             // Fallback on earlier versions
         }
@@ -168,6 +164,32 @@ class ZHCDemoMessagesViewController: ZHCMessagesViewController, BillDelegate, Ch
         // actionButton.display(inViewController: self)
     }
     
+    
+    func cancelDeliveryByUser() {
+        ApiService.cancelDelivery(Authorization: self.user?.data?.accessToken ?? "", deliveryId: self.order?.id ?? 0, completion: { (response) in
+            if (response.errorCode == 0) {
+                self.showBanner(title: "alert".localized, message: "delivery_cancelled".localized, style: UIColor.SUCCESS)
+                DispatchQueue.main.asyncAfter(deadline: .now() + 2, execute: {
+                    self.dismiss(animated: true, completion: nil)
+                })
+            }else {
+                self.showBanner(title: "alert".localized, message: response.errorMessage ?? "", style: UIColor.INFO)
+            }
+        })
+    }
+    
+    func cancelDeliveryByDriver() {
+        ApiService.cancelDeliveryByDriver(Authorization: self.user?.data?.accessToken ?? "", deliveryId: self.order?.id ?? 0, completion: { (response) in
+            if (response.errorCode == 0) {
+                self.showBanner(title: "alert".localized, message: "delivery_cancelled".localized, style: UIColor.SUCCESS)
+                DispatchQueue.main.asyncAfter(deadline: .now() + 2, execute: {
+                    self.dismiss(animated: true, completion: nil)
+                })
+            }else {
+                self.showBanner(title: "alert".localized, message: response.errorMessage ?? "", style: UIColor.INFO)
+            }
+        })
+    }
     
     func setupUserFloating() {
         let actionButton = JJFloatingActionButton()
@@ -182,17 +204,12 @@ class ZHCDemoMessagesViewController: ZHCMessagesViewController, BillDelegate, Ch
         item.action = { item in
             
             //cancel order
-            self.showAlert(title: "alert".localized, message: "confirm_cancel_delivery".localized, actionTitle: "cancel".localized, cancelTitle: "no".localized, actionHandler: {
-                ApiService.cancelDelivery(Authorization: self.user?.data?.accessToken ?? "", deliveryId: self.order?.id ?? 0, completion: { (response) in
-                    if (response.errorCode == 0) {
-                        self.showBanner(title: "alert".localized, message: "delivery_cancelled".localized, style: UIColor.SUCCESS)
-                        DispatchQueue.main.asyncAfter(deadline: .now() + 2, execute: {
-                            self.dismiss(animated: true, completion: nil)
-                        })
-                    }else {
-                        self.showBanner(title: "alert".localized, message: response.errorMessage ?? "", style: UIColor.INFO)
-                    }
-                })
+            self.showAlert(title: "alert".localized, message: "confirm_cancel_delivery".localized, actionTitle: "yes".localized, cancelTitle: "no".localized, actionHandler: {
+                if ((self.user?.data?.roles?.contains(find: "Driver"))!) {
+                    self.cancelDeliveryByDriver()
+                }else {
+                    self.cancelDeliveryByUser()
+                }
             })
             
         }
@@ -209,7 +226,8 @@ class ZHCDemoMessagesViewController: ZHCMessagesViewController, BillDelegate, Ch
             // Fallback on earlier versions
         }
         if #available(iOS 11.0, *) {
-            actionButton.bottomAnchor.constraint(equalTo: view.safeAreaLayoutGuide.bottomAnchor, constant: -56).isActive = true
+          //  actionButton.bottomAnchor.constraint(equalTo: view.safeAreaLayoutGuide.bottomAnchor, constant: -56).isActive = true
+            actionButton.bottomAnchor.constraint(equalTo: self.inputMessageBarView.safeAreaLayoutGuide.bottomAnchor, constant: -56).isActive = true
         } else {
             // Fallback on earlier versions
         }
@@ -348,7 +366,7 @@ class ZHCDemoMessagesViewController: ZHCMessagesViewController, BillDelegate, Ch
     // MARK: ZHCMessagesTableViewDataSource
     
     override func senderDisplayName() -> String {
-        return kZHCDemoAvatarDisplayNameJobs;
+        return self.user?.data?.fullName ?? "";
     }
     
     override func  senderId() -> String {
@@ -358,6 +376,19 @@ class ZHCDemoMessagesViewController: ZHCMessagesViewController, BillDelegate, Ch
     override func  tableView(_ tableView: ZHCMessagesTableView, messageDataForCellAt indexPath: IndexPath) -> ZHCMessageData {
         return self.demoData.messages.object(at: indexPath.row) as! ZHCMessageData;
     }
+    
+//    override func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
+//         let message: ZHCMessage = self.demoData.messages.object(at: indexPath.row) as! ZHCMessage;
+//        if (message.isMediaMessage) {
+//            var images = [String]()
+//            let str = message.media.mediaData?() as? String ?? ""
+//            images.append(str)
+//            if let vc = UIStoryboard(name: "Main", bundle: nil).instantiateViewController(withIdentifier: "ImageSliderVC") as? ImageSliderVC
+//            {
+//                self.navigationController?.pushViewController(vc, animated: true)
+//            }
+//        }
+//    }
     
     override func tableView(_ tableView: UITableView, didDeselectRowAt indexPath: IndexPath) {
         self.demoData.messages.removeObject(at: indexPath.row);
@@ -381,16 +412,10 @@ class ZHCDemoMessagesViewController: ZHCMessagesViewController, BillDelegate, Ch
     }
     
     override func tableView(_ tableView: ZHCMessagesTableView, avatarImageDataForCellAt indexPath: IndexPath) -> ZHCMessageAvatarImageDataSource? {
-        /**
-         *  Return your previously created avatar image data objects.
-         *
-         *  Note: these the avatars will be sized according to these values:
-         *
-         *  Override the defaults in `viewDidLoad`
-         */
-        
+    
         let message: ZHCMessage = self.demoData.messages.object(at: indexPath.row) as! ZHCMessage;
-        return self.demoData.avatars.object(forKey: message.senderId) as! ZHCMessageAvatarImageDataSource?;
+        
+        return self.demoData.avatars.object(forKey: message.senderId) as! ZHCMessageAvatarImageDataSource?
     }
     
     override func tableView(_ tableView: ZHCMessagesTableView, attributedTextForCellTopLabelAt indexPath: IndexPath) -> NSAttributedString? {
@@ -404,7 +429,7 @@ class ZHCDemoMessagesViewController: ZHCMessagesViewController, BillDelegate, Ch
     override func tableView(_ tableView: ZHCMessagesTableView, attributedTextForMessageBubbleTopLabelAt indexPath: IndexPath) -> NSAttributedString? {
         let message: ZHCMessage = self.demoData.messages.object(at: indexPath.row) as! ZHCMessage;
         if message.senderId == self.senderId(){
-            return nil;
+            return NSAttributedString.init(string: self.user?.data?.fullName ?? "");
         }
         if (indexPath.row-1)>0 {
             let preMessage: ZHCMessage = self.demoData.messages.object(at: indexPath.row-1) as! ZHCMessage;
@@ -497,9 +522,9 @@ class ZHCDemoMessagesViewController: ZHCMessagesViewController, BillDelegate, Ch
         let message: ZHCMessage = self.demoData.messages.object(at: indexPath.row) as! ZHCMessage;
         if !message.isMediaMessage {
             if (message.senderId == self.senderId()) {
-                cell.textView?.textColor = UIColor.black;
-            }else{
                 cell.textView?.textColor = UIColor.white;
+            }else{
+                cell.textView?.textColor = UIColor.black;
             }
         }
     }

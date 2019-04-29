@@ -9,11 +9,17 @@
 import UIKit
 import MOLH
 
-class LanguageVC: UIViewController {
+class LanguageVC: BaseVC {
 
+    
+    @IBOutlet weak var ivHandle: UIImageView!
+    
+    
     override func viewDidLoad() {
         super.viewDidLoad()
-
+        if (self.isArabic()) {
+            self.ivHandle.image = UIImage(named: "bg_language_buttons_arabic")
+        }
     }
     
     @IBAction func arabicAction(_ sender: Any) {

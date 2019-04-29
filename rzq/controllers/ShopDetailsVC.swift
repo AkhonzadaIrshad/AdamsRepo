@@ -36,9 +36,13 @@ class ShopDetailsVC: BaseVC, UITableViewDelegate, UITableViewDataSource {
     @IBOutlet weak var lblWorkingHours: MyUILabel!
     @IBOutlet weak var lblNearbyDrivers: MyUILabel!
     
+    @IBOutlet weak var ivHandle: UIImageView!
+    
+    
     var latitude : Double?
     var longitude : Double?
     
+    @IBOutlet weak var segmentHeight: NSLayoutConstraint!
     
     var currentZoom: Float = 0.0
     var gMap : GMSMapView?
@@ -49,6 +53,9 @@ class ShopDetailsVC: BaseVC, UITableViewDelegate, UITableViewDataSource {
     
     override func viewDidLoad() {
         super.viewDidLoad()
+        if (self.isArabic()) {
+            self.ivHandle.image = UIImage(named: "ic_back_arabic")
+        }
          self.infoView.isHidden = false
         gMap = GMSMapView()
         self.setUpGoogleMap()
@@ -69,6 +76,7 @@ class ShopDetailsVC: BaseVC, UITableViewDelegate, UITableViewDataSource {
             self.tableView.isHidden = true
             self.viewBecomeDriver.isHidden = false
             self.segmentControl.isHidden = true
+            self.segmentHeight.constant = 0
             
             self.viewRegister.isHidden = true
         }
@@ -80,7 +88,16 @@ class ShopDetailsVC: BaseVC, UITableViewDelegate, UITableViewDataSource {
         self.lblAddress.text = self.shop?.address ?? ""
         self.ratingView.rating = self.shop?.rate ?? 0.0
         self.lblDistance.text = self.getShopDistance()
-        self.lblWorkingHours.text = self.shop?.workingHours ?? ""
+        
+        
+        let hours = self.shop?.workingHours?.split(separator: ",")
+        let dayWeek = Calendar.current.component(.weekday, from: Date()) + 1
+        if (hours?.count ?? 0 > dayWeek) {
+         self.lblWorkingHours.text = String(hours?[dayWeek] ?? "")
+        }else if (hours?.count ?? 0 > 0) {
+            self.lblWorkingHours.text = String(hours?[0] ?? "")
+        }
+        
         self.lblNearbyDrivers.text = "\(self.shop?.nearbyDriversCount ?? 0) \("drivers".localized)"
         // Do any additional setup after loading the view.
     }
@@ -180,6 +197,7 @@ class ShopDetailsVC: BaseVC, UITableViewDelegate, UITableViewDataSource {
         marker.map = gMap
         
         self.mapView.addSubview(gMap!)
+        gMap?.bindFrameToSuperviewBounds()
         self.view.layoutSubviews()
         
     }
@@ -209,12 +227,26 @@ class ShopDetailsVC: BaseVC, UITableViewDelegate, UITableViewDataSource {
     }
     
     @IBAction func becomeDriverAction(_ sender: Any) {
-        if let vc = UIStoryboard(name: "Main", bundle: nil).instantiateViewController(withIdentifier: "RegisterDriverVC") as? RegisterDriverVC
-        {
-            self.navigationController?.pushViewController(vc, animated: true)
+        if (self.isLoggedIn()) {
+            if let vc = UIStoryboard(name: "Main", bundle: nil).instantiateViewController(withIdentifier: "RegisterDriverVC") as? RegisterDriverVC
+            {
+                self.navigationController?.pushViewController(vc, animated: true)
+            }
         }
     }
     
+    @IBAction func workingHoursAction(_ sender: Any) {
+        let hours = (self.shop?.workingHours?.split(separator: ","))!
+        var items = [String]()
+        for hour in hours {
+            items.append(String(hour))
+        }
+        if let vc = UIStoryboard(name: "Main", bundle: nil).instantiateViewController(withIdentifier: "WorkingHoursVC") as? WorkingHoursVC
+        {
+            vc.items = items
+            self.navigationController?.pushViewController(vc, animated: true)
+        }
+    }
     @IBAction func shareAction(_ sender: Any) {
         self.generateDeepLink()
     }

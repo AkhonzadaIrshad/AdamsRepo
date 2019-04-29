@@ -350,7 +350,23 @@ class BaseViewController: UIViewController, SlideMenuDelegate {
     }
     
     
-    
+    func isLoggedIn() -> Bool{
+        if (self.loadUser().data?.userID?.count ?? 0 > 0) {
+            return true
+        }else {
+            self.showAlert(title: "alert".localized, message: "not_logged_in".localized, actionTitle: "login".localized, cancelTitle: "no".localized, actionHandler: {
+                //login
+                if let vc = UIStoryboard(name: "Main", bundle: nil).instantiateViewController(withIdentifier: "LoginVC") as? LoginVC
+                {
+                    self.present(vc, animated: true, completion: nil)
+                }
+                
+            }) {
+                //no
+            }
+            return false
+        }
+    }
     
     
 }

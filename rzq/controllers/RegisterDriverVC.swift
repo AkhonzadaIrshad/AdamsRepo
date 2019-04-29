@@ -18,6 +18,9 @@ class RegisterDriverVC: BaseVC, UINavigationControllerDelegate {
     @IBOutlet weak var ivCivilId: UIImageView!
     @IBOutlet weak var ivLicense: UIImageView!
     
+    @IBOutlet weak var ivHandle: UIImageView!
+    
+    
     var profileImage : UIImage?
     var civilImage : UIImage?
     var licenseImage : UIImage?
@@ -44,7 +47,9 @@ class RegisterDriverVC: BaseVC, UINavigationControllerDelegate {
     
     override func viewDidLoad() {
         super.viewDidLoad()
-
+        if (self.isArabic()) {
+            self.ivHandle.image = UIImage(named: "ic_back_arabic")
+        }
         self.edtName.text = self.loadUser().data?.fullName ?? ""
         self.edtMobile.text = self.loadUser().data?.phoneNumber ?? ""
         self.edtEmail.text = self.loadUser().data?.email ?? ""

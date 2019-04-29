@@ -24,6 +24,9 @@ class DeliveryStep2: BaseVC {
     
     @IBOutlet weak var searchAddress: MyUITextField!
     
+    @IBOutlet weak var ivHandle: UIImageView!
+    
+    
     var markerLocation: GMSMarker?
     var currentZoom: Float = 0.0
     var gMap : GMSMapView?
@@ -43,6 +46,9 @@ class DeliveryStep2: BaseVC {
     
     override func viewDidLoad() {
         super.viewDidLoad()
+        if (self.isArabic()) {
+            self.ivHandle.image = UIImage(named: "ic_back_arabic")
+        }
         gMap = GMSMapView()
         self.lblPickupLocation.text = self.orderModel?.pickUpAddress ?? ""
         self.setUpGoogleMap()
@@ -81,11 +87,12 @@ class DeliveryStep2: BaseVC {
         gMap?.delegate = self
         let marker = GMSMarker()
         marker.position = CLLocationCoordinate2D(latitude: self.latitude ?? 0.0, longitude: self.longitude ?? 0.0)
-        marker.title =  ""
+        marker.title =  "my_location"
         marker.snippet = ""
         marker.map = gMap
         
         self.mapView.addSubview(gMap!)
+        gMap?.bindFrameToSuperviewBounds()
         self.view.layoutSubviews()
         
         
@@ -218,6 +225,10 @@ class DeliveryStep2: BaseVC {
         self.dropLocation = location
         self.GetAnnotationUsingCoordinated(location)
     }
+    fileprivate func getAddressForMapCenter(location : CLLocation) {
+        self.dropLocation = location
+        self.GetAnnotationUsingCoordinated(location)
+    }
     
     fileprivate func GetAnnotationUsingCoordinated(_ location : CLLocation) {
         
@@ -272,23 +283,27 @@ class DeliveryStep2: BaseVC {
                         
                         
                         self.lblDropLocation.text = strAddresMain
+                        self.lblDropLocation.textColor = UIColor.appDarkBlue
                         self.orderModel?.dropOffAddress = strAddresMain
                         
                     }
                     else {
                         
                         self.lblDropLocation.text = "Loading".localized
+                        self.lblDropLocation.textColor = UIColor.appDarkBlue
                         self.orderModel?.dropOffAddress = ""
                     }
                 }
                 else {
                     
                     self.lblDropLocation.text = "Loading".localized
+                    self.lblDropLocation.textColor = UIColor.appDarkBlue
                     self.orderModel?.dropOffAddress = ""
                 }
             }
             else {
                 self.lblDropLocation.text = "Loading".localized
+                self.lblDropLocation.textColor = UIColor.appDarkBlue
                 self.orderModel?.dropOffAddress = ""
             }
         }
@@ -310,7 +325,14 @@ extension DeliveryStep2 : GMSMapViewDelegate {
     
     func mapView(_ mapView: GMSMapView, didTap marker: GMSMarker) -> Bool {
         let id = marker.title ?? "0"
-        if (Int(id)! > 0) {
+        if (id == "my_location") {
+            self.orderModel?.dropOffLatitude = marker.position.latitude
+            self.orderModel?.dropOffLongitude = marker.position.longitude
+            self.getAddressForMapCenter(location: CLLocation(latitude: marker.position.latitude, longitude: marker.position.longitude))
+            self.drawLocationLine()
+            return true
+        }
+        if (Int(id) ?? 0 > 0) {
             toolTipView?.removeFromSuperview()
             toolTipView = UIView.fromNib()
             if (self.orderModel?.shop?.id ?? 0 > 0) {
@@ -347,6 +369,7 @@ extension DeliveryStep2 : GMSMapViewDelegate {
         self.pinMarker?.snippet = ""
         self.pinMarker?.map = gMap
         self.lblDropLocation.text = "Loading".localized
+        self.lblDropLocation.textColor = UIColor.appDarkBlue
         self.orderModel?.dropOffLatitude = coordinate.latitude
         self.orderModel?.dropOffLongitude = coordinate.longitude
         self.orderModel?.dropOffAddress = ""

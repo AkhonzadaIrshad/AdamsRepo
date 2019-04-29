@@ -41,4 +41,6 @@ pod 'RealmSwift'
    pod 'ExpandableCell'
    pod 'ZHChat', '~> 0.2.1'
    pod 'Branch'
+   pod 'ImageSlideshow', '~> 1.6'
+   pod 'MultilineTextField'
 end

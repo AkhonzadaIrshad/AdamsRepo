@@ -16,7 +16,7 @@ import CoreLocation
 import SnapKit
 import Firebase
 
-class HomeMapVC: BaseViewController,LabasLocationManagerDelegate, UICollectionViewDelegate, UICollectionViewDataSource, UICollectionViewDelegateFlowLayout, UIScrollViewDelegate,FilterSheetDelegate, ShopSheetDelegate {
+class HomeMapVC: BaseViewController,LabasLocationManagerDelegate, UICollectionViewDelegate, UICollectionViewDataSource, UICollectionViewDelegateFlowLayout, UIScrollViewDelegate,FilterSheetDelegate, ShopSheetDelegate, FilterListDelegate {
     
     @IBOutlet weak var edtSearch: MyUITextField!
     
@@ -42,6 +42,8 @@ class HomeMapVC: BaseViewController,LabasLocationManagerDelegate, UICollectionVi
     
     var shops = [DataShop]()
     var items = [DatumDel]()
+    var shopMarkers = [GMSMarker]()
+    
     @IBOutlet weak var searchView: CardView!
     
     var collectionViewFlowLayout : UICollectionViewFlowLayout?
@@ -59,7 +61,9 @@ class HomeMapVC: BaseViewController,LabasLocationManagerDelegate, UICollectionVi
         self.lblLocation.isHidden = true
         self.btnLocation.isHidden = true
         
+        //snuff
         ApiService.updateRegId(Authorization: self.loadUser().data?.accessToken ?? "", regId: Messaging.messaging().fcmToken ?? "not_avaliable") { (response) in
+        
           
         }
         
@@ -98,16 +102,19 @@ class HomeMapVC: BaseViewController,LabasLocationManagerDelegate, UICollectionVi
     func handleNotification() {
         let type = App.shared.notificationType ?? "0"
         let itemId = App.shared.notificationValue ?? "0"
+        let deliveryId = App.shared.notificationDeliveryId ?? "0"
         switch type {
         case "0":
             //regular
             App.shared.notificationValue = "0"
             App.shared.notificationType = "0"
+            App.shared.notificationDeliveryId = "0"
             break
         case "11":
             //chat
             App.shared.notificationValue = "0"
             App.shared.notificationType = "0"
+            App.shared.notificationDeliveryId = "0"
             
             ApiService.getDelivery(id: Int(itemId)!) { (response) in
                 DispatchQueue.main.async {
@@ -125,37 +132,53 @@ class HomeMapVC: BaseViewController,LabasLocationManagerDelegate, UICollectionVi
         case "1":
             App.shared.notificationValue = "0"
             App.shared.notificationType = "0"
+            App.shared.notificationDeliveryId = "0"
             self.openViewControllerBasedOnIdentifier("NotificationsVC")
             break
         case "2":
             App.shared.notificationValue = "0"
             App.shared.notificationType = "0"
+            App.shared.notificationDeliveryId = "0"
             self.openViewControllerBasedOnIdentifier("NotificationsVC")
             break
         case "3":
             App.shared.notificationValue = "0"
             App.shared.notificationType = "0"
+            App.shared.notificationDeliveryId = "0"
             self.openViewControllerBasedOnIdentifier("NotificationsVC")
             break
         case "4":
             App.shared.notificationValue = "0"
             App.shared.notificationType = "0"
+            App.shared.notificationDeliveryId = "0"
             self.openViewControllerBasedOnIdentifier("NotificationsVC")
             break
         case "5":
             App.shared.notificationValue = "0"
             App.shared.notificationType = "0"
+            App.shared.notificationDeliveryId = "0"
             self.openViewControllerBasedOnIdentifier("NotificationsVC")
+            
+            let vc = UIStoryboard(name: "Main", bundle: nil).instantiateViewController(withIdentifier: "RateDriverDialog") as! RateDriverDialog
+            vc.deliveryId = Int(deliveryId)
+            self.definesPresentationContext = true
+            vc.modalPresentationStyle = UIModalPresentationStyle.overCurrentContext
+            vc.view.backgroundColor = UIColor.clear
+            self.present(vc, animated: true, completion: nil)
             break
+            
         case "6":
             App.shared.notificationValue = "0"
             App.shared.notificationType = "0"
+            App.shared.notificationDeliveryId = "0"
             self.openViewControllerBasedOnIdentifier("OrdersVC")
             break
+            
         default:
             //regular
             App.shared.notificationValue = "0"
             App.shared.notificationType = "0"
+            App.shared.notificationDeliveryId = "0"
             break
         }
         
@@ -205,7 +228,9 @@ class HomeMapVC: BaseViewController,LabasLocationManagerDelegate, UICollectionVi
             cell.lblDistance.text = "\(distanceStr) \("km".localized)"
             cell.lblTime.text = "\(String(format: "%.1f", (distanceInKM * 1.1))) \("minutes".localized)"
             if (response.locationData != nil) {
-               self.drawLocationLine(driverLocation: response.locationData!, order: item)
+                if (item.status == Constants.ORDER_ON_THE_WAY) {
+                    self.drawLocationLine(driverLocation: response.locationData!, order: item)
+                }
             }
         }
     }
@@ -284,7 +309,9 @@ class HomeMapVC: BaseViewController,LabasLocationManagerDelegate, UICollectionVi
             cell.lblDistance.text = "\(distanceStr) \("km".localized)"
             cell.lblTime.text = "\(String(format: "%.2f", (distanceInKM * 1.1))) \("minutes".localized)"
             if (response.locationData != nil) {
+                if (item.status == Constants.ORDER_ON_THE_WAY) {
                 self.drawLocationLine(driverLocation: response.locationData!, order: item)
+                }
             }
         }
         
@@ -373,7 +400,7 @@ class HomeMapVC: BaseViewController,LabasLocationManagerDelegate, UICollectionVi
     
     
     func getShopsList(radius : Float, rating : Double, types : Int) {
-        ApiService.getShops(latitude: 31.943981, longitude: 35.891211, radius: radius, rating : rating, types : types) { (response) in
+        ApiService.getShops(latitude: self.latitude ?? 0.0, longitude: self.longitude ?? 0.0, radius: radius, rating : rating, types : types) { (response) in
             self.shops.removeAll()
             self.shops.append(contentsOf: response.dataShops ?? [DataShop]())
             self.addShopsMarkers()
@@ -434,9 +461,14 @@ class HomeMapVC: BaseViewController,LabasLocationManagerDelegate, UICollectionVi
             marker.snippet = "\(center.phoneNumber ?? "")"
             marker.icon = UIImage(named: "ic_map_shop")
             marker.map = gMap
+            self.shopMarkers.append(marker)
         }
+        let marker = GMSMarker()
+        marker.position = CLLocationCoordinate2D(latitude: self.latitude ?? 0.0, longitude: self.longitude ?? 0.0)
+        marker.title =  "my_location"
+        marker.snippet = ""
+        marker.map = gMap
     }
-    
     
     func labasLocationManager(didUpdateLocation location: CLLocation) {
         if (self.latitude ?? 0.0 == 0.0 || self.longitude ?? 0.0 == 0.0) {
@@ -477,6 +509,7 @@ class HomeMapVC: BaseViewController,LabasLocationManagerDelegate, UICollectionVi
         marker.map = gMap
         
         self.mapView.addSubview(gMap!)
+        gMap?.bindFrameToSuperviewBounds()
         self.view.layoutSubviews()
         
         self.getShopsList(radius: Float(Constants.DEFAULT_RADIUS), rating: 0, types : 0)
@@ -485,6 +518,7 @@ class HomeMapVC: BaseViewController,LabasLocationManagerDelegate, UICollectionVi
     
     func loadTracks() {
         ApiService.getOnGoingDeliveries(Authorization: self.loadUser().data?.accessToken ?? "") { (response) in
+            self.items.removeAll()
             for item in response.data ?? [DatumDel]() {
                 if (item.status! == Constants.ORDER_ON_THE_WAY || item.status! == Constants.ORDER_PROCESSING) {
                // if (item.status! == Constants.ORDER_ON_THE_WAY) {
@@ -507,6 +541,25 @@ class HomeMapVC: BaseViewController,LabasLocationManagerDelegate, UICollectionVi
     
     @IBAction func searchAction(_ sender: Any) {
         
+    }
+    
+    @IBAction func openShopsFilter(_ sender: Any) {
+        if let vc = UIStoryboard(name: "Main", bundle: nil).instantiateViewController(withIdentifier: "FilterShopsVC") as? FilterShopsVC
+        {
+            vc.delegate = self
+            vc.latitude = self.latitude
+            vc.longitude = self.longitude
+            self.navigationController?.pushViewController(vc, animated: true)
+        }
+    }
+    
+    func onClick(shop: DataShop) {
+        let camera = GMSCameraPosition.camera(withLatitude: shop.latitude ?? 0.0, longitude: shop.longitude ?? 0.0, zoom: 15.0)
+        self.gMap?.animate(to: camera)
+        // marker.icon = UIImage(named: "ic_map_shop_selected")
+        ApiService.getShopDetails(id: shop.id ?? 0) { (response) in
+            self.showShopDetailsSheet(shop: response.shopData!)
+        }
     }
     
     @IBAction func filterAction(_ sender: Any) {
@@ -540,12 +593,14 @@ class HomeMapVC: BaseViewController,LabasLocationManagerDelegate, UICollectionVi
     }
     
     @IBAction func onTheWayAction(_ sender: Any) {
-        if let vc = UIStoryboard(name: "Main", bundle: nil).instantiateViewController(withIdentifier: "DeliveryStep1") as? DeliveryStep1
-        {
-            vc.latitude = self.latitude
-            vc.longitude = self.longitude
-            self.navigationController?.pushViewController(vc, animated: true)
-        }
+      //  if (self.isLoggedIn()) {
+            if let vc = UIStoryboard(name: "Main", bundle: nil).instantiateViewController(withIdentifier: "DeliveryStep1") as? DeliveryStep1
+            {
+                vc.latitude = self.latitude
+                vc.longitude = self.longitude
+                self.navigationController?.pushViewController(vc, animated: true)
+            }
+      //  }
     }
     @IBAction func servicesAction(_ sender: Any) {
         
@@ -638,9 +693,18 @@ extension HomeMapVC : GMSMapViewDelegate {
         if (id.contains(find: "track")) {
             return true
         }
+        if (id.contains(find: "my_location")) {
+            return true
+        }
         if (id == "0") {
             return true
         }
+        for mark in self.shopMarkers {
+            mark.icon = UIImage(named: "ic_map_shop")
+        }
+        marker.icon = UIImage(named: "ic_map_shop_selected")
+        let camera = GMSCameraPosition.camera(withLatitude: marker.position.latitude, longitude: marker.position.longitude, zoom: 15.0)
+        self.gMap?.animate(to: camera)
        // marker.icon = UIImage(named: "ic_map_shop_selected")
         ApiService.getShopDetails(id: Int(id)!) { (response) in
           self.showShopDetailsSheet(shop: response.shopData!)

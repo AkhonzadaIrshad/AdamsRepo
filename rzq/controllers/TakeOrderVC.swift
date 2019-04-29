@@ -12,6 +12,7 @@ import GooglePlaces
 import MapKit
 import CoreLocation
 import Sheeeeeeeeet
+import MultilineTextField
 
 class TakeOrderVC: BaseVC {
     
@@ -25,11 +26,14 @@ class TakeOrderVC: BaseVC {
     
     @IBOutlet weak var lblDropoffLocation: MyUILabel!
     
-    @IBOutlet weak var lblOrderDescription: MyUILabel!
+    @IBOutlet weak var lblOrderDescription: MultilineTextField!
     
     @IBOutlet weak var btnTime: MyUIButton!
     
     @IBOutlet weak var edtCost: MyUITextField!
+    
+    @IBOutlet weak var ivHandle: UIImageView!
+    
     
     var selectedTime : Int?
     
@@ -55,6 +59,9 @@ class TakeOrderVC: BaseVC {
     
     override func viewDidLoad() {
         super.viewDidLoad()
+        if (self.isArabic()) {
+            self.ivHandle.image = UIImage(named: "ic_back_arabic")
+        }
         gMap = GMSMapView()
         self.setUpGoogleMap()
         
@@ -66,6 +73,11 @@ class TakeOrderVC: BaseVC {
         
         self.lblOrderDescription.text = self.desc ?? ""
         // Do any additional setup after loading the view.
+      
+        lblOrderDescription.placeholder = ""
+        lblOrderDescription.placeholderColor = UIColor.black
+        lblOrderDescription.isPlaceholderScrollEnabled = true
+        
     }
     
     func setUpGoogleMap() {
@@ -79,6 +91,7 @@ class TakeOrderVC: BaseVC {
         marker.map = gMap
         
         self.mapView.addSubview(gMap!)
+        gMap?.bindFrameToSuperviewBounds()
         self.view.layoutSubviews()
         
         self.drawLocationLine()

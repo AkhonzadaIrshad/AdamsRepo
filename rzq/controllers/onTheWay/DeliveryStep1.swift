@@ -23,6 +23,8 @@ class DeliveryStep1: BaseVC,LabasLocationManagerDelegate {
     
     @IBOutlet weak var searchField: SearchTextField!
     
+    @IBOutlet weak var ivHandle: UIImageView!
+    
     var markerLocation: GMSMarker?
     var currentZoom: Float = 0.0
     var gMap : GMSMapView?
@@ -40,9 +42,13 @@ class DeliveryStep1: BaseVC,LabasLocationManagerDelegate {
     
     var shops = [DataShop]()
     var filterShops = [DataShop]()
+    var shopMarkers = [GMSMarker]()
     
     override func viewDidLoad() {
         super.viewDidLoad()
+        if (self.isArabic()) {
+            self.ivHandle.image = UIImage(named: "ic_back_arabic")
+        }
         if (self.orderModel == nil) {
             self.orderModel = OTWOrder()
         }
@@ -60,6 +66,7 @@ class DeliveryStep1: BaseVC,LabasLocationManagerDelegate {
    
         if (self.orderModel?.shop?.id ?? 0 > 0) {
             self.lblPickupLocation.text = self.orderModel?.pickUpAddress ?? ""
+            self.lblPickupLocation.textColor = UIColor.appDarkBlue
           //  self.edtMoreDetails.text = self.orderModel?.pickUpAddress ?? ""
             
             self.pinMarker?.map = nil
@@ -112,6 +119,7 @@ class DeliveryStep1: BaseVC,LabasLocationManagerDelegate {
         marker.map = gMap
         
         self.mapView.addSubview(gMap!)
+        gMap?.bindFrameToSuperviewBounds()
         self.view.layoutSubviews()
         
         self.getShopsList(radius: Float(Constants.DEFAULT_RADIUS), rating: 0)
@@ -221,16 +229,19 @@ class DeliveryStep1: BaseVC,LabasLocationManagerDelegate {
                         }
                         
                         self.lblPickupLocation.text = strAddresMain
+                        self.lblPickupLocation.textColor = UIColor.appDarkBlue
                         self.orderModel?.pickUpAddress = strAddresMain
                         
                     }
                     else {
                         self.lblPickupLocation.text = "Loading".localized
+                        self.lblPickupLocation.textColor = UIColor.appDarkBlue
                         self.orderModel?.pickUpAddress = ""
                     }
                 }
                 else {
                     self.lblPickupLocation.text = "Loading".localized
+                    self.lblPickupLocation.textColor = UIColor.appDarkBlue
                     self.orderModel?.pickUpAddress = ""
                 }
             }
@@ -242,7 +253,7 @@ class DeliveryStep1: BaseVC,LabasLocationManagerDelegate {
     }
     
     func getShopsList(radius : Float, rating : Double) {
-        ApiService.getShops(latitude: 31.943981, longitude: 35.891211, radius: radius, rating : rating, types : 0) { (response) in
+        ApiService.getShops(latitude: self.latitude ?? 0.0, longitude: self.longitude ?? 0.0, radius: radius, rating : rating, types : 0) { (response) in
             self.shops.removeAll()
             self.shops.append(contentsOf: response.dataShops ?? [DataShop]())
             self.addShopsMarkers()
@@ -269,8 +280,9 @@ class DeliveryStep1: BaseVC,LabasLocationManagerDelegate {
                 self.orderModel?.pickUpLatitude = shop.latitude ?? 0.0
                 self.orderModel?.pickUpLongitude = shop.longitude ?? 0.0
                 self.orderModel?.shop = shop
-                self.orderModel?.pickUpAddress = shop.address ?? ""
-                self.lblPickupLocation.text = shop.address ?? ""
+                self.orderModel?.pickUpAddress = shop.name ?? ""
+                self.lblPickupLocation.text = shop.name ?? ""
+                self.lblPickupLocation.textColor = UIColor.appDarkBlue
                 
                 let camera = GMSCameraPosition.camera(withLatitude: self.orderModel?.pickUpLatitude ?? 0.0, longitude: self.orderModel?.pickUpLongitude ?? 0.0, zoom: 15.0)
                 self.gMap?.animate(to: camera)
@@ -279,6 +291,10 @@ class DeliveryStep1: BaseVC,LabasLocationManagerDelegate {
             }
             
         }
+    }
+    @IBAction func clearPickLocation(_ sender: Any) {
+        self.gMap?.clear()
+        self.getShopsList(radius: Float(Constants.DEFAULT_RADIUS), rating: 0)
     }
     
     func addShopsMarkers() {
@@ -290,7 +306,13 @@ class DeliveryStep1: BaseVC,LabasLocationManagerDelegate {
             marker.snippet = "\(center.phoneNumber ?? "")"
             marker.icon = UIImage(named: "ic_map_shop")
             marker.map = gMap
+            self.shopMarkers.append(marker)
         }
+        let marker = GMSMarker()
+        marker.position = CLLocationCoordinate2D(latitude: self.latitude ?? 0.0, longitude: self.longitude ?? 0.0)
+        marker.title =  "my_location"
+        marker.snippet = ""
+        marker.map = gMap
     }
     
     
@@ -304,9 +326,13 @@ extension DeliveryStep1 : GMSMapViewDelegate {
     }
     func mapView(_ mapView: GMSMapView, didTap marker: GMSMarker) -> Bool {
         let id = marker.title ?? "0"
+        if (id.contains(find: "my_location")) {
+            return true
+        }
         if (Int(id) ?? 0 > 0) {
             ApiService.getShopDetails(id: Int(id)!) { (response) in
                 self.pinMarker?.map = nil
+                self.lblPickupLocation.textColor = UIColor.appDarkBlue
                 self.lblPickupLocation.text = response.shopData?.name ?? ""
                 let dataShop = DataShop(id: response.shopData?.id ?? 0, type: response.shopData?.type ?? 0, rate: response.shopData?.rate ?? 0.0, name: response.shopData?.name ?? "", address: response.shopData?.address ?? "", latitude: response.shopData?.latitude ?? 0.0, longitude: response.shopData?.longitude ?? 0.0, phoneNumber: response.shopData?.phoneNumber ?? "", workingHours: response.shopData?.workingHours ?? "", isOpen: response.shopData?.isOpen ?? false, image: response.shopData?.image ?? "")
                 self.orderModel?.shop = dataShop
@@ -314,10 +340,13 @@ extension DeliveryStep1 : GMSMapViewDelegate {
                 self.orderModel?.pickUpLatitude = response.shopData?.latitude ?? 0.0
                 self.orderModel?.pickUpLongitude = response.shopData?.longitude ?? 0.0
                 
+                for mark in self.shopMarkers {
+                    mark.icon = UIImage(named: "ic_map_shop")
+                }
+                marker.icon = UIImage(named: "ic_map_shop_selected")
+                
                 let camera = GMSCameraPosition.camera(withLatitude: self.orderModel?.pickUpLatitude ?? 0.0, longitude: self.orderModel?.pickUpLongitude ?? 0.0, zoom: 15.0)
                 self.gMap?.animate(to: camera)
-                
-                
             }
             return true
         }else {
@@ -333,6 +362,7 @@ extension DeliveryStep1 : GMSMapViewDelegate {
         self.pinMarker?.snippet = ""
         self.pinMarker?.map = gMap
         self.lblPickupLocation.text = "Loading".localized
+        self.lblPickupLocation.textColor = UIColor.appDarkBlue
         self.orderModel?.pickUpAddress = ""
         self.orderModel?.pickUpLatitude = coordinate.latitude
         self.orderModel?.pickUpLongitude = coordinate.longitude

@@ -18,6 +18,7 @@ class OrdersVC: BaseViewController, UITableViewDelegate, UITableViewDataSource {
     @IBOutlet weak var btnAbout: UIButton!
     @IBOutlet weak var containerView: UIView!
     
+    @IBOutlet weak var emptyView: EmptyView!
     
     var pendingItems = [DatumDel]()
     var historyItems = [Datum]()
@@ -43,6 +44,7 @@ class OrdersVC: BaseViewController, UITableViewDelegate, UITableViewDataSource {
             self.tableView.delegate = self
             self.tableView.dataSource = self
             self.tableView.reloadData()
+            self.validateEmptyView()
         }
         
         ApiService.getPreviousDeliveries(Authorization: self.loadUser().data?.accessToken ?? "", pageSize: 100, pageNumber: 1) { (response) in
@@ -51,8 +53,25 @@ class OrdersVC: BaseViewController, UITableViewDelegate, UITableViewDataSource {
             self.tableView.delegate = self
             self.tableView.dataSource = self
             self.tableView.reloadData()
+            self.validateEmptyView()
         }
         
+    }
+    
+    func validateEmptyView() {
+        if (segmentControl.selectedSegmentIndex == 0) {
+            if (self.pendingItems.count > 0) {
+                self.emptyView.isHidden = true
+            }else {
+                self.emptyView.isHidden = false
+            }
+        }else {
+            if (self.historyItems.count > 0) {
+                self.emptyView.isHidden = true
+            }else {
+                self.emptyView.isHidden = false
+            }
+        }
     }
     
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
@@ -91,6 +110,14 @@ class OrdersVC: BaseViewController, UITableViewDelegate, UITableViewDataSource {
         if (self.segmentControl.selectedSegmentIndex == 0) {
             let item = self.pendingItems[indexPath.row]
             let cell : OrderCell = tableView.dequeueReusableCell(withIdentifier: "ordercell", for: indexPath) as! OrderCell
+            
+            if (item.image?.count ?? 0 > 0) {
+                let url = URL(string: "\(Constants.IMAGE_URL)\(item.image ?? "")")
+                cell.ivLogo.kf.setImage(with: url)
+            }else {
+                cell.ivLogo.image = UIImage(named: "splash_logo")
+            }
+           
             cell.lblTitle.text = item.title ?? ""
             cell.lblOrderNumber.text = "\("order_number".localized) \(Constants.ORDER_NUMBER_PREFIX)\(item.id ?? 0)"
             cell.lblDeliveryDate.text = "\("delivery_date".localized) \(item.createdDate ?? "")"
@@ -132,6 +159,14 @@ class OrdersVC: BaseViewController, UITableViewDelegate, UITableViewDataSource {
         }else {
             let item = self.historyItems[indexPath.row]
             let cell : OrderCell = tableView.dequeueReusableCell(withIdentifier: "ordercell", for: indexPath) as! OrderCell
+            
+            if (item.image?.count ?? 0 > 0) {
+                let url = URL(string: "\(Constants.IMAGE_URL)\(item.image ?? "")")
+                cell.ivLogo.kf.setImage(with: url)
+            }else {
+                cell.ivLogo.image = UIImage(named: "splash_logo")
+            }
+            
             cell.lblTitle.text = item.title ?? ""
             cell.lblOrderNumber.text = "\("order_number".localized) \(Constants.ORDER_NUMBER_PREFIX)\(item.id ?? 0)"
             cell.lblDeliveryDate.text = "\("delivery_date".localized) \(item.createdDate ?? "")"
@@ -168,6 +203,7 @@ class OrdersVC: BaseViewController, UITableViewDelegate, UITableViewDataSource {
     
     @IBAction func segmentAction(_ sender: Any) {
         self.tableView.reloadData()
+        self.validateEmptyView()
     }
     
 }

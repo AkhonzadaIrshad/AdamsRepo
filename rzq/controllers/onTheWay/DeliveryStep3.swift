@@ -13,6 +13,7 @@ import MapKit
 import CoreLocation
 import Sheeeeeeeeet
 import SwiftyGif
+import MultilineTextField
 
 class DeliveryStep3: BaseVC, UINavigationControllerDelegate, ImagePickerDelegate {
 
@@ -20,13 +21,17 @@ class DeliveryStep3: BaseVC, UINavigationControllerDelegate, ImagePickerDelegate
     @IBOutlet weak var lblDropoffLocation: MyUILabel!
     @IBOutlet weak var mapView: UIView!
     @IBOutlet weak var edtCouponNumber: MyUITextField!
-    @IBOutlet weak var edtOrderDetails: MyUITextField!
     @IBOutlet weak var lblImages: MyUILabel!
     @IBOutlet weak var viewImages: UIView!
     @IBOutlet weak var viewRecording: UIView!
     @IBOutlet weak var edtCost: MyUITextField!
     @IBOutlet weak var btnTime: MyUIButton!
     @IBOutlet weak var bgRecord: UIImageView!
+    
+    @IBOutlet weak var ivHandle: UIImageView!
+    
+    @IBOutlet weak var edtOrderDetails: MultilineTextField!
+    
     
     @IBOutlet weak var gif: UIImageView!
     var markerLocation: GMSMarker?
@@ -55,6 +60,13 @@ class DeliveryStep3: BaseVC, UINavigationControllerDelegate, ImagePickerDelegate
     
     override func viewDidLoad() {
         super.viewDidLoad()
+        if (self.isArabic()) {
+            self.ivHandle.image = UIImage(named: "ic_back_arabic")
+        }
+        // below are properties that can be optionally customized
+        edtOrderDetails.placeholder = "order_details".localized
+        edtOrderDetails.placeholderColor = UIColor.lightGray
+        edtOrderDetails.isPlaceholderScrollEnabled = true
         
         let gif = UIImage(gifName: "recording.gif")
         self.gif.setGifImage(gif)
@@ -183,6 +195,7 @@ class DeliveryStep3: BaseVC, UINavigationControllerDelegate, ImagePickerDelegate
         marker.map = gMap
         
         self.mapView.addSubview(gMap!)
+        gMap?.bindFrameToSuperviewBounds()
         self.view.layoutSubviews()
     }
     
@@ -226,7 +239,7 @@ class DeliveryStep3: BaseVC, UINavigationControllerDelegate, ImagePickerDelegate
             self.btnRecord.setImage(UIImage(named: "ic_microphone"), for: .normal)
             self.gif.isHidden = true
             recorder.stop()
-            if (recorder.time > 2) {
+            if (recorder.time > 1) {
                 self.viewRecording.isHidden = false
             }else {
                 self.viewRecording.isHidden = true
@@ -261,7 +274,7 @@ class DeliveryStep3: BaseVC, UINavigationControllerDelegate, ImagePickerDelegate
         self.btnRecord.setImage(UIImage(named: "ic_microphone"), for: .normal)
         self.gif.isHidden = true
         recorder.stop()
-        if (recorder.time > 2) {
+        if (recorder.time > 1) {
             self.viewRecording.isHidden = false
         }else {
             self.viewRecording.isHidden = true

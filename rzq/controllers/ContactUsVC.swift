@@ -38,6 +38,8 @@ class ContactUsVC: BaseViewController {
                 self.hideLoading()
                 if (response.errorCode == 0) {
                     self.showBanner(title: "alert".localized, message: "message_sent_successfully".localized, style: UIColor.SUCCESS)
+                    self.edtSubject.text = ""
+                    self.edtMessage.text = ""
 //                    DispatchQueue.main.asyncAfter(deadline: .now() + 2, execute: {
 //                        self.navigationController?.popViewController(animated: true)
 //                    })

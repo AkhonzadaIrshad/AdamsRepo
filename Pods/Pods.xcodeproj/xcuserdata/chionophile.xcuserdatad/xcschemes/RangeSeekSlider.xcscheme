@@ -14,7 +14,7 @@
             buildForArchiving = "YES">
             <BuildableReference
                BuildableIdentifier = "primary"
-               BlueprintIdentifier = "B6D6EE8BA1B572E6959E8E12E982E32F"
+               BlueprintIdentifier = "6FA647EF19CD15E93310F96CCEE4F4BF"
                BlueprintName = "RangeSeekSlider"
                ReferencedContainer = "container:Pods.xcodeproj"
                BuildableName = "RangeSeekSlider.framework">

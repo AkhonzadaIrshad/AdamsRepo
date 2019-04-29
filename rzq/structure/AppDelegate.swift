@@ -75,9 +75,11 @@ class AppDelegate: UIResponder, UIApplicationDelegate, MOLHResetable,MessagingDe
             // your logic here!
             let type = userInfo["Type"] as? String ?? "0"
             let chatId = userInfo["Id"] as? String ?? "0"
+            let deliveryId = userInfo["DeliveryId"] as? String ?? "0"
             
             App.shared.notificationType = type
             App.shared.notificationValue = chatId
+            App.shared.notificationDeliveryId = deliveryId
             
         }
         
@@ -126,6 +128,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate, MOLHResetable,MessagingDe
         var body = ""
         var type = ""
         var itemId = ""
+        var deliveryId = ""
         
         if MOLHLanguage.isRTLLanguage() {
             title = remoteMessage.appData[AnyHashable("ArabicTitle")] as? String ?? ""
@@ -136,9 +139,11 @@ class AppDelegate: UIResponder, UIApplicationDelegate, MOLHResetable,MessagingDe
         }
         type = remoteMessage.appData[AnyHashable("Type")] as? String ?? "0"
         itemId = remoteMessage.appData[AnyHashable("Id")] as? String ?? "0"
+        deliveryId = remoteMessage.appData[AnyHashable("DeliveryId")] as? String ?? "0"
         
         App.shared.notificationType = type
         App.shared.notificationValue = itemId
+        App.shared.notificationDeliveryId = deliveryId
         
         scheduleNotifications(title: title , message: body, type : type, itemId: itemId)
         
@@ -151,9 +156,10 @@ class AppDelegate: UIResponder, UIApplicationDelegate, MOLHResetable,MessagingDe
             print("user tapped the notification bar when the app is in foreground")
             let type = response.notification.request.content.userInfo["Type"] as? String ?? "0"
             let itemId = response.notification.request.content.userInfo["Id"] as? String ?? "0"
-            
+            let deliveryId = response.notification.request.content.userInfo["DeliveryId"] as? String ?? "0"
             App.shared.notificationType = type
             App.shared.notificationValue = itemId
+            App.shared.notificationDeliveryId = deliveryId
             
             
         }
@@ -163,9 +169,11 @@ class AppDelegate: UIResponder, UIApplicationDelegate, MOLHResetable,MessagingDe
             print("user tapped the notification bar when the app is in background")
             let type = response.notification.request.content.userInfo["Type"] as? String ?? "0"
             let itemId = response.notification.request.content.userInfo["Id"] as? String ?? "0"
+            let deliveryId = response.notification.request.content.userInfo["DeliveryId"] as? String ?? "0"
             
             App.shared.notificationType = type
             App.shared.notificationValue = itemId
+            App.shared.notificationDeliveryId = deliveryId
             
             
         }
@@ -201,6 +209,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate, MOLHResetable,MessagingDe
         var body = ""
         var type = ""
         var ItemId = ""
+        var deliveryId = ""
         
         if MOLHLanguage.isRTLLanguage() {
             title = userInfo["ArabicTitle"] as? String ?? ""
@@ -211,10 +220,12 @@ class AppDelegate: UIResponder, UIApplicationDelegate, MOLHResetable,MessagingDe
         }
         type = userInfo["Type"] as? String ?? "0"
         ItemId = userInfo["Id"] as? String ?? "0"
+        deliveryId = userInfo["DeliveryId"] as? String ?? "0"
         
         
         App.shared.notificationType = type
         App.shared.notificationValue = ItemId
+        App.shared.notificationDeliveryId = deliveryId
         
         scheduleNotifications(title: title , message: body, type : type, itemId: ItemId)
         if let messageID = userInfo[gcmMessageIDKey] {
@@ -249,6 +260,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate, MOLHResetable,MessagingDe
         var body = ""
         var type = ""
         var itemId = ""
+        var deliveryId = ""
         
         let whole : [AnyHashable: Any] = userInfo["aps"] as! [AnyHashable : Any]
         let data : [AnyHashable: Any] = whole["alert"] as! [AnyHashable : Any]
@@ -269,10 +281,12 @@ class AppDelegate: UIResponder, UIApplicationDelegate, MOLHResetable,MessagingDe
         
         type = data["Type"] as? String ?? "0"
         itemId = data["Id"] as? String ?? "0"
+        deliveryId = data["DeliveryId"] as? String ?? "0"
         
         
         App.shared.notificationType = type
         App.shared.notificationValue = itemId
+        App.shared.notificationDeliveryId = deliveryId
         
         let state: UIApplication.State = UIApplication.shared.applicationState // or use  let state =  UIApplication.sharedApplication().applicationState
         

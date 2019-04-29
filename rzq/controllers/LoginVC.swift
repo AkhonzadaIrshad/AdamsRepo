@@ -16,6 +16,8 @@ class LoginVC: BaseVC, CountryPickerViewDataSource, CountryPickerViewDelegate {
     
     @IBOutlet weak var edtMobileNumber: SkyFloatingLabelTextField!
     
+    @IBOutlet weak var ivHandle: UIImageView!
+    
     @IBOutlet weak var countryPicker: CountryPickerView!
     
     override func viewDidLoad() {
@@ -30,6 +32,9 @@ class LoginVC: BaseVC, CountryPickerViewDataSource, CountryPickerViewDelegate {
         self.countryPicker.showCountryCodeInView = false
         self.countryPicker.setCountryByCode("KW")
         // Do any additional setup after loading the view.
+        if (self.isArabic()) {
+            self.ivHandle.image = UIImage(named: "bg_circular")
+        }
     }
     
     func countryPickerView(_ countryPickerView: CountryPickerView, didSelectCountry country: Country) {

@@ -25,6 +25,7 @@ class AcceptBidDialog: BaseVC {
 
     var deliveryId  : Int?
     var bidId : Int?
+    var notificationId : Int?
     var item : DatumNot?
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -64,13 +65,19 @@ class AcceptBidDialog: BaseVC {
         ApiService.declineBid(Authorization: self.loadUser().data?.accessToken ?? "", bidId: self.bidId ?? 0) { (response) in
             self.hideLoading()
             if (response.errorCode == 0) {
-                self.showBanner(title: "alert".localized, message: "bid_declined_successfully".localized, style: UIColor.SUCCESS)
-                DispatchQueue.main.asyncAfter(deadline: .now() + 2, execute: {
-                    self.dismiss(animated: true, completion: nil)
-                })
+                self.deleteNotification()
             }else {
                 self.showBanner(title: "alert".localized, message: response.errorMessage ?? "", style: UIColor.INFO)
             }
+        }
+    }
+    
+    func deleteNotification() {
+        ApiService.deleteNotification(Authorization: self.loadUser().data?.accessToken ?? "", id: self.notificationId ?? 0) { (response) in
+            self.showBanner(title: "alert".localized, message: "bid_declined_successfully".localized, style: UIColor.SUCCESS)
+            DispatchQueue.main.asyncAfter(deadline: .now() + 2, execute: {
+                self.dismiss(animated: true, completion: nil)
+            })
         }
     }
     

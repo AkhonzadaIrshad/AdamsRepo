@@ -12,6 +12,8 @@ class RegisteredShopsVC: BaseViewController, UITableViewDelegate, UITableViewDat
     
     @IBOutlet weak var tableView: UITableView!
     
+    @IBOutlet weak var emptyView: EmptyView!
+    
     @IBOutlet weak var btnMenu: UIButton!
     var items = [SubsDatum]()
     
@@ -29,11 +31,17 @@ class RegisteredShopsVC: BaseViewController, UITableViewDelegate, UITableViewDat
     
     func loadShops() {
         ApiService.getMySubscriptions(Authorization: self.loadUser().data?.accessToken ?? "") { (response) in
-            self.items.removeAll()
-            self.items.append(contentsOf: response.subsData ?? [SubsDatum]())
-            self.tableView.delegate = self
-            self.tableView.dataSource = self
-            self.tableView.reloadData()
+            if (response.subsData?.count ?? 0 > 0) {
+                self.emptyView.isHidden = true
+                self.items.removeAll()
+                self.items.append(contentsOf: response.subsData ?? [SubsDatum]())
+                self.tableView.delegate = self
+                self.tableView.dataSource = self
+                self.tableView.reloadData()
+            }else {
+                self.emptyView.isHidden = false
+            }
+            
         }
     }
     

@@ -38,6 +38,7 @@ class DataClassDelObj: Codable {
     let canCancel, canChat: Bool?
     let statusString: String?
     let images: [String]?
+    let voiceFile : String?
     let createdDate: String?
     
     enum CodingKeys: String, CodingKey {
@@ -58,9 +59,10 @@ class DataClassDelObj: Codable {
         case images = "Images"
         case createdDate = "CreatedDate"
         case chatId = "ChatId"
+        case voiceFile = "VoiceFile"
     }
     
-    init(id: Int?, chatId : Int?, title: String?, fromAddress: String?, fromLatitude: Double?, fromLongitude: Double?, toAddress: String?, toLatitude: Double?, toLongitude: Double?, time: Int?, cost: Double?, status: Int?, canCancel: Bool?, canChat: Bool?, statusString: String?, images: [String]?, createdDate: String?) {
+    init(id: Int?, chatId : Int?, title: String?, fromAddress: String?, fromLatitude: Double?, fromLongitude: Double?, toAddress: String?, toLatitude: Double?, toLongitude: Double?, time: Int?, cost: Double?, status: Int?, canCancel: Bool?, canChat: Bool?, statusString: String?, images: [String]?,voiceFile : String?, createdDate: String?) {
         self.id = id
         self.chatId = chatId
         self.title = title
@@ -71,6 +73,7 @@ class DataClassDelObj: Codable {
         self.toLatitude = toLatitude
         self.toLongitude = toLongitude
         self.time = time
+        self.voiceFile = voiceFile
         self.cost = cost
         self.status = status
         self.canCancel = canCancel

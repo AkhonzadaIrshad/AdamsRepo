@@ -8,12 +8,17 @@
 
 import UIKit
 
-class Intro3: UIViewController {
+class Intro3: BaseVC {
 
     var delegate : IntroDelegate?
     
+    @IBOutlet weak var ivHandle: UIImageView!
+    
     override func viewDidLoad() {
         super.viewDidLoad()
+        if (self.isArabic()) {
+            self.ivHandle.image = UIImage(named: "bg_circular")
+        }
     }
     
     @IBAction func doneAction(_ sender: Any) {

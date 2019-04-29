@@ -113,3 +113,15 @@
 "thank_you_for_rating" = "Thank you for rating.";
 "shop_on_rzq" = "Shop on Rzq";
 "thank_you_for_rating" = "Thank you for rating.";
+"confirm_logout" = "Are you sure you want to logout?";
+"logout" = "Logout";
+
+"monday" = "Monday";
+"tuesday" = "Tuesday";
+"wednesday" = "Wednesday";
+"thursday" = "Thursday";
+"friday" = "Friday";
+"saturday" = "Saturday";
+"sunday" = "Sunday";
+"order_details" = "Write your order here";
+"feedback_comments" = "Feedback/ Comments";

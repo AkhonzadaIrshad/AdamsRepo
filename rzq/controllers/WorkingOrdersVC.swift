@@ -19,6 +19,8 @@ class WorkingOrdersVC: BaseViewController, UITableViewDelegate, UITableViewDataS
     
     @IBOutlet weak var containerView: UIView!
     
+    @IBOutlet weak var emptyView: EmptyView!
+    
     var pendingItems = [DatumDriverDel]()
     var historyItems = [DatumDelObj]()
     
@@ -34,22 +36,23 @@ class WorkingOrdersVC: BaseViewController, UITableViewDelegate, UITableViewDataS
         
     }
     
-    func showEmptyView(show : Bool) {
-        self.containerView.subviews.forEach({ $0.removeFromSuperview() })
-        if (show) {
-            self.tableView.isHidden = true
-            let emptyView: EmptyView = UIView.fromNib()
-            emptyView.lblTitle.text = "no_orders".localized
-            emptyView.lblDescription.text = "no_orders_desc".localized
-            emptyView.ivEmpty.image = UIImage(named: "empty_orders")
-            //  emptyView.frame = self.containerView.frame
-            self.containerView.addSubview(emptyView)
-            emptyView.bindFrameToSuperviewBounds()
-        } else {
-            self.tableView.isHidden = false
+    func validateEmptyView() {
+        if (segmentControl.selectedSegmentIndex == 0) {
+            if (self.pendingItems.count > 0) {
+                self.emptyView.isHidden = true
+            }else {
+                self.emptyView.isHidden = false
+            }
+        }else {
+            if (self.historyItems.count > 0) {
+                self.emptyView.isHidden = true
+            }else {
+                self.emptyView.isHidden = false
+            }
         }
     }
     
+   
     override func viewDidAppear(_ animated: Bool) {
         super.viewDidAppear(animated)
         ApiService.getDriverOnGoingDeliveries(Authorization: self.loadUser().data?.accessToken ?? "") { (response) in
@@ -58,6 +61,7 @@ class WorkingOrdersVC: BaseViewController, UITableViewDelegate, UITableViewDataS
             self.tableView.delegate = self
             self.tableView.dataSource = self
             self.tableView.reloadData()
+            self.validateEmptyView()
         }
         ApiService.getDriverPreviousDeliveries(Authorization: self.loadUser().data?.accessToken ?? "") { (response) in
             self.historyItems.removeAll()
@@ -65,6 +69,7 @@ class WorkingOrdersVC: BaseViewController, UITableViewDelegate, UITableViewDataS
             self.tableView.delegate = self
             self.tableView.dataSource = self
             self.tableView.reloadData()
+            self.validateEmptyView()
         }
         
     }
@@ -105,6 +110,14 @@ class WorkingOrdersVC: BaseViewController, UITableViewDelegate, UITableViewDataS
         if (self.segmentControl.selectedSegmentIndex == 0) {
             let item = self.pendingItems[indexPath.row]
             let cell : OrderCell = tableView.dequeueReusableCell(withIdentifier: "ordercell", for: indexPath) as! OrderCell
+            
+            if (item.image?.count ?? 0 > 0) {
+                let url = URL(string: "\(Constants.IMAGE_URL)\(item.image ?? "")")
+                cell.ivLogo.kf.setImage(with: url)
+            }else {
+                cell.ivLogo.image = UIImage(named: "splash_logo")
+            }
+            
             cell.lblTitle.text = item.title ?? ""
             cell.lblOrderNumber.text = "\("order_number".localized) \(Constants.ORDER_NUMBER_PREFIX)\(item.id ?? 0)"
             cell.lblDeliveryDate.text = "\("delivery_date".localized) \(item.createdDate ?? "")"
@@ -147,6 +160,14 @@ class WorkingOrdersVC: BaseViewController, UITableViewDelegate, UITableViewDataS
         }else {
             let item = self.historyItems[indexPath.row]
             let cell : OrderCell = tableView.dequeueReusableCell(withIdentifier: "ordercell", for: indexPath) as! OrderCell
+            
+            if (item.image?.count ?? 0 > 0) {
+                let url = URL(string: "\(Constants.IMAGE_URL)\(item.image ?? "")")
+                cell.ivLogo.kf.setImage(with: url)
+            }else {
+                cell.ivLogo.image = UIImage(named: "splash_logo")
+            }
+            
             cell.lblTitle.text = item.title ?? ""
             cell.lblOrderNumber.text = "\("order_number".localized) \(Constants.ORDER_NUMBER_PREFIX)\(item.id ?? 0)"
             cell.lblDeliveryDate.text = "\("delivery_date".localized) \(item.createdDate ?? "")"
@@ -182,6 +203,7 @@ class WorkingOrdersVC: BaseViewController, UITableViewDelegate, UITableViewDataS
     }
     @IBAction func segmentAction(_ sender: Any) {
         self.tableView.reloadData()
+        self.validateEmptyView()
     }
 
 

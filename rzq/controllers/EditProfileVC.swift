@@ -18,6 +18,9 @@ class EditProfileVC: BaseVC,UINavigationControllerDelegate {
     @IBOutlet weak var edtEmail: SkyFloatingLabelTextField!
     @IBOutlet weak var edtUserName: SkyFloatingLabelTextField!
     
+    @IBOutlet weak var ivHandle: UIImageView!
+    
+    
     @IBOutlet weak var edtMobileNumber: SkyFloatingLabelTextField!
     
     
@@ -42,7 +45,9 @@ class EditProfileVC: BaseVC,UINavigationControllerDelegate {
     
     override func viewDidLoad() {
         super.viewDidLoad()
-
+        if (self.isArabic()) {
+            self.ivHandle.image = UIImage(named: "ic_back_arabic")
+        }
         self.chkFemale.checkmarkStyle = .tick
         self.chkFemale.checkmarkColor = UIColor.appDarkBlue
         self.chkFemale.checkedBorderColor = UIColor.appDarkBlue

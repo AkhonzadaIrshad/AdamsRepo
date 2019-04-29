@@ -77,6 +77,9 @@ PODS:
     - GoogleUtilities/Logger
   - GoogleUtilities/UserDefaults (5.3.7):
     - GoogleUtilities/Logger
+  - ImageSlideshow (1.7.0):
+    - ImageSlideshow/Core (= 1.7.0)
+  - ImageSlideshow/Core (1.7.0)
   - IQKeyboardManagerSwift (6.2.0)
   - JJFloatingActionButton (1.2.0)
   - Kingfisher (5.1.0)
@@ -100,6 +103,7 @@ PODS:
     - MaterialComponents/private/Math
     - MaterialComponents/ShadowLayer
   - MOLH (0.8)
+  - MultilineTextField (0.2.3)
   - nanopb (0.3.901):
     - nanopb/decode (= 0.3.901)
     - nanopb/encode (= 0.3.901)
@@ -140,12 +144,14 @@ DEPENDENCIES:
   - FittedSheets
   - GoogleMaps
   - GooglePlaces
+  - ImageSlideshow (~> 1.6)
   - IQKeyboardManagerSwift
   - JJFloatingActionButton
   - Kingfisher (~> 5.0)
   - MarqueeLabel/Swift
   - MaterialComponents/BottomSheet
   - MOLH
+  - MultilineTextField
   - RangeSeekSlider
   - ReadMoreTextView
   - RealmSwift
@@ -184,12 +190,14 @@ SPEC REPOS:
     - GoogleMaps
     - GooglePlaces
     - GoogleUtilities
+    - ImageSlideshow
     - IQKeyboardManagerSwift
     - JJFloatingActionButton
     - Kingfisher
     - MarqueeLabel
     - MaterialComponents
     - MOLH
+    - MultilineTextField
     - nanopb
     - Protobuf
     - RangeSeekSlider
@@ -230,12 +238,14 @@ SPEC CHECKSUMS:
   GoogleMaps: 941cd655e009b4d8e42df19a3d749bc3fccec973
   GooglePlaces: c086e0055dc5f0177d7c9d65fc77a1734f9a4825
   GoogleUtilities: 111a012f4c3a29c9e7c954c082fafd6ee3c999c0
+  ImageSlideshow: f8eec5e37a980f60923b585ff23b0e140fd24018
   IQKeyboardManagerSwift: b07ccf9d8cafe993dcd6cb794eb4ba34611a0c4e
   JJFloatingActionButton: 8d3fc4b4c389c6984583cc371fd89deb819fa521
   Kingfisher: fcec238063d17404fca89bf0a850583211c4cbf6
   MarqueeLabel: 440a502b91a9179bd98f9fff00ba1150650a1c0e
   MaterialComponents: 1aef341d47fbaed37ddb5163a01af94cb6da8506
   MOLH: b9766efe89be975ce82a8d5642f681da23c876fc
+  MultilineTextField: 10965d9c3e05a182181bd7971eb009c7607001ae
   nanopb: 2901f78ea1b7b4015c860c2fdd1ea2fee1a18d48
   Protobuf: 1eb9700044745f00181c136ef21b8ff3ad5a0fd5
   RangeSeekSlider: 0386c5a9aa5ebcb2fa5238e8a627280cf46c7c0a
@@ -253,6 +263,6 @@ SPEC CHECKSUMS:
   SwiftyJSON: c4bcba26dd9ec7a027fc8eade48e2c911f229e96
   ZHChat: d554719971be77fb8346a51e3fd8043ff18e1292
 
-PODFILE CHECKSUM: 383be590fd2908de2afd11898db672a9e5911214
+PODFILE CHECKSUM: e8d65a65c069f30f3f8a495dce03c2d6e2aa725c
 
 COCOAPODS: 1.5.3

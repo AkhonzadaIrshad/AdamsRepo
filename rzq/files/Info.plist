@@ -17,18 +17,18 @@
 	<key>CFBundlePackageType</key>
 	<string>APPL</string>
 	<key>CFBundleShortVersionString</key>
-	<string>1.0</string>
-    <key>CFBundleURLTypes</key>
-    <array>
-        <dict>
-            <key>CFBundleURLSchemes</key>
-            <array>
-                <string>com.rzqapp.link</string>
-            </array>
-        </dict>
-    </array>
+	<string>1.2</string>
+	<key>CFBundleURLTypes</key>
+	<array>
+		<dict>
+			<key>CFBundleURLSchemes</key>
+			<array>
+				<string>com.rzqapp.link</string>
+			</array>
+		</dict>
+	</array>
 	<key>CFBundleVersion</key>
-	<string>1</string>
+	<string>3</string>
 	<key>LSApplicationQueriesSchemes</key>
 	<array>
 		<string>tel</string>
@@ -92,13 +92,12 @@
 		<string>UIInterfaceOrientationLandscapeLeft</string>
 		<string>UIInterfaceOrientationLandscapeRight</string>
 	</array>
-    <key>branch_key</key>
-    <dict>
-        <key>live</key>
-        <string>key_live_bjSAlghqpP3uu9tvkFqKXpikDCfw07H5</string>
-        <key>test</key>
-        <string>key_test_hlxrWC5Zx16DkYmWu4AHiimdqugRYMr</string>
-    </dict>
+	<key>branch_key</key>
+	<dict>
+		<key>live</key>
+		<string>key_live_bjSAlghqpP3uu9tvkFqKXpikDCfw07H5</string>
+		<key>test</key>
+		<string>key_test_hlxrWC5Zx16DkYmWu4AHiimdqugRYMr</string>
+	</dict>
 </dict>
-
 </plist>

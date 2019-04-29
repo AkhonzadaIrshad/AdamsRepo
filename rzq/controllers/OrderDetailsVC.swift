@@ -11,8 +11,9 @@ import GoogleMaps
 import GooglePlaces
 import MapKit
 import CoreLocation
+import AVFoundation
 
-class OrderDetailsVC: BaseVC, UICollectionViewDelegate, UICollectionViewDataSource, UICollectionViewDelegateFlowLayout {
+class OrderDetailsVC: BaseVC, UICollectionViewDelegate, UICollectionViewDataSource, UICollectionViewDelegateFlowLayout, AVAudioPlayerDelegate {
     
     @IBOutlet weak var mapView: UIView!
     
@@ -36,6 +37,15 @@ class OrderDetailsVC: BaseVC, UICollectionViewDelegate, UICollectionViewDataSour
     @IBOutlet weak var viewChat: UIView!
     @IBOutlet weak var btnChat: MyUIButton!
     
+    @IBOutlet weak var audioViewHeight: NSLayoutConstraint!
+    
+    @IBOutlet weak var imagesViewHeight: NSLayoutConstraint!
+    @IBOutlet weak var btnPlay: UIButton!
+    
+    @IBOutlet weak var ivHandle: UIImageView!
+    
+    var player : AVPlayer?
+    
     var markerLocation: GMSMarker?
     var currentZoom: Float = 0.0
     var gMap : GMSMapView?
@@ -50,9 +60,14 @@ class OrderDetailsVC: BaseVC, UICollectionViewDelegate, UICollectionViewDataSour
     
     var items = [String]()
     
+    @IBOutlet weak var descriptionHright: NSLayoutConstraint!
+    @IBOutlet weak var descriptionView: UIView!
+    
     override func viewDidLoad() {
         super.viewDidLoad()
-        
+        if (self.isArabic()) {
+            self.ivHandle.image = UIImage(named: "ic_back_arabic")
+        }
         self.setUpGoogleMap()
         self.lblStatus.text = self.order?.statusString ?? ""
         self.lblStatus.textColor = self.getStatusColor(status: self.order?.status ?? 0)
@@ -77,9 +92,24 @@ class OrderDetailsVC: BaseVC, UICollectionViewDelegate, UICollectionViewDataSour
         
         self.items.append(contentsOf: self.order?.images ?? [String]())
         
+        
+        var newFrame  = self.descriptionView.frame
+        self.lblDescription.numberOfLines = 0
+        self.lblDescription.sizeToFit()
+        newFrame.size.height = 55 + self.lblDescription.bounds.height
+        self.descriptionHright.constant = newFrame.size.height
+        
         self.imagesCollection.delegate = self
         self.imagesCollection.dataSource = self
         self.imagesCollection.reloadData()
+        
+        
+        if (self.order?.voiceFile?.count ?? 0 == 0) {
+            self.audioViewHeight.constant = 0
+        }
+        if (self.order?.images?.count ?? 0 == 0) {
+            self.imagesViewHeight.constant = 0
+        }
         
     }
     
@@ -127,7 +157,11 @@ class OrderDetailsVC: BaseVC, UICollectionViewDelegate, UICollectionViewDataSour
     }
     
     func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
-        
+        if let vc = UIStoryboard(name: "Main", bundle: nil).instantiateViewController(withIdentifier: "ImageSliderVC") as? ImageSliderVC
+        {
+            vc.orderImages = self.items
+            self.navigationController?.pushViewController(vc, animated: true)
+        }
     }
     
     func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
@@ -151,6 +185,7 @@ class OrderDetailsVC: BaseVC, UICollectionViewDelegate, UICollectionViewDataSour
         marker.map = gMap
         
         self.mapView.addSubview(gMap!)
+        gMap?.bindFrameToSuperviewBounds()
         self.view.layoutSubviews()
         
         self.drawLocationLine()
@@ -246,6 +281,61 @@ class OrderDetailsVC: BaseVC, UICollectionViewDelegate, UICollectionViewDataSour
         let vc = UIStoryboard(name: "Main", bundle: nil).instantiateViewController(withIdentifier: "MapNavigationController") as! UINavigationController
         self.present(vc, animated: true, completion: nil)
     }
+    
+    @IBAction func playRecordAction(_ sender: Any) {
+    // playSound(soundUrl: ("\(Constants.IMAGE_URL)\(self.order?.voiceFile ?? "")"))
+        let url = URL(string: ("\(Constants.IMAGE_URL)\(self.order?.voiceFile ?? "")"))
+        self.downloadFileFromURL(url: url!)
+    }
+    
+    func downloadFileFromURL(url:URL){
+        
+        var downloadTask:URLSessionDownloadTask
+        downloadTask = URLSession.shared.downloadTask(with: url, completionHandler: { (url, response, error) in
+            self.play(url: url!)
+        })
+        
+        downloadTask.resume()
+        
+    }
+    
+    func play(url:URL) {
+        print("playing \(url)")
+        DispatchQueue.main.async {
+            self.btnPlay.setImage(UIImage(named: "ic_order_pause"), for: .normal)
+        }
+        do {
+            let player = try AVAudioPlayer(contentsOf: url)
+            player.delegate = self
+            player.prepareToPlay()
+            player.volume = 1.0
+            player.play()
+        } catch let error as NSError {
+            //self.player = nil
+            print(error.localizedDescription)
+        } catch {
+            print("AVAudioPlayer init failed")
+        }
+        
+    }
+    
+    func audioPlayerDidFinishPlaying(_ player: AVAudioPlayer, successfully flag: Bool) {
+        DispatchQueue.main.async {
+            self.btnPlay.setImage(UIImage(named: "ic_order_play"), for: .normal)
+        }
+    }
+    
+    
+//    func playSound(soundUrl: String) {
+//        let sound = URL(string: soundUrl)!
+//        do {
+//            let audioPlayer = try AVAudioPlayer(contentsOf: sound)
+//            audioPlayer.prepareToPlay()
+//            audioPlayer.play()
+//        }catch let error {
+//            print("Error: \(error.localizedDescription)")
+//        }
+//    }
     
     @IBAction func chatAction(_ sender: Any) {
          DispatchQueue.main.async {
