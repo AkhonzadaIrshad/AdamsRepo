@@ -18,11 +18,23 @@ class LoginVC: BaseVC, CountryPickerViewDataSource, CountryPickerViewDelegate {
     
     @IBOutlet weak var ivHandle: UIImageView!
     
+    @IBOutlet weak var lblTerms: MyUILabel!
+    
     @IBOutlet weak var countryPicker: CountryPickerView!
+    
+    var attributedString = NSMutableAttributedString(string:"")
     
     override func viewDidLoad() {
         super.viewDidLoad()
-
+        
+        self.lblTerms.attributedText = NSAttributedString(string: "agree_terms".localized, attributes:
+            [.underlineStyle: NSUnderlineStyle.single.rawValue])
+        
+        let tap = UITapGestureRecognizer(target: self, action: #selector(LoginVC.openTerms))
+        self.lblTerms.isUserInteractionEnabled = true
+        self.lblTerms.addGestureRecognizer(tap)
+        
+        
         self.edtMobileNumber.delegate = self
         self.countryPicker.dataSource = self
         self.countryPicker.delegate = self
@@ -47,7 +59,7 @@ class LoginVC: BaseVC, CountryPickerViewDataSource, CountryPickerViewDelegate {
     
     func preferredCountries(in countryPickerView: CountryPickerView) -> [Country] {
         var countries = [Country]()
-        ["KW", "SA", "EG"].forEach { code in
+        ["KW"].forEach { code in
             if let country = countryPickerView.getCountryByCode(code) {
                 countries.append(country)
             }
@@ -55,11 +67,9 @@ class LoginVC: BaseVC, CountryPickerViewDataSource, CountryPickerViewDelegate {
         return countries
     }
     
-    
     func sectionTitleForPreferredCountries(in countryPickerView: CountryPickerView) -> String? {
         return "select_country".localized
     }
-    
     
     @IBAction func nextAction(_ sender: Any) {
         if (self.validateFields()) {
@@ -108,6 +118,13 @@ class LoginVC: BaseVC, CountryPickerViewDataSource, CountryPickerViewDelegate {
         return true
     }
     
+    @objc func openTerms(sender:UITapGestureRecognizer) {
+        if let vc = UIStoryboard(name: "Main", bundle: nil).instantiateViewController(withIdentifier: "TermsPushVC") as? TermsPushVC
+        {
+            self.present(vc, animated: true, completion: nil)
+        }
+    }
+    
     
 }
 extension LoginVC: UITextFieldDelegate {
@@ -132,5 +149,7 @@ extension LoginVC: UITextFieldDelegate {
         }
         return false
     }
+    
+    
     
 }

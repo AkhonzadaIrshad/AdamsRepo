@@ -89,12 +89,12 @@ class DeliveryStep1: BaseVC,LabasLocationManagerDelegate {
             self.showBanner(title: "alert".localized, message: "choose_shop_or_pickup".localized, style: UIColor.INFO)
             return false
         }
-        if (self.orderModel?.shop?.id ?? 0 == 0) {
-            if (self.edtMoreDetails.text?.count ?? 0 == 0) {
-                self.showBanner(title: "alert".localized, message: "enter_pickup_details".localized, style: UIColor.INFO)
-                return false
-            }
-        }
+//        if (self.orderModel?.shop?.id ?? 0 == 0) {
+//            if (self.edtMoreDetails.text?.count ?? 0 == 0) {
+//                self.showBanner(title: "alert".localized, message: "enter_pickup_details".localized, style: UIColor.INFO)
+//                return false
+//            }
+//        }
         return true
     }
     
@@ -260,18 +260,29 @@ class DeliveryStep1: BaseVC,LabasLocationManagerDelegate {
         }
     }
     
-    func getShopsByName(name : String) {
-        ApiService.getShopsByName(name: name) { (response) in
+    func getShopDistance(latitude : Double, longitude : Double) -> String {
+        let userLatLng = CLLocation(latitude: self.latitude ?? 0.0, longitude: self.longitude ?? 0.0)
+        let shopLatLng = CLLocation(latitude: latitude, longitude: longitude)
+        let distanceInMeters = shopLatLng.distance(from: userLatLng)
+        let distanceInKM = distanceInMeters / 1000.0
+        let distanceStr = String(format: "%.2f", distanceInKM)
+        return "(\(distanceStr) \("km".localized))"
+    }
+    
+    func getShopsByName(name : String, latitude : Double, longitude: Double, radius : Float) {
+        ApiService.getShopsByName(name: name,latitude: latitude, longitude: longitude, radius: radius) { (response) in
             self.shops.removeAll()
             var filterItems = [SearchTextFieldItem]()
             self.filterShops.removeAll()
             self.filterShops.append(contentsOf: response.dataShops ?? [DataShop]())
             
+            
             for shop in self.filterShops {
-              let item1 = SearchTextFieldItem(title: shop.name ?? "", subtitle: shop.address ?? "", image: UIImage(named: "ic_location"))
+              let item1 = SearchTextFieldItem(title: "\(shop.name ?? "")  \(self.getShopDistance(latitude: shop.latitude ?? 0.0, longitude: shop.longitude ?? 0.0))", subtitle: shop.address ?? "", image: UIImage(named: "ic_location"))
                 filterItems.append(item1)
             }
             
+            self.searchField.theme.font = UIFont.systemFont(ofSize: 13)
             self.searchField.filterItems(filterItems)
             self.searchField.itemSelectionHandler = { filteredResults, itemPosition in
                 // Just in case you need the item position
@@ -380,7 +391,7 @@ extension DeliveryStep1: UITextFieldDelegate {
             let newString: NSString =
                 currentString.replacingCharacters(in: range, with: string) as NSString
             if (newString.length >= 3) {
-                self.getShopsByName(name : newString as String)
+                self.getShopsByName(name: newString as String, latitude: self.latitude ?? 0.0, longitude: self.longitude ?? 0.0, radius: Float(Constants.DEFAULT_RADIUS))
             }
             if (newString.length == 0) {
                 self.gMap?.clear()

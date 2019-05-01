@@ -245,12 +245,6 @@ class AppDelegate: UIResponder, UIApplicationDelegate, MOLHResetable,MessagingDe
     }
     
     func application(_ application: UIApplication, didReceiveRemoteNotification userInfo: [AnyHashable: Any], fetchCompletionHandler completionHandler: @escaping (UIBackgroundFetchResult) -> Void) {
-        // If you are receiving a notification message while your app is in the background,
-        // this callback will not be fired till the user taps on the notification launching the application.
-        // TODO: Handle data of notification
-        // With swizzling disabled you must let Messaging know about the message, for Analytics
-        // Messaging.messaging().appDidReceiveMessage(userInfo)
-        // Print message ID.
         
         if let messageID = userInfo[gcmMessageIDKey] {
             print("Message ID: \(messageID)")
@@ -295,6 +289,9 @@ class AppDelegate: UIResponder, UIApplicationDelegate, MOLHResetable,MessagingDe
         }else if state == .active {
                 self.updateChat()
                 self.updateNotifications()
+            if (notificationType == "3") {
+                self.goToNotifications()
+            }
                 self.showBanner(title: title, message: body, style: UIColor.colorPrimary)
         }
         
@@ -397,6 +394,14 @@ class AppDelegate: UIResponder, UIApplicationDelegate, MOLHResetable,MessagingDe
             if rootViewController is NotificationsVC {
                 let vc = rootViewController as! NotificationsVC
                 vc.updateNotifications()
+            }
+        }
+    }
+    func goToNotifications() {
+        if let rootViewController = UIApplication.topViewController() {
+            if rootViewController is SendingOrderVC {
+                let vc = rootViewController as! SendingOrderVC
+                vc.goToNotifications()
             }
         }
     }

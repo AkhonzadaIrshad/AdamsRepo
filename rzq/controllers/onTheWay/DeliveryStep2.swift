@@ -54,15 +54,22 @@ class DeliveryStep2: BaseVC {
         self.setUpGoogleMap()
     }
     
+    func selectDefaultDrop() {
+        self.orderModel?.dropOffLatitude = self.latitude ?? 0.0
+        self.orderModel?.dropOffLongitude = self.longitude ?? 0.0
+        self.getAddressForMapCenter(location: CLLocation(latitude: self.latitude ?? 0.0, longitude: self.longitude ?? 0.0))
+        self.drawLocationLine()
+    }
+    
     func validate() -> Bool {
         if (self.orderModel?.dropOffLatitude ?? 0.0 == 0.0 || self.orderModel?.dropOffLongitude ?? 0.0 == 0.0) {
             self.showBanner(title: "alert".localized, message: "choose_drop_location".localized, style: UIColor.INFO)
             return false
         }
-        if (self.edtMoreDetails.text?.count ?? 0 == 0) {
-            self.showBanner(title: "alert".localized, message: "enter_dropoff_details".localized, style: UIColor.INFO)
-            return false
-        }
+//        if (self.edtMoreDetails.text?.count ?? 0 == 0) {
+//            self.showBanner(title: "alert".localized, message: "enter_dropoff_details".localized, style: UIColor.INFO)
+//            return false
+//        }
         return true
     }
     
@@ -95,7 +102,7 @@ class DeliveryStep2: BaseVC {
         gMap?.bindFrameToSuperviewBounds()
         self.view.layoutSubviews()
         
-        
+        self.selectDefaultDrop()
     }
     
     @IBAction func step1Action(_ sender: Any) {

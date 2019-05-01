@@ -114,8 +114,6 @@ class WorkingOrdersVC: BaseViewController, UITableViewDelegate, UITableViewDataS
             if (item.image?.count ?? 0 > 0) {
                 let url = URL(string: "\(Constants.IMAGE_URL)\(item.image ?? "")")
                 cell.ivLogo.kf.setImage(with: url)
-            }else {
-                cell.ivLogo.image = UIImage(named: "splash_logo")
             }
             
             cell.lblTitle.text = item.title ?? ""
@@ -144,7 +142,7 @@ class WorkingOrdersVC: BaseViewController, UITableViewDelegate, UITableViewDataS
                  DispatchQueue.main.async {
                 let messagesVC: ZHCDemoMessagesViewController = ZHCDemoMessagesViewController.init()
                 messagesVC.presentBool = true
-                    let dumOrder = DatumDel(driverID: self.loadUser().data?.accessToken ?? "", canReport: false, canTrack: false, id: item.id ?? 0, chatId : item.chatId ?? 0, fromAddress: item.fromAddress ?? "", toAddress: item.toAddress ?? "", title: item.title ?? "", status: item.status ?? Constants.ORDER_PROCESSING, price: item.price ?? 0.0, time: item.time ?? 0, statusString: item.statusString ?? "", image: item.image ?? "", createdDate: item.createdDate ?? "", toLatitude: item.toLatitude ?? 0.0, toLongitude: item.toLongitude ?? 0.0, fromLatitude: item.fromLatitude ?? 0.0, fromLongitude: item.fromLongitude ?? 0.0, driverName: item.driverName ?? "", driverImage: item.driverImage ?? "", driverRate: item.driverRate ?? 0.0, canRate: false, canCancel: false, canChat: false)
+                    let dumOrder = DatumDel(driverID: item.driverId ?? "", canReport: false, canTrack: false, id: item.id ?? 0, chatId : item.chatId ?? 0, fromAddress: item.fromAddress ?? "", toAddress: item.toAddress ?? "", title: item.title ?? "", status: item.status ?? Constants.ORDER_PROCESSING, price: item.price ?? 0.0, time: item.time ?? 0, statusString: item.statusString ?? "", image: item.image ?? "", createdDate: item.createdDate ?? "", toLatitude: item.toLatitude ?? 0.0, toLongitude: item.toLongitude ?? 0.0, fromLatitude: item.fromLatitude ?? 0.0, fromLongitude: item.fromLongitude ?? 0.0, driverName: item.driverName ?? "", driverImage: item.driverImage ?? "", driverRate: item.driverRate ?? 0.0, canRate: false, canCancel: false, canChat: false)
                 
                 messagesVC.order = dumOrder
                 messagesVC.user = self.loadUser()
@@ -164,8 +162,6 @@ class WorkingOrdersVC: BaseViewController, UITableViewDelegate, UITableViewDataS
             if (item.image?.count ?? 0 > 0) {
                 let url = URL(string: "\(Constants.IMAGE_URL)\(item.image ?? "")")
                 cell.ivLogo.kf.setImage(with: url)
-            }else {
-                cell.ivLogo.image = UIImage(named: "splash_logo")
             }
             
             cell.lblTitle.text = item.title ?? ""

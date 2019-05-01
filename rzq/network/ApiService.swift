@@ -79,7 +79,7 @@ class ApiService : NSObject {
         }
     }
     
-    static func verifyPinCode(userId:String ,code : String, completion:@escaping(_ response : VerifyResponse)-> Void) {
+    static func verifyPinCode(userId:String ,code : String, completion:@escaping(_ response : VerifyResponse?, _ status : Int)-> Void) {
         
         let all : [String : Any] = ["UserId" : userId,
                                     "Code" : code]
@@ -90,9 +90,10 @@ class ApiService : NSObject {
                     do {
                         let decoder = JSONDecoder()
                         let baseResponse = try decoder.decode(VerifyResponse.self, from: json)
-                        completion(baseResponse)
+                        completion(baseResponse, 0)
                     }catch let err{
                         print(err)
+                        completion(nil, 101)
                     }
                 }
         }
@@ -659,11 +660,11 @@ class ApiService : NSObject {
         }
     }
     
-    static func getShopsByName(name : String, completion:@escaping(_ response : ShopListResponse)-> Void) {
+    static func getShopsByName(name : String,latitude : Double, longitude : Double, radius : Float, completion:@escaping(_ response : ShopListResponse)-> Void) {
         
         let headers = [Constants.LANG_HEADER : self.getLang()]
         
-        AFManager.request("\(Constants.BASE_URL)Shop/ListByName?name=\(name)", method: .get, parameters: nil ,encoding: JSONEncoding.default, headers: headers)
+        AFManager.request("\(Constants.BASE_URL)Shop/ListByName?latitude=\(latitude)&longitude=\(longitude)&radius=\(radius)&name=\(name)", method: .get, parameters: nil ,encoding: JSONEncoding.default, headers: headers)
             .responseJSON { response in
                 if let json = response.data {
                     do {

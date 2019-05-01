@@ -216,7 +216,7 @@ class DeliveryStep3: BaseVC, UINavigationControllerDelegate, ImagePickerDelegate
     }
     
     @IBAction func photoAction(_ sender: Any) {
-        self.showAlert(title: "add_image_pic_title".localized, message: "add_salon_pic_message".localized, actionTitle: "camera".localized, cancelTitle: "gallery".localized, actionHandler: {
+        self.showAlertWithCancel(title: "add_image_pic_title".localized, message: "add_salon_pic_message".localized, actionTitle: "camera".localized, cancelTitle: "gallery".localized, actionHandler: {
             //camera
             guard UIImagePickerController.isSourceTypeAvailable(.camera) else {
                 self.selectImageFrom(.photoLibrary)
@@ -316,10 +316,10 @@ class DeliveryStep3: BaseVC, UINavigationControllerDelegate, ImagePickerDelegate
             ApiService.uploadMedia(Authorization: self.loadUser().data?.accessToken ?? "", deliveryId: id, imagesData: imagesData, audioData: audioData!) { (response) in
                 self.hideLoading()
                 if (response.errorCode == 0) {
-                    let vc = UIStoryboard(name: "Main", bundle: nil).instantiateViewController(withIdentifier: "OrderSubmittedSheet") as! OrderSubmittedSheet
-                    self.definesPresentationContext = true
-                    vc.modalPresentationStyle = UIModalPresentationStyle.overCurrentContext
-                    vc.view.backgroundColor = UIColor.clear
+                    let vc = UIStoryboard(name: "Main", bundle: nil).instantiateViewController(withIdentifier: "SendingOrderVC") as! SendingOrderVC
+//                    self.definesPresentationContext = true
+//                    vc.modalPresentationStyle = UIModalPresentationStyle.overCurrentContext
+//                    vc.view.backgroundColor = UIColor.clear
                     
                     self.present(vc, animated: true, completion: nil)
                 }else {
@@ -328,10 +328,10 @@ class DeliveryStep3: BaseVC, UINavigationControllerDelegate, ImagePickerDelegate
                 
             }
         }else {
-            let vc = UIStoryboard(name: "Main", bundle: nil).instantiateViewController(withIdentifier: "OrderSubmittedSheet") as! OrderSubmittedSheet
-            self.definesPresentationContext = true
-            vc.modalPresentationStyle = UIModalPresentationStyle.overCurrentContext
-            vc.view.backgroundColor = UIColor.clear
+            let vc = UIStoryboard(name: "Main", bundle: nil).instantiateViewController(withIdentifier: "SendingOrderVC") as! SendingOrderVC
+//            self.definesPresentationContext = true
+//            vc.modalPresentationStyle = UIModalPresentationStyle.overCurrentContext
+//            vc.view.backgroundColor = UIColor.clear
             
             self.present(vc, animated: true, completion: nil)
         
@@ -349,6 +349,7 @@ class DeliveryStep3: BaseVC, UINavigationControllerDelegate, ImagePickerDelegate
         appearance.item.subtitleFont = UIFont(name: Constants.ARABIC_FONT_REGULAR, size: 14)
         appearance.item.font = UIFont(name: Constants.ARABIC_FONT_REGULAR, size: 14)
         
+        let item0 = ActionSheetItem(title: "asap".localized, value: 0, image: nil)
         let item1 = ActionSheetItem(title: "1_hour".localized, value: 1, image: nil)
         let item2 = ActionSheetItem(title: "2_hour".localized, value: 2, image: nil)
         let item3 = ActionSheetItem(title: "3_hour".localized, value: 3, image: nil)
@@ -357,9 +358,14 @@ class DeliveryStep3: BaseVC, UINavigationControllerDelegate, ImagePickerDelegate
         let item5 = ActionSheetItem(title: "2_day".localized, value: 5, image: nil)
         let item6 = ActionSheetItem(title: "3_day".localized, value: 6, image: nil)
         
-        let actionSheet = ActionSheet(items: [title,item1,item2,item3,item4,item5,item6]) { sheet, item in
+        let actionSheet = ActionSheet(items: [title,item0,item1,item2,item3,item4,item5,item6]) { sheet, item in
             if let value = item.value as? Int {
                 switch (value) {
+                case 0:
+                    //1 hour
+                    self.btnTime.setTitle("asap".localized, for: .normal)
+                    self.selectedTime = 0
+                    break
                 case 1:
                     //1 hour
                     self.btnTime.setTitle("1_hour".localized, for: .normal)

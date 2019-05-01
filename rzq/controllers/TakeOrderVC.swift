@@ -24,6 +24,8 @@ class TakeOrderVC: BaseVC {
     
     @IBOutlet weak var lblPickuplocation: MyUILabel!
     
+    @IBOutlet weak var lblClientsName: MyUILabel!
+    
     @IBOutlet weak var lblDropoffLocation: MyUILabel!
     
     @IBOutlet weak var lblOrderDescription: MultilineTextField!
@@ -53,6 +55,7 @@ class TakeOrderVC: BaseVC {
     var toLongitude : Double?
     var fromAddress : String?
     var toAddress : String?
+    var clientsName : String?
     var desc : String?
     
     var selectedRoute: NSDictionary!
@@ -70,6 +73,7 @@ class TakeOrderVC: BaseVC {
         
         self.lblPickuplocation.text = self.fromAddress ?? ""
         self.lblDropoffLocation.text = self.toAddress ?? ""
+        self.lblClientsName.text = self.clientsName ?? ""
         
         self.lblOrderDescription.text = self.desc ?? ""
         // Do any additional setup after loading the view.
@@ -226,6 +230,7 @@ class TakeOrderVC: BaseVC {
         appearance.item.subtitleFont = UIFont(name: Constants.ARABIC_FONT_REGULAR, size: 14)
         appearance.item.font = UIFont(name: Constants.ARABIC_FONT_REGULAR, size: 14)
         
+        let item0 = ActionSheetItem(title: "asap".localized, value: 0, image: nil)
         let item1 = ActionSheetItem(title: "1_hour".localized, value: 1, image: nil)
         let item2 = ActionSheetItem(title: "2_hour".localized, value: 2, image: nil)
         let item3 = ActionSheetItem(title: "3_hour".localized, value: 3, image: nil)
@@ -234,9 +239,14 @@ class TakeOrderVC: BaseVC {
         let item5 = ActionSheetItem(title: "2_day".localized, value: 5, image: nil)
         let item6 = ActionSheetItem(title: "3_day".localized, value: 6, image: nil)
         
-        let actionSheet = ActionSheet(items: [title,item1,item2,item3,item4,item5,item6]) { sheet, item in
+        let actionSheet = ActionSheet(items: [title,item0,item1,item2,item3,item4,item5,item6]) { sheet, item in
             if let value = item.value as? Int {
                 switch (value) {
+                case 0:
+                    //1 hour
+                    self.btnTime.setTitle("asap".localized, for: .normal)
+                    self.selectedTime = 1
+                    break
                 case 1:
                     //1 hour
                     self.btnTime.setTitle("1_hour".localized, for: .normal)

@@ -28,6 +28,7 @@ class DriverOnGoingOrdersResponse: Codable {
 
 class DatumDriverDel: Codable {
     let id: Int?
+    let driverId: String?
     let chatId : Int?
     let fromAddress, toAddress, title: String?
     let status, time: Int?
@@ -39,6 +40,7 @@ class DatumDriverDel: Codable {
     
     enum CodingKeys: String, CodingKey {
         case id = "Id"
+        case driverId = "DriverId"
         case chatId = "ChatId"
         case fromAddress = "FromAddress"
         case toAddress = "ToAddress"
@@ -61,8 +63,9 @@ class DatumDriverDel: Codable {
         case canChat = "CanChat"
     }
     
-    init(id: Int?, chatId : Int?, fromAddress: String?, toAddress: String?, title: String?, status: Int?, price: Double?, time: Int?, statusString: String?, image: String?, createdDate: String?, toLatitude: Double?, toLongitude: Double?, fromLatitude: Double?, fromLongitude: Double?, driverName: String?, driverImage: String?, driverRate: Double?, canRate: Bool?, canCancel: Bool?, canChat: Bool?) {
+    init(id: Int?,driverId : String?, chatId : Int?, fromAddress: String?, toAddress: String?, title: String?, status: Int?, price: Double?, time: Int?, statusString: String?, image: String?, createdDate: String?, toLatitude: Double?, toLongitude: Double?, fromLatitude: Double?, fromLongitude: Double?, driverName: String?, driverImage: String?, driverRate: Double?, canRate: Bool?, canCancel: Bool?, canChat: Bool?) {
         self.id = id
+        self.driverId = driverId
         self.chatId = chatId
         self.fromAddress = fromAddress
         self.toAddress = toAddress

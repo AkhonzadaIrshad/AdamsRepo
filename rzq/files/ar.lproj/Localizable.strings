@@ -116,6 +116,7 @@
 "confirm_logout" = "Are you sure you want to logout?";
 "logout" = "Logout";
 
+"delivery_cancelled" = "Delivery has been cancelled successfully.";
 "monday" = "Monday";
 "tuesday" = "Tuesday";
 "wednesday" = "Wednesday";
@@ -125,3 +126,6 @@
 "sunday" = "Sunday";
 "order_details" = "Write your order here";
 "feedback_comments" = "Feedback/ Comments";
+"account_inactive" = "Your account is not active.";
+"asap" = "ASAP";
+"agree_terms" = "By clicking next you agree to our Terms & Conditions.";

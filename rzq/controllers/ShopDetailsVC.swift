@@ -98,12 +98,11 @@ class ShopDetailsVC: BaseVC, UITableViewDelegate, UITableViewDataSource {
             self.lblWorkingHours.text = String(hours?[0] ?? "")
         }
         
-        self.lblNearbyDrivers.text = "\(self.shop?.nearbyDriversCount ?? 0) \("drivers".localized)"
+        self.lblNearbyDrivers.text = "\((self.shop?.nearbyDriversCount ?? 0 + 10)) \("drivers".localized)"
         // Do any additional setup after loading the view.
     }
     
-    
-    
+  
     func generateDeepLink() {
         
         var shareText = ""
@@ -153,7 +152,12 @@ class ShopDetailsVC: BaseVC, UITableViewDelegate, UITableViewDataSource {
         
         cell.lblTitle.text = item.title ?? ""
         cell.lblMoney.text = "\(item.price ?? 0.0) \("currency".localized)"
-        cell.lblTime.text = "\(item.time ?? 0) \("hours".localized)"
+        if (item.time ?? 0 > 0) {
+            cell.lblTime.text = "\(item.time ?? 0) \("hours".localized)"
+        }else {
+            cell.lblTime.text = "asap".localized
+        }
+        
         
         let driverLatLng = CLLocation(latitude: self.latitude ?? 0.0, longitude: self.longitude ?? 0.0)
         let dropOffLatLng = CLLocation(latitude: item.toLatitude ?? 0.0, longitude: item.toLongitude ?? 0.0)

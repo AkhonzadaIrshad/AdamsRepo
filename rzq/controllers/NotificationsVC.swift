@@ -103,7 +103,15 @@ class NotificationsVC: BaseViewController, UITableViewDelegate, UITableViewDataS
     
     
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
-        
+        let item = self.items[indexPath.row]
+        if (item.type == Constants.DELIVERY_COMPLETED) {
+            let vc = UIStoryboard(name: "Main", bundle: nil).instantiateViewController(withIdentifier: "RateDriverDialog") as! RateDriverDialog
+            vc.deliveryId = item.deliveryID ?? 0
+            self.definesPresentationContext = true
+            vc.modalPresentationStyle = UIModalPresentationStyle.overCurrentContext
+            vc.view.backgroundColor = UIColor.clear
+            self.present(vc, animated: true, completion: nil)
+        }
     }
     
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
@@ -121,10 +129,23 @@ class NotificationsVC: BaseViewController, UITableViewDelegate, UITableViewDataS
             let fromAddress = dict?["FromAddress"] as? String ?? ""
             let toAddress = dict?["ToAddress"] as? String ?? ""
             let desc = dict?["Description"] as? String ?? ""
+            let clientName = dict?["UserName"] as? String ?? ""
+            let shopImage = dict?["ShopImage"] as? String ?? ""
+            
+            if (shopImage.count > 0) {
+                let url = URL(string: "\(Constants.IMAGE_URL)\(shopImage)")
+                cell.ivLogo.kf.setImage(with: url)
+            }
             
             cell.lblTitle.text = desc
             cell.lblMoney.text = "\(dict?["EstimatedPrice"] as? Double ?? 0.0) \("currency".localized)"
-            cell.lblTime.text = "\(dict?["Time"] as? Int ?? 0) \("hours".localized)"
+            let time = dict?["Time"] as? Int ?? 0
+            
+            if (time > 0) {
+             cell.lblTime.text = "\(dict?["Time"] as? Int ?? 0) \("hours".localized)"
+            }else {
+                cell.lblTime.text = "asap".localized
+            }
             
             let driverLatLng = CLLocation(latitude: self.latitude ?? 0.0, longitude: self.longitude ?? 0.0)
             let dropOffLatLng = CLLocation(latitude: toLatitude, longitude: toLongitude)
@@ -147,6 +168,7 @@ class NotificationsVC: BaseViewController, UITableViewDelegate, UITableViewDataS
                     vc.toLongitude = toLongitude
                     vc.fromAddress = fromAddress
                     vc.toAddress = toAddress
+                    vc.clientsName = clientName
                     vc.desc = desc
                     self.navigationController?.pushViewController(vc, animated: true)
                 }
@@ -178,6 +200,14 @@ class NotificationsVC: BaseViewController, UITableViewDelegate, UITableViewDataS
             
             let dict = item.data?.convertToDictionary()
             
+            let shopImage = dict?["ShopImage"] as? String ?? ""
+            
+            if (shopImage.count > 0) {
+                let url = URL(string: "\(Constants.IMAGE_URL)\(shopImage)")
+                cell.ivLogo.kf.setImage(with: url)
+            }
+            
+            
             var desc = ""
             if (self.isArabic()) {
               desc = dict?["ArabicBody"] as? String ?? ""
@@ -188,7 +218,12 @@ class NotificationsVC: BaseViewController, UITableViewDelegate, UITableViewDataS
             
             cell.lblTitle.text = desc
             cell.lblMoney.text = "\(dict?["Price"] as? Double ?? 0.0) \("currency".localized)"
-            cell.lblTime.text = "\(dict?["Time"] as? Int ?? 0) \("hours".localized)"
+            let time = dict?["Time"] as? Int ?? 0
+            if (time > 0) {
+                cell.lblTime.text = "\(dict?["Time"] as? Int ?? 0) \("hours".localized)"
+            }else {
+                cell.lblTime.text = "asap".localized
+            }
             
             let distanceStr = String(format: "%.2f", (distance / 1000.0))
             

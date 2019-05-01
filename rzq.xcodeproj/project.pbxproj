@@ -97,6 +97,8 @@
 		8BD329C5225C9A690060900A /* RealmUser.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8BD329C4225C9A690060900A /* RealmUser.swift */; };
 		8BD329C9225CAC280060900A /* DeliveryResponse.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8BD329C8225CAC280060900A /* DeliveryResponse.swift */; };
 		8BD329CB225CAD080060900A /* DeliveryCreatedResponse.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8BD329CA225CAD080060900A /* DeliveryCreatedResponse.swift */; };
+		8BD3CA8E227884BF003ABC49 /* pending.gif in Resources */ = {isa = PBXBuildFile; fileRef = 8BD3CA8D227884BE003ABC49 /* pending.gif */; };
+		8BD3CA90227884D5003ABC49 /* SendingOrderVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8BD3CA8F227884D5003ABC49 /* SendingOrderVC.swift */; };
 		8BD45F9E22671516000FB47A /* AppConfigResponse.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8BD45F9D22671516000FB47A /* AppConfigResponse.swift */; };
 		8BD45FA022672BBC000FB47A /* OrderImageCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8BD45F9F22672BBC000FB47A /* OrderImageCell.swift */; };
 		8BD45FA222672D44000FB47A /* ShopDeliveriesResponse.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8BD45FA122672D44000FB47A /* ShopDeliveriesResponse.swift */; };
@@ -139,6 +141,7 @@
 		8BF2223D2271FEDF005BE71D /* RegisterAsDriverMenuVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8BF2223C2271FEDF005BE71D /* RegisterAsDriverMenuVC.swift */; };
 		8BF2223F227207BF005BE71D /* RateUserDialog.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8BF2223E227207BF005BE71D /* RateUserDialog.swift */; };
 		8BF2224222720FC0005BE71D /* Localizable.strings in Resources */ = {isa = PBXBuildFile; fileRef = 8BF2224422720FC0005BE71D /* Localizable.strings */; };
+		8BF29CA22279BA5E0001EF21 /* TermsPushVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8BF29CA12279BA5E0001EF21 /* TermsPushVC.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -235,6 +238,8 @@
 		8BD329C4225C9A690060900A /* RealmUser.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RealmUser.swift; sourceTree = "<group>"; };
 		8BD329C8225CAC280060900A /* DeliveryResponse.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DeliveryResponse.swift; sourceTree = "<group>"; };
 		8BD329CA225CAD080060900A /* DeliveryCreatedResponse.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DeliveryCreatedResponse.swift; sourceTree = "<group>"; };
+		8BD3CA8D227884BE003ABC49 /* pending.gif */ = {isa = PBXFileReference; lastKnownFileType = image.gif; path = pending.gif; sourceTree = "<group>"; };
+		8BD3CA8F227884D5003ABC49 /* SendingOrderVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SendingOrderVC.swift; sourceTree = "<group>"; };
 		8BD45F9D22671516000FB47A /* AppConfigResponse.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppConfigResponse.swift; sourceTree = "<group>"; };
 		8BD45F9F22672BBC000FB47A /* OrderImageCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = OrderImageCell.swift; sourceTree = "<group>"; };
 		8BD45FA122672D44000FB47A /* ShopDeliveriesResponse.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ShopDeliveriesResponse.swift; sourceTree = "<group>"; };
@@ -281,6 +286,7 @@
 		8BF2224122720FB1005BE71D /* ar */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = ar; path = ar.lproj/Main.strings; sourceTree = "<group>"; };
 		8BF2224322720FC0005BE71D /* en */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = en; path = en.lproj/Localizable.strings; sourceTree = "<group>"; };
 		8BF2224522720FC5005BE71D /* ar */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = ar; path = ar.lproj/Localizable.strings; sourceTree = "<group>"; };
+		8BF29CA12279BA5E0001EF21 /* TermsPushVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TermsPushVC.swift; sourceTree = "<group>"; };
 		E55152A97B11159AAAF7C8B3 /* Pods-rzq.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-rzq.release.xcconfig"; path = "Pods/Target Support Files/Pods-rzq/Pods-rzq.release.xcconfig"; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
@@ -390,6 +396,8 @@
 				8BDAA8BE2275A24300F59D5E /* WorkingHoursVC.swift */,
 				8BDAA8C02275B16500F59D5E /* AnswersVC.swift */,
 				8BDAA8C22275D86900F59D5E /* FilterShopsVC.swift */,
+				8BD3CA8F227884D5003ABC49 /* SendingOrderVC.swift */,
+				8BF29CA12279BA5E0001EF21 /* TermsPushVC.swift */,
 			);
 			path = controllers;
 			sourceTree = "<group>";
@@ -439,6 +447,7 @@
 		8B2BCC97224FCEED00CBC7D3 /* assets */ = {
 			isa = PBXGroup;
 			children = (
+				8BD3CA8D227884BE003ABC49 /* pending.gif */,
 				8BF222202271A9C5005BE71D /* recording.gif */,
 				8BC54B052268771500B70A97 /* Imgs */,
 				8BC54B012268767E00B70A97 /* data.json */,
@@ -728,6 +737,7 @@
 				8BF2224222720FC0005BE71D /* Localizable.strings in Resources */,
 				8B9CA8432250CCDF00DE0DC4 /* english_bold.ttf in Resources */,
 				8BF222212271A9C5005BE71D /* recording.gif in Resources */,
+				8BD3CA8E227884BF003ABC49 /* pending.gif in Resources */,
 				8BC54B032268767F00B70A97 /* data.json in Resources */,
 				8B9CA8472250CCDF00DE0DC4 /* english_regular.ttf in Resources */,
 				8BF222392271DB9D005BE71D /* EmptyView.xib in Resources */,
@@ -946,6 +956,7 @@
 				8BEF649B2253959E003AE522 /* HomeServiceCell.swift in Sources */,
 				8BD99C5E2259EC1D00E00A0A /* ProfileVC.swift in Sources */,
 				8B84A169225A31560090CB5D /* App.swift in Sources */,
+				8BF29CA22279BA5E0001EF21 /* TermsPushVC.swift in Sources */,
 				8B9CA8362250CAB000DE0DC4 /* MyUITextView.swift in Sources */,
 				8BDAA8B92275912A00F59D5E /* KingfisherSource.swift in Sources */,
 				8BD99C62225A1E2E00E00A0A /* RegisterDriverVC.swift in Sources */,
@@ -965,6 +976,7 @@
 				8BBEA59C2260BD6100FBEBFC /* OnGoingDeliveriesResponse.swift in Sources */,
 				8BA815932251F54C004EE1A8 /* FilterSheet.swift in Sources */,
 				8BCB78092254DE5500E52ED0 /* NotificationsVC.swift in Sources */,
+				8BD3CA90227884D5003ABC49 /* SendingOrderVC.swift in Sources */,
 				8B1F91C02255F02100B639F1 /* AudioRecorderManager.swift in Sources */,
 				8BCB77FC2254BA6C00E52ED0 /* ShopDetailsVC.swift in Sources */,
 				8BC54AFC2268752100B70A97 /* ZHPhotoItem.swift in Sources */,

@@ -40,7 +40,7 @@ class ZHCDemoMessagesViewController: ZHCMessagesViewController, BillDelegate, Ch
             self.scrollToBottom(animated: false);
         }
         
-        if ((self.user?.data?.roles?.contains(find: "Driver"))!) {
+        if ((self.user?.data?.roles?.contains(find: "Driver"))! && self.user?.data?.userID == self.order?.driverID) {
             self.setupFloating()
         }else if (self.order?.status != Constants.ORDER_ON_THE_WAY) {
             self.setupUserFloating()

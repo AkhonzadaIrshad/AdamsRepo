@@ -14,6 +14,8 @@ class ContactUsVC: BaseViewController {
     
     @IBOutlet weak var edtMessage: MyUITextField!
     
+    @IBOutlet weak var edtMobile: MyUITextField!
+    
     @IBOutlet weak var btnMenu: UIButton!
     
     override func viewDidLoad() {
@@ -24,16 +26,16 @@ class ContactUsVC: BaseViewController {
 
           self.btnMenu.addTarget(self, action: #selector(BaseViewController.onSlideMenuButtonPressed(_:)), for: UIControl.Event.touchUpInside)
         
+        self.edtMobile.text = self.loadUser().data?.phoneNumber ?? ""
         
         // Do any additional setup after loading the view.
     }
-    
     
     @IBAction func sendAction(_ sender: Any) {
         if (self.validate()) {
             self.showLoading()
             var message = ""
-            message = "\(self.edtMessage.text ?? "")\n\n\("mobile: ") \(self.loadUser().data?.phoneNumber ?? "")"
+            message = "\(self.edtMessage.text ?? "")\n\n\("mobile: ") \(self.edtMobile.text ?? "")"
             ApiService.contactUs(subject: self.edtSubject.text ?? "", body: message) { (response) in
                 self.hideLoading()
                 if (response.errorCode == 0) {

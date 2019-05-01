@@ -74,7 +74,13 @@ class OrderDetailsVC: BaseVC, UICollectionViewDelegate, UICollectionViewDataSour
         self.lblPickup.text = self.order?.fromAddress ?? ""
         self.lblDropoff.text = self.order?.toAddress ?? ""
         self.lblCost.text = "\(self.order?.cost ?? 0.0) \("currency".localized)"
-        self.lblTime.text = "\(self.order?.time ?? 0) \("hours".localized)"
+        
+        if (self.order?.time ?? 0 > 0) {
+           self.lblTime.text = "\(self.order?.time ?? 0) \("hours".localized)"
+        }else {
+            self.lblTime.text = "asap".localized
+        }
+        
         self.lblDescription.text = self.order?.title ?? ""
         if (self.order?.status == Constants.ORDER_PROCESSING || self.order?.status == Constants.ORDER_ON_THE_WAY) {
             self.viewChat.isHidden = false
@@ -288,11 +294,20 @@ class OrderDetailsVC: BaseVC, UICollectionViewDelegate, UICollectionViewDataSour
         self.downloadFileFromURL(url: url!)
     }
     
+    func playRecord(path : URL) {
+        let playerItem:AVPlayerItem = AVPlayerItem(url: path)
+        let audioPlayer = AVPlayer(playerItem: playerItem)
+        audioPlayer.volume = 1.0
+        audioPlayer.isMuted = false
+        audioPlayer.play()
+    }
+    
     func downloadFileFromURL(url:URL){
         
         var downloadTask:URLSessionDownloadTask
         downloadTask = URLSession.shared.downloadTask(with: url, completionHandler: { (url, response, error) in
-            self.play(url: url!)
+           // self.play(url: url!)
+            self.playRecord(path: url!)
         })
         
         downloadTask.resume()

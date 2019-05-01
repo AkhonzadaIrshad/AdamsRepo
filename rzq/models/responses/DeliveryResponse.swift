@@ -28,6 +28,7 @@ class DeliveryResponse: Codable {
 
 class DataClassDelObj: Codable {
     let id: Int?
+    let driverId : String?
     let chatId : Int?
     let title, fromAddress: String?
     let fromLatitude, fromLongitude: Double?
@@ -43,6 +44,7 @@ class DataClassDelObj: Codable {
     
     enum CodingKeys: String, CodingKey {
         case id = "Id"
+        case driverId = "DriverId"
         case title = "Title"
         case fromAddress = "FromAddress"
         case fromLatitude = "FromLatitude"
@@ -62,8 +64,9 @@ class DataClassDelObj: Codable {
         case voiceFile = "VoiceFile"
     }
     
-    init(id: Int?, chatId : Int?, title: String?, fromAddress: String?, fromLatitude: Double?, fromLongitude: Double?, toAddress: String?, toLatitude: Double?, toLongitude: Double?, time: Int?, cost: Double?, status: Int?, canCancel: Bool?, canChat: Bool?, statusString: String?, images: [String]?,voiceFile : String?, createdDate: String?) {
+    init(id: Int?,driverId : String?, chatId : Int?, title: String?, fromAddress: String?, fromLatitude: Double?, fromLongitude: Double?, toAddress: String?, toLatitude: Double?, toLongitude: Double?, time: Int?, cost: Double?, status: Int?, canCancel: Bool?, canChat: Bool?, statusString: String?, images: [String]?,voiceFile : String?, createdDate: String?) {
         self.id = id
+        self.driverId = driverId
         self.chatId = chatId
         self.title = title
         self.fromAddress = fromAddress

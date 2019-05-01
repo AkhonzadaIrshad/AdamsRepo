@@ -261,8 +261,8 @@ class HomeListVC: BaseViewController, UITableViewDelegate, UITableViewDataSource
         }
     }
     
-    func getShopsByName(name : String) {
-        ApiService.getShopsByName(name: name) { (response) in
+    func getShopsByName(name : String, latitude : Double, longitude: Double, radius : Float) {
+        ApiService.getShopsByName(name: name, latitude: latitude, longitude: longitude, radius: radius) { (response) in
             self.shops.removeAll()
             self.shops.append(contentsOf: response.dataShops ?? [DataShop]())
             self.tableView.reloadData()
@@ -380,7 +380,7 @@ extension HomeListVC: UITextFieldDelegate {
             let newString: NSString =
                 currentString.replacingCharacters(in: range, with: string) as NSString
             if (newString.length >= 3) {
-                self.getShopsByName(name : newString as String)
+                self.getShopsByName(name : newString as String, latitude: self.latitude ?? 0.0, longitude: self.longitude ?? 0.0, radius: Float(Constants.DEFAULT_RADIUS))
             }
             if (newString.length == 0) {
                 self.getShopsList(radius: Float(Constants.DEFAULT_RADIUS), rating: 0, types : 0)

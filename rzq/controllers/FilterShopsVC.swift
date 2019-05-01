@@ -7,6 +7,7 @@
 //
 
 import UIKit
+import CoreLocation
 
 protocol FilterListDelegate {
     func onClick(shop : DataShop)
@@ -57,7 +58,15 @@ class FilterShopsVC: BaseVC, UITableViewDelegate, UITableViewDataSource {
         
         let item = self.items[indexPath.row]
         
-        cell.lblName.text = item.name ?? ""
+        
+        let driverLatLng = CLLocation(latitude: self.latitude ?? 0.0, longitude: self.longitude ?? 0.0)
+        let dropOffLatLng = CLLocation(latitude: item.latitude ?? 0.0, longitude: item.longitude ?? 0.0)
+        let distanceInMeters = dropOffLatLng.distance(from: driverLatLng)
+        let distanceInKM = distanceInMeters / 1000.0
+        let distanceStr = String(format: "%.2f", distanceInKM)
+        
+        cell.lblName.text = "\(item.name ?? "")  (\(distanceStr) \("km".localized))"
+        
         cell.lblAddress.text = item.address ?? ""
         
         return cell
@@ -75,8 +84,8 @@ class FilterShopsVC: BaseVC, UITableViewDelegate, UITableViewDataSource {
         }
     }
     
-    func getShopsByName(name : String) {
-        ApiService.getShopsByName(name: name) { (response) in
+    func getShopsByName(name : String, latitude : Double, longitude: Double, radius : Float) {
+        ApiService.getShopsByName(name: name, latitude: latitude, longitude: longitude, radius: radius) { (response) in
             self.items.removeAll()
             self.items.append(contentsOf: response.dataShops ?? [DataShop]())
             self.tableView.reloadData()
@@ -96,7 +105,7 @@ extension FilterShopsVC: UITextFieldDelegate {
             let newString: NSString =
                 currentString.replacingCharacters(in: range, with: string) as NSString
             if (newString.length >= 3) {
-                self.getShopsByName(name : newString as String)
+                self.getShopsByName(name : newString as String, latitude: self.latitude ?? 0.0, longitude: self.longitude ?? 0.0, radius: Float(Constants.DEFAULT_RADIUS))
             }
             if (newString.length == 0) {
                 self.getShopsList(radius: Float(Constants.DEFAULT_RADIUS), rating: 0, types : 0)

@@ -112,6 +112,33 @@ class BaseVC: UIViewController,UIGestureRecognizerDelegate {
         self.present(alert, animated: true, completion: nil)
     }
     
+    func showAlertWithCancel(title: String,
+                   message: String,
+                   actionTitle: String,
+                   cancelTitle: String,
+                   actionHandler:(()->Void)?,
+                   cancelHandler:(()->Void)? = nil) {
+        
+        let alert = UIAlertController(title: title, message: message, preferredStyle: .alert)
+        
+        let okAction = UIAlertAction(title: actionTitle, style: .default) { (action) in
+            actionHandler?()
+        }
+        
+        let cancelAction = UIAlertAction(title: cancelTitle, style: .default) { (action) in
+            cancelHandler?()
+        }
+        let dismissAction = UIAlertAction(title: "cancel".localized, style: .cancel) {
+            UIAlertAction in
+            
+        }
+        
+        alert.addAction(okAction)
+        alert.addAction(cancelAction)
+        alert.addAction(dismissAction)
+        self.present(alert, animated: true, completion: nil)
+    }
+    
     
     
     func deleteUsers() {

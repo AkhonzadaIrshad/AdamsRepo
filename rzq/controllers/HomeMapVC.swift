@@ -407,8 +407,8 @@ class HomeMapVC: BaseViewController,LabasLocationManagerDelegate, UICollectionVi
         }
     }
     
-    func getShopsByName(name : String) {
-        ApiService.getShopsByName(name: name) { (response) in
+    func getShopsByName(name : String, latitude : Double, longitude: Double, radius : Float) {
+        ApiService.getShopsByName(name: name, latitude: latitude, longitude: longitude, radius: radius) { (response) in
             self.shops.removeAll()
             self.shops.append(contentsOf: response.dataShops ?? [DataShop]())
             self.addShopsMarkers()
@@ -429,15 +429,21 @@ class HomeMapVC: BaseViewController,LabasLocationManagerDelegate, UICollectionVi
         self.present(vc, animated: true, completion: nil)
     }
     
-
+    @IBAction func goToCurrentLocation(_ sender: Any) {
+        let camera = GMSCameraPosition.camera(withLatitude: self.latitude ?? 0.0, longitude: self.longitude ?? 0.0, zoom: 15.0)
+        self.gMap?.animate(to: camera)
+    }
+    
     func onOrder(order: OTWOrder) {
-        if let vc = UIStoryboard(name: "Main", bundle: nil).instantiateViewController(withIdentifier: "DeliveryStep1") as? DeliveryStep1
-        {
-            vc.orderModel = OTWOrder()
-            vc.orderModel = order
-            vc.latitude = self.latitude
-            vc.longitude = self.longitude
-            self.navigationController?.pushViewController(vc, animated: true)
+        if (self.isLoggedIn()) {
+            if let vc = UIStoryboard(name: "Main", bundle: nil).instantiateViewController(withIdentifier: "DeliveryStep1") as? DeliveryStep1
+            {
+                vc.orderModel = OTWOrder()
+                vc.orderModel = order
+                vc.latitude = self.latitude
+                vc.longitude = self.longitude
+                self.navigationController?.pushViewController(vc, animated: true)
+            }
         }
     }
     
@@ -593,14 +599,14 @@ class HomeMapVC: BaseViewController,LabasLocationManagerDelegate, UICollectionVi
     }
     
     @IBAction func onTheWayAction(_ sender: Any) {
-      //  if (self.isLoggedIn()) {
+        if (self.isLoggedIn()) {
             if let vc = UIStoryboard(name: "Main", bundle: nil).instantiateViewController(withIdentifier: "DeliveryStep1") as? DeliveryStep1
             {
                 vc.latitude = self.latitude
                 vc.longitude = self.longitude
                 self.navigationController?.pushViewController(vc, animated: true)
             }
-      //  }
+        }
     }
     @IBAction func servicesAction(_ sender: Any) {
         
@@ -725,7 +731,7 @@ extension HomeMapVC: UITextFieldDelegate {
             let newString: NSString =
                 currentString.replacingCharacters(in: range, with: string) as NSString
             if (newString.length >= 3) {
-                self.getShopsByName(name : newString as String)
+                self.getShopsByName(name : newString as String, latitude: self.latitude ?? 0.0, longitude: self.longitude ?? 0.0, radius: Float(Constants.DEFAULT_RADIUS))
             }
             if (newString.length == 0) {
                 self.gMap?.clear()

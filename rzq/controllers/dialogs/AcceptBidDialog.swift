@@ -55,7 +55,12 @@ class AcceptBidDialog: BaseVC {
         self.rateView.rating = driverRate
         self.lblOfferPrice.text = "\(price) \("currency".localized)"
         self.lblMoney.text = "\(price) \("currency".localized)"
-        self.lblTime.text = "\(time) \("hours".localized)"
+        if (time > 0) {
+           self.lblTime.text = "\(time) \("hours".localized)"
+        }else {
+           self.lblTime.text = "asap".localized
+        }
+        
         self.lblDistance.text = "\(distance) \("km".localized)"
         self.lblOrdersCount.text = "\(orderCount) \("orders".localized)"
     }

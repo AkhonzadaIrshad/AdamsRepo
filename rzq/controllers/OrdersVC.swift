@@ -114,8 +114,6 @@ class OrdersVC: BaseViewController, UITableViewDelegate, UITableViewDataSource {
             if (item.image?.count ?? 0 > 0) {
                 let url = URL(string: "\(Constants.IMAGE_URL)\(item.image ?? "")")
                 cell.ivLogo.kf.setImage(with: url)
-            }else {
-                cell.ivLogo.image = UIImage(named: "splash_logo")
             }
            
             cell.lblTitle.text = item.title ?? ""
@@ -163,8 +161,6 @@ class OrdersVC: BaseViewController, UITableViewDelegate, UITableViewDataSource {
             if (item.image?.count ?? 0 > 0) {
                 let url = URL(string: "\(Constants.IMAGE_URL)\(item.image ?? "")")
                 cell.ivLogo.kf.setImage(with: url)
-            }else {
-                cell.ivLogo.image = UIImage(named: "splash_logo")
             }
             
             cell.lblTitle.text = item.title ?? ""

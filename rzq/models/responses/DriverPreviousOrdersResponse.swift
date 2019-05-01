@@ -39,6 +39,7 @@ class DataClassDriverDel: Codable {
 
 class DatumDelObj: Codable {
     let id: Int?
+    let driverId: String?
     let fromAddress, toAddress, title: String?
     let status, time: Int?
     let statusString, image, createdDate: String?
@@ -49,6 +50,7 @@ class DatumDelObj: Codable {
     
     enum CodingKeys: String, CodingKey {
         case id = "Id"
+        case driverId = "DriverId"
         case fromAddress = "FromAddress"
         case toAddress = "ToAddress"
         case title = "Title"
@@ -70,8 +72,9 @@ class DatumDelObj: Codable {
         case canChat = "CanChat"
     }
     
-    init(id: Int?, fromAddress: String?, toAddress: String?, title: String?, status: Int?, price: Double?, time: Int?, statusString: String?, image: String?, createdDate: String?, toLatitude: Double?, toLongitude: Double?, fromLatitude: Double?, fromLongitude: Double?, driverName: String?, driverImage: String?, driverRate: Double?, canRate: Bool?, canCancel: Bool?, canChat: Bool?) {
+    init(id: Int?,driverId : String?, fromAddress: String?, toAddress: String?, title: String?, status: Int?, price: Double?, time: Int?, statusString: String?, image: String?, createdDate: String?, toLatitude: Double?, toLongitude: Double?, fromLatitude: Double?, fromLongitude: Double?, driverName: String?, driverImage: String?, driverRate: Double?, canRate: Bool?, canCancel: Bool?, canChat: Bool?) {
         self.id = id
+        self.driverId = driverId
         self.fromAddress = fromAddress
         self.toAddress = toAddress
         self.title = title

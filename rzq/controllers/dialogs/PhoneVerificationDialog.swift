@@ -70,14 +70,20 @@ class PhoneVerificationDialog: BaseVC {
     @IBAction func confirmAction(_ sender: Any) {
         if (self.pinView.getPinAsString().count == 4) {
             self.showLoading()
-            ApiService.verifyPinCode(userId: self.userId ?? "", code: self.pinView.getPinAsString()) { (response) in
+            ApiService.verifyPinCode(userId: self.userId ?? "", code: self.pinView.getPinAsString()) { (response, status) in
                 self.hideLoading()
-                if (response.errorCode == 0) {
+                if (status != 0) {
+                     self.showBanner(title: "alert".localized, message: "wrong_verification_code".localized, style: UIColor.INFO)
+                     return
+                }
+                if (response?.errorCode == 0) {
                     self.deleteUsers()
-                    self.updateUser(self.getRealmUser(userProfile: response))
+                    self.updateUser(self.getRealmUser(userProfile: response!))
                     let mainStoryboardIpad : UIStoryboard = UIStoryboard(name: "Main", bundle: nil)
                     let initialViewControlleripad : UIViewController = mainStoryboardIpad.instantiateViewController(withIdentifier: self.getHomeView()) as! UINavigationController
                     self.present(initialViewControlleripad, animated: true, completion: {})
+                }else if (response?.errorCode == 18) {
+                    self.showBanner(title: "alert".localized, message: "account_inactive".localized, style: UIColor.INFO)
                 }else {
                    self.showBanner(title: "alert".localized, message: "wrong_verification_code".localized, style: UIColor.INFO)
                 }

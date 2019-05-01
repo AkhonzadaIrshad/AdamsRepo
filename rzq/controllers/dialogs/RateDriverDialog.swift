@@ -34,8 +34,12 @@ class RateDriverDialog: BaseVC {
                 self.dismiss(animated: true, completion: nil)
             }else {
                 self.showBanner(title: "alert".localized, message: response.errorMessage ?? "", style: UIColor.INFO)
+                self.dismiss(animated: true, completion: nil)
             }
         }
     }
     
+    @IBAction func dismissAction(_ sender: Any) {
+        self.dismiss(animated: true, completion: nil)
+    }
 }
