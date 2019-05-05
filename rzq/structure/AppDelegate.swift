@@ -260,9 +260,11 @@ class AppDelegate: UIResponder, UIApplicationDelegate, MOLHResetable,MessagingDe
         let data : [AnyHashable: Any] = whole["alert"] as! [AnyHashable : Any]
         
         let notificationType = userInfo["Type"] as? String ?? ""
-        if (notificationType == "5") {
+        if (notificationType == "5" || notificationType == "2") {
             //close chat
             self.closeChat()
+        }else if (notificationType == "4") {
+            self.removeCancelFromChat()
         }
         
         if MOLHLanguage.currentAppleLanguage() == "ar" {
@@ -386,6 +388,15 @@ class AppDelegate: UIResponder, UIApplicationDelegate, MOLHResetable,MessagingDe
             if rootViewController is ZHCDemoMessagesViewController {
                 let vc = rootViewController as! ZHCDemoMessagesViewController
                 vc.closeChat()
+            }
+        }
+    }
+    
+    func removeCancelFromChat() {
+        if let rootViewController = UIApplication.topViewController() {
+            if rootViewController is ZHCDemoMessagesViewController {
+                let vc = rootViewController as! ZHCDemoMessagesViewController
+                vc.removeCancel()
             }
         }
     }

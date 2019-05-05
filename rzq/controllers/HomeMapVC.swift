@@ -46,6 +46,8 @@ class HomeMapVC: BaseViewController,LabasLocationManagerDelegate, UICollectionVi
     
     @IBOutlet weak var searchView: CardView!
     
+    var mModel : FilterModel?
+    
     var collectionViewFlowLayout : UICollectionViewFlowLayout?
     
     override func viewDidLoad() {
@@ -230,6 +232,8 @@ class HomeMapVC: BaseViewController,LabasLocationManagerDelegate, UICollectionVi
             if (response.locationData != nil) {
                 if (item.status == Constants.ORDER_ON_THE_WAY) {
                     self.drawLocationLine(driverLocation: response.locationData!, order: item)
+                }else {
+                    self.gMap?.clear()
                 }
             }
         }
@@ -310,7 +314,9 @@ class HomeMapVC: BaseViewController,LabasLocationManagerDelegate, UICollectionVi
             cell.lblTime.text = "\(String(format: "%.2f", (distanceInKM * 1.1))) \("minutes".localized)"
             if (response.locationData != nil) {
                 if (item.status == Constants.ORDER_ON_THE_WAY) {
-                self.drawLocationLine(driverLocation: response.locationData!, order: item)
+                    self.drawLocationLine(driverLocation: response.locationData!, order: item)
+                }else {
+                    self.gMap?.clear()
                 }
             }
         }
@@ -502,6 +508,7 @@ class HomeMapVC: BaseViewController,LabasLocationManagerDelegate, UICollectionVi
         super.viewWillAppear(animated)
         LabasLocationManager.shared.delegate = self
         LabasLocationManager.shared.startUpdatingLocation()
+        self.loadTracks()
     }
     
     func setUpGoogleMap() {
@@ -523,6 +530,7 @@ class HomeMapVC: BaseViewController,LabasLocationManagerDelegate, UICollectionVi
     }
     
     func loadTracks() {
+        self.gMap?.clear()
         ApiService.getOnGoingDeliveries(Authorization: self.loadUser().data?.accessToken ?? "") { (response) in
             self.items.removeAll()
             for item in response.data ?? [DatumDel]() {
@@ -577,6 +585,7 @@ class HomeMapVC: BaseViewController,LabasLocationManagerDelegate, UICollectionVi
 //        self.present(bottomSheet, animated: true, completion: nil)
         
         sheetContent.delegate = self
+        sheetContent.mModel = self.mModel
         let sheet = SheetViewController(controller: sheetContent, sizes: [.fullScreen, .fixed(self.view.frame.size.height - 50)])
         sheet.willDismiss = { _ in
             // This is called just before the sheet is dismissed
@@ -588,13 +597,15 @@ class HomeMapVC: BaseViewController,LabasLocationManagerDelegate, UICollectionVi
         
     }
     
-    func onApply(radius: Float, rating: Double, types : Int) {
+    func onApply(radius: Float, rating: Double, types : Int, model : FilterModel) {
         gMap?.clear()
+        self.mModel = model
         self.getShopsList(radius: radius, rating: rating, types : types)
     }
     
     func onClear() {
         gMap?.clear()
+        self.mModel = FilterModel()
         self.getShopsList(radius: Float(Constants.DEFAULT_RADIUS), rating: 0, types : 0)
     }
     

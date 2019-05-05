@@ -94,19 +94,30 @@ class ConfigSettings: Codable {
     let isMapView: Bool?
     let driversLimit, orderTimeConstraint: Int?
     let radius : Double?
+    let MinimumOneKmValue,MinimumFiveKmValue,MaximumValue,IncrementValue : Double?
     
     enum CodingKeys: String, CodingKey {
         case isMapView = "IsMapView"
         case radius = "Radius"
         case driversLimit = "DriversLimit"
         case orderTimeConstraint = "OrderTimeConstraint"
+        
+        case MinimumOneKmValue = "MinimumOneKmValue"
+        case MinimumFiveKmValue = "MinimumFiveKmValue"
+        case MaximumValue = "MaximumValue"
+        case IncrementValue = "IncrementValue"
     }
     
-    init(isMapView: Bool?, radius: Double?, driversLimit: Int?, orderTimeConstraint: Int?) {
+    init(isMapView: Bool?, radius: Double?, driversLimit: Int?, orderTimeConstraint: Int?,MinimumOneKmValue : Double?,MinimumFiveKmValue : Double?, MaximumValue : Double?, IncrementValue : Double?) {
         self.isMapView = isMapView
         self.radius = radius
         self.driversLimit = driversLimit
         self.orderTimeConstraint = orderTimeConstraint
+        
+        self.MinimumOneKmValue = MinimumOneKmValue
+        self.MinimumFiveKmValue = MinimumFiveKmValue
+        self.MaximumValue = MaximumValue
+        self.IncrementValue = IncrementValue
     }
 }
 

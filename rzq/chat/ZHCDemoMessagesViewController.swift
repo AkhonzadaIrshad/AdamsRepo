@@ -23,6 +23,9 @@ class ZHCDemoMessagesViewController: ZHCMessagesViewController, BillDelegate, Ch
     
     var delegate : ChatDelegate?
     
+    var actionButton : JJFloatingActionButton?
+    var driverActionButton : JJFloatingActionButton?
+    
     var imagePicker: UIImagePickerController!
     enum ImageSource {
         case photoLibrary
@@ -37,7 +40,7 @@ class ZHCDemoMessagesViewController: ZHCMessagesViewController, BillDelegate, Ch
         demoData.loadMessages();
         self.title = "RZQ".localized;
         if self.automaticallyScrollsToMostRecentMessage {
-            self.scrollToBottom(animated: false);
+            self.scrollToBottom(animated: false)
         }
         
         if ((self.user?.data?.roles?.contains(find: "Driver"))! && self.user?.data?.userID == self.order?.driverID) {
@@ -62,6 +65,15 @@ class ZHCDemoMessagesViewController: ZHCMessagesViewController, BillDelegate, Ch
         
     }
     
+    func removeCancel() {
+        self.order?.status = Constants.ORDER_ON_THE_WAY
+        if ((self.user?.data?.roles?.contains(find: "Driver"))! && self.user?.data?.userID == self.order?.driverID) {
+            self.setupFloating()
+        }else if (self.order?.status == Constants.ORDER_ON_THE_WAY) {
+            self.actionButton?.removeFromSuperview()
+        }
+    }
+    
     func reloadChat() {
         self.messageTableView?.reloadData()
         self.scrollToBottom(animated: false)
@@ -81,19 +93,20 @@ class ZHCDemoMessagesViewController: ZHCMessagesViewController, BillDelegate, Ch
     
     
     func setupFloating() {
-        let actionButton = JJFloatingActionButton()
+        self.driverActionButton?.removeFromSuperview()
+         self.driverActionButton = JJFloatingActionButton()
         
-        let item = actionButton.addItem()
-        item.titleLabel.text = "cancel_order".localized
-        item.titleLabel.font = UIFont(name: self.getFontName(), size: 13)
-        item.imageView.image = UIImage(named: "chat_cancelorder")
-        item.buttonColor = UIColor.appLightBlue
-        item.buttonImageColor = .white
-        item.action = { item in
+        let item = self.driverActionButton?.addItem()
+        item?.titleLabel.text = "cancel_order".localized
+        item?.titleLabel.font = UIFont(name: self.getFontName(), size: 13)
+        item?.imageView.image = UIImage(named: "chat_cancelorder")
+        item?.buttonColor = UIColor.appLightBlue
+        item?.buttonImageColor = .white
+        item?.action = { item in
             
             //cancel order
             self.showAlert(title: "alert".localized, message: "confirm_cancel_delivery".localized, actionTitle: "yes".localized, cancelTitle: "no".localized, actionHandler: {
-                if ((self.user?.data?.roles?.contains(find: "Driver"))!) {
+               if ((self.user?.data?.roles?.contains(find: "Driver"))! && self.user?.data?.userID == self.order?.driverID) {
                     self.cancelDeliveryByDriver()
                 }else {
                     self.cancelDeliveryByUser()
@@ -102,18 +115,18 @@ class ZHCDemoMessagesViewController: ZHCMessagesViewController, BillDelegate, Ch
             
         }
         
-        let item2 = actionButton.addItem()
+        let item2 = self.driverActionButton?.addItem()
         if (self.order?.status == Constants.ORDER_PROCESSING) {
-            item2.titleLabel.text = "on_my_way".localized
+            item2?.titleLabel.text = "on_my_way".localized
         }else {
-            item2.titleLabel.text = "complete_delivery".localized
+            item2?.titleLabel.text = "complete_delivery".localized
         }
         
-        item2.titleLabel.font = UIFont(name: self.getFontName(), size: 13)
-        item2.imageView.image = UIImage(named: "chat_onmyway")
-        item2.buttonColor = UIColor.appLightBlue
-        item2.buttonImageColor = .white
-        item2.action = { item in
+        item2?.titleLabel.font = UIFont(name: self.getFontName(), size: 13)
+        item2?.imageView.image = UIImage(named: "chat_onmyway")
+        item2?.buttonColor = UIColor.appLightBlue
+        item2?.buttonImageColor = .white
+        item2?.action = { item in
             if (self.order?.status == Constants.ORDER_PROCESSING) {
                 //on my way
                 if let vc = UIStoryboard(name: "Main", bundle: nil).instantiateViewController(withIdentifier: "CustomerBillVC") as? CustomerBillVC
@@ -142,20 +155,20 @@ class ZHCDemoMessagesViewController: ZHCMessagesViewController, BillDelegate, Ch
             }
         }
         
-        actionButton.buttonColor = UIColor.appLightBlue
-        actionButton.shadowColor = UIColor.blue
-        actionButton.buttonImage = UIImage(named: "chat_floating")
+        self.driverActionButton?.buttonColor = UIColor.appLightBlue
+        self.driverActionButton?.shadowColor = UIColor.blue
+        self.driverActionButton?.buttonImage = UIImage(named: "chat_floating")
         
-        view.addSubview(actionButton)
-        actionButton.translatesAutoresizingMaskIntoConstraints = false
+        view.addSubview(self.driverActionButton!)
+        self.driverActionButton?.translatesAutoresizingMaskIntoConstraints = false
         if #available(iOS 11.0, *) {
-            actionButton.trailingAnchor.constraint(equalTo: view.safeAreaLayoutGuide.trailingAnchor, constant: -16).isActive = true
+            self.driverActionButton?.trailingAnchor.constraint(equalTo: view.safeAreaLayoutGuide.trailingAnchor, constant: -16).isActive = true
         } else {
             // Fallback on earlier versions
         }
         if #available(iOS 11.0, *) {
 //            actionButton.bottomAnchor.constraint(equalTo: view.safeAreaLayoutGuide.bottomAnchor, constant: -56).isActive = true
-              actionButton.bottomAnchor.constraint(equalTo: self.inputMessageBarView.safeAreaLayoutGuide.bottomAnchor, constant: -56).isActive = true
+              self.driverActionButton?.bottomAnchor.constraint(equalTo: self.inputMessageBarView.safeAreaLayoutGuide.bottomAnchor, constant: -56).isActive = true
         } else {
             // Fallback on earlier versions
         }
@@ -192,20 +205,21 @@ class ZHCDemoMessagesViewController: ZHCMessagesViewController, BillDelegate, Ch
     }
     
     func setupUserFloating() {
-        let actionButton = JJFloatingActionButton()
+        self.actionButton?.removeFromSuperview()
+        self.actionButton = JJFloatingActionButton()
         
         
-        let item = actionButton.addItem()
-        item.titleLabel.text = "cancel_order".localized
-        item.titleLabel.font = UIFont(name: self.getFontName(), size: 13)
-        item.imageView.image = UIImage(named: "chat_cancelorder")
-        item.buttonColor = UIColor.appLightBlue
-        item.buttonImageColor = .white
-        item.action = { item in
+        let item = actionButton?.addItem()
+        item?.titleLabel.text = "cancel_order".localized
+        item?.titleLabel.font = UIFont(name: self.getFontName(), size: 13)
+        item?.imageView.image = UIImage(named: "chat_cancelorder")
+        item?.buttonColor = UIColor.appLightBlue
+        item?.buttonImageColor = .white
+        item?.action = { item in
             
             //cancel order
             self.showAlert(title: "alert".localized, message: "confirm_cancel_delivery".localized, actionTitle: "yes".localized, cancelTitle: "no".localized, actionHandler: {
-                if ((self.user?.data?.roles?.contains(find: "Driver"))!) {
+                   if ((self.user?.data?.roles?.contains(find: "Driver"))! && self.user?.data?.userID == self.order?.driverID) {
                     self.cancelDeliveryByDriver()
                 }else {
                     self.cancelDeliveryByUser()
@@ -214,20 +228,20 @@ class ZHCDemoMessagesViewController: ZHCMessagesViewController, BillDelegate, Ch
             
         }
         
-        actionButton.buttonColor = UIColor.appLightBlue
-        actionButton.shadowColor = UIColor.blue
-        actionButton.buttonImage = UIImage(named: "chat_floating")
+        self.actionButton?.buttonColor = UIColor.appLightBlue
+        self.actionButton?.shadowColor = UIColor.blue
+        self.actionButton?.buttonImage = UIImage(named: "chat_floating")
         
-        view.addSubview(actionButton)
-        actionButton.translatesAutoresizingMaskIntoConstraints = false
+        view.addSubview(actionButton!)
+        self.actionButton?.translatesAutoresizingMaskIntoConstraints = false
         if #available(iOS 11.0, *) {
-            actionButton.trailingAnchor.constraint(equalTo: view.safeAreaLayoutGuide.trailingAnchor, constant: -16).isActive = true
+            self.actionButton?.trailingAnchor.constraint(equalTo: view.safeAreaLayoutGuide.trailingAnchor, constant: -16).isActive = true
         } else {
             // Fallback on earlier versions
         }
         if #available(iOS 11.0, *) {
           //  actionButton.bottomAnchor.constraint(equalTo: view.safeAreaLayoutGuide.bottomAnchor, constant: -56).isActive = true
-            actionButton.bottomAnchor.constraint(equalTo: self.inputMessageBarView.safeAreaLayoutGuide.bottomAnchor, constant: -56).isActive = true
+            self.actionButton?.bottomAnchor.constraint(equalTo: self.inputMessageBarView.safeAreaLayoutGuide.bottomAnchor, constant: -56).isActive = true
         } else {
             // Fallback on earlier versions
         }

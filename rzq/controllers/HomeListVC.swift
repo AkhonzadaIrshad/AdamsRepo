@@ -29,6 +29,7 @@ class HomeListVC: BaseViewController, UITableViewDelegate, UITableViewDataSource
     
     var latitude : Double?
     var longitude : Double?
+    var mModel : FilterModel?
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -43,6 +44,7 @@ class HomeListVC: BaseViewController, UITableViewDelegate, UITableViewDataSource
         
         self.tableView.delegate = self
         self.tableView.dataSource = self
+        
         
         LabasLocationManager.shared.delegate = self
         LabasLocationManager.shared.startUpdatingLocation()
@@ -350,6 +352,7 @@ class HomeListVC: BaseViewController, UITableViewDelegate, UITableViewDataSource
         //        self.present(bottomSheet, animated: true, completion: nil)
         
         sheetContent.delegate = self
+        sheetContent.mModel = self.mModel
         let sheet = SheetViewController(controller: sheetContent, sizes: [.fullScreen, .fixed(self.view.frame.size.height - 50)])
         sheet.willDismiss = { _ in
             // This is called just before the sheet is dismissed
@@ -360,11 +363,13 @@ class HomeListVC: BaseViewController, UITableViewDelegate, UITableViewDataSource
         self.present(sheet, animated: false, completion: nil)
     }
     
-    func onApply(radius: Float, rating: Double, types : Int) {
+    func onApply(radius: Float, rating: Double, types : Int, model : FilterModel) {
+        self.mModel = model
         self.getShopsList(radius: radius, rating: rating, types : types)
     }
     
     func onClear() {
+        self.mModel = FilterModel()
         self.getShopsList(radius: Float(Constants.DEFAULT_RADIUS), rating: 0, types : 0)
     }
     

@@ -129,3 +129,8 @@
 "account_inactive" = "Your account is not active.";
 "asap" = "ASAP";
 "agree_terms" = "By clicking next you agree to our Terms & Conditions.";
+
+"date" = "Date";
+"distance" = "Distance";
+"price" = "Price";
+"sort_notifications_by" = "Sort Notifications By";

@@ -12,7 +12,7 @@ import Cosmos
 
 
 protocol FilterSheetDelegate {
-    func onApply(radius : Float, rating : Double, types : Int)
+    func onApply(radius : Float, rating : Double, types : Int, model : FilterModel)
     func onClear()
 }
 class FilterSheet: UIViewController, UICollectionViewDelegate, UICollectionViewDataSource, UICollectionViewDelegateFlowLayout {
@@ -29,14 +29,28 @@ class FilterSheet: UIViewController, UICollectionViewDelegate, UICollectionViewD
     
     var items = [ShopType]()
     
+    var mModel : FilterModel?
+    
     override func viewDidLoad() {
         super.viewDidLoad()
         
         self.items = Constants.getPlaces()
         
+        for passedType in self.mModel?.types ?? [ShopType]() {
+            for type in self.items {
+                if (type.id == passedType.id) {
+                    if (passedType.icChecked ?? false){
+                        type.icChecked = true
+                    }
+                }
+            }
+        }
         self.sectionsCollection.delegate = self
         self.sectionsCollection.dataSource = self
         self.sectionsCollection.reloadData()
+        
+        self.ratingView.rating = self.mModel?.rating ?? 0.0
+        self.distanceSlider.value = self.mModel?.radius ?? 0.0
         
     }
     
@@ -109,11 +123,16 @@ class FilterSheet: UIViewController, UICollectionViewDelegate, UICollectionViewD
         for item in self.items {
             sum = sum + (item.id ?? 0)
         }
-        delegate?.onApply(radius: (self.distanceSlider.value * 1000.0), rating: self.ratingView.rating, types : sum)
+        mModel = FilterModel()
+        mModel?.rating = self.ratingView.rating
+        mModel?.radius = self.distanceSlider.value
+        mModel?.types = self.items
+        delegate?.onApply(radius: (self.distanceSlider.value * 1000.0), rating: self.ratingView.rating, types : sum, model : self.mModel!)
         self.dismiss(animated: true, completion: nil)
     }
     
     @IBAction func clearAction(_ sender: Any) {
+        mModel = FilterModel()
         delegate?.onClear()
         self.dismiss(animated: true, completion: nil)
     }

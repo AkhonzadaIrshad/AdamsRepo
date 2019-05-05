@@ -32,7 +32,7 @@ class DatumDel: Codable {
     let id: Int?
     let chatId : Int?
     let fromAddress, toAddress, title: String?
-    let status, time: Int?
+    var status, time: Int?
     let statusString, image, createdDate: String?
     let toLatitude, toLongitude, fromLatitude,price, fromLongitude: Double?
     let driverName, driverImage: String?

@@ -8,8 +8,9 @@
 
 import UIKit
 import CoreLocation
+import Sheeeeeeeeet
 
-class NotificationsVC: BaseViewController, UITableViewDelegate, UITableViewDataSource,LabasLocationManagerDelegate {
+class NotificationsVC: BaseViewController, UITableViewDelegate, UITableViewDataSource,LabasLocationManagerDelegate, AcceptBidDelegate {
     
     @IBOutlet weak var btnMenu: UIButton!
     
@@ -21,14 +22,19 @@ class NotificationsVC: BaseViewController, UITableViewDelegate, UITableViewDataS
     
     @IBOutlet weak var btnAbout: UIButton!
     
+    @IBOutlet weak var lblSortBy: MyUILabel!
     
     var items = [DatumNot]()
     
     var latitude : Double?
     var longitude : Double?
     
+    var sortBy : Int?
+    
     override func viewDidLoad() {
         super.viewDidLoad()
+        
+        self.lblSortBy.text = "date".localized
         
         self.btnMenu.addTarget(self, action: #selector(BaseViewController.onSlideMenuButtonPressed(_:)), for: UIControl.Event.touchUpInside)
         
@@ -45,7 +51,7 @@ class NotificationsVC: BaseViewController, UITableViewDelegate, UITableViewDataS
     
     func updateNotifications() {
         self.items.removeAll()
-        ApiService.getAllNotifications(Authorization: self.loadUser().data?.accessToken ?? "") { (response) in
+        ApiService.getAllNotifications(Authorization: self.loadUser().data?.accessToken ?? "", sortBy: self.sortBy ?? 1) { (response) in
             self.items.removeAll()
             self.items.append(contentsOf: response.data ?? [DatumNot]())
             if (self.items.count > 0) {
@@ -59,6 +65,64 @@ class NotificationsVC: BaseViewController, UITableViewDelegate, UITableViewDataS
       }
     }
     
+    @IBAction func sortByAction(_ sender: Any) {
+        let actionSheet = createSortSheet()
+        actionSheet.appearance.title.textColor = UIColor.colorPrimary
+        actionSheet.present(in: self, from: self.view)
+    }
+    
+    func createSortSheet() -> ActionSheet {
+        let title = ActionSheetTitle(title: "sort_notifications_by".localized)
+        
+        let appearance = ActionSheetAppearance()
+        
+        appearance.title.font = UIFont(name: self.getFontName(), size: 16)
+        appearance.sectionTitle.font = UIFont(name: self.getFontName(), size: 14)
+        appearance.sectionTitle.subtitleFont = UIFont(name: self.getFontName(), size: 14)
+        appearance.item.subtitleFont = UIFont(name: self.getFontName(), size: 14)
+        appearance.item.font = UIFont(name: self.getFontName(), size: 14)
+        
+        let item1 = ActionSheetItem(title: "date".localized, value: 1, image: UIImage(named: "ic_sheet_date"))
+        let item2 = ActionSheetItem(title: "distance".localized, value: 2, image: UIImage(named: "ic_sheet_distance"))
+        let item3 = ActionSheetItem(title: "price".localized, value: 3, image: UIImage(named: "ic_sheet_price"))
+        
+        let actionSheet = ActionSheet(items: [title,item1,item2,item3]) { sheet, item in
+            if let value = item.value as? Int {
+                switch (value) {
+                case 1:
+                    //nearby
+                    self.lblSortBy.text = "date".localized
+                    self.sortBy = 1
+                    self.updateNotifications()
+                    break
+                case 2:
+                    //low price
+                    self.lblSortBy.text = "distance".localized
+                    self.sortBy = 2
+                    self.updateNotifications()
+                    break
+                case 3:
+                    //rating
+                    self.lblSortBy.text = "price".localized
+                    self.sortBy = 3
+                    self.updateNotifications()
+                    break
+                default:
+                    print("1")
+                    break
+                }
+            }
+            if item is ActionSheetOkButton {
+                print("OK buttons has the value `true`")
+            }
+        }
+        actionSheet.appearance = appearance
+        actionSheet.title = "select_an_option".localized
+        
+        return actionSheet
+    }
+    
+    
     
     func labasLocationManager(didUpdateLocation location: CLLocation) {
         if (self.latitude ?? 0.0 == 0.0 || self.longitude ?? 0.0 == 0.0) {
@@ -69,7 +133,7 @@ class NotificationsVC: BaseViewController, UITableViewDelegate, UITableViewDataS
     
     override func viewDidAppear(_ animated: Bool) {
         super.viewDidAppear(animated)
-        ApiService.getAllNotifications(Authorization: self.loadUser().data?.accessToken ?? "") { (response) in
+        ApiService.getAllNotifications(Authorization: self.loadUser().data?.accessToken ?? "", sortBy: self.sortBy ?? 1) { (response) in
             self.items.removeAll()
             self.items.append(contentsOf: response.data ?? [DatumNot]())
             if (self.items.count > 0) {
@@ -237,6 +301,7 @@ class NotificationsVC: BaseViewController, UITableViewDelegate, UITableViewDataS
               let notificationId = dict?["Id"] as? Int ?? 0
                 vc.item = item
                 vc.notificationId = notificationId
+                vc.delegate = self
                 
                 self.present(vc, animated: true, completion: nil)
             }
@@ -326,8 +391,21 @@ class NotificationsVC: BaseViewController, UITableViewDelegate, UITableViewDataS
         
     }
     
-    
-    
+    func refreshNotifications() {
+        ApiService.getAllNotifications(Authorization: self.loadUser().data?.accessToken ?? "", sortBy: self.sortBy ?? 1) { (response) in
+            self.items.removeAll()
+            self.items.append(contentsOf: response.data ?? [DatumNot]())
+            if (self.items.count > 0) {
+                self.emptyView.isHidden = true
+                self.tableView.delegate = self
+                self.tableView.dataSource = self
+                self.tableView.reloadData()
+            }else {
+                self.emptyView.isHidden = false
+            }
+            
+        }
+    }
     
     
 }

@@ -193,7 +193,7 @@ class ApiService : NSObject {
         let headers = [Constants.AUTH_HEADER: "bearer \(Authorization)",
             Constants.LANG_HEADER : self.getLang()]
         
-        AFManager.request("\(Constants.BASE_URL)User/DeleteNotification?id=\(id)", method: .delete, parameters: nil ,encoding: JSONEncoding.default, headers: headers)
+        AFManager.request("\(Constants.BASE_URL)UserNotification/Delete?id=\(id)", method: .delete, parameters: nil ,encoding: JSONEncoding.default, headers: headers)
             .responseJSON { response in
                 if let json = response.data {
                     do {
@@ -621,12 +621,12 @@ class ApiService : NSObject {
     
     
     
-    static func getAllNotifications(Authorization : String, completion:@escaping(_ response : AllNotificationsResponse)-> Void) {
+    static func getAllNotifications(Authorization : String, sortBy : Int, completion:@escaping(_ response : AllNotificationsResponse)-> Void) {
         
         let headers = [Constants.AUTH_HEADER: "bearer \(Authorization)",
             Constants.LANG_HEADER : self.getLang()]
         
-        AFManager.request("\(Constants.BASE_URL)User/GetAllNotifications", method: .get, parameters: nil ,encoding: JSONEncoding.default, headers: headers)
+        AFManager.request("\(Constants.BASE_URL)UserNotification/GetAll?sortBy=\(sortBy)", method: .get, parameters: nil ,encoding: JSONEncoding.default, headers: headers)
             .responseJSON { response in
                 if let json = response.data {
                     do {
@@ -708,7 +708,7 @@ class ApiService : NSObject {
                                     "ProfilePicture" : ProfilePicture,
                                     "Email" : Email]
         
-        AFManager.request("\(Constants.BASE_URL)User/RegisterAsDriver", method: .post, parameters: all ,encoding: JSONEncoding.default, headers: headers)
+        AFManager.request("\(Constants.BASE_URL)DriverRequest/Register", method: .post, parameters: all ,encoding: JSONEncoding.default, headers: headers)
             .responseJSON { response in
                 if let json = response.data {
                     do {

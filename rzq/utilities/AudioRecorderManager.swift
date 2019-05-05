@@ -16,7 +16,7 @@ class AudioRecorderManager: NSObject {
     var recordingSession: AVAudioSession!
     var recorder:AVAudioRecorder?
     
-    func setup(){
+    func setup() {
         
         recordingSession = AVAudioSession.sharedInstance()
         

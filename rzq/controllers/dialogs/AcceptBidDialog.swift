@@ -10,7 +10,7 @@ import UIKit
 import Cosmos
 
 protocol AcceptBidDelegate {
-    func didDecline()
+    func refreshNotifications()
 }
 class AcceptBidDialog: BaseVC {
     
@@ -27,6 +27,9 @@ class AcceptBidDialog: BaseVC {
     var bidId : Int?
     var notificationId : Int?
     var item : DatumNot?
+    
+    var delegate : AcceptBidDelegate?
+    
     override func viewDidLoad() {
         super.viewDidLoad()
         
@@ -70,21 +73,25 @@ class AcceptBidDialog: BaseVC {
         ApiService.declineBid(Authorization: self.loadUser().data?.accessToken ?? "", bidId: self.bidId ?? 0) { (response) in
             self.hideLoading()
             if (response.errorCode == 0) {
-                self.deleteNotification()
+                self.showBanner(title: "alert".localized, message: "bid_declined_successfully".localized, style: UIColor.SUCCESS)
+                self.delegate?.refreshNotifications()
+                DispatchQueue.main.asyncAfter(deadline: .now() + 2, execute: {
+                    self.dismiss(animated: true, completion: nil)
+                })
             }else {
                 self.showBanner(title: "alert".localized, message: response.errorMessage ?? "", style: UIColor.INFO)
             }
         }
     }
     
-    func deleteNotification() {
-        ApiService.deleteNotification(Authorization: self.loadUser().data?.accessToken ?? "", id: self.notificationId ?? 0) { (response) in
-            self.showBanner(title: "alert".localized, message: "bid_declined_successfully".localized, style: UIColor.SUCCESS)
-            DispatchQueue.main.asyncAfter(deadline: .now() + 2, execute: {
-                self.dismiss(animated: true, completion: nil)
-            })
-        }
-    }
+//    func deleteNotification() {
+//        ApiService.deleteNotification(Authorization: self.loadUser().data?.accessToken ?? "", id: self.notificationId ?? 0) { (response) in
+//            self.showBanner(title: "alert".localized, message: "bid_declined_successfully".localized, style: UIColor.SUCCESS)
+//            DispatchQueue.main.asyncAfter(deadline: .now() + 2, execute: {
+//                self.dismiss(animated: true, completion: nil)
+//            })
+//        }
+//    }
     
     @IBAction func acceptAction(_ sender: Any) {
         self.showLoading()
@@ -92,6 +99,7 @@ class AcceptBidDialog: BaseVC {
             self.hideLoading()
             if (response.errorCode == 0) {
                 self.showBanner(title: "alert".localized, message: "bid_accepted_successfully".localized, style: UIColor.SUCCESS)
+                self.delegate?.refreshNotifications()
                 DispatchQueue.main.asyncAfter(deadline: .now() + 2, execute: {
                     self.dismiss(animated: true, completion: nil)
                 })
