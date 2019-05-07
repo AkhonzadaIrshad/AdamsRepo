@@ -56,6 +56,18 @@ class HomeListVC: BaseViewController, UITableViewDelegate, UITableViewDataSource
         
          NotificationCenter.default.addObserver(self, selector: #selector(appCameToForeground), name: UIApplication.willEnterForegroundNotification, object: nil)
         
+        self.validateDriverDueAmount()
+        
+    }
+    
+    func validateDriverDueAmount() {
+        if ((self.loadUser().data?.roles?.contains(find: "Driver"))!) {
+            let check = self.loadUser().data?.exceededDueAmount ?? false
+            if (check) {
+                //show alert
+                self.showAlertOK(title: "alert".localized, message: "due_amount".localized, actionTitle: "ok".localized)
+            }
+        }
     }
     
     override func viewDidAppear(_ animated: Bool) {
@@ -170,13 +182,46 @@ class HomeListVC: BaseViewController, UITableViewDelegate, UITableViewDataSource
         })
     }
     
+    func getShopImageByType(type : Int) -> UIImage {
+        switch type {
+        case Constants.PLACE_BAKERY:
+            return UIImage(named: "ic_place_bakery")!
+        case Constants.PLACE_BOOK_STORE:
+            return UIImage(named: "ic_place_book_store")!
+        case Constants.PLACE_CAFE:
+            return UIImage(named: "ic_place_cafe")!
+        case Constants.PLACE_MEAL_DELIVERY:
+            return UIImage(named: "ic_place_meal_delivery")!
+        case Constants.PLACE_MEAL_TAKEAWAY:
+            return UIImage(named: "ic_place_meal_takeaway")!
+        case Constants.PLACE_PHARMACY:
+            return UIImage(named: "ic_place_pharmacy")!
+        case Constants.PLACE_RESTAURANT:
+            return UIImage(named: "ic_place_restaurant")!
+        case Constants.PLACE_SHOPPING_MALL:
+            return UIImage(named: "ic_place_shopping_mall")!
+        case Constants.PLACE_STORE:
+            return UIImage(named: "ic_place_store")!
+        case Constants.PLACE_SUPERMARKET:
+            return UIImage(named: "ic_place_supermarket")!
+        default:
+            return UIImage(named: "ic_place_store")!
+        }
+    }
+    
+    
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         let cell : ShopCell = tableView.dequeueReusableCell(withIdentifier: "shopcell", for: indexPath) as! ShopCell
         
         let shop = self.shops[indexPath.row]
         
-        let url = URL(string: "\(Constants.IMAGE_URL)\(shop.image ?? "")")
-        cell.ivLogo.kf.setImage(with: url)
+        if (shop.image?.count ?? 0 > 0) {
+            let url = URL(string: "\(Constants.IMAGE_URL)\(shop.image ?? "")")
+            cell.ivLogo.kf.setImage(with: url)
+        }else {
+          cell.ivLogo.image = self.getShopImageByType(type: shop.type ?? 0)
+        }
+        
         
         cell.lblName.text = shop.name ?? ""
         cell.lblAddress.text = shop.address ?? ""

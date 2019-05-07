@@ -26,7 +26,7 @@ class Constants {
     static var LANG_HEADER = "Accept-Language"
     static var BASE_URL = "http://35.192.208.228/RZQ/api/"
     
-    static var DEFAULT_RADIUS = 50000.0
+    static var DEFAULT_RADIUS = 20000.0
     
     static var ORDER_NUMBER_PREFIX = "RZQ_"
     
@@ -73,7 +73,13 @@ class Constants {
     static func getPlaces() -> Array<ShopType> {
         var places : Array<ShopType> = Array()
         
-        var item = ShopType()
+       var item = ShopType()
+        item.id = Constants.PLACE_RESTAURANT
+        item.name = "restaurant".localized
+       // item.icChecked = true
+        places.append(item)
+        
+        item = ShopType()
         item.id = Constants.PLACE_BAKERY
         item.name = "bakery".localized
         places.append(item)
@@ -103,11 +109,7 @@ class Constants {
         item.name = "pharmacy".localized
         places.append(item)
         
-        item = ShopType()
-        item.id = Constants.PLACE_RESTAURANT
-        item.name = "restaurant".localized
-        places.append(item)
-        
+       
         item = ShopType()
         item.id = Constants.PLACE_SHOPPING_MALL
         item.name = "shopping_mall".localized

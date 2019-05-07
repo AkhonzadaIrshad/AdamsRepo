@@ -9,6 +9,9 @@
 import UIKit
 import CBPinEntryView
 
+protocol PhoneVerificationDelegate {
+    func resend()
+}
 class PhoneVerificationDialog: BaseVC {
 
     @IBOutlet weak var pinView: CBPinEntryView!
@@ -22,6 +25,8 @@ class PhoneVerificationDialog: BaseVC {
     var timer:Timer?
     
     var userId : String?
+    
+    var delegate : PhoneVerificationDelegate?
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -65,6 +70,7 @@ class PhoneVerificationDialog: BaseVC {
         self.btnResend.isHidden = true
         self.resendView.isHidden = true
         self.startTimer()
+        self.delegate?.resend()
     }
     
     @IBAction func confirmAction(_ sender: Any) {
@@ -92,5 +98,10 @@ class PhoneVerificationDialog: BaseVC {
             self.showBanner(title: "alert".localized, message: "wrong_verification_code".localized, style: UIColor.INFO)
         }
     }
+    
+    @IBAction func dismissAction(_ sender: Any) {
+        self.dismiss(animated: true, completion: nil)
+    }
+    
     
 }

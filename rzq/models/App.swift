@@ -23,5 +23,4 @@ class App: NSObject {
         return instance
     }()
     
-    
 }

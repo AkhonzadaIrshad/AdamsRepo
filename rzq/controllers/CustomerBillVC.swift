@@ -159,7 +159,7 @@ extension CustomerBillVC: UITextFieldDelegate {
         if let text = textField.text as NSString? {
             let txtAfterUpdate = text.replacingCharacters(in: range, with: string)
             if txtAfterUpdate.convertToEnglishNumber() != "0" {
-                textField.text = txtAfterUpdate.convertToEnglishNumber()
+                textField.text = txtAfterUpdate.replacedArabicDigitsWithEnglish
             }
         }
         if textField == self.edtOrderCost {

@@ -121,7 +121,9 @@ class FilterSheet: UIViewController, UICollectionViewDelegate, UICollectionViewD
     @IBAction func applyAction(_ sender: Any) {
         var sum = 0
         for item in self.items {
-            sum = sum + (item.id ?? 0)
+            if (item.icChecked ?? false) {
+                sum = sum + (item.id ?? 0)
+            }
         }
         mModel = FilterModel()
         mModel?.rating = self.ratingView.rating

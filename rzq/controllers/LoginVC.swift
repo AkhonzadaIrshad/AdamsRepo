@@ -10,7 +10,7 @@ import UIKit
 import SkyFloatingLabelTextField
 import CountryPickerView
 
-class LoginVC: BaseVC, CountryPickerViewDataSource, CountryPickerViewDelegate {
+class LoginVC: BaseVC, CountryPickerViewDataSource, CountryPickerViewDelegate, PhoneVerificationDelegate {
 
     @IBOutlet weak var edtUserName: SkyFloatingLabelTextField!
     
@@ -88,6 +88,7 @@ class LoginVC: BaseVC, CountryPickerViewDataSource, CountryPickerViewDelegate {
                     vc.modalPresentationStyle = UIModalPresentationStyle.overCurrentContext
                     vc.view.backgroundColor = UIColor.clear
                     vc.userId = response.data ?? ""
+                    vc.delegate = self
                     
                     self.present(vc, animated: true, completion: nil)
                 }else {
@@ -97,8 +98,20 @@ class LoginVC: BaseVC, CountryPickerViewDataSource, CountryPickerViewDelegate {
         }
     }
     
+    func resend() {
+        var code = self.countryPicker.selectedCountry.phoneCode
+        code = code.replacingOccurrences(of: "+", with: "")
+        var mobile = self.edtMobileNumber.text ?? ""
+        if (mobile.starts(with: "0")) {
+            mobile = String(mobile.dropFirst())
+        }
+        ApiService.registerUser(phoneNumber: "\(code)\(mobile)", fullName: self.edtUserName.text ?? "", email: "", birthDate: "", gender: 1) { (response) in
+           
+        }
+    }
+    
     @IBAction func skipAction(_ sender: Any) {
-        self.updateUser(self.getRealmUser(userProfile: VerifyResponse(data: DataClass(accessToken: "", phoneNumber: "", username: "", fullName: "", userID: "", dateOfBirth: "", profilePicture: "", email: "", gender: 0, rate: 0, roles: "", isOnline: false), errorCode: 0, errorMessage: "")))
+        self.updateUser(self.getRealmUser(userProfile: VerifyResponse(data: DataClass(accessToken: "", phoneNumber: "", username: "", fullName: "", userID: "", dateOfBirth: "", profilePicture: "", email: "", gender: 0, rate: 0, roles: "", isOnline: false,exceededDueAmount: false), errorCode: 0, errorMessage: "")))
         let mainStoryboardIpad : UIStoryboard = UIStoryboard(name: "Main", bundle: nil)
         let initialViewControlleripad : UIViewController = mainStoryboardIpad.instantiateViewController(withIdentifier: self.getHomeView()) as! UINavigationController
         self.present(initialViewControlleripad, animated: true, completion: {})

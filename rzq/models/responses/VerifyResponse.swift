@@ -29,9 +29,11 @@ class VerifyResponse: Codable {
 class DataClass: Codable {
     let accessToken, phoneNumber, username, fullName: String?
     let userID, dateOfBirth, profilePicture, email: String?
-    let gender, rate: Int?
+    let gender: Int?
+    let rate : Double?
     let roles: String?
     let isOnline: Bool?
+    let exceededDueAmount : Bool?
     
     enum CodingKeys: String, CodingKey {
         case accessToken = "access_token"
@@ -46,9 +48,10 @@ class DataClass: Codable {
         case rate = "Rate"
         case roles = "Roles"
         case isOnline = "IsOnline"
+        case exceededDueAmount = "ExceededDueAmount"
     }
     
-    init(accessToken: String?, phoneNumber: String?, username: String?, fullName: String?, userID: String?, dateOfBirth: String?, profilePicture: String?, email: String?, gender: Int?, rate: Int?, roles: String?, isOnline: Bool?) {
+    init(accessToken: String?, phoneNumber: String?, username: String?, fullName: String?, userID: String?, dateOfBirth: String?, profilePicture: String?, email: String?, gender: Int?, rate: Double?, roles: String?, isOnline: Bool?, exceededDueAmount : Bool?) {
         self.accessToken = accessToken
         self.phoneNumber = phoneNumber
         self.username = username
@@ -61,5 +64,6 @@ class DataClass: Codable {
         self.rate = rate
         self.roles = roles
         self.isOnline = isOnline
+        self.exceededDueAmount = exceededDueAmount
     }
 }

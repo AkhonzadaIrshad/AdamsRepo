@@ -31,6 +31,8 @@ class HomeMapVC: BaseViewController,LabasLocationManagerDelegate, UICollectionVi
     
     @IBOutlet weak var collectionView: UICollectionView!
     
+    let cameraZoom : Float = 20.0
+    
     var selectedRoute: NSDictionary!
     
     var markerLocation: GMSMarker?
@@ -72,6 +74,8 @@ class HomeMapVC: BaseViewController,LabasLocationManagerDelegate, UICollectionVi
        
           NotificationCenter.default.addObserver(self, selector: #selector(appCameToForeground), name: UIApplication.willEnterForegroundNotification, object: nil)
         
+        
+        self.validateDriverDueAmount()
     }
     
     override func viewDidAppear(_ animated: Bool) {
@@ -232,8 +236,6 @@ class HomeMapVC: BaseViewController,LabasLocationManagerDelegate, UICollectionVi
             if (response.locationData != nil) {
                 if (item.status == Constants.ORDER_ON_THE_WAY) {
                     self.drawLocationLine(driverLocation: response.locationData!, order: item)
-                }else {
-                    self.gMap?.clear()
                 }
             }
         }
@@ -315,8 +317,6 @@ class HomeMapVC: BaseViewController,LabasLocationManagerDelegate, UICollectionVi
             if (response.locationData != nil) {
                 if (item.status == Constants.ORDER_ON_THE_WAY) {
                     self.drawLocationLine(driverLocation: response.locationData!, order: item)
-                }else {
-                    self.gMap?.clear()
                 }
             }
         }
@@ -436,7 +436,7 @@ class HomeMapVC: BaseViewController,LabasLocationManagerDelegate, UICollectionVi
     }
     
     @IBAction func goToCurrentLocation(_ sender: Any) {
-        let camera = GMSCameraPosition.camera(withLatitude: self.latitude ?? 0.0, longitude: self.longitude ?? 0.0, zoom: 15.0)
+        let camera = GMSCameraPosition.camera(withLatitude: self.latitude ?? 0.0, longitude: self.longitude ?? 0.0, zoom: self.cameraZoom)
         self.gMap?.animate(to: camera)
     }
     
@@ -484,8 +484,13 @@ class HomeMapVC: BaseViewController,LabasLocationManagerDelegate, UICollectionVi
     
     func labasLocationManager(didUpdateLocation location: CLLocation) {
         if (self.latitude ?? 0.0 == 0.0 || self.longitude ?? 0.0 == 0.0) {
+            
             self.latitude = location.coordinate.latitude
             self.longitude = location.coordinate.longitude
+            
+//            self.latitude = 29.331003
+//            self.longitude = 47.686659
+            
             self.hideLoading()
             self.setUpGoogleMap()
             
@@ -494,12 +499,12 @@ class HomeMapVC: BaseViewController,LabasLocationManagerDelegate, UICollectionVi
                  
                 }
             }
+            
             let cllLocation = CLLocation(latitude: self.latitude ?? 0.0, longitude: self.longitude ?? 0.0)
             self.lblLocation.isHidden = false
             self.btnLocation.isHidden = false
             self.GetAnnotationUsingCoordinated(cllLocation)
            
-            
         }
          self.loadTracks()
     }
@@ -512,7 +517,7 @@ class HomeMapVC: BaseViewController,LabasLocationManagerDelegate, UICollectionVi
     }
     
     func setUpGoogleMap() {
-        let camera = GMSCameraPosition.camera(withLatitude: self.latitude ?? 0.0, longitude: self.longitude ?? 0.0, zoom: 15.0)
+        let camera = GMSCameraPosition.camera(withLatitude: self.latitude ?? 0.0, longitude: self.longitude ?? 0.0, zoom: self.cameraZoom)
         gMap = GMSMapView.map(withFrame: CGRect(x: 0, y: 0, width: self.mapView.frame.width, height: self.mapView.frame.height), camera: camera)
         gMap?.delegate = self
         let marker = GMSMarker()
@@ -525,12 +530,11 @@ class HomeMapVC: BaseViewController,LabasLocationManagerDelegate, UICollectionVi
         gMap?.bindFrameToSuperviewBounds()
         self.view.layoutSubviews()
         
-        self.getShopsList(radius: Float(Constants.DEFAULT_RADIUS), rating: 0, types : 0)
+        self.getShopsList(radius: Float(Constants.DEFAULT_RADIUS), rating: 0, types : 64)
         
     }
     
     func loadTracks() {
-        self.gMap?.clear()
         ApiService.getOnGoingDeliveries(Authorization: self.loadUser().data?.accessToken ?? "") { (response) in
             self.items.removeAll()
             for item in response.data ?? [DatumDel]() {
@@ -568,7 +572,7 @@ class HomeMapVC: BaseViewController,LabasLocationManagerDelegate, UICollectionVi
     }
     
     func onClick(shop: DataShop) {
-        let camera = GMSCameraPosition.camera(withLatitude: shop.latitude ?? 0.0, longitude: shop.longitude ?? 0.0, zoom: 15.0)
+        let camera = GMSCameraPosition.camera(withLatitude: shop.latitude ?? 0.0, longitude: shop.longitude ?? 0.0, zoom: self.cameraZoom)
         self.gMap?.animate(to: camera)
         // marker.icon = UIImage(named: "ic_map_shop_selected")
         ApiService.getShopDetails(id: shop.id ?? 0) { (response) in
@@ -594,11 +598,11 @@ class HomeMapVC: BaseViewController,LabasLocationManagerDelegate, UICollectionVi
             // This is called after the sheet is dismissed
         }
         self.present(sheet, animated: false, completion: nil)
-        
     }
     
     func onApply(radius: Float, rating: Double, types : Int, model : FilterModel) {
         gMap?.clear()
+        self.mModel = FilterModel()
         self.mModel = model
         self.getShopsList(radius: radius, rating: rating, types : types)
     }
@@ -624,6 +628,16 @@ class HomeMapVC: BaseViewController,LabasLocationManagerDelegate, UICollectionVi
     }
     @IBAction func tendersAction(_ sender: Any) {
         
+    }
+    
+    func validateDriverDueAmount() {
+        if ((self.loadUser().data?.roles?.contains(find: "Driver"))!) {
+            let check = self.loadUser().data?.exceededDueAmount ?? false
+            if (check) {
+                //show alert
+                self.showAlertOK(title: "alert".localized, message: "due_amount".localized, actionTitle: "ok".localized)
+            }
+        }
     }
     
     fileprivate func GetAnnotationUsingCoordinated(_ location : CLLocation) {
@@ -720,7 +734,7 @@ extension HomeMapVC : GMSMapViewDelegate {
             mark.icon = UIImage(named: "ic_map_shop")
         }
         marker.icon = UIImage(named: "ic_map_shop_selected")
-        let camera = GMSCameraPosition.camera(withLatitude: marker.position.latitude, longitude: marker.position.longitude, zoom: 15.0)
+        let camera = GMSCameraPosition.camera(withLatitude: marker.position.latitude, longitude: marker.position.longitude, zoom: self.cameraZoom)
         self.gMap?.animate(to: camera)
        // marker.icon = UIImage(named: "ic_map_shop_selected")
         ApiService.getShopDetails(id: Int(id)!) { (response) in

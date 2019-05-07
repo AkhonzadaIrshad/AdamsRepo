@@ -295,6 +295,15 @@ class DeliveryStep1: BaseVC,LabasLocationManagerDelegate {
                 self.lblPickupLocation.text = shop.name ?? ""
                 self.lblPickupLocation.textColor = UIColor.appDarkBlue
                 
+                
+                for marker in self.shopMarkers {
+                    marker.icon = UIImage(named: "ic_map_shop")
+                    if (marker.title == "\(shop.id ?? 0)") {
+                         marker.icon = UIImage(named: "ic_map_shop_selected")
+                    }
+                }
+                
+                
                 let camera = GMSCameraPosition.camera(withLatitude: self.orderModel?.pickUpLatitude ?? 0.0, longitude: self.orderModel?.pickUpLongitude ?? 0.0, zoom: 15.0)
                 self.gMap?.animate(to: camera)
                 

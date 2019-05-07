@@ -408,4 +408,11 @@ class NotificationsVC: BaseViewController, UITableViewDelegate, UITableViewDataS
     }
     
     
+    func onAccept() {
+        let mainStoryboardIpad : UIStoryboard = UIStoryboard(name: "Main", bundle: nil)
+        let initialViewControlleripad : UIViewController = mainStoryboardIpad.instantiateViewController(withIdentifier: self.getHomeView()) as! UINavigationController
+        self.present(initialViewControlleripad, animated: true, completion: {})
+    }
+    
+    
 }

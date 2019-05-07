@@ -123,12 +123,12 @@ class RegisterAsDriverMenuVC: BaseViewController ,UINavigationControllerDelegate
                 self.hideLoading()
                 if (response.errorCode == 0) {
                     self.showBanner(title: "alert".localized, message: "driver_registered".localized, style: UIColor.SUCCESS)
-                    DispatchQueue.main.asyncAfter(deadline: .now() + 2, execute: {
-                        self.navigationController?.popViewController(animated: true)
-                    })
                 }else {
                     self.showBanner(title: "alert".localized, message: response.errorMessage ?? "", style: UIColor.INFO)
                 }
+                DispatchQueue.main.asyncAfter(deadline: .now() + 2, execute: {
+                    self.openViewControllerBasedOnIdentifier(self.getSubHomeView())
+                })
             }
         }
         

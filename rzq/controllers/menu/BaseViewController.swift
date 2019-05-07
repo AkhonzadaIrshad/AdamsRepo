@@ -132,6 +132,16 @@ class BaseViewController: UIViewController, SlideMenuDelegate {
         }
     }
     
+    func getHomeView() -> String {
+        if (App.shared.config?.configSettings?.isMapView ?? true) {
+            // return "HomeMapVC"
+            return "MapNavigationController"
+        }else {
+            //  return "HomeListVC"
+            return "ListNavigationController"
+        }
+    }
+    
     
     func openViewControllerBasedOnIdentifier(_ strIdentifier:String) {
         let destViewController : UIViewController = self.storyboard!.instantiateViewController(withIdentifier: strIdentifier)
@@ -291,16 +301,17 @@ class BaseViewController: UIViewController, SlideMenuDelegate {
         realmUser.profile_picture = userProfile.data?.profilePicture ?? ""
         realmUser.email = userProfile.data?.email ?? ""
         realmUser.gender = userProfile.data?.gender ?? 1
-        realmUser.rate = userProfile.data?.rate ?? 0
+        realmUser.rate = userProfile.data?.rate ?? 0.0
         realmUser.roles = userProfile.data?.roles ?? ""
         realmUser.isOnline = userProfile.data?.isOnline ?? false
+        realmUser.exceeded_amount = userProfile.data?.exceededDueAmount ?? false
         
         return realmUser
     }
     
     
     func getUser (realmUser  : RealmUser) -> VerifyResponse {
-        let userData = DataClass(accessToken: realmUser.access_token, phoneNumber: realmUser.phone_number, username: realmUser.user_name, fullName: realmUser.full_name, userID: realmUser.userId, dateOfBirth: realmUser.date_of_birth, profilePicture: realmUser.profile_picture, email: realmUser.email, gender: realmUser.gender, rate: realmUser.rate, roles: realmUser.roles, isOnline: realmUser.isOnline)
+        let userData = DataClass(accessToken: realmUser.access_token, phoneNumber: realmUser.phone_number, username: realmUser.user_name, fullName: realmUser.full_name, userID: realmUser.userId, dateOfBirth: realmUser.date_of_birth, profilePicture: realmUser.profile_picture, email: realmUser.email, gender: realmUser.gender, rate: realmUser.rate, roles: realmUser.roles, isOnline: realmUser.isOnline,exceededDueAmount : realmUser.exceeded_amount)
         let verifyResponse = VerifyResponse(data: userData, errorCode: 0, errorMessage: "")
         
         return verifyResponse
@@ -320,7 +331,7 @@ class BaseViewController: UIViewController, SlideMenuDelegate {
         if (realmUser.count > 0) {
             return self.getUser(realmUser: realmUser[0])
         }else {
-            return VerifyResponse(data: DataClass(accessToken: "", phoneNumber: "", username: "", fullName: "", userID: "", dateOfBirth: "", profilePicture: "", email: "", gender: 1, rate: 0, roles: "", isOnline: false), errorCode: 0, errorMessage: "")
+            return VerifyResponse(data: DataClass(accessToken: "", phoneNumber: "", username: "", fullName: "", userID: "", dateOfBirth: "", profilePicture: "", email: "", gender: 1, rate: 0, roles: "", isOnline: false, exceededDueAmount: false), errorCode: 0, errorMessage: "")
         }
         
     }
@@ -345,6 +356,23 @@ class BaseViewController: UIViewController, SlideMenuDelegate {
         
         alert.addAction(okAction)
         alert.addAction(cancelAction)
+        
+        self.present(alert, animated: true, completion: nil)
+    }
+    
+    
+    func showAlertOK(title: String,
+                   message: String,
+                   actionTitle: String,
+                   cancelHandler:(()->Void)? = nil) {
+        
+        let alert = UIAlertController(title: title, message: message, preferredStyle: .alert)
+        
+        let okAction = UIAlertAction(title: actionTitle, style: .default) { (action) in
+            cancelHandler?()
+        }
+        
+        alert.addAction(okAction)
         
         self.present(alert, animated: true, completion: nil)
     }

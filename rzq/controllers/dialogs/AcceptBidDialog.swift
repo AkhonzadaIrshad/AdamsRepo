@@ -11,6 +11,7 @@ import Cosmos
 
 protocol AcceptBidDelegate {
     func refreshNotifications()
+    func onAccept()
 }
 class AcceptBidDialog: BaseVC {
     
@@ -99,7 +100,7 @@ class AcceptBidDialog: BaseVC {
             self.hideLoading()
             if (response.errorCode == 0) {
                 self.showBanner(title: "alert".localized, message: "bid_accepted_successfully".localized, style: UIColor.SUCCESS)
-                self.delegate?.refreshNotifications()
+                self.delegate?.onAccept()
                 DispatchQueue.main.asyncAfter(deadline: .now() + 2, execute: {
                     self.dismiss(animated: true, completion: nil)
                 })

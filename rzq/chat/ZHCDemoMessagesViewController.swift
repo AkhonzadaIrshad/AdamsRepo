@@ -183,7 +183,7 @@ class ZHCDemoMessagesViewController: ZHCMessagesViewController, BillDelegate, Ch
             if (response.errorCode == 0) {
                 self.showBanner(title: "alert".localized, message: "delivery_cancelled".localized, style: UIColor.SUCCESS)
                 DispatchQueue.main.asyncAfter(deadline: .now() + 2, execute: {
-                    self.dismiss(animated: true, completion: nil)
+                    self.goToOrders()
                 })
             }else {
                 self.showBanner(title: "alert".localized, message: response.errorMessage ?? "", style: UIColor.INFO)
@@ -196,12 +196,22 @@ class ZHCDemoMessagesViewController: ZHCMessagesViewController, BillDelegate, Ch
             if (response.errorCode == 0) {
                 self.showBanner(title: "alert".localized, message: "delivery_cancelled".localized, style: UIColor.SUCCESS)
                 DispatchQueue.main.asyncAfter(deadline: .now() + 2, execute: {
-                    self.dismiss(animated: true, completion: nil)
+                    self.goToOrders()
                 })
             }else {
                 self.showBanner(title: "alert".localized, message: response.errorMessage ?? "", style: UIColor.INFO)
             }
         })
+    }
+    
+    func goToOrders() {
+        if ((self.user?.data?.roles?.contains(find: "Driver"))!) {
+            let vc = UIStoryboard(name: "Main", bundle: nil).instantiateViewController(withIdentifier: "WorkingOrdersNavigationController") as! UINavigationController
+            self.present(vc, animated: true, completion: nil)
+        }else {
+            let vc = UIStoryboard(name: "Main", bundle: nil).instantiateViewController(withIdentifier: "OrdersNavigationController") as! UINavigationController
+            self.present(vc, animated: true, completion: nil)
+        }
     }
     
     func setupUserFloating() {

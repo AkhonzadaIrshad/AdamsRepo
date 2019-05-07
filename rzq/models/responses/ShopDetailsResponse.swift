@@ -32,7 +32,7 @@ class ShopData: Codable {
     let latitude, longitude,rate: Double?
     let phoneNumber, workingHours: String?
     let isOpen: Bool?
-    let type : Int?
+    var type : Int?
     let image: String?
     
     enum CodingKeys: String, CodingKey {

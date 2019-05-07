@@ -54,12 +54,48 @@ class RegisteredShopsVC: BaseViewController, UITableViewDelegate, UITableViewDat
         
     }
     
+    func getShopImageByType(type : Int) -> UIImage {
+        switch type {
+        case Constants.PLACE_BAKERY:
+            return UIImage(named: "ic_place_bakery")!
+        case Constants.PLACE_BOOK_STORE:
+            return UIImage(named: "ic_place_book_store")!
+        case Constants.PLACE_CAFE:
+            return UIImage(named: "ic_place_cafe")!
+        case Constants.PLACE_MEAL_DELIVERY:
+            return UIImage(named: "ic_place_meal_delivery")!
+        case Constants.PLACE_MEAL_TAKEAWAY:
+            return UIImage(named: "ic_place_meal_takeaway")!
+        case Constants.PLACE_PHARMACY:
+            return UIImage(named: "ic_place_pharmacy")!
+        case Constants.PLACE_RESTAURANT:
+            return UIImage(named: "ic_place_restaurant")!
+        case Constants.PLACE_SHOPPING_MALL:
+            return UIImage(named: "ic_place_shopping_mall")!
+        case Constants.PLACE_STORE:
+            return UIImage(named: "ic_place_store")!
+        case Constants.PLACE_SUPERMARKET:
+            return UIImage(named: "ic_place_supermarket")!
+        default:
+            return UIImage(named: "ic_place_store")!
+        }
+    }
+    
+    
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
        let cell : ShopRegisterCell = tableView.dequeueReusableCell(withIdentifier: "shopregistercell", for: indexPath) as! ShopRegisterCell
         
         let item = self.items[indexPath.row]
-        let url = URL(string: "\(Constants.IMAGE_URL)\(item.image ?? "")")
-        cell.ivLogo.kf.setImage(with: url)
+        
+        if (item.image?.count ?? 0 > 0) {
+            let url = URL(string: "\(Constants.IMAGE_URL)\(item.image ?? "")")
+            cell.ivLogo.kf.setImage(with: url)
+        }else {
+            cell.ivLogo.image = self.getShopImageByType(type: item.type ?? 0)
+        }
+       
+        
+        
         cell.lblName.text = item.name ?? ""
         cell.lblAddress.text = item.address ?? ""
         

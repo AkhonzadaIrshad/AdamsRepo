@@ -37,6 +37,9 @@ class OrderDetailsVC: BaseVC, UICollectionViewDelegate, UICollectionViewDataSour
     @IBOutlet weak var viewChat: UIView!
     @IBOutlet weak var btnChat: MyUIButton!
     
+    @IBOutlet weak var viewCancel: UIView!
+    @IBOutlet weak var btnCancel: MyUIButton!
+    
     @IBOutlet weak var audioViewHeight: NSLayoutConstraint!
     
     @IBOutlet weak var imagesViewHeight: NSLayoutConstraint!
@@ -115,6 +118,17 @@ class OrderDetailsVC: BaseVC, UICollectionViewDelegate, UICollectionViewDataSour
         }
         if (self.order?.images?.count ?? 0 == 0) {
             self.imagesViewHeight.constant = 0
+        }
+        
+        
+        if ((self.loadUser().data?.roles?.contains(find: "Driver"))!) {
+                self.viewCancel.isHidden = true
+        }else {
+            if (self.order?.status == Constants.ORDER_PENDING) {
+                self.viewCancel.isHidden = false
+            }else {
+                self.viewCancel.isHidden = true
+            }
         }
         
     }
@@ -357,13 +371,49 @@ class OrderDetailsVC: BaseVC, UICollectionViewDelegate, UICollectionViewDataSour
         let messagesVC: ZHCDemoMessagesViewController = ZHCDemoMessagesViewController.init()
         messagesVC.presentBool = true
             
-            let order = DatumDel(driverID: "", canReport: false, canTrack: false, id: self.order?.id ?? 0, chatId: self.order?.chatId ?? 0, fromAddress: self.order?.fromAddress ?? "", toAddress: self.order?.toAddress ?? "", title: self.order?.title ?? "", status: self.order?.status ?? 0, price: self.order?.cost ?? 0.0, time: self.order?.time ?? 0, statusString: self.order?.statusString ?? "", image: "", createdDate: self.order?.createdDate ?? "", toLatitude: self.order?.toLatitude ?? 0.0, toLongitude: self.order?.toLongitude ?? 0.0, fromLatitude: self.order?.fromLatitude ?? 0.0, fromLongitude: self.order?.fromLongitude ?? 0.0, driverName: "", driverImage: "", driverRate: 0, canRate: false, canCancel: false, canChat: false)
+            let order = DatumDel(driverID: self.order?.driverId ?? "", canReport: false, canTrack: false, id: self.order?.id ?? 0, chatId: self.order?.chatId ?? 0, fromAddress: self.order?.fromAddress ?? "", toAddress: self.order?.toAddress ?? "", title: self.order?.title ?? "", status: self.order?.status ?? 0, price: self.order?.cost ?? 0.0, time: self.order?.time ?? 0, statusString: self.order?.statusString ?? "", image: "", createdDate: self.order?.createdDate ?? "", toLatitude: self.order?.toLatitude ?? 0.0, toLongitude: self.order?.toLongitude ?? 0.0, fromLatitude: self.order?.fromLatitude ?? 0.0, fromLongitude: self.order?.fromLongitude ?? 0.0, driverName: "", driverImage: "", driverRate: 0, canRate: false, canCancel: false, canChat: false)
             
         messagesVC.order = order
         messagesVC.user = self.loadUser()
         let nav: UINavigationController = UINavigationController.init(rootViewController: messagesVC)
         self.navigationController?.present(nav, animated: true, completion: nil)
         }
+    }
+    
+    func cancelDeliveryByUser() {
+        ApiService.cancelDelivery(Authorization: self.loadUser().data?.accessToken ?? "", deliveryId: self.order?.id ?? 0, completion: { (response) in
+            if (response.errorCode == 0) {
+                self.showBanner(title: "alert".localized, message: "delivery_cancelled".localized, style: UIColor.SUCCESS)
+                DispatchQueue.main.asyncAfter(deadline: .now() + 2, execute: {
+                    self.navigationController?.popViewController(animated: true)
+                })
+            }else {
+                self.showBanner(title: "alert".localized, message: response.errorMessage ?? "", style: UIColor.INFO)
+            }
+        })
+    }
+    
+    func cancelDeliveryByDriver() {
+        ApiService.cancelDeliveryByDriver(Authorization: self.loadUser().data?.accessToken ?? "", deliveryId: self.order?.id ?? 0, completion: { (response) in
+            if (response.errorCode == 0) {
+                self.showBanner(title: "alert".localized, message: "delivery_cancelled".localized, style: UIColor.SUCCESS)
+                DispatchQueue.main.asyncAfter(deadline: .now() + 2, execute: {
+                    self.navigationController?.popViewController(animated: true)
+                })
+            }else {
+                self.showBanner(title: "alert".localized, message: response.errorMessage ?? "", style: UIColor.INFO)
+            }
+        })
+    }
+    
+    @IBAction func cancelOrderAction(_ sender: Any) {
+        self.showAlert(title: "alert".localized, message: "confirm_cancel_delivery".localized, actionTitle: "yes".localized, cancelTitle: "no".localized, actionHandler: {
+            if ((self.loadUser().data?.roles?.contains(find: "Driver"))! && self.loadUser().data?.userID == self.order?.driverId ?? "") {
+                self.cancelDeliveryByDriver()
+            }else {
+                self.cancelDeliveryByUser()
+            }
+        })
     }
     
 }

@@ -87,12 +87,14 @@ class MenuViewController: BaseVC {
               self.moodSwitch.isOn = false
             }
             lblWorkingOrders.text = "working_orders".localized
+            lblWorkingOrders.textColor = UIColor.black
             self.registeredShopsHeight.constant = 50
             self.registeredShopsView.isHidden = false
-        }else {
+        } else {
             self.topViewHeight.constant = 125.0
             self.viewMood.isHidden = true
             lblWorkingOrders.text = "register_as_driver".localized
+            lblWorkingOrders.textColor = UIColor.processing
             self.registeredShopsHeight.constant = 0
             self.registeredShopsView.isHidden = true
         }
@@ -181,13 +183,13 @@ class MenuViewController: BaseVC {
         if (sender.isOn) {
             ApiService.goOnline(Authorization: self.loadUser().data?.accessToken ?? "") { (response) in
                 self.hideLoading()
-                self.updateUser(self.getRealmUser(userProfile: VerifyResponse(data: DataClass(accessToken: self.loadUser().data?.accessToken ?? "", phoneNumber: self.loadUser().data?.phoneNumber ?? "", username: self.loadUser().data?.username ?? "", fullName: self.loadUser().data?.fullName ?? "", userID: self.loadUser().data?.userID ?? "", dateOfBirth: self.loadUser().data?.dateOfBirth ?? "", profilePicture: self.loadUser().data?.profilePicture ?? "", email: self.loadUser().data?.email ?? "", gender: self.loadUser().data?.gender ?? 1, rate: self.loadUser().data?.rate ?? 0, roles: self.loadUser().data?.roles ?? "", isOnline: true), errorCode: 0, errorMessage: "")))
+                self.updateUser(self.getRealmUser(userProfile: VerifyResponse(data: DataClass(accessToken: self.loadUser().data?.accessToken ?? "", phoneNumber: self.loadUser().data?.phoneNumber ?? "", username: self.loadUser().data?.username ?? "", fullName: self.loadUser().data?.fullName ?? "", userID: self.loadUser().data?.userID ?? "", dateOfBirth: self.loadUser().data?.dateOfBirth ?? "", profilePicture: self.loadUser().data?.profilePicture ?? "", email: self.loadUser().data?.email ?? "", gender: self.loadUser().data?.gender ?? 1, rate: self.loadUser().data?.rate ?? 0, roles: self.loadUser().data?.roles ?? "", isOnline: true,exceededDueAmount: self.loadUser().data?.exceededDueAmount ?? false), errorCode: 0, errorMessage: "")))
                 self.moodSwitch.isOn = true
             }
         }else {
             ApiService.goOffline(Authorization: self.loadUser().data?.accessToken ?? "") { (response) in
                 self.hideLoading()
-                    self.updateUser(self.getRealmUser(userProfile: VerifyResponse(data: DataClass(accessToken: self.loadUser().data?.accessToken ?? "", phoneNumber: self.loadUser().data?.phoneNumber ?? "", username: self.loadUser().data?.username ?? "", fullName: self.loadUser().data?.fullName ?? "", userID: self.loadUser().data?.userID ?? "", dateOfBirth: self.loadUser().data?.dateOfBirth ?? "", profilePicture: self.loadUser().data?.profilePicture ?? "", email: self.loadUser().data?.email ?? "", gender: self.loadUser().data?.gender ?? 1, rate: self.loadUser().data?.rate ?? 0, roles: self.loadUser().data?.roles ?? "", isOnline: false), errorCode: 0, errorMessage: "")))
+                    self.updateUser(self.getRealmUser(userProfile: VerifyResponse(data: DataClass(accessToken: self.loadUser().data?.accessToken ?? "", phoneNumber: self.loadUser().data?.phoneNumber ?? "", username: self.loadUser().data?.username ?? "", fullName: self.loadUser().data?.fullName ?? "", userID: self.loadUser().data?.userID ?? "", dateOfBirth: self.loadUser().data?.dateOfBirth ?? "", profilePicture: self.loadUser().data?.profilePicture ?? "", email: self.loadUser().data?.email ?? "", gender: self.loadUser().data?.gender ?? 1, rate: self.loadUser().data?.rate ?? 0, roles: self.loadUser().data?.roles ?? "", isOnline: false,exceededDueAmount: self.loadUser().data?.exceededDueAmount ?? false), errorCode: 0, errorMessage: "")))
                 self.moodSwitch.isOn = false
             }
         }

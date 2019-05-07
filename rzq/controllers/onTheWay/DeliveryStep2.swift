@@ -61,6 +61,11 @@ class DeliveryStep2: BaseVC {
         self.drawLocationLine()
     }
     
+    @IBAction func myLocationAction(_ sender: Any) {
+        let camera = GMSCameraPosition.camera(withLatitude: self.latitude ?? 0.0, longitude: self.longitude ?? 0.0, zoom: 20.0)
+        self.gMap?.animate(to: camera)
+    }
+    
     func validate() -> Bool {
         if (self.orderModel?.dropOffLatitude ?? 0.0 == 0.0 || self.orderModel?.dropOffLongitude ?? 0.0 == 0.0) {
             self.showBanner(title: "alert".localized, message: "choose_drop_location".localized, style: UIColor.INFO)
@@ -88,7 +93,6 @@ class DeliveryStep2: BaseVC {
     }
     
     func setUpGoogleMap() {
-        
         let camera = GMSCameraPosition.camera(withLatitude: self.latitude ?? 0.0, longitude: self.longitude ?? 0.0, zoom: 15.0)
         gMap = GMSMapView.map(withFrame: CGRect(x: 0, y: 0, width: self.mapView.frame.width, height: self.mapView.frame.height), camera: camera)
         gMap?.delegate = self

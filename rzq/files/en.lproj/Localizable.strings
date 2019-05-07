@@ -134,3 +134,5 @@
 "distance" = "Distance";
 "price" = "Price";
 "sort_notifications_by" = "Sort Notifications By";
+"ok" = "Ok";
+"due_amount" = "Your due balance is too high, you wont be receving any new orders, kindly contact RZQ.";

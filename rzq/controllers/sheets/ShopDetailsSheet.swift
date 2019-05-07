@@ -37,10 +37,42 @@ class ShopDetailsSheet: BaseVC {
         super.viewWillAppear(animated)
         lblName.text = shop?.name ?? ""
         lblDesc.text = shop?.address ?? ""
-        let url = URL(string: "\(Constants.IMAGE_URL)\(shop?.image ?? "")")
-        ivLogo.kf.setImage(with: url)
+        
+        if (shop?.image?.count ?? 0 > 0) {
+            let url = URL(string: "\(Constants.IMAGE_URL)\(shop?.image ?? "")")
+          self.ivLogo.kf.setImage(with: url)
+        }else {
+            self.ivLogo.image = self.getShopImageByType(type : self.shop?.type ?? 0)
+        }
+       
     }
     
+    func getShopImageByType(type : Int) -> UIImage {
+        switch type {
+        case Constants.PLACE_BAKERY:
+            return UIImage(named: "ic_place_bakery")!
+        case Constants.PLACE_BOOK_STORE:
+            return UIImage(named: "ic_place_book_store")!
+        case Constants.PLACE_CAFE:
+            return UIImage(named: "ic_place_cafe")!
+        case Constants.PLACE_MEAL_DELIVERY:
+            return UIImage(named: "ic_place_meal_delivery")!
+        case Constants.PLACE_MEAL_TAKEAWAY:
+            return UIImage(named: "ic_place_meal_takeaway")!
+        case Constants.PLACE_PHARMACY:
+            return UIImage(named: "ic_place_pharmacy")!
+        case Constants.PLACE_RESTAURANT:
+            return UIImage(named: "ic_place_restaurant")!
+        case Constants.PLACE_SHOPPING_MALL:
+            return UIImage(named: "ic_place_shopping_mall")!
+        case Constants.PLACE_STORE:
+            return UIImage(named: "ic_place_store")!
+        case Constants.PLACE_SUPERMARKET:
+            return UIImage(named: "ic_place_supermarket")!
+        default:
+            return UIImage(named: "ic_place_store")!
+        }
+    }
     
     @IBAction func orderAction(_ sender: Any) {
         if (self.isLoggedIn()) {
