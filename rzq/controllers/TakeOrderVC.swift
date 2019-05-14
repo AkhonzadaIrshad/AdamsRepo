@@ -220,7 +220,7 @@ class TakeOrderVC: BaseVC, AVAudioPlayerDelegate {
         let origin = "\(self.fromLatitude ?? 0),\(self.fromLongitude ?? 0)"
         let destination = "\(self.toLatitude ?? 0),\(self.toLongitude ?? 0)"
         
-        let urlString = "https://maps.googleapis.com/maps/api/directions/json?origin=\(origin)&destination=\(destination)&mode=driving&key=AIzaSyDxtBzX5RkfCrl51ttGLHMKXAk9zrW4LLY"
+        let urlString = "https://maps.googleapis.com/maps/api/directions/json?origin=\(origin)&destination=\(destination)&mode=driving&key=\(Constants.GOOGLE_API_KEY)"
         
         let url = URL(string: urlString)
         URLSession.shared.dataTask(with: url!, completionHandler: {

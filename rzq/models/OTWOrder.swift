@@ -16,6 +16,8 @@ class OTWOrder : NSObject {
     var dropOffAddress : String?
     var pickUpDetails : String?
     var dropOffDetails : String?
+    var orderDetails : String?
+    var orderCost : String?
     var time : Int?
     var shop : DataShop?
 }

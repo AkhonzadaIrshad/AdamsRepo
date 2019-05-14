@@ -112,9 +112,13 @@ class LoginVC: BaseVC, CountryPickerViewDataSource, CountryPickerViewDelegate, P
     
     @IBAction func skipAction(_ sender: Any) {
         self.updateUser(self.getRealmUser(userProfile: VerifyResponse(data: DataClass(accessToken: "", phoneNumber: "", username: "", fullName: "", userID: "", dateOfBirth: "", profilePicture: "", email: "", gender: 0, rate: 0, roles: "", isOnline: false,exceededDueAmount: false), errorCode: 0, errorMessage: "")))
+        
+        
         let mainStoryboardIpad : UIStoryboard = UIStoryboard(name: "Main", bundle: nil)
         let initialViewControlleripad : UIViewController = mainStoryboardIpad.instantiateViewController(withIdentifier: self.getHomeView()) as! UINavigationController
         self.present(initialViewControlleripad, animated: true, completion: {})
+        
+    
     }
     
     func validateFields() -> Bool {

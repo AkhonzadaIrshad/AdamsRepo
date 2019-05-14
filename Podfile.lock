@@ -117,7 +117,6 @@ PODS:
   - Realm/Headers (3.13.1)
   - RealmSwift (3.13.1):
     - Realm (= 3.13.1)
-  - SearchTextField (1.2.2)
   - Sheeeeeeeeet (1.2.4)
   - SimpleCheckbox (1.5.0)
   - SkyFloatingLabelTextField (3.6.0)
@@ -155,7 +154,6 @@ DEPENDENCIES:
   - RangeSeekSlider
   - ReadMoreTextView
   - RealmSwift
-  - SearchTextField
   - Sheeeeeeeeet
   - SimpleCheckbox
   - SkyFloatingLabelTextField (~> 3.0)
@@ -204,7 +202,6 @@ SPEC REPOS:
     - ReadMoreTextView
     - Realm
     - RealmSwift
-    - SearchTextField
     - Sheeeeeeeeet
     - SimpleCheckbox
     - SkyFloatingLabelTextField
@@ -252,7 +249,6 @@ SPEC CHECKSUMS:
   ReadMoreTextView: 19147adf93abce6d7271e14031a00303fe28720d
   Realm: 50071da38fe079e0735e47c9f2eae738c68c5996
   RealmSwift: 8a1e6a02b7a08cd17a31e3115143fb69fe5f3fb9
-  SearchTextField: a0992739d4b05dcbb40fb3a5cc6526bd991bdd23
   Sheeeeeeeeet: 70de6f5b3874d7cf63a18fbdbed7cf32a9d30883
   SimpleCheckbox: 1e59697852ef3caa56a0ed1b40be0f034763b9b9
   SkyFloatingLabelTextField: 38164979b79512f9ff9288ad8acfc4bbf5d843e3
@@ -263,6 +259,6 @@ SPEC CHECKSUMS:
   SwiftyJSON: c4bcba26dd9ec7a027fc8eade48e2c911f229e96
   ZHChat: d554719971be77fb8346a51e3fd8043ff18e1292
 
-PODFILE CHECKSUM: e8d65a65c069f30f3f8a495dce03c2d6e2aa725c
+PODFILE CHECKSUM: b5c0ba1dd7cc74901ea3c935217721b19eb44450
 
 COCOAPODS: 1.5.3

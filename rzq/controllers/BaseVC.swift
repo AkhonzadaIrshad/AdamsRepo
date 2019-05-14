@@ -51,6 +51,15 @@ class BaseVC: UIViewController,UIGestureRecognizerDelegate {
         }
     }
     
+    
+    func getFontName() -> String {
+        if (self.isArabic()) {
+            return Constants.ARABIC_FONT_REGULAR
+        }else {
+            return Constants.ENGLISH_FONT_REGULAR
+        }
+    }
+    
     func showBanner(title:String, message:String,style: UIColor) {
         let banner = Banner(title: title, subtitle: message, image: nil, backgroundColor: style)
         banner.dismissesOnTap = true

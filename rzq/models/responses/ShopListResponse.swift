@@ -53,7 +53,7 @@ class DataShop: Codable {
     init(id: Int?,type : Int?,rate : Double?, name: String?, address : String?, latitude: Double?, longitude: Double?, phoneNumber: String?, workingHours: String?, isOpen: Bool?, image: String?) {
         self.id = id
         self.type = type
-        self.rate = rate
+        self.rate = rate ?? 0.0
         self.name = name
         self.latitude = latitude
         self.longitude = longitude

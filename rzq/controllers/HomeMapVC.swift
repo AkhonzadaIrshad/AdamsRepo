@@ -50,6 +50,10 @@ class HomeMapVC: BaseViewController,LabasLocationManagerDelegate, UICollectionVi
     
     var mModel : FilterModel?
     
+    var polyline : GMSPolyline?
+    var pickMarker : GMSMarker?
+    var dropMarker : GMSMarker?
+    
     var collectionViewFlowLayout : UICollectionViewFlowLayout?
     
     override func viewDidLoad() {
@@ -57,7 +61,7 @@ class HomeMapVC: BaseViewController,LabasLocationManagerDelegate, UICollectionVi
         gMap = GMSMapView()
         self.btnMenu.addTarget(self, action: #selector(BaseViewController.onSlideMenuButtonPressed(_:)), for: UIControl.Event.touchUpInside)
         
-         self.btnAbout.addTarget(self, action: #selector(BaseViewController.onAboutPressed(_:)), for: UIControl.Event.touchUpInside)
+        self.btnAbout.addTarget(self, action: #selector(BaseViewController.onAboutPressed(_:)), for: UIControl.Event.touchUpInside)
         
         self.edtSearch.delegate = self
         self.showLoading()
@@ -67,12 +71,12 @@ class HomeMapVC: BaseViewController,LabasLocationManagerDelegate, UICollectionVi
         
         //snuff
         ApiService.updateRegId(Authorization: self.loadUser().data?.accessToken ?? "", regId: Messaging.messaging().fcmToken ?? "not_avaliable") { (response) in
-        
-          
+            
+            
         }
         
-       
-          NotificationCenter.default.addObserver(self, selector: #selector(appCameToForeground), name: UIApplication.willEnterForegroundNotification, object: nil)
+        
+        NotificationCenter.default.addObserver(self, selector: #selector(appCameToForeground), name: UIApplication.willEnterForegroundNotification, object: nil)
         
         
         self.validateDriverDueAmount()
@@ -236,6 +240,8 @@ class HomeMapVC: BaseViewController,LabasLocationManagerDelegate, UICollectionVi
             if (response.locationData != nil) {
                 if (item.status == Constants.ORDER_ON_THE_WAY) {
                     self.drawLocationLine(driverLocation: response.locationData!, order: item)
+                }else {
+                    self.polyline?.map = nil
                 }
             }
         }
@@ -317,6 +323,8 @@ class HomeMapVC: BaseViewController,LabasLocationManagerDelegate, UICollectionVi
             if (response.locationData != nil) {
                 if (item.status == Constants.ORDER_ON_THE_WAY) {
                     self.drawLocationLine(driverLocation: response.locationData!, order: item)
+                }else {
+                    self.polyline?.map = nil
                 }
             }
         }
@@ -341,7 +349,7 @@ class HomeMapVC: BaseViewController,LabasLocationManagerDelegate, UICollectionVi
         let origin = "\(fromLatitude ?? 0),\(fromLongitude ?? 0)"
         let destination = "\(toLatitude ?? 0),\(toLongitude ?? 0)"
         
-        let urlString = "https://maps.googleapis.com/maps/api/directions/json?origin=\(origin)&destination=\(destination)&mode=driving&key=AIzaSyDxtBzX5RkfCrl51ttGLHMKXAk9zrW4LLY"
+        let urlString = "https://maps.googleapis.com/maps/api/directions/json?origin=\(origin)&destination=\(destination)&mode=driving&key=\(Constants.GOOGLE_API_KEY)"
         
         let url = URL(string: urlString)
         URLSession.shared.dataTask(with: url!, completionHandler: {
@@ -364,28 +372,28 @@ class HomeMapVC: BaseViewController,LabasLocationManagerDelegate, UICollectionVi
                                     let routeOverviewPolyline:NSDictionary = (route as! NSDictionary).value(forKey: "overview_polyline") as! NSDictionary
                                     let points = routeOverviewPolyline.object(forKey: "points")
                                     let path = GMSPath.init(fromEncodedPath: points! as! String)
-                                    let polyline = GMSPolyline.init(path: path)
-                                    polyline.strokeWidth = 2
-                                    polyline.strokeColor = UIColor.appDarkBlue
+                                    self.polyline = GMSPolyline.init(path: path)
+                                    self.polyline?.strokeWidth = 2
+                                    self.polyline?.strokeColor = UIColor.appDarkBlue
                                     
                                     let bounds = GMSCoordinateBounds(path: path!)
                                     self.gMap?.animate(with: GMSCameraUpdate.fit(bounds, withPadding: 30.0))
                                     
-                                    polyline.map = self.gMap
+                                    self.polyline?.map = self.gMap
                                     
                                     
                                     let pickUpPosition = CLLocationCoordinate2D(latitude: fromLatitude ?? 0.0, longitude: fromLongitude ?? 0.0)
-                                    let pickMarker = GMSMarker(position: pickUpPosition)
-                                    pickMarker.title = "track"
-                                    pickMarker.icon = UIImage(named: "ic_map_driver")
-                                    pickMarker.map = self.gMap
+                                    self.pickMarker = GMSMarker(position: pickUpPosition)
+                                    self.pickMarker?.title = "track"
+                                    self.pickMarker?.icon = UIImage(named: "ic_map_driver")
+                                    self.pickMarker?.map = self.gMap
                                     
                                     
                                     let dropOffPosition = CLLocationCoordinate2D(latitude: toLatitude ?? 0.0, longitude: toLongitude ?? 0.0)
-                                    let dropMarker = GMSMarker(position: dropOffPosition)
-                                    dropMarker.title = "track"
-                                    dropMarker.icon = UIImage(named: "ic_location")
-                                    dropMarker.map = self.gMap
+                                    self.dropMarker = GMSMarker(position: dropOffPosition)
+                                    self.dropMarker?.title = "track"
+                                    self.dropMarker?.icon = UIImage(named: "ic_location")
+                                    self.dropMarker?.map = self.gMap
                                     
                                 }
                             })
@@ -448,6 +456,7 @@ class HomeMapVC: BaseViewController,LabasLocationManagerDelegate, UICollectionVi
                 vc.orderModel = order
                 vc.latitude = self.latitude
                 vc.longitude = self.longitude
+                vc.fromHome = true
                 self.navigationController?.pushViewController(vc, animated: true)
             }
         }
@@ -482,21 +491,23 @@ class HomeMapVC: BaseViewController,LabasLocationManagerDelegate, UICollectionVi
         marker.map = gMap
     }
     
+    
+    
     func labasLocationManager(didUpdateLocation location: CLLocation) {
         if (self.latitude ?? 0.0 == 0.0 || self.longitude ?? 0.0 == 0.0) {
             
             self.latitude = location.coordinate.latitude
             self.longitude = location.coordinate.longitude
             
-//            self.latitude = 29.331003
-//            self.longitude = 47.686659
+            //            self.latitude = 29.381127
+            //            self.longitude = 47.999135
             
             self.hideLoading()
             self.setUpGoogleMap()
             
             if ((self.loadUser().data?.roles?.contains(find: "Driver"))!) {
                 ApiService.updateLocation(Authorization: self.loadUser().data?.accessToken ?? "", latitude: self.latitude ?? 0.0, longitude: self.longitude ?? 0.0) { (response) in
-                 
+                    
                 }
             }
             
@@ -504,16 +515,20 @@ class HomeMapVC: BaseViewController,LabasLocationManagerDelegate, UICollectionVi
             self.lblLocation.isHidden = false
             self.btnLocation.isHidden = false
             self.GetAnnotationUsingCoordinated(cllLocation)
-           
+            
         }
-         self.loadTracks()
+      //  self.loadTracks()
+        
     }
     
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
         LabasLocationManager.shared.delegate = self
-        LabasLocationManager.shared.startUpdatingLocation()
-        self.loadTracks()
+        if (self.latitude ?? 0.0 == 0.0 || self.longitude ?? 0.0 == 0.0) {
+            LabasLocationManager.shared.startUpdatingLocation()
+        }else {
+            self.setUpGoogleMap()
+        }
     }
     
     func setUpGoogleMap() {
@@ -530,8 +545,8 @@ class HomeMapVC: BaseViewController,LabasLocationManagerDelegate, UICollectionVi
         gMap?.bindFrameToSuperviewBounds()
         self.view.layoutSubviews()
         
-        self.getShopsList(radius: Float(Constants.DEFAULT_RADIUS), rating: 0, types : 64)
-        
+        //   self.getShopsList(radius: Float(Constants.DEFAULT_RADIUS), rating: 0, types : 64)
+        self.loadTracks()
     }
     
     func loadTracks() {
@@ -539,19 +554,22 @@ class HomeMapVC: BaseViewController,LabasLocationManagerDelegate, UICollectionVi
             self.items.removeAll()
             for item in response.data ?? [DatumDel]() {
                 if (item.status! == Constants.ORDER_ON_THE_WAY || item.status! == Constants.ORDER_PROCESSING) {
-               // if (item.status! == Constants.ORDER_ON_THE_WAY) {
+                    // if (item.status! == Constants.ORDER_ON_THE_WAY) {
                     self.items.append(item)
                 }
             }
             if (self.items.count > 0) {
-                self.searchView.isHidden = true
+                //  self.searchView.isHidden = true
                 self.collectionView.isHidden = false
                 self.collectionView.delegate = self
                 self.collectionView.dataSource = self
                 self.collectionView.reloadData()
             }else {
-                self.searchView.isHidden = false
+                // self.searchView.isHidden = false
                 self.collectionView.isHidden = true
+                self.polyline?.map = nil
+                self.pickMarker?.map = nil
+                self.dropMarker?.map = nil
             }
             
         }
@@ -582,11 +600,11 @@ class HomeMapVC: BaseViewController,LabasLocationManagerDelegate, UICollectionVi
     
     @IBAction func filterAction(_ sender: Any) {
         let sheetContent = UIStoryboard(name: "Main", bundle: nil).instantiateViewController(withIdentifier: "FilterSheet") as! FilterSheet
-//        // Do any additional setup after loading the view, typically from a nib.
-//        let bottomSheet = MDCBottomSheetController(contentViewController: sheetContent)
-//
-//        bottomSheet.preferredContentSize = CGSize(width: self.view.frame.size.width, height: self.view.frame.size.height - 50)
-//        self.present(bottomSheet, animated: true, completion: nil)
+        //        // Do any additional setup after loading the view, typically from a nib.
+        //        let bottomSheet = MDCBottomSheetController(contentViewController: sheetContent)
+        //
+        //        bottomSheet.preferredContentSize = CGSize(width: self.view.frame.size.width, height: self.view.frame.size.height - 50)
+        //        self.present(bottomSheet, animated: true, completion: nil)
         
         sheetContent.delegate = self
         sheetContent.mModel = self.mModel
@@ -619,6 +637,7 @@ class HomeMapVC: BaseViewController,LabasLocationManagerDelegate, UICollectionVi
             {
                 vc.latitude = self.latitude
                 vc.longitude = self.longitude
+                vc.fromHome = true
                 self.navigationController?.pushViewController(vc, animated: true)
             }
         }
@@ -714,7 +733,7 @@ class HomeMapVC: BaseViewController,LabasLocationManagerDelegate, UICollectionVi
 
 extension HomeMapVC : GMSMapViewDelegate {
     func mapView(_ mapView: GMSMapView, didChange position: GMSCameraPosition) {
-       
+        
     }
     func mapView(_ mapView: GMSMapView, idleAt position: GMSCameraPosition) {
         
@@ -736,12 +755,12 @@ extension HomeMapVC : GMSMapViewDelegate {
         marker.icon = UIImage(named: "ic_map_shop_selected")
         let camera = GMSCameraPosition.camera(withLatitude: marker.position.latitude, longitude: marker.position.longitude, zoom: self.cameraZoom)
         self.gMap?.animate(to: camera)
-       // marker.icon = UIImage(named: "ic_map_shop_selected")
+        // marker.icon = UIImage(named: "ic_map_shop_selected")
         ApiService.getShopDetails(id: Int(id)!) { (response) in
-          self.showShopDetailsSheet(shop: response.shopData!)
+            self.showShopDetailsSheet(shop: response.shopData!)
         }
         
-       // self.getBCDetailsAPI(bcid: Int(id) ?? 0)
+        // self.getBCDetailsAPI(bcid: Int(id) ?? 0)
         return true
     }
     

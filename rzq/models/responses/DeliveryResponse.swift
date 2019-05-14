@@ -41,8 +41,12 @@ class DataClassDelObj: Codable {
     let images: [String]?
     let voiceFile : String?
     let createdDate: String?
+    let pickUpDetails : String?
+    let dropOffDetails : String?
     
     enum CodingKeys: String, CodingKey {
+        case pickUpDetails = "PickUpDetails"
+        case dropOffDetails = "DropOffDetails"
         case id = "Id"
         case driverId = "DriverId"
         case title = "Title"
@@ -64,7 +68,7 @@ class DataClassDelObj: Codable {
         case voiceFile = "VoiceFile"
     }
     
-    init(id: Int?,driverId : String?, chatId : Int?, title: String?, fromAddress: String?, fromLatitude: Double?, fromLongitude: Double?, toAddress: String?, toLatitude: Double?, toLongitude: Double?, time: Int?, cost: Double?, status: Int?, canCancel: Bool?, canChat: Bool?, statusString: String?, images: [String]?,voiceFile : String?, createdDate: String?) {
+    init(id: Int?,driverId : String?, chatId : Int?, title: String?, fromAddress: String?, fromLatitude: Double?, fromLongitude: Double?, toAddress: String?, toLatitude: Double?, toLongitude: Double?, time: Int?, cost: Double?, status: Int?, canCancel: Bool?, canChat: Bool?, statusString: String?, images: [String]?,voiceFile : String?, createdDate: String?, pickUpDetails: String?,dropOffDetails: String?) {
         self.id = id
         self.driverId = driverId
         self.chatId = chatId
@@ -84,5 +88,7 @@ class DataClassDelObj: Codable {
         self.statusString = statusString
         self.images = images
         self.createdDate = createdDate
+        self.pickUpDetails = pickUpDetails
+        self.dropOffDetails = dropOffDetails
     }
 }

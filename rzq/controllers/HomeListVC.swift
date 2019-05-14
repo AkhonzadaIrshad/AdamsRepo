@@ -236,6 +236,10 @@ class HomeListVC: BaseViewController, UITableViewDelegate, UITableViewDataSource
     @IBAction func onTheWayAction(_ sender: Any) {
         if let vc = UIStoryboard(name: "Main", bundle: nil).instantiateViewController(withIdentifier: "DeliveryStep1") as? DeliveryStep1
         {
+            vc.orderModel = OTWOrder()
+            vc.fromHome = true
+            vc.latitude = self.latitude ?? 0.0
+            vc.longitude = self.longitude ?? 0.0
             self.navigationController?.pushViewController(vc, animated: true)
         }
     }

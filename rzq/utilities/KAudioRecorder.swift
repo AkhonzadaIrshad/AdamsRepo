@@ -95,6 +95,27 @@ class KAudioRecorder: NSObject {
         }
     }
     
+    func getUrl() -> URL {
+        if let recorder = self.audioRecorder  {
+            
+            if recorder.url.path == url?.path && url != nil {
+                return url!
+            }
+            
+            do {
+                audioPlayer = try AVAudioPlayer(contentsOf: recorder.url)
+                url = audioRecorder.url
+                return url!
+                
+            } catch {
+                
+            }
+        }else {
+            return URL(string: "")!
+        }
+        return URL(string: "")!
+    }
+    
     func play() {
         
         if !isRecording && !isPlaying {
@@ -162,7 +183,6 @@ class KAudioRecorder: NSObject {
     }
     
     func stopPlaying() {
-        
         audioPlayer.stop()
         isPlaying = false
     }
@@ -202,7 +222,8 @@ class KAudioRecorder: NSObject {
         return result
     }
     
-}//
+}
+//
 extension KAudioRecorder: AVAudioRecorderDelegate {
     
     func audioRecorderDidFinishRecording(_ recorder: AVAudioRecorder, successfully flag: Bool) {

@@ -117,6 +117,7 @@ class IntroVC: UIPageViewController, UIPageViewControllerDataSource, UIPageViewC
         }
     }
     
+    
     func getRealmUser (userProfile  : VerifyResponse) -> RealmUser {
         
         let realmUser = RealmUser()

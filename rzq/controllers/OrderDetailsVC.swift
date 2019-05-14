@@ -74,7 +74,18 @@ class OrderDetailsVC: BaseVC, UICollectionViewDelegate, UICollectionViewDataSour
         self.setUpGoogleMap()
         self.lblStatus.text = self.order?.statusString ?? ""
         self.lblStatus.textColor = self.getStatusColor(status: self.order?.status ?? 0)
-        self.lblPickup.text = self.order?.fromAddress ?? ""
+        
+        if (self.order?.pickUpDetails?.count ?? 0 > 0) {
+            self.lblPickup.text = "\(self.order?.fromAddress ?? "") ,\(self.order?.pickUpDetails ?? "")"
+        }else {
+            self.lblPickup.text = self.order?.fromAddress ?? ""
+        }
+        if (self.order?.dropOffDetails?.count ?? 0 > 0) {
+             self.lblDropoff.text = "\(self.order?.toAddress ?? "") ,\(self.order?.dropOffDetails ?? "")"
+        }else {
+            self.lblDropoff.text = self.order?.toAddress ?? ""
+        }
+       
         self.lblDropoff.text = self.order?.toAddress ?? ""
         self.lblCost.text = "\(self.order?.cost ?? 0.0) \("currency".localized)"
         
@@ -228,7 +239,7 @@ class OrderDetailsVC: BaseVC, UICollectionViewDelegate, UICollectionViewDataSour
         let origin = "\(fromLatitude ?? 0),\(fromLongitude ?? 0)"
         let destination = "\(toLatitude ?? 0),\(toLongitude ?? 0)"
         
-        let urlString = "https://maps.googleapis.com/maps/api/directions/json?origin=\(origin)&destination=\(destination)&mode=driving&key=AIzaSyDxtBzX5RkfCrl51ttGLHMKXAk9zrW4LLY"
+        let urlString = "https://maps.googleapis.com/maps/api/directions/json?origin=\(origin)&destination=\(destination)&mode=driving&key=\(Constants.GOOGLE_API_KEY)"
         
         let url = URL(string: urlString)
         URLSession.shared.dataTask(with: url!, completionHandler: {

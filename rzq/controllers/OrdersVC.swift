@@ -192,6 +192,8 @@ class OrdersVC: BaseViewController, UITableViewDelegate, UITableViewDataSource {
             return UIColor.cancelled
         case Constants.ORDER_COMPLETED:
             return UIColor.delivered
+        case Constants.ORDER_EXPIRED:
+            return UIColor.expired
         default:
             return UIColor.pending
         }

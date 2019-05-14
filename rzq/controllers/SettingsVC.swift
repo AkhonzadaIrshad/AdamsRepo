@@ -12,7 +12,7 @@ import Alamofire
 import SVProgressHUD
 import Firebase
 
-class SettingsVC: BaseViewController {
+class SettingsVC: BaseVC {
 
     
     @IBOutlet weak var englishButton: UIButton!
@@ -22,26 +22,20 @@ class SettingsVC: BaseViewController {
     
     @IBOutlet weak var arabicButton: UIButton!
     
-    @IBOutlet weak var btnMenu: UIButton!
-    
     @IBOutlet weak var notificationSwitch: UISwitch!
     
-    
+    @IBOutlet weak var ivHandle: UIImageView!
     
     override func viewDidLoad() {
         super.viewDidLoad()
-
-          self.btnMenu.addTarget(self, action: #selector(BaseViewController.onSlideMenuButtonPressed(_:)), for: UIControl.Event.touchUpInside)
-        
-        // Do any additional setup after loading the view.
+       
         if MOLHLanguage.isArabic() {
             arabicCheckbox.image = UIImage(named: "ic_checked")
             englishCheckbox.image = UIImage(named: "ic_unchecked_orange")
-            
+            self.ivHandle.image = UIImage(named: "ic_back_arabic")
         }else {
             englishCheckbox.image = UIImage(named: "ic_checked")
             arabicCheckbox.image = UIImage(named: "ic_unchecked_orange")
-            
         }
         
         let notificationFlag = UserDefaults.standard.value(forKey: Constants.IS_NOTIFICATION_ACTIVE) as? Bool ?? true
@@ -102,5 +96,8 @@ class SettingsVC: BaseViewController {
         MOLH.reset()
     }
     
-
+    @IBAction func backAction(_ sender: Any) {
+        self.navigationController?.popViewController(animated: true)
+    }
+    
 }

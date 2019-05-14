@@ -41,6 +41,8 @@ class Constants {
     static let TWITTER_URL = "twitter://user?screen_name=rzqapp"
     static let TWITTER_URL_ALT = "https://twitter.com/rzqapp"
     
+    static let GOOGLE_API_KEY = "AIzaSyDtBOSpJ-Afpa7yvzkyuVEGfVxuxpam4JE"
+    
     
     static var DELIVERY_CREATED = 1
     static var DELIVERY_CANCELLED = 2
@@ -68,6 +70,7 @@ class Constants {
     static var ORDER_PROCESSING = 2
     static var ORDER_CANCELLED = 5
     static var ORDER_COMPLETED = 4
+    static var ORDER_EXPIRED = 6
     
     
     static func getPlaces() -> Array<ShopType> {

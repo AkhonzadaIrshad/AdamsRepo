@@ -9,18 +9,23 @@
 import UIKit
 import FittedSheets
 
-class FAQsVC: BaseViewController, UITableViewDelegate, UITableViewDataSource {
+class FAQsVC: BaseVC, UITableViewDelegate, UITableViewDataSource {
 
     @IBOutlet weak var tableView: UITableView!
     
     var items = [FAQsDatum]()
     
-    @IBOutlet weak var btnMenu: UIButton!
+    @IBOutlet weak var ivHandle: UIImageView!
+    
     override func viewDidLoad() {
         super.viewDidLoad()
 
         self.tableView.rowHeight = UITableView.automaticDimension
         self.tableView.estimatedRowHeight = 56.0
+        
+        if (self.isArabic()) {
+              self.ivHandle.image = UIImage(named: "ic_back_arabic")
+        }
         
         ApiService.getAllFAQs { (response) in
             self.items.append(contentsOf: response.faQsData ?? [FAQsDatum]())
@@ -28,10 +33,7 @@ class FAQsVC: BaseViewController, UITableViewDelegate, UITableViewDataSource {
             self.tableView.dataSource = self
             self.tableView.reloadData()
         }
-        // Do any additional setup after loading the view.
-        
-          self.btnMenu.addTarget(self, action: #selector(BaseViewController.onSlideMenuButtonPressed(_:)), for: UIControl.Event.touchUpInside)
-        
+      
     }
     
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
@@ -64,6 +66,10 @@ class FAQsVC: BaseViewController, UITableViewDelegate, UITableViewDataSource {
         cell.lblQuestion.text = self.items[indexPath.row].question ?? ""
         
         return cell
+    }
+    
+    @IBAction func blackAction(_ sender: Any) {
+    self.navigationController?.popViewController(animated: true)
     }
     
    

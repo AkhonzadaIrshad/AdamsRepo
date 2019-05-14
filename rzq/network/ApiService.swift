@@ -227,8 +227,7 @@ class ApiService : NSObject {
         }
     }
     
-    
-    static func createDelivery(Authorization : String, desc: String ,fromLongitude : Double, fromLatitude : Double, toLongitude : Double, toLatitude : Double, time : Int, estimatedPrice : String, fromAddress : String,toAddress : String, shopId : Int, completion:@escaping(_ response : DeliveryCreatedResponse)-> Void) {
+    static func createDelivery(Authorization : String, desc: String ,fromLongitude : Double, fromLatitude : Double, toLongitude : Double, toLatitude : Double, time : Int, estimatedPrice : String, fromAddress : String,toAddress : String, shopId : Int,pickUpDetails : String, dropOffDetails : String, completion:@escaping(_ response : DeliveryCreatedResponse)-> Void) {
         
         let headers = [Constants.AUTH_HEADER: "bearer \(Authorization)",
             Constants.LANG_HEADER : self.getLang()]
@@ -242,7 +241,9 @@ class ApiService : NSObject {
                                     "ToAddress" : toAddress,
                                     "Time" : time,
                                     "EstimatedPrice" : estimatedPrice,
-                                    "ShopId" : shopId]
+                                    "ShopId" : shopId,
+                                    "PickUpDetails" : pickUpDetails,
+                                    "DropOffDetails" : dropOffDetails]
         // "ShopId" : shopId]
         
         AFManager.request("\(Constants.BASE_URL)Delivery/Create", method: .post, parameters: all ,encoding: JSONEncoding.default, headers: headers)
@@ -258,7 +259,6 @@ class ApiService : NSObject {
                 }
         }
     }
-    
     
     
     static func createBid(Authorization : String, deliveryId: Int ,time : Int, price : String, longitude : Double, latitude : Double, completion:@escaping(_ response : DeliveryCreatedResponse)-> Void) {
@@ -329,7 +329,7 @@ class ApiService : NSObject {
     
     static func acceptBid(Authorization : String, deliveryId: Int, bidId : Int, completion:@escaping(_ response : AcceptBidResponse)-> Void) {
         
-        let headers = [Constants.AUTH_HEADER: "bearer \(Authorization)",
+        let headers = [Constants.AUTH_HEADER : "bearer \(Authorization)",
             Constants.LANG_HEADER : self.getLang()]
         
         let all : [String : Any] = ["DeliveryId" : deliveryId,
@@ -640,13 +640,11 @@ class ApiService : NSObject {
         }
     }
     
-    
-    
     static func getShops(latitude : Double, longitude : Double, radius : Float,rating : Double,types : Int, completion:@escaping(_ response : ShopListResponse)-> Void) {
         
         let headers = [Constants.LANG_HEADER : self.getLang()]
         
-        AFManager.request("\(Constants.BASE_URL)Shop/List?latitude=\(latitude)&longitude=\(longitude)&radius=\(radius)&rating=\(rating)", method: .get, parameters: nil ,encoding: JSONEncoding.default, headers: headers)
+        AFManager.request("\(Constants.BASE_URL)Shop/List?latitude=\(latitude)&longitude=\(longitude)&radius=\(radius)&rate=\(Int(rating))", method: .get, parameters: nil ,encoding: JSONEncoding.default, headers: headers)
             .responseJSON { response in
                 if let json = response.data {
                     do {
@@ -833,7 +831,7 @@ class ApiService : NSObject {
                 multipartFormData.append(data, withName: "1",fileName: "image.jpg", mimeType: "image/jpg")
             }
             
-             multipartFormData.append(audioData, withName: "2",fileName: "audio.m4a", mimeType: "audio/m4a")
+            multipartFormData.append(audioData, withName: "2",fileName: "audio.m4a", mimeType: "audio/m4a")
             
             
         }, usingThreshold: UInt64.init(), to: "\(Constants.BASE_URL)Delivery/Upload?deliveryId=\(deliveryId)", method: .post, headers: headers) { (result) in

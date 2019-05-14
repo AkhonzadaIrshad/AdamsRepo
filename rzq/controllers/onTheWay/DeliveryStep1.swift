@@ -11,9 +11,9 @@ import GoogleMaps
 import GooglePlaces
 import MapKit
 import CoreLocation
-import SearchTextField
+import Firebase
 
-class DeliveryStep1: BaseVC,LabasLocationManagerDelegate {
+class DeliveryStep1: BaseVC,LabasLocationManagerDelegate, Step2Delegate {
     
     @IBOutlet weak var lblPickupLocation: MyUILabel!
     
@@ -25,9 +25,14 @@ class DeliveryStep1: BaseVC,LabasLocationManagerDelegate {
     
     @IBOutlet weak var ivHandle: UIImageView!
     
+    @IBOutlet weak var ivShop: CircleImage!
+    @IBOutlet weak var viewShopDetails: CardView!
+    
     var markerLocation: GMSMarker?
     var currentZoom: Float = 0.0
     var gMap : GMSMapView?
+    
+    var fromHome : Bool?
     
     var latitude : Double?
     var longitude : Double?
@@ -62,12 +67,12 @@ class DeliveryStep1: BaseVC,LabasLocationManagerDelegate {
         }else {
             self.setUpGoogleMap()
         }
-       
-   
+        
+        
         if (self.orderModel?.shop?.id ?? 0 > 0) {
             self.lblPickupLocation.text = self.orderModel?.pickUpAddress ?? ""
             self.lblPickupLocation.textColor = UIColor.appDarkBlue
-          //  self.edtMoreDetails.text = self.orderModel?.pickUpAddress ?? ""
+            //  self.edtMoreDetails.text = self.orderModel?.pickUpAddress ?? ""
             
             self.pinMarker?.map = nil
             self.pinMarker = GMSMarker()
@@ -80,35 +85,69 @@ class DeliveryStep1: BaseVC,LabasLocationManagerDelegate {
             let camera = GMSCameraPosition.camera(withLatitude: self.orderModel?.pickUpLatitude ?? 0.0, longitude: self.orderModel?.pickUpLongitude ?? 0.0, zoom: 15.0)
             self.gMap?.animate(to: camera)
             
+            
+            self.ivShop.isHidden = false
+            self.viewShopDetails.isHidden = false
+            let url = URL(string: "\(Constants.IMAGE_URL)\(self.orderModel?.shop?.image ?? "")")
+            self.ivShop.kf.setImage(with: url)
+            self.edtMoreDetails.text = "\(self.orderModel?.shop?.name ?? "")\n\(self.orderModel?.shop?.address ?? "")"
+            
+        }
+        
+        ApiService.updateRegId(Authorization: self.loadUser().data?.accessToken ?? "", regId: Messaging.messaging().fcmToken ?? "not_avaliable") { (response) in
+            
+            
         }
         
     }
+    
+    
+    @IBAction func shopDetailsAction(_ sender: Any) {
+        if let vc = UIStoryboard(name: "Main", bundle: nil).instantiateViewController(withIdentifier: "ShopDetailsVC") as? ShopDetailsVC
+        {
+            vc.latitude = self.latitude ?? 0.0
+            vc.longitude = self.longitude ?? 0.0
+            let shopData = ShopData(rate: self.orderModel?.shop?.rate ?? 0.0, nearbyDriversCount: 0, id: self.orderModel?.shop?.id ?? 0, type: self.orderModel?.shop?.type ?? 0, name: self.orderModel?.shop?.name ?? "", address: self.orderModel?.shop?.address ?? "", latitude: self.orderModel?.shop?.latitude ?? 0.0, longitude: self.orderModel?.shop?.longitude ?? 0.0, phoneNumber: self.orderModel?.shop?.phoneNumber ?? "", workingHours: self.orderModel?.shop?.workingHours ?? "", isOpen: self.orderModel?.shop?.isOpen ?? false, image: self.orderModel?.shop?.image ?? "")
+            vc.shop = shopData
+            self.navigationController?.pushViewController(vc, animated: true)
+        }
+    }
+    
     
     func validate() -> Bool {
         if (self.orderModel?.pickUpLatitude ?? 0.0 == 0.0 || self.orderModel?.pickUpLongitude ?? 0.0 == 0.0) {
             self.showBanner(title: "alert".localized, message: "choose_shop_or_pickup".localized, style: UIColor.INFO)
             return false
         }
-//        if (self.orderModel?.shop?.id ?? 0 == 0) {
-//            if (self.edtMoreDetails.text?.count ?? 0 == 0) {
-//                self.showBanner(title: "alert".localized, message: "enter_pickup_details".localized, style: UIColor.INFO)
-//                return false
-//            }
-//        }
+        //        if (self.orderModel?.shop?.id ?? 0 == 0) {
+        //            if (self.edtMoreDetails.text?.count ?? 0 == 0) {
+        //                self.showBanner(title: "alert".localized, message: "enter_pickup_details".localized, style: UIColor.INFO)
+        //                return false
+        //            }
+        //        }
         return true
     }
     
     func labasLocationManager(didUpdateLocation location: CLLocation) {
         if (self.latitude ?? 0.0 == 0.0 || self.longitude ?? 0.0 == 0.0) {
-            self.latitude = location.coordinate.latitude
-            self.longitude = location.coordinate.longitude
+            
+                        self.latitude = location.coordinate.latitude
+                        self.longitude = location.coordinate.longitude
+            
+//            self.latitude = 29.381127
+//            self.longitude = 47.999135
+            
             self.hideLoading()
             self.setUpGoogleMap()
         }
     }
     
+    func updateModel(model: OTWOrder) {
+        self.orderModel = model
+    }
+    
     func setUpGoogleMap() {
-
+        
         let camera = GMSCameraPosition.camera(withLatitude: self.latitude ?? 0.0, longitude: self.longitude ?? 0.0, zoom: 15.0)
         gMap = GMSMapView.map(withFrame: CGRect(x: 0, y: 0, width: self.mapView.frame.width, height: self.mapView.frame.height), camera: camera)
         gMap?.delegate = self
@@ -131,15 +170,17 @@ class DeliveryStep1: BaseVC,LabasLocationManagerDelegate {
     }
     
     @IBAction func step2Action(_ sender: Any) {
-        if (self.validate()) {
-            if let vc = UIStoryboard(name: "Main", bundle: nil).instantiateViewController(withIdentifier: "DeliveryStep2") as? DeliveryStep2
-            {
-                vc.latitude = self.latitude
-                vc.longitude = self.longitude
-                vc.orderModel = self.orderModel
-                self.navigationController?.pushViewController(vc, animated: true)
-            }
-        }
+//        if (self.validate()) {
+//            if let vc = UIStoryboard(name: "Main", bundle: nil).instantiateViewController(withIdentifier: "DeliveryStep2") as? DeliveryStep2
+//            {
+//                self.orderModel?.pickUpDetails = self.edtMoreDetails.text ?? ""
+//                vc.latitude = self.latitude
+//                vc.longitude = self.longitude
+//                vc.orderModel = self.orderModel
+//                vc.delegate = self
+//                self.navigationController?.pushViewController(vc, animated: true)
+//            }
+//        }
         
     }
     
@@ -151,23 +192,31 @@ class DeliveryStep1: BaseVC,LabasLocationManagerDelegate {
         if (self.validate()) {
             if let vc = UIStoryboard(name: "Main", bundle: nil).instantiateViewController(withIdentifier: "DeliveryStep2") as? DeliveryStep2
             {
+                self.orderModel?.pickUpDetails = self.edtMoreDetails.text ?? ""
                 vc.latitude = self.latitude
                 vc.longitude = self.longitude
                 vc.orderModel = self.orderModel
+                vc.delegate = self
                 self.navigationController?.pushViewController(vc, animated: true)
             }
         }
     }
     
     @IBAction func backAction(_ sender: Any) {
-        self.navigationController?.popViewController(animated: true)
+        if (fromHome ?? false) {
+            self.navigationController?.popViewController(animated: true)
+        }else {
+            let mainStoryboardIpad : UIStoryboard = UIStoryboard(name: "Main", bundle: nil)
+            let initialViewControlleripad : UIViewController = mainStoryboardIpad.instantiateViewController(withIdentifier: self.getHomeView()) as! UINavigationController
+            self.present(initialViewControlleripad, animated: true, completion: {})
+        }
     }
     
     @IBAction func searchAction(_ sender: Any) {
         
     }
     
-
+    
     
     fileprivate func getAddressForMapCenter() {
         let point : CGPoint = mapView.center
@@ -278,7 +327,7 @@ class DeliveryStep1: BaseVC,LabasLocationManagerDelegate {
             
             
             for shop in self.filterShops {
-              let item1 = SearchTextFieldItem(title: "\(shop.name ?? "")  \(self.getShopDistance(latitude: shop.latitude ?? 0.0, longitude: shop.longitude ?? 0.0))", subtitle: shop.address ?? "", image: UIImage(named: "ic_location"))
+                let item1 = SearchTextFieldItem(title: "\(shop.name ?? "")  \(self.getShopDistance(latitude: shop.latitude ?? 0.0, longitude: shop.longitude ?? 0.0))", subtitle: shop.address ?? "", image: UIImage(named: "ic_location"))
                 filterItems.append(item1)
             }
             
@@ -296,12 +345,19 @@ class DeliveryStep1: BaseVC,LabasLocationManagerDelegate {
                 self.lblPickupLocation.textColor = UIColor.appDarkBlue
                 
                 
+                
                 for marker in self.shopMarkers {
                     marker.icon = UIImage(named: "ic_map_shop")
                     if (marker.title == "\(shop.id ?? 0)") {
-                         marker.icon = UIImage(named: "ic_map_shop_selected")
+                        marker.icon = UIImage(named: "ic_map_shop_selected")
                     }
                 }
+                
+                self.ivShop.isHidden = false
+                self.viewShopDetails.isHidden = false
+                let url = URL(string: "\(Constants.IMAGE_URL)\(shop.image ?? "")")
+                self.ivShop.kf.setImage(with: url)
+                self.edtMoreDetails.text = "\(shop.name ?? "")\n\(shop.address ?? "")"
                 
                 
                 let camera = GMSCameraPosition.camera(withLatitude: self.orderModel?.pickUpLatitude ?? 0.0, longitude: self.orderModel?.pickUpLongitude ?? 0.0, zoom: 15.0)
@@ -312,7 +368,12 @@ class DeliveryStep1: BaseVC,LabasLocationManagerDelegate {
             
         }
     }
+    
     @IBAction func clearPickLocation(_ sender: Any) {
+        self.ivShop.image = nil
+        self.edtMoreDetails.text = ""
+        self.ivShop.isHidden = true
+        self.viewShopDetails.isHidden = true
         self.gMap?.clear()
         self.getShopsList(radius: Float(Constants.DEFAULT_RADIUS), rating: 0)
     }
@@ -360,6 +421,15 @@ extension DeliveryStep1 : GMSMapViewDelegate {
                 self.orderModel?.pickUpLatitude = response.shopData?.latitude ?? 0.0
                 self.orderModel?.pickUpLongitude = response.shopData?.longitude ?? 0.0
                 
+                
+                self.ivShop.isHidden = false
+                self.viewShopDetails.isHidden = false
+                let url = URL(string: "\(Constants.IMAGE_URL)\(response.shopData?.image ?? "")")
+                self.ivShop.kf.setImage(with: url)
+                self.edtMoreDetails.text = "\(response.shopData?.name ?? "")\n\(response.shopData?.address ?? "")"
+                
+                
+                
                 for mark in self.shopMarkers {
                     mark.icon = UIImage(named: "ic_map_shop")
                 }
@@ -373,8 +443,9 @@ extension DeliveryStep1 : GMSMapViewDelegate {
             return true
         }
     }
+    
     func mapView(_ mapView: GMSMapView, didLongPressAt coordinate: CLLocationCoordinate2D) {
-         self.pinMarker?.map = nil
+        self.pinMarker?.map = nil
         self.pinMarker = GMSMarker()
         self.pinMarker?.position = CLLocationCoordinate2D(latitude: coordinate.latitude, longitude: coordinate.longitude)
         self.pinMarker?.title =  ""
@@ -387,6 +458,12 @@ extension DeliveryStep1 : GMSMapViewDelegate {
         self.orderModel?.pickUpLatitude = coordinate.latitude
         self.orderModel?.pickUpLongitude = coordinate.longitude
         self.getAddressForMapCenter()
+        
+        self.ivShop.image = nil
+        self.edtMoreDetails.text = ""
+        self.ivShop.isHidden = true
+        self.viewShopDetails.isHidden = true
+        
     }
     
 }

@@ -14,48 +14,70 @@ import CoreLocation
 import Sheeeeeeeeet
 import SwiftyGif
 import MultilineTextField
+import SimpleCheckbox
 
+protocol Step3Delegate {
+    func updateModel(model : OTWOrder)
+}
 class DeliveryStep3: BaseVC, UINavigationControllerDelegate, ImagePickerDelegate {
 
     @IBOutlet weak var lblPickupLocation: MyUILabel!
+    
     @IBOutlet weak var lblDropoffLocation: MyUILabel!
+    
     @IBOutlet weak var mapView: UIView!
+    
     @IBOutlet weak var edtCouponNumber: MyUITextField!
+    
     @IBOutlet weak var lblImages: MyUILabel!
+    
     @IBOutlet weak var viewImages: UIView!
+    
     @IBOutlet weak var viewRecording: UIView!
-    @IBOutlet weak var edtCost: MyUITextField!
+    
     @IBOutlet weak var btnTime: MyUIButton!
+    
     @IBOutlet weak var bgRecord: UIImageView!
     
     @IBOutlet weak var ivHandle: UIImageView!
     
     @IBOutlet weak var edtOrderDetails: MultilineTextField!
     
-    
     @IBOutlet weak var gif: UIImageView!
+    
     var markerLocation: GMSMarker?
+    
     var currentZoom: Float = 0.0
+    
     var gMap : GMSMapView?
     
     var latitude : Double?
+    
     var longitude : Double?
+    
+    var delegate : Step3Delegate?
 
     @IBOutlet weak var btnRecord: UIButton!
+    
     @IBOutlet weak var btnPlay: UIButton!
     
     var selectedTime : Int?
     
     var orderModel : OTWOrder?
     
-     var selectedRoute: NSDictionary!
+    var selectedRoute: NSDictionary!
+    
+    @IBOutlet weak var priceChk: Checkbox!
     
     var selectedImages = [UIImage]()
+    
     var imagePicker: UIImagePickerController!
+    
     enum ImageSource {
         case photoLibrary
         case camera
     }
+    
     var recorder = KAudioRecorder.shared
     
     override func viewDidLoad() {
@@ -79,13 +101,22 @@ class DeliveryStep3: BaseVC, UINavigationControllerDelegate, ImagePickerDelegate
         self.lblDropoffLocation.text = self.orderModel?.dropOffAddress ?? ""
         
         self.drawLocationLine()
+        
+        self.edtOrderDetails.text = self.orderModel?.orderDetails ?? ""
+      //  self.edtCost.text = self.orderModel?.orderCost ?? ""
+        
+        self.priceChk.checkmarkStyle = .tick
+        self.priceChk.checkmarkColor = UIColor.processing
+        self.priceChk.checkedBorderColor = UIColor.processing
+        self.priceChk.uncheckedBorderColor = UIColor.colorPrimary
+        
     }
     
     func drawLocationLine() {
         let origin = "\(self.orderModel?.pickUpLatitude ?? 0),\(self.orderModel?.pickUpLongitude ?? 0)"
         let destination = "\(self.orderModel?.dropOffLatitude ?? 0),\(self.orderModel?.dropOffLongitude ?? 0)"
         
-        let urlString = "https://maps.googleapis.com/maps/api/directions/json?origin=\(origin)&destination=\(destination)&mode=driving&key=AIzaSyDxtBzX5RkfCrl51ttGLHMKXAk9zrW4LLY"
+        let urlString = "https://maps.googleapis.com/maps/api/directions/json?origin=\(origin)&destination=\(destination)&mode=driving&key=\(Constants.GOOGLE_API_KEY)"
         
         let url = URL(string: urlString)
         URLSession.shared.dataTask(with: url!, completionHandler: {
@@ -171,6 +202,13 @@ class DeliveryStep3: BaseVC, UINavigationControllerDelegate, ImagePickerDelegate
         
     }
     
+    func saveBackModel() {
+        self.orderModel?.orderDetails = self.edtOrderDetails.text ?? ""
+      //  self.orderModel?.orderCost = self.edtCost.text ?? ""
+        self.delegate?.updateModel(model: self.orderModel!)
+        self.navigationController?.popViewController(animated: true)
+    }
+    
     func selectImageFrom(_ source: ImageSource) {
         imagePicker =  UIImagePickerController()
         imagePicker.delegate = self
@@ -200,15 +238,15 @@ class DeliveryStep3: BaseVC, UINavigationControllerDelegate, ImagePickerDelegate
     }
     
     @IBAction func backAction(_ sender: Any) {
-     self.navigationController?.popViewController(animated: true)
+     self.saveBackModel()
     }
     
     @IBAction func step1Action(_ sender: Any) {
-         self.popBack(3)
+       //  self.popBack(3)
     }
     
     @IBAction func step2Action(_ sender: Any) {
-        self.navigationController?.popViewController(animated: true)
+       // self.navigationController?.popViewController(animated: true)
     }
     
     @IBAction func step3Action(_ sender: Any) {
@@ -281,6 +319,14 @@ class DeliveryStep3: BaseVC, UINavigationControllerDelegate, ImagePickerDelegate
         }
     }
     
+    func getCost() -> Double {
+        if (priceChk.isChecked) {
+            return 11.0
+        }else {
+            return 9.0
+        }
+    }
+    
     @IBAction func timeAction(_ sender: Any) {
         let actionSheet = createTimeSheet()
         actionSheet.appearance.title.textColor = UIColor.colorPrimary
@@ -289,7 +335,7 @@ class DeliveryStep3: BaseVC, UINavigationControllerDelegate, ImagePickerDelegate
     
     @IBAction func placeOrderAction(_ sender: Any) {
         if (self.validate()) {
-            ApiService.createDelivery(Authorization: self.loadUser().data?.accessToken ?? "", desc: self.edtOrderDetails.text ?? "", fromLongitude: self.orderModel?.pickUpLongitude ?? 0.0, fromLatitude: self.orderModel?.pickUpLatitude ?? 0.0, toLongitude: self.orderModel?.dropOffLongitude ?? 0.0, toLatitude: self.orderModel?.dropOffLatitude ?? 0.0, time: self.selectedTime ?? 1, estimatedPrice: self.edtCost.text ?? "", fromAddress: self.orderModel?.pickUpAddress ?? "", toAddress: self.orderModel?.dropOffAddress ?? "", shopId: self.orderModel?.shop?.id ?? 0) { (response) in
+            ApiService.createDelivery(Authorization: self.loadUser().data?.accessToken ?? "", desc: self.edtOrderDetails.text ?? "", fromLongitude: self.orderModel?.pickUpLongitude ?? 0.0, fromLatitude: self.orderModel?.pickUpLatitude ?? 0.0, toLongitude: self.orderModel?.dropOffLongitude ?? 0.0, toLatitude: self.orderModel?.dropOffLatitude ?? 0.0, time: self.selectedTime ?? 1, estimatedPrice: "\(self.getCost())", fromAddress: self.orderModel?.pickUpAddress ?? "", toAddress: self.orderModel?.dropOffAddress ?? "", shopId: self.orderModel?.shop?.id ?? 0, pickUpDetails : self.orderModel?.pickUpDetails ?? "", dropOffDetails : self.orderModel?.dropOffDetails ?? "") { (response) in
                 if (response.data ?? 0 > 0) {
                     self.handleUploadingMedia(id : response.data ?? 0)
                 }else {
@@ -309,7 +355,7 @@ class DeliveryStep3: BaseVC, UINavigationControllerDelegate, ImagePickerDelegate
             }
             var audioData : Data?
             do {
-              audioData = try Data.init(contentsOf: self.recorder.url ?? URL(fileURLWithPath: ""))
+                   audioData = try Data.init(contentsOf: self.recorder.getUrl())
               }catch let err {
               audioData = Data(base64Encoded: "")
             }
@@ -416,10 +462,11 @@ class DeliveryStep3: BaseVC, UINavigationControllerDelegate, ImagePickerDelegate
             self.showBanner(title: "alert".localized, message: "enter_order_details".localized, style: UIColor.INFO)
             return false
         }
-        if (self.edtCost.text?.count ?? 0 == 0) {
-            self.showBanner(title: "alert".localized, message: "enter_order_cost".localized, style: UIColor.INFO)
-            return false
-        }
+        
+//        if (self.edtCost.text?.count ?? 0 == 0) {
+//            self.showBanner(title: "alert".localized, message: "enter_order_cost".localized, style: UIColor.INFO)
+//            return false
+//        }
         
         return true
     }
@@ -435,7 +482,7 @@ class DeliveryStep3: BaseVC, UINavigationControllerDelegate, ImagePickerDelegate
             
             self.present(vc, animated: true, completion: nil)
         }else {
-            self.showAlert(title: "add_image_pic_title".localized, message: "add_salon_pic_message".localized, actionTitle: "camera".localized, cancelTitle: "gallery".localized, actionHandler: {
+            self.showAlertWithCancel(title: "add_image_pic_title".localized, message: "add_salon_pic_message".localized, actionTitle: "camera".localized, cancelTitle: "gallery".localized, actionHandler: {
                 //camera
                 guard UIImagePickerController.isSourceTypeAvailable(.camera) else {
                     self.selectImageFrom(.photoLibrary)
@@ -473,6 +520,10 @@ class DeliveryStep3: BaseVC, UINavigationControllerDelegate, ImagePickerDelegate
         self.gif.isHidden = true
         self.viewRecording.isHidden = true
         
+    }
+    
+    @IBAction func backBtnAction(_ sender: Any) {
+      self.saveBackModel()
     }
     
 }

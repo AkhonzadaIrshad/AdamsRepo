@@ -277,10 +277,24 @@ class MenuViewController: BaseVC {
         delegate?.slideMenuItemSelectedAtIndex(3)
     }
     
+    
+    @IBAction func suggestShopAction(_ sender: Any) {
+        delegate?.slideMenuItemSelectedAtIndex(-1)
+        if let vc = UIStoryboard(name: "Main", bundle: nil).instantiateViewController(withIdentifier: "SuggestShopVC") as? SuggestShopVC
+        {
+            self.navigationController?.pushViewController(vc, animated: true)
+        }
+    }
+    
+    
     @IBAction func settingsAction(_ sender: Any) {
-        self.selectedTag = 4
-        self.validateSelectedTag(tag: self.selectedTag)
-        delegate?.slideMenuItemSelectedAtIndex(4)
+       // self.selectedTag = 4
+       // self.validateSelectedTag(tag: self.selectedTag)
+        delegate?.slideMenuItemSelectedAtIndex(-1)
+                if let vc = UIStoryboard(name: "Main", bundle: nil).instantiateViewController(withIdentifier: "SettingsVC") as? SettingsVC
+                {
+                    self.navigationController?.pushViewController(vc, animated: true)
+                }
     }
     
     @IBAction func registeredShopsAction(_ sender: Any) {

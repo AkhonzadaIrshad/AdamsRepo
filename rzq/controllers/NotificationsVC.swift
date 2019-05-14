@@ -167,15 +167,15 @@ class NotificationsVC: BaseViewController, UITableViewDelegate, UITableViewDataS
     
     
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
-        let item = self.items[indexPath.row]
-        if (item.type == Constants.DELIVERY_COMPLETED) {
-            let vc = UIStoryboard(name: "Main", bundle: nil).instantiateViewController(withIdentifier: "RateDriverDialog") as! RateDriverDialog
-            vc.deliveryId = item.deliveryID ?? 0
-            self.definesPresentationContext = true
-            vc.modalPresentationStyle = UIModalPresentationStyle.overCurrentContext
-            vc.view.backgroundColor = UIColor.clear
-            self.present(vc, animated: true, completion: nil)
-        }
+//        let item = self.items[indexPath.row]
+//        if (item.type == Constants.DELIVERY_COMPLETED) {
+//            let vc = UIStoryboard(name: "Main", bundle: nil).instantiateViewController(withIdentifier: "RateDriverDialog") as! RateDriverDialog
+//            vc.deliveryId = item.deliveryID ?? 0
+//            self.definesPresentationContext = true
+//            vc.modalPresentationStyle = UIModalPresentationStyle.overCurrentContext
+//            vc.view.backgroundColor = UIColor.clear
+//            self.present(vc, animated: true, completion: nil)
+//        }
     }
     
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
@@ -328,7 +328,7 @@ class NotificationsVC: BaseViewController, UITableViewDelegate, UITableViewDataS
             
             return cell
         case Constants.DELIVERY_COMPLETED:
-            let cell : RegularAlertCell = tableView.dequeueReusableCell(withIdentifier: "regularalertcell", for: indexPath) as! RegularAlertCell
+            let cell : OrderCompletedCell = tableView.dequeueReusableCell(withIdentifier: "ordercompletedcell", for: indexPath) as! OrderCompletedCell
             
             let dict = item.data?.convertToDictionary()
             
@@ -340,10 +340,19 @@ class NotificationsVC: BaseViewController, UITableViewDelegate, UITableViewDataS
             
             if (self.isArabic()) {
                 cell.lblTitle.text = arabicTitle
-                cell.lblDescription.text = arabicBody
+                cell.lblDesc.text = arabicBody
             }else {
                 cell.lblTitle.text = englishTitle
-                cell.lblDescription.text = englishBody
+                cell.lblDesc.text = englishBody
+            }
+            
+            cell.onRate = {
+                let vc = UIStoryboard(name: "Main", bundle: nil).instantiateViewController(withIdentifier: "RateDriverDialog") as! RateDriverDialog
+                vc.deliveryId = item.deliveryID ?? 0
+                self.definesPresentationContext = true
+                vc.modalPresentationStyle = UIModalPresentationStyle.overCurrentContext
+                vc.view.backgroundColor = UIColor.clear
+                self.present(vc, animated: true, completion: nil)
             }
             
             return cell

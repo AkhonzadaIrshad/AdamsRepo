@@ -12,6 +12,7 @@ import JJFloatingActionButton
 import MOLH
 import BRYXBanner
 import SVProgressHUD
+import SwiftyGif
 
 class ZHCDemoMessagesViewController: ZHCMessagesViewController, BillDelegate, ChatDelegate,UINavigationControllerDelegate {
     
@@ -25,6 +26,12 @@ class ZHCDemoMessagesViewController: ZHCMessagesViewController, BillDelegate, Ch
     
     var actionButton : JJFloatingActionButton?
     var driverActionButton : JJFloatingActionButton?
+    
+    
+    var gif : UIImageView?
+    var btnRecord : UIButton?
+    var recorder = KAudioRecorder.shared
+    
     
     var imagePicker: UIImagePickerController!
     enum ImageSource {
@@ -50,8 +57,83 @@ class ZHCDemoMessagesViewController: ZHCMessagesViewController, BillDelegate, Ch
         }
         
         // Do any additional setup after loading the view.
+        self.gif = UIImageView()
+        self.gif?.frame = CGRect(x: self.view.bounds.midX, y: self.view.bounds.midY, width: 70, height: 70)
+        self.gif?.center = self.view.center
+        let gf = UIImage(gifName: "recording.gif")
+        self.gif?.setGifImage(gf)
+        self.gif?.isHidden = true
+        self.view.addSubview(self.gif!)
+        
+        self.setUpRecordButton()
+        
     }
     
+    func setUpRecordButton() {
+        self.btnRecord = UIButton()
+        self.btnRecord?.frame = CGRect(x: 7, y: self.view.frame.size.height - 38, width: 43, height: 43)
+        self.btnRecord?.backgroundColor = UIColor.clear
+        self.btnRecord?.setBackgroundImage(UIImage(named: "bg_audio_orange"), for: .normal)
+        self.btnRecord?.addTarget(self, action: #selector(recordAction), for: .touchUpInside)
+        self.btnRecord?.addTarget(self, action: #selector(recordPress), for: .touchDown)
+        self.view.addSubview(btnRecord!)
+        
+        self.btnRecord?.translatesAutoresizingMaskIntoConstraints = false
+        if #available(iOS 11.0, *) {
+            self.btnRecord?.leadingAnchor.constraint(equalTo: view.safeAreaLayoutGuide.leadingAnchor, constant: 9).isActive = true
+        } else {
+            // Fallback on earlier versions
+        }
+        if #available(iOS 11.0, *) {
+            //            actionButton.bottomAnchor.constraint(equalTo: view.safeAreaLayoutGuide.bottomAnchor, constant: -56).isActive = true
+            self.btnRecord?.bottomAnchor.constraint(equalTo: self.inputMessageBarView.safeAreaLayoutGuide.bottomAnchor, constant: -6).isActive = true
+        } else {
+            // Fallback on earlier versions
+        }
+    }
+    
+    @objc func recordPress(sender: UIButton!) {
+        if (recorder.isRecording) {
+            //stop
+            self.gif?.isHidden = true
+            recorder.stop()
+            if (recorder.time > 1) {
+               self.sendVoiceMessage()
+            }else {
+               
+            }
+        }else {
+            //record
+            self.gif?.isHidden = false
+            recorder.recordName = "chat_file"
+            recorder.record()
+        }
+    }
+    @objc func recordAction(sender: UIButton!) {
+        //        if (recorder.isRecording) {
+        //            //stop
+        //            self.btnRecord.setImage(UIImage(named: "ic_microphone"), for: .normal)
+        //            recorder.stop()
+        //            if (recorder.time > 2) {
+        //                self.viewRecording.isHidden = false
+        //            }else {
+        //                self.viewRecording.isHidden = true
+        //            }
+        //        }else {
+        //            //record
+        //            self.btnRecord.setImage(UIImage(named: "ic_recording"), for: .normal)
+        //            recorder.recordName = "order_file"
+        //            recorder.record()
+        //        }
+        //stop
+        self.gif?.isHidden = true
+        recorder.stop()
+        if (recorder.time > 1) {
+             self.sendVoiceMessage()
+        }else {
+           
+        }
+    }
     
     func getChatMessages() {
         demoData.loadMessages();
@@ -60,7 +142,7 @@ class ZHCDemoMessagesViewController: ZHCMessagesViewController, BillDelegate, Ch
     func closeChat() {
         self.showBanner(title: "alert".localized, message: "delivery_completed_user", style: UIColor.SUCCESS)
         DispatchQueue.main.asyncAfter(deadline: .now() + 2) {
-          self.dismiss(animated: true, completion: nil)
+            self.dismiss(animated: true, completion: nil)
         }
         
     }
@@ -94,7 +176,7 @@ class ZHCDemoMessagesViewController: ZHCMessagesViewController, BillDelegate, Ch
     
     func setupFloating() {
         self.driverActionButton?.removeFromSuperview()
-         self.driverActionButton = JJFloatingActionButton()
+        self.driverActionButton = JJFloatingActionButton()
         
         let item = self.driverActionButton?.addItem()
         item?.titleLabel.text = "cancel_order".localized
@@ -106,7 +188,7 @@ class ZHCDemoMessagesViewController: ZHCMessagesViewController, BillDelegate, Ch
             
             //cancel order
             self.showAlert(title: "alert".localized, message: "confirm_cancel_delivery".localized, actionTitle: "yes".localized, cancelTitle: "no".localized, actionHandler: {
-               if ((self.user?.data?.roles?.contains(find: "Driver"))! && self.user?.data?.userID == self.order?.driverID) {
+                if ((self.user?.data?.roles?.contains(find: "Driver"))! && self.user?.data?.userID == self.order?.driverID) {
                     self.cancelDeliveryByDriver()
                 }else {
                     self.cancelDeliveryByUser()
@@ -145,7 +227,7 @@ class ZHCDemoMessagesViewController: ZHCMessagesViewController, BillDelegate, Ch
                         self.definesPresentationContext = true
                         vc.modalPresentationStyle = UIModalPresentationStyle.overCurrentContext
                         vc.view.backgroundColor = UIColor.clear
-                    
+                        
                         self.present(vc, animated: true, completion: nil)
                         
                     }else {
@@ -167,8 +249,8 @@ class ZHCDemoMessagesViewController: ZHCMessagesViewController, BillDelegate, Ch
             // Fallback on earlier versions
         }
         if #available(iOS 11.0, *) {
-//            actionButton.bottomAnchor.constraint(equalTo: view.safeAreaLayoutGuide.bottomAnchor, constant: -56).isActive = true
-              self.driverActionButton?.bottomAnchor.constraint(equalTo: self.inputMessageBarView.safeAreaLayoutGuide.bottomAnchor, constant: -56).isActive = true
+            //            actionButton.bottomAnchor.constraint(equalTo: view.safeAreaLayoutGuide.bottomAnchor, constant: -56).isActive = true
+            self.driverActionButton?.bottomAnchor.constraint(equalTo: self.inputMessageBarView.safeAreaLayoutGuide.bottomAnchor, constant: -56).isActive = true
         } else {
             // Fallback on earlier versions
         }
@@ -229,7 +311,7 @@ class ZHCDemoMessagesViewController: ZHCMessagesViewController, BillDelegate, Ch
             
             //cancel order
             self.showAlert(title: "alert".localized, message: "confirm_cancel_delivery".localized, actionTitle: "yes".localized, cancelTitle: "no".localized, actionHandler: {
-                   if ((self.user?.data?.roles?.contains(find: "Driver"))! && self.user?.data?.userID == self.order?.driverID) {
+                if ((self.user?.data?.roles?.contains(find: "Driver"))! && self.user?.data?.userID == self.order?.driverID) {
                     self.cancelDeliveryByDriver()
                 }else {
                     self.cancelDeliveryByUser()
@@ -250,7 +332,7 @@ class ZHCDemoMessagesViewController: ZHCMessagesViewController, BillDelegate, Ch
             // Fallback on earlier versions
         }
         if #available(iOS 11.0, *) {
-          //  actionButton.bottomAnchor.constraint(equalTo: view.safeAreaLayoutGuide.bottomAnchor, constant: -56).isActive = true
+            //  actionButton.bottomAnchor.constraint(equalTo: view.safeAreaLayoutGuide.bottomAnchor, constant: -56).isActive = true
             self.actionButton?.bottomAnchor.constraint(equalTo: self.inputMessageBarView.safeAreaLayoutGuide.bottomAnchor, constant: -56).isActive = true
         } else {
             // Fallback on earlier versions
@@ -401,18 +483,18 @@ class ZHCDemoMessagesViewController: ZHCMessagesViewController, BillDelegate, Ch
         return self.demoData.messages.object(at: indexPath.row) as! ZHCMessageData;
     }
     
-//    override func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
-//         let message: ZHCMessage = self.demoData.messages.object(at: indexPath.row) as! ZHCMessage;
-//        if (message.isMediaMessage) {
-//            var images = [String]()
-//            let str = message.media.mediaData?() as? String ?? ""
-//            images.append(str)
-//            if let vc = UIStoryboard(name: "Main", bundle: nil).instantiateViewController(withIdentifier: "ImageSliderVC") as? ImageSliderVC
-//            {
-//                self.navigationController?.pushViewController(vc, animated: true)
-//            }
-//        }
-//    }
+    //    override func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
+    //         let message: ZHCMessage = self.demoData.messages.object(at: indexPath.row) as! ZHCMessage;
+    //        if (message.isMediaMessage) {
+    //            var images = [String]()
+    //            let str = message.media.mediaData?() as? String ?? ""
+    //            images.append(str)
+    //            if let vc = UIStoryboard(name: "Main", bundle: nil).instantiateViewController(withIdentifier: "ImageSliderVC") as? ImageSliderVC
+    //            {
+    //                self.navigationController?.pushViewController(vc, animated: true)
+    //            }
+    //        }
+    //    }
     
     override func tableView(_ tableView: UITableView, didDeselectRowAt indexPath: IndexPath) {
         self.demoData.messages.removeObject(at: indexPath.row);
@@ -436,7 +518,7 @@ class ZHCDemoMessagesViewController: ZHCMessagesViewController, BillDelegate, Ch
     }
     
     override func tableView(_ tableView: ZHCMessagesTableView, avatarImageDataForCellAt indexPath: IndexPath) -> ZHCMessageAvatarImageDataSource? {
-    
+        
         let message: ZHCMessage = self.demoData.messages.object(at: indexPath.row) as! ZHCMessage;
         
         return self.demoData.avatars.object(forKey: message.senderId) as! ZHCMessageAvatarImageDataSource?
@@ -563,6 +645,29 @@ class ZHCDemoMessagesViewController: ZHCMessagesViewController, BillDelegate, Ch
                 self.finishSendingMessage(animated: true)
             }
         }
+    }
+    
+    func sendVoiceMessage() {
+        
+        var audioData : Data?
+        do {
+            audioData = try Data.init(contentsOf: self.recorder.getUrl())
+            
+        }catch let err {
+            audioData = Data(base64Encoded: "")
+        }
+        
+        let audioBase64 = audioData?.base64EncodedString()
+        
+        ApiService.sendChatMessage(Authorization: self.user?.data?.accessToken ?? "", chatId: self.order?.chatId ?? 0, type: 3, message: "", image: "", voice: audioBase64!) { (response) in
+            if (response.errorCode == 0) {
+                let audioItem: ZHCAudioMediaItem = ZHCAudioMediaItem.init(data: audioData as! Data);
+                let audioMessage: ZHCMessage = ZHCMessage.init(senderId: self.senderId(), displayName: self.senderDisplayName(), media: audioItem);
+                self.demoData.messages.add(audioMessage);
+                self.finishSendingMessage(animated: true);
+            }
+        }
+        
     }
     
     //MARK: ZHCMessagesInputToolbarDelegate

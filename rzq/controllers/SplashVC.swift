@@ -9,11 +9,11 @@
 import UIKit
 
 class SplashVC: BaseVC {
-
+    
     override func viewDidLoad() {
         super.viewDidLoad()
         
-      
+        
         ApiService.getAppConfig { (response) in
             App.shared.config = response.configData
             self.startSplashLoader()
@@ -31,9 +31,18 @@ class SplashVC: BaseVC {
                         if (response.errorCode == 0) {
                             self.updateUser(self.getRealmUser(userProfile: response))
                             if (check) {
-                                let mainStoryboardIpad : UIStoryboard = UIStoryboard(name: "Main", bundle: nil)
-                                let initialViewControlleripad : UIViewController = mainStoryboardIpad.instantiateViewController(withIdentifier: self.getHomeView()) as! UINavigationController
-                                self.present(initialViewControlleripad, animated: true, completion: {})
+                                
+                                let type = App.shared.notificationType ?? "0"
+                                if (type == "0") {
+                                    if let vc = UIStoryboard(name: "Main", bundle: nil).instantiateViewController(withIdentifier: "step1navigation") as? UINavigationController
+                                    {
+                                        self.present(vc, animated: true, completion: nil)
+                                    }
+                                }else {
+                                    let mainStoryboardIpad : UIStoryboard = UIStoryboard(name: "Main", bundle: nil)
+                                    let initialViewControlleripad : UIViewController = mainStoryboardIpad.instantiateViewController(withIdentifier: self.getHomeView()) as! UINavigationController
+                                    self.present(initialViewControlleripad, animated: true, completion: {})
+                                }
                             }else {
                                 if let vc = UIStoryboard(name: "Main", bundle: nil).instantiateViewController(withIdentifier: "LanguageVC") as? LanguageVC
                                 {
@@ -63,5 +72,5 @@ class SplashVC: BaseVC {
             }
         }
     }
-
+    
 }

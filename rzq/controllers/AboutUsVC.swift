@@ -9,9 +9,9 @@
 import UIKit
 import JJFloatingActionButton
 
-class AboutUsVC: BaseViewController {
+class AboutUsVC: BaseVC {
 
-    @IBOutlet weak var btnMenu: UIButton!
+    @IBOutlet weak var ivHandle: UIImageView!
     
     @IBOutlet weak var ivLogo: UIImageView!
     
@@ -20,8 +20,6 @@ class AboutUsVC: BaseViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
 
-          self.btnMenu.addTarget(self, action: #selector(BaseViewController.onSlideMenuButtonPressed(_:)), for: UIControl.Event.touchUpInside)
-        
         let urlStr = App.shared.config?.company?.logo ?? ""
         if (urlStr.count > 0) {
             let url = URL(string: "\(Constants.IMAGE_URL)\(urlStr)")
@@ -30,6 +28,7 @@ class AboutUsVC: BaseViewController {
         
         if (self.isArabic()) {
           self.tvContent.text = App.shared.config?.company?.arabicDescription ?? ""
+              self.ivHandle.image = UIImage(named: "ic_back_arabic")
         }else {
          self.tvContent.text = App.shared.config?.company?.englishDescription ?? ""
         }
@@ -158,5 +157,8 @@ class AboutUsVC: BaseViewController {
         // actionButton.display(inViewController: self)
     }
     
-
+    @IBAction func backAction(_ sender: Any) {
+    self.navigationController?.popViewController(animated: true)
+    }
+    
 }

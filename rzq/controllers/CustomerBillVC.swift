@@ -110,7 +110,7 @@ class CustomerBillVC: BaseVC,UINavigationControllerDelegate, UICollectionViewDel
     
     
     @IBAction func addAction(_ sender: Any) {
-        self.showAlert(title: "add_image_pic_title".localized, message: "add_salon_pic_message".localized, actionTitle: "camera".localized, cancelTitle: "gallery".localized, actionHandler: {
+        self.showAlertWithCancel(title: "add_image_pic_title".localized, message: "add_salon_pic_message".localized, actionTitle: "camera".localized, cancelTitle: "gallery".localized, actionHandler: {
             //camera
             guard UIImagePickerController.isSourceTypeAvailable(.camera) else {
                 self.selectImageFrom(.photoLibrary)

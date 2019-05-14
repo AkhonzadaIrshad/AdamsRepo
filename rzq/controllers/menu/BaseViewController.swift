@@ -202,8 +202,8 @@ class BaseViewController: UIViewController, SlideMenuDelegate {
     //    }
     
     @objc func  onAboutPressed(_ sender : UIButton) {
-        selectedTag = 8
-        self.openViewControllerBasedOnIdentifier("AboutUsVC")
+        //selectedTag = 8
+       // self.openViewControllerBasedOnIdentifier("AboutUsVC")
     }
     
     @objc func onSlideMenuButtonPressed(_ sender : UIButton) {
@@ -395,6 +395,14 @@ class BaseViewController: UIViewController, SlideMenuDelegate {
             return false
         }
     }
+    func isLoggedInNoAlert() -> Bool{
+        if (self.loadUser().data?.userID?.count ?? 0 > 0) {
+            return true
+        }else {
+            return false
+        }
+    }
+    
     
     
 }

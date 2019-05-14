@@ -85,9 +85,17 @@ class PhoneVerificationDialog: BaseVC {
                 if (response?.errorCode == 0) {
                     self.deleteUsers()
                     self.updateUser(self.getRealmUser(userProfile: response!))
-                    let mainStoryboardIpad : UIStoryboard = UIStoryboard(name: "Main", bundle: nil)
-                    let initialViewControlleripad : UIViewController = mainStoryboardIpad.instantiateViewController(withIdentifier: self.getHomeView()) as! UINavigationController
-                    self.present(initialViewControlleripad, animated: true, completion: {})
+                    
+//                    let mainStoryboardIpad : UIStoryboard = UIStoryboard(name: "Main", bundle: nil)
+//                    let initialViewControlleripad : UIViewController = mainStoryboardIpad.instantiateViewController(withIdentifier: self.getHomeView()) as! UINavigationController
+//                    self.present(initialViewControlleripad, animated: true, completion: {})
+                    
+                    if let vc = UIStoryboard(name: "Main", bundle: nil).instantiateViewController(withIdentifier: "step1navigation") as? UINavigationController
+                    {
+                        self.present(vc, animated: true, completion: nil)
+                    }
+                    
+                    
                 }else if (response?.errorCode == 18) {
                     self.showBanner(title: "alert".localized, message: "account_inactive".localized, style: UIColor.INFO)
                 }else {

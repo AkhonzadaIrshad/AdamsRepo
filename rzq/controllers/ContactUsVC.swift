@@ -8,7 +8,7 @@
 
 import UIKit
 
-class ContactUsVC: BaseViewController {
+class ContactUsVC: BaseVC {
     
     @IBOutlet weak var edtSubject: MyUITextField!
     
@@ -16,15 +16,17 @@ class ContactUsVC: BaseViewController {
     
     @IBOutlet weak var edtMobile: MyUITextField!
     
-    @IBOutlet weak var btnMenu: UIButton!
+    @IBOutlet weak var ivHandle: UIImageView!
     
     override func viewDidLoad() {
         super.viewDidLoad()
         
         self.edtSubject.addDoneButtonOnKeyboard()
         self.edtMessage.addDoneButtonOnKeyboard()
-
-          self.btnMenu.addTarget(self, action: #selector(BaseViewController.onSlideMenuButtonPressed(_:)), for: UIControl.Event.touchUpInside)
+        
+        if (self.isArabic()) {
+            self.ivHandle.image = UIImage(named: "ic_back_arabic")
+        }
         
         self.edtMobile.text = self.loadUser().data?.phoneNumber ?? ""
         
@@ -63,4 +65,9 @@ class ContactUsVC: BaseViewController {
         }
         return true
     }
+    
+    @IBAction func backAction(_ sender: Any) {
+        self.navigationController?.popViewController(animated: true)
+    }
+    
 }

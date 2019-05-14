@@ -29,8 +29,8 @@ class AppDelegate: UIResponder, UIApplicationDelegate, MOLHResetable,MessagingDe
         // Override point for customization after application launch.
         
         //maps
-        GMSServices.provideAPIKey("AIzaSyBdPdoBTk2e1KE1s9XxBB8B4a7upqSL_GU")
-        GMSPlacesClient.provideAPIKey("AIzaSyBdPdoBTk2e1KE1s9XxBB8B4a7upqSL_GU")
+        GMSServices.provideAPIKey("\(Constants.GOOGLE_API_KEY)")
+        GMSPlacesClient.provideAPIKey("\(Constants.GOOGLE_API_KEY)")
         
         MOLH.shared.activate(true)
         
@@ -59,7 +59,6 @@ class AppDelegate: UIResponder, UIApplicationDelegate, MOLHResetable,MessagingDe
         
         application.registerForRemoteNotifications()
         
-        
         //branch
         
         // Branch.setUseTestBranchKey(true)
@@ -71,7 +70,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate, MOLHResetable,MessagingDe
         }
         
         
-        if let userInfo = launchOptions?[UIApplication.LaunchOptionsKey.remoteNotification] as? [String: AnyObject]{
+        if let userInfo = launchOptions?[UIApplication.LaunchOptionsKey.remoteNotification] as? [String: AnyObject] {
             // your logic here!
             let type = userInfo["Type"] as? String ?? "0"
             let chatId = userInfo["Id"] as? String ?? "0"
@@ -651,9 +650,41 @@ extension UIColor {
     static var uncheckedText:UIColor {
         return #colorLiteral(red: 0.1960784314, green: 0.231372549, blue: 0.2705882353, alpha: 1)
     }
+    static var expired:UIColor {
+        return #colorLiteral(red: 0.7411764706, green: 0.06274509804, blue: 0.8784313725, alpha: 1)
+    }
+}
+
+extension UIButton {
+    open override func touchesBegan(_ touches: Set<UITouch>, with event: UIEvent?) {
+        super.touchesBegan(touches, with: event)
+         if ((self.restorationIdentifier?.contains(find: "dont_touch") ?? false) == false) {
+            let colorAnimation = CABasicAnimation(keyPath: "backgroundColor")
+            colorAnimation.fromValue = UIColor.processing.cgColor
+            colorAnimation.duration = 1  // animation duration
+            // colorAnimation.autoreverses = true // optional in my case
+            // colorAnimation.repeatCount = FLT_MAX // optional in my case
+            self.layer.add(colorAnimation, forKey: "ColorPulse")
+        }
+    }
+}
+
+extension UIImageView {
+    open override func touchesBegan(_ touches: Set<UITouch>, with event: UIEvent?) {
+        super.touchesBegan(touches, with: event)
+        
+        let colorAnimation = CABasicAnimation(keyPath: "backgroundColor")
+        colorAnimation.fromValue = UIColor.processing.cgColor
+        colorAnimation.duration = 1  // animation duration
+        // colorAnimation.autoreverses = true // optional in my case
+        // colorAnimation.repeatCount = FLT_MAX // optional in my case
+        self.layer.add(colorAnimation, forKey: "ColorPulse")
+    }
 }
 
 extension UIView {
+    
+ 
     class func fromNib<T: UIView>() -> T {
         return Bundle.main.loadNibNamed(String(describing: T.self), owner: nil, options: nil)![0] as! T
     }
@@ -670,7 +701,20 @@ extension UIView {
         self.trailingAnchor.constraint(equalTo: superview.trailingAnchor, constant: 0).isActive = true
         
     }
+    
+    open override func touchesBegan(_ touches: Set<UITouch>, with event: UIEvent?) {
+        super.touchesBegan(touches, with: event)
+        if (self.restorationIdentifier?.contains(find: "touch_event") ?? false) {
+            let colorAnimation = CABasicAnimation(keyPath: "backgroundColor")
+            colorAnimation.fromValue = UIColor.processing.cgColor
+            colorAnimation.duration = 1  // animation duration
+            // colorAnimation.autoreverses = true // optional in my case
+            // colorAnimation.repeatCount = FLT_MAX // optional in my case
+            self.layer.add(colorAnimation, forKey: "ColorPulse")
+        }
+    }
 }
+
 extension UIImage {
     func toBase64() -> String? {
         guard let imageData = self.jpegData(compressionQuality: 0.1) else { return nil }

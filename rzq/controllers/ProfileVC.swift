@@ -55,7 +55,7 @@ class ProfileVC: BaseVC {
             }
          
             self.lblName.text = response.dataProfileObj?.fullName ?? ""
-            self.lblBalance.text = "\(response.dataProfileObj?.balance ?? 0)"
+            self.lblBalance.text = "\(response.dataProfileObj?.balance ?? 0) \("currency".localized)"
             self.lblOrderCount.text = "\(response.dataProfileObj?.ordersCount ?? 0)"
             
             self.ratingView.rating = Double(response.dataProfileObj?.rate ?? 0)

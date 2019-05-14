@@ -12,7 +12,10 @@ import GooglePlaces
 import MapKit
 import CoreLocation
 
-class DeliveryStep2: BaseVC {
+protocol Step2Delegate {
+    func updateModel(model : OTWOrder)
+}
+class DeliveryStep2: BaseVC, Step3Delegate {
 
     @IBOutlet weak var lblPickupLocation: MyUILabel!
     
@@ -40,6 +43,8 @@ class DeliveryStep2: BaseVC {
     
     var pinMarker : GMSMarker?
     
+    var delegate : Step2Delegate?
+    
     var selectedRoute: NSDictionary!
     
     var toolTipView : ToolTipView?
@@ -52,6 +57,8 @@ class DeliveryStep2: BaseVC {
         gMap = GMSMapView()
         self.lblPickupLocation.text = self.orderModel?.pickUpAddress ?? ""
         self.setUpGoogleMap()
+        
+        self.edtMoreDetails.text = self.orderModel?.dropOffDetails ?? ""
     }
     
     func selectDefaultDrop() {
@@ -64,6 +71,10 @@ class DeliveryStep2: BaseVC {
     @IBAction func myLocationAction(_ sender: Any) {
         let camera = GMSCameraPosition.camera(withLatitude: self.latitude ?? 0.0, longitude: self.longitude ?? 0.0, zoom: 20.0)
         self.gMap?.animate(to: camera)
+    }
+    
+    func updateModel(model: OTWOrder) {
+        self.orderModel = model
     }
     
     func validate() -> Bool {
@@ -81,7 +92,17 @@ class DeliveryStep2: BaseVC {
     @IBAction func searchPlacesAction(_ sender: Any) {
         let autocompleteController = GMSAutocompleteViewController()
         autocompleteController.delegate = self
-        UITextField.appearance(whenContainedInInstancesOf: [UISearchBar.self]).defaultTextAttributes = [NSAttributedString.Key.foregroundColor: UIColor.white]
+       
+        let filter = GMSAutocompleteFilter()
+        filter.country = "KW"
+        autocompleteController.primaryTextColor = UIColor.black
+        autocompleteController.secondaryTextColor = UIColor.black
+        autocompleteController.tintColor = UIColor.black
+        autocompleteController.autocompleteFilter = filter
+        
+//        UITextField.appearance(whenContainedInInstancesOf: [UISearchBar.self]).defaultTextAttributes = [NSAttributedString.Key.foregroundColor: UIColor.white]
+        
+        
         present(autocompleteController, animated: true, completion: nil)
     }
     
@@ -110,7 +131,7 @@ class DeliveryStep2: BaseVC {
     }
     
     @IBAction func step1Action(_ sender: Any) {
-        self.navigationController?.popViewController(animated: true)
+       // self.navigationController?.popViewController(animated: true)
     }
     
     @IBAction func step2Action(_ sender: Any) {
@@ -118,19 +139,27 @@ class DeliveryStep2: BaseVC {
     }
     
     @IBAction func step3Action(_ sender: Any) {
-        if (self.validate()) {
-            if let vc = UIStoryboard(name: "Main", bundle: nil).instantiateViewController(withIdentifier: "DeliveryStep3") as? DeliveryStep3
-            {
-                vc.latitude = self.latitude
-                vc.longitude = self.longitude
-                vc.orderModel = self.orderModel
-                self.navigationController?.pushViewController(vc, animated: true)
-            }
-        }
+//        if (self.validate()) {
+//            if let vc = UIStoryboard(name: "Main", bundle: nil).instantiateViewController(withIdentifier: "DeliveryStep3") as? DeliveryStep3
+//            {
+//                self.orderModel?.dropOffDetails = self.edtMoreDetails.text ?? ""
+//                vc.latitude = self.latitude
+//                vc.longitude = self.longitude
+//                vc.orderModel = self.orderModel
+//                vc.delegate = self
+//                self.navigationController?.pushViewController(vc, animated: true)
+//            }
+//        }
     }
     
     
     @IBAction func backAction(_ sender: Any) {
+        self.saveBackModel()
+    }
+    
+    func saveBackModel() {
+        self.orderModel?.dropOffDetails = self.edtMoreDetails.text ?? ""
+        self.delegate?.updateModel(model: self.orderModel!)
         self.navigationController?.popViewController(animated: true)
     }
     
@@ -138,7 +167,7 @@ class DeliveryStep2: BaseVC {
         let origin = "\(self.orderModel?.pickUpLatitude ?? 0),\(self.orderModel?.pickUpLongitude ?? 0)"
         let destination = "\(self.orderModel?.dropOffLatitude ?? 0),\(self.orderModel?.dropOffLongitude ?? 0)"
         
-        let urlString = "https://maps.googleapis.com/maps/api/directions/json?origin=\(origin)&destination=\(destination)&mode=driving&key=AIzaSyDxtBzX5RkfCrl51ttGLHMKXAk9zrW4LLY"
+        let urlString = "https://maps.googleapis.com/maps/api/directions/json?origin=\(origin)&destination=\(destination)&mode=driving&key=\(Constants.GOOGLE_API_KEY)"
         
         let url = URL(string: urlString)
         URLSession.shared.dataTask(with: url!, completionHandler: {
@@ -221,9 +250,11 @@ class DeliveryStep2: BaseVC {
         if (self.validate()) {
             if let vc = UIStoryboard(name: "Main", bundle: nil).instantiateViewController(withIdentifier: "DeliveryStep3") as? DeliveryStep3
             {
+                self.orderModel?.dropOffDetails = self.edtMoreDetails.text ?? ""
                 vc.latitude = self.latitude
                 vc.longitude = self.longitude
                 vc.orderModel = self.orderModel
+                vc.delegate = self
                 self.navigationController?.pushViewController(vc, animated: true)
             }
         }
@@ -321,6 +352,11 @@ class DeliveryStep2: BaseVC {
     }
     
     
+    @IBAction func backBtnAction(_ sender: Any) {
+         self.saveBackModel()
+    }
+    
+    
     
 }
 
@@ -392,9 +428,13 @@ extension DeliveryStep2 : GMSMapViewDelegate {
 
 extension DeliveryStep2: GMSAutocompleteViewControllerDelegate {
     func viewController(_ viewController: GMSAutocompleteViewController, didAutocompleteWith place: GMSPlace) {
-        let camera = GMSCameraPosition.camera(withLatitude:place.coordinate.latitude, longitude:place.coordinate.longitude, zoom: 17.0)
+//        let camera = GMSCameraPosition.camera(withLatitude:place.coordinate.latitude, longitude:place.coordinate.longitude, zoom: 17.0)
         dismiss(animated: true, completion: {
-            self.gMap?.animate(to: camera)
+            self.orderModel?.dropOffLatitude = place.coordinate.latitude
+            self.orderModel?.dropOffLongitude = place.coordinate.longitude
+            self.lblDropLocation.text = place.name ?? ""
+            self.drawLocationLine()
+           // self.gMap?.animate(to: camera)
         })
     }
     
