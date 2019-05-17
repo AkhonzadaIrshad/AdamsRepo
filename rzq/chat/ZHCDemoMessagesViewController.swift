@@ -50,7 +50,7 @@ class ZHCDemoMessagesViewController: ZHCMessagesViewController, BillDelegate, Ch
             self.scrollToBottom(animated: false)
         }
         
-        if ((self.user?.data?.roles?.contains(find: "Driver"))! && self.user?.data?.userID == self.order?.driverID) {
+        if ((self.user?.data?.roles?.contains(find: "Driver"))! && self.user?.data?.userID == self.order?.providerID) {
             self.setupFloating()
         }else if (self.order?.status != Constants.ORDER_ON_THE_WAY) {
             self.setupUserFloating()
@@ -149,7 +149,7 @@ class ZHCDemoMessagesViewController: ZHCMessagesViewController, BillDelegate, Ch
     
     func removeCancel() {
         self.order?.status = Constants.ORDER_ON_THE_WAY
-        if ((self.user?.data?.roles?.contains(find: "Driver"))! && self.user?.data?.userID == self.order?.driverID) {
+        if ((self.user?.data?.roles?.contains(find: "Driver"))! && self.user?.data?.userID == self.order?.providerID) {
             self.setupFloating()
         }else if (self.order?.status == Constants.ORDER_ON_THE_WAY) {
             self.actionButton?.removeFromSuperview()
@@ -188,7 +188,7 @@ class ZHCDemoMessagesViewController: ZHCMessagesViewController, BillDelegate, Ch
             
             //cancel order
             self.showAlert(title: "alert".localized, message: "confirm_cancel_delivery".localized, actionTitle: "yes".localized, cancelTitle: "no".localized, actionHandler: {
-                if ((self.user?.data?.roles?.contains(find: "Driver"))! && self.user?.data?.userID == self.order?.driverID) {
+                if ((self.user?.data?.roles?.contains(find: "Driver"))! && self.user?.data?.userID == self.order?.providerID) {
                     self.cancelDeliveryByDriver()
                 }else {
                     self.cancelDeliveryByUser()
@@ -311,7 +311,7 @@ class ZHCDemoMessagesViewController: ZHCMessagesViewController, BillDelegate, Ch
             
             //cancel order
             self.showAlert(title: "alert".localized, message: "confirm_cancel_delivery".localized, actionTitle: "yes".localized, cancelTitle: "no".localized, actionHandler: {
-                if ((self.user?.data?.roles?.contains(find: "Driver"))! && self.user?.data?.userID == self.order?.driverID) {
+                if ((self.user?.data?.roles?.contains(find: "Driver"))! && self.user?.data?.userID == self.order?.providerID) {
                     self.cancelDeliveryByDriver()
                 }else {
                     self.cancelDeliveryByUser()
@@ -368,7 +368,9 @@ class ZHCDemoMessagesViewController: ZHCMessagesViewController, BillDelegate, Ch
             if (response.errorCode == 0) {
                 self.showBanner(title: "alert".localized, message: "delivery_started".localized, style: UIColor.SUCCESS)
                 self.startNavigation(longitude: self.order?.toLongitude ?? 0.0, latitude: self.order?.toLatitude ?? 0.0)
-                self.order = DatumDel(driverID: "", canReport: false, canTrack: false, id: self.order?.id ?? 0, chatId: self.order?.chatId ?? 0, fromAddress: self.order?.fromAddress ?? "", toAddress: self.order?.toAddress ?? "", title: self.order?.title ?? "", status: Constants.ORDER_ON_THE_WAY, price: self.order?.price ?? 0.0, time: self.order?.time ?? 0, statusString: self.order?.statusString ?? "", image: self.order?.image ?? "", createdDate: self.order?.createdDate ?? "", toLatitude: self.order?.toLatitude ?? 0.0, toLongitude: self.order?.toLongitude ?? 0.0, fromLatitude: self.order?.fromLatitude ?? 0.0, fromLongitude: self.order?.fromLongitude ?? 0.0, driverName: "", driverImage: "", driverRate: 0, canRate: false, canCancel: false, canChat: false)
+                
+                self.order = DatumDel(id: self.order?.id ?? 0, title: self.order?.title ?? "", status: self.order?.status ?? 0, statusString: self.order?.statusString ?? "", image: self.order?.image ?? "", createdDate: self.order?.createdDate ?? "", chatId: self.order?.chatId ?? 0, fromAddress: self.order?.fromAddress ?? "", fromLatitude: self.order?.fromLatitude ?? 0.0, fromLongitude: self.order?.fromLongitude ?? 0.0, toAddress: self.order?.toAddress ?? "", toLatitude: self.order?.toLatitude ?? 0.0, toLongitude: self.order?.toLongitude ?? 0.0, providerID: self.order?.providerID, providerName: self.order?.providerName ?? "", providerImage: self.order?.providerImage ?? "", providerRate: self.order?.providerRate ?? 0.0, time: self.order?.time ?? 0, price: self.order?.price ?? 0.0, serviceName: self.order?.serviceName ?? "")
+                
                 self.setupFloating()
             }else {
                 self.showBanner(title: "alert".localized, message: response.errorMessage ?? "", style: UIColor.INFO)

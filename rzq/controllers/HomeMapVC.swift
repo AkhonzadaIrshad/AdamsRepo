@@ -130,7 +130,11 @@ class HomeMapVC: BaseViewController,LabasLocationManagerDelegate, UICollectionVi
                 DispatchQueue.main.async {
                     let messagesVC: ZHCDemoMessagesViewController = ZHCDemoMessagesViewController.init()
                     messagesVC.presentBool = true
-                    let order = DatumDel(driverID: "", canReport: false, canTrack: false, id: response.data?.id ?? 0, chatId: response.data?.chatId ?? 0, fromAddress: response.data?.fromAddress ?? "", toAddress: response.data?.toAddress ?? "", title: response.data?.title ?? "", status: response.data?.status ?? 0, price: response.data?.cost ?? 0.0, time: response.data?.time ?? 0, statusString: response.data?.statusString ?? "", image: "", createdDate: response.data?.createdDate ?? "", toLatitude: response.data?.toLatitude ?? 0.0, toLongitude: response.data?.toLatitude ?? 0.0, fromLatitude: response.data?.fromLatitude ?? 0.0, fromLongitude: response.data?.fromLongitude ?? 0.0, driverName: "", driverImage: "", driverRate: 0, canRate: false, canCancel: false, canChat: false)
+//                    let order = DatumDel(driverID: "", canReport: false, canTrack: false, id: response.data?.id ?? 0, chatId: response.data?.chatId ?? 0, fromAddress: response.data?.fromAddress ?? "", toAddress: response.data?.toAddress ?? "", title: response.data?.title ?? "", status: response.data?.status ?? 0, price: response.data?.cost ?? 0.0, time: response.data?.time ?? 0, statusString: response.data?.statusString ?? "", image: "", createdDate: response.data?.createdDate ?? "", toLatitude: response.data?.toLatitude ?? 0.0, toLongitude: response.data?.toLatitude ?? 0.0, fromLatitude: response.data?.fromLatitude ?? 0.0, fromLongitude: response.data?.fromLongitude ?? 0.0, driverName: "", driverImage: "", driverRate: 0, canRate: false, canCancel: false, canChat: false)
+                    
+                      let order = DatumDel(id: response.data?.id ?? 0, title: response.data?.title ?? "", status: response.data?.status ?? 0, statusString: response.data?.statusString ?? "", image: "", createdDate: response.data?.createdDate ?? "", chatId: response.data?.chatId ?? 0, fromAddress: response.data?.fromAddress ?? "", fromLatitude: response.data?.fromLatitude ?? 0.0, fromLongitude: response.data?.fromLongitude ?? 0.0, toAddress: response.data?.toAddress ?? "", toLatitude: response.data?.toLatitude ?? 0.0, toLongitude: response.data?.toLongitude ?? 0.0, providerID: response.data?.driverId, providerName: "", providerImage: "", providerRate: 0, time: response.data?.time ?? 0, price: response.data?.cost ?? 0.0, serviceName: "")
+                    
+                    
                     messagesVC.order = order
                     messagesVC.user = self.loadUser()
                     let nav: UINavigationController = UINavigationController.init(rootViewController: messagesVC)
@@ -291,11 +295,11 @@ class HomeMapVC: BaseViewController,LabasLocationManagerDelegate, UICollectionVi
         let cell: PendingOrderCell = collectionView.dequeueReusableCell(withReuseIdentifier: "pendingordercell", for: indexPath as IndexPath) as! PendingOrderCell
         
         let item = self.items[indexPath.row]
-        let url = URL(string: "\(Constants.IMAGE_URL)\(item.driverImage ?? "")")
+        let url = URL(string: "\(Constants.IMAGE_URL)\(item.providerImage ?? "")")
         cell.ivLogo.kf.setImage(with: url)
         
-        cell.lblDriverName.text = item.driverName ?? ""
-        cell.ratingView.rating = item.driverRate ?? 0.0
+        cell.lblDriverName.text = item.providerName ?? ""
+        cell.ratingView.rating = item.providerRate ?? 0.0
         
         cell.lblPrice.text = "\(item.price ?? 0.0) \("currency".localized)"
         cell.lblPayment.text = "cash".localized
@@ -496,11 +500,11 @@ class HomeMapVC: BaseViewController,LabasLocationManagerDelegate, UICollectionVi
     func labasLocationManager(didUpdateLocation location: CLLocation) {
         if (self.latitude ?? 0.0 == 0.0 || self.longitude ?? 0.0 == 0.0) {
             
-            self.latitude = location.coordinate.latitude
-            self.longitude = location.coordinate.longitude
+//            self.latitude = location.coordinate.latitude
+//            self.longitude = location.coordinate.longitude
             
-            //            self.latitude = 29.381127
-            //            self.longitude = 47.999135
+                        self.latitude = 29.381127
+                        self.longitude = 47.999135
             
             self.hideLoading()
             self.setUpGoogleMap()

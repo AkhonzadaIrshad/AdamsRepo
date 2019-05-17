@@ -458,6 +458,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate, MOLHResetable,MessagingDe
     
 }
 
+
 extension UITextField {
     func addDoneButtonOnKeyboard()
     {
@@ -478,6 +479,18 @@ extension UITextField {
     {
         self.resignFirstResponder()
     }
+    
+    func setLeftPaddingPoints(_ amount:CGFloat){
+        let paddingView = UIView(frame: CGRect(x: 0, y: 0, width: amount, height: self.frame.size.height))
+        self.leftView = paddingView
+        self.leftViewMode = .always
+    }
+    func setRightPaddingPoints(_ amount:CGFloat) {
+        let paddingView = UIView(frame: CGRect(x: 0, y: 0, width: amount, height: self.frame.size.height))
+        self.rightView = paddingView
+        self.rightViewMode = .always
+    }
+    
     
 }
 
@@ -660,7 +673,7 @@ extension UIButton {
         super.touchesBegan(touches, with: event)
          if ((self.restorationIdentifier?.contains(find: "dont_touch") ?? false) == false) {
             let colorAnimation = CABasicAnimation(keyPath: "backgroundColor")
-            colorAnimation.fromValue = UIColor.processing.cgColor
+            colorAnimation.fromValue = UIColor.appLightGray.cgColor
             colorAnimation.duration = 1  // animation duration
             // colorAnimation.autoreverses = true // optional in my case
             // colorAnimation.repeatCount = FLT_MAX // optional in my case
@@ -674,7 +687,7 @@ extension UIImageView {
         super.touchesBegan(touches, with: event)
         
         let colorAnimation = CABasicAnimation(keyPath: "backgroundColor")
-        colorAnimation.fromValue = UIColor.processing.cgColor
+        colorAnimation.fromValue = UIColor.appLightGray.cgColor
         colorAnimation.duration = 1  // animation duration
         // colorAnimation.autoreverses = true // optional in my case
         // colorAnimation.repeatCount = FLT_MAX // optional in my case
@@ -706,7 +719,7 @@ extension UIView {
         super.touchesBegan(touches, with: event)
         if (self.restorationIdentifier?.contains(find: "touch_event") ?? false) {
             let colorAnimation = CABasicAnimation(keyPath: "backgroundColor")
-            colorAnimation.fromValue = UIColor.processing.cgColor
+            colorAnimation.fromValue = UIColor.appLightGray.cgColor
             colorAnimation.duration = 1  // animation duration
             // colorAnimation.autoreverses = true // optional in my case
             // colorAnimation.repeatCount = FLT_MAX // optional in my case

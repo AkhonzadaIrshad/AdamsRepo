@@ -29,39 +29,51 @@ class ShopDetailsResponse: Codable {
 class ShopData: Codable {
     let nearbyDriversCount, id: Int?
     let name, address: String?
-    let latitude, longitude,rate: Double?
-    let phoneNumber, workingHours: String?
-    let isOpen: Bool?
-    var type : Int?
-    let image: String?
+    let latitude, longitude: Double?
+    let phoneNumber, workingHours, image: String?
+    let rate: Double?
+    let type: TypeClass?
     
     enum CodingKeys: String, CodingKey {
-        case rate = "Rate"
         case nearbyDriversCount = "NearbyDriversCount"
         case id = "Id"
-        case type = "Type"
         case name = "Name"
         case address = "Address"
         case latitude = "Latitude"
         case longitude = "Longitude"
         case phoneNumber = "PhoneNumber"
         case workingHours = "WorkingHours"
-        case isOpen = "IsOpen"
         case image = "Image"
+        case rate = "Rate"
+        case type = "Type"
     }
     
-    init(rate: Double?, nearbyDriversCount: Int?, id: Int?, type : Int?, name: String?, address: String?, latitude: Double?, longitude: Double?, phoneNumber: String?, workingHours: String?, isOpen: Bool?, image: String?) {
-        self.rate = rate
+    init(nearbyDriversCount: Int?, id: Int?, name: String?, address: String?, latitude: Double?, longitude: Double?, phoneNumber: String?, workingHours: String?, image: String?, rate: Double?, type: TypeClass?) {
         self.nearbyDriversCount = nearbyDriversCount
         self.id = id
-        self.type = type
         self.name = name
         self.address = address
         self.latitude = latitude
         self.longitude = longitude
         self.phoneNumber = phoneNumber
         self.workingHours = workingHours
-        self.isOpen = isOpen
         self.image = image
+        self.rate = rate
+        self.type = type
+    }
 }
+
+class TypeClass: Codable {
+    let id: Int?
+    let name: String?
+    
+    enum CodingKeys: String, CodingKey {
+        case id = "Id"
+        case name = "Name"
+    }
+    
+    init(id: Int?, name: String?) {
+        self.id = id
+        self.name = name
+    }
 }

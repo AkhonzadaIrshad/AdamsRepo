@@ -38,61 +38,62 @@ class DataClassDriverDel: Codable {
 }
 
 class DatumDelObj: Codable {
-    let id: Int?
-    let driverId: String?
-    let fromAddress, toAddress, title: String?
-    let status, time: Int?
+    let id, time: Int?
+    let title: String?
+    let status: Int?
     let statusString, image, createdDate: String?
-    let toLatitude, toLongitude, fromLatitude, fromLongitude, price: Double?
-    let driverName, driverImage: String?
-    let driverRate: Double?
-    let canRate, canCancel, canChat: Bool?
+    let chatId: Int?
+    let fromAddress: String?
+    let fromLatitude, fromLongitude: Double?
+    let toAddress: String?
+    let toLatitude, toLongitude: Double?
+    let providerID, providerName, providerImage: String?
+    let providerRate, price: Double?
+    let serviceName: String?
     
     enum CodingKeys: String, CodingKey {
         case id = "Id"
-        case driverId = "DriverId"
-        case fromAddress = "FromAddress"
-        case toAddress = "ToAddress"
         case title = "Title"
         case status = "Status"
-        case price = "Price"
-        case time = "Time"
         case statusString = "StatusString"
         case image = "Image"
         case createdDate = "CreatedDate"
-        case toLatitude = "ToLatitude"
-        case toLongitude = "ToLongitude"
+        case chatId = "ChatId"
+        case fromAddress = "FromAddress"
         case fromLatitude = "FromLatitude"
         case fromLongitude = "FromLongitude"
-        case driverName = "DriverName"
-        case driverImage = "DriverImage"
-        case driverRate = "DriverRate"
-        case canRate = "CanRate"
-        case canCancel = "CanCancel"
-        case canChat = "CanChat"
+        case toAddress = "ToAddress"
+        case toLatitude = "ToLatitude"
+        case toLongitude = "ToLongitude"
+        case providerID = "ProviderId"
+        case providerName = "ProviderName"
+        case providerImage = "ProviderImage"
+        case providerRate = "ProviderRate"
+        case time = "Time"
+        case price = "Price"
+        case serviceName = "ServiceName"
     }
     
-    init(id: Int?,driverId : String?, fromAddress: String?, toAddress: String?, title: String?, status: Int?, price: Double?, time: Int?, statusString: String?, image: String?, createdDate: String?, toLatitude: Double?, toLongitude: Double?, fromLatitude: Double?, fromLongitude: Double?, driverName: String?, driverImage: String?, driverRate: Double?, canRate: Bool?, canCancel: Bool?, canChat: Bool?) {
+    init(id: Int?, title: String?, status: Int?, statusString: String?, image: String?, createdDate: String?, chatId: Int?, fromAddress: String?, fromLatitude: Double?, fromLongitude: Double?, toAddress: String?, toLatitude: Double?, toLongitude: Double?, providerID: String?, providerName: String?, providerImage: String?, providerRate: Double?, time: Int?, price: Double?, serviceName: String?) {
         self.id = id
-        self.driverId = driverId
-        self.fromAddress = fromAddress
-        self.toAddress = toAddress
         self.title = title
         self.status = status
-        self.price = price
-        self.time = time
         self.statusString = statusString
         self.image = image
         self.createdDate = createdDate
-        self.toLatitude = toLatitude
-        self.toLongitude = toLongitude
+        self.chatId = chatId
+        self.fromAddress = fromAddress
         self.fromLatitude = fromLatitude
         self.fromLongitude = fromLongitude
-        self.driverName = driverName
-        self.driverImage = driverImage
-        self.driverRate = driverRate
-        self.canRate = canRate
-        self.canCancel = canCancel
-        self.canChat = canChat
+        self.toAddress = toAddress
+        self.toLatitude = toLatitude
+        self.toLongitude = toLongitude
+        self.providerID = providerID
+        self.providerName = providerName
+        self.providerImage = providerImage
+        self.providerRate = providerRate
+        self.time = time
+        self.price = price
+        self.serviceName = serviceName
     }
 }

@@ -213,7 +213,7 @@ class ApiService : NSObject {
         
         let headers = [Constants.LANG_HEADER : self.getLang()]
         
-        AFManager.request("\(Constants.BASE_URL)Delivery/Get?id=\(id)", method: .get, parameters: nil ,encoding: JSONEncoding.default, headers: headers)
+        AFManager.request("\(Constants.BASE_URL)Order/Get?id=\(id)", method: .get, parameters: nil ,encoding: JSONEncoding.default, headers: headers)
             .responseJSON { response in
                 if let json = response.data {
                     do {
@@ -239,7 +239,7 @@ class ApiService : NSObject {
                                     "ToLatitude" : toLatitude,
                                     "FromAddress" : fromAddress,
                                     "ToAddress" : toAddress,
-                                    "Time" : time,
+                                    "EstimatedTime" : time,
                                     "EstimatedPrice" : estimatedPrice,
                                     "ShopId" : shopId,
                                     "PickUpDetails" : pickUpDetails,
@@ -272,7 +272,7 @@ class ApiService : NSObject {
                                     "Longitude" : longitude,
                                     "Latitude" : latitude]
         
-        AFManager.request("\(Constants.BASE_URL)Delivery/CreateBid", method: .post, parameters: all ,encoding: JSONEncoding.default, headers: headers)
+        AFManager.request("\(Constants.BASE_URL)Order/CreateBid", method: .post, parameters: all ,encoding: JSONEncoding.default, headers: headers)
             .responseJSON { response in
                 if let json = response.data {
                     do {
@@ -292,7 +292,7 @@ class ApiService : NSObject {
         let headers = [Constants.AUTH_HEADER: "bearer \(Authorization)",
             Constants.LANG_HEADER : self.getLang()]
         
-        AFManager.request("\(Constants.BASE_URL)Delivery/Cancel?id=\(deliveryId)", method: .post, parameters: nil ,encoding: JSONEncoding.default, headers: headers)
+        AFManager.request("\(Constants.BASE_URL)Order/Cancel?id=\(deliveryId)", method: .post, parameters: nil ,encoding: JSONEncoding.default, headers: headers)
             .responseJSON { response in
                 if let json = response.data {
                     do {
@@ -312,7 +312,7 @@ class ApiService : NSObject {
         let headers = [Constants.AUTH_HEADER: "bearer \(Authorization)",
             Constants.LANG_HEADER : self.getLang()]
         
-        AFManager.request("\(Constants.BASE_URL)Delivery/CancelByDriver?id=\(deliveryId)", method: .post, parameters: nil ,encoding: JSONEncoding.default, headers: headers)
+        AFManager.request("\(Constants.BASE_URL)Order/CancelByProvider?id=\(deliveryId)", method: .post, parameters: nil ,encoding: JSONEncoding.default, headers: headers)
             .responseJSON { response in
                 if let json = response.data {
                     do {
@@ -332,10 +332,10 @@ class ApiService : NSObject {
         let headers = [Constants.AUTH_HEADER : "bearer \(Authorization)",
             Constants.LANG_HEADER : self.getLang()]
         
-        let all : [String : Any] = ["DeliveryId" : deliveryId,
-                                    "BidId" : bidId]
+//        let all : [String : Any] = ["DeliveryId" : deliveryId,
+//                                    "BidId" : bidId]
         
-        AFManager.request("\(Constants.BASE_URL)Delivery/AcceptBid", method: .post, parameters: all ,encoding: JSONEncoding.default, headers: headers)
+        AFManager.request("\(Constants.BASE_URL)Order/AcceptBid?id=\(deliveryId)", method: .post, parameters: nil ,encoding: JSONEncoding.default, headers: headers)
             .responseJSON { response in
                 if let json = response.data {
                     do {
@@ -354,7 +354,7 @@ class ApiService : NSObject {
         let headers = [Constants.AUTH_HEADER: "bearer \(Authorization)",
             Constants.LANG_HEADER : self.getLang()]
         
-        AFManager.request("\(Constants.BASE_URL)Delivery/DeclineBid?id=\(bidId)", method: .get, parameters: nil ,encoding: JSONEncoding.default, headers: headers)
+        AFManager.request("\(Constants.BASE_URL)Order/DeclineBid?id=\(bidId)", method: .get, parameters: nil ,encoding: JSONEncoding.default, headers: headers)
             .responseJSON { response in
                 if let json = response.data {
                     do {
@@ -376,10 +376,10 @@ class ApiService : NSObject {
         let headers = [Constants.AUTH_HEADER: "bearer \(Authorization)",
             Constants.LANG_HEADER : self.getLang()]
         
-        let all : [String : Any] = ["DeliveryId" : deliveryId,
+        let all : [String : Any] = ["OrderId" : deliveryId,
                                     "OrderPrice" : actualPrice]
         
-        AFManager.request("\(Constants.BASE_URL)Delivery/StartDelivery", method: .post, parameters: all ,encoding: JSONEncoding.default, headers: headers)
+        AFManager.request("\(Constants.BASE_URL)Order/OnTheWay", method: .post, parameters: all ,encoding: JSONEncoding.default, headers: headers)
             .responseJSON { response in
                 if let json = response.data {
                     do {
@@ -398,9 +398,7 @@ class ApiService : NSObject {
         let headers = [Constants.AUTH_HEADER: "bearer \(Authorization)",
             Constants.LANG_HEADER : self.getLang()]
         
-        let all : [String : Any] = ["DeliveryId" : deliveryId]
-        
-        AFManager.request("\(Constants.BASE_URL)Delivery/CompleteDelivery", method: .post, parameters: all ,encoding: JSONEncoding.default, headers: headers)
+        AFManager.request("\(Constants.BASE_URL)Order/Complete?id=\(deliveryId)", method: .post, parameters: nil ,encoding: JSONEncoding.default, headers: headers)
             .responseJSON { response in
                 if let json = response.data {
                     do {
@@ -447,7 +445,7 @@ class ApiService : NSObject {
         let headers = [Constants.AUTH_HEADER: "bearer \(Authorization)",
             Constants.LANG_HEADER : self.getLang()]
         
-        AFManager.request("\(Constants.BASE_URL)Delivery/GetOnGoingDeliveries", method: .get, parameters: nil ,encoding: JSONEncoding.default, headers: headers)
+        AFManager.request("\(Constants.BASE_URL)Order/GetOnGoingOrders", method: .get, parameters: nil ,encoding: JSONEncoding.default, headers: headers)
             .responseJSON { response in
                 if let json = response.data {
                     do {
@@ -470,7 +468,7 @@ class ApiService : NSObject {
             "pageSize" : "\(pageSize)",
             "pageNumber" : "\(pageNumber)"]
         
-        AFManager.request("\(Constants.BASE_URL)Delivery/GetPreviousDeliveries", method: .get, parameters: nil ,encoding: JSONEncoding.default, headers: headers)
+        AFManager.request("\(Constants.BASE_URL)Order/GetPreviousOrders", method: .get, parameters: nil ,encoding: JSONEncoding.default, headers: headers)
             .responseJSON { response in
                 if let json = response.data {
                     do {
@@ -511,7 +509,7 @@ class ApiService : NSObject {
         let headers = [Constants.AUTH_HEADER: "bearer \(Authorization)",
             Constants.LANG_HEADER : self.getLang()]
         
-        AFManager.request("\(Constants.BASE_URL)Delivery/GetDriverOnGoingDeliveries", method: .get, parameters: nil ,encoding: JSONEncoding.default, headers: headers)
+        AFManager.request("\(Constants.BASE_URL)Order/GetProviderOnGoingOrders", method: .get, parameters: nil ,encoding: JSONEncoding.default, headers: headers)
             .responseJSON { response in
                 if let json = response.data {
                     do {
@@ -531,7 +529,7 @@ class ApiService : NSObject {
         let headers = [Constants.AUTH_HEADER: "bearer \(Authorization)",
             Constants.LANG_HEADER : self.getLang()]
         
-        AFManager.request("\(Constants.BASE_URL)Delivery/GetDriverPreviousDeliveries", method: .get, parameters: nil ,encoding: JSONEncoding.default, headers: headers)
+        AFManager.request("\(Constants.BASE_URL)Order/GetProviderPreviousOrders", method: .get, parameters: nil ,encoding: JSONEncoding.default, headers: headers)
             .responseJSON { response in
                 if let json = response.data {
                     do {
@@ -552,11 +550,11 @@ class ApiService : NSObject {
         let headers = [Constants.AUTH_HEADER: "bearer \(Authorization)",
             Constants.LANG_HEADER : self.getLang()]
         
-        let all : [String : Any] = ["DeliveryId" : deliveryId,
+        let all : [String : Any] = ["OrderId" : deliveryId,
                                     "Rate" : rate,
                                     "Comment" : comment]
         
-        AFManager.request("\(Constants.BASE_URL)Delivery/RateDriver", method: .post, parameters: all ,encoding: JSONEncoding.default, headers: headers)
+        AFManager.request("\(Constants.BASE_URL)Order/RateProvider", method: .post, parameters: all ,encoding: JSONEncoding.default, headers: headers)
             .responseJSON { response in
                 if let json = response.data {
                     do {
@@ -577,11 +575,11 @@ class ApiService : NSObject {
         let headers = [Constants.AUTH_HEADER: "bearer \(Authorization)",
             Constants.LANG_HEADER : self.getLang()]
         
-        let all : [String : Any] = ["DeliveryId" : deliveryId,
+        let all : [String : Any] = ["OrderId" : deliveryId,
                                     "Rate" : rate,
                                     "Comment" : comment]
         
-        AFManager.request("\(Constants.BASE_URL)Delivery/RateUser", method: .post, parameters: all ,encoding: JSONEncoding.default, headers: headers)
+        AFManager.request("\(Constants.BASE_URL)Order/RateUser", method: .post, parameters: all ,encoding: JSONEncoding.default, headers: headers)
             .responseJSON { response in
                 if let json = response.data {
                     do {
@@ -602,10 +600,10 @@ class ApiService : NSObject {
         let headers = [Constants.AUTH_HEADER: "bearer \(Authorization)",
             Constants.LANG_HEADER : self.getLang()]
         
-        let all : [String : Any] = ["DeliveryId" : deliveryId,
+        let all : [String : Any] = ["OrderId" : deliveryId,
                                     "Description" : desc]
         
-        AFManager.request("\(Constants.BASE_URL)Delivery/ReportDriver", method: .post, parameters: all ,encoding: JSONEncoding.default, headers: headers)
+        AFManager.request("\(Constants.BASE_URL)Order/ReportProvider", method: .post, parameters: all ,encoding: JSONEncoding.default, headers: headers)
             .responseJSON { response in
                 if let json = response.data {
                     do {
@@ -639,6 +637,35 @@ class ApiService : NSObject {
                 }
         }
     }
+    
+    
+    static func suggestShop(address: String, latitude : Double,longitude : Double, phoneNumber : String, workingHours : String, image : String, name : String, type : Int,completion:@escaping(_ response : BaseResponse)-> Void) {
+        
+        let headers = [Constants.LANG_HEADER : self.getLang()]
+        
+        let all : [String : Any] = ["Address" : address,
+                                    "Latitude" : latitude,
+                                    "Longitude" : longitude,
+                                    "PhoneNumber" : phoneNumber,
+                                    "WorkingHours" : workingHours,
+                                    "Image" : image,
+                                    "Name" : name,
+                                    "Type" : type]
+        
+        AFManager.request("\(Constants.BASE_URL)Shop/Suggest", method: .post, parameters: all ,encoding: JSONEncoding.default, headers: headers)
+            .responseJSON { response in
+                if let json = response.data {
+                    do {
+                        let decoder = JSONDecoder()
+                        let baseResponse = try decoder.decode(BaseResponse.self, from: json)
+                        completion(baseResponse)
+                    }catch let err{
+                        print(err)
+                    }
+                }
+        }
+    }
+    
     
     static func getShops(latitude : Double, longitude : Double, radius : Float,rating : Double,types : Int, completion:@escaping(_ response : ShopListResponse)-> Void) {
         
@@ -706,7 +733,7 @@ class ApiService : NSObject {
                                     "ProfilePicture" : ProfilePicture,
                                     "Email" : Email]
         
-        AFManager.request("\(Constants.BASE_URL)DriverRequest/Register", method: .post, parameters: all ,encoding: JSONEncoding.default, headers: headers)
+        AFManager.request("\(Constants.BASE_URL)DriverRequest/RegisterAsDriver", method: .post, parameters: all ,encoding: JSONEncoding.default, headers: headers)
             .responseJSON { response in
                 if let json = response.data {
                     do {
@@ -805,7 +832,7 @@ class ApiService : NSObject {
         let headers = [Constants.AUTH_HEADER: "bearer \(Authorization)",
             Constants.LANG_HEADER : self.getLang()]
         
-        AFManager.request("\(Constants.BASE_URL)Delivery/GetOrderLocation?id=\(deliveryId)", method: .get, parameters: nil ,encoding: JSONEncoding.default, headers: headers)
+        AFManager.request("\(Constants.BASE_URL)Order/GetOrderLocation?id=\(deliveryId)", method: .get, parameters: nil ,encoding: JSONEncoding.default, headers: headers)
             .responseJSON { response in
                 if let json = response.data {
                     do {
@@ -834,7 +861,7 @@ class ApiService : NSObject {
             multipartFormData.append(audioData, withName: "2",fileName: "audio.m4a", mimeType: "audio/m4a")
             
             
-        }, usingThreshold: UInt64.init(), to: "\(Constants.BASE_URL)Delivery/Upload?deliveryId=\(deliveryId)", method: .post, headers: headers) { (result) in
+        }, usingThreshold: UInt64.init(), to: "\(Constants.BASE_URL)Order/Upload?orderId=\(deliveryId)", method: .post, headers: headers) { (result) in
             switch result{
             case .success(let upload, _, _):
                 upload.responseJSON { response in

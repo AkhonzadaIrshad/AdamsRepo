@@ -10,7 +10,7 @@ import UIKit
 import MultilineTextField
 import CoreLocation
 
-class SuggestShopVC: BaseVC, SelectLocationDelegate,UINavigationControllerDelegate, UICollectionViewDelegate, UICollectionViewDataSource, UICollectionViewDelegateFlowLayout {
+class SuggestShopVC: BaseVC, SelectLocationDelegate,UINavigationControllerDelegate, UICollectionViewDelegate, UICollectionViewDataSource, UICollectionViewDelegateFlowLayout,TypeListDelegate, AddHoursDelegate {
 
     @IBOutlet weak var btnBack: UIButton!
     
@@ -20,10 +20,15 @@ class SuggestShopVC: BaseVC, SelectLocationDelegate,UINavigationControllerDelega
 
     @IBOutlet weak var collectionView: UICollectionView!
     
+    @IBOutlet weak var lblSelectedCategory: MyUILabel!
+    
     var selectedLocation : CLLocation?
     
     var selectedImages = [UIImage]()
     var imagePicker: UIImagePickerController!
+    var selectedType : ShopType?
+    
+    var chosenHours : String?
     
     enum ImageSource {
         case photoLibrary
@@ -41,6 +46,10 @@ class SuggestShopVC: BaseVC, SelectLocationDelegate,UINavigationControllerDelega
         edtName.placeholderColor = UIColor.lightGray
         edtName.isPlaceholderScrollEnabled = true
         
+        self.edtAddress.setLeftPaddingPoints(10)
+        self.edtAddress.setRightPaddingPoints(10)
+        
+        self.edtName.contentInset = UIEdgeInsets(top: 0, left: 10, bottom: 0, right: 10)
         // Do any additional setup after loading the view.
     }
     
@@ -138,12 +147,72 @@ class SuggestShopVC: BaseVC, SelectLocationDelegate,UINavigationControllerDelega
         self.navigationController?.popViewController(animated: true)
     }
     
-    @IBAction func categoriesAction(_ sender: Any) {
-        
+    func onClick(type: ShopType) {
+        self.selectedType = type
+        self.lblSelectedCategory.text = type.name ?? ""
     }
     
+    @IBAction func categoriesAction(_ sender: Any) {
+        if let vc = UIStoryboard(name: "Main", bundle: nil).instantiateViewController(withIdentifier: "ShopTypesFilterVC") as? ShopTypesFilterVC
+        {
+            vc.delegate = self
+            self.navigationController?.pushViewController(vc, animated: true)
+        }
+    }
+    
+    func chosenHours(str: String) {
+      self.chosenHours = str
+    }
     
     @IBAction func workingHoursAction(_ sender: Any) {
+        if let vc = UIStoryboard(name: "Main", bundle: nil).instantiateViewController(withIdentifier: "AddHoursVC") as? AddHoursVC
+        {
+            vc.delegate = self
+            self.navigationController?.pushViewController(vc, animated: true)
+        }
+    }
+    func validate() -> Bool {
+        if (self.edtName.text.count == 0) {
+            self.showBanner(title: "alert".localized, message: "enter_shop_name".localized, style: UIColor.INFO)
+            return false
+        }
+        if (self.selectedLocation == nil) {
+            self.showBanner(title: "alert".localized, message: "add_shop_location".localized, style: UIColor.INFO)
+            return false
+        }
+        if (self.edtAddress.text?.count == 0) {
+            self.showBanner(title: "alert".localized, message: "enter_shop_address".localized, style: UIColor.INFO)
+            return false
+        }
+        if (self.selectedType == nil) {
+            self.showBanner(title: "alert".localized, message: "select_shop_type".localized, style: UIColor.INFO)
+            return false
+        }
+        if (self.chosenHours?.count ?? 0 == 0) {
+            self.showBanner(title: "alert".localized, message: "add_shop_hours".localized, style: UIColor.INFO)
+            return false
+        }
+        return true
+    }
+    @IBAction func submitAction(_ sender: Any) {
+        if (self.validate()) {
+            self.showLoading()
+            var strBase64 = ""
+            if (selectedImages.count > 0) {
+               strBase64 = self.selectedImages[0].toBase64() ?? ""
+            }
+            ApiService.suggestShop(address: self.edtAddress.text ?? "", latitude: self.selectedLocation?.coordinate.latitude ?? 0.0, longitude: self.selectedLocation?.coordinate.longitude ?? 0.0, phoneNumber: "", workingHours: self.chosenHours ?? "", image: strBase64, name: self.edtName.text ?? "", type: self.selectedType?.id ?? 0) { (response) in
+                self.hideLoading()
+                if (response.errorCode == 0) {
+                    self.showBanner(title: "alert".localized, message: "shop_suggested".localized, style: UIColor.SUCCESS)
+                    DispatchQueue.main.asyncAfter(deadline: .now() + 2, execute: {
+                        self.navigationController?.popViewController(animated: true)
+                    })
+                }else {
+                    self.showBanner(title: "alert".localized, message: response.errorMessage ?? "", style: UIColor.INFO)
+                }
+            }
+        }
         
     }
     

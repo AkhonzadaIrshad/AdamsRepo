@@ -85,7 +85,7 @@ class ShopDetailsVC: BaseVC, UITableViewDelegate, UITableViewDataSource {
             let url = URL(string: "\(Constants.IMAGE_URL)\(self.shop?.image ?? "")")
             self.ivLogo.kf.setImage(with: url)
         }else {
-          self.ivLogo.image = self.getShopImageByType(type: self.shop?.type ?? 0)
+          self.ivLogo.image = self.getShopImageByType(type: self.shop?.type?.id ?? 0)
         }
        
         

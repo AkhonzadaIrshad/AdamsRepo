@@ -24,7 +24,8 @@ class Constants {
     
     static var AUTH_HEADER = "Authorization"
     static var LANG_HEADER = "Accept-Language"
-    static var BASE_URL = "http://35.192.208.228/RZQ/api/"
+   // static var BASE_URL = "http://35.192.208.228/RZQ/api/"
+    static var BASE_URL = "http://35.192.208.228/RZQ2/api/"
     
     static var DEFAULT_RADIUS = 20000.0
     
@@ -130,6 +131,112 @@ class Constants {
         
         return places
     }
+    
+    static func getHoursStr() -> Array<String> {
+        var hours : Array<String> = Array()
         
+        var item = "01:00"
+        hours.append(item)
+        item = "02:00"
+        hours.append(item)
+        item = "03:00"
+        hours.append(item)
+        item = "04:00"
+        hours.append(item)
+        item = "05:00"
+        hours.append(item)
+        item = "06:00"
+        hours.append(item)
+        item = "07:00"
+        hours.append(item)
+        item = "08:00"
+        hours.append(item)
+        item = "09:00"
+        hours.append(item)
+        item = "10:00"
+        hours.append(item)
+        item = "11:00"
+        hours.append(item)
+        item = "12:00"
+        hours.append(item)
+        item = "13:00"
+        hours.append(item)
+        item = "14:00"
+        hours.append(item)
+        item = "15:00"
+        hours.append(item)
+        item = "16:00"
+        hours.append(item)
+        item = "17:00"
+        hours.append(item)
+        item = "18:00"
+        hours.append(item)
+        item = "19:00"
+        hours.append(item)
+        item = "20:00"
+        hours.append(item)
+        item = "21:00"
+        hours.append(item)
+        item = "22:00"
+        hours.append(item)
+        item = "23:00"
+        hours.append(item)
+        
+        return hours
+    }
+    static func getHours() -> Array<HourItem> {
+        var hours : Array<HourItem> = Array()
+     
+        var item = HourItem()
+        item.id = 1
+        item.name = "monday".localized
+        item.from = "12:00"
+        item.to = "18:00"
+        hours.append(item)
+        
+        item = HourItem()
+        item.id = 2
+        item.name = "tuesday".localized
+        item.from = "12:00"
+        item.to = "18:00"
+        hours.append(item)
+        
+        item = HourItem()
+        item.id = 3
+        item.name = "wednesday".localized
+        item.from = "12:00"
+        item.to = "18:00"
+        hours.append(item)
+        
+        item = HourItem()
+        item.id = 4
+        item.name = "thursday".localized
+        item.from = "12:00"
+        item.to = "18:00"
+        hours.append(item)
+        
+        item = HourItem()
+        item.id = 5
+        item.name = "friday".localized
+        item.from = "12:00"
+        item.to = "18:00"
+        hours.append(item)
+        
+        item = HourItem()
+        item.id = 6
+        item.name = "saturday".localized
+        item.from = "12:00"
+        item.to = "18:00"
+        hours.append(item)
+        
+        item = HourItem()
+        item.id = 7
+        item.name = "sunday".localized
+        item.from = "12:00"
+        item.to = "18:00"
+        hours.append(item)
+        
+        return hours
+    }
         
 }

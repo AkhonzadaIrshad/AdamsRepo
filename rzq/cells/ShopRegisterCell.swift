@@ -16,8 +16,6 @@ class ShopRegisterCell: UITableViewCell {
     
     @IBOutlet weak var lblAddress: MyUILabel!
     
-    
-    
      var onCancel : (() -> Void)? = nil
     
     @IBAction func cancelRegistrationAction(_ sender: Any) {

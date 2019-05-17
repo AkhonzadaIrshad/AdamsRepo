@@ -113,7 +113,12 @@ class HomeListVC: BaseViewController, UITableViewDelegate, UITableViewDataSource
                 DispatchQueue.main.async {
                     let messagesVC: ZHCDemoMessagesViewController = ZHCDemoMessagesViewController.init()
                     messagesVC.presentBool = true
-                    let order = DatumDel(driverID: "", canReport: false, canTrack: false, id: response.data?.id ?? 0, chatId: response.data?.chatId ?? 0, fromAddress: response.data?.fromAddress ?? "", toAddress: response.data?.toAddress ?? "", title: response.data?.title ?? "", status: response.data?.status ?? 0, price: response.data?.cost ?? 0.0, time: response.data?.time ?? 0, statusString: response.data?.statusString ?? "", image: "", createdDate: response.data?.createdDate ?? "", toLatitude: response.data?.toLatitude ?? 0.0, toLongitude: response.data?.toLatitude ?? 0.0, fromLatitude: response.data?.fromLatitude ?? 0.0, fromLongitude: response.data?.fromLongitude ?? 0.0, driverName: "", driverImage: "", driverRate: 0, canRate: false, canCancel: false, canChat: false)
+                    
+//                    let order = DatumDel(driverID: "", canReport: false, canTrack: false, id: response.data?.id ?? 0, chatId: response.data?.chatId ?? 0, fromAddress: response.data?.fromAddress ?? "", toAddress: response.data?.toAddress ?? "", title: response.data?.title ?? "", status: response.data?.status ?? 0, price: response.data?.cost ?? 0.0, time: response.data?.time ?? 0, statusString: response.data?.statusString ?? "", image: "", createdDate: response.data?.createdDate ?? "", toLatitude: response.data?.toLatitude ?? 0.0, toLongitude: response.data?.toLatitude ?? 0.0, fromLatitude: response.data?.fromLatitude ?? 0.0, fromLongitude: response.data?.fromLongitude ?? 0.0, driverName: "", driverImage: "", driverRate: 0, canRate: false, canCancel: false, canChat: false)
+                    
+                     let order = DatumDel(id: response.data?.id ?? 0, title: response.data?.title ?? "", status: response.data?.status ?? 0, statusString: response.data?.statusString ?? "", image: "", createdDate: response.data?.createdDate ?? "", chatId: response.data?.chatId ?? 0, fromAddress: response.data?.fromAddress ?? "", fromLatitude: response.data?.fromLatitude ?? 0.0, fromLongitude: response.data?.fromLongitude ?? 0.0, toAddress: response.data?.toAddress ?? "", toLatitude: response.data?.toLatitude ?? 0.0, toLongitude: response.data?.toLongitude ?? 0.0, providerID: response.data?.driverId, providerName: "", providerImage: "", providerRate: 0, time: response.data?.time ?? 0, price: response.data?.cost ?? 0.0, serviceName: "")
+                    
+                    
                     messagesVC.order = order
                     messagesVC.user = self.loadUser()
                     let nav: UINavigationController = UINavigationController.init(rootViewController: messagesVC)
@@ -219,14 +224,14 @@ class HomeListVC: BaseViewController, UITableViewDelegate, UITableViewDataSource
             let url = URL(string: "\(Constants.IMAGE_URL)\(shop.image ?? "")")
             cell.ivLogo.kf.setImage(with: url)
         }else {
-          cell.ivLogo.image = self.getShopImageByType(type: shop.type ?? 0)
+          cell.ivLogo.image = self.getShopImageByType(type: shop.type?.id ?? 0)
         }
         
         
         cell.lblName.text = shop.name ?? ""
         cell.lblAddress.text = shop.address ?? ""
         cell.lblRate.text = "\(shop.rate ?? 0.0)"
-        cell.lblType.text = self.getShopType(type : shop.type ?? 0)
+        cell.lblType.text = self.getShopType(type : shop.type?.id ?? 0)
         cell.lblDistance.text = self.getShopDistance(latitude: shop.latitude ?? 0.0, longitude: shop.longitude ?? 0.0)
         
         return cell

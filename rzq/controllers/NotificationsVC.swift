@@ -202,11 +202,17 @@ class NotificationsVC: BaseViewController, UITableViewDelegate, UITableViewDataS
             }
             
             cell.lblTitle.text = desc
-            cell.lblMoney.text = "\(dict?["EstimatedPrice"] as? Double ?? 0.0) \("currency".localized)"
-            let time = dict?["Time"] as? Int ?? 0
+            let price = dict?["EstimatedPrice"] as? Double ?? 0.0
+            if (price > 10) {
+                cell.lblMoney.text = "> 10 \("currency".localized)"
+            }else {
+                cell.lblMoney.text = "< 10 \("currency".localized)"
+            }
+//            cell.lblMoney.text = "\(dict?["EstimatedPrice"] as? Double ?? 0.0) \("currency".localized)"
+            let time = dict?["EstimatedTime"] as? Int ?? 0
             
             if (time > 0) {
-             cell.lblTime.text = "\(dict?["Time"] as? Int ?? 0) \("hours".localized)"
+             cell.lblTime.text = "\(dict?["EstimatedTime"] as? Int ?? 0) \("hours".localized)"
             }else {
                 cell.lblTime.text = "asap".localized
             }

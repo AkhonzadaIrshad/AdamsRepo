@@ -47,6 +47,8 @@ class OrderDetailsVC: BaseVC, UICollectionViewDelegate, UICollectionViewDataSour
     
     @IBOutlet weak var ivHandle: UIImageView!
     
+    @IBOutlet weak var recordLine: UIView!
+    
     var player : AVPlayer?
     
     var markerLocation: GMSMarker?
@@ -87,7 +89,13 @@ class OrderDetailsVC: BaseVC, UICollectionViewDelegate, UICollectionViewDataSour
         }
        
         self.lblDropoff.text = self.order?.toAddress ?? ""
-        self.lblCost.text = "\(self.order?.cost ?? 0.0) \("currency".localized)"
+        let price = self.order?.cost ?? 0.0
+        if (price > 10) {
+           self.lblCost.text = "> 10 \("currency".localized)"
+        }else {
+           self.lblCost.text = "< 10 \("currency".localized)"
+        }
+//        self.lblCost.text = "\(self.order?.cost ?? 0.0) \("currency".localized)"
         
         if (self.order?.time ?? 0 > 0) {
            self.lblTime.text = "\(self.order?.time ?? 0) \("hours".localized)"
@@ -126,6 +134,7 @@ class OrderDetailsVC: BaseVC, UICollectionViewDelegate, UICollectionViewDataSour
         
         if (self.order?.voiceFile?.count ?? 0 == 0) {
             self.audioViewHeight.constant = 0
+            self.recordLine.isHidden = true
         }
         if (self.order?.images?.count ?? 0 == 0) {
             self.imagesViewHeight.constant = 0
@@ -382,7 +391,9 @@ class OrderDetailsVC: BaseVC, UICollectionViewDelegate, UICollectionViewDataSour
         let messagesVC: ZHCDemoMessagesViewController = ZHCDemoMessagesViewController.init()
         messagesVC.presentBool = true
             
-            let order = DatumDel(driverID: self.order?.driverId ?? "", canReport: false, canTrack: false, id: self.order?.id ?? 0, chatId: self.order?.chatId ?? 0, fromAddress: self.order?.fromAddress ?? "", toAddress: self.order?.toAddress ?? "", title: self.order?.title ?? "", status: self.order?.status ?? 0, price: self.order?.cost ?? 0.0, time: self.order?.time ?? 0, statusString: self.order?.statusString ?? "", image: "", createdDate: self.order?.createdDate ?? "", toLatitude: self.order?.toLatitude ?? 0.0, toLongitude: self.order?.toLongitude ?? 0.0, fromLatitude: self.order?.fromLatitude ?? 0.0, fromLongitude: self.order?.fromLongitude ?? 0.0, driverName: "", driverImage: "", driverRate: 0, canRate: false, canCancel: false, canChat: false)
+//            let order = DatumDel(driverID: self.order?.driverId ?? "", canReport: false, canTrack: false, id: self.order?.id ?? 0, chatId: self.order?.chatId ?? 0, fromAddress: self.order?.fromAddress ?? "", toAddress: self.order?.toAddress ?? "", title: self.order?.title ?? "", status: self.order?.status ?? 0, price: self.order?.cost ?? 0.0, time: self.order?.time ?? 0, statusString: self.order?.statusString ?? "", image: "", createdDate: self.order?.createdDate ?? "", toLatitude: self.order?.toLatitude ?? 0.0, toLongitude: self.order?.toLongitude ?? 0.0, fromLatitude: self.order?.fromLatitude ?? 0.0, fromLongitude: self.order?.fromLongitude ?? 0.0, driverName: "", driverImage: "", driverRate: 0, canRate: false, canCancel: false, canChat: false)
+            
+             let order = DatumDel(id: self.order?.id ?? 0, title: self.order?.title ?? "", status: self.order?.status ?? 0, statusString: self.order?.statusString ?? "", image: "", createdDate: self.order?.createdDate ?? "", chatId: self.order?.chatId ?? 0, fromAddress: self.order?.fromAddress ?? "", fromLatitude: self.order?.fromLatitude ?? 0.0, fromLongitude: self.order?.fromLongitude ?? 0.0, toAddress: self.order?.toAddress ?? "", toLatitude: self.order?.toLatitude ?? 0.0, toLongitude: self.order?.toLongitude ?? 0.0, providerID: self.order?.driverId, providerName: "", providerImage: "", providerRate: 0, time: self.order?.time ?? 0, price: self.order?.cost ?? 0.0, serviceName: "")
             
         messagesVC.order = order
         messagesVC.user = self.loadUser()

@@ -134,3 +134,15 @@
 "distance" = "Distance";
 "price" = "Price";
 "sort_notifications_by" = "Sort Notifications By";
+"ok" = "Ok";
+"due_amount" = "Your due balance is too high, you wont be receving any new orders, kindly contact RZQ.";
+
+"open" = "Open";
+"closed" = "Closed";
+"shop_suggested" = "Shop suggested successfully, thank you.";
+
+"enter_shop_name" = "Enter place name!";
+"add_shop_location" = "Add place location on map!";
+"enter_shop_address" = "Enter place address!";
+"select_shop_type" = "Select place type!";
+"add_shop_hours" = "Add place working hours!";

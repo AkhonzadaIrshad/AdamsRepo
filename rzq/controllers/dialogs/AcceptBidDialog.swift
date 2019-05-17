@@ -96,7 +96,7 @@ class AcceptBidDialog: BaseVC {
     
     @IBAction func acceptAction(_ sender: Any) {
         self.showLoading()
-        ApiService.acceptBid(Authorization: self.loadUser().data?.accessToken ?? "", deliveryId: self.deliveryId ?? 0, bidId: self.bidId ?? 0) { (response) in
+        ApiService.acceptBid(Authorization: self.loadUser().data?.accessToken ?? "", deliveryId: self.bidId ?? 0, bidId: self.bidId ?? 0) { (response) in
             self.hideLoading()
             if (response.errorCode == 0) {
                 self.showBanner(title: "alert".localized, message: "bid_accepted_successfully".localized, style: UIColor.SUCCESS)

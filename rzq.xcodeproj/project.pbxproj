@@ -129,6 +129,11 @@
 		8BDB970B225B3A2D0036E801 /* Intro1.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8BDB970A225B3A2D0036E801 /* Intro1.swift */; };
 		8BDB970D225B3A360036E801 /* Intro2.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8BDB970C225B3A360036E801 /* Intro2.swift */; };
 		8BDB970F225B3A3E0036E801 /* Intro3.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8BDB970E225B3A3E0036E801 /* Intro3.swift */; };
+		8BE1FA88228C316000B98E5E /* ShopTypesFilterVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8BE1FA87228C316000B98E5E /* ShopTypesFilterVC.swift */; };
+		8BE1FA8A228C321E00B98E5E /* ShopTypeCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8BE1FA89228C321E00B98E5E /* ShopTypeCell.swift */; };
+		8BE1FA8C228C403300B98E5E /* HourCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8BE1FA8B228C403300B98E5E /* HourCell.swift */; };
+		8BE1FA8E228C420800B98E5E /* AddHoursVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8BE1FA8D228C420800B98E5E /* AddHoursVC.swift */; };
+		8BE1FA90228C42E300B98E5E /* HourItem.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8BE1FA8F228C42E300B98E5E /* HourItem.swift */; };
 		8BEF648D22536849003AE522 /* DeliveryStep3.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8BEF648C22536849003AE522 /* DeliveryStep3.swift */; };
 		8BEF649022537F5E003AE522 /* ImagePickerDialog.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8BEF648F22537F5E003AE522 /* ImagePickerDialog.swift */; };
 		8BEF649322537FD8003AE522 /* DialogImageCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8BEF649222537FD8003AE522 /* DialogImageCell.swift */; };
@@ -280,6 +285,11 @@
 		8BDB970A225B3A2D0036E801 /* Intro1.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Intro1.swift; sourceTree = "<group>"; };
 		8BDB970C225B3A360036E801 /* Intro2.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Intro2.swift; sourceTree = "<group>"; };
 		8BDB970E225B3A3E0036E801 /* Intro3.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Intro3.swift; sourceTree = "<group>"; };
+		8BE1FA87228C316000B98E5E /* ShopTypesFilterVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ShopTypesFilterVC.swift; sourceTree = "<group>"; };
+		8BE1FA89228C321E00B98E5E /* ShopTypeCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ShopTypeCell.swift; sourceTree = "<group>"; };
+		8BE1FA8B228C403300B98E5E /* HourCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HourCell.swift; sourceTree = "<group>"; };
+		8BE1FA8D228C420800B98E5E /* AddHoursVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AddHoursVC.swift; sourceTree = "<group>"; };
+		8BE1FA8F228C42E300B98E5E /* HourItem.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HourItem.swift; sourceTree = "<group>"; };
 		8BEF648C22536849003AE522 /* DeliveryStep3.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DeliveryStep3.swift; sourceTree = "<group>"; };
 		8BEF648F22537F5E003AE522 /* ImagePickerDialog.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ImagePickerDialog.swift; sourceTree = "<group>"; };
 		8BEF649222537FD8003AE522 /* DialogImageCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DialogImageCell.swift; sourceTree = "<group>"; };
@@ -338,6 +348,7 @@
 				8B84A168225A31560090CB5D /* App.swift */,
 				8BF222362271D0BA005BE71D /* ShopType.swift */,
 				8BB7CA05227F55F200D7C8F2 /* FilterModel.swift */,
+				8BE1FA8F228C42E300B98E5E /* HourItem.swift */,
 			);
 			path = models;
 			sourceTree = "<group>";
@@ -419,6 +430,8 @@
 				8BF29CA12279BA5E0001EF21 /* TermsPushVC.swift */,
 				8BC23285228AF14200CD086F /* SelectLocationViewController.swift */,
 				8BC23287228AF1BB00CD086F /* SuggestShopVC.swift */,
+				8BE1FA87228C316000B98E5E /* ShopTypesFilterVC.swift */,
+				8BE1FA8D228C420800B98E5E /* AddHoursVC.swift */,
 			);
 			path = controllers;
 			sourceTree = "<group>";
@@ -441,6 +454,8 @@
 				8BDAA8C42275DBAE00F59D5E /* ShopFilterCell.swift */,
 				8BCD198A228441F600AFB878 /* FilterSearchCell.swift */,
 				8BCD199022845A6D00AFB878 /* OrderCompletedCell.swift */,
+				8BE1FA89228C321E00B98E5E /* ShopTypeCell.swift */,
+				8BE1FA8B228C403300B98E5E /* HourCell.swift */,
 			);
 			path = cells;
 			sourceTree = "<group>";
@@ -820,6 +835,7 @@
 				"${BUILT_PRODUCTS_DIR}/Cosmos/Cosmos.framework",
 				"${BUILT_PRODUCTS_DIR}/CountryPickerView/CountryPickerView.framework",
 				"${BUILT_PRODUCTS_DIR}/DatePickerDialog/DatePickerDialog.framework",
+				"${BUILT_PRODUCTS_DIR}/DropDown/DropDown.framework",
 				"${BUILT_PRODUCTS_DIR}/EAIntroView/EAIntroView.framework",
 				"${BUILT_PRODUCTS_DIR}/EARestrictedScrollView/EARestrictedScrollView.framework",
 				"${BUILT_PRODUCTS_DIR}/ExpandableCell/ExpandableCell.framework",
@@ -859,6 +875,7 @@
 				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/Cosmos.framework",
 				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/CountryPickerView.framework",
 				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/DatePickerDialog.framework",
+				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/DropDown.framework",
 				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/EAIntroView.framework",
 				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/EARestrictedScrollView.framework",
 				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/ExpandableCell.framework",
@@ -957,6 +974,7 @@
 				8B121BAF2265FD000083069F /* QuestionAnswerVC.swift in Sources */,
 				8B121B9D2265D07C0083069F /* RegisteredShopsVC.swift in Sources */,
 				8BD329C5225C9A690060900A /* RealmUser.swift in Sources */,
+				8BE1FA8C228C403300B98E5E /* HourCell.swift in Sources */,
 				8BD99C5C2259E6BA00E00A0A /* CircleImage.swift in Sources */,
 				8BA8159C22523023004EE1A8 /* LabasLocationManager.swift in Sources */,
 				8B2BCC82224FCEB400CBC7D3 /* AppDelegate.swift in Sources */,
@@ -985,6 +1003,7 @@
 				8BF2221F22719E4D005BE71D /* ShopCell.swift in Sources */,
 				8BD329C2225C98710060900A /* CreateAddressResponse.swift in Sources */,
 				8BD45FA222672D44000FB47A /* ShopDeliveriesResponse.swift in Sources */,
+				8BE1FA8A228C321E00B98E5E /* ShopTypeCell.swift in Sources */,
 				8BEF649B2253959E003AE522 /* HomeServiceCell.swift in Sources */,
 				8BD99C5E2259EC1D00E00A0A /* ProfileVC.swift in Sources */,
 				8B84A169225A31560090CB5D /* App.swift in Sources */,
@@ -1018,6 +1037,7 @@
 				8BA8159F22524537004EE1A8 /* DeliveryStep1.swift in Sources */,
 				8BD329BC225C8C790060900A /* BaseResponse.swift in Sources */,
 				8B1F91CB225629F500B639F1 /* ToolTipView.swift in Sources */,
+				8BE1FA8E228C420800B98E5E /* AddHoursVC.swift in Sources */,
 				8B9CA8382250CAC800DE0DC4 /* MyUITextField.swift in Sources */,
 				8B121B992265CD8B0083069F /* SettingsVC.swift in Sources */,
 				8B9CA8342250CA9C00DE0DC4 /* MyUILabel.swift in Sources */,
@@ -1032,8 +1052,10 @@
 				8BC54AFE2268752100B70A97 /* ZHModelData.swift in Sources */,
 				8BCB77FA2254BA2000E52ED0 /* OrderSubmittedSheet.swift in Sources */,
 				8B121BB3226605AA0083069F /* AboutUsVC.swift in Sources */,
+				8BE1FA90228C42E300B98E5E /* HourItem.swift in Sources */,
 				8B121BAB2265FB380083069F /* QuestionCell.swift in Sources */,
 				8B56C0412270D01400E2DDC5 /* ChatResponse.swift in Sources */,
+				8BE1FA88228C316000B98E5E /* ShopTypesFilterVC.swift in Sources */,
 				8BF2223B2271DBDC005BE71D /* EmptyView.swift in Sources */,
 				8BDB970B225B3A2D0036E801 /* Intro1.swift in Sources */,
 				8BBEA5A22260C4AB00FBEBFC /* DriverPreviousOrdersResponse.swift in Sources */,

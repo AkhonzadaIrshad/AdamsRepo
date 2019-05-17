@@ -142,7 +142,8 @@ class WorkingOrdersVC: BaseViewController, UITableViewDelegate, UITableViewDataS
                  DispatchQueue.main.async {
                 let messagesVC: ZHCDemoMessagesViewController = ZHCDemoMessagesViewController.init()
                 messagesVC.presentBool = true
-                    let dumOrder = DatumDel(driverID: item.driverId ?? "", canReport: false, canTrack: false, id: item.id ?? 0, chatId : item.chatId ?? 0, fromAddress: item.fromAddress ?? "", toAddress: item.toAddress ?? "", title: item.title ?? "", status: item.status ?? Constants.ORDER_PROCESSING, price: item.price ?? 0.0, time: item.time ?? 0, statusString: item.statusString ?? "", image: item.image ?? "", createdDate: item.createdDate ?? "", toLatitude: item.toLatitude ?? 0.0, toLongitude: item.toLongitude ?? 0.0, fromLatitude: item.fromLatitude ?? 0.0, fromLongitude: item.fromLongitude ?? 0.0, driverName: item.driverName ?? "", driverImage: item.driverImage ?? "", driverRate: item.driverRate ?? 0.0, canRate: false, canCancel: false, canChat: false)
+                    
+                    let dumOrder = DatumDel(id: item.id ?? 0, title: item.title ?? "", status: item.status ?? 0, statusString: item.statusString ?? "", image: item.image ?? "", createdDate: item.createdDate ?? "", chatId: item.chatId ?? 0, fromAddress: item.fromAddress ?? "", fromLatitude: item.fromLatitude ?? 0.0, fromLongitude: item.fromLongitude ?? 0.0, toAddress: item.toAddress ?? "", toLatitude: item.toLatitude ?? 0.0, toLongitude: item.toLongitude ?? 0.0, providerID: item.providerID ?? "", providerName: item.providerName ?? "", providerImage: item.providerImage ?? "", providerRate: item.providerRate ?? 0.0, time: item.time ?? 0, price: item.price ?? 0.0, serviceName: item.serviceName ?? "")
                 
                 messagesVC.order = dumOrder
                 messagesVC.user = self.loadUser()

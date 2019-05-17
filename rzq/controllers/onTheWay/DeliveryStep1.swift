@@ -107,7 +107,8 @@ class DeliveryStep1: BaseVC,LabasLocationManagerDelegate, Step2Delegate {
         {
             vc.latitude = self.latitude ?? 0.0
             vc.longitude = self.longitude ?? 0.0
-            let shopData = ShopData(rate: self.orderModel?.shop?.rate ?? 0.0, nearbyDriversCount: 0, id: self.orderModel?.shop?.id ?? 0, type: self.orderModel?.shop?.type ?? 0, name: self.orderModel?.shop?.name ?? "", address: self.orderModel?.shop?.address ?? "", latitude: self.orderModel?.shop?.latitude ?? 0.0, longitude: self.orderModel?.shop?.longitude ?? 0.0, phoneNumber: self.orderModel?.shop?.phoneNumber ?? "", workingHours: self.orderModel?.shop?.workingHours ?? "", isOpen: self.orderModel?.shop?.isOpen ?? false, image: self.orderModel?.shop?.image ?? "")
+        
+              let shopData = ShopData(nearbyDriversCount: 0, id: self.orderModel?.shop?.id ?? 0, name: self.orderModel?.shop?.name ?? "", address: self.orderModel?.shop?.address ?? "", latitude: self.orderModel?.shop?.latitude ?? 0.0, longitude: self.orderModel?.shop?.longitude ?? 0.0, phoneNumber: self.orderModel?.shop?.phoneNumber ?? "", workingHours: self.orderModel?.shop?.workingHours ?? "", image: self.orderModel?.shop?.image ?? "", rate: self.orderModel?.shop?.rate ?? 0.0, type: self.orderModel?.shop?.type ?? TypeClass(id: 0, name: ""))
             vc.shop = shopData
             self.navigationController?.pushViewController(vc, animated: true)
         }
@@ -131,11 +132,11 @@ class DeliveryStep1: BaseVC,LabasLocationManagerDelegate, Step2Delegate {
     func labasLocationManager(didUpdateLocation location: CLLocation) {
         if (self.latitude ?? 0.0 == 0.0 || self.longitude ?? 0.0 == 0.0) {
             
-                        self.latitude = location.coordinate.latitude
-                        self.longitude = location.coordinate.longitude
+//                        self.latitude = location.coordinate.latitude
+//                        self.longitude = location.coordinate.longitude
             
-//            self.latitude = 29.381127
-//            self.longitude = 47.999135
+            self.latitude = 29.381127
+            self.longitude = 47.999135
             
             self.hideLoading()
             self.setUpGoogleMap()
@@ -415,20 +416,24 @@ extension DeliveryStep1 : GMSMapViewDelegate {
                 self.pinMarker?.map = nil
                 self.lblPickupLocation.textColor = UIColor.appDarkBlue
                 self.lblPickupLocation.text = response.shopData?.name ?? ""
-                let dataShop = DataShop(id: response.shopData?.id ?? 0, type: response.shopData?.type ?? 0, rate: response.shopData?.rate ?? 0.0, name: response.shopData?.name ?? "", address: response.shopData?.address ?? "", latitude: response.shopData?.latitude ?? 0.0, longitude: response.shopData?.longitude ?? 0.0, phoneNumber: response.shopData?.phoneNumber ?? "", workingHours: response.shopData?.workingHours ?? "", isOpen: response.shopData?.isOpen ?? false, image: response.shopData?.image ?? "")
+                let dataShop = DataShop(id: response.shopData?.id ?? 0, name: response.shopData?.name ?? "", address: response.shopData?.address ?? "", latitude: response.shopData?.latitude ?? 0.0, longitude: response.shopData?.longitude ?? 0.0, phoneNumber: response.shopData?.phoneNumber ?? "", workingHours: response.shopData?.workingHours ?? "", image: response.shopData?.image ?? "", rate: response.shopData?.rate ?? 0.0, type: response.shopData?.type ?? TypeClass(id: 0, name: ""))
                 self.orderModel?.shop = dataShop
                 self.orderModel?.pickUpAddress = response.shopData?.name ?? ""
                 self.orderModel?.pickUpLatitude = response.shopData?.latitude ?? 0.0
                 self.orderModel?.pickUpLongitude = response.shopData?.longitude ?? 0.0
                 
                 
-                self.ivShop.isHidden = false
+                
                 self.viewShopDetails.isHidden = false
-                let url = URL(string: "\(Constants.IMAGE_URL)\(response.shopData?.image ?? "")")
-                self.ivShop.kf.setImage(with: url)
+                 self.ivShop.isHidden = false
                 self.edtMoreDetails.text = "\(response.shopData?.name ?? "")\n\(response.shopData?.address ?? "")"
                 
-                
+                if (response.shopData?.image?.count ?? 0 > 0) {
+                    let url = URL(string: "\(Constants.IMAGE_URL)\(response.shopData?.image ?? "")")
+                    self.ivShop.kf.setImage(with: url)
+                }else {
+                    self.ivShop.image = self.getShopImageByType(type : response.shopData?.type?.id ?? 0)
+                }
                 
                 for mark in self.shopMarkers {
                     mark.icon = UIImage(named: "ic_map_shop")
@@ -443,6 +448,36 @@ extension DeliveryStep1 : GMSMapViewDelegate {
             return true
         }
     }
+    
+    
+    func getShopImageByType(type : Int) -> UIImage {
+        switch type {
+        case Constants.PLACE_BAKERY:
+            return UIImage(named: "ic_place_bakery")!
+        case Constants.PLACE_BOOK_STORE:
+            return UIImage(named: "ic_place_book_store")!
+        case Constants.PLACE_CAFE:
+            return UIImage(named: "ic_place_cafe")!
+        case Constants.PLACE_MEAL_DELIVERY:
+            return UIImage(named: "ic_place_meal_delivery")!
+        case Constants.PLACE_MEAL_TAKEAWAY:
+            return UIImage(named: "ic_place_meal_takeaway")!
+        case Constants.PLACE_PHARMACY:
+            return UIImage(named: "ic_place_pharmacy")!
+        case Constants.PLACE_RESTAURANT:
+            return UIImage(named: "ic_place_restaurant")!
+        case Constants.PLACE_SHOPPING_MALL:
+            return UIImage(named: "ic_place_shopping_mall")!
+        case Constants.PLACE_STORE:
+            return UIImage(named: "ic_place_store")!
+        case Constants.PLACE_SUPERMARKET:
+            return UIImage(named: "ic_place_supermarket")!
+        default:
+            return UIImage(named: "ic_place_store")!
+        }
+    }
+    
+    
     
     func mapView(_ mapView: GMSMapView, didLongPressAt coordinate: CLLocationCoordinate2D) {
         self.pinMarker?.map = nil

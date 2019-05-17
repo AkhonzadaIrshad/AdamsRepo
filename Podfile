@@ -42,4 +42,5 @@ pod 'RealmSwift'
    pod 'Branch'
    pod 'ImageSlideshow', '~> 1.6'
    pod 'MultilineTextField'
+   pod 'DropDown'
 end
