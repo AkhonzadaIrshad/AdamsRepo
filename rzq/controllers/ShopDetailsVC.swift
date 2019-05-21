@@ -85,7 +85,8 @@ class ShopDetailsVC: BaseVC, UITableViewDelegate, UITableViewDataSource {
             let url = URL(string: "\(Constants.IMAGE_URL)\(self.shop?.image ?? "")")
             self.ivLogo.kf.setImage(with: url)
         }else {
-          self.ivLogo.image = self.getShopImageByType(type: self.shop?.type?.id ?? 0)
+            let url = URL(string: "\(Constants.IMAGE_URL)\(self.shop?.type?.image ?? "")")
+            self.ivLogo.kf.setImage(with: url)
         }
        
         
@@ -105,6 +106,25 @@ class ShopDetailsVC: BaseVC, UITableViewDelegate, UITableViewDataSource {
         
         self.lblNearbyDrivers.text = "\((self.shop?.nearbyDriversCount ?? 0 + 10)) \("drivers".localized)"
         // Do any additional setup after loading the view.
+        
+        let singleTap = UITapGestureRecognizer(target: self, action: #selector(enlargeImage))
+        self.ivLogo.isUserInteractionEnabled = true
+        self.ivLogo.addGestureRecognizer(singleTap)
+        
+    }
+    @objc func enlargeImage() {
+            if let vc = UIStoryboard(name: "Main", bundle: nil).instantiateViewController(withIdentifier: "ImageSliderVC") as? ImageSliderVC
+            {
+                var images = [String]()
+                  if (self.shop?.image?.count ?? 0 > 0) {
+                    images.append("\(Constants.IMAGE_URL)\(self.shop?.image ?? "")")
+                  }else {
+                    images.append("\(Constants.IMAGE_URL)\(self.shop?.type?.image ?? "")")
+                }
+                
+                vc.orderImages = images
+                self.navigationController?.pushViewController(vc, animated: true)
+            }
     }
     
     func getShopImageByType(type : Int) -> UIImage {
@@ -282,6 +302,7 @@ class ShopDetailsVC: BaseVC, UITableViewDelegate, UITableViewDataSource {
             self.navigationController?.pushViewController(vc, animated: true)
         }
     }
+    
     @IBAction func shareAction(_ sender: Any) {
         self.generateDeepLink()
     }

@@ -9,6 +9,8 @@
 import UIKit
 import MultilineTextField
 import CoreLocation
+import GooglePlaces
+import GoogleMaps
 
 class SuggestShopVC: BaseVC, SelectLocationDelegate,UINavigationControllerDelegate, UICollectionViewDelegate, UICollectionViewDataSource, UICollectionViewDelegateFlowLayout,TypeListDelegate, AddHoursDelegate {
 
@@ -22,11 +24,20 @@ class SuggestShopVC: BaseVC, SelectLocationDelegate,UINavigationControllerDelega
     
     @IBOutlet weak var lblSelectedCategory: MyUILabel!
     
+    @IBOutlet weak var ivHandle: UIImageView!
+    
+    
+    @IBOutlet weak var ivIndicator1: UIImageView!
+    @IBOutlet weak var ivIndicator2: UIImageView!
+    
     var selectedLocation : CLLocation?
     
     var selectedImages = [UIImage]()
     var imagePicker: UIImagePickerController!
     var selectedType : ShopType?
+    
+    var latitude : Double?
+    var longitude : Double?
     
     var chosenHours : String?
     
@@ -38,6 +49,12 @@ class SuggestShopVC: BaseVC, SelectLocationDelegate,UINavigationControllerDelega
     override func viewDidLoad() {
         super.viewDidLoad()
 
+        if (self.isArabic()) {
+            self.ivHandle.image = UIImage(named: "ic_back_arabic")
+            self.ivIndicator1.image = UIImage(named: "ic_indicator_arabic")
+            self.ivIndicator2.image = UIImage(named: "ic_indicator_arabic")
+        }
+        
         self.collectionView.delegate = self
         self.collectionView.dataSource = self
         self.collectionView.reloadData()
@@ -51,6 +68,12 @@ class SuggestShopVC: BaseVC, SelectLocationDelegate,UINavigationControllerDelega
         
         self.edtName.contentInset = UIEdgeInsets(top: 0, left: 10, bottom: 0, right: 10)
         // Do any additional setup after loading the view.
+        
+        if (self.latitude ?? 0.0 > 0.0 && self.longitude ?? 0.0 > 0.0) {
+            let location =  CLLocation.init(latitude: self.latitude ?? 0.0, longitude: self.longitude ?? 0.0)
+            self.selectedLocation = CLLocation.init(latitude: self.latitude ?? 0.0, longitude: self.longitude ?? 0.0)
+            self.GetAnnotationUsingCoordinated(location)
+        }
     }
     
     
@@ -215,6 +238,75 @@ class SuggestShopVC: BaseVC, SelectLocationDelegate,UINavigationControllerDelega
         }
         
     }
+    
+    fileprivate func GetAnnotationUsingCoordinated(_ location : CLLocation) {
+        
+        GMSGeocoder().reverseGeocodeCoordinate(location.coordinate) { (response, error) in
+            
+            var strAddresMain : String = ""
+            
+            if let address : GMSAddress = response?.firstResult() {
+                if let lines = address.lines  {
+                    if (lines.count > 0) {
+                        if lines.count > 0 {
+                            if lines[0].characters.count > 0 {
+                                strAddresMain = strAddresMain + lines[0]
+                            }
+                        }
+                    }
+                    
+                    if lines.count > 1 {
+                        if lines[1].characters.count > 0 {
+                            if strAddresMain.characters.count > 0 {
+                                strAddresMain = strAddresMain + ", \(lines[1])"
+                            } else {
+                                strAddresMain = strAddresMain + "\(lines[1])"
+                            }
+                        }
+                    }
+                    
+                    if (strAddresMain.characters.count > 0) {
+                        
+                        var strSubTitle = ""
+                        if let locality = address.locality {
+                            strSubTitle = locality
+                        }
+                        
+                        if let administrativeArea = address.administrativeArea {
+                            if strSubTitle.characters.count > 0 {
+                                strSubTitle = "\(strSubTitle), \(administrativeArea)"
+                            }
+                            else {
+                                strSubTitle = administrativeArea
+                            }
+                        }
+                        
+                        if let country = address.country {
+                            if strSubTitle.characters.count > 0 {
+                                strSubTitle = "\(strSubTitle), \(country)"
+                            }
+                            else {
+                                strSubTitle = country
+                            }
+                        }
+                        
+                     self.edtAddress.text = strAddresMain
+                        
+                    }
+                    else {
+                      self.edtAddress.text = ""
+                    }
+                }
+                else {
+                   self.edtAddress.text = ""
+                }
+            }
+            else {
+                self.edtAddress.text = ""
+            }
+        }
+    }
+    
     
 }
 extension SuggestShopVC: UIImagePickerControllerDelegate {

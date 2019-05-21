@@ -354,10 +354,14 @@ class DeliveryStep3: BaseVC, UINavigationControllerDelegate, ImagePickerDelegate
                 imagesData.append(image.jpegData(compressionQuality: 0.30)!)
             }
             var audioData : Data?
-            do {
-                   audioData = try Data.init(contentsOf: self.recorder.getUrl())
-              }catch let err {
-              audioData = Data(base64Encoded: "")
+            if (self.recorder.time > 0) {
+                do {
+                    audioData = try Data.init(contentsOf: self.recorder.getUrl())
+                }catch let err {
+                    audioData = Data(base64Encoded: "")
+                }
+            }else {
+                audioData = Data(base64Encoded: "")
             }
             ApiService.uploadMedia(Authorization: self.loadUser().data?.accessToken ?? "", deliveryId: id, imagesData: imagesData, audioData: audioData!) { (response) in
                 self.hideLoading()

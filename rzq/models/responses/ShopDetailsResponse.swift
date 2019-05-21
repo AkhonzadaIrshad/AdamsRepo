@@ -65,15 +65,16 @@ class ShopData: Codable {
 
 class TypeClass: Codable {
     let id: Int?
-    let name: String?
+    let name, image: String?
     
     enum CodingKeys: String, CodingKey {
         case id = "Id"
         case name = "Name"
+        case image = "Image"
     }
-    
-    init(id: Int?, name: String?) {
+    init(id: Int?, name: String?, image: String?) {
         self.id = id
         self.name = name
+        self.image = image
     }
 }

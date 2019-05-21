@@ -91,6 +91,13 @@ class AppDelegate: UIResponder, UIApplicationDelegate, MOLHResetable,MessagingDe
         return true
     }
     
+    func updateNotificationCount() {
+        let defaults = UserDefaults.standard
+        var notificationCount : Int = defaults.value(forKey: Constants.NOTIFICATION_COUNT) as? Int ?? 0
+        notificationCount = notificationCount + 1
+        defaults.setValue(notificationCount, forKey: Constants.NOTIFICATION_COUNT)
+    }
+    
     //branch
     func application(_ app: UIApplication, open url: URL, options: [UIApplication.OpenURLOptionsKey : Any] = [:]) -> Bool {
         Branch.getInstance().application(app, open: url, options: options)
@@ -293,6 +300,12 @@ class AppDelegate: UIResponder, UIApplicationDelegate, MOLHResetable,MessagingDe
             if (notificationType == "3") {
                 self.goToNotifications()
             }
+            if (notificationType == "4") {
+                self.loadTracks()
+            }
+            if (notificationType == "5") {
+                self.loadTracks()
+            }
                 self.showBanner(title: title, message: body, style: UIColor.colorPrimary)
         }
         
@@ -304,6 +317,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate, MOLHResetable,MessagingDe
     }
     
     func showBanner(title:String, message:String,style: UIColor) {
+        self.updateNotificationCount()
         let banner = Banner(title: title, subtitle: message, image: nil, backgroundColor: style)
         banner.dismissesOnTap = true
         banner.textColor = UIColor.white
@@ -320,8 +334,8 @@ class AppDelegate: UIResponder, UIApplicationDelegate, MOLHResetable,MessagingDe
         }
     }
     
-    
     func scheduleNotifications(title : String, message : String, type : String, itemId : String) {
+        self.updateNotificationCount()
         let requestIdentifier = "Notification"
         if #available(iOS 10.0, *) {
             let content = UNMutableNotificationContent()
@@ -407,11 +421,22 @@ class AppDelegate: UIResponder, UIApplicationDelegate, MOLHResetable,MessagingDe
             }
         }
     }
+    
+    
     func goToNotifications() {
         if let rootViewController = UIApplication.topViewController() {
             if rootViewController is SendingOrderVC {
                 let vc = rootViewController as! SendingOrderVC
                 vc.goToNotifications()
+            }
+        }
+    }
+    
+    func loadTracks() {
+        if let rootViewController = UIApplication.topViewController() {
+            if rootViewController is HomeMapVC {
+                let vc = rootViewController as! HomeMapVC
+                vc.loadTracks()
             }
         }
     }

@@ -43,4 +43,5 @@ pod 'RealmSwift'
    pod 'ImageSlideshow', '~> 1.6'
    pod 'MultilineTextField'
    pod 'DropDown'
+   pod 'AMPopTip'
 end

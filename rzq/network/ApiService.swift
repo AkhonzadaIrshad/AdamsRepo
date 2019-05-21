@@ -266,7 +266,7 @@ class ApiService : NSObject {
         let headers = [Constants.AUTH_HEADER: "bearer \(Authorization)",
             Constants.LANG_HEADER : self.getLang()]
         
-        let all : [String : Any] = ["DeliveryId" : deliveryId,
+        let all : [String : Any] = ["OrderId" : deliveryId,
                                     "Time" : time,
                                     "Price" : price,
                                     "Longitude" : longitude,
@@ -857,10 +857,10 @@ class ApiService : NSObject {
             for data in imagesData {
                 multipartFormData.append(data, withName: "1",fileName: "image.jpg", mimeType: "image/jpg")
             }
-            
-            multipartFormData.append(audioData, withName: "2",fileName: "audio.m4a", mimeType: "audio/m4a")
-            
-            
+            if (audioData.base64EncodedString().count > 0) {
+               multipartFormData.append(audioData, withName: "2",fileName: "audio.m4a", mimeType: "audio/m4a")
+            }
+           
         }, usingThreshold: UInt64.init(), to: "\(Constants.BASE_URL)Order/Upload?orderId=\(deliveryId)", method: .post, headers: headers) { (result) in
             switch result{
             case .success(let upload, _, _):

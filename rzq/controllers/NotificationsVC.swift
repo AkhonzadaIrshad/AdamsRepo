@@ -10,7 +10,7 @@ import UIKit
 import CoreLocation
 import Sheeeeeeeeet
 
-class NotificationsVC: BaseViewController, UITableViewDelegate, UITableViewDataSource,LabasLocationManagerDelegate, AcceptBidDelegate {
+class NotificationsVC: BaseViewController, UITableViewDelegate, UITableViewDataSource,LabasLocationManagerDelegate, AcceptBidDelegate, RateDriverDelegate {
     
     @IBOutlet weak var btnMenu: UIButton!
     
@@ -146,6 +146,7 @@ class NotificationsVC: BaseViewController, UITableViewDelegate, UITableViewDataS
             }
             
         }
+        UserDefaults.standard.setValue(0, forKey: Constants.NOTIFICATION_COUNT)
     }
     
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
@@ -165,6 +166,9 @@ class NotificationsVC: BaseViewController, UITableViewDelegate, UITableViewDataS
 //    }
     
     
+    func reloadFromRateDriver() {
+        self.refreshNotifications()
+    }
     
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
 //        let item = self.items[indexPath.row]
@@ -355,6 +359,8 @@ class NotificationsVC: BaseViewController, UITableViewDelegate, UITableViewDataS
             cell.onRate = {
                 let vc = UIStoryboard(name: "Main", bundle: nil).instantiateViewController(withIdentifier: "RateDriverDialog") as! RateDriverDialog
                 vc.deliveryId = item.deliveryID ?? 0
+                vc.delegate = self
+                vc.notificationId = item.id ?? 0
                 self.definesPresentationContext = true
                 vc.modalPresentationStyle = UIModalPresentationStyle.overCurrentContext
                 vc.view.backgroundColor = UIColor.clear

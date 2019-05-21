@@ -28,10 +28,14 @@ class HomeMapVC: BaseViewController,LabasLocationManagerDelegate, UICollectionVi
     @IBOutlet weak var btnLocation: UIButton!
     @IBOutlet weak var lblLocation: MyUILabel!
     
+   
+    
+    @IBOutlet weak var viewOnTheWay: UIView!
+    
     
     @IBOutlet weak var collectionView: UICollectionView!
     
-    let cameraZoom : Float = 20.0
+    let cameraZoom : Float = 15.0
     
     var selectedRoute: NSDictionary!
     
@@ -358,10 +362,10 @@ class HomeMapVC: BaseViewController,LabasLocationManagerDelegate, UICollectionVi
         let url = URL(string: urlString)
         URLSession.shared.dataTask(with: url!, completionHandler: {
             (data, response, error) in
-            if(error != nil){
+            if(error != nil) {
                 print("error")
             } else {
-                do{
+                do {
                     let json = try JSONSerialization.jsonObject(with: data!, options:.allowFragments) as! [String : AnyObject]
                     if let routes = json["routes"] as? NSArray {
                         if (routes.count > 0) {
@@ -405,11 +409,11 @@ class HomeMapVC: BaseViewController,LabasLocationManagerDelegate, UICollectionVi
                             //no routes
                         }
                         
-                    }else {
+                    } else {
                         //no routes
                     }
                     
-                }catch let error as NSError{
+                } catch let error as NSError{
                     print("error:\(error)")
                 }
             }
@@ -496,15 +500,14 @@ class HomeMapVC: BaseViewController,LabasLocationManagerDelegate, UICollectionVi
     }
     
     
-    
     func labasLocationManager(didUpdateLocation location: CLLocation) {
         if (self.latitude ?? 0.0 == 0.0 || self.longitude ?? 0.0 == 0.0) {
             
 //            self.latitude = location.coordinate.latitude
 //            self.longitude = location.coordinate.longitude
             
-                        self.latitude = 29.381127
-                        self.longitude = 47.999135
+                        self.latitude = 29.273551
+                        self.longitude = 47.936161
             
             self.hideLoading()
             self.setUpGoogleMap()
@@ -568,12 +571,14 @@ class HomeMapVC: BaseViewController,LabasLocationManagerDelegate, UICollectionVi
                 self.collectionView.delegate = self
                 self.collectionView.dataSource = self
                 self.collectionView.reloadData()
+                self.viewOnTheWay.isHidden = true
             }else {
                 // self.searchView.isHidden = false
                 self.collectionView.isHidden = true
                 self.polyline?.map = nil
                 self.pickMarker?.map = nil
                 self.dropMarker?.map = nil
+                self.viewOnTheWay.isHidden = false
             }
             
         }
@@ -750,12 +755,13 @@ extension HomeMapVC : GMSMapViewDelegate {
         if (id.contains(find: "my_location")) {
             return true
         }
-        if (id == "0") {
+        if (id == "0" || id == "") {
             return true
         }
         for mark in self.shopMarkers {
             mark.icon = UIImage(named: "ic_map_shop")
         }
+        
         marker.icon = UIImage(named: "ic_map_shop_selected")
         let camera = GMSCameraPosition.camera(withLatitude: marker.position.latitude, longitude: marker.position.longitude, zoom: self.cameraZoom)
         self.gMap?.animate(to: camera)

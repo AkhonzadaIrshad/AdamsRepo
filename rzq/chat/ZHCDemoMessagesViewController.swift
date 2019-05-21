@@ -44,8 +44,8 @@ class ZHCDemoMessagesViewController: ZHCMessagesViewController, BillDelegate, Ch
         demoData.user = self.user
         demoData.order = self.order
         demoData.delegate = self
-        demoData.loadMessages();
-        self.title = "RZQ".localized;
+        demoData.loadMessages()
+        self.title = "RZQ".localized
         if self.automaticallyScrollsToMostRecentMessage {
             self.scrollToBottom(animated: false)
         }
@@ -58,12 +58,14 @@ class ZHCDemoMessagesViewController: ZHCMessagesViewController, BillDelegate, Ch
         
         // Do any additional setup after loading the view.
         self.gif = UIImageView()
-        self.gif?.frame = CGRect(x: self.view.bounds.midX, y: self.view.bounds.midY, width: 70, height: 70)
-        self.gif?.center = self.view.center
+        self.gif?.frame = CGRect(x: self.view.frame.midX, y: self.view.frame.midY, width: 70, height: 70)
+       self.gif?.center = self.view.center
         let gf = UIImage(gifName: "recording.gif")
         self.gif?.setGifImage(gf)
+        
         self.gif?.isHidden = true
         self.view.addSubview(self.gif!)
+        
         
         self.setUpRecordButton()
         
@@ -80,13 +82,13 @@ class ZHCDemoMessagesViewController: ZHCMessagesViewController, BillDelegate, Ch
         
         self.btnRecord?.translatesAutoresizingMaskIntoConstraints = false
         if #available(iOS 11.0, *) {
-            self.btnRecord?.leadingAnchor.constraint(equalTo: view.safeAreaLayoutGuide.leadingAnchor, constant: 9).isActive = true
+            self.btnRecord?.leadingAnchor.constraint(equalTo: view.leadingAnchor, constant: 9).isActive = true
         } else {
             // Fallback on earlier versions
         }
         if #available(iOS 11.0, *) {
             //            actionButton.bottomAnchor.constraint(equalTo: view.safeAreaLayoutGuide.bottomAnchor, constant: -56).isActive = true
-            self.btnRecord?.bottomAnchor.constraint(equalTo: self.inputMessageBarView.safeAreaLayoutGuide.bottomAnchor, constant: -6).isActive = true
+            self.btnRecord?.bottomAnchor.constraint(equalTo: self.inputMessageBarView.bottomAnchor, constant: -6).isActive = true
         } else {
             // Fallback on earlier versions
         }

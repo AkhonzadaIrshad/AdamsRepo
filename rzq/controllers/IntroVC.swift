@@ -135,13 +135,14 @@ class IntroVC: UIPageViewController, UIPageViewControllerDataSource, UIPageViewC
         realmUser.roles = userProfile.data?.roles ?? ""
         realmUser.isOnline = userProfile.data?.isOnline ?? false
         realmUser.exceeded_amount = userProfile.data?.exceededDueAmount ?? false
+        realmUser.balance = userProfile.data?.balance ?? 0.0
         
         return realmUser
     }
     
     
     func getUser (realmUser  : RealmUser) -> VerifyResponse {
-      let userData = DataClass(accessToken: realmUser.access_token, phoneNumber: realmUser.phone_number, username: realmUser.user_name, fullName: realmUser.full_name, userID: realmUser.userId, dateOfBirth: realmUser.date_of_birth, profilePicture: realmUser.profile_picture, email: realmUser.email, gender: realmUser.gender, rate: realmUser.rate, roles: realmUser.roles, isOnline: realmUser.isOnline,exceededDueAmount: realmUser.exceeded_amount)
+      let userData = DataClass(accessToken: realmUser.access_token, phoneNumber: realmUser.phone_number, username: realmUser.user_name, fullName: realmUser.full_name, userID: realmUser.userId, dateOfBirth: realmUser.date_of_birth, profilePicture: realmUser.profile_picture, email: realmUser.email, gender: realmUser.gender, rate: realmUser.rate, roles: realmUser.roles, isOnline: realmUser.isOnline,exceededDueAmount: realmUser.exceeded_amount, balance: realmUser.balance)
         let verifyResponse = VerifyResponse(data: userData, errorCode: 0, errorMessage: "")
         
         return verifyResponse
@@ -161,7 +162,7 @@ class IntroVC: UIPageViewController, UIPageViewControllerDataSource, UIPageViewC
         if (realmUser.count > 0) {
             return self.getUser(realmUser: realmUser[0])
         }else {
-        return VerifyResponse(data: DataClass(accessToken: "", phoneNumber: "", username: "", fullName: "", userID: "", dateOfBirth: "", profilePicture: "", email: "", gender: 1, rate: 0, roles: "", isOnline: false,exceededDueAmount:  false), errorCode: 0, errorMessage: "")
+        return VerifyResponse(data: DataClass(accessToken: "", phoneNumber: "", username: "", fullName: "", userID: "", dateOfBirth: "", profilePicture: "", email: "", gender: 1, rate: 0, roles: "", isOnline: false,exceededDueAmount:  false,balance: 0.0), errorCode: 0, errorMessage: "")
         }
         
     }

@@ -224,7 +224,8 @@ class HomeListVC: BaseViewController, UITableViewDelegate, UITableViewDataSource
             let url = URL(string: "\(Constants.IMAGE_URL)\(shop.image ?? "")")
             cell.ivLogo.kf.setImage(with: url)
         }else {
-          cell.ivLogo.image = self.getShopImageByType(type: shop.type?.id ?? 0)
+            let url = URL(string: "\(Constants.IMAGE_URL)\(shop.type?.image ?? "")")
+            cell.ivLogo.kf.setImage(with: url)
         }
         
         

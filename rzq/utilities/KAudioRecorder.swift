@@ -96,7 +96,7 @@ class KAudioRecorder: NSObject {
     }
     
     func getUrl() -> URL {
-        if let recorder = self.audioRecorder  {
+        if let recorder = self.audioRecorder {
             
             if recorder.url.path == url?.path && url != nil {
                 return url!
@@ -114,7 +114,7 @@ class KAudioRecorder: NSObject {
             return URL(string: "")!
         }
         return URL(string: "")!
-    }
+    }                           
     
     func play() {
         

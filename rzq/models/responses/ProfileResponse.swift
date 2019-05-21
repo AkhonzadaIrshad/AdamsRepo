@@ -28,9 +28,10 @@ class ProfileResponse: Codable {
 
 class DataProfileObj: Codable {
     let id, fullName: String?
-    let gender, rate: Int?
+    let gender: Int?
+    let rate, balance : Double?
     let dateOfBirth, image, email, phoneNumber: String?
-    let balance, ordersCount: Int?
+    let ordersCount: Int?
     let roles: String?
     
     enum CodingKeys: String, CodingKey {
@@ -47,7 +48,7 @@ class DataProfileObj: Codable {
         case roles = "Roles"
     }
     
-    init(id: String?, fullName: String?, gender: Int?, rate: Int?, dateOfBirth: String?, image: String?, email: String?, phoneNumber: String?, balance: Int?, ordersCount: Int?, roles: String?) {
+    init(id: String?, fullName: String?, gender: Int?, rate: Double?, dateOfBirth: String?, image: String?, email: String?, phoneNumber: String?, balance: Double?, ordersCount: Int?, roles: String?) {
         self.id = id
         self.fullName = fullName
         self.gender = gender

@@ -188,6 +188,8 @@
 		8B2BCC9F224FD6E000CBC7D3 /* IntroVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = IntroVC.swift; sourceTree = "<group>"; };
 		8B30B10C22773261007930E0 /* RateDriverDialog.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RateDriverDialog.swift; sourceTree = "<group>"; };
 		8B3BE04022635720009590BC /* AcceptBidDialog.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AcceptBidDialog.swift; sourceTree = "<group>"; };
+		8B3D3866229450A100FCB2E4 /* en */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = en; path = en.lproj/Main.strings; sourceTree = "<group>"; };
+		8B3D3868229450AD00FCB2E4 /* ar */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = ar; path = ar.lproj/Main.strings; sourceTree = "<group>"; };
 		8B56C0402270D01400E2DDC5 /* ChatResponse.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ChatResponse.swift; sourceTree = "<group>"; };
 		8B56C0422270D21000E2DDC5 /* AcceptBidResponse.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AcceptBidResponse.swift; sourceTree = "<group>"; };
 		8B5EB8AF2250EC6E00DC657C /* MenuViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MenuViewController.swift; sourceTree = "<group>"; };
@@ -311,7 +313,6 @@
 		8BF2223C2271FEDF005BE71D /* RegisterAsDriverMenuVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RegisterAsDriverMenuVC.swift; sourceTree = "<group>"; };
 		8BF2223E227207BF005BE71D /* RateUserDialog.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RateUserDialog.swift; sourceTree = "<group>"; };
 		8BF2224022720FB1005BE71D /* ar */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = ar; path = ar.lproj/LaunchScreen.strings; sourceTree = "<group>"; };
-		8BF2224122720FB1005BE71D /* ar */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = ar; path = ar.lproj/Main.strings; sourceTree = "<group>"; };
 		8BF2224322720FC0005BE71D /* en */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = en; path = en.lproj/Localizable.strings; sourceTree = "<group>"; };
 		8BF2224522720FC5005BE71D /* ar */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = ar; path = ar.lproj/Localizable.strings; sourceTree = "<group>"; };
 		8BF29CA12279BA5E0001EF21 /* TermsPushVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TermsPushVC.swift; sourceTree = "<group>"; };
@@ -827,6 +828,7 @@
 			);
 			inputPaths = (
 				"${SRCROOT}/Pods/Target Support Files/Pods-rzq/Pods-rzq-frameworks.sh",
+				"${BUILT_PRODUCTS_DIR}/AMPopTip/AMPopTip.framework",
 				"${BUILT_PRODUCTS_DIR}/Alamofire/Alamofire.framework",
 				"${BUILT_PRODUCTS_DIR}/AlamofireImage/AlamofireImage.framework",
 				"${BUILT_PRODUCTS_DIR}/BRYXBanner/BRYXBanner.framework",
@@ -867,6 +869,7 @@
 			);
 			name = "[CP] Embed Pods Frameworks";
 			outputPaths = (
+				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/AMPopTip.framework",
 				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/Alamofire.framework",
 				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/AlamofireImage.framework",
 				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/BRYXBanner.framework",
@@ -1070,7 +1073,8 @@
 			isa = PBXVariantGroup;
 			children = (
 				8B2BCC86224FCEB400CBC7D3 /* Base */,
-				8BF2224122720FB1005BE71D /* ar */,
+				8B3D3866229450A100FCB2E4 /* en */,
+				8B3D3868229450AD00FCB2E4 /* ar */,
 			);
 			name = Main.storyboard;
 			sourceTree = "<group>";

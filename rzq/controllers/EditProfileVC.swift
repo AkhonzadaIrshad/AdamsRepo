@@ -45,9 +45,27 @@ class EditProfileVC: BaseVC,UINavigationControllerDelegate {
     
     override func viewDidLoad() {
         super.viewDidLoad()
+        
+        self.edtUserName.title = "name".localized
+        self.edtUserName.placeholder = "name".localized
+        self.edtUserName.selectedTitle = "name".localized
+        self.edtUserName.font = UIFont(name: self.getFontName(), size: 14)
+        
+        self.edtEmail.title = "email_address".localized
+        self.edtEmail.placeholder = "email_address".localized
+        self.edtEmail.selectedTitle = "email_address".localized
+        self.edtEmail.font = UIFont(name: self.getFontName(), size: 14)
+        
+        
+        self.edtMobileNumber.title = "mobile_number".localized
+        self.edtMobileNumber.placeholder = "mobile_number".localized
+        self.edtMobileNumber.selectedTitle = "mobile_number".localized
+         self.edtMobileNumber.font = UIFont(name: self.getFontName(), size: 14)
+        
         if (self.isArabic()) {
             self.ivHandle.image = UIImage(named: "ic_back_arabic")
         }
+        
         self.chkFemale.checkmarkStyle = .tick
         self.chkFemale.checkmarkColor = UIColor.appDarkBlue
         self.chkFemale.checkedBorderColor = UIColor.appDarkBlue

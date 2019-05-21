@@ -16,11 +16,17 @@ class AddHoursVC: BaseVC, UITableViewDelegate, UITableViewDataSource, HourCellDe
     @IBOutlet weak var btnBack: UIButton!
     @IBOutlet weak var tableView: UITableView!
     
+    @IBOutlet weak var ivHandle: UIImageView!
+    
     var items = [HourItem]()
     var delegate : AddHoursDelegate?
     
     override func viewDidLoad() {
         super.viewDidLoad()
+        
+        if (self.isArabic()) {
+            self.ivHandle.image = UIImage(named: "ic_back_arabic")
+        }
         
         self.tableView.delegate = self
         self.tableView.dataSource = self
@@ -94,7 +100,10 @@ class AddHoursVC: BaseVC, UITableViewDelegate, UITableViewDataSource, HourCellDe
         }
         
         cell.onAllDay = {
-            
+            item.from  = "01:00"
+            item.to = "23:00"
+            cell.btnFrom.setTitle("01:00", for: .normal)
+            cell.btnTo.setTitle("23:00", for: .normal)
         }
 
         return cell

@@ -91,9 +91,9 @@ class RegisteredShopsVC: BaseViewController, UITableViewDelegate, UITableViewDat
             let url = URL(string: "\(Constants.IMAGE_URL)\(item.image ?? "")")
             cell.ivLogo.kf.setImage(with: url)
         }else {
-            cell.ivLogo.image = self.getShopImageByType(type: item.type ?? 0)
+            let url = URL(string: "\(Constants.IMAGE_URL)\(item.type?.image ?? "")")
+            cell.ivLogo.kf.setImage(with: url)
         }
-       
         
         
         cell.lblName.text = item.name ?? ""

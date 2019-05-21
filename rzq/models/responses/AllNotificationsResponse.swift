@@ -27,6 +27,7 @@ class AllNotificationsResponse: Codable {
 }
 
 class DatumNot: Codable {
+    let id : Int?
     let type: Int?
     let createdDate, data, userID: String?
     let deliveryID, serviceID, tenderID: Int?
@@ -39,9 +40,11 @@ class DatumNot: Codable {
         case deliveryID = "DeliveryId"
         case serviceID = "ServiceId"
         case tenderID = "TenderId"
+        case id = "Id"
     }
     
-    init(type: Int?, createdDate: String?, data: String?, userID: String?, deliveryID: Int?, serviceID: Int?, tenderID: Int?) {
+    init(id : Int?, type: Int?, createdDate: String?, data: String?, userID: String?, deliveryID: Int?, serviceID: Int?, tenderID: Int?) {
+        self.id = id
         self.type = type
         self.createdDate = createdDate
         self.data = data

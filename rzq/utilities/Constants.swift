@@ -31,6 +31,8 @@ class Constants {
     
     static var ORDER_NUMBER_PREFIX = "RZQ_"
     
+    static var NOTIFICATION_COUNT = "KEY_NOTIFICATION_COUNT"
+    
     static var IS_NOTIFICATION_ACTIVE = "IS_NOTIFICATION_ACTIVE"
     static var DID_SEE_INTRO = "DID_SEE_INTRO"
     static var DID_CHOOSE_LANGUAGE = "DID_CHOOSE_LANGUAGE"

@@ -27,6 +27,17 @@ class LoginVC: BaseVC, CountryPickerViewDataSource, CountryPickerViewDelegate, P
     override func viewDidLoad() {
         super.viewDidLoad()
         
+        self.edtUserName.title = "name".localized
+        self.edtUserName.placeholder = "name".localized
+        self.edtUserName.selectedTitle = "name".localized
+        
+        self.edtUserName.font = UIFont(name: self.getFontName(), size: 14)
+        self.edtMobileNumber.font = UIFont(name: self.getFontName(), size: 14)
+        
+        self.edtMobileNumber.title = "mobile_number".localized
+        self.edtMobileNumber.placeholder = "mobile_number".localized
+        self.edtMobileNumber.selectedTitle = "mobile_number".localized
+        
         self.lblTerms.attributedText = NSAttributedString(string: "agree_terms".localized, attributes:
             [.underlineStyle: NSUnderlineStyle.single.rawValue])
         
@@ -45,7 +56,7 @@ class LoginVC: BaseVC, CountryPickerViewDataSource, CountryPickerViewDelegate, P
         self.countryPicker.setCountryByCode("KW")
         // Do any additional setup after loading the view.
         if (self.isArabic()) {
-            self.ivHandle.image = UIImage(named: "bg_circular")
+            self.ivHandle.image = UIImage(named: "bg_circular_arabic")
         }
     }
     
@@ -111,7 +122,7 @@ class LoginVC: BaseVC, CountryPickerViewDataSource, CountryPickerViewDelegate, P
     }
     
     @IBAction func skipAction(_ sender: Any) {
-        self.updateUser(self.getRealmUser(userProfile: VerifyResponse(data: DataClass(accessToken: "", phoneNumber: "", username: "", fullName: "", userID: "", dateOfBirth: "", profilePicture: "", email: "", gender: 0, rate: 0, roles: "", isOnline: false,exceededDueAmount: false), errorCode: 0, errorMessage: "")))
+        self.updateUser(self.getRealmUser(userProfile: VerifyResponse(data: DataClass(accessToken: "", phoneNumber: "", username: "", fullName: "", userID: "", dateOfBirth: "", profilePicture: "", email: "", gender: 0, rate: 0, roles: "", isOnline: false,exceededDueAmount: false, balance: 0.0), errorCode: 0, errorMessage: "")))
         
         
         let mainStoryboardIpad : UIStoryboard = UIStoryboard(name: "Main", bundle: nil)

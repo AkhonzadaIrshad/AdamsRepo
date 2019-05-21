@@ -2,6 +2,7 @@ PODS:
   - Alamofire (4.8.1)
   - AlamofireImage (3.5.0):
     - Alamofire (~> 4.8)
+  - AMPopTip (4.0.1)
   - Branch (0.26.0):
     - Branch/Core (= 0.26.0)
   - Branch/Core (0.26.0)
@@ -131,6 +132,7 @@ PODS:
 DEPENDENCIES:
   - Alamofire
   - AlamofireImage (~> 3.5)
+  - AMPopTip
   - Branch
   - BRYXBanner
   - CBPinEntryView
@@ -170,6 +172,7 @@ SPEC REPOS:
   https://github.com/cocoapods/specs.git:
     - Alamofire
     - AlamofireImage
+    - AMPopTip
     - Branch
     - BRYXBanner
     - CBPinEntryView
@@ -218,6 +221,7 @@ SPEC REPOS:
 SPEC CHECKSUMS:
   Alamofire: 16ce2c353fb72865124ddae8a57c5942388f4f11
   AlamofireImage: 1aea346f4dda2f6c67622fa5a89fcbb80d79cc16
+  AMPopTip: 41742f15d743203496cfdcd576f41b596b0efae3
   Branch: 5bf1e0d3f57bfce0b7029c960118641695b294ee
   BRYXBanner: 8cf1b119792e1cee8d7ba107297ef89f7409bc53
   CBPinEntryView: 9837797ee263a05dbe501e8ccbf3e992e758410b
@@ -263,6 +267,6 @@ SPEC CHECKSUMS:
   SwiftyJSON: c4bcba26dd9ec7a027fc8eade48e2c911f229e96
   ZHChat: d554719971be77fb8346a51e3fd8043ff18e1292
 
-PODFILE CHECKSUM: 3e3029e35e0b5eee37289a50158abc3dff107726
+PODFILE CHECKSUM: bb596155056c369fd4f65d230be1d3a0a1b458ee
 
 COCOAPODS: 1.5.3

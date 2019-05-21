@@ -103,7 +103,7 @@ class OrderDetailsVC: BaseVC, UICollectionViewDelegate, UICollectionViewDataSour
             self.lblTime.text = "asap".localized
         }
         
-        self.lblDescription.text = self.order?.title ?? ""
+        self.lblDescription.text = self.order?.desc ?? ""
         if (self.order?.status == Constants.ORDER_PROCESSING || self.order?.status == Constants.ORDER_ON_THE_WAY) {
             self.viewChat.isHidden = false
         }else {

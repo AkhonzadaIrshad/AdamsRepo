@@ -52,7 +52,7 @@
 "drivers" = "Drivers";
 "select_country" = "Select Country";
 
-"app_restart" = "App with restart to setup the language";
+"app_restart" = "App will restart to setup the language";
 "yes" = "Yes";
 "no" = "No";
 "delivery_date" = "Delivery Date:";
@@ -60,7 +60,7 @@
 "to" = "To:";
 "order_number" = "Order Number:";
 "orders" = "Orders";
-"bid_accepted_successfully" = "Bid accepted successfully, your offer has been sent to the client, thank you.";
+"bid_accepted_successfully" = "Bid accepted successfully, your offer has been sent to the provider, thank you.";
 "cash" = "Cash";
 "location" = "Location";
 "RZQ" = "RZQ";
@@ -146,3 +146,10 @@
 "enter_shop_address" = "Enter place address!";
 "select_shop_type" = "Select place type!";
 "add_shop_hours" = "Add place working hours!";
+
+"current_location_desc" = "Go to your current location on map.";
+
+
+"mobile_number" = "Mobile Number";
+"name" = "Name";
+"email_address" = "Email Address";

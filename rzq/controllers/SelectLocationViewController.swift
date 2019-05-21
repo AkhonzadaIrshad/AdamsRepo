@@ -24,6 +24,9 @@ class SelectLocationViewController: BaseVC {
     var delegate : SelectLocationDelegate?
     
     @IBOutlet weak var btnBack: UIButton!
+    
+    @IBOutlet weak var ivHandle: UIImageView!
+    
     var selectedLocation:CLLocation?
     // MARK: Properties
     var markerLocation: GMSMarker?
@@ -41,7 +44,7 @@ class SelectLocationViewController: BaseVC {
     override func viewDidLoad() {
         super.viewDidLoad()
         if (self.isArabic()) {
-            self.btnBack.setImage(UIImage(named: "ic_back_arabic"), for: [])
+          self.ivHandle.image = UIImage(named: "ic_back_arabic")
         }
         let loc = CLLocationCoordinate2D(latitude: 24.7136, longitude: 46.6753)
         mapView.camera = GMSCameraPosition(target: loc, zoom: 15, bearing: 0, viewingAngle: 0)

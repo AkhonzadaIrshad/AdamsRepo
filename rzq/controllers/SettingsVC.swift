@@ -26,6 +26,11 @@ class SettingsVC: BaseVC {
     
     @IBOutlet weak var ivHandle: UIImageView!
     
+    @IBOutlet weak var ivIndicator1: UIImageView!
+    @IBOutlet weak var ivIndicator2: UIImageView!
+    @IBOutlet weak var ivIndicator3: UIImageView!
+    
+    
     override func viewDidLoad() {
         super.viewDidLoad()
        
@@ -33,6 +38,9 @@ class SettingsVC: BaseVC {
             arabicCheckbox.image = UIImage(named: "ic_checked")
             englishCheckbox.image = UIImage(named: "ic_unchecked_orange")
             self.ivHandle.image = UIImage(named: "ic_back_arabic")
+            self.ivIndicator1.image = UIImage(named: "ic_indicator_arabic")
+            self.ivIndicator2.image = UIImage(named: "ic_indicator_arabic")
+            self.ivIndicator3.image = UIImage(named: "ic_indicator_arabic")
         }else {
             englishCheckbox.image = UIImage(named: "ic_checked")
             arabicCheckbox.image = UIImage(named: "ic_unchecked_orange")
@@ -99,5 +107,30 @@ class SettingsVC: BaseVC {
     @IBAction func backAction(_ sender: Any) {
         self.navigationController?.popViewController(animated: true)
     }
+    
+    
+    @IBAction func faqsAction(_ sender: Any) {
+        if let vc = UIStoryboard(name: "Main", bundle: nil).instantiateViewController(withIdentifier: "FAQsVC") as? FAQsVC
+        {
+            self.navigationController?.pushViewController(vc, animated: true)
+        }
+    }
+    
+    
+    @IBAction func termsAction(_ sender: Any) {
+        if let vc = UIStoryboard(name: "Main", bundle: nil).instantiateViewController(withIdentifier: "TermsVC") as? TermsVC
+        {
+            self.navigationController?.pushViewController(vc, animated: true)
+        }
+    }
+    
+    
+    @IBAction func aboutUsAction(_ sender: Any) {
+        if let vc = UIStoryboard(name: "Main", bundle: nil).instantiateViewController(withIdentifier: "AboutUsVC") as? AboutUsVC
+        {
+            self.navigationController?.pushViewController(vc, animated: true)
+        }
+    }
+    
     
 }

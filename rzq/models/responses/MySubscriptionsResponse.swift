@@ -30,10 +30,9 @@ class SubsDatum: Codable {
     let id: Int?
     let name, address: String?
     let latitude, longitude: Double?
-    let phoneNumber, workingHours: String?
-    let isOpen: Bool?
-    let image: String?
-    let type : Int?
+    let phoneNumber, workingHours, image: String?
+    let rate: Double?
+    let type: TypeClass?
     
     enum CodingKeys: String, CodingKey {
         case id = "Id"
@@ -43,12 +42,12 @@ class SubsDatum: Codable {
         case longitude = "Longitude"
         case phoneNumber = "PhoneNumber"
         case workingHours = "WorkingHours"
-        case isOpen = "IsOpen"
         case image = "Image"
+        case rate = "Rate"
         case type = "Type"
     }
     
-    init(id: Int?, name: String?, address: String?, latitude: Double?, longitude: Double?, phoneNumber: String?, workingHours: String?, isOpen: Bool?, image: String?, type : Int?) {
+    init(id: Int?, name: String?, address: String?, latitude: Double?, longitude: Double?, phoneNumber: String?, workingHours: String?, image: String?, rate: Double?, type: TypeClass?) {
         self.id = id
         self.name = name
         self.address = address
@@ -56,8 +55,8 @@ class SubsDatum: Codable {
         self.longitude = longitude
         self.phoneNumber = phoneNumber
         self.workingHours = workingHours
-        self.isOpen = isOpen
         self.image = image
+        self.rate = rate
         self.type = type
     }
 }

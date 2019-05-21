@@ -107,9 +107,15 @@ class BaseViewController: UIViewController, SlideMenuDelegate {
             break
         case 10:
             //rate action
+            self.openAppStore()
             break
         case 11:
             //share action
+            if (self.isArabic()) {
+                self.shareAction(content: App.shared.config?.configString?.arabicTellAFriend ?? "")
+            }else {
+                self.shareAction(content: App.shared.config?.configString?.englishTellAFriend ?? "")
+            }
             break
         case 12:
             //profile
@@ -123,6 +129,35 @@ class BaseViewController: UIViewController, SlideMenuDelegate {
             print("default\n", terminator: "")
         }
     }
+    
+    
+    func openAppStore() {
+        if let url = URL(string: "itms-apps://itunes.apple.com/app/id1459027070"),
+            UIApplication.shared.canOpenURL(url){
+            UIApplication.shared.open(url, options: [:]) { (opened) in
+                if(opened){
+                    print("App Store Opened")
+                }
+            }
+        } else {
+            print("Can't Open URL on Simulator")
+        }
+    }
+    
+    
+    func shareAction(content : String){
+        let textToShare = [ content ]
+        let activityViewController = UIActivityViewController(activityItems: textToShare, applicationActivities: nil)
+        activityViewController.popoverPresentationController?.sourceView = self.view // so that iPads won't crash
+        
+        // exclude some activity types from the list (optional)
+        activityViewController.excludedActivityTypes = [ UIActivity.ActivityType.airDrop, UIActivity.ActivityType.postToFacebook ]
+        
+        // present the view controller
+        self.present(activityViewController, animated: true, completion: nil)
+        
+    }
+    
     
     func getSubHomeView() -> String {
         if (App.shared.config?.configSettings?.isMapView ?? true) {
@@ -160,6 +195,11 @@ class BaseViewController: UIViewController, SlideMenuDelegate {
         } else {
             self.navigationController!.pushViewController(destViewController, animated: true)
         }
+    }
+    
+    
+    override func viewWillAppear(_ animated: Bool) {
+        
     }
     
     func getFontName() -> String {
@@ -226,6 +266,7 @@ class BaseViewController: UIViewController, SlideMenuDelegate {
                 viewMenuBack.removeFromSuperview()
             })
             
+
             return
         }
         
@@ -239,8 +280,12 @@ class BaseViewController: UIViewController, SlideMenuDelegate {
         self.addChild(menuVC)
         menuVC.view.layoutIfNeeded()
         
-        
-        menuVC.view.frame=CGRect(x: 0 - UIScreen.main.bounds.size.width, y: 0, width: UIScreen.main.bounds.size.width, height: UIScreen.main.bounds.size.height);
+        if (self.isArabic()) {
+            menuVC.view.frame=CGRect(x: UIScreen.main.bounds.size.width, y: 0, width: UIScreen.main.bounds.size.width, height: UIScreen.main.bounds.size.height);
+        }else {
+             menuVC.view.frame=CGRect(x: 0 - UIScreen.main.bounds.size.width, y: 0, width: UIScreen.main.bounds.size.width, height: UIScreen.main.bounds.size.height);
+        }
+       
         
         UIView.animate(withDuration: 0.3, animations: { () -> Void in
             menuVC.view.frame=CGRect(x: 0, y: 0, width: UIScreen.main.bounds.size.width, height: UIScreen.main.bounds.size.height);
@@ -305,13 +350,14 @@ class BaseViewController: UIViewController, SlideMenuDelegate {
         realmUser.roles = userProfile.data?.roles ?? ""
         realmUser.isOnline = userProfile.data?.isOnline ?? false
         realmUser.exceeded_amount = userProfile.data?.exceededDueAmount ?? false
+        realmUser.balance = userProfile.data?.balance ?? 0.0
         
         return realmUser
     }
     
     
     func getUser (realmUser  : RealmUser) -> VerifyResponse {
-        let userData = DataClass(accessToken: realmUser.access_token, phoneNumber: realmUser.phone_number, username: realmUser.user_name, fullName: realmUser.full_name, userID: realmUser.userId, dateOfBirth: realmUser.date_of_birth, profilePicture: realmUser.profile_picture, email: realmUser.email, gender: realmUser.gender, rate: realmUser.rate, roles: realmUser.roles, isOnline: realmUser.isOnline,exceededDueAmount : realmUser.exceeded_amount)
+        let userData = DataClass(accessToken: realmUser.access_token, phoneNumber: realmUser.phone_number, username: realmUser.user_name, fullName: realmUser.full_name, userID: realmUser.userId, dateOfBirth: realmUser.date_of_birth, profilePicture: realmUser.profile_picture, email: realmUser.email, gender: realmUser.gender, rate: realmUser.rate, roles: realmUser.roles, isOnline: realmUser.isOnline,exceededDueAmount : realmUser.exceeded_amount, balance: realmUser.balance)
         let verifyResponse = VerifyResponse(data: userData, errorCode: 0, errorMessage: "")
         
         return verifyResponse
@@ -331,7 +377,7 @@ class BaseViewController: UIViewController, SlideMenuDelegate {
         if (realmUser.count > 0) {
             return self.getUser(realmUser: realmUser[0])
         }else {
-            return VerifyResponse(data: DataClass(accessToken: "", phoneNumber: "", username: "", fullName: "", userID: "", dateOfBirth: "", profilePicture: "", email: "", gender: 1, rate: 0, roles: "", isOnline: false, exceededDueAmount: false), errorCode: 0, errorMessage: "")
+            return VerifyResponse(data: DataClass(accessToken: "", phoneNumber: "", username: "", fullName: "", userID: "", dateOfBirth: "", profilePicture: "", email: "", gender: 1, rate: 0, roles: "", isOnline: false, exceededDueAmount: false, balance: 0.0), errorCode: 0, errorMessage: "")
         }
         
     }

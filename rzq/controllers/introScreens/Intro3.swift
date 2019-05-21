@@ -17,7 +17,7 @@ class Intro3: BaseVC {
     override func viewDidLoad() {
         super.viewDidLoad()
         if (self.isArabic()) {
-            self.ivHandle.image = UIImage(named: "bg_circular")
+            self.ivHandle.image = UIImage(named: "bg_circular_arabic")
         }
     }
     
