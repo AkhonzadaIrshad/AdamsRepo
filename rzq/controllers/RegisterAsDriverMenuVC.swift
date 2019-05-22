@@ -54,6 +54,26 @@ class RegisterAsDriverMenuVC: BaseViewController ,UINavigationControllerDelegate
         self.edtMobile.text = self.loadUser().data?.phoneNumber ?? ""
         self.edtEmail.text = self.loadUser().data?.email ?? ""
         
+        self.edtName.title = "name".localized
+        self.edtName.placeholder = "name".localized
+        self.edtName.selectedTitle = "name".localized
+        self.edtName.font = UIFont(name: self.getFontName(), size: 14)
+        
+        self.edtMobile.title = "mobile_number".localized
+        self.edtMobile.placeholder = "mobile_number".localized
+        self.edtMobile.selectedTitle = "mobile_number".localized
+        self.edtMobile.font = UIFont(name: self.getFontName(), size: 14)
+        
+        self.edtEmail.title = "email_address".localized
+        self.edtEmail.placeholder = "email_address".localized
+        self.edtEmail.selectedTitle = "email_address".localized
+        self.edtEmail.font = UIFont(name: self.getFontName(), size: 14)
+        
+        if (self.isArabic()) {
+            self.edtName.textAlignment = NSTextAlignment.right
+            self.edtMobile.textAlignment = NSTextAlignment.right
+            self.edtEmail.textAlignment = NSTextAlignment.right
+        }
         // Do any additional setup after loading the view.
     }
     

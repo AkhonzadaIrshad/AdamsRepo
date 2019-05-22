@@ -18,6 +18,7 @@ class TermsVC: BaseVC {
         super.viewDidLoad()
 
         if (self.isArabic()) {
+            self.tvContent.textAlignment = NSTextAlignment.right
             self.tvContent.text = App.shared.config?.configString?.arabicTermsAndConditions ?? ""
             self.ivHandle.image = UIImage(named: "ic_back_arabic")
         }else {

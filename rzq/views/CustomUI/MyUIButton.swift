@@ -21,22 +21,22 @@ class MyUIButton : UIButton {
             if (MOLHLanguage.currentAppleLanguage() == "ar") {
                 switch fontType {
                 case "1"://light
-                    self.titleLabel?.font = UIFont(name: "\(Constants.ARABIC_FONT_LIGHT)", size: fontSize)
+                    self.titleLabel?.font = UIFont(name: "\(Constants.ARABIC_FONT_LIGHT)", size: (fontSize - 1))
                     break
                 case "2"://regular
-                    self.titleLabel?.font = UIFont(name: "\(Constants.ARABIC_FONT_REGULAR)", size: fontSize)
+                    self.titleLabel?.font = UIFont(name: "\(Constants.ARABIC_FONT_REGULAR)", size: (fontSize - 1))
                     break
                 case "3"://medium
-                    self.titleLabel?.font = UIFont(name: "\(Constants.ARABIC_FONT_MEDIUM)", size: fontSize)
+                    self.titleLabel?.font = UIFont(name: "\(Constants.ARABIC_FONT_MEDIUM)", size: (fontSize - 1))
                     break
                 case "4"://semibold
-                    self.titleLabel?.font = UIFont(name: "\(Constants.ARABIC_FONT_SEMIBOLD)", size: fontSize)
+                    self.titleLabel?.font = UIFont(name: "\(Constants.ARABIC_FONT_SEMIBOLD)", size: (fontSize - 1))
                     break
                 case "5"://bold
-                    self.titleLabel?.font = UIFont(name: "\(Constants.ARABIC_FONT_BOLD)", size: fontSize)
+                    self.titleLabel?.font = UIFont(name: "\(Constants.ARABIC_FONT_BOLD)", size: (fontSize - 1))
                     break
                 default:
-                    self.titleLabel?.font = UIFont(name: "\(Constants.ARABIC_FONT_REGULAR)", size: fontSize)
+                    self.titleLabel?.font = UIFont(name: "\(Constants.ARABIC_FONT_REGULAR)", size: (fontSize - 1))
                 }
             }else {
                 switch fontType {

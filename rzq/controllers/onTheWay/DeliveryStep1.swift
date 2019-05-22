@@ -167,11 +167,11 @@ class DeliveryStep1: BaseVC,LabasLocationManagerDelegate, Step2Delegate {
     func labasLocationManager(didUpdateLocation location: CLLocation) {
         if (self.latitude ?? 0.0 == 0.0 || self.longitude ?? 0.0 == 0.0) {
             
-//            self.latitude = location.coordinate.latitude
-//            self.longitude = location.coordinate.longitude
+            self.latitude = location.coordinate.latitude
+            self.longitude = location.coordinate.longitude
             
-            self.latitude = 29.273551
-            self.longitude = 47.936161
+//            self.latitude = 29.273551
+//            self.longitude = 47.936161
 
             self.hideLoading()
             self.setUpGoogleMap()

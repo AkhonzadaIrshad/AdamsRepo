@@ -27,6 +27,7 @@ class AboutUsVC: BaseVC {
         }
         
         if (self.isArabic()) {
+            self.tvContent.textAlignment = NSTextAlignment.right
           self.tvContent.text = App.shared.config?.company?.arabicDescription ?? ""
               self.ivHandle.image = UIImage(named: "ic_back_arabic")
         }else {

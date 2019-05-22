@@ -30,13 +30,18 @@ class LoginVC: BaseVC, CountryPickerViewDataSource, CountryPickerViewDelegate, P
         self.edtUserName.title = "name".localized
         self.edtUserName.placeholder = "name".localized
         self.edtUserName.selectedTitle = "name".localized
-        
         self.edtUserName.font = UIFont(name: self.getFontName(), size: 14)
+        
         self.edtMobileNumber.font = UIFont(name: self.getFontName(), size: 14)
         
         self.edtMobileNumber.title = "mobile_number".localized
         self.edtMobileNumber.placeholder = "mobile_number".localized
         self.edtMobileNumber.selectedTitle = "mobile_number".localized
+        
+        if (self.isArabic()) {
+            self.edtUserName.textAlignment = NSTextAlignment.right
+            self.edtMobileNumber.textAlignment = NSTextAlignment.right
+        }
         
         self.lblTerms.attributedText = NSAttributedString(string: "agree_terms".localized, attributes:
             [.underlineStyle: NSUnderlineStyle.single.rawValue])
@@ -58,6 +63,9 @@ class LoginVC: BaseVC, CountryPickerViewDataSource, CountryPickerViewDelegate, P
         if (self.isArabic()) {
             self.ivHandle.image = UIImage(named: "bg_circular_arabic")
         }
+        
+        self.edtUserName.addDoneButtonOnKeyboard()
+        self.edtMobileNumber.addDoneButtonOnKeyboard()
     }
     
     func countryPickerView(_ countryPickerView: CountryPickerView, didSelectCountry country: Country) {
@@ -87,7 +95,7 @@ class LoginVC: BaseVC, CountryPickerViewDataSource, CountryPickerViewDelegate, P
             self.showLoading()
             var code = self.countryPicker.selectedCountry.phoneCode
             code = code.replacingOccurrences(of: "+", with: "")
-            var mobile = self.edtMobileNumber.text ?? ""
+            var mobile = (self.edtMobileNumber.text ?? "").replacedArabicDigitsWithEnglish
             if (mobile.starts(with: "0")) {
                 mobile = String(mobile.dropFirst())
             }

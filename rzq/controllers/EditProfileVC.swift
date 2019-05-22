@@ -63,6 +63,9 @@ class EditProfileVC: BaseVC,UINavigationControllerDelegate {
          self.edtMobileNumber.font = UIFont(name: self.getFontName(), size: 14)
         
         if (self.isArabic()) {
+            self.edtUserName.textAlignment = NSTextAlignment.right
+            self.edtEmail.textAlignment = NSTextAlignment.right
+            self.edtMobileNumber.textAlignment = NSTextAlignment.right
             self.ivHandle.image = UIImage(named: "ic_back_arabic")
         }
         

@@ -490,6 +490,7 @@ extension UITextField {
         let doneToolbar: UIToolbar = UIToolbar(frame: CGRect.init(x: 0, y: 0, width: UIScreen.main.bounds.width, height: 50))
         doneToolbar.barStyle = .default
         
+        
         let flexSpace = UIBarButtonItem(barButtonSystemItem: .flexibleSpace, target: nil, action: nil)
         let done: UIBarButtonItem = UIBarButtonItem(title: "done".localized, style: .done, target: self, action: #selector(self.doneButtonAction))
         
@@ -627,6 +628,9 @@ extension UIViewController {
 extension UIColor {
     static var colorPrimary:UIColor {
         return #colorLiteral(red: 0.5137254902, green: 0.5019607843, blue: 0.968627451, alpha: 1)
+    }
+    static var appLogoColor:UIColor {
+        return #colorLiteral(red: 0.1450980392, green: 0.1098039216, blue: 0.3725490196, alpha: 1)
     }
     static var appDarkBlue:UIColor {
           return #colorLiteral(red: 0.2431372549, green: 0.05490196078, blue: 0.4039215686, alpha: 1)

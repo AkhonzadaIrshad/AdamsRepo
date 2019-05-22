@@ -687,16 +687,19 @@ class ApiService : NSObject {
     
     static func getShopsByName(name : String,latitude : Double, longitude : Double, radius : Float, completion:@escaping(_ response : ShopListResponse)-> Void) {
         
-        let headers = [Constants.LANG_HEADER : self.getLang()]
+        let headers = ["Content-Type": "application/json",
+                      Constants.LANG_HEADER : self.getLang()]
         
-        AFManager.request("\(Constants.BASE_URL)Shop/ListByName?latitude=\(latitude)&longitude=\(longitude)&radius=\(radius)&name=\(name)", method: .get, parameters: nil ,encoding: JSONEncoding.default, headers: headers)
-            .responseJSON { response in
+        let url = "\(Constants.BASE_URL)Shop/ListByName?latitude=\(latitude)&longitude=\(longitude)&radius=\(radius)&name=\(name)"
+        let encodedUrl = url.addingPercentEncoding(withAllowedCharacters: .urlQueryAllowed) ?? url
+        AFManager.request(encodedUrl, method: .get, parameters: nil ,encoding: JSONEncoding.default, headers: headers)
+            .response { response in
                 if let json = response.data {
                     do {
                         let decoder = JSONDecoder()
                         let baseResponse = try decoder.decode(ShopListResponse.self, from: json)
                         completion(baseResponse)
-                    }catch let err{
+                    } catch let err{
                         print(err)
                     }
                 }

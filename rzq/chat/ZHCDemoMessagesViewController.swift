@@ -111,6 +111,7 @@ class ZHCDemoMessagesViewController: ZHCMessagesViewController, BillDelegate, Ch
             recorder.record()
         }
     }
+    
     @objc func recordAction(sender: UIButton!) {
         //        if (recorder.isRecording) {
         //            //stop
@@ -138,7 +139,7 @@ class ZHCDemoMessagesViewController: ZHCMessagesViewController, BillDelegate, Ch
     }
     
     func getChatMessages() {
-        demoData.loadMessages();
+        demoData.loadMessages()
     }
     
     func closeChat() {
@@ -184,7 +185,7 @@ class ZHCDemoMessagesViewController: ZHCMessagesViewController, BillDelegate, Ch
         item?.titleLabel.text = "cancel_order".localized
         item?.titleLabel.font = UIFont(name: self.getFontName(), size: 13)
         item?.imageView.image = UIImage(named: "chat_cancelorder")
-        item?.buttonColor = UIColor.appLightBlue
+        item?.buttonColor = UIColor.appLogoColor
         item?.buttonImageColor = .white
         item?.action = { item in
             
@@ -208,7 +209,7 @@ class ZHCDemoMessagesViewController: ZHCMessagesViewController, BillDelegate, Ch
         
         item2?.titleLabel.font = UIFont(name: self.getFontName(), size: 13)
         item2?.imageView.image = UIImage(named: "chat_onmyway")
-        item2?.buttonColor = UIColor.appLightBlue
+        item2?.buttonColor = UIColor.appLogoColor
         item2?.buttonImageColor = .white
         item2?.action = { item in
             if (self.order?.status == Constants.ORDER_PROCESSING) {
@@ -239,7 +240,7 @@ class ZHCDemoMessagesViewController: ZHCMessagesViewController, BillDelegate, Ch
             }
         }
         
-        self.driverActionButton?.buttonColor = UIColor.appLightBlue
+        self.driverActionButton?.buttonColor = UIColor.appLogoColor
         self.driverActionButton?.shadowColor = UIColor.blue
         self.driverActionButton?.buttonImage = UIImage(named: "chat_floating")
         
@@ -307,7 +308,7 @@ class ZHCDemoMessagesViewController: ZHCMessagesViewController, BillDelegate, Ch
         item?.titleLabel.text = "cancel_order".localized
         item?.titleLabel.font = UIFont(name: self.getFontName(), size: 13)
         item?.imageView.image = UIImage(named: "chat_cancelorder")
-        item?.buttonColor = UIColor.appLightBlue
+        item?.buttonColor = UIColor.appLogoColor
         item?.buttonImageColor = .white
         item?.action = { item in
             
@@ -322,7 +323,7 @@ class ZHCDemoMessagesViewController: ZHCMessagesViewController, BillDelegate, Ch
             
         }
         
-        self.actionButton?.buttonColor = UIColor.appLightBlue
+        self.actionButton?.buttonColor = UIColor.appLogoColor
         self.actionButton?.shadowColor = UIColor.blue
         self.actionButton?.buttonImage = UIImage(named: "chat_floating")
         

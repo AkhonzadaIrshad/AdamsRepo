@@ -18,6 +18,7 @@ class TermsPushVC: BaseVC {
         super.viewDidLoad()
         
         if (self.isArabic()) {
+            self.tvContent.textAlignment = NSTextAlignment.right
             self.tvContent.text = App.shared.config?.configString?.arabicTermsAndConditions ?? ""
         }else {
             self.tvContent.text = App.shared.config?.configString?.englishTermsAndConditions ?? ""

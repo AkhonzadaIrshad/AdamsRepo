@@ -37,7 +37,7 @@ class ContactUsVC: BaseVC {
         if (self.validate()) {
             self.showLoading()
             var message = ""
-            message = "\(self.edtMessage.text ?? "")\n\n\("mobile: ") \(self.edtMobile.text ?? "")"
+            message = "\(self.edtMessage.text ?? "")\n\n\("mobile: ") \(self.edtMobile.text?.replacedArabicDigitsWithEnglish ?? "")"
             ApiService.contactUs(subject: self.edtSubject.text ?? "", body: message) { (response) in
                 self.hideLoading()
                 if (response.errorCode == 0) {

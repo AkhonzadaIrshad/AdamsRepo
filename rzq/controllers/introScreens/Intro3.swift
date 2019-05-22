@@ -14,9 +14,11 @@ class Intro3: BaseVC {
     
     @IBOutlet weak var ivHandle: UIImageView!
     
+    @IBOutlet weak var ivHandle2: UIImageView!
     override func viewDidLoad() {
         super.viewDidLoad()
         if (self.isArabic()) {
+             self.ivHandle2.image = UIImage(named: "intro3_indicator_arabic")
             self.ivHandle.image = UIImage(named: "bg_circular_arabic")
         }
     }

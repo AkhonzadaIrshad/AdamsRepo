@@ -249,7 +249,7 @@
 "I8j-55-aZp.text" = "مشاركة التطبيق";
 
 /* Class = "UILabel"; text = "Please enter your verification code."; ObjectID = "IGb-Zg-MUT"; */
-"IGb-Zg-MUT.text" = "الرجاء ادخال رمز التحقق";
+"IGb-Zg-MUT.text" = "الرجاء ادخال رمز التحقق الذي تم ارساله برسالة نصية";
 
 /* Class = "UILabel"; text = "My Profile"; ObjectID = "IMv-u6-vjU"; */
 "IMv-u6-vjU.text" = "ملفي الشخصي";
@@ -678,7 +678,7 @@
 "jch-Wk-USi.text" = "من";
 
 /* Class = "UILabel"; text = "How about we start by adding a package?"; ObjectID = "jd4-27-ISa"; */
-"jd4-27-ISa.text" = "How about we start by adding a package?";
+"jd4-27-ISa.text" = "ابدأ بطلبك الاول الان !";
 
 /* Class = "UIButton"; normalTitle = "Order"; ObjectID = "jef-gq-3W7"; */
 "jef-gq-3W7.normalTitle" = "طلب";

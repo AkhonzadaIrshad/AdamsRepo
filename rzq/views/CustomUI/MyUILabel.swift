@@ -21,22 +21,22 @@ class MyUILabel : UILabel {
             if (MOLHLanguage.currentAppleLanguage() == "ar") {
                 switch fontType {
                 case "1"://light
-                    self.font = UIFont(name: "\(Constants.ARABIC_FONT_LIGHT)", size: fontSize)
+                    self.font = UIFont(name: "\(Constants.ARABIC_FONT_LIGHT)", size: (fontSize - 1))
                     break
                 case "2"://regular
-                    self.font = UIFont(name: "\(Constants.ARABIC_FONT_REGULAR)", size: fontSize)
+                    self.font = UIFont(name: "\(Constants.ARABIC_FONT_REGULAR)", size: (fontSize - 1))
                     break
                 case "3"://medium
-                    self.font = UIFont(name: "\(Constants.ARABIC_FONT_MEDIUM)", size: fontSize)
+                    self.font = UIFont(name: "\(Constants.ARABIC_FONT_MEDIUM)", size: (fontSize - 1))
                     break
                 case "4"://semibold
-                    self.font = UIFont(name: "\(Constants.ARABIC_FONT_SEMIBOLD)", size: fontSize)
+                    self.font = UIFont(name: "\(Constants.ARABIC_FONT_SEMIBOLD)", size: (fontSize - 1))
                     break
                 case "5"://bold
-                    self.font = UIFont(name: "\(Constants.ARABIC_FONT_BOLD)", size: fontSize)
+                    self.font = UIFont(name: "\(Constants.ARABIC_FONT_BOLD)", size: (fontSize - 1))
                     break
                 default:
-                    self.font = UIFont(name: "\(Constants.ARABIC_FONT_REGULAR)", size: fontSize)
+                    self.font = UIFont(name: "\(Constants.ARABIC_FONT_REGULAR)", size: (fontSize - 1))
                 }
             }else {
                 switch fontType {

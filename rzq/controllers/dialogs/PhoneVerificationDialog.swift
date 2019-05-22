@@ -31,6 +31,11 @@ class PhoneVerificationDialog: BaseVC {
     override func viewDidLoad() {
         super.viewDidLoad()
         // Do any additional setup after loading the view.
+        if (self.isArabic()) {
+            navigationController?.view.semanticContentAttribute = .forceRightToLeft
+            navigationController?.navigationBar.semanticContentAttribute = .forceRightToLeft
+        }
+        
         self.startTimer()
     }
     
@@ -76,7 +81,7 @@ class PhoneVerificationDialog: BaseVC {
     @IBAction func confirmAction(_ sender: Any) {
         if (self.pinView.getPinAsString().count == 4) {
             self.showLoading()
-            ApiService.verifyPinCode(userId: self.userId ?? "", code: self.pinView.getPinAsString()) { (response, status) in
+            ApiService.verifyPinCode(userId: self.userId ?? "", code: self.pinView.getPinAsString().replacedArabicDigitsWithEnglish) { (response, status) in
                 self.hideLoading()
                 if (status != 0) {
                      self.showBanner(title: "alert".localized, message: "wrong_verification_code".localized, style: UIColor.INFO)

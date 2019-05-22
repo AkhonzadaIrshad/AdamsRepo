@@ -8,13 +8,16 @@
 
 import UIKit
 
-class Intro1: UIViewController {
+class Intro1: BaseVC {
 
     var delegate : IntroDelegate?
     
+    @IBOutlet weak var ivHandle: UIImageView!
     override func viewDidLoad() {
         super.viewDidLoad()
-
+        if (self.isArabic()) {
+            self.ivHandle.image = UIImage(named: "intro1_indicator_arabic")
+        }
         // Do any additional setup after loading the view.
     }
     
