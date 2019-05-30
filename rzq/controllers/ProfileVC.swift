@@ -75,6 +75,14 @@ class ProfileVC: BaseVC {
                 self.viewRegisterDriver.isHidden = false
             }
             
+            if ((response.dataProfileObj?.roles?.contains("ServiceProvider"))!) {
+                self.ivProviderBadge.isHidden = false
+                self.viewRegisterPRovider.isHidden = true
+            }else {
+                self.ivDriverBadge.isHidden = true
+                self.viewRegisterPRovider.isHidden = false
+            }
+            
 //            if ((response.dataProfileObj?.roles?.contains("ServiceProvider"))!) {
 //                self.ivProviderBadge.isHidden = false
 //            }else {
@@ -108,7 +116,10 @@ class ProfileVC: BaseVC {
     }
     
     @IBAction func registerProvider(_ sender: Any) {
-        
+        if let vc = UIStoryboard(name: "Main", bundle: nil).instantiateViewController(withIdentifier: "RegisterAsServiceProviderVC") as? RegisterAsServiceProviderVC
+        {
+            self.navigationController?.pushViewController(vc, animated: true)
+        }
     }
     
     @IBAction func logoutAction(_ sender: Any) {

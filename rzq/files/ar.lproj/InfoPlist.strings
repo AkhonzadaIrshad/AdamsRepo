@@ -1,0 +1,11 @@
+/* 
+  InfoPlist.strings
+  rzq
+
+  Created by Zaid najjar on 5/23/19.
+  Copyright © 2019 technzone. All rights reserved.
+*/
+"CFBundleDisplayName" = "رزق RZQ";
+"NSLocationWhenInUseUsageDescription" = "يحتاج رزق استخدام خدمة الموقع لاظهار اقرب الاماكن اليك وتتبع الطلبات.";
+"NSMicrophoneUsageDescription" = "يحتاج رزق استخدام الميكروفون لتسجيل ملاحظات صوتية لطلبك.";
+"NSPhotoLibraryUsageDescription" = "يمكنك اضافة صور لطلبك.";

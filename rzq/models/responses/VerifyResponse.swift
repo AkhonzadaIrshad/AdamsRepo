@@ -50,7 +50,7 @@ class DataClass: Codable {
         case roles = "Roles"
         case isOnline = "IsOnline"
         case exceededDueAmount = "ExceededDueAmount"
-        case balance = "Balance"
+        case balance = "DueAmount"
     }
     
     init(accessToken: String?, phoneNumber: String?, username: String?, fullName: String?, userID: String?, dateOfBirth: String?, profilePicture: String?, email: String?, gender: Int?, rate: Double?, roles: String?, isOnline: Bool?, exceededDueAmount : Bool?, balance : Double?) {

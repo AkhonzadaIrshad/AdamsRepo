@@ -49,6 +49,11 @@ class OrderDetailsVC: BaseVC, UICollectionViewDelegate, UICollectionViewDataSour
     
     @IBOutlet weak var recordLine: UIView!
     
+    @IBOutlet weak var lblServiceName: MyUILabel!
+    
+    @IBOutlet weak var pickupHeight: NSLayoutConstraint!
+    @IBOutlet weak var pickUpLine: UIView!
+    
     var player : AVPlayer?
     
     var markerLocation: GMSMarker?
@@ -88,6 +93,14 @@ class OrderDetailsVC: BaseVC, UICollectionViewDelegate, UICollectionViewDataSour
             self.lblDropoff.text = self.order?.toAddress ?? ""
         }
        
+        if (self.order?.type == 2 || self.order?.type == 3) {
+           self.pickupHeight.constant = 0
+            self.pickUpLine.isHidden = true
+        }else {
+           self.pickupHeight.constant = 51
+            self.pickUpLine.isHidden = false
+        }
+        
         self.lblDropoff.text = self.order?.toAddress ?? ""
         let price = self.order?.cost ?? 0.0
         if (price > 10) {
@@ -114,7 +127,7 @@ class OrderDetailsVC: BaseVC, UICollectionViewDelegate, UICollectionViewDataSour
         }else {
             self.viewTrack.isHidden = true
         }
-        if ((self.loadUser().data?.roles?.contains(find: "Driver"))!) {
+        if (self.isProvider()) {
             self.viewTrack.isHidden = true
         }
         
@@ -141,7 +154,7 @@ class OrderDetailsVC: BaseVC, UICollectionViewDelegate, UICollectionViewDataSour
         }
         
         
-        if ((self.loadUser().data?.roles?.contains(find: "Driver"))!) {
+        if (self.isProvider()) {
                 self.viewCancel.isHidden = true
         }else {
             if (self.order?.status == Constants.ORDER_PENDING) {
@@ -152,6 +165,14 @@ class OrderDetailsVC: BaseVC, UICollectionViewDelegate, UICollectionViewDataSour
         }
         
     }
+    
+    func isProvider() -> Bool {
+        if ((self.loadUser().data?.roles?.contains(find: "Driver"))! || (self.loadUser().data?.roles?.contains(find: "ServiceProvider"))! || (self.loadUser().data?.roles?.contains(find: "TenderProvider"))!) {
+            return true
+        }
+        return false
+    }
+    
     
     func getStatusColor(status : Int) -> UIColor {
         switch status {
@@ -430,7 +451,7 @@ class OrderDetailsVC: BaseVC, UICollectionViewDelegate, UICollectionViewDataSour
     
     @IBAction func cancelOrderAction(_ sender: Any) {
         self.showAlert(title: "alert".localized, message: "confirm_cancel_delivery".localized, actionTitle: "yes".localized, cancelTitle: "no".localized, actionHandler: {
-            if ((self.loadUser().data?.roles?.contains(find: "Driver"))! && self.loadUser().data?.userID == self.order?.driverId ?? "") {
+            if (self.isProvider() && self.loadUser().data?.userID == self.order?.driverId ?? "") {
                 self.cancelDeliveryByDriver()
             }else {
                 self.cancelDeliveryByUser()

@@ -32,6 +32,9 @@
 /* Class = "UIBarButtonItem"; title = " "; ObjectID = "1kt-zu-9P7"; */
 "1kt-zu-9P7.title" = " ";
 
+/* Class = "UILabel"; text = "Tenders"; ObjectID = "1le-4I-lVA"; */
+"1le-4I-lVA.text" = "Tender";
+
 /* Class = "UILabel"; text = "Registered shops will appear here."; ObjectID = "1ty-MF-qYA"; */
 "1ty-MF-qYA.text" = "Registered shops will appear here.";
 
@@ -50,11 +53,20 @@
 /* Class = "UILabel"; text = "Orders will appear here."; ObjectID = "2hI-p2-6o8"; */
 "2hI-p2-6o8.text" = "Orders will appear here.";
 
+/* Class = "UIButton"; normalTitle = "Send"; ObjectID = "2w8-Zm-OOf"; */
+"2w8-Zm-OOf.normalTitle" = "Send";
+
 /* Class = "UIButton"; normalTitle = "Submit"; ObjectID = "33N-BT-81V"; */
 "33N-BT-81V.normalTitle" = "Submit";
 
 /* Class = "UILabel"; text = "Order"; ObjectID = "3Nj-at-qOb"; */
 "3Nj-at-qOb.text" = "Order";
+
+/* Class = "UILabel"; text = "Add your pin point by long pressing on map."; ObjectID = "3SE-GE-zb0"; */
+"3SE-GE-zb0.text" = "Add your pin point by long pressing on map.";
+
+/* Class = "UILabel"; text = "To"; ObjectID = "3gd-5m-u4f"; */
+"3gd-5m-u4f.text" = "To";
 
 /* Class = "UILabel"; text = "Place Category"; ObjectID = "3qC-KS-4fh"; */
 "3qC-KS-4fh.text" = "Place Category";
@@ -64,6 +76,9 @@
 
 /* Class = "UILabel"; text = "Phone Verification"; ObjectID = "4Z2-ZM-RnI"; */
 "4Z2-ZM-RnI.text" = "Phone Verification";
+
+/* Class = "UILabel"; text = "Services"; ObjectID = "4cb-L8-GCH"; */
+"4cb-L8-GCH.text" = "Services";
 
 /* Class = "UITextField"; placeholder = "Search"; ObjectID = "5AA-mA-dnC"; */
 "5AA-mA-dnC.placeholder" = "Search";
@@ -77,6 +92,9 @@
 /* Class = "UILabel"; text = "Payment"; ObjectID = "5XH-Lj-jhv"; */
 "5XH-Lj-jhv.text" = "Payment";
 
+/* Class = "UILabel"; text = "Cost"; ObjectID = "5fN-GZ-qgJ"; */
+"5fN-GZ-qgJ.text" = "Cost";
+
 /* Class = "UILabel"; text = "Add your pin point by long pressing on map."; ObjectID = "5mm-jv-nde"; */
 "5mm-jv-nde.text" = "Add your pin point by long pressing on map.";
 
@@ -85,6 +103,9 @@
 
 /* Class = "UILabel"; text = "Label"; ObjectID = "60g-gR-gjc"; */
 "60g-gR-gjc.text" = "Label";
+
+/* Class = "UIButton"; normalTitle = "Next"; ObjectID = "6Oo-Xo-H65"; */
+"6Oo-Xo-H65.normalTitle" = "Next";
 
 /* Class = "UIButton"; normalTitle = "Confirm"; ObjectID = "6pE-iy-dWn"; */
 "6pE-iy-dWn.normalTitle" = "Confirm";
@@ -107,8 +128,14 @@
 /* Class = "UIButton"; normalTitle = "Select date"; ObjectID = "8Gq-Ka-VQ9"; */
 "8Gq-Ka-VQ9.normalTitle" = "Select date";
 
+/* Class = "UILabel"; text = "Order"; ObjectID = "8HJ-9h-Kmp"; */
+"8HJ-9h-Kmp.text" = "Order";
+
 /* Class = "UITextField"; placeholder = "Coupon Number"; ObjectID = "8OE-Oi-xLU"; */
 "8OE-Oi-xLU.placeholder" = "Coupon Number";
+
+/* Class = "UIButton"; normalTitle = "1 Hour"; ObjectID = "8Sh-eq-Sq7"; */
+"8Sh-eq-Sq7.normalTitle" = "1 Hour";
 
 /* Class = "UILabel"; text = "delivery date"; ObjectID = "8T3-dm-quA"; */
 "8T3-dm-quA.text" = "delivery date";
@@ -140,6 +167,9 @@
 /* Class = "UIButton"; normalTitle = "Next"; ObjectID = "A9Y-JR-xYs"; */
 "A9Y-JR-xYs.normalTitle" = "Next";
 
+/* Class = "UIButton"; normalTitle = "Back"; ObjectID = "A9r-Fe-iM8"; */
+"A9r-Fe-iM8.normalTitle" = "Back";
+
 /* Class = "UILabel"; text = "Rate App"; ObjectID = "AIN-UD-k78"; */
 "AIN-UD-k78.text" = "Rate App";
 
@@ -152,11 +182,20 @@
 /* Class = "UILabel"; text = "Add Working Hours"; ObjectID = "AoT-bZ-gGX"; */
 "AoT-bZ-gGX.text" = "Add Working Hours";
 
+/* Class = "UILabel"; text = "Select Services"; ObjectID = "Aov-Lt-cMo"; */
+"Aov-Lt-cMo.text" = "Select Services";
+
+/* Class = "UILabel"; text = "Client"; ObjectID = "At9-26-bKR"; */
+"At9-26-bKR.text" = "Client";
+
 /* Class = "UILabel"; text = "value"; ObjectID = "BTs-Ma-1Lh"; */
 "BTs-Ma-1Lh.text" = "value";
 
 /* Class = "UILabel"; text = "Order status"; ObjectID = "BdW-3l-ogC"; */
 "BdW-3l-ogC.text" = "Order status";
+
+/* Class = "UILabel"; text = "To"; ObjectID = "CUT-oB-eUG"; */
+"CUT-oB-eUG.text" = "To";
 
 /* Class = "UILabel"; text = "Label"; ObjectID = "CfQ-xG-mSp"; */
 "CfQ-xG-mSp.text" = "Label";
@@ -188,11 +227,17 @@
 /* Class = "UIButton"; normalTitle = "Take This Order"; ObjectID = "Eib-nZ-4yb"; */
 "Eib-nZ-4yb.normalTitle" = "Take This Order";
 
+/* Class = "UILabel"; text = "Time"; ObjectID = "EnO-hA-2m5"; */
+"EnO-hA-2m5.text" = "Time";
+
 /* Class = "UIButton"; normalTitle = "Become a driver"; ObjectID = "Ep0-sF-pwF"; */
 "Ep0-sF-pwF.normalTitle" = "Become a driver";
 
 /* Class = "UIButton"; normalTitle = "Send"; ObjectID = "Ep5-eC-1KG"; */
 "Ep5-eC-1KG.normalTitle" = "Send";
+
+/* Class = "UILabel"; text = "More Details"; ObjectID = "F6Q-d9-Lwu"; */
+"F6Q-d9-Lwu.text" = "More Details";
 
 /* Class = "UILabel"; text = "Working Hours"; ObjectID = "F6f-gO-h0q"; */
 "F6f-gO-h0q.text" = "Working Hours";
@@ -221,14 +266,29 @@
 /* Class = "UIButton"; normalTitle = "Back"; ObjectID = "GJP-WY-Z69"; */
 "GJP-WY-Z69.normalTitle" = "Back";
 
+/* Class = "UIButton"; normalTitle = "Place Order"; ObjectID = "GQT-s7-tUj"; */
+"GQT-s7-tUj.normalTitle" = "Place Order";
+
 /* Class = "UILabel"; text = "Post your order, and one of our couriers will respond to you"; ObjectID = "GTa-IX-OzM"; */
 "GTa-IX-OzM.text" = "Post your order, and one of our couriers will respond to you";
+
+/* Class = "UILabel"; text = "Label"; ObjectID = "GX6-dB-Cpf"; */
+"GX6-dB-Cpf.text" = "Label";
+
+/* Class = "UILabel"; text = "Can't find a service?, type it below"; ObjectID = "Gm8-J5-F1q"; */
+"Gm8-J5-F1q.text" = "Can't find a service?, type it below";
 
 /* Class = "UILabel"; text = "To"; ObjectID = "GxW-fC-auU"; */
 "GxW-fC-auU.text" = "To";
 
+/* Class = "UILabel"; text = "Last step! Confirm your order"; ObjectID = "H2g-al-Kb5"; */
+"H2g-al-Kb5.text" = "Last step! Confirm your order";
+
 /* Class = "UILabel"; text = "Last step! Confirm your order"; ObjectID = "H6r-O2-zRm"; */
 "H6r-O2-zRm.text" = "Last step! Confirm your order";
+
+/* Class = "UILabel"; text = "To"; ObjectID = "HLw-3z-bc8"; */
+"HLw-3z-bc8.text" = "To";
 
 /* Class = "UILabel"; text = "Notifications"; ObjectID = "HO9-nX-gir"; */
 "HO9-nX-gir.text" = "Notifications";
@@ -236,8 +296,14 @@
 /* Class = "UILabel"; text = "Label"; ObjectID = "HUm-F0-Xmy"; */
 "HUm-F0-Xmy.text" = "Label";
 
+/* Class = "UITextView"; text = "Lorem ipsum dolor sit er elit lamet, consectetaur cillium adipisicing pecu, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum. Nam liber te conscient to factor tum poen legum odioque civiuda."; ObjectID = "HeV-dk-ZGD"; */
+"HeV-dk-ZGD.text" = "Lorem ipsum dolor sit er elit lamet, consectetaur cillium adipisicing pecu, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum. Nam liber te conscient to factor tum poen legum odioque civiuda.";
+
 /* Class = "UILabel"; text = "We will help you if you want anything from any store!"; ObjectID = "Hg3-rc-Wcf"; */
 "Hg3-rc-Wcf.text" = "We will help you if you want anything from any store!";
+
+/* Class = "UILabel"; text = "Label"; ObjectID = "HiP-Wg-5SL"; */
+"HiP-Wg-5SL.text" = "Label";
 
 /* Class = "UILabel"; text = "Place Name"; ObjectID = "Hnp-hn-IEO"; */
 "Hnp-hn-IEO.text" = "Place Name";
@@ -257,8 +323,17 @@
 /* Class = "UILabel"; text = "Question"; ObjectID = "ITK-y4-Kmd"; */
 "ITK-y4-Kmd.text" = "Question";
 
+/* Class = "UILabel"; text = "Max"; ObjectID = "Ij3-Oa-40t"; */
+"Ij3-Oa-40t.text" = "Max";
+
 /* Class = "UILabel"; text = "Label"; ObjectID = "ItT-04-zmy"; */
 "ItT-04-zmy.text" = "Label";
+
+/* Class = "UILabel"; text = "To"; ObjectID = "J74-cR-1v3"; */
+"J74-cR-1v3.text" = "To";
+
+/* Class = "UITextField"; placeholder = "Apartment No, Floor"; ObjectID = "JAh-6b-cLm"; */
+"JAh-6b-cLm.placeholder" = "Apartment No, Floor";
 
 /* Class = "UIButton"; normalTitle = "Track Your Order"; ObjectID = "JXA-Ta-3iP"; */
 "JXA-Ta-3iP.normalTitle" = "Track Your Order";
@@ -268,6 +343,9 @@
 
 /* Class = "UILabel"; text = "ETA"; ObjectID = "Kh2-YV-pvQ"; */
 "Kh2-YV-pvQ.text" = "ETA";
+
+/* Class = "UIButton"; normalTitle = "1 Hour"; ObjectID = "KlM-u8-dg2"; */
+"KlM-u8-dg2.normalTitle" = "1 Hour";
 
 /* Class = "UIButton"; normalTitle = "Next"; ObjectID = "Kly-x9-kF3"; */
 "Kly-x9-kF3.normalTitle" = "Next";
@@ -281,11 +359,17 @@
 /* Class = "UIButton"; normalTitle = "Register"; ObjectID = "LQl-pq-7Wl"; */
 "LQl-pq-7Wl.normalTitle" = "Register";
 
+/* Class = "UITextField"; placeholder = "Apartment No, Floor"; ObjectID = "LhN-4i-yUZ"; */
+"LhN-4i-yUZ.placeholder" = "Apartment No, Floor";
+
 /* Class = "UILabel"; text = "Delivery Cost"; ObjectID = "Lld-IY-BvX"; */
 "Lld-IY-BvX.text" = "Delivery Cost";
 
 /* Class = "UILabel"; text = "Shop"; ObjectID = "M1q-iD-r4w"; */
 "M1q-iD-r4w.text" = "Shop";
+
+/* Class = "UILabel"; text = "Order"; ObjectID = "M80-m3-pph"; */
+"M80-m3-pph.text" = "Order";
 
 /* Class = "UILabel"; text = "0 km - 1 km"; ObjectID = "MO4-q7-yUf"; */
 "MO4-q7-yUf.text" = "0 km - 1 km";
@@ -299,11 +383,23 @@
 /* Class = "UIButton"; normalTitle = "Apply"; ObjectID = "Md4-V7-waf"; */
 "Md4-V7-waf.normalTitle" = "Apply";
 
+/* Class = "UILabel"; text = "From"; ObjectID = "Mvr-jC-3hi"; */
+"Mvr-jC-3hi.text" = "Tenders";
+
+/* Class = "UILabel"; text = "To"; ObjectID = "N6N-Z2-CeV"; */
+"N6N-Z2-CeV.text" = "To";
+
 /* Class = "UILabel"; text = "From"; ObjectID = "N8c-ak-Scl"; */
 "N8c-ak-Scl.text" = "From";
 
+/* Class = "UILabel"; text = "Above 10 KD"; ObjectID = "NAz-gV-jKq"; */
+"NAz-gV-jKq.text" = "Above 10 KD";
+
 /* Class = "UILabel"; text = "Turn Notifications ON or Off"; ObjectID = "NGg-52-YiS"; */
 "NGg-52-YiS.text" = "Turn Notifications ON or Off";
+
+/* Class = "UILabel"; text = "Order"; ObjectID = "NIE-hV-su3"; */
+"NIE-hV-su3.text" = "Order";
 
 /* Class = "UILabel"; text = "Orders"; ObjectID = "NNA-jz-piX"; */
 "NNA-jz-piX.text" = "Orders";
@@ -344,8 +440,14 @@
 /* Class = "UILabel"; text = "Min"; ObjectID = "PPP-md-7pM"; */
 "PPP-md-7pM.text" = "Min";
 
+/* Class = "UILabel"; text = "Cost"; ObjectID = "PWS-fH-0e5"; */
+"PWS-fH-0e5.text" = "Cost";
+
 /* Class = "UILabel"; text = "Label"; ObjectID = "PbA-JQ-cLM"; */
 "PbA-JQ-cLM.text" = "Label";
+
+/* Class = "UILabel"; text = "Drop Off Location"; ObjectID = "Q5f-Qd-hcy"; */
+"Q5f-Qd-hcy.text" = "Drop Off Location";
 
 /* Class = "UIButton"; normalTitle = "Details"; ObjectID = "QG5-5W-5yQ"; */
 "QG5-5W-5yQ.normalTitle" = "Details";
@@ -356,6 +458,9 @@
 /* Class = "UILabel"; text = "Voice Record"; ObjectID = "QaM-DC-fHe"; */
 "QaM-DC-fHe.text" = "Voice Record";
 
+/* Class = "UILabel"; text = "To"; ObjectID = "Qkv-nc-4rW"; */
+"Qkv-nc-4rW.text" = "To";
+
 /* Class = "UILabel"; text = "Distance"; ObjectID = "R3J-aD-hWc"; */
 "R3J-aD-hWc.text" = "Distance";
 
@@ -364,6 +469,9 @@
 
 /* Class = "UILabel"; text = "Label"; ObjectID = "R7U-gN-6tK"; */
 "R7U-gN-6tK.text" = "Label";
+
+/* Class = "UILabel"; text = "Order"; ObjectID = "RY8-5X-MCg"; */
+"RY8-5X-MCg.text" = "Order";
 
 /* Class = "UITextField"; placeholder = "Apartment No, Floor"; ObjectID = "Rou-bW-pEK"; */
 "Rou-bW-pEK.placeholder" = "Apartment No, Floor";
@@ -410,6 +518,12 @@
 /* Class = "UILabel"; text = "More Details"; ObjectID = "U2s-Ga-UUd"; */
 "U2s-Ga-UUd.text" = "More Details";
 
+/* Class = "UILabel"; text = "You can add your pin point by long pressing on map."; ObjectID = "U71-yp-hek"; */
+"U71-yp-hek.text" = "You can add your pin point by long pressing on map.";
+
+/* Class = "UITextField"; placeholder = "type here"; ObjectID = "USH-x9-hcc"; */
+"USH-x9-hcc.placeholder" = "type here";
+
 /* Class = "UILabel"; text = "About Us"; ObjectID = "UY7-Z1-NXi"; */
 "UY7-Z1-NXi.text" = "About Us";
 
@@ -428,6 +542,12 @@
 /* Class = "UILabel"; text = "13.2 km"; ObjectID = "Uoe-kc-Xq3"; */
 "Uoe-kc-Xq3.text" = "13.2 km";
 
+/* Class = "UIButton"; normalTitle = "Choose"; ObjectID = "UrC-bR-wGV"; */
+"UrC-bR-wGV.normalTitle" = "Choose";
+
+/* Class = "UILabel"; text = "Service"; ObjectID = "UuG-bi-lCk"; */
+"UuG-bi-lCk.text" = "Service";
+
 /* Class = "UILabel"; text = "From"; ObjectID = "UuV-t1-atN"; */
 "UuV-t1-atN.text" = "From";
 
@@ -443,6 +563,12 @@
 /* Class = "UIButton"; normalTitle = "Send"; ObjectID = "V84-ey-U8Z"; */
 "V84-ey-U8Z.normalTitle" = "Send";
 
+/* Class = "UILabel"; text = "Services"; ObjectID = "V8n-LB-lhh"; */
+"V8n-LB-lhh.text" = "Services";
+
+/* Class = "UILabel"; text = "Order"; ObjectID = "Vai-Ct-LyU"; */
+"Vai-Ct-LyU.text" = "Order";
+
 /* Class = "UILabel"; text = "Register As Driver"; ObjectID = "VcV-Iv-TdB"; */
 "VcV-Iv-TdB.text" = "Register As Driver";
 
@@ -455,8 +581,14 @@
 /* Class = "UILabel"; text = "Label"; ObjectID = "W5B-vZ-Ft9"; */
 "W5B-vZ-Ft9.text" = "Label";
 
+/* Class = "UILabel"; text = "You"; ObjectID = "WIJ-qG-mWb"; */
+"WIJ-qG-mWb.text" = "You";
+
 /* Class = "UILabel"; text = "Working Orders"; ObjectID = "WcU-C0-8CE"; */
 "WcU-C0-8CE.text" = "Working Orders";
+
+/* Class = "UIButton"; normalTitle = "Register"; ObjectID = "Wn5-aP-Hnd"; */
+"Wn5-aP-Hnd.normalTitle" = "Register";
 
 /* Class = "UILabel"; text = "Register As Driver"; ObjectID = "Wsm-sn-ppo"; */
 "Wsm-sn-ppo.text" = "Register As Driver";
@@ -470,11 +602,17 @@
 /* Class = "UIButton"; normalTitle = "Chat"; ObjectID = "XI6-bJ-t4n"; */
 "XI6-bJ-t4n.normalTitle" = "Chat";
 
+/* Class = "UIButton"; normalTitle = "Back"; ObjectID = "XPi-pp-ddy"; */
+"XPi-pp-ddy.normalTitle" = "Back";
+
 /* Class = "UILabel"; text = "Working Orders"; ObjectID = "Xg4-57-mxi"; */
 "Xg4-57-mxi.text" = "Working Orders";
 
 /* Class = "UILabel"; text = "Client Name"; ObjectID = "XhP-tf-nyt"; */
 "XhP-tf-nyt.text" = "Client Name";
+
+/* Class = "UIButton"; normalTitle = "Place Order"; ObjectID = "Xka-2S-Nlm"; */
+"Xka-2S-Nlm.normalTitle" = "Place Order";
 
 /* Class = "UILabel"; text = "Order Description"; ObjectID = "Xxj-3X-Kmg"; */
 "Xxj-3X-Kmg.text" = "Order Description";
@@ -485,8 +623,14 @@
 /* Class = "UILabel"; text = "Add Bill Images"; ObjectID = "YSy-IL-qqm"; */
 "YSy-IL-qqm.text" = "Add Bill Images";
 
+/* Class = "UILabel"; text = "Min"; ObjectID = "YYN-BZ-ofc"; */
+"YYN-BZ-ofc.text" = "Min";
+
 /* Class = "UIButton"; normalTitle = "Chat"; ObjectID = "YZo-H5-MqR"; */
 "YZo-H5-MqR.normalTitle" = "Chat";
+
+/* Class = "UIButton"; normalTitle = "1 Hour"; ObjectID = "Yhr-D4-Ifs"; */
+"Yhr-D4-Ifs.normalTitle" = "1 Hour";
 
 /* Class = "UILabel"; text = "Label"; ObjectID = "YjC-Qe-61q"; */
 "YjC-Qe-61q.text" = "Label";
@@ -497,8 +641,14 @@
 /* Class = "UILabel"; text = "Label"; ObjectID = "ZQd-nd-4fu"; */
 "ZQd-nd-4fu.text" = "Label";
 
+/* Class = "UILabel"; text = "Take This Order"; ObjectID = "ZUI-73-WCC"; */
+"ZUI-73-WCC.text" = "Take This Order";
+
 /* Class = "UILabel"; text = "Date of Birth"; ObjectID = "ZVH-37-3R8"; */
 "ZVH-37-3R8.text" = "Date of Birth";
+
+/* Class = "UILabel"; text = "Order"; ObjectID = "Zcn-D0-WsH"; */
+"Zcn-D0-WsH.text" = "Order";
 
 /* Class = "UILabel"; text = "Label"; ObjectID = "Zey-4T-xLy"; */
 "Zey-4T-xLy.text" = "Label";
@@ -518,6 +668,12 @@
 /* Class = "UILabel"; text = "Add your pin point by long pressing on map."; ObjectID = "a3Y-zy-pBI"; */
 "a3Y-zy-pBI.text" = "Add your pin point by long pressing on map.";
 
+/* Class = "UILabel"; text = "Services"; ObjectID = "aAT-qP-wHC"; */
+"aAT-qP-wHC.text" = "Tenders";
+
+/* Class = "UILabel"; text = "Civil ID / Passport"; ObjectID = "aHn-hh-vTm"; */
+"aHn-hh-vTm.text" = "Civil ID / Passport";
+
 /* Class = "UILabel"; text = "العربية"; ObjectID = "aW2-h1-oL0"; */
 "aW2-h1-oL0.text" = "العربية";
 
@@ -530,14 +686,23 @@
 /* Class = "UILabel"; text = "English"; ObjectID = "avm-Z0-cTH"; */
 "avm-Z0-cTH.text" = "English";
 
+/* Class = "UILabel"; text = "Time"; ObjectID = "b4I-he-2i1"; */
+"b4I-he-2i1.text" = "Time";
+
 /* Class = "UIButton"; normalTitle = "Chat"; ObjectID = "bBn-gd-yjK"; */
 "bBn-gd-yjK.normalTitle" = "Chat";
+
+/* Class = "UILabel"; text = "Services"; ObjectID = "bPt-FT-G1X"; */
+"bPt-FT-G1X.text" = "Services";
 
 /* Class = "UITextView"; text = "Lorem ipsum dolor sit er elit lamet, consectetaur cillium adipisicing pecu, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum. Nam liber te conscient to factor tum poen legum odioque civiuda."; ObjectID = "bbI-TT-x0z"; */
 "bbI-TT-x0z.text" = "Lorem ipsum dolor sit er elit lamet, consectetaur cillium adipisicing pecu, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum. Nam liber te conscient to factor tum poen legum odioque civiuda.";
 
 /* Class = "UILabel"; text = "Orders"; ObjectID = "bco-ZI-wEx"; */
 "bco-ZI-wEx.text" = "Orders";
+
+/* Class = "UILabel"; text = "Label"; ObjectID = "buE-Uv-IWq"; */
+"buE-Uv-IWq.text" = "Label";
 
 /* Class = "UIButton"; normalTitle = "العربية"; ObjectID = "bue-pX-ykf"; */
 "bue-pX-ykf.normalTitle" = "العربية";
@@ -548,8 +713,8 @@
 /* Class = "UILabel"; text = "Register As Service Provider"; ObjectID = "bzR-Ad-SYR"; */
 "bzR-Ad-SYR.text" = "Register As Service Provider";
 
-/* Class = "UIButton"; normalTitle = "Search places"; ObjectID = "c47-XM-1f3"; */
-"c47-XM-1f3.normalTitle" = "Search places";
+/* Class = "UIButton"; normalTitle = "Search for drop off location"; ObjectID = "c47-XM-1f3"; */
+"c47-XM-1f3.normalTitle" = "Search for drop off location";
 
 /* Class = "UIButton"; normalTitle = "Skip"; ObjectID = "c6G-GS-rnf"; */
 "c6G-GS-rnf.normalTitle" = "Skip";
@@ -566,6 +731,15 @@
 /* Class = "UILabel"; text = "Label"; ObjectID = "cX2-xw-hz6"; */
 "cX2-xw-hz6.text" = "Label";
 
+/* Class = "UILabel"; text = "To"; ObjectID = "cXN-jc-D0o"; */
+"cXN-jc-D0o.text" = "To";
+
+/* Class = "UILabel"; text = "Label"; ObjectID = "cbR-kz-stT"; */
+"cbR-kz-stT.text" = "Label";
+
+/* Class = "UILabel"; text = "To"; ObjectID = "clL-HN-uXr"; */
+"clL-HN-uXr.text" = "To";
+
 /* Class = "UILabel"; text = "Label"; ObjectID = "dCi-Yw-rLQ"; */
 "dCi-Yw-rLQ.text" = "Label";
 
@@ -578,8 +752,20 @@
 /* Class = "UILabel"; text = "Max"; ObjectID = "dpg-NV-J6Z"; */
 "dpg-NV-J6Z.text" = "Max";
 
+/* Class = "UIButton"; normalTitle = "Back"; ObjectID = "e2k-YZ-iP4"; */
+"e2k-YZ-iP4.normalTitle" = "Back";
+
+/* Class = "UILabel"; text = "Place Images"; ObjectID = "e3B-g0-1kP"; */
+"e3B-g0-1kP.text" = "Place Images";
+
 /* Class = "UIButton"; normalTitle = "Done"; ObjectID = "eOD-Qr-sN3"; */
 "eOD-Qr-sN3.normalTitle" = "Done";
+
+/* Class = "UILabel"; text = "Last step! Confirm your order"; ObjectID = "eOn-0i-Y0c"; */
+"eOn-0i-Y0c.text" = "Last step! Confirm your order";
+
+/* Class = "UILabel"; text = "Above 10 KD"; ObjectID = "eUB-nh-9Hh"; */
+"eUB-nh-9Hh.text" = "Above 10 KD";
 
 /* Class = "UILabel"; text = "Label"; ObjectID = "eZe-Qv-T7F"; */
 "eZe-Qv-T7F.text" = "Label";
@@ -590,11 +776,20 @@
 /* Class = "UILabel"; text = "Label"; ObjectID = "emM-8i-755"; */
 "emM-8i-755.text" = "Label";
 
+/* Class = "UILabel"; text = "Label"; ObjectID = "f7e-Up-D2k"; */
+"f7e-Up-D2k.text" = "Label";
+
 /* Class = "UILabel"; text = "Add Coupon"; ObjectID = "fNh-Lf-pb7"; */
 "fNh-Lf-pb7.text" = "Add Coupon";
 
 /* Class = "UILabel"; text = "Working Hours"; ObjectID = "fTM-p2-csh"; */
 "fTM-p2-csh.text" = "Working Hours";
+
+/* Class = "UIButton"; normalTitle = "Search for drop off location"; ObjectID = "feb-cT-aex"; */
+"feb-cT-aex.normalTitle" = "Search for destination location";
+
+/* Class = "UIButton"; normalTitle = "Search for drop off location"; ObjectID = "fsO-Tu-R1u"; */
+"fsO-Tu-R1u.normalTitle" = "Search for destination location";
 
 /* Class = "UILabel"; text = "Orders will appear here."; ObjectID = "gDr-0c-CkO"; */
 "gDr-0c-CkO.text" = "Orders will appear here.";
@@ -602,8 +797,14 @@
 /* Class = "UILabel"; text = "Order"; ObjectID = "gFV-Cm-8zp"; */
 "gFV-Cm-8zp.text" = "Order";
 
+/* Class = "UILabel"; text = "Select services"; ObjectID = "gIL-OB-Efj"; */
+"gIL-OB-Efj.text" = "Select services";
+
 /* Class = "UILabel"; text = "Message"; ObjectID = "gJ1-B6-FPq"; */
 "gJ1-B6-FPq.text" = "Message";
+
+/* Class = "UILabel"; text = "Service"; ObjectID = "gR1-lq-Jif"; */
+"gR1-lq-Jif.text" = "Service";
 
 /* Class = "UILabel"; text = "Label"; ObjectID = "gcX-ht-J50"; */
 "gcX-ht-J50.text" = "Label";
@@ -650,6 +851,9 @@
 /* Class = "UILabel"; text = "Zaid Kh"; ObjectID = "i51-tH-Mmr"; */
 "i51-tH-Mmr.text" = "Zaid Kh";
 
+/* Class = "UILabel"; text = "Order Description"; ObjectID = "iWC-2h-kPm"; */
+"iWC-2h-kPm.text" = "Order Description";
+
 /* Class = "UILabel"; text = "About Us"; ObjectID = "iZQ-iM-BQx"; */
 "iZQ-iM-BQx.text" = "About Us";
 
@@ -689,8 +893,17 @@
 /* Class = "UILabel"; text = "Order Count"; ObjectID = "jve-yy-IT0"; */
 "jve-yy-IT0.text" = "Order Count";
 
+/* Class = "UILabel"; text = "00.00"; ObjectID = "k4B-xR-Irc"; */
+"k4B-xR-Irc.text" = "00.00";
+
+/* Class = "UILabel"; text = "Cost"; ObjectID = "kFp-em-Dle"; */
+"kFp-em-Dle.text" = "Cost";
+
 /* Class = "UILabel"; text = "Your Location"; ObjectID = "kLg-k9-A7X"; */
 "kLg-k9-A7X.text" = "Your Location";
+
+/* Class = "UILabel"; text = "Client Name"; ObjectID = "kuY-JU-n4L"; */
+"kuY-JU-n4L.text" = "Client Name";
 
 /* Class = "UILabel"; text = "Select Category"; ObjectID = "lEj-d7-BPK"; */
 "lEj-d7-BPK.text" = "Select Category";
@@ -701,11 +914,20 @@
 /* Class = "UILabel"; text = "Client"; ObjectID = "lHD-BU-ORp"; */
 "lHD-BU-ORp.text" = "Client";
 
+/* Class = "UILabel"; text = "To"; ObjectID = "lIr-Bg-3hH"; */
+"lIr-Bg-3hH.text" = "To";
+
 /* Class = "UILabel"; text = "Profile Picture"; ObjectID = "lTb-pK-iSq"; */
 "lTb-pK-iSq.text" = "Profile Picture";
 
+/* Class = "UILabel"; text = "From"; ObjectID = "lVq-25-6ZE"; */
+"lVq-25-6ZE.text" = "Services";
+
 /* Class = "UILabel"; text = "My Profile"; ObjectID = "lcX-G2-Rna"; */
 "lcX-G2-Rna.text" = "My Profile";
+
+/* Class = "UILabel"; text = "From"; ObjectID = "lnB-wi-cR5"; */
+"lnB-wi-cR5.text" = "Services";
 
 /* Class = "UILabel"; text = "Label"; ObjectID = "lvS-9S-rn1"; */
 "lvS-9S-rn1.text" = "Label";
@@ -724,6 +946,9 @@
 
 /* Class = "UILabel"; text = "The new experience in transporting goods."; ObjectID = "mDk-GY-cgu"; */
 "mDk-GY-cgu.text" = "The new experience in transporting goods.";
+
+/* Class = "UILabel"; text = "You can add your pin point by long pressing on map."; ObjectID = "mNN-AQ-vgz"; */
+"mNN-AQ-vgz.text" = "You can add your pin point by long pressing on map.";
 
 /* Class = "UILabel"; text = "Order Cost"; ObjectID = "mOJ-Ll-kfO"; */
 "mOJ-Ll-kfO.text" = "Order Cost";
@@ -745,6 +970,9 @@
 
 /* Class = "UILabel"; text = "Open 24 hours"; ObjectID = "nTb-2d-iWW"; */
 "nTb-2d-iWW.text" = "Open 24 hours";
+
+/* Class = "UILabel"; text = "Profile Picture"; ObjectID = "nUU-Y9-HpB"; */
+"nUU-Y9-HpB.text" = "Profile Picture";
 
 /* Class = "UILabel"; text = "Account Balance"; ObjectID = "neB-q2-PUZ"; */
 "neB-q2-PUZ.text" = "Account Balance";
@@ -776,6 +1004,9 @@
 /* Class = "UILabel"; text = "More Details"; ObjectID = "oXA-dN-KbM"; */
 "oXA-dN-KbM.text" = "More Details";
 
+/* Class = "UILabel"; text = "Order"; ObjectID = "ofD-eb-t9x"; */
+"ofD-eb-t9x.text" = "Order";
+
 /* Class = "UILabel"; text = "Distance"; ObjectID = "ohg-ih-5fT"; */
 "ohg-ih-5fT.text" = "Distance";
 
@@ -787,6 +1018,9 @@
 
 /* Class = "UILabel"; text = "Above 10 KD"; ObjectID = "ovX-Gp-RtZ"; */
 "ovX-Gp-RtZ.text" = "Above 10 KD";
+
+/* Class = "UIButton"; normalTitle = "Next"; ObjectID = "p57-NF-Ps7"; */
+"p57-NF-Ps7.normalTitle" = "Next";
 
 /* Class = "UILabel"; text = "Distance"; ObjectID = "pLb-Gi-XDZ"; */
 "pLb-Gi-XDZ.text" = "Distance";
@@ -815,6 +1049,9 @@
 /* Class = "UILabel"; text = "Your Location"; ObjectID = "qAT-II-une"; */
 "qAT-II-une.text" = "Your Location";
 
+/* Class = "UILabel"; text = "Label"; ObjectID = "qXi-N7-gOw"; */
+"qXi-N7-gOw.text" = "Label";
+
 /* Class = "UILabel"; text = "Search for your shops"; ObjectID = "qlN-g2-YIU"; */
 "qlN-g2-YIU.text" = "Search for your shops";
 
@@ -826,6 +1063,9 @@
 
 /* Class = "UILabel"; text = "Home"; ObjectID = "rve-Fk-ChB"; */
 "rve-Fk-ChB.text" = "Home";
+
+/* Class = "UILabel"; text = "You can add product images with your touch."; ObjectID = "sG9-er-y4A"; */
+"sG9-er-y4A.text" = "You can add product images with your touch.";
 
 /* Class = "UILabel"; text = "To"; ObjectID = "sHb-78-7AK"; */
 "sHb-78-7AK.text" = "To";
@@ -839,17 +1079,29 @@
 /* Class = "UIButton"; normalTitle = "Done"; ObjectID = "sbw-wh-vKt"; */
 "sbw-wh-vKt.normalTitle" = "Done";
 
+/* Class = "UILabel"; text = "Register As Service Provider"; ObjectID = "seB-pg-Gum"; */
+"seB-pg-Gum.text" = "Register As Service Provider";
+
 /* Class = "UILabel"; text = "delivery date"; ObjectID = "seI-IY-tDW"; */
 "seI-IY-tDW.text" = "delivery date";
 
 /* Class = "UIButton"; normalTitle = "Back"; ObjectID = "ssI-um-yB3"; */
 "ssI-um-yB3.normalTitle" = "Back";
 
+/* Class = "UILabel"; text = "Label"; ObjectID = "suq-HU-S0i"; */
+"suq-HU-S0i.text" = "Label";
+
 /* Class = "UILabel"; text = "How many drivers around this shop?"; ObjectID = "suv-wH-pkx"; */
 "suv-wH-pkx.text" = "How many drivers around this shop?";
 
+/* Class = "UILabel"; text = "Order"; ObjectID = "t15-n1-Z03"; */
+"t15-n1-Z03.text" = "Order";
+
 /* Class = "UILabel"; text = "Cost"; ObjectID = "t8W-M9-YHp"; */
 "t8W-M9-YHp.text" = "Cost";
+
+/* Class = "UILabel"; text = "More Details"; ObjectID = "tCj-nF-syF"; */
+"tCj-nF-syF.text" = "More Details";
 
 /* Class = "UILabel"; text = "Turn on your location settings to add your address automatically."; ObjectID = "tPU-kl-Uwh"; */
 "tPU-kl-Uwh.text" = "Turn on your location settings to add your address automatically.";
@@ -881,8 +1133,11 @@
 /* Class = "UILabel"; text = "Price"; ObjectID = "ujH-VG-ZRv"; */
 "ujH-VG-ZRv.text" = "Price";
 
-/* Class = "UITextField"; placeholder = "Search for shops"; ObjectID = "uoN-4e-Qtq"; */
-"uoN-4e-Qtq.placeholder" = "Search for shops";
+/* Class = "UIButton"; normalTitle = "Back"; ObjectID = "ujZ-qU-0g6"; */
+"ujZ-qU-0g6.normalTitle" = "Back";
+
+/* Class = "UITextField"; placeholder = "Search for pickup location"; ObjectID = "uoN-4e-Qtq"; */
+"uoN-4e-Qtq.placeholder" = "Search for pickup location";
 
 /* Class = "UILabel"; text = "Label"; ObjectID = "vNJ-fR-wCx"; */
 "vNJ-fR-wCx.text" = "Label";
@@ -920,11 +1175,17 @@
 /* Class = "UIButton"; normalTitle = "Go to My Orders"; ObjectID = "w9z-2t-qEz"; */
 "w9z-2t-qEz.normalTitle" = "Go to My Orders";
 
+/* Class = "UILabel"; text = "From"; ObjectID = "wQQ-hU-aQW"; */
+"wQQ-hU-aQW.text" = "Tenders";
+
 /* Class = "UIButton"; normalTitle = "Accept"; ObjectID = "wTG-8q-dd8"; */
 "wTG-8q-dd8.normalTitle" = "Accept";
 
 /* Class = "UIButton"; normalTitle = "12:00"; ObjectID = "wkz-Vy-MUT"; */
 "wkz-Vy-MUT.normalTitle" = "12:00";
+
+/* Class = "UILabel"; text = "Add your pin point by long pressing on map."; ObjectID = "wl4-A4-RMZ"; */
+"wl4-A4-RMZ.text" = "Add your pin point by long pressing on map.";
 
 /* Class = "UIButton"; normalTitle = "Track"; ObjectID = "wld-TF-0GR"; */
 "wld-TF-0GR.normalTitle" = "Track";
@@ -956,8 +1217,14 @@
 /* Class = "UILabel"; text = "Label"; ObjectID = "y7C-SM-ytU"; */
 "y7C-SM-ytU.text" = "Label";
 
+/* Class = "UILabel"; text = "To"; ObjectID = "yCv-mh-CZg"; */
+"yCv-mh-CZg.text" = "To";
+
 /* Class = "UILabel"; text = "Label"; ObjectID = "yRU-b5-pfO"; */
 "yRU-b5-pfO.text" = "Label";
+
+/* Class = "UILabel"; text = "Time"; ObjectID = "yVf-EN-461"; */
+"yVf-EN-461.text" = "Time";
 
 /* Class = "UIButton"; normalTitle = "Cancel Registration"; ObjectID = "z0E-KX-qZO"; */
 "z0E-KX-qZO.normalTitle" = "Cancel Registration";

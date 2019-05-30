@@ -61,13 +61,20 @@ class HomeListVC: BaseViewController, UITableViewDelegate, UITableViewDataSource
     }
     
     func validateDriverDueAmount() {
-        if ((self.loadUser().data?.roles?.contains(find: "Driver"))!) {
+        if (self.isProvider()) {
             let check = self.loadUser().data?.exceededDueAmount ?? false
             if (check) {
                 //show alert
                 self.showAlertOK(title: "alert".localized, message: "due_amount".localized, actionTitle: "ok".localized)
             }
         }
+    }
+    
+    func isProvider() -> Bool {
+        if ((self.loadUser().data?.roles?.contains(find: "Driver"))! || (self.loadUser().data?.roles?.contains(find: "ServiceProvider"))! || (self.loadUser().data?.roles?.contains(find: "TenderProvider"))!) {
+            return true
+        }
+        return false
     }
     
     override func viewDidAppear(_ animated: Bool) {
@@ -220,8 +227,8 @@ class HomeListVC: BaseViewController, UITableViewDelegate, UITableViewDataSource
         
         let shop = self.shops[indexPath.row]
         
-        if (shop.image?.count ?? 0 > 0) {
-            let url = URL(string: "\(Constants.IMAGE_URL)\(shop.image ?? "")")
+        if (shop.images?.count ?? 0 > 0) {
+            let url = URL(string: "\(Constants.IMAGE_URL)\(shop.images?[0] ?? "")")
             cell.ivLogo.kf.setImage(with: url)
         }else {
             let url = URL(string: "\(Constants.IMAGE_URL)\(shop.type?.image ?? "")")
@@ -285,7 +292,7 @@ class HomeListVC: BaseViewController, UITableViewDelegate, UITableViewDataSource
             self.longitude = location.coordinate.longitude
             self.hideLoading()
             
-            if ((self.loadUser().data?.roles?.contains(find: "Driver"))!) {
+            if (self.isProvider()) {
                 ApiService.updateLocation(Authorization: self.loadUser().data?.accessToken ?? "", latitude: self.latitude ?? 0.0, longitude: self.longitude ?? 0.0) { (response) in
                   
                 }

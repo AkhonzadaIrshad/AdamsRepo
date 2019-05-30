@@ -5,7 +5,7 @@
 	<key>CFBundleDevelopmentRegion</key>
 	<string>$(DEVELOPMENT_LANGUAGE)</string>
 	<key>CFBundleDisplayName</key>
-	<string>Rzq</string>
+	<string>رزق  RZQ</string>
 	<key>CFBundleExecutable</key>
 	<string>$(EXECUTABLE_NAME)</string>
 	<key>CFBundleIdentifier</key>
@@ -28,7 +28,7 @@
 		</dict>
 	</array>
 	<key>CFBundleVersion</key>
-	<string>16</string>
+	<string>18</string>
 	<key>LSApplicationQueriesSchemes</key>
 	<array>
 		<string>tel</string>
@@ -49,7 +49,7 @@
 	<key>NSCameraUsageDescription</key>
 	<string>This app will use camera to take photos for your order.</string>
 	<key>NSLocationWhenInUseUsageDescription</key>
-	<string>RZQ needs to access your location to show you nearby shops.</string>
+	<string>RZQ needs to access your location to show you nearby shops and track orders.</string>
 	<key>NSMicrophoneUsageDescription</key>
 	<string>RZQ needs to access your microphone to add voice notes to your order.</string>
 	<key>NSPhotoLibraryUsageDescription</key>

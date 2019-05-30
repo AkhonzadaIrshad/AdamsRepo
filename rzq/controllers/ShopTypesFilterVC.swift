@@ -9,7 +9,7 @@
 import UIKit
 
 protocol TypeListDelegate {
-    func onClick(type : ShopType)
+    func onClick(type : TypeClass)
 }
 
 class ShopTypesFilterVC: BaseVC, UITableViewDelegate, UITableViewDataSource {
@@ -23,25 +23,36 @@ class ShopTypesFilterVC: BaseVC, UITableViewDelegate, UITableViewDataSource {
     var latitude : Double?
     var longitude : Double?
     
-    var items = [ShopType]()
+    var items = [TypeClass]()
     
     var delegate : TypeListDelegate?
     
     override func viewDidLoad() {
-        
-        self.items = Constants.getPlaces()
-        
         super.viewDidLoad()
-        if (self.isArabic()) {
-            self.ivHandle.image = UIImage(named: "ic_back_arabic")
-        }
+        
         self.tableView.delegate = self
         self.tableView.dataSource = self
         
+        self.reloadTypes()
+        
+        if (self.isArabic()) {
+            self.ivHandle.image = UIImage(named: "ic_back_arabic")
+        }
+
+    
         self.searchField.delegate = self
         
-        self.tableView.reloadData()
         
+    }
+    
+    func reloadTypes() {
+        ApiService.getAllTypes { (response) in
+            if (response.errorCode == 0) {
+                self.items.removeAll()
+                self.items.append(contentsOf: response.data ?? [TypeClass]())
+                self.tableView.reloadData()
+            }
+        }
     }
     
     
@@ -63,39 +74,16 @@ class ShopTypesFilterVC: BaseVC, UITableViewDelegate, UITableViewDataSource {
         
         let item = self.items[indexPath.row]
         
-        cell.ivLogo.image = self.getShopImageByType(type: item.id ?? 0)
+        if (item.image?.count ?? 0 > 0) {
+            let url = URL(string: "\(Constants.IMAGE_URL)\(item.image ?? "")")
+            cell.ivLogo.kf.setImage(with: url)
+        }
+        
         cell.lblName.text = item.name ?? ""
         
         return cell
     }
     
-    
-    func getShopImageByType(type : Int) -> UIImage {
-        switch type {
-        case Constants.PLACE_BAKERY:
-            return UIImage(named: "ic_place_bakery")!
-        case Constants.PLACE_BOOK_STORE:
-            return UIImage(named: "ic_place_book_store")!
-        case Constants.PLACE_CAFE:
-            return UIImage(named: "ic_place_cafe")!
-        case Constants.PLACE_MEAL_DELIVERY:
-            return UIImage(named: "ic_place_meal_delivery")!
-        case Constants.PLACE_MEAL_TAKEAWAY:
-            return UIImage(named: "ic_place_meal_takeaway")!
-        case Constants.PLACE_PHARMACY:
-            return UIImage(named: "ic_place_pharmacy")!
-        case Constants.PLACE_RESTAURANT:
-            return UIImage(named: "ic_place_restaurant")!
-        case Constants.PLACE_SHOPPING_MALL:
-            return UIImage(named: "ic_place_shopping_mall")!
-        case Constants.PLACE_STORE:
-            return UIImage(named: "ic_place_store")!
-        case Constants.PLACE_SUPERMARKET:
-            return UIImage(named: "ic_place_supermarket")!
-        default:
-            return UIImage(named: "ic_place_store")!
-        }
-    }
     
     
     @IBAction func backAction(_ sender: Any) {
@@ -115,17 +103,16 @@ extension ShopTypesFilterVC: UITextFieldDelegate {
             let newString: NSString =
                 currentString.replacingCharacters(in: range, with: string) as NSString
             if (newString.length >= 3) {
-                self.items.removeAll()
-                let arr = Constants.getPlaces().filter {
+                
+                let arr = self.items.filter {
                     $0.name?.lowercased().range(of: newString.lowercased as String) != nil
                 }
+                self.items.removeAll()
                 self.items.append(contentsOf: arr)
                 self.tableView.reloadData()
             }
             if (newString.length == 0) {
-                self.items.removeAll()
-                self.items = Constants.getPlaces()
-                self.tableView.reloadData()
+                self.reloadTypes()
             }
             return newString.length <= maxLength
         }

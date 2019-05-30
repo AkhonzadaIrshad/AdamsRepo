@@ -28,9 +28,10 @@ class HomeMapVC: BaseViewController,LabasLocationManagerDelegate, UICollectionVi
     @IBOutlet weak var btnLocation: UIButton!
     @IBOutlet weak var lblLocation: MyUILabel!
     
-   
     
     @IBOutlet weak var viewOnTheWay: UIView!
+    @IBOutlet weak var viewServices: UIView!
+    @IBOutlet weak var viewTenders: UIView!
     
     
     @IBOutlet weak var collectionView: UICollectionView!
@@ -84,6 +85,8 @@ class HomeMapVC: BaseViewController,LabasLocationManagerDelegate, UICollectionVi
         
         
         self.validateDriverDueAmount()
+        
+        
     }
     
     override func viewDidAppear(_ animated: Bool) {
@@ -250,6 +253,8 @@ class HomeMapVC: BaseViewController,LabasLocationManagerDelegate, UICollectionVi
                     self.drawLocationLine(driverLocation: response.locationData!, order: item)
                 }else {
                     self.polyline?.map = nil
+                    self.pickMarker?.map = nil
+                    self.dropMarker?.map = nil
                 }
             }
         }
@@ -333,6 +338,8 @@ class HomeMapVC: BaseViewController,LabasLocationManagerDelegate, UICollectionVi
                     self.drawLocationLine(driverLocation: response.locationData!, order: item)
                 }else {
                     self.polyline?.map = nil
+                    self.pickMarker?.map = nil
+                    self.dropMarker?.map = nil
                 }
             }
         }
@@ -499,20 +506,19 @@ class HomeMapVC: BaseViewController,LabasLocationManagerDelegate, UICollectionVi
         marker.map = gMap
     }
     
-    
     func labasLocationManager(didUpdateLocation location: CLLocation) {
         if (self.latitude ?? 0.0 == 0.0 || self.longitude ?? 0.0 == 0.0) {
             
-            self.latitude = location.coordinate.latitude
-            self.longitude = location.coordinate.longitude
+//            self.latitude = location.coordinate.latitude
+//            self.longitude = location.coordinate.longitude
             
-//                        self.latitude = 29.273551
-//                        self.longitude = 47.936161
+                        self.latitude = 29.273551
+                        self.longitude = 47.936161
             
             self.hideLoading()
             self.setUpGoogleMap()
             
-            if ((self.loadUser().data?.roles?.contains(find: "Driver"))!) {
+            if (self.isProvider()) {
                 ApiService.updateLocation(Authorization: self.loadUser().data?.accessToken ?? "", latitude: self.latitude ?? 0.0, longitude: self.longitude ?? 0.0) { (response) in
                     
                 }
@@ -525,7 +531,6 @@ class HomeMapVC: BaseViewController,LabasLocationManagerDelegate, UICollectionVi
             
         }
       //  self.loadTracks()
-        
     }
     
     override func viewWillAppear(_ animated: Bool) {
@@ -552,6 +557,12 @@ class HomeMapVC: BaseViewController,LabasLocationManagerDelegate, UICollectionVi
         gMap?.bindFrameToSuperviewBounds()
         self.view.layoutSubviews()
         
+        
+//        ApiService.getPlacesAPI(input: "mac", types: "geocode", latitude: self.latitude ?? 0.0, longitude: self.longitude ?? 0.0) { (response) in
+//            let x = response.status ?? ""
+//        }
+        
+        
         //   self.getShopsList(radius: Float(Constants.DEFAULT_RADIUS), rating: 0, types : 64)
         self.loadTracks()
     }
@@ -572,6 +583,8 @@ class HomeMapVC: BaseViewController,LabasLocationManagerDelegate, UICollectionVi
                 self.collectionView.dataSource = self
                 self.collectionView.reloadData()
                 self.viewOnTheWay.isHidden = true
+                self.viewServices.isHidden = true
+                self.viewTenders.isHidden = true
             }else {
                 // self.searchView.isHidden = false
                 self.collectionView.isHidden = true
@@ -579,6 +592,8 @@ class HomeMapVC: BaseViewController,LabasLocationManagerDelegate, UICollectionVi
                 self.pickMarker?.map = nil
                 self.dropMarker?.map = nil
                 self.viewOnTheWay.isHidden = false
+                self.viewServices.isHidden = false
+                self.viewTenders.isHidden = false
             }
             
         }
@@ -651,21 +666,44 @@ class HomeMapVC: BaseViewController,LabasLocationManagerDelegate, UICollectionVi
             }
         }
     }
+    
     @IBAction func servicesAction(_ sender: Any) {
-        
+        if (self.isLoggedIn()) {
+            if let vc = UIStoryboard(name: "Main", bundle: nil).instantiateViewController(withIdentifier: "ServiceStep1") as? ServiceStep1
+            {
+                vc.latitude = self.latitude
+                vc.longitude = self.longitude
+                self.navigationController?.pushViewController(vc, animated: true)
+            }
+        }
     }
+
     @IBAction func tendersAction(_ sender: Any) {
-        
+        if (self.isLoggedIn()) {
+            if let vc = UIStoryboard(name: "Main", bundle: nil).instantiateViewController(withIdentifier: "TenderStep1") as? TenderStep1
+            {
+                vc.latitude = self.latitude
+                vc.longitude = self.longitude
+                self.navigationController?.pushViewController(vc, animated: true)
+            }
+        }
     }
     
     func validateDriverDueAmount() {
-        if ((self.loadUser().data?.roles?.contains(find: "Driver"))!) {
+        if (self.isProvider()) {
             let check = self.loadUser().data?.exceededDueAmount ?? false
             if (check) {
                 //show alert
                 self.showAlertOK(title: "alert".localized, message: "due_amount".localized, actionTitle: "ok".localized)
             }
         }
+    }
+    
+    func isProvider() -> Bool {
+        if ((self.loadUser().data?.roles?.contains(find: "Driver"))! || (self.loadUser().data?.roles?.contains(find: "ServiceProvider"))! || (self.loadUser().data?.roles?.contains(find: "TenderProvider"))!) {
+            return true
+        }
+        return false
     }
     
     fileprivate func GetAnnotationUsingCoordinated(_ location : CLLocation) {

@@ -14,7 +14,7 @@ import CoreLocation
 import Cosmos
 import Branch
 
-class ShopDetailsVC: BaseVC, UITableViewDelegate, UITableViewDataSource {
+class ShopDetailsVC: BaseVC, UITableViewDelegate, UITableViewDataSource, UICollectionViewDelegate, UICollectionViewDataSource, UICollectionViewDelegateFlowLayout {
     
     @IBOutlet weak var viewBecomeDriver: CardView!
     
@@ -38,6 +38,11 @@ class ShopDetailsVC: BaseVC, UITableViewDelegate, UITableViewDataSource {
     
     @IBOutlet weak var ivHandle: UIImageView!
     
+    @IBOutlet weak var collectionView: UICollectionView!
+    
+    @IBOutlet weak var collectionViewHright: NSLayoutConstraint!
+    
+    @IBOutlet weak var lblImages: MyUILabel!
     
     var latitude : Double?
     var longitude : Double?
@@ -81,8 +86,8 @@ class ShopDetailsVC: BaseVC, UITableViewDelegate, UITableViewDataSource {
             self.viewRegister.isHidden = true
         }
         
-        if (self.shop?.image?.count ?? 0 > 0) {
-            let url = URL(string: "\(Constants.IMAGE_URL)\(self.shop?.image ?? "")")
+        if (self.shop?.images?.count ?? 0 > 0) {
+            let url = URL(string: "\(Constants.IMAGE_URL)\(self.shop?.images?[0] ?? "")")
             self.ivLogo.kf.setImage(with: url)
         }else {
             let url = URL(string: "\(Constants.IMAGE_URL)\(self.shop?.type?.image ?? "")")
@@ -111,15 +116,74 @@ class ShopDetailsVC: BaseVC, UITableViewDelegate, UITableViewDataSource {
         self.ivLogo.isUserInteractionEnabled = true
         self.ivLogo.addGestureRecognizer(singleTap)
         
+        
+        if (self.shop?.images?.count ?? 0 > 0) {
+            self.collectionView.delegate = self
+            self.collectionView.dataSource = self
+            self.collectionView.reloadData()
+        }else {
+            self.collectionViewHright.constant = 0
+            self.lblImages.isHidden = true
+        }
+    
     }
+    
+    //collection delegates
+    func numberOfSectionsInCollectionView(collectionView: UICollectionView) -> Int {
+        return 1
+    }
+    
+    func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, sizeForItemAt indexPath: IndexPath) -> CGSize {
+        return CGSize(width: 80.0, height: 80.0)
+        
+    }
+    
+    func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, insetForSectionAt section: Int) -> UIEdgeInsets {
+        return UIEdgeInsets.zero
+    }
+    
+    func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, minimumInteritemSpacingForSectionAt section: Int) -> CGFloat {
+        return 4
+    }
+    
+    func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, minimumLineSpacingForSectionAt section: Int) -> CGFloat {
+        return 4
+    }
+    
+    func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
+        return self.shop?.images?.count ?? 0
+    }
+    
+    func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
+        if let vc = UIStoryboard(name: "Main", bundle: nil).instantiateViewController(withIdentifier: "ImageSliderVC") as? ImageSliderVC
+        {
+            vc.orderImages = self.shop?.images ?? [String]()
+            self.navigationController?.pushViewController(vc, animated: true)
+        }
+    }
+    
+    func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
+        let cell: ShopImageCell = collectionView.dequeueReusableCell(withReuseIdentifier: "shopimagecell", for: indexPath as IndexPath) as! ShopImageCell
+        
+        let url = URL(string: "\(Constants.IMAGE_URL)\(self.shop?.images?[indexPath.row] ?? "")")
+        cell.ivLogo.kf.setImage(with: url)
+        
+        return cell
+        
+    }
+    
+    
+    
+    
+    
     @objc func enlargeImage() {
             if let vc = UIStoryboard(name: "Main", bundle: nil).instantiateViewController(withIdentifier: "ImageSliderVC") as? ImageSliderVC
             {
                 var images = [String]()
-                  if (self.shop?.image?.count ?? 0 > 0) {
-                    images.append("\(Constants.IMAGE_URL)\(self.shop?.image ?? "")")
+                  if (self.shop?.images?.count ?? 0 > 0) {
+                    images.append("\(self.shop?.images?[0] ?? "")")
                   }else {
-                    images.append("\(Constants.IMAGE_URL)\(self.shop?.type?.image ?? "")")
+                    images.append("\(self.shop?.type?.image ?? "")")
                 }
                 
                 vc.orderImages = images
@@ -163,7 +227,7 @@ class ShopDetailsVC: BaseVC, UITableViewDelegate, UITableViewDataSource {
         let buo = BranchUniversalObject.init(canonicalIdentifier: "rzqapp/\(self.shop?.id ?? 0)")
         buo.title = "\(self.shop?.name ?? "")"
         buo.contentDescription = shareText
-        buo.imageUrl = "\(Constants.IMAGE_URL)\(self.shop?.image ?? "")"
+        buo.imageUrl = "\(Constants.IMAGE_URL)\(self.shop?.images?[0] ?? "")"
         buo.publiclyIndex = true
         buo.locallyIndex = true
         buo.contentMetadata.customMetadata["ShopId"] = self.shop?.id ?? 0

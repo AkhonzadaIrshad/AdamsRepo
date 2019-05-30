@@ -36,6 +36,8 @@ class DeliveryStep1: BaseVC,LabasLocationManagerDelegate, Step2Delegate {
     
     @IBOutlet weak var btnCurrentLocation: UIButton!
     
+    @IBOutlet weak var ivIndicator: UIImageView!
+    
     var markerLocation: GMSMarker?
     var currentZoom: Float = 0.0
     var gMap : GMSMapView?
@@ -61,10 +63,12 @@ class DeliveryStep1: BaseVC,LabasLocationManagerDelegate, Step2Delegate {
     var filterShops = [DataShop]()
     var shopMarkers = [GMSMarker]()
     
+    
     override func viewDidLoad() {
         super.viewDidLoad()
         if (self.isArabic()) {
             self.ivHandle.image = UIImage(named: "ic_back_arabic")
+            self.ivIndicator.image = UIImage(named: "ic_arrow_login_white_arabic")
         }
         if (self.orderModel == nil) {
             self.orderModel = OTWOrder()
@@ -79,7 +83,6 @@ class DeliveryStep1: BaseVC,LabasLocationManagerDelegate, Step2Delegate {
         }else {
             self.setUpGoogleMap()
         }
-        
         
         if (self.orderModel?.shop?.id ?? 0 > 0) {
             self.lblPickupLocation.text = self.orderModel?.pickUpAddress ?? ""
@@ -97,11 +100,17 @@ class DeliveryStep1: BaseVC,LabasLocationManagerDelegate, Step2Delegate {
             let camera = GMSCameraPosition.camera(withLatitude: self.orderModel?.pickUpLatitude ?? 0.0, longitude: self.orderModel?.pickUpLongitude ?? 0.0, zoom: 15.0)
             self.gMap?.animate(to: camera)
             
-            
             self.ivShop.isHidden = false
             self.viewShopDetails.isHidden = false
-            let url = URL(string: "\(Constants.IMAGE_URL)\(self.orderModel?.shop?.image ?? "")")
-            self.ivShop.kf.setImage(with: url)
+            
+            if (self.orderModel?.shop?.images?.count ?? 0 > 0) {
+                let url = URL(string: "\(Constants.IMAGE_URL)\(self.orderModel?.shop?.images?[0] ?? "")")
+                self.ivShop.kf.setImage(with: url)
+            }else {
+                let url = URL(string: "\(Constants.IMAGE_URL)\(self.orderModel?.shop?.type?.image ?? "")")
+                self.ivShop.kf.setImage(with: url)
+            }
+            
             self.edtMoreDetails.text = "\(self.orderModel?.shop?.name ?? "")\n\(self.orderModel?.shop?.address ?? "")"
             
             
@@ -143,7 +152,7 @@ class DeliveryStep1: BaseVC,LabasLocationManagerDelegate, Step2Delegate {
             vc.latitude = self.latitude ?? 0.0
             vc.longitude = self.longitude ?? 0.0
             
-            let shopData = ShopData(nearbyDriversCount: 0, id: self.orderModel?.shop?.id ?? 0, name: self.orderModel?.shop?.name ?? "", address: self.orderModel?.shop?.address ?? "", latitude: self.orderModel?.shop?.latitude ?? 0.0, longitude: self.orderModel?.shop?.longitude ?? 0.0, phoneNumber: self.orderModel?.shop?.phoneNumber ?? "", workingHours: self.orderModel?.shop?.workingHours ?? "", image: self.orderModel?.shop?.image ?? "", rate: self.orderModel?.shop?.rate ?? 0.0, type: self.orderModel?.shop?.type ?? TypeClass(id: 0, name: "",image: ""))
+            let shopData = ShopData(nearbyDriversCount: 0, id: self.orderModel?.shop?.id ?? 0, name: self.orderModel?.shop?.name ?? "", address: self.orderModel?.shop?.address ?? "", latitude: self.orderModel?.shop?.latitude ?? 0.0, longitude: self.orderModel?.shop?.longitude ?? 0.0, phoneNumber: self.orderModel?.shop?.phoneNumber ?? "", workingHours: self.orderModel?.shop?.workingHours ?? "", images: self.orderModel?.shop?.images ?? [String](), rate: self.orderModel?.shop?.rate ?? 0.0, type: self.orderModel?.shop?.type ?? TypeClass(id: 0, name: "",image: ""))
             vc.shop = shopData
             self.navigationController?.pushViewController(vc, animated: true)
         }
@@ -167,11 +176,11 @@ class DeliveryStep1: BaseVC,LabasLocationManagerDelegate, Step2Delegate {
     func labasLocationManager(didUpdateLocation location: CLLocation) {
         if (self.latitude ?? 0.0 == 0.0 || self.longitude ?? 0.0 == 0.0) {
             
-            self.latitude = location.coordinate.latitude
-            self.longitude = location.coordinate.longitude
+//            self.latitude = location.coordinate.latitude
+//            self.longitude = location.coordinate.longitude
             
-//            self.latitude = 29.273551
-//            self.longitude = 47.936161
+            self.latitude = 29.273551
+            self.longitude = 47.936161
 
             self.hideLoading()
             self.setUpGoogleMap()
@@ -244,6 +253,7 @@ class DeliveryStep1: BaseVC,LabasLocationManagerDelegate, Step2Delegate {
         }else {
             let mainStoryboardIpad : UIStoryboard = UIStoryboard(name: "Main", bundle: nil)
             let initialViewControlleripad : UIViewController = mainStoryboardIpad.instantiateViewController(withIdentifier: self.getHomeView()) as! UINavigationController
+            
             self.present(initialViewControlleripad, animated: true, completion: {})
         }
     }
@@ -359,7 +369,6 @@ class DeliveryStep1: BaseVC,LabasLocationManagerDelegate, Step2Delegate {
             self.filterShops.removeAll()
             self.filterShops.append(contentsOf: response.dataShops ?? [DataShop]())
             
-            
             for shop in self.filterShops {
                 let item1 = SearchTextFieldItem(title: "\(shop.name ?? "")  \(self.getShopDistance(latitude: shop.latitude ?? 0.0, longitude: shop.longitude ?? 0.0))", subtitle: shop.address ?? "", image: UIImage(named: "ic_location"))
                 filterItems.append(item1)
@@ -399,8 +408,16 @@ class DeliveryStep1: BaseVC,LabasLocationManagerDelegate, Step2Delegate {
                 
                 self.ivShop.isHidden = false
                 self.viewShopDetails.isHidden = false
-                let url = URL(string: "\(Constants.IMAGE_URL)\(shop.image ?? "")")
-                self.ivShop.kf.setImage(with: url)
+                
+                if (shop.images?.count ?? 0 > 0) {
+                    let url = URL(string: "\(Constants.IMAGE_URL)\(shop.images?[0] ?? "")")
+                    self.ivShop.kf.setImage(with: url)
+                }else {
+                    let url = URL(string: "\(Constants.IMAGE_URL)\(shop.type?.image ?? "")")
+                    self.ivShop.kf.setImage(with: url)
+                }
+               
+                
                 self.edtMoreDetails.text = "\(shop.name ?? "")\n\(shop.address ?? "")"
                 
                 self.lblShopName.text = shop.name ?? ""
@@ -417,6 +434,78 @@ class DeliveryStep1: BaseVC,LabasLocationManagerDelegate, Step2Delegate {
             
         }
     }
+    
+    
+    func getShopByPlaces(name : String, latitude : Double, longitude: Double) {
+        
+        ApiService.getPlacesAPI(input: name, latitude: latitude, longitude: longitude) { (response) in
+            self.shops.removeAll()
+            var filterItems = [SearchTextFieldItem]()
+            self.filterShops.removeAll()
+            for prediction in response.results ?? [Result]() {
+                let dataShop = DataShop(id: 0, name: prediction.name ?? "", address: prediction.formattedAddress ?? "", latitude: prediction.geometry?.location?.lat ?? 0.0, longitude: prediction.geometry?.location?.lng ?? 0.0, phoneNumber: "", workingHours: "", images: [String](), rate: prediction.rating ?? 0.0, type: TypeClass(id: 0, name: prediction.types?[0] ?? "", image: ""))
+                
+                  self.filterShops.append(dataShop)
+            }
+            
+            for shop in self.filterShops {
+                let item1 = SearchTextFieldItem(title: "\(shop.name ?? "")  \(self.getShopDistance(latitude: shop.latitude ?? 0.0, longitude: shop.longitude ?? 0.0))", subtitle: shop.address ?? "", image: UIImage(named: "ic_location"))
+                filterItems.append(item1)
+            }
+            
+            self.searchField.theme.font = UIFont.systemFont(ofSize: 13)
+            self.searchField.filterItems(filterItems)
+            self.searchField.itemSelectionHandler = { filteredResults, itemPosition in
+                // Just in case you need the item position
+                let shop = self.filterShops[itemPosition]
+                self.searchField.text = shop.name ?? ""
+                self.orderModel?.pickUpLatitude = shop.latitude ?? 0.0
+                self.orderModel?.pickUpLongitude = shop.longitude ?? 0.0
+                self.orderModel?.shop = shop
+                self.orderModel?.pickUpAddress = shop.name ?? ""
+                self.lblPickupLocation.text = shop.name ?? ""
+                self.lblPickupLocation.textColor = UIColor.appDarkBlue
+                
+                
+                for marker in self.shopMarkers {
+                    marker.map = nil
+                }
+                
+                self.singleMarker?.map = nil
+                self.singleMarker = GMSMarker()
+                self.singleMarker?.position = CLLocationCoordinate2D(latitude: shop.latitude ?? 0.0, longitude: shop.longitude ?? 0.0)
+                self.singleMarker?.title =  "\(shop.id ?? 0)"
+                self.singleMarker?.snippet = "\(shop.phoneNumber ?? "")"
+                self.singleMarker?.icon = UIImage(named: "ic_map_shop_selected")
+                self.singleMarker?.map = self.gMap
+                
+                self.ivShop.isHidden = false
+                self.viewShopDetails.isHidden = false
+                
+                if (shop.images?.count ?? 0 > 0) {
+                    let url = URL(string: "\(Constants.IMAGE_URL)\(shop.images?[0] ?? "")")
+                    self.ivShop.kf.setImage(with: url)
+                }else {
+                    let url = URL(string: "\(Constants.IMAGE_URL)\(shop.type?.image ?? "")")
+                    self.ivShop.kf.setImage(with: url)
+                }
+                
+                
+                self.edtMoreDetails.text = "\(shop.name ?? "")\n\(shop.address ?? "")"
+                
+                self.lblShopName.text = shop.name ?? ""
+                self.shopNameHeight.constant = 20
+                self.viewPin.isHidden = false
+                self.viewSuggest.isHidden = true
+                
+                
+                let camera = GMSCameraPosition.camera(withLatitude: self.orderModel?.pickUpLatitude ?? 0.0, longitude: self.orderModel?.pickUpLongitude ?? 0.0, zoom: 15.0)
+                self.gMap?.animate(to: camera)
+                
+            }
+        }
+    }
+    
     
     @IBAction func clearPickLocation(_ sender: Any) {
         self.ivShop.image = nil
@@ -489,7 +578,7 @@ extension DeliveryStep1 : GMSMapViewDelegate {
                 self.pinMarker?.map = nil
                 self.lblPickupLocation.textColor = UIColor.appDarkBlue
                 self.lblPickupLocation.text = response.shopData?.name ?? ""
-                let dataShop = DataShop(id: response.shopData?.id ?? 0, name: response.shopData?.name ?? "", address: response.shopData?.address ?? "", latitude: response.shopData?.latitude ?? 0.0, longitude: response.shopData?.longitude ?? 0.0, phoneNumber: response.shopData?.phoneNumber ?? "", workingHours: response.shopData?.workingHours ?? "", image: response.shopData?.image ?? "", rate: response.shopData?.rate ?? 0.0, type: response.shopData?.type ?? TypeClass(id: 0, name: "",image: ""))
+                let dataShop = DataShop(id: response.shopData?.id ?? 0, name: response.shopData?.name ?? "", address: response.shopData?.address ?? "", latitude: response.shopData?.latitude ?? 0.0, longitude: response.shopData?.longitude ?? 0.0, phoneNumber: response.shopData?.phoneNumber ?? "", workingHours: response.shopData?.workingHours ?? "", images: response.shopData?.images ?? [String](), rate: response.shopData?.rate ?? 0.0, type: response.shopData?.type ?? TypeClass(id: 0, name: "",image: ""))
                 self.orderModel?.shop = dataShop
                 self.orderModel?.pickUpAddress = response.shopData?.name ?? ""
                 self.orderModel?.pickUpLatitude = response.shopData?.latitude ?? 0.0
@@ -503,8 +592,8 @@ extension DeliveryStep1 : GMSMapViewDelegate {
                 self.ivShop.isHidden = false
                 self.edtMoreDetails.text = "\(response.shopData?.name ?? "")\n\(response.shopData?.address ?? "")"
                 
-                if (response.shopData?.image?.count ?? 0 > 0) {
-                    let url = URL(string: "\(Constants.IMAGE_URL)\(response.shopData?.image ?? "")")
+                if (response.shopData?.images?.count ?? 0 > 0) {
+                    let url = URL(string: "\(Constants.IMAGE_URL)\(response.shopData?.images?[0] ?? "")")
                     self.ivShop.kf.setImage(with: url)
                 }else {
                     let url = URL(string: "\(Constants.IMAGE_URL)\(response.shopData?.type?.image ?? "")")
@@ -605,7 +694,9 @@ extension DeliveryStep1: UITextFieldDelegate {
             let newString: NSString =
                 currentString.replacingCharacters(in: range, with: string) as NSString
             if (newString.length >= 3) {
-                self.getShopsByName(name: newString as String, latitude: self.latitude ?? 0.0, longitude: self.longitude ?? 0.0, radius: Float(Constants.DEFAULT_RADIUS))
+//                self.getShopsByName(name: newString as String, latitude: self.latitude ?? 0.0, longitude: self.longitude ?? 0.0, radius: Float(Constants.DEFAULT_RADIUS))
+                
+                 self.getShopByPlaces(name: newString as String, latitude: self.latitude ?? 0.0, longitude: self.longitude ?? 0.0)
             }
             if (newString.length == 0) {
                 self.gMap?.clear()

@@ -10,11 +10,11 @@
             ignoreCount = "0"
             continueAfterRunningActions = "No"
             filePath = "rzq/chat/ZHCDemoMessagesViewController.swift"
-            timestampString = "580228099.133065"
+            timestampString = "580592712.7976"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "666"
-            endingLineNumber = "666"
+            startingLineNumber = "665"
+            endingLineNumber = "665"
             landmarkName = "sendVoiceMessage()"
             landmarkType = "7">
             <Locations>
@@ -26,7 +26,7 @@
                   moduleName = "rzq"
                   usesParentBreakpointCondition = "Yes"
                   urlString = "file:///Users/chionophile/Documents/Projects/iOS/rzq/rzq/chat/ZHCDemoMessagesViewController.swift"
-                  timestampString = "580222784.300491"
+                  timestampString = "580851255.669673"
                   startingColumnNumber = "9223372036854775807"
                   endingColumnNumber = "9223372036854775807"
                   startingLineNumber = "666"
@@ -41,7 +41,7 @@
                   moduleName = "rzq"
                   usesParentBreakpointCondition = "Yes"
                   urlString = "file:///Users/chionophile/Documents/Projects/iOS/rzq/rzq/chat/ZHCDemoMessagesViewController.swift"
-                  timestampString = "580222784.302196"
+                  timestampString = "580851255.6732841"
                   startingColumnNumber = "9223372036854775807"
                   endingColumnNumber = "9223372036854775807"
                   startingLineNumber = "656"
@@ -58,45 +58,13 @@
             ignoreCount = "0"
             continueAfterRunningActions = "No"
             filePath = "rzq/chat/ZHCDemoMessagesViewController.swift"
-            timestampString = "580228099.136571"
+            timestampString = "580592712.797658"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "665"
-            endingLineNumber = "665"
+            startingLineNumber = "664"
+            endingLineNumber = "664"
             landmarkName = "sendVoiceMessage()"
             landmarkType = "7">
-            <Locations>
-               <Location
-                  shouldBeEnabled = "Yes"
-                  ignoreCount = "0"
-                  continueAfterRunningActions = "No"
-                  symbolName = "rzq.ZHCDemoMessagesViewController.sendVoiceMessage() -&gt; ()"
-                  moduleName = "rzq"
-                  usesParentBreakpointCondition = "Yes"
-                  urlString = "file:///Users/chionophile/Documents/Projects/iOS/rzq/rzq/chat/ZHCDemoMessagesViewController.swift"
-                  timestampString = "580222784.416834"
-                  startingColumnNumber = "9223372036854775807"
-                  endingColumnNumber = "9223372036854775807"
-                  startingLineNumber = "666"
-                  endingLineNumber = "666"
-                  offsetFromSymbolStart = "740">
-               </Location>
-               <Location
-                  shouldBeEnabled = "Yes"
-                  ignoreCount = "0"
-                  continueAfterRunningActions = "No"
-                  symbolName = "closure #1 (rzq.BaseResponse) -&gt; () in rzq.ZHCDemoMessagesViewController.sendVoiceMessage() -&gt; ()"
-                  moduleName = "rzq"
-                  usesParentBreakpointCondition = "Yes"
-                  urlString = "file:///Users/chionophile/Documents/Projects/iOS/rzq/rzq/chat/ZHCDemoMessagesViewController.swift"
-                  timestampString = "580222784.419752"
-                  startingColumnNumber = "9223372036854775807"
-                  endingColumnNumber = "9223372036854775807"
-                  startingLineNumber = "656"
-                  endingLineNumber = "656"
-                  offsetFromSymbolStart = "124">
-               </Location>
-            </Locations>
          </BreakpointContent>
       </BreakpointProxy>
       <BreakpointProxy
@@ -106,11 +74,11 @@
             ignoreCount = "0"
             continueAfterRunningActions = "No"
             filePath = "rzq/controllers/HomeMapVC.swift"
-            timestampString = "580151762.852813"
+            timestampString = "580739053.392301"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "761"
-            endingLineNumber = "761"
+            startingLineNumber = "793"
+            endingLineNumber = "793"
             landmarkName = "mapView(_:didTap:)"
             landmarkType = "7">
          </BreakpointContent>

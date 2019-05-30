@@ -261,6 +261,70 @@ class ApiService : NSObject {
     }
     
     
+    
+    static func createService(Authorization : String, desc: String ,toLongitude : Double, toLatitude : Double, time : Int, price : String, address : String, serviceId : Int, dropOffDetails : String, completion:@escaping(_ response : DeliveryCreatedResponse)-> Void) {
+        
+        let headers = [Constants.AUTH_HEADER: "bearer \(Authorization)",
+            Constants.LANG_HEADER : self.getLang()]
+        
+        let all : [String : Any] = ["Description" : desc,
+                                    "Longitude" : toLongitude,
+                                    "Latitude" : toLatitude,
+                                    "Address" : address,
+                                    "ServiceId" : serviceId,
+                                    "EstimatedTime" : time,
+                                    "EstimatedPrice" : price,
+                                    "DropOffDetails" : dropOffDetails]
+        
+        
+        AFManager.request("\(Constants.BASE_URL)ServiceOrder/Create", method: .post, parameters: all ,encoding: JSONEncoding.default, headers: headers)
+            .responseJSON { response in
+                if let json = response.data {
+                    do {
+                        let decoder = JSONDecoder()
+                        let baseResponse = try decoder.decode(DeliveryCreatedResponse.self, from: json)
+                        completion(baseResponse)
+                    }catch let err{
+                        print(err)
+                    }
+                }
+        }
+    }
+    
+    
+    
+    
+    static func createTender(Authorization : String, desc: String ,toLongitude : Double, toLatitude : Double, time : Int, price : String, address : String, serviceId : Int, dropOffDetails : String, completion:@escaping(_ response : DeliveryCreatedResponse)-> Void) {
+        
+        let headers = [Constants.AUTH_HEADER: "bearer \(Authorization)",
+            Constants.LANG_HEADER : self.getLang()]
+        
+        let all : [String : Any] = ["Description" : desc,
+                                    "Longitude" : toLongitude,
+                                    "Latitude" : toLatitude,
+                                    "Address" : address,
+                                    "TenderId" : serviceId,
+                                    "EstimatedTime" : time,
+                                    "EstimatedPrice" : price,
+                                    "DropOffDetails" : dropOffDetails]
+        
+        
+        AFManager.request("\(Constants.BASE_URL)TenderOrder/Create", method: .post, parameters: all ,encoding: JSONEncoding.default, headers: headers)
+            .responseJSON { response in
+                if let json = response.data {
+                    do {
+                        let decoder = JSONDecoder()
+                        let baseResponse = try decoder.decode(DeliveryCreatedResponse.self, from: json)
+                        completion(baseResponse)
+                    }catch let err{
+                        print(err)
+                    }
+                }
+        }
+    }
+    
+    
+    
     static func createBid(Authorization : String, deliveryId: Int ,time : Int, price : String, longitude : Double, latitude : Double, completion:@escaping(_ response : DeliveryCreatedResponse)-> Void) {
         
         let headers = [Constants.AUTH_HEADER: "bearer \(Authorization)",
@@ -332,10 +396,10 @@ class ApiService : NSObject {
         let headers = [Constants.AUTH_HEADER : "bearer \(Authorization)",
             Constants.LANG_HEADER : self.getLang()]
         
-//        let all : [String : Any] = ["DeliveryId" : deliveryId,
-//                                    "BidId" : bidId]
+        //        let all : [String : Any] = ["DeliveryId" : deliveryId,
+        //                                    "BidId" : bidId]
         
-        AFManager.request("\(Constants.BASE_URL)Order/AcceptBid?id=\(deliveryId)", method: .post, parameters: nil ,encoding: JSONEncoding.default, headers: headers)
+        AFManager.request("\(Constants.BASE_URL)Order/AcceptBid?id=\(bidId)", method: .post, parameters: nil ,encoding: JSONEncoding.default, headers: headers)
             .responseJSON { response in
                 if let json = response.data {
                     do {
@@ -354,7 +418,7 @@ class ApiService : NSObject {
         let headers = [Constants.AUTH_HEADER: "bearer \(Authorization)",
             Constants.LANG_HEADER : self.getLang()]
         
-        AFManager.request("\(Constants.BASE_URL)Order/DeclineBid?id=\(bidId)", method: .get, parameters: nil ,encoding: JSONEncoding.default, headers: headers)
+        AFManager.request("\(Constants.BASE_URL)Order/DeclineBid?id=\(bidId)", method: .post, parameters: nil ,encoding: JSONEncoding.default, headers: headers)
             .responseJSON { response in
                 if let json = response.data {
                     do {
@@ -618,6 +682,62 @@ class ApiService : NSObject {
     }
     
     
+    static func getAllTypes(completion:@escaping(_ response : AllTypesResponse)-> Void) {
+        
+        let headers = [Constants.LANG_HEADER : self.getLang()]
+        
+        AFManager.request("\(Constants.BASE_URL)Shop/GetAllTypes", method: .get, parameters: nil ,encoding: JSONEncoding.default, headers: headers)
+            .responseJSON { response in
+                if let json = response.data {
+                    do {
+                        let decoder = JSONDecoder()
+                        let baseResponse = try decoder.decode(AllTypesResponse.self, from: json)
+                        completion(baseResponse)
+                    }catch let err{
+                        print(err)
+                    }
+                }
+        }
+    }
+    
+    
+    static func getAllServices(name : String, completion:@escaping(_ response : AllServicesResponse)-> Void) {
+        
+        let headers = [Constants.LANG_HEADER : self.getLang()]
+        
+        AFManager.request("\(Constants.BASE_URL)Service/GetAll", method: .get, parameters: nil ,encoding: JSONEncoding.default, headers: headers)
+            .responseJSON { response in
+                if let json = response.data {
+                    do {
+                        let decoder = JSONDecoder()
+                        let baseResponse = try decoder.decode(AllServicesResponse.self, from: json)
+                        completion(baseResponse)
+                    }catch let err{
+                        print(err)
+                    }
+                }
+        }
+    }
+    
+    
+    static func getAllTenders(name : String, completion:@escaping(_ response : AllTendersResponse)-> Void) {
+        
+        let headers = [Constants.LANG_HEADER : self.getLang()]
+        
+        AFManager.request("\(Constants.BASE_URL)Tender/GetAll", method: .get, parameters: nil ,encoding: JSONEncoding.default, headers: headers)
+            .responseJSON { response in
+                if let json = response.data {
+                    do {
+                        let decoder = JSONDecoder()
+                        let baseResponse = try decoder.decode(AllTendersResponse.self, from: json)
+                        completion(baseResponse)
+                    }catch let err{
+                        print(err)
+                    }
+                }
+        }
+    }
+    
     
     static func getAllNotifications(Authorization : String, sortBy : Int, completion:@escaping(_ response : AllNotificationsResponse)-> Void) {
         
@@ -639,7 +759,7 @@ class ApiService : NSObject {
     }
     
     
-    static func suggestShop(address: String, latitude : Double,longitude : Double, phoneNumber : String, workingHours : String, image : String, name : String, type : Int,completion:@escaping(_ response : BaseResponse)-> Void) {
+    static func suggestShop(address: String, latitude : Double,longitude : Double, phoneNumber : String, workingHours : String, name : String, type : Int,completion:@escaping(_ response : DeliveryCreatedResponse)-> Void) {
         
         let headers = [Constants.LANG_HEADER : self.getLang()]
         
@@ -648,7 +768,6 @@ class ApiService : NSObject {
                                     "Longitude" : longitude,
                                     "PhoneNumber" : phoneNumber,
                                     "WorkingHours" : workingHours,
-                                    "Image" : image,
                                     "Name" : name,
                                     "Type" : type]
         
@@ -657,7 +776,7 @@ class ApiService : NSObject {
                 if let json = response.data {
                     do {
                         let decoder = JSONDecoder()
-                        let baseResponse = try decoder.decode(BaseResponse.self, from: json)
+                        let baseResponse = try decoder.decode(DeliveryCreatedResponse.self, from: json)
                         completion(baseResponse)
                     }catch let err{
                         print(err)
@@ -688,7 +807,7 @@ class ApiService : NSObject {
     static func getShopsByName(name : String,latitude : Double, longitude : Double, radius : Float, completion:@escaping(_ response : ShopListResponse)-> Void) {
         
         let headers = ["Content-Type": "application/json",
-                      Constants.LANG_HEADER : self.getLang()]
+                       Constants.LANG_HEADER : self.getLang()]
         
         let url = "\(Constants.BASE_URL)Shop/ListByName?latitude=\(latitude)&longitude=\(longitude)&radius=\(radius)&name=\(name)"
         let encodedUrl = url.addingPercentEncoding(withAllowedCharacters: .urlQueryAllowed) ?? url
@@ -749,6 +868,34 @@ class ApiService : NSObject {
                 }
         }
     }
+    
+    
+    
+    static func registerAsServiceProvider(Authorization : String, services: [Int], serviceName : String, nationalId : String, profilePicture : String, email : String, completion:@escaping(_ response : BaseResponse)-> Void) {
+        
+        let headers = [Constants.AUTH_HEADER: "bearer \(Authorization)",
+            Constants.LANG_HEADER : self.getLang()]
+        
+        let all : [String : Any] = ["Services" : services,
+                                    "ServiceName" : serviceName,
+                                    "NationalId" : nationalId,
+                                    "ProfilePicture" : profilePicture,
+                                    "Email" : email]
+        
+        AFManager.request("\(Constants.BASE_URL)DriverRequest/RegisterAsServiceProvider", method: .post, parameters: all ,encoding: JSONEncoding.default, headers: headers)
+            .responseJSON { response in
+                if let json = response.data {
+                    do {
+                        let decoder = JSONDecoder()
+                        let baseResponse = try decoder.decode(BaseResponse.self, from: json)
+                        completion(baseResponse)
+                    }catch let err{
+                        print(err)
+                    }
+                }
+        }
+    }
+    
     
     
     static func getProfile(Authorization : String, completion:@escaping(_ response : ProfileResponse)-> Void) {
@@ -861,10 +1008,45 @@ class ApiService : NSObject {
                 multipartFormData.append(data, withName: "1",fileName: "image.jpg", mimeType: "image/jpg")
             }
             if (audioData.base64EncodedString().count > 0) {
-               multipartFormData.append(audioData, withName: "2",fileName: "audio.m4a", mimeType: "audio/m4a")
+                multipartFormData.append(audioData, withName: "2",fileName: "audio.m4a", mimeType: "audio/m4a")
             }
-           
+            
         }, usingThreshold: UInt64.init(), to: "\(Constants.BASE_URL)Order/Upload?orderId=\(deliveryId)", method: .post, headers: headers) { (result) in
+            switch result{
+            case .success(let upload, _, _):
+                upload.responseJSON { response in
+                    if let json = response.data {
+                        do {
+                            let decoder = JSONDecoder()
+                            let baseResponse = try decoder.decode(BaseResponse.self, from: json)
+                            completion(baseResponse)
+                        }catch let err{
+                            print(err)
+                        }
+                    }
+                }
+            case .failure(let error):
+                completion(BaseResponse(errorCode: 100, errorMessage: error.localizedDescription, message: error.localizedDescription))
+            }
+        }
+        
+    }
+    
+    
+    
+    static func uploadShopImages(Authorization : String, requestId: Int, imagesData : [Data],completion:@escaping(_ response : BaseResponse)-> Void) {
+        
+        let headers = [Constants.AUTH_HEADER: "bearer \(Authorization)",
+            Constants.LANG_HEADER : self.getLang(),
+            "Content_Type": "multipart/form-data"]
+        
+        AFManager.upload(multipartFormData: { (multipartFormData) in
+            
+            for data in imagesData {
+                multipartFormData.append(data, withName: "1",fileName: "image.jpg", mimeType: "image/jpg")
+            }
+            
+        }, usingThreshold: UInt64.init(), to: "\(Constants.BASE_URL)Shop/UploadRequestImage?requestId=\(requestId)", method: .post, headers: headers) { (result) in
             switch result{
             case .success(let upload, _, _):
                 upload.responseJSON { response in
@@ -988,6 +1170,25 @@ class ApiService : NSObject {
                     do {
                         let decoder = JSONDecoder()
                         let baseResponse = try decoder.decode(BaseResponse.self, from: json)
+                        completion(baseResponse)
+                    }catch let err{
+                        print(err)
+                    }
+                }
+        }
+    }
+    
+    
+    
+    static func getPlacesAPI(input : String, latitude : Double, longitude : Double, completion:@escaping(_ response : GooglePlaceResponse)-> Void) {
+        
+        let headers = ["Content-Type": "application/json"]
+        AFManager.request("https://maps.googleapis.com/maps/api/place/textsearch/json?query=\(input)&location=\(latitude),\(longitude)&radius=5000&key=\(Constants.GOOGLE_API_KEY)", method: .get, parameters: nil ,encoding: JSONEncoding.default, headers: headers)
+            .responseJSON { response in
+                if let json = response.data {
+                    do {
+                        let decoder = JSONDecoder()
+                        let baseResponse = try decoder.decode(GooglePlaceResponse.self, from: json)
                         completion(baseResponse)
                     }catch let err{
                         print(err)

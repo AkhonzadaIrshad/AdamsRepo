@@ -45,6 +45,7 @@
 "add_license_first" = "اضف صورة رخصة القيادة اولاً!";
 
 "driver_registered" = "طلبك قيد التنفيذ، شكراً لك.";
+"provider_registered" = "طلبك قيد التنفيذ، شكراً لك.";
 "enter_subject_first" = "ادخل عنوان اولاً!";
 "enter_message_first" = "ادخل الرسالة اولاً!";
 "message_sent_successfully" = "تم ارسال الرسالة بنجاح، شكراً لك";
@@ -77,7 +78,7 @@
 "profile_updated_successfully" = "تم تحديث الملف بنجاح";
 
 "register_as_driver" = "التسجيل كسائق";
-"working_orders" = "طلبات العمل";
+"working_orders" = "الطلبات الجارية";
 
 "not_logged_in" = "يجب عليك تسجيل الدخول";
 "login" = "الدخول";
@@ -143,14 +144,32 @@
 "shop_suggested" = "تم الارسال بنجاح، شكراً لك";
 
 "enter_shop_name" = "ادخل اسم المكان!";
-"add_shop_location" = "اضف الموقع على الخارطة!";
+"add_shop_location" = "اضف الموقع على الخريطة!";
 "enter_shop_address" = "ادخل عنوان المكان";
 "select_shop_type" = "اختر قسم المكان!";
 "add_shop_hours" = "اضف ساعات العمل!";
 
-"current_location_desc" = "اذهب الى موقعك الحالي على الخارطة";
+"current_location_desc" = "اذهب الى موقعك الحالي على الخريطة";
 
 
 "mobile_number" = "رقم الهاتف";
 "name" = "الاسم";
 "email_address" = "البريد الاكتروني";
+
+"waiting_driver_bids" = "جاري انتظار عروض اسعار السائقين";
+"waiting_provider_bids" = "جاري انتظار عروض اسعار مزودي الخدمة";
+
+"waiting_driver_bids_desc" = "تم ارسال الطلب لاقرب السائقين، ستصلك عروض الاسعار";
+"waiting_provider_bids_desc" = "تم ارسال الطلب لاقرب مزودي الخدمة، ستصلك عروض الاسعار";
+
+"rate_driver" = "قيم السائق";
+"rate_provider" = "قيم مزود الخدمة";
+
+"cant_add_more_images" = "لا يمكن اضافة اكثر من ٥ صور.";
+
+
+"call_us" = "اتصل بنا";
+"our_website" = "موقعنا الاكتروني";
+"our_instagram" = "الانستاجرام";
+"our_facebook" = "الفيسبوك";
+

@@ -165,7 +165,6 @@ class NotificationsVC: BaseViewController, UITableViewDelegate, UITableViewDataS
 //        }
 //    }
     
-    
     func reloadFromRateDriver() {
         self.refreshNotifications()
     }
@@ -232,7 +231,7 @@ class NotificationsVC: BaseViewController, UITableViewDelegate, UITableViewDataS
             cell.onTake = {
                 if let vc = UIStoryboard(name: "Main", bundle: nil).instantiateViewController(withIdentifier: "TakeOrderVC") as? TakeOrderVC
                 {
-                    vc.deliveryId = item.deliveryID ?? 0
+                    vc.deliveryId = item.orderID ?? 0
                     vc.latitude = self.latitude
                     vc.longitude = self.longitude
                     
@@ -337,6 +336,7 @@ class NotificationsVC: BaseViewController, UITableViewDelegate, UITableViewDataS
             }
             
             return cell
+            
         case Constants.DELIVERY_COMPLETED:
             let cell : OrderCompletedCell = tableView.dequeueReusableCell(withIdentifier: "ordercompletedcell", for: indexPath) as! OrderCompletedCell
             
@@ -355,10 +355,11 @@ class NotificationsVC: BaseViewController, UITableViewDelegate, UITableViewDataS
                 cell.lblTitle.text = englishTitle
                 cell.lblDesc.text = englishBody
             }
+            cell.btnRate.setTitle("rate_driver".localized, for: .normal)
             
             cell.onRate = {
                 let vc = UIStoryboard(name: "Main", bundle: nil).instantiateViewController(withIdentifier: "RateDriverDialog") as! RateDriverDialog
-                vc.deliveryId = item.deliveryID ?? 0
+                vc.deliveryId = item.orderID ?? 0
                 vc.delegate = self
                 vc.notificationId = item.id ?? 0
                 self.definesPresentationContext = true
@@ -386,8 +387,172 @@ class NotificationsVC: BaseViewController, UITableViewDelegate, UITableViewDataS
                 cell.lblTitle.text = englishTitle
                 cell.lblDescription.text = englishBody
             }
+            return cell
+            
+            //service
+        case Constants.SERVICE_CREATED:
+            let cell : DriverOrderCell = tableView.dequeueReusableCell(withIdentifier: "driverordercell", for: indexPath) as! DriverOrderCell
+            
+            let dict = item.data?.convertToDictionary()
+            
+            let toLatitude = dict?["ToLatitude"] as? Double ?? 0.0
+            let toLongitude = dict?["ToLongitude"] as? Double ?? 0.0
+            var serviceName = ""
+            if (self.isArabic()) {
+               serviceName = dict?["ServiceArabicName"] as? String ?? ""
+            }else {
+               serviceName = dict?["ServiceEnglishName"] as? String ?? ""
+            }
+            let toAddress = dict?["ToAddress"] as? String ?? ""
+            let desc = dict?["Description"] as? String ?? ""
+            let clientName = dict?["UserName"] as? String ?? ""
+            let serviceImage = dict?["ServiceImage"] as? String ?? ""
+            
+            if (serviceImage.count > 0) {
+                let url = URL(string: "\(Constants.IMAGE_URL)\(serviceImage)")
+                cell.ivLogo.kf.setImage(with: url)
+            }
+            
+            cell.lblTitle.text = desc
+            let price = dict?["EstimatedPrice"] as? Double ?? 0.0
+            if (price > 10) {
+                cell.lblMoney.text = "> 10 \("currency".localized)"
+            }else {
+                cell.lblMoney.text = "< 10 \("currency".localized)"
+            }
+            //            cell.lblMoney.text = "\(dict?["EstimatedPrice"] as? Double ?? 0.0) \("currency".localized)"
+            let time = dict?["EstimatedTime"] as? Int ?? 0
+            
+            if (time > 0) {
+                cell.lblTime.text = "\(dict?["EstimatedTime"] as? Int ?? 0) \("hours".localized)"
+            }else {
+                cell.lblTime.text = "asap".localized
+            }
+            
+            let driverLatLng = CLLocation(latitude: self.latitude ?? 0.0, longitude: self.longitude ?? 0.0)
+            let dropOffLatLng = CLLocation(latitude: toLatitude, longitude: toLongitude)
+            let distanceInMeters = dropOffLatLng.distance(from: driverLatLng)
+            let distanceInKM = distanceInMeters / 1000.0
+            let distanceStr = String(format: "%.2f", distanceInKM)
+            
+            cell.lblDistance.text = "\(distanceStr) \("km".localized)"
+            
+            cell.onTake = {
+                if let vc = UIStoryboard(name: "Main", bundle: nil).instantiateViewController(withIdentifier: "TakeServiceOrderVC") as? TakeServiceOrderVC
+                {
+                    vc.deliveryId = item.orderID ?? 0
+                    vc.latitude = self.latitude
+                    vc.longitude = self.longitude
+                    vc.toLatitude = toLatitude
+                    vc.toLongitude = toLongitude
+                    vc.toAddress = toAddress
+                    vc.clientsName = clientName
+                    vc.desc = desc
+                    vc.serviceName = serviceName
+                    self.navigationController?.pushViewController(vc, animated: true)
+                }
+            }
             
             return cell
+            
+            
+        case Constants.SERVICE_BID_CREATED:
+            let cell : DriverBidCell = tableView.dequeueReusableCell(withIdentifier: "driverbidcell", for: indexPath) as! DriverBidCell
+            
+            let dict = item.data?.convertToDictionary()
+            
+            let shopImage = dict?["ServiceImage"] as? String ?? ""
+            
+            if (shopImage.count > 0) {
+                let url = URL(string: "\(Constants.IMAGE_URL)\(shopImage)")
+                cell.ivLogo.kf.setImage(with: url)
+            }
+            
+            
+            var desc = ""
+            if (self.isArabic()) {
+                desc = dict?["ArabicBody"] as? String ?? ""
+            }else {
+                desc = dict?["EnglishBody"] as? String ?? ""
+            }
+            
+            let Droplatitude = dict?["Latitude"] as? Double ?? 0.0
+            let Droplongitude = dict?["Longitude"] as? Double ?? 0.0
+            
+            cell.lblTitle.text = desc
+            cell.lblMoney.text = "\(dict?["Price"] as? Double ?? 0.0) \("currency".localized)"
+            let time = dict?["Time"] as? Int ?? 0
+            if (time > 0) {
+                cell.lblTime.text = "\(dict?["Time"] as? Int ?? 0) \("hours".localized)"
+            }else {
+                cell.lblTime.text = "asap".localized
+            }
+            
+            let driverLatLng = CLLocation(latitude: self.latitude ?? 0.0, longitude: self.longitude ?? 0.0)
+            let dropOffLatLng = CLLocation(latitude: Droplatitude, longitude: Droplongitude)
+            let distanceInMeters = dropOffLatLng.distance(from: driverLatLng)
+            let distanceInKM = distanceInMeters / 1000.0
+            
+            let distanceStr = String(format: "%.2f", distanceInKM)
+            
+            cell.lblDistance.text = "\(distanceStr) \("km".localized)"
+            
+            cell.onCheck = {
+                let vc = UIStoryboard(name: "Main", bundle: nil).instantiateViewController(withIdentifier: "AcceptBidDialog") as! AcceptBidDialog
+                self.definesPresentationContext = true
+                vc.modalPresentationStyle = UIModalPresentationStyle.overCurrentContext
+                vc.view.backgroundColor = UIColor.clear
+                let notificationId = dict?["Id"] as? Int ?? 0
+                vc.item = item
+                vc.notificationId = notificationId
+                vc.delegate = self
+                
+                self.present(vc, animated: true, completion: nil)
+            }
+            
+            return cell
+            
+        case Constants.SERVICE_COMPLETED:
+            let cell : OrderCompletedCell = tableView.dequeueReusableCell(withIdentifier: "ordercompletedcell", for: indexPath) as! OrderCompletedCell
+            
+            let dict = item.data?.convertToDictionary()
+            
+            let arabicTitle = dict?["ArabicTitle"] as? String ?? ""
+            let englishTitle = dict?["EnglishTitle"] as? String ?? ""
+            
+            let arabicBody = dict?["ArabicBody"] as? String ?? ""
+            let englishBody = dict?["EnglishBody"] as? String ?? ""
+            
+            if (self.isArabic()) {
+                cell.lblTitle.text = arabicTitle
+                cell.lblDesc.text = arabicBody
+            }else {
+                cell.lblTitle.text = englishTitle
+                cell.lblDesc.text = englishBody
+            }
+            
+            cell.btnRate.setTitle("rate_provider".localized, for: .normal)
+            
+            cell.onRate = {
+                let vc = UIStoryboard(name: "Main", bundle: nil).instantiateViewController(withIdentifier: "RateDriverDialog") as! RateDriverDialog
+                vc.deliveryId = item.orderID ?? 0
+                vc.delegate = self
+                vc.notificationId = item.id ?? 0
+                self.definesPresentationContext = true
+                vc.modalPresentationStyle = UIModalPresentationStyle.overCurrentContext
+                vc.view.backgroundColor = UIColor.clear
+                self.present(vc, animated: true, completion: nil)
+            }
+            
+            return cell
+            
+            
+            
+            
+            
+            
+            
+            
         default:
             let cell : RegularAlertCell = tableView.dequeueReusableCell(withIdentifier: "regularalertcell", for: indexPath) as! RegularAlertCell
             

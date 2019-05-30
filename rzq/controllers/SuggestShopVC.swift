@@ -34,7 +34,7 @@ class SuggestShopVC: BaseVC, SelectLocationDelegate,UINavigationControllerDelega
     
     var selectedImages = [UIImage]()
     var imagePicker: UIImagePickerController!
-    var selectedType : ShopType?
+    var selectedType : TypeClass?
     
     var latitude : Double?
     var longitude : Double?
@@ -136,19 +136,23 @@ class SuggestShopVC: BaseVC, SelectLocationDelegate,UINavigationControllerDelega
     
     
     @IBAction func addAction(_ sender: Any) {
-        self.showAlertWithCancel(title: "add_image_pic_title".localized, message: "add_salon_pic_message".localized, actionTitle: "camera".localized, cancelTitle: "gallery".localized, actionHandler: {
-            //camera
-            guard UIImagePickerController.isSourceTypeAvailable(.camera) else {
-                self.selectImageFrom(.photoLibrary)
-                return
+        if (self.selectedImages.count < 5) {
+            self.showAlertWithCancel(title: "add_image_pic_title".localized, message: "add_salon_pic_message".localized, actionTitle: "camera".localized, cancelTitle: "gallery".localized, actionHandler: {
+                //camera
+                guard UIImagePickerController.isSourceTypeAvailable(.camera) else {
+                    self.selectImageFrom(.photoLibrary)
+                    return
+                }
+                self.selectImageFrom(.camera)
+            }) {
+                //gallery
+                self.imagePicker =  UIImagePickerController()
+                self.imagePicker.delegate = self
+                self.imagePicker.sourceType = .photoLibrary
+                self.present(self.imagePicker, animated: true, completion: nil)
             }
-            self.selectImageFrom(.camera)
-        }) {
-            //gallery
-            self.imagePicker =  UIImagePickerController()
-            self.imagePicker.delegate = self
-            self.imagePicker.sourceType = .photoLibrary
-            self.present(self.imagePicker, animated: true, completion: nil)
+        }else {
+            self.showBanner(title: "alert".localized, message: "cant_add_more_images".localized, style: UIColor.INFO)
         }
     }
     
@@ -170,7 +174,7 @@ class SuggestShopVC: BaseVC, SelectLocationDelegate,UINavigationControllerDelega
         self.navigationController?.popViewController(animated: true)
     }
     
-    func onClick(type: ShopType) {
+    func onClick(type: TypeClass) {
         self.selectedType = type
         self.lblSelectedCategory.text = type.name ?? ""
     }
@@ -220,11 +224,29 @@ class SuggestShopVC: BaseVC, SelectLocationDelegate,UINavigationControllerDelega
     @IBAction func submitAction(_ sender: Any) {
         if (self.validate()) {
             self.showLoading()
-            var strBase64 = ""
-            if (selectedImages.count > 0) {
-               strBase64 = self.selectedImages[0].toBase64() ?? ""
+            ApiService.suggestShop(address: self.edtAddress.text ?? "", latitude: self.selectedLocation?.coordinate.latitude ?? 0.0, longitude: self.selectedLocation?.coordinate.longitude ?? 0.0, phoneNumber: "", workingHours: self.chosenHours ?? "", name: self.edtName.text ?? "", type: self.selectedType?.id ?? 0) { (response) in
+                self.hideLoading()
+                if (response.errorCode == 0) {
+                   self.handleUploadingMedia(id : response.data ?? 0)
+                }else {
+                    self.showBanner(title: "alert".localized, message: response.errorMessage ?? "", style: UIColor.INFO)
+                }
             }
-            ApiService.suggestShop(address: self.edtAddress.text ?? "", latitude: self.selectedLocation?.coordinate.latitude ?? 0.0, longitude: self.selectedLocation?.coordinate.longitude ?? 0.0, phoneNumber: "", workingHours: self.chosenHours ?? "", image: strBase64, name: self.edtName.text ?? "", type: self.selectedType?.id ?? 0) { (response) in
+        }
+        
+    }
+    
+    
+    
+    func handleUploadingMedia(id : Int) {
+        if (self.selectedImages.count > 0) {
+            self.showLoading()
+            var imagesData = [Data]()
+            for image in self.selectedImages {
+                imagesData.append(image.jpegData(compressionQuality: 0.30)!)
+            }
+           
+            ApiService.uploadShopImages(Authorization: self.loadUser().data?.accessToken ?? "", requestId: id, imagesData: imagesData) { (response) in
                 self.hideLoading()
                 if (response.errorCode == 0) {
                     self.showBanner(title: "alert".localized, message: "shop_suggested".localized, style: UIColor.SUCCESS)
@@ -234,9 +256,14 @@ class SuggestShopVC: BaseVC, SelectLocationDelegate,UINavigationControllerDelega
                 }else {
                     self.showBanner(title: "alert".localized, message: response.errorMessage ?? "", style: UIColor.INFO)
                 }
+                
             }
+        }else {
+            self.showBanner(title: "alert".localized, message: "shop_suggested".localized, style: UIColor.SUCCESS)
+            DispatchQueue.main.asyncAfter(deadline: .now() + 2, execute: {
+                self.navigationController?.popViewController(animated: true)
+            })
         }
-        
     }
     
     fileprivate func GetAnnotationUsingCoordinated(_ location : CLLocation) {

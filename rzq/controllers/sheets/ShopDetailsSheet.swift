@@ -38,8 +38,8 @@ class ShopDetailsSheet: BaseVC {
         lblName.text = shop?.name ?? ""
         lblDesc.text = shop?.address ?? ""
         
-        if (shop?.image?.count ?? 0 > 0) {
-            let url = URL(string: "\(Constants.IMAGE_URL)\(shop?.image ?? "")")
+        if (shop?.images?.count ?? 0 > 0) {
+            let url = URL(string: "\(Constants.IMAGE_URL)\(shop?.images?[0] ?? "")")
           self.ivLogo.kf.setImage(with: url)
         }else {
             let url = URL(string: "\(Constants.IMAGE_URL)\(shop?.type?.image ?? "")")
@@ -80,7 +80,7 @@ class ShopDetailsSheet: BaseVC {
             
                 let model = OTWOrder()
                 
-            let shopData = DataShop(id: self.shop?.id ?? 0, name: self.shop?.name ?? "", address: self.shop?.address ?? "", latitude: self.shop?.latitude ?? 0.0, longitude: self.shop?.longitude ?? 0.0, phoneNumber: self.shop?.phoneNumber ?? "", workingHours: self.shop?.workingHours ?? "", image: self.shop?.image ?? "", rate: self.shop?.rate ?? 0.0, type: self.shop?.type ?? TypeClass(id: 0, name: "",image: ""))
+            let shopData = DataShop(id: self.shop?.id ?? 0, name: self.shop?.name ?? "", address: self.shop?.address ?? "", latitude: self.shop?.latitude ?? 0.0, longitude: self.shop?.longitude ?? 0.0, phoneNumber: self.shop?.phoneNumber ?? "", workingHours: self.shop?.workingHours ?? "", images: self.shop?.images ?? [String](), rate: self.shop?.rate ?? 0.0, type: self.shop?.type ?? TypeClass(id: 0, name: "",image: ""))
                 
                 model.shop = shopData
                 model.pickUpAddress = shop?.name

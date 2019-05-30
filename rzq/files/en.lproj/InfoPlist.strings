@@ -1,0 +1,11 @@
+/* 
+  InfoPlist.strings
+  rzq
+
+  Created by Zaid najjar on 5/23/19.
+  Copyright © 2019 technzone. All rights reserved.
+*/
+"CFBundleDisplayName" = "رزق RZQ";
+"NSLocationWhenInUseUsageDescription" = "RZQ needs to access your location to show you nearby shops and track orders.";
+"NSMicrophoneUsageDescription" = "RZQ needs to access your microphone to add voice notes to your order.";
+"NSPhotoLibraryUsageDescription" = "You can select photos to attach to your order.";

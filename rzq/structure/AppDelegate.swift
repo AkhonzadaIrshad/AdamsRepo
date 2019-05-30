@@ -74,7 +74,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate, MOLHResetable,MessagingDe
             // your logic here!
             let type = userInfo["Type"] as? String ?? "0"
             let chatId = userInfo["Id"] as? String ?? "0"
-            let deliveryId = userInfo["DeliveryId"] as? String ?? "0"
+            let deliveryId = userInfo["OrderId"] as? String ?? "0"
             
             App.shared.notificationType = type
             App.shared.notificationValue = chatId
@@ -145,7 +145,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate, MOLHResetable,MessagingDe
         }
         type = remoteMessage.appData[AnyHashable("Type")] as? String ?? "0"
         itemId = remoteMessage.appData[AnyHashable("Id")] as? String ?? "0"
-        deliveryId = remoteMessage.appData[AnyHashable("DeliveryId")] as? String ?? "0"
+        deliveryId = remoteMessage.appData[AnyHashable("OrderId")] as? String ?? "0"
         
         App.shared.notificationType = type
         App.shared.notificationValue = itemId
@@ -162,7 +162,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate, MOLHResetable,MessagingDe
             print("user tapped the notification bar when the app is in foreground")
             let type = response.notification.request.content.userInfo["Type"] as? String ?? "0"
             let itemId = response.notification.request.content.userInfo["Id"] as? String ?? "0"
-            let deliveryId = response.notification.request.content.userInfo["DeliveryId"] as? String ?? "0"
+            let deliveryId = response.notification.request.content.userInfo["OrderId"] as? String ?? "0"
             App.shared.notificationType = type
             App.shared.notificationValue = itemId
             App.shared.notificationDeliveryId = deliveryId
@@ -175,7 +175,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate, MOLHResetable,MessagingDe
             print("user tapped the notification bar when the app is in background")
             let type = response.notification.request.content.userInfo["Type"] as? String ?? "0"
             let itemId = response.notification.request.content.userInfo["Id"] as? String ?? "0"
-            let deliveryId = response.notification.request.content.userInfo["DeliveryId"] as? String ?? "0"
+            let deliveryId = response.notification.request.content.userInfo["OrderId"] as? String ?? "0"
             
             App.shared.notificationType = type
             App.shared.notificationValue = itemId
@@ -226,7 +226,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate, MOLHResetable,MessagingDe
         }
         type = userInfo["Type"] as? String ?? "0"
         ItemId = userInfo["Id"] as? String ?? "0"
-        deliveryId = userInfo["DeliveryId"] as? String ?? "0"
+        deliveryId = userInfo["OrderId"] as? String ?? "0"
         
         
         App.shared.notificationType = type
@@ -283,7 +283,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate, MOLHResetable,MessagingDe
         
         type = data["Type"] as? String ?? "0"
         itemId = data["Id"] as? String ?? "0"
-        deliveryId = data["DeliveryId"] as? String ?? "0"
+        deliveryId = data["OrderId"] as? String ?? "0"
         
         
         App.shared.notificationType = type
@@ -294,16 +294,16 @@ class AppDelegate: UIResponder, UIApplicationDelegate, MOLHResetable,MessagingDe
         
         if state == .background {
             scheduleNotifications(title: title , message: body,type: type,itemId: itemId)
-        }else if state == .active {
+        } else if state == .active {
                 self.updateChat()
                 self.updateNotifications()
-            if (notificationType == "3") {
+            if (notificationType == "3" || notificationType == "14") {
                 self.goToNotifications()
             }
-            if (notificationType == "4") {
+            if (notificationType == "4" || notificationType == "18") {
                 self.loadTracks()
             }
-            if (notificationType == "5") {
+            if (notificationType == "5" || notificationType == "19") {
                 self.loadTracks()
             }
                 self.showBanner(title: title, message: body, style: UIColor.colorPrimary)

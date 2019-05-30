@@ -12,6 +12,7 @@ class OrderCompletedCell: UITableViewCell {
 
     @IBOutlet weak var lblTitle: MyUILabel!
     @IBOutlet weak var lblDesc: MyUILabel!
+    @IBOutlet weak var btnRate: MyUIButton!
     
     var onRate : (() -> Void)? = nil
     

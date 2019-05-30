@@ -13,7 +13,7 @@
 "camera" = "Camera";
 "gallery" = "Gallery";
 "images" = "images";
-"choose_time" = "Choose Delivery Time";
+"choose_time" = "Choose Order Time";
 "1_hour" = "1 Hour";
 "2_hour" = "2 Hours";
 "3_hour" = "3 Hours";
@@ -45,6 +45,7 @@
 "add_license_first" = "Add license image first!";
 
 "driver_registered" = "Your driver registration is now pending, thank you.";
+"provider_registered" = "Your service provider registration is now pending, thank you.";
 "enter_subject_first" = "Enter subject first!";
 "enter_message_first" = "Enter message first!";
 "message_sent_successfully" = "Your message has been sent successfully, thank you.";
@@ -55,7 +56,7 @@
 "app_restart" = "App will restart to setup the language";
 "yes" = "Yes";
 "no" = "No";
-"delivery_date" = "Delivery Date:";
+"delivery_date" = "Order Date:";
 "from" = "From:";
 "to" = "To:";
 "order_number" = "Order Number:";
@@ -69,9 +70,9 @@
 "minutes" = "Min";
 
 "order_cost" = "Order Cost";
-"delivery_cost" = "Delivery Cost";
+"delivery_cost" = "Order Cost";
 "total_cost" = "Total Cost";
-"delivery_started" = "Delivery has been started successfully.";
+"delivery_started" = "Order has been started successfully.";
 "registered_to_shop" = "You have registered to shop successfully.";
 "unregistered_to_shop" = "You have unregistered to this shop.";
 "profile_updated_successfully" = "Profile has been updated successfully.";
@@ -88,7 +89,7 @@
 "bakery" = "Bakery";
 "book_store" = "Book Store";
 "cafe" = "Cafe";
-"meal_delivery" = "Food Delivery";
+"meal_delivery" = "Food Order";
 "meal_takeaway" = "Food Takeaway";
 "pharmacy" = "Pharmacy";
 "restaurant" = "Restaurant";
@@ -96,7 +97,7 @@
 "store" = "Store";
 "super_market" = "Super Market";
 "shop" = "Shop";
-"confirm_cancel_delivery" = "Are you sure you want to cancel this delivery?";
+"confirm_cancel_delivery" = "Are you sure you want to cancel this order?";
 
 "no_notifications" = "No Notifications";
 "no_notifications_desc" = "Notifications will appear here.";
@@ -107,16 +108,16 @@
 "location" = "Location";
 "navigate_to_us" = "Navigate to us";
 "bid_declined_successfully" = "Bid declined successfully.";
-"complete_delivery" = "Complete Delivery";
-"delivery_completed" = "Delivery is completed, please rate the client.";
-"delivery_completed_user" = "Delivery is completed.";
+"complete_delivery" = "Complete Order";
+"delivery_completed" = "Order is completed, please rate the client.";
+"delivery_completed_user" = "Order is completed.";
 "thank_you_for_rating" = "Thank you for rating.";
 "shop_on_rzq" = "Shop on Rzq";
 "thank_you_for_rating" = "Thank you for rating.";
 "confirm_logout" = "Are you sure you want to logout?";
 "logout" = "Logout";
 
-"delivery_cancelled" = "Delivery has been cancelled successfully.";
+"delivery_cancelled" = "Order has been cancelled successfully.";
 "monday" = "Monday";
 "tuesday" = "Tuesday";
 "wednesday" = "Wednesday";
@@ -153,3 +154,19 @@
 "mobile_number" = "Mobile Number";
 "name" = "Name";
 "email_address" = "Email Address";
+
+"waiting_driver_bids" = "Waiting for driver bids";
+"waiting_provider_bids" = "Waiting for provider bids";
+
+"waiting_driver_bids_desc" = "We sent your delivery order to all nearby drivers, waiting for their bids.";
+"waiting_provider_bids_desc" = "We sent your service order to all nearby providers, waiting for their bids.";
+
+"rate_driver" = "Rate Driver";
+"rate_provider" = "Rate Provider";
+
+"cant_add_more_images" = "You can't add more than 5 images.";
+
+"call_us" = "Call Us";
+"our_website" = "Our Website";
+"our_instagram" = "Our Instagram";
+"our_facebook" = "Our Facebook";

@@ -30,8 +30,9 @@ class ShopData: Codable {
     let nearbyDriversCount, id: Int?
     let name, address: String?
     let latitude, longitude: Double?
-    let phoneNumber, workingHours, image: String?
+    let phoneNumber, workingHours: String?
     let rate: Double?
+    let images: [String]?
     let type: TypeClass?
     
     enum CodingKeys: String, CodingKey {
@@ -43,12 +44,12 @@ class ShopData: Codable {
         case longitude = "Longitude"
         case phoneNumber = "PhoneNumber"
         case workingHours = "WorkingHours"
-        case image = "Image"
+        case images = "Images"
         case rate = "Rate"
         case type = "Type"
     }
     
-    init(nearbyDriversCount: Int?, id: Int?, name: String?, address: String?, latitude: Double?, longitude: Double?, phoneNumber: String?, workingHours: String?, image: String?, rate: Double?, type: TypeClass?) {
+    init(nearbyDriversCount: Int?, id: Int?, name: String?, address: String?, latitude: Double?, longitude: Double?, phoneNumber: String?, workingHours: String?, images: [String]?, rate: Double?, type: TypeClass?) {
         self.nearbyDriversCount = nearbyDriversCount
         self.id = id
         self.name = name
@@ -57,7 +58,7 @@ class ShopData: Codable {
         self.longitude = longitude
         self.phoneNumber = phoneNumber
         self.workingHours = workingHours
-        self.image = image
+        self.images = images
         self.rate = rate
         self.type = type
     }

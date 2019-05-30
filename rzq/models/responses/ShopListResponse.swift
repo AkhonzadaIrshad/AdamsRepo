@@ -30,7 +30,8 @@ class DataShop: Codable {
     let id: Int?
     let name, address: String?
     let latitude, longitude: Double?
-    let phoneNumber, workingHours, image: String?
+    let phoneNumber, workingHours: String?
+    let images : [String]?
     let rate: Double?
     let type: TypeClass?
     
@@ -42,12 +43,12 @@ class DataShop: Codable {
         case longitude = "Longitude"
         case phoneNumber = "PhoneNumber"
         case workingHours = "WorkingHours"
-        case image = "Image"
+        case images = "Images"
         case rate = "Rate"
         case type = "Type"
     }
     
-    init(id: Int?, name: String?, address: String?, latitude: Double?, longitude: Double?, phoneNumber: String?, workingHours: String?, image: String?, rate: Double?, type: TypeClass?) {
+    init(id: Int?, name: String?, address: String?, latitude: Double?, longitude: Double?, phoneNumber: String?, workingHours: String?, images: [String]?, rate: Double?, type: TypeClass?) {
         self.id = id
         self.name = name
         self.address = address
@@ -55,7 +56,7 @@ class DataShop: Codable {
         self.longitude = longitude
         self.phoneNumber = phoneNumber
         self.workingHours = workingHours
-        self.image = image
+        self.images = images
         self.rate = rate
         self.type = type
     }

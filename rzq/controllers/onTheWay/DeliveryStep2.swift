@@ -385,7 +385,7 @@ extension DeliveryStep2 : GMSMapViewDelegate {
             if (self.orderModel?.shop?.id ?? 0 > 0) {
                 toolTipView?.lblTitle.text = self.orderModel?.shop?.name ?? ""
                 toolTipView?.lblDescription.text = self.orderModel?.shop?.address ?? ""
-                let url = URL(string: "\(Constants.IMAGE_URL)\(self.orderModel?.shop?.image ?? "")")
+                let url = URL(string: "\(Constants.IMAGE_URL)\(self.orderModel?.shop?.images?[0] ?? "")")
                 toolTipView?.ivLogo.kf.setImage(with: url)
             }else {
                 toolTipView?.lblTitle.text = self.orderModel?.pickUpAddress ?? ""

@@ -60,19 +60,6 @@ class ImagePickerDialog: BaseVC,UINavigationControllerDelegate, UICollectionView
        
     }
     
-    
-    func selectImageFrom(_ source: ImageSource) {
-        imagePicker =  UIImagePickerController()
-        imagePicker.delegate = self
-        switch source {
-        case .camera:
-            imagePicker.sourceType = .camera
-        case .photoLibrary:
-            imagePicker.sourceType = .photoLibrary
-        }
-        present(imagePicker, animated: true, completion: nil)
-    }
-    
     func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
         let cell: DialogImageCell = collectionView.dequeueReusableCell(withReuseIdentifier: "dialogimagecell", for: indexPath as IndexPath) as! DialogImageCell
         
@@ -85,6 +72,19 @@ class ImagePickerDialog: BaseVC,UINavigationControllerDelegate, UICollectionView
         
         return cell
         
+    }
+    
+    
+    func selectImageFrom(_ source: ImageSource) {
+        imagePicker =  UIImagePickerController()
+        imagePicker.delegate = self
+        switch source {
+        case .camera:
+            imagePicker.sourceType = .camera
+        case .photoLibrary:
+            imagePicker.sourceType = .photoLibrary
+        }
+        present(imagePicker, animated: true, completion: nil)
     }
     
     

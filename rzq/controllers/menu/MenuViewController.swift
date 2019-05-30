@@ -82,7 +82,7 @@ class MenuViewController: BaseVC {
             self.ivProfile.kf.setImage(with: url)
         }
         
-        if ((self.loadUser().data?.roles?.contains(find: "Driver"))!) {
+        if (self.isProvider()) {
             self.viewMood.isHidden = false
             self.topViewHeight.constant = 175.0
             if (self.loadUser().data?.isOnline ?? false) {
@@ -119,6 +119,14 @@ class MenuViewController: BaseVC {
             loginView.isHidden  = false
         }
         
+    }
+    
+    
+    func isProvider() -> Bool {
+        if ((self.loadUser().data?.roles?.contains(find: "Driver"))! || (self.loadUser().data?.roles?.contains(find: "ServiceProvider"))! || (self.loadUser().data?.roles?.contains(find: "TenderProvider"))!) {
+            return true
+        }
+        return false
     }
     
     func handleNotificationCounter() {
@@ -284,7 +292,7 @@ class MenuViewController: BaseVC {
         if (!self.isLoggedIn()) {
             return
           }
-         if ((self.loadUser().data?.roles?.contains(find: "Driver"))!) {
+         if (self.isProvider()) {
             self.selectedTag = 99
             self.validateSelectedTag(tag: self.selectedTag)
             delegate?.slideMenuItemSelectedAtIndex(99)

@@ -20,12 +20,12 @@ class Constants {
     static var ARABIC_FONT_SEMIBOLD = "Tajawal-Medium"
     static var ARABIC_FONT_BOLD = "Tajawal-Bold"
     
-    static var IMAGE_URL = "http://35.192.208.228/RZQ/api/file/get?name="
     
     static var AUTH_HEADER = "Authorization"
     static var LANG_HEADER = "Accept-Language"
-   // static var BASE_URL = "http://35.192.208.228/RZQ/api/"
-    static var BASE_URL = "http://35.192.208.228/RZQ2/api/"
+    
+    static var BASE_URL = "http://www.rzqapp.com/rzq/api/"
+    static var IMAGE_URL = "http://www.rzqapp.com/rzq/api/file/get?name="
     
     static var DEFAULT_RADIUS = 20000.0
     
@@ -54,6 +54,14 @@ class Constants {
     static var DELIVERY_COMPLETED = 5
     static var BID_ACCEPTED = 6
     static var NEW_MESSAGE = 11
+    
+    static var SERVICE_CREATED = 13
+    static var SERVICE_BID_CREATED = 14
+    static var SERVICE_BID_ACCEPTED = 15
+    static var SERVICE_BID_DECLINED = 16
+    static var SERVICE_CANCELLED = 17
+    static var SERVICE_ON_THE_WAY = 18
+    static var SERVICE_COMPLETED = 19
     
    
     static var PLACE_BAKERY = 1
