@@ -1183,7 +1183,12 @@ class ApiService : NSObject {
     static func getPlacesAPI(input : String, latitude : Double, longitude : Double, completion:@escaping(_ response : GooglePlaceResponse)-> Void) {
         
         let headers = ["Content-Type": "application/json"]
-        AFManager.request("https://maps.googleapis.com/maps/api/place/textsearch/json?query=\(input)&location=\(latitude),\(longitude)&radius=5000&key=\(Constants.GOOGLE_API_KEY)", method: .get, parameters: nil ,encoding: JSONEncoding.default, headers: headers)
+       
+        let url = "https://maps.googleapis.com/maps/api/place/nearbysearch/json?keyword=\(input)&name=\(input)&location=\(latitude),\(longitude)&rankby=distance&language=en&sensor=false&key=\(Constants.GOOGLE_API_KEY)"
+        
+        let encodedUrl = url.addingPercentEncoding(withAllowedCharacters: .urlQueryAllowed) ?? url
+        
+        AFManager.request(encodedUrl, method: .get, parameters: nil ,encoding: JSONEncoding.default, headers: headers)
             .responseJSON { response in
                 if let json = response.data {
                     do {

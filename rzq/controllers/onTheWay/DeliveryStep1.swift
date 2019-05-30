@@ -375,6 +375,8 @@ class DeliveryStep1: BaseVC,LabasLocationManagerDelegate, Step2Delegate {
             }
             
             self.searchField.theme.font = UIFont.systemFont(ofSize: 13)
+            self.searchField.startVisibleWithoutInteraction = true
+            self.searchField.startSuggestingInmediately = true
             self.searchField.filterItems(filterItems)
             self.searchField.itemSelectionHandler = { filteredResults, itemPosition in
                 // Just in case you need the item position
@@ -443,7 +445,7 @@ class DeliveryStep1: BaseVC,LabasLocationManagerDelegate, Step2Delegate {
             var filterItems = [SearchTextFieldItem]()
             self.filterShops.removeAll()
             for prediction in response.results ?? [Result]() {
-                let dataShop = DataShop(id: 0, name: prediction.name ?? "", address: prediction.formattedAddress ?? "", latitude: prediction.geometry?.location?.lat ?? 0.0, longitude: prediction.geometry?.location?.lng ?? 0.0, phoneNumber: "", workingHours: "", images: [String](), rate: prediction.rating ?? 0.0, type: TypeClass(id: 0, name: prediction.types?[0] ?? "", image: ""))
+                let dataShop = DataShop(id: 0, name: prediction.name ?? "", address: prediction.vicinity ?? "", latitude: prediction.geometry?.location?.lat ?? 0.0, longitude: prediction.geometry?.location?.lng ?? 0.0, phoneNumber: "", workingHours: "", images: [String](), rate: prediction.rating ?? 0.0, type: TypeClass(id: 0, name: prediction.types?[0] ?? "", image: ""))
                 
                   self.filterShops.append(dataShop)
             }
@@ -454,6 +456,7 @@ class DeliveryStep1: BaseVC,LabasLocationManagerDelegate, Step2Delegate {
             }
             
             self.searchField.theme.font = UIFont.systemFont(ofSize: 13)
+            self.searchField.forceNoFiltering = true
             self.searchField.filterItems(filterItems)
             self.searchField.itemSelectionHandler = { filteredResults, itemPosition in
                 // Just in case you need the item position

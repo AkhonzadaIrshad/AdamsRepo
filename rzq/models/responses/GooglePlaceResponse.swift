@@ -28,7 +28,6 @@ class GooglePlaceResponse: Codable {
 
 // MARK: - Result
 class Result: Codable {
-    let formattedAddress: String?
     let geometry: Geometry?
     let icon: String?
     let id, name: String?
@@ -38,24 +37,24 @@ class Result: Codable {
     let plusCode: PlusCode?
     let priceLevel: Int?
     let rating: Double?
-    let reference: String?
+    let reference, scope: String?
     let types: [String]?
     let userRatingsTotal: Int?
+    let vicinity: String?
     
     enum CodingKeys: String, CodingKey {
-        case formattedAddress = "formatted_address"
         case geometry, icon, id, name
         case openingHours = "opening_hours"
         case photos
         case placeID = "place_id"
         case plusCode = "plus_code"
         case priceLevel = "price_level"
-        case rating, reference, types
+        case rating, reference, scope, types
         case userRatingsTotal = "user_ratings_total"
+        case vicinity
     }
     
-    init(formattedAddress: String?, geometry: Geometry?, icon: String?, id: String?, name: String?, openingHours: OpeningHours?, photos: [Photo]?, placeID: String?, plusCode: PlusCode?, priceLevel: Int?, rating: Double?, reference: String?, types: [String]?, userRatingsTotal: Int?) {
-        self.formattedAddress = formattedAddress
+    init(geometry: Geometry?, icon: String?, id: String?, name: String?, openingHours: OpeningHours?, photos: [Photo]?, placeID: String?, plusCode: PlusCode?, priceLevel: Int?, rating: Double?, reference: String?, scope: String?, types: [String]?, userRatingsTotal: Int?, vicinity: String?) {
         self.geometry = geometry
         self.icon = icon
         self.id = id
@@ -67,8 +66,10 @@ class Result: Codable {
         self.priceLevel = priceLevel
         self.rating = rating
         self.reference = reference
+        self.scope = scope
         self.types = types
         self.userRatingsTotal = userRatingsTotal
+        self.vicinity = vicinity
     }
 }
 
