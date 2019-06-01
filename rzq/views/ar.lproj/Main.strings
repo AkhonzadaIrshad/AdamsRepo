@@ -278,6 +278,10 @@
 /* Class = "UILabel"; text = "Can't find a service?, type it below"; ObjectID = "Gm8-J5-F1q"; */
 "Gm8-J5-F1q.text" = "لم تجد خدمتك؟ ادخلها بالاسفل.";
 
+"PYs-tI-OoW.placeholder" = "ابحث عن مكان الوجهة";
+"9aI-b4-8ZM.placeholder" = "ابحث عن مكان الوجهة";
+"DUG-bT-Cbn.placeholder" = "ابحث عن مكان الوجهة";
+
 /* Class = "UILabel"; text = "To"; ObjectID = "GxW-fC-auU"; */
 "GxW-fC-auU.text" = "الى";
 
@@ -1070,6 +1074,9 @@
 /* Class = "UILabel"; text = "To"; ObjectID = "sHb-78-7AK"; */
 "sHb-78-7AK.text" = "الى";
 
+"GoF-rZ-Bo8.normalTitle" = "اقل من ١٠ د.ك";
+"i3L-VB-N8M.normalTitle" = "اقل من ١٠ د.ك";
+"gQE-2w-AvE.normalTitle" = "اقل من ١٠ د.ك";
 /* Class = "UILabel"; text = "Working Hours"; ObjectID = "sSU-ub-plR"; */
 "sSU-ub-plR.text" =  "ساعات العمل";
 

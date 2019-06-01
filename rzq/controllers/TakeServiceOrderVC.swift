@@ -100,13 +100,13 @@ class TakeServiceOrderVC: BaseVC, AVAudioPlayerDelegate {
         let distanceInKM = distanceInMeters / 1000.0
         
         if (distanceInKM > 1.0) {
-            self.minValue = App.shared.config?.configSettings?.MinimumFiveKmValue ?? 0.0
+            self.minValue = App.shared.config?.configSettings?.minimumFiveKMValue ?? 0.0
         }else {
-            self.minValue = App.shared.config?.configSettings?.MinimumOneKmValue ?? 0.0
+            self.minValue = App.shared.config?.configSettings?.minimumOneKMValue ?? 0.0
         }
-        self.maxValue = App.shared.config?.configSettings?.MaximumValue ?? 0.0
+        self.maxValue = App.shared.config?.configSettings?.maximumValue ?? 0.0
         self.lblMin.text = "\(self.minValue)"
-        self.lblMax.text = "\(App.shared.config?.configSettings?.MaximumValue ?? 0.0)"
+        self.lblMax.text = "\(App.shared.config?.configSettings?.maximumValue ?? 0.0)"
         self.lblValue.text = "\(self.minValue)"
         
         ApiService.getDelivery(id: self.deliveryId ?? 0) { (response) in
@@ -392,7 +392,7 @@ class TakeServiceOrderVC: BaseVC, AVAudioPlayerDelegate {
     }
     
     @IBAction func minusAction(_ sender: Any) {
-        let incrementValue = App.shared.config?.configSettings?.IncrementValue ?? 0.0
+        let incrementValue = App.shared.config?.configSettings?.incrementValue ?? 0.0
         let lblMinValue : Double = Double(self.lblValue.text ?? "")!
         if (lblMinValue <= self.minValue) {
             self.lblValue.text = "\(self.minValue)"
@@ -402,7 +402,7 @@ class TakeServiceOrderVC: BaseVC, AVAudioPlayerDelegate {
     }
     
     @IBAction func plusAction(_ sender: Any) {
-        let incrementValue = App.shared.config?.configSettings?.IncrementValue ?? 0.0
+        let incrementValue = App.shared.config?.configSettings?.incrementValue ?? 0.0
         let lblMaxValue : Double = Double(self.lblValue.text ?? "")!
         if (lblMaxValue >= self.maxValue) {
             self.lblValue.text = "\(self.maxValue)"

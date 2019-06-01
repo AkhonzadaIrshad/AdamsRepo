@@ -20,9 +20,11 @@ class ServiceStep2: BaseVC {
     
     @IBOutlet weak var edtMoreDetails: MyUITextField!
     
-    @IBOutlet weak var searchAddress: MyUITextField!
-    
     @IBOutlet weak var ivHandle: UIImageView!
+    
+    @IBOutlet weak var searchField: SearchTextField!
+    
+    @IBOutlet weak var moreDetailsView: UIView!
     
     
     var markerLocation: GMSMarker?
@@ -42,6 +44,9 @@ class ServiceStep2: BaseVC {
     
     var toolTipView : ToolTipView?
     
+    var shops = [DataShop]()
+    var filterShops = [DataShop]()
+    
     override func viewDidLoad() {
         super.viewDidLoad()
         super.viewDidLoad()
@@ -49,6 +54,7 @@ class ServiceStep2: BaseVC {
             self.ivHandle.image = UIImage(named: "ic_back_arabic")
         }
         gMap = GMSMapView()
+        self.searchField.delegate = self
         self.setUpGoogleMap()
         
         self.edtMoreDetails.text = self.orderModel?.dropOffDetails ?? ""
@@ -78,22 +84,22 @@ class ServiceStep2: BaseVC {
         return true
     }
     
-    @IBAction func searchPlacesAction(_ sender: Any) {
-        let autocompleteController = GMSAutocompleteViewController()
-        autocompleteController.delegate = self
-        
-        let filter = GMSAutocompleteFilter()
-        filter.country = "KW"
-        autocompleteController.primaryTextColor = UIColor.black
-        autocompleteController.secondaryTextColor = UIColor.black
-        autocompleteController.tintColor = UIColor.black
-        autocompleteController.autocompleteFilter = filter
-        
-        //        UITextField.appearance(whenContainedInInstancesOf: [UISearchBar.self]).defaultTextAttributes = [NSAttributedString.Key.foregroundColor: UIColor.white]
-        
-        
-        present(autocompleteController, animated: true, completion: nil)
-    }
+//    @IBAction func searchPlacesAction(_ sender: Any) {
+//        let autocompleteController = GMSAutocompleteViewController()
+//        autocompleteController.delegate = self
+//
+//        let filter = GMSAutocompleteFilter()
+//        filter.country = "KW"
+//        autocompleteController.primaryTextColor = UIColor.black
+//        autocompleteController.secondaryTextColor = UIColor.black
+//        autocompleteController.tintColor = UIColor.black
+//        autocompleteController.autocompleteFilter = filter
+//
+//        //        UITextField.appearance(whenContainedInInstancesOf: [UISearchBar.self]).defaultTextAttributes = [NSAttributedString.Key.foregroundColor: UIColor.white]
+//
+//
+//        present(autocompleteController, animated: true, completion: nil)
+//    }
     
     @IBAction func searchAction(_ sender: Any) {
         let autocompleteController = GMSAutocompleteViewController()
@@ -128,6 +134,7 @@ class ServiceStep2: BaseVC {
         self.orderModel?.dropOffAddress = ""
         self.getAddressForMapCenter()
         
+        self.moreDetailsView.isHidden = false
         
         self.mapView.addSubview(gMap!)
         gMap?.bindFrameToSuperviewBounds()
@@ -158,6 +165,7 @@ class ServiceStep2: BaseVC {
     
   
     @IBAction func clearDropLocation(_ sender: Any) {
+        self.moreDetailsView.isHidden = true
         self.lblDropLocation.text = ""
         self.orderModel?.dropOffAddress = ""
         self.orderModel?.dropOffLatitude = 0.0
@@ -287,6 +295,69 @@ class ServiceStep2: BaseVC {
     
     
     
+    func getShopByPlaces(name : String, latitude : Double, longitude: Double) {
+        
+        ApiService.getPlacesAPI(input: name, latitude: latitude, longitude: longitude) { (response) in
+            self.shops.removeAll()
+            var filterItems = [SearchTextFieldItem]()
+            self.filterShops.removeAll()
+            for prediction in response.results ?? [Result]() {
+                let dataShop = DataShop(id: 0, name: prediction.name ?? "", address: prediction.vicinity ?? "", latitude: prediction.geometry?.location?.lat ?? 0.0, longitude: prediction.geometry?.location?.lng ?? 0.0, phoneNumber: "", workingHours: "", images: [String](), rate: prediction.rating ?? 0.0, type: TypeClass(id: 0, name: prediction.types?[0] ?? "", image: ""))
+                
+                self.filterShops.append(dataShop)
+            }
+            
+            for shop in self.filterShops {
+                let item1 = SearchTextFieldItem(title: "\(shop.name ?? "")  \(self.getShopDistance(latitude: shop.latitude ?? 0.0, longitude: shop.longitude ?? 0.0))", subtitle: shop.address ?? "", image: UIImage(named: "ic_location"))
+                filterItems.append(item1)
+            }
+            
+            self.searchField.theme.font = UIFont.systemFont(ofSize: 13)
+            self.searchField.forceNoFiltering = true
+            self.searchField.filterItems(filterItems)
+            self.searchField.itemSelectionHandler = { filteredResults, itemPosition in
+                // Just in case you need the item position
+                let shop = self.filterShops[itemPosition]
+                self.searchField.text = shop.name ?? ""
+                self.orderModel?.dropOffLatitude = shop.latitude ?? 0.0
+                self.orderModel?.dropOffLongitude = shop.longitude ?? 0.0
+                self.orderModel?.dropOffAddress = shop.name ?? ""
+                self.lblDropLocation.text = shop.name ?? ""
+                self.lblDropLocation.textColor = UIColor.appDarkBlue
+                
+                self.edtMoreDetails.text = shop.address ?? ""
+                
+                self.pinMarker?.map = nil
+                self.pinMarker = GMSMarker()
+                self.pinMarker?.position = CLLocationCoordinate2D(latitude: shop.latitude ?? 0.0, longitude: shop.longitude ?? 0.0)
+                self.pinMarker?.title =  ""
+                self.pinMarker?.icon = UIImage(named: "ic_location")
+                self.pinMarker?.snippet = ""
+                self.pinMarker?.map = self.gMap
+                self.lblDropLocation.text = "Loading".localized
+                self.lblDropLocation.textColor = UIColor.appDarkBlue
+                self.orderModel?.dropOffAddress = shop.name ?? ""
+                self.orderModel?.dropOffDetails = shop.address ?? ""
+                self.getAddressForMapCenter()
+                
+                let camera = GMSCameraPosition.camera(withLatitude: shop.latitude ?? 0.0, longitude: shop.longitude ?? 0.0, zoom: 20.0)
+                self.gMap?.animate(to: camera)
+                
+                
+            }
+        }
+    }
+    
+    func getShopDistance(latitude : Double, longitude : Double) -> String {
+        let userLatLng = CLLocation(latitude: self.latitude ?? 0.0, longitude: self.longitude ?? 0.0)
+        let shopLatLng = CLLocation(latitude: latitude, longitude: longitude)
+        let distanceInMeters = shopLatLng.distance(from: userLatLng)
+        let distanceInKM = distanceInMeters / 1000.0
+        let distanceStr = String(format: "%.2f", distanceInKM)
+        return "(\(distanceStr) \("km".localized))"
+    }
+    
+    
 }
 
 extension ServiceStep2 : GMSMapViewDelegate {
@@ -305,6 +376,7 @@ extension ServiceStep2 : GMSMapViewDelegate {
     
     func mapView(_ mapView: GMSMapView, didLongPressAt coordinate: CLLocationCoordinate2D) {
         self.pinMarker?.map = nil
+        self.moreDetailsView.isHidden = false
         self.pinMarker = GMSMarker()
         self.pinMarker?.position = CLLocationCoordinate2D(latitude: coordinate.latitude, longitude: coordinate.longitude)
         self.pinMarker?.title =  ""
@@ -316,6 +388,7 @@ extension ServiceStep2 : GMSMapViewDelegate {
         self.orderModel?.dropOffLatitude = coordinate.latitude
         self.orderModel?.dropOffLongitude = coordinate.longitude
         self.orderModel?.dropOffAddress = ""
+        self.edtMoreDetails.text = ""
         self.getAddressForMapCenter()
     }
     
@@ -347,4 +420,28 @@ extension ServiceStep2: GMSAutocompleteViewControllerDelegate {
     func didUpdateAutocompletePredictions(_ viewController: GMSAutocompleteViewController) {
         UIApplication.shared.isNetworkActivityIndicatorVisible = false
     }
+}
+extension ServiceStep2: UITextFieldDelegate {
+    
+    func textField(_ textField: UITextField, shouldChangeCharactersIn range: NSRange, replacementString string: String) -> Bool {
+        
+        if textField == self.searchField {
+            let maxLength = 100
+            let currentString: NSString = textField.text as NSString? ?? ""
+            let newString: NSString =
+                currentString.replacingCharacters(in: range, with: string) as NSString
+            if (newString.length >= 3) {
+                //                self.getShopsByName(name: newString as String, latitude: self.latitude ?? 0.0, longitude: self.longitude ?? 0.0, radius: Float(Constants.DEFAULT_RADIUS))
+                
+                self.getShopByPlaces(name: newString as String, latitude: self.latitude ?? 0.0, longitude: self.longitude ?? 0.0)
+            }
+            if (newString.length == 0) {
+               
+            }
+            return newString.length <= maxLength
+        }
+        
+        return false
+    }
+    
 }

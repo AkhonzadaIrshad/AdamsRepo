@@ -8,52 +8,48 @@
 
 import Foundation
 
+// MARK: - AppConfigResponse
 class AppConfigResponse: Codable {
-    let configData: ConfigData?
+    let data: ConfigData?
     let errorCode: Int?
     let errorMessage: String?
     
     enum CodingKeys: String, CodingKey {
-        case configData = "Data"
+        case data = "Data"
         case errorCode = "ErrorCode"
         case errorMessage = "ErrorMessage"
     }
     
-    init(configData: ConfigData?, errorCode: Int?, errorMessage: String?) {
-        self.configData = configData
+    init(data: ConfigData?, errorCode: Int?, errorMessage: String?) {
+        self.data = data
         self.errorCode = errorCode
         self.errorMessage = errorMessage
     }
 }
 
+// MARK: - DataClass
 class ConfigData: Codable {
-    let description: String?
     let updateStatus: UpdateStatus?
     let developer, company: Company?
     let configString: ConfigString?
     let configSettings: ConfigSettings?
-    let flag: Bool?
     let id: Int?
     
     enum CodingKeys: String, CodingKey {
-        case description = "Description"
         case updateStatus = "UpdateStatus"
         case developer = "Developer"
         case company = "Company"
         case configString = "ConfigString"
         case configSettings = "ConfigSettings"
-        case flag = "Flag"
         case id = "Id"
     }
     
-    init(description: String?, updateStatus: UpdateStatus?, developer: Company?, company: Company?, configString: ConfigString?, configSettings: ConfigSettings?, flag: Bool?, id: Int?) {
-        self.description = description
+    init(updateStatus: UpdateStatus?, developer: Company?, company: Company?, configString: ConfigString?, configSettings: ConfigSettings?, id: Int?) {
         self.updateStatus = updateStatus
         self.developer = developer
         self.company = company
         self.configString = configString
         self.configSettings = configSettings
-        self.flag = flag
         self.id = id
     }
 }
@@ -90,42 +86,51 @@ class Company: Codable {
     }
 }
 
+// MARK: - ConfigSettings
 class ConfigSettings: Codable {
+    let flag: Bool?
+    let percentage, dueAmountLimit, showNotificationPeriod: Double?
     let isMapView: Bool?
-    let driversLimit, orderTimeConstraint: Int?
-    let radius : Double?
-    let MinimumOneKmValue,MinimumFiveKmValue,MaximumValue,IncrementValue : Double?
+    let radius, driversLimit, orderTimeConstraint, minimumOneKMValue: Double?
+    let minimumFiveKMValue, maximumValue, incrementValue, shopLimit: Double?
     
     enum CodingKeys: String, CodingKey {
+        case flag = "Flag"
+        case percentage = "Percentage"
+        case dueAmountLimit = "DueAmountLimit"
+        case showNotificationPeriod = "ShowNotificationPeriod"
         case isMapView = "IsMapView"
         case radius = "Radius"
         case driversLimit = "DriversLimit"
         case orderTimeConstraint = "OrderTimeConstraint"
-        
-        case MinimumOneKmValue = "MinimumOneKmValue"
-        case MinimumFiveKmValue = "MinimumFiveKmValue"
-        case MaximumValue = "MaximumValue"
-        case IncrementValue = "IncrementValue"
+        case minimumOneKMValue = "MinimumOneKmValue"
+        case minimumFiveKMValue = "MinimumFiveKmValue"
+        case maximumValue = "MaximumValue"
+        case incrementValue = "IncrementValue"
+        case shopLimit = "ShopLimit"
     }
     
-    init(isMapView: Bool?, radius: Double?, driversLimit: Int?, orderTimeConstraint: Int?,MinimumOneKmValue : Double?,MinimumFiveKmValue : Double?, MaximumValue : Double?, IncrementValue : Double?) {
+    init(flag: Bool?, percentage: Double?, dueAmountLimit: Double?, showNotificationPeriod: Double?, isMapView: Bool?, radius: Double?, driversLimit: Double?, orderTimeConstraint: Double?, minimumOneKMValue: Double?, minimumFiveKMValue: Double?, maximumValue: Double?, incrementValue: Double?, shopLimit: Double?) {
+        self.flag = flag
+        self.percentage = percentage
+        self.dueAmountLimit = dueAmountLimit
+        self.showNotificationPeriod = showNotificationPeriod
         self.isMapView = isMapView
         self.radius = radius
         self.driversLimit = driversLimit
         self.orderTimeConstraint = orderTimeConstraint
-        
-        self.MinimumOneKmValue = MinimumOneKmValue
-        self.MinimumFiveKmValue = MinimumFiveKmValue
-        self.MaximumValue = MaximumValue
-        self.IncrementValue = IncrementValue
+        self.minimumOneKMValue = minimumOneKMValue
+        self.minimumFiveKMValue = minimumFiveKMValue
+        self.maximumValue = maximumValue
+        self.incrementValue = incrementValue
+        self.shopLimit = shopLimit
     }
 }
 
+// MARK: - ConfigString
 class ConfigString: Codable {
     let arabicTermsAndConditions, englishTermsAndConditions, arabicPrivacyPolicy, englishPrivacyPolicy: String?
     let arabicNewVersionText, englishNewVersionText, arabicTellAFriend, englishTellAFriend: String?
-    let arabicDisclamier, englishDisclamier, help: String?
-    let showDisclaimer: Bool?
     
     enum CodingKeys: String, CodingKey {
         case arabicTermsAndConditions = "ArabicTermsAndConditions"
@@ -136,13 +141,9 @@ class ConfigString: Codable {
         case englishNewVersionText = "EnglishNewVersionText"
         case arabicTellAFriend = "ArabicTellAFriend"
         case englishTellAFriend = "EnglishTellAFriend"
-        case arabicDisclamier = "ArabicDisclamier"
-        case englishDisclamier = "EnglishDisclamier"
-        case help = "Help"
-        case showDisclaimer = "ShowDisclaimer"
     }
     
-    init(arabicTermsAndConditions: String?, englishTermsAndConditions: String?, arabicPrivacyPolicy: String?, englishPrivacyPolicy: String?, arabicNewVersionText: String?, englishNewVersionText: String?, arabicTellAFriend: String?, englishTellAFriend: String?, arabicDisclamier: String?, englishDisclamier: String?, help: String?, showDisclaimer: Bool?) {
+    init(arabicTermsAndConditions: String?, englishTermsAndConditions: String?, arabicPrivacyPolicy: String?, englishPrivacyPolicy: String?, arabicNewVersionText: String?, englishNewVersionText: String?, arabicTellAFriend: String?, englishTellAFriend: String?) {
         self.arabicTermsAndConditions = arabicTermsAndConditions
         self.englishTermsAndConditions = englishTermsAndConditions
         self.arabicPrivacyPolicy = arabicPrivacyPolicy
@@ -151,34 +152,35 @@ class ConfigString: Codable {
         self.englishNewVersionText = englishNewVersionText
         self.arabicTellAFriend = arabicTellAFriend
         self.englishTellAFriend = englishTellAFriend
-        self.arabicDisclamier = arabicDisclamier
-        self.englishDisclamier = englishDisclamier
-        self.help = help
-        self.showDisclaimer = showDisclaimer
     }
 }
 
+// MARK: - UpdateStatus
 class UpdateStatus: Codable {
-    let status: Bool?
-    let appURL, version: String?
+    let arabicDescription, englishDescription, appURL, version: String?
     let isMandatory: Bool?
-    let arabicDescription, englishDescription: String?
+    let iosAppURL, iosVersion: String?
+    let iosIsMandatory: Bool?
     
     enum CodingKeys: String, CodingKey {
-        case status = "Status"
+        case arabicDescription = "ArabicDescription"
+        case englishDescription = "EnglishDescription"
         case appURL = "AppUrl"
         case version = "Version"
         case isMandatory = "IsMandatory"
-        case arabicDescription = "ArabicDescription"
-        case englishDescription = "EnglishDescription"
+        case iosAppURL = "IOSAppUrl"
+        case iosVersion = "IOSVersion"
+        case iosIsMandatory = "IOSIsMandatory"
     }
     
-    init(status: Bool?, appURL: String?, version: String?, isMandatory: Bool?, arabicDescription: String?, englishDescription: String?) {
-        self.status = status
+    init(arabicDescription: String?, englishDescription: String?, appURL: String?, version: String?, isMandatory: Bool?, iosAppURL: String?, iosVersion: String?, iosIsMandatory: Bool?) {
+        self.arabicDescription = arabicDescription
+        self.englishDescription = englishDescription
         self.appURL = appURL
         self.version = version
         self.isMandatory = isMandatory
-        self.arabicDescription = arabicDescription
-        self.englishDescription = englishDescription
+        self.iosAppURL = iosAppURL
+        self.iosVersion = iosVersion
+        self.iosIsMandatory = iosIsMandatory
     }
 }

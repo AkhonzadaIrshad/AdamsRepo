@@ -22,7 +22,7 @@ class TermsVC: BaseVC {
             self.tvContent.text = App.shared.config?.configString?.arabicTermsAndConditions ?? ""
             self.ivHandle.image = UIImage(named: "ic_back_arabic")
         }else {
-           self.tvContent.text = App.shared.config?.configString?.englishTermsAndConditions ?? ""
+            self.tvContent.text = App.shared.config?.configString?.englishTermsAndConditions ?? ""
         }
         
     }

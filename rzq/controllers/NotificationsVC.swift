@@ -203,6 +203,11 @@ class NotificationsVC: BaseViewController, UITableViewDelegate, UITableViewDataS
                 let url = URL(string: "\(Constants.IMAGE_URL)\(shopImage)")
                 cell.ivLogo.kf.setImage(with: url)
             }
+            if (item.type == 1) {
+                cell.ivType.image = UIImage(named: "ic_drive")
+            }else {
+                cell.ivType.image = UIImage(named: "ic_tool")
+            }
             
             cell.lblTitle.text = desc
             let price = dict?["EstimatedPrice"] as? Double ?? 0.0
@@ -411,6 +416,12 @@ class NotificationsVC: BaseViewController, UITableViewDelegate, UITableViewDataS
             if (serviceImage.count > 0) {
                 let url = URL(string: "\(Constants.IMAGE_URL)\(serviceImage)")
                 cell.ivLogo.kf.setImage(with: url)
+            }
+            
+            if (item.type == 1) {
+                cell.ivType.image = UIImage(named: "ic_drive")
+            }else {
+                cell.ivType.image = UIImage(named: "ic_tool")
             }
             
             cell.lblTitle.text = desc

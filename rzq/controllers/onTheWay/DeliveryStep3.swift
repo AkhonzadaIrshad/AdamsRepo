@@ -14,7 +14,6 @@ import CoreLocation
 import Sheeeeeeeeet
 import SwiftyGif
 import MultilineTextField
-import SimpleCheckbox
 
 protocol Step3Delegate {
     func updateModel(model : OTWOrder)
@@ -27,7 +26,6 @@ class DeliveryStep3: BaseVC, UINavigationControllerDelegate, ImagePickerDelegate
     
     @IBOutlet weak var mapView: UIView!
     
-    @IBOutlet weak var edtCouponNumber: MyUITextField!
     
     @IBOutlet weak var lblImages: MyUILabel!
     
@@ -44,6 +42,8 @@ class DeliveryStep3: BaseVC, UINavigationControllerDelegate, ImagePickerDelegate
     @IBOutlet weak var edtOrderDetails: MultilineTextField!
     
     @IBOutlet weak var gif: UIImageView!
+    
+    @IBOutlet weak var btnCost: MyUIButton!
     
     var markerLocation: GMSMarker?
     
@@ -67,11 +67,11 @@ class DeliveryStep3: BaseVC, UINavigationControllerDelegate, ImagePickerDelegate
     
     var selectedRoute: NSDictionary!
     
-    @IBOutlet weak var priceChk: Checkbox!
-    
     var selectedImages = [UIImage]()
     
     var imagePicker: UIImagePickerController!
+    
+    var isAboveTen : Bool?
     
     enum ImageSource {
         case photoLibrary
@@ -104,11 +104,6 @@ class DeliveryStep3: BaseVC, UINavigationControllerDelegate, ImagePickerDelegate
         
         self.edtOrderDetails.text = self.orderModel?.orderDetails ?? ""
       //  self.edtCost.text = self.orderModel?.orderCost ?? ""
-        
-        self.priceChk.checkmarkStyle = .tick
-        self.priceChk.checkmarkColor = UIColor.processing
-        self.priceChk.checkedBorderColor = UIColor.processing
-        self.priceChk.uncheckedBorderColor = UIColor.colorPrimary
         
     }
     
@@ -320,7 +315,7 @@ class DeliveryStep3: BaseVC, UINavigationControllerDelegate, ImagePickerDelegate
     }
     
     func getCost() -> Double {
-        if (priceChk.isChecked) {
+        if (self.isAboveTen ?? false) {
             return 11.0
         }else {
             return 9.0
@@ -461,6 +456,52 @@ class DeliveryStep3: BaseVC, UINavigationControllerDelegate, ImagePickerDelegate
         return actionSheet
     }
     
+    
+    
+    
+    func createCostSheet() -> ActionSheet {
+        let title = ActionSheetTitle(title: "select_cost_range".localized)
+        
+        let appearance = ActionSheetAppearance()
+        
+        appearance.title.font = UIFont(name: Constants.ARABIC_FONT_REGULAR, size: 16)
+        appearance.sectionTitle.font = UIFont(name: Constants.ARABIC_FONT_REGULAR, size: 14)
+        appearance.sectionTitle.subtitleFont = UIFont(name: Constants.ARABIC_FONT_REGULAR, size: 14)
+        appearance.item.subtitleFont = UIFont(name: Constants.ARABIC_FONT_REGULAR, size: 14)
+        appearance.item.font = UIFont(name: Constants.ARABIC_FONT_REGULAR, size: 14)
+        
+        let item0 = ActionSheetItem(title: "below_ten_kd".localized, value: 0, image: nil)
+        let item1 = ActionSheetItem(title: "above_ten_kd".localized, value: 1, image: nil)
+        
+        let actionSheet = ActionSheet(items: [title,item0,item1]) { sheet, item in
+            if let value = item.value as? Int {
+                switch (value) {
+                case 0:
+                    //below
+                    self.btnCost.setTitle("below_ten_kd".localized, for: .normal)
+                    self.isAboveTen = false
+                    break
+                case 1:
+                    //above
+                    self.btnCost.setTitle("above_ten_kd".localized, for: .normal)
+                    self.isAboveTen = true
+                    break
+                default:
+                    print("1")
+                    break
+                }
+            }
+            if item is ActionSheetOkButton {
+                print("OK buttons has the value `true`")
+            }
+        }
+        actionSheet.appearance = appearance
+        actionSheet.title = "select_an_option".localized
+        
+        return actionSheet
+    }
+    
+    
     func validate() -> Bool {
         if (self.edtOrderDetails.text?.count ?? 0 == 0) {
             self.showBanner(title: "alert".localized, message: "enter_order_details".localized, style: UIColor.INFO)
@@ -529,6 +570,13 @@ class DeliveryStep3: BaseVC, UINavigationControllerDelegate, ImagePickerDelegate
     @IBAction func backBtnAction(_ sender: Any) {
       self.saveBackModel()
     }
+    
+    @IBAction func costAction(_ sender: Any) {
+        let actionSheet = createCostSheet()
+        actionSheet.appearance.title.textColor = UIColor.colorPrimary
+        actionSheet.present(in: self, from: self.view)
+    }
+    
     
 }
 extension DeliveryStep3 : GMSMapViewDelegate {

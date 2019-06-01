@@ -38,6 +38,9 @@ class DeliveryStep1: BaseVC,LabasLocationManagerDelegate, Step2Delegate {
     
     @IBOutlet weak var ivIndicator: UIImageView!
     
+    @IBOutlet weak var moreDetailsView: UIView!
+    
+    
     var markerLocation: GMSMarker?
     var currentZoom: Float = 0.0
     var gMap : GMSMapView?
@@ -85,6 +88,7 @@ class DeliveryStep1: BaseVC,LabasLocationManagerDelegate, Step2Delegate {
         }
         
         if (self.orderModel?.shop?.id ?? 0 > 0) {
+            self.moreDetailsView.isHidden = false
             self.lblPickupLocation.text = self.orderModel?.pickUpAddress ?? ""
             self.lblPickupLocation.textColor = UIColor.appDarkBlue
             //  self.edtMoreDetails.text = self.orderModel?.pickUpAddress ?? ""
@@ -511,6 +515,7 @@ class DeliveryStep1: BaseVC,LabasLocationManagerDelegate, Step2Delegate {
     
     
     @IBAction func clearPickLocation(_ sender: Any) {
+        self.moreDetailsView.isHidden = true
         self.ivShop.image = nil
         self.edtMoreDetails.text = ""
         self.lblPickupLocation.text = ""
@@ -656,6 +661,7 @@ extension DeliveryStep1 : GMSMapViewDelegate {
     
     func mapView(_ mapView: GMSMapView, didLongPressAt coordinate: CLLocationCoordinate2D) {
         self.gMap?.clear()
+        self.moreDetailsView.isHidden = false
         self.shopMarkers.removeAll()
         self.pinMarker?.map = nil
         self.pinMarker = GMSMarker()

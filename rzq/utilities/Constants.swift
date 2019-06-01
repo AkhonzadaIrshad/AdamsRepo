@@ -20,12 +20,11 @@ class Constants {
     static var ARABIC_FONT_SEMIBOLD = "Tajawal-Medium"
     static var ARABIC_FONT_BOLD = "Tajawal-Bold"
     
-    
     static var AUTH_HEADER = "Authorization"
     static var LANG_HEADER = "Accept-Language"
     
-    static var BASE_URL = "http://www.rzqapp.com/rzq/api/"
-    static var IMAGE_URL = "http://www.rzqapp.com/rzq/api/file/get?name="
+    static var BASE_URL = "http://rzq.rzqapp.com/api/"
+    static var IMAGE_URL = "http://rzq.rzqapp.com/api/file/get?name="
     
     static var DEFAULT_RADIUS = 20000.0
     

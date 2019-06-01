@@ -173,3 +173,6 @@
 "our_instagram" = "الانستاجرام";
 "our_facebook" = "الفيسبوك";
 
+"select_cost_range" = "اختر فئة السعر";
+"below_ten_kd" = "اقل من ١٠ د.ك";
+"above_ten_kd" = "اكبر من ١٠ د.ك";

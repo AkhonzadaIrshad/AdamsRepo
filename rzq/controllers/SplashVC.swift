@@ -15,7 +15,7 @@ class SplashVC: BaseVC {
         
         
         ApiService.getAppConfig { (response) in
-            App.shared.config = response.configData
+            App.shared.config = response.data
             self.startSplashLoader()
         }
     }

@@ -20,6 +20,10 @@
 /* Class = "UIButton"; normalTitle = "Place Order"; ObjectID = "1CT-yu-bU4"; */
 "1CT-yu-bU4.normalTitle" = "Place Order";
 
+"GoF-rZ-Bo8.normalTitle" = "Below 10 KD";
+"i3L-VB-N8M.normalTitle" = "Below 10 KD";
+"gQE-2w-AvE.normalTitle" = "Below 10 KD";
+
 /* Class = "UILabel"; text = "Order"; ObjectID = "1TR-hb-f0r"; */
 "1TR-hb-f0r.text" = "Order";
 
@@ -932,6 +936,8 @@
 /* Class = "UILabel"; text = "Label"; ObjectID = "lvS-9S-rn1"; */
 "lvS-9S-rn1.text" = "Label";
 
+
+
 /* Class = "UIButton"; normalTitle = "Track"; ObjectID = "lxD-LV-M1f"; */
 "lxD-LV-M1f.normalTitle" = "Track";
 
@@ -1138,6 +1144,10 @@
 
 /* Class = "UITextField"; placeholder = "Search for pickup location"; ObjectID = "uoN-4e-Qtq"; */
 "uoN-4e-Qtq.placeholder" = "Search for pickup location";
+
+"PYs-tI-OoW.placeholder" = "Search for drop off location";
+"9aI-b4-8ZM.placeholder" = "Search for drop off location";
+"DUG-bT-Cbn.placeholder" = "Search for drop off location";
 
 /* Class = "UILabel"; text = "Label"; ObjectID = "vNJ-fR-wCx"; */
 "vNJ-fR-wCx.text" = "Label";

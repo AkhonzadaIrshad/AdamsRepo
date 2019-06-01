@@ -20,6 +20,8 @@ class DriverOrderCell: UITableViewCell {
     
     @IBOutlet weak var lblDistance: MyUILabel!
     
+    @IBOutlet weak var ivType: UIImageView!
+    
     var onTake : (() -> Void)? = nil
     
     @IBAction func takeOrderAction(_ sender: Any) {

@@ -309,7 +309,6 @@ class AppDelegate: UIResponder, UIApplicationDelegate, MOLHResetable,MessagingDe
                 self.showBanner(title: title, message: body, style: UIColor.colorPrimary)
         }
         
-        
         // Print full message.
         print(userInfo)
         
@@ -616,6 +615,18 @@ extension String {
     }
 }
 extension UIViewController {
+    open override func awakeFromNib() {
+        super.awakeFromNib()
+        if (MOLHLanguage.currentAppleLanguage() == "ar") {
+            navigationController?.view.semanticContentAttribute = .forceRightToLeft
+            navigationController?.navigationBar.semanticContentAttribute = .forceRightToLeft
+        }else {
+            navigationController?.view.semanticContentAttribute = .forceLeftToRight
+            navigationController?.navigationBar.semanticContentAttribute = .forceLeftToRight
+        }
+        
+    }
+    
     func popBack(_ nb: Int) {
         if let viewControllers: [UIViewController] = self.navigationController?.viewControllers {
             guard viewControllers.count < nb else {
