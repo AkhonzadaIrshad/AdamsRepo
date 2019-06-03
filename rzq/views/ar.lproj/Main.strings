@@ -167,8 +167,12 @@
 /* Class = "UIButton"; normalTitle = "Next"; ObjectID = "A9Y-JR-xYs"; */
 "A9Y-JR-xYs.normalTitle" = "التالي";
 
+"IVO-Wy-ZPd.text" = "المبلغ المسحق";
 /* Class = "UIButton"; normalTitle = "Back"; ObjectID = "A9r-Fe-iM8"; */
 "A9r-Fe-iM8.normalTitle" = "رجوع";
+
+"nfZ-bd-Wtl.text" = "للبحث من الاعلى";
+"hqX-pI-KDM.text" = "للبحث من الاعلى";
 
 /* Class = "UILabel"; text = "Rate App"; ObjectID = "AIN-UD-k78"; */
 "AIN-UD-k78.text" = "قيم التطبيق";
@@ -237,7 +241,7 @@
 "Ep5-eC-1KG.normalTitle" = "ارسل";
 
 /* Class = "UILabel"; text = "More Details"; ObjectID = "F6Q-d9-Lwu"; */
-"F6Q-d9-Lwu.text" = "المزيد";
+"F6Q-d9-Lwu.text" = "اختياري";
 
 /* Class = "UILabel"; text = "Working Hours"; ObjectID = "F6f-gO-h0q"; */
 "F6f-gO-h0q.text" = "ساعات العمل";
@@ -520,7 +524,7 @@
 "TvU-TF-gms.normalTitle" = "ارسل الفاتورة";
 
 /* Class = "UILabel"; text = "More Details"; ObjectID = "U2s-Ga-UUd"; */
-"U2s-Ga-UUd.text" = "المزيد";
+"U2s-Ga-UUd.text" = "اختياري";
 
 /* Class = "UILabel"; text = "You can add your pin point by long pressing on map."; ObjectID = "U71-yp-hek"; */
 "U71-yp-hek.text" = "اضف موقعك الخاص على الخريطة بالضغط المطول";
@@ -844,7 +848,7 @@
 "hGv-Lk-Qql.text" = "Label";
 
 /* Class = "UILabel"; text = "Suggest a Place"; ObjectID = "hId-r6-OBe"; */
-"hId-r6-OBe.text" = "اقترح متجر";
+"hId-r6-OBe.text" = "اقترح متجرك او بوتيكك الخاص";
 
 /* Class = "UIButton"; normalTitle = "Register"; ObjectID = "heQ-V4-lVv"; */
 "heQ-V4-lVv.normalTitle" = "تسجيل";
@@ -877,7 +881,7 @@
 "ixy-DN-Ofc.text" = "Label";
 
 /* Class = "UILabel"; text = "Suggest a Shop"; ObjectID = "j4t-8B-U2U"; */
-"j4t-8B-U2U.text" = "اقترح متجر";
+"j4t-8B-U2U.text" = "اقترح متجرك او بوتيكك الخاص";
 
 /* Class = "UILabel"; text = "Profile Picture"; ObjectID = "jQw-J5-5FV"; */
 "jQw-J5-5FV.text" = "صورة الملف";
@@ -1006,7 +1010,7 @@
 "oVV-Fh-1fQ.text" = "Label";
 
 /* Class = "UILabel"; text = "More Details"; ObjectID = "oXA-dN-KbM"; */
-"oXA-dN-KbM.text" = "المزيد";
+"oXA-dN-KbM.text" = "اختياري";
 
 /* Class = "UILabel"; text = "Order"; ObjectID = "ofD-eb-t9x"; */
 "ofD-eb-t9x.text" = "اطلب";
@@ -1108,7 +1112,7 @@
 "t8W-M9-YHp.text" = "تكلفة الطلب";
 
 /* Class = "UILabel"; text = "More Details"; ObjectID = "tCj-nF-syF"; */
-"tCj-nF-syF.text" = "المزيد";
+"tCj-nF-syF.text" = "اختياري";
 
 /* Class = "UILabel"; text = "Turn on your location settings to add your address automatically."; ObjectID = "tPU-kl-Uwh"; */
 "tPU-kl-Uwh.text" = "قم بتشغيل خدمة الموقع لخدمة أفضل";

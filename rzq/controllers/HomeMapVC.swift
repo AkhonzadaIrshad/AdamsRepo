@@ -87,6 +87,9 @@ class HomeMapVC: BaseViewController,LabasLocationManagerDelegate, UICollectionVi
         self.validateDriverDueAmount()
         
         
+        self.viewServices.isHidden = true
+        self.viewTenders.isHidden = true
+        
     }
     
     override func viewDidAppear(_ animated: Bool) {
@@ -509,11 +512,11 @@ class HomeMapVC: BaseViewController,LabasLocationManagerDelegate, UICollectionVi
     func labasLocationManager(didUpdateLocation location: CLLocation) {
         if (self.latitude ?? 0.0 == 0.0 || self.longitude ?? 0.0 == 0.0) {
             
-//            self.latitude = location.coordinate.latitude
-//            self.longitude = location.coordinate.longitude
+            self.latitude = location.coordinate.latitude
+            self.longitude = location.coordinate.longitude
             
-                        self.latitude = 29.273551
-                        self.longitude = 47.936161
+//                        self.latitude = 29.273551
+//                        self.longitude = 47.936161
             
             self.hideLoading()
             self.setUpGoogleMap()
@@ -592,8 +595,9 @@ class HomeMapVC: BaseViewController,LabasLocationManagerDelegate, UICollectionVi
                 self.pickMarker?.map = nil
                 self.dropMarker?.map = nil
                 self.viewOnTheWay.isHidden = false
-                self.viewServices.isHidden = false
-                self.viewTenders.isHidden = false
+                //back to false when u want to show them
+                self.viewServices.isHidden = true
+                self.viewTenders.isHidden = true
             }
             
         }

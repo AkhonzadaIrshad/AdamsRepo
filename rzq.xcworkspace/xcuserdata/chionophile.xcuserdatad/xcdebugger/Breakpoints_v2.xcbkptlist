@@ -9,76 +9,12 @@
             shouldBeEnabled = "Yes"
             ignoreCount = "0"
             continueAfterRunningActions = "No"
-            filePath = "rzq/chat/ZHCDemoMessagesViewController.swift"
-            timestampString = "580592712.7976"
-            startingColumnNumber = "9223372036854775807"
-            endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "665"
-            endingLineNumber = "665"
-            landmarkName = "sendVoiceMessage()"
-            landmarkType = "7">
-            <Locations>
-               <Location
-                  shouldBeEnabled = "Yes"
-                  ignoreCount = "0"
-                  continueAfterRunningActions = "No"
-                  symbolName = "rzq.ZHCDemoMessagesViewController.sendVoiceMessage() -&gt; ()"
-                  moduleName = "rzq"
-                  usesParentBreakpointCondition = "Yes"
-                  urlString = "file:///Users/chionophile/Documents/Projects/iOS/rzq/rzq/chat/ZHCDemoMessagesViewController.swift"
-                  timestampString = "581064861.696833"
-                  startingColumnNumber = "9223372036854775807"
-                  endingColumnNumber = "9223372036854775807"
-                  startingLineNumber = "666"
-                  endingLineNumber = "666"
-                  offsetFromSymbolStart = "740">
-               </Location>
-               <Location
-                  shouldBeEnabled = "Yes"
-                  ignoreCount = "0"
-                  continueAfterRunningActions = "No"
-                  symbolName = "closure #1 (rzq.BaseResponse) -&gt; () in rzq.ZHCDemoMessagesViewController.sendVoiceMessage() -&gt; ()"
-                  moduleName = "rzq"
-                  usesParentBreakpointCondition = "Yes"
-                  urlString = "file:///Users/chionophile/Documents/Projects/iOS/rzq/rzq/chat/ZHCDemoMessagesViewController.swift"
-                  timestampString = "581064861.698602"
-                  startingColumnNumber = "9223372036854775807"
-                  endingColumnNumber = "9223372036854775807"
-                  startingLineNumber = "656"
-                  endingLineNumber = "656"
-                  offsetFromSymbolStart = "124">
-               </Location>
-            </Locations>
-         </BreakpointContent>
-      </BreakpointProxy>
-      <BreakpointProxy
-         BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
-         <BreakpointContent
-            shouldBeEnabled = "Yes"
-            ignoreCount = "0"
-            continueAfterRunningActions = "No"
-            filePath = "rzq/chat/ZHCDemoMessagesViewController.swift"
-            timestampString = "580592712.797658"
-            startingColumnNumber = "9223372036854775807"
-            endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "664"
-            endingLineNumber = "664"
-            landmarkName = "sendVoiceMessage()"
-            landmarkType = "7">
-         </BreakpointContent>
-      </BreakpointProxy>
-      <BreakpointProxy
-         BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
-         <BreakpointContent
-            shouldBeEnabled = "Yes"
-            ignoreCount = "0"
-            continueAfterRunningActions = "No"
             filePath = "rzq/controllers/HomeMapVC.swift"
-            timestampString = "580739053.392301"
+            timestampString = "581176990.80212"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "793"
-            endingLineNumber = "793"
+            startingLineNumber = "797"
+            endingLineNumber = "797"
             landmarkName = "mapView(_:didTap:)"
             landmarkType = "7">
          </BreakpointContent>
@@ -96,6 +32,38 @@
             startingLineNumber = "952"
             endingLineNumber = "952"
             landmarkName = "getAppConfig(completion:)"
+            landmarkType = "7">
+         </BreakpointContent>
+      </BreakpointProxy>
+      <BreakpointProxy
+         BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
+         <BreakpointContent
+            shouldBeEnabled = "Yes"
+            ignoreCount = "0"
+            continueAfterRunningActions = "No"
+            filePath = "rzq/controllers/onTheWay/DeliveryStep1.swift"
+            timestampString = "581263898.52476"
+            startingColumnNumber = "9223372036854775807"
+            endingColumnNumber = "9223372036854775807"
+            startingLineNumber = "402"
+            endingLineNumber = "402"
+            landmarkName = "getShopsByName(name:latitude:longitude:radius:)"
+            landmarkType = "7">
+         </BreakpointContent>
+      </BreakpointProxy>
+      <BreakpointProxy
+         BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
+         <BreakpointContent
+            shouldBeEnabled = "Yes"
+            ignoreCount = "0"
+            continueAfterRunningActions = "No"
+            filePath = "Pods/ZHChat/ZHCMessagesViewController/Controllers/ZHCMessagesViewController.m"
+            timestampString = "581182650.631372"
+            startingColumnNumber = "9223372036854775807"
+            endingColumnNumber = "9223372036854775807"
+            startingLineNumber = "753"
+            endingLineNumber = "753"
+            landmarkName = "-showMoreView"
             landmarkType = "7">
          </BreakpointContent>
       </BreakpointProxy>

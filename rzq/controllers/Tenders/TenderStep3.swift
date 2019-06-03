@@ -243,6 +243,11 @@ class TenderStep3: BaseVC, UINavigationControllerDelegate, ImagePickerDelegate {
         }
     }
     
+    
+    @IBAction func clearFieldAction(_ sender: Any) {
+        self.edtOrderDetails.text = ""
+    }
+    
     @IBAction func timeAction(_ sender: Any) {
         let actionSheet = createTimeSheet()
         actionSheet.appearance.title.textColor = UIColor.colorPrimary

@@ -122,12 +122,12 @@ class NotificationsVC: BaseViewController, UITableViewDelegate, UITableViewDataS
         return actionSheet
     }
     
-    
-    
+
     func labasLocationManager(didUpdateLocation location: CLLocation) {
         if (self.latitude ?? 0.0 == 0.0 || self.longitude ?? 0.0 == 0.0) {
             self.latitude = location.coordinate.latitude
             self.longitude = location.coordinate.longitude
+            self.updateNotifications()
         }
     }
     

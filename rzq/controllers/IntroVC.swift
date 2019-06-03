@@ -90,7 +90,7 @@ class IntroVC: UIPageViewController, UIPageViewControllerDataSource, UIPageViewC
             return "MapNavigationController"
         }else {
             //  return "HomeListVC"
-            return "ListNavigationController"
+            return "MapNavigationController"
         }
     }
     

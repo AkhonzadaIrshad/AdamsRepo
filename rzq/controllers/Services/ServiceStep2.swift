@@ -325,6 +325,8 @@ class ServiceStep2: BaseVC {
                 self.lblDropLocation.text = shop.name ?? ""
                 self.lblDropLocation.textColor = UIColor.appDarkBlue
                 
+                 self.view.endEditing(true)
+                
                 self.edtMoreDetails.text = shop.address ?? ""
                 
                 self.pinMarker?.map = nil
@@ -356,6 +358,11 @@ class ServiceStep2: BaseVC {
         let distanceStr = String(format: "%.2f", distanceInKM)
         return "(\(distanceStr) \("km".localized))"
     }
+    
+    @IBAction func clearFieldAction(_ sender: Any) {
+        self.edtMoreDetails.text = ""
+    }
+    
     
     
 }

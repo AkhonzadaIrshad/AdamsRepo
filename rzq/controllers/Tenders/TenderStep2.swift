@@ -326,6 +326,8 @@ class TenderStep2: BaseVC {
                 
                 self.edtMoreDetails.text = shop.address ?? ""
                 
+                 self.view.endEditing(true)
+                
                 self.pinMarker?.map = nil
                 self.pinMarker = GMSMarker()
                 self.pinMarker?.position = CLLocationCoordinate2D(latitude: shop.latitude ?? 0.0, longitude: shop.longitude ?? 0.0)
@@ -356,6 +358,11 @@ class TenderStep2: BaseVC {
         return "(\(distanceStr) \("km".localized))"
     }
     
+    @IBAction func clearFieldAction(_ sender: Any) {
+        self.edtMoreDetails.text = ""
+    }
+    
+ 
     
 }
 

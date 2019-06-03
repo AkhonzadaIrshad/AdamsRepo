@@ -170,7 +170,10 @@
 "our_website" = "Our Website";
 "our_instagram" = "Our Instagram";
 "our_facebook" = "Our Facebook";
+"our_twitter" = "Our Twitter";
 
 "select_cost_range" = "Select Price Range";
 "below_ten_kd" = "Below 10 KD";
 "above_ten_kd" = "Above 10 KD";
+
+"to_location_desc" = "We used your location as destination, you can search above or add your custom location on map.";

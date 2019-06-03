@@ -27,16 +27,23 @@ class ZHCDemoMessagesViewController: ZHCMessagesViewController, BillDelegate, Ch
     var actionButton : JJFloatingActionButton?
     var driverActionButton : JJFloatingActionButton?
     
-    
     var gif : UIImageView?
     var btnRecord : UIButton?
     var recorder = KAudioRecorder.shared
     
+    var bottomMargin = 0.0
     
     var imagePicker: UIImagePickerController!
     enum ImageSource {
         case photoLibrary
         case camera
+    }
+    
+     var hasSafeArea: Bool {
+        guard #available(iOS 11.0, *), let topPadding = UIApplication.shared.keyWindow?.safeAreaInsets.top, topPadding > 24 else {
+            return false
+        }
+        return true
     }
     
     override func viewDidLoad() {
@@ -66,9 +73,13 @@ class ZHCDemoMessagesViewController: ZHCMessagesViewController, BillDelegate, Ch
         self.gif?.isHidden = true
         self.view.addSubview(self.gif!)
         
-        
         self.setUpRecordButton()
         
+        if (self.hasSafeArea) {
+            self.bottomMargin = 20.0
+        }else {
+            self.bottomMargin = 0.0
+        }
     }
     
     func setUpRecordButton() {
@@ -252,7 +263,6 @@ class ZHCDemoMessagesViewController: ZHCMessagesViewController, BillDelegate, Ch
             // Fallback on earlier versions
         }
         if #available(iOS 11.0, *) {
-            //            actionButton.bottomAnchor.constraint(equalTo: view.safeAreaLayoutGuide.bottomAnchor, constant: -56).isActive = true
             self.driverActionButton?.bottomAnchor.constraint(equalTo: self.inputMessageBarView.safeAreaLayoutGuide.bottomAnchor, constant: -56).isActive = true
         } else {
             // Fallback on earlier versions
@@ -433,6 +443,7 @@ class ZHCDemoMessagesViewController: ZHCMessagesViewController, BillDelegate, Ch
         }
         self.startDelivery(cost: cost)
     }
+    
     func isArabic() -> Bool {
         if (MOLHLanguage.currentAppleLanguage() == "ar") {
             return true
@@ -457,10 +468,18 @@ class ZHCDemoMessagesViewController: ZHCMessagesViewController, BillDelegate, Ch
     }
     
     override func viewWillAppear(_ animated: Bool) {
-        super.viewWillAppear(animated);
+        super.viewWillAppear(animated)
         if self.presentBool {
             self.navigationItem.leftBarButtonItem = UIBarButtonItem.init(barButtonSystemItem: UIBarButtonItem.SystemItem.stop, target: self, action:#selector(closePressed))
         }
+        
+//        self.inputMessageBarView.translatesAutoresizingMaskIntoConstraints = false
+//        if #available(iOS 11.0, *) {
+//             self.inputMessageBarView.bottomAnchor.constraint(equalTo: view.bottomAnchor, constant: 100).isActive = true
+//        } else {
+//            // Fallback on earlier versions
+//        }
+
     }
     
     override func didReceiveMemoryWarning() {

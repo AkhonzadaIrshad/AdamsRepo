@@ -136,6 +136,15 @@ class AboutUsVC: BaseVC {
         item4.action = { item in
             self.callNumber()
         }
+        let item5 = actionButton.addItem()
+        item5.titleLabel.text = "our_twitter".localized
+        item5.titleLabel.font = UIFont(name: self.getFontName(), size: 13)
+        item5.imageView.image = UIImage(named: "ic_about5")
+        item5.buttonColor = UIColor.twitterColor
+        item5.buttonImageColor = .white
+        item5.action = { item in
+            self.openTwitterProfile()
+        }
         
         actionButton.buttonColor = UIColor.white
         actionButton.shadowColor = UIColor.blue

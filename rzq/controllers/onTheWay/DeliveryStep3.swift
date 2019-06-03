@@ -577,6 +577,10 @@ class DeliveryStep3: BaseVC, UINavigationControllerDelegate, ImagePickerDelegate
         actionSheet.present(in: self, from: self.view)
     }
     
+    @IBAction func clearFieldAction(_ sender: Any) {
+        self.edtOrderDetails.text = ""
+    }
+    
     
 }
 extension DeliveryStep3 : GMSMapViewDelegate {

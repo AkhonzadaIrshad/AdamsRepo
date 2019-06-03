@@ -249,6 +249,11 @@ class ServiceStep3: BaseVC, UINavigationControllerDelegate, ImagePickerDelegate 
         actionSheet.present(in: self, from: self.view)
     }
     
+    
+    @IBAction func clearFieldAction(_ sender: Any) {
+        self.edtOrderDetails.text = ""
+    }
+    
     @IBAction func placeOrderAction(_ sender: Any) {
         if (self.validate()) {
             ApiService.createService(Authorization: self.loadUser().data?.accessToken ?? "", desc: self.edtOrderDetails.text ?? "", toLongitude: self.orderModel?.dropOffLongitude ?? 0.0, toLatitude: self.orderModel?.dropOffLatitude ?? 0.0, time: self.selectedTime ?? 1, price: "\(self.getCost())", address: self.orderModel?.dropOffAddress ?? "", serviceId: self.orderModel?.service?.id ?? 0, dropOffDetails: self.orderModel?.dropOffDetails ?? "") { (response) in

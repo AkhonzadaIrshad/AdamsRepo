@@ -163,7 +163,7 @@ class BaseViewController: UIViewController, SlideMenuDelegate {
         if (App.shared.config?.configSettings?.isMapView ?? true) {
             return "HomeMapVC"
         }else {
-            return "HomeListVC"
+            return "HomeMapVC"
         }
     }
     
@@ -173,7 +173,7 @@ class BaseViewController: UIViewController, SlideMenuDelegate {
             return "MapNavigationController"
         }else {
             //  return "HomeListVC"
-            return "ListNavigationController"
+            return "MapNavigationController"
         }
     }
     

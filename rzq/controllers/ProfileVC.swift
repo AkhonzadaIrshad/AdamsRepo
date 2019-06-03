@@ -35,6 +35,12 @@ class ProfileVC: BaseVC {
     
     @IBOutlet weak var ivIndicator2: UIImageView!
     
+    
+    @IBOutlet weak var lblDueAmount: MyUILabel!
+    @IBOutlet weak var lineDueAmount: UIView!
+    @IBOutlet weak var lblDueTitle: MyUILabel!
+    @IBOutlet weak var dueTitleHeight: NSLayoutConstraint!
+    
     var user : DataProfileObj?
     
     override func viewDidLoad() {
@@ -45,6 +51,7 @@ class ProfileVC: BaseVC {
             self.ivIndicator2.image = UIImage(named: "ic_indicator_arabic")
         }
         // Do any additional setup after loading the view.
+        
     }
     
     override func viewDidAppear(_ animated: Bool) {
@@ -88,6 +95,25 @@ class ProfileVC: BaseVC {
 //            }else {
 //                self.ivProviderBadge.isHidden = true
 //            }
+          
+            if ((response.dataProfileObj?.roles?.contains("Driver"))! || (response.dataProfileObj?.roles?.contains("ServiceProvider"))! ||
+                (response.dataProfileObj?.roles?.contains("TenderProvider"))!) {
+                
+                self.lineDueAmount.isHidden = false
+                self.dueTitleHeight.constant = 20
+                self.lblDueTitle.isHidden = false
+                let balance = response.dataProfileObj?.balance ?? 0.0
+                let perc = App.shared.config?.configSettings?.percentage ?? 0.0
+                let total = balance * perc
+                let finalTotal = total / 10.0
+                self.lblDueAmount.text = "\(finalTotal) \("currency".localized)"
+                
+            }else {
+                self.lineDueAmount.isHidden = true
+                self.dueTitleHeight.constant = 0
+                self.lblDueTitle.isHidden = true
+                self.lblDueAmount.text = ""
+            }
             
         }
     }

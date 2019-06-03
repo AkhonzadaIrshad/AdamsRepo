@@ -47,7 +47,7 @@ class BaseVC: UIViewController,UIGestureRecognizerDelegate {
             return "MapNavigationController"
         }else {
           //  return "HomeListVC"
-            return "ListNavigationController"
+            return "MapNavigationController"
         }
     }
     

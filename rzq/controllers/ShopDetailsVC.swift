@@ -89,12 +89,13 @@ class ShopDetailsVC: BaseVC, UITableViewDelegate, UITableViewDataSource, UIColle
         if (self.shop?.images?.count ?? 0 > 0) {
             let url = URL(string: "\(Constants.IMAGE_URL)\(self.shop?.images?[0] ?? "")")
             self.ivLogo.kf.setImage(with: url)
-        }else {
+        }else if (self.shop?.type?.image?.count ?? 0 > 0){
             let url = URL(string: "\(Constants.IMAGE_URL)\(self.shop?.type?.image ?? "")")
             self.ivLogo.kf.setImage(with: url)
+        }else {
+            self.ivLogo.image = UIImage(named: "ic_place_store")
         }
-       
-        
+     
         self.lblName.text = self.shop?.name ?? ""
         self.lblAddress.text = self.shop?.address ?? ""
         self.ratingView.rating = self.shop?.rate ?? 0.0
@@ -378,7 +379,8 @@ class ShopDetailsVC: BaseVC, UITableViewDelegate, UITableViewDataSource, UIColle
             if (response.errorCode == 0) {
                 self.showBanner(title: "alert".localized, message: "registered_to_shop".localized, style: UIColor.SUCCESS)
             }else {
-                self.showBanner(title: "alert".localized, message: response.errorMessage ?? "", style: UIColor.INFO)
+               // self.showBanner(title: "alert".localized, message: response.errorMessage ?? "", style: UIColor.INFO)
+                self.showBanner(title: "alert".localized, message: "registered_to_shop".localized, style: UIColor.SUCCESS)
             }
         }
     }

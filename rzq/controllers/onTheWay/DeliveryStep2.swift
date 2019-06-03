@@ -11,6 +11,7 @@ import GoogleMaps
 import GooglePlaces
 import MapKit
 import CoreLocation
+import AMPopTip
 
 protocol Step2Delegate {
     func updateModel(model : OTWOrder)
@@ -32,7 +33,9 @@ class DeliveryStep2: BaseVC, Step3Delegate {
     
     @IBOutlet weak var moreDetailsView: UIView!
     
+    @IBOutlet weak var lblDistance: UILabel!
     
+    @IBOutlet weak var viewFromTo: CardView!
     
     var markerLocation: GMSMarker?
     var currentZoom: Float = 0.0
@@ -56,6 +59,8 @@ class DeliveryStep2: BaseVC, Step3Delegate {
     var shops = [DataShop]()
     var filterShops = [DataShop]()
     
+    @IBOutlet weak var lblSearch: MyUILabel!
+    
     override func viewDidLoad() {
         super.viewDidLoad()
         if (self.isArabic()) {
@@ -67,10 +72,23 @@ class DeliveryStep2: BaseVC, Step3Delegate {
         self.setUpGoogleMap()
         
         self.edtMoreDetails.text = self.orderModel?.dropOffDetails ?? ""
+        
+        
+        let popTip = PopTip()
+        popTip.bubbleColor = UIColor.processing
+        popTip.textColor = UIColor.white
+        
+       popTip.show(text: "to_location_desc".localized, direction: .down, maxWidth: 260, in: self.view, from: self.viewFromTo.frame)
+        
+        DispatchQueue.main.asyncAfter(deadline: .now() + 4) {
+            popTip.hide()
+        }
+        
     }
     
     func selectDefaultDrop() {
         self.moreDetailsView.isHidden = false
+        self.lblSearch.isHidden = true
         self.orderModel?.dropOffLatitude = self.latitude ?? 0.0
         self.orderModel?.dropOffLongitude = self.longitude ?? 0.0
         self.getAddressForMapCenter(location: CLLocation(latitude: self.latitude ?? 0.0, longitude: self.longitude ?? 0.0))
@@ -173,6 +191,9 @@ class DeliveryStep2: BaseVC, Step3Delegate {
     }
     
     func drawLocationLine() {
+        
+        self.getFromToDistance()
+        
         let origin = "\(self.orderModel?.pickUpLatitude ?? 0),\(self.orderModel?.pickUpLongitude ?? 0)"
         let destination = "\(self.orderModel?.dropOffLatitude ?? 0),\(self.orderModel?.dropOffLongitude ?? 0)"
         
@@ -236,6 +257,7 @@ class DeliveryStep2: BaseVC, Step3Delegate {
                        //no routes
                     }
                     
+                    
                 }catch let error as NSError{
                     print("error:\(error)")
                 }
@@ -245,6 +267,7 @@ class DeliveryStep2: BaseVC, Step3Delegate {
     
     @IBAction func clearDropLocation(_ sender: Any) {
         self.moreDetailsView.isHidden = true
+        self.lblSearch.isHidden = false
         self.lblDropLocation.text = ""
         self.orderModel?.dropOffAddress = ""
         self.orderModel?.dropOffLatitude = 0.0
@@ -254,6 +277,7 @@ class DeliveryStep2: BaseVC, Step3Delegate {
         self.dropLocation = nil
         self.gMap?.clear()
         self.toolTipView?.removeFromSuperview()
+        self.lblDistance.text = ""
     }
     
     @IBAction func nextAction(_ sender: Any) {
@@ -381,6 +405,7 @@ class DeliveryStep2: BaseVC, Step3Delegate {
                 self.filterShops.append(dataShop)
             }
             
+            
             for shop in self.filterShops {
                 let item1 = SearchTextFieldItem(title: "\(shop.name ?? "")  \(self.getShopDistance(latitude: shop.latitude ?? 0.0, longitude: shop.longitude ?? 0.0))", subtitle: shop.address ?? "", image: UIImage(named: "ic_location"))
                 filterItems.append(item1)
@@ -402,7 +427,8 @@ class DeliveryStep2: BaseVC, Step3Delegate {
                 self.lblDropLocation.text = shop.name ?? ""
                 self.lblDropLocation.textColor = UIColor.appDarkBlue
                 
-               
+               self.view.endEditing(true)
+                
                 self.pinMarker?.map = nil
                 self.pinMarker = GMSMarker()
                 self.pinMarker?.position = CLLocationCoordinate2D(latitude: shop.latitude ?? 0.0, longitude: shop.longitude ?? 0.0)
@@ -415,8 +441,6 @@ class DeliveryStep2: BaseVC, Step3Delegate {
                 self.getAddressForMapCenter()
                 self.drawLocationLine()
                 
-                
-                
             }
         }
     }
@@ -428,6 +452,20 @@ class DeliveryStep2: BaseVC, Step3Delegate {
         let distanceInKM = distanceInMeters / 1000.0
         let distanceStr = String(format: "%.2f", distanceInKM)
         return "(\(distanceStr) \("km".localized))"
+    }
+    
+    func getFromToDistance() {
+        let driverLatLng = CLLocation(latitude: self.orderModel?.pickUpLatitude ?? 0.0, longitude: self.orderModel?.pickUpLongitude ?? 0.0)
+        let dropOffLatLng = CLLocation(latitude: self.orderModel?.dropOffLatitude ?? 0.0, longitude: self.orderModel?.dropOffLongitude ?? 0.0)
+        let distanceInMeters = dropOffLatLng.distance(from: driverLatLng)
+        let distanceInKM = distanceInMeters / 1000.0
+        let distanceStr = String(format: "%.2f", distanceInKM)
+        self.lblDistance.text = "\(distanceStr) \("km".localized)"
+    }
+    
+    
+    @IBAction func clearFieldAction(_ sender: Any) {
+        self.edtMoreDetails.text = ""
     }
     
     
@@ -483,6 +521,7 @@ extension DeliveryStep2 : GMSMapViewDelegate {
     func mapView(_ mapView: GMSMapView, didLongPressAt coordinate: CLLocationCoordinate2D) {
         self.pinMarker?.map = nil
         self.moreDetailsView.isHidden = false
+        self.lblSearch.isHidden = true
         self.pinMarker = GMSMarker()
         self.pinMarker?.position = CLLocationCoordinate2D(latitude: coordinate.latitude, longitude: coordinate.longitude)
         self.pinMarker?.title =  ""

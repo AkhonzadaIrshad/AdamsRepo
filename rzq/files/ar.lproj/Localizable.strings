@@ -5,7 +5,7 @@
   Created by Zaid najjar on 4/1/19.
   Copyright © 2019 technzone. All rights reserved.
 */
-"km" = "Km";
+"km" = "كم";
 "Loading" = "جاري التحميل";
 
 "add_image_pic_title" = "اضف صور";
@@ -167,12 +167,15 @@
 
 "cant_add_more_images" = "لا يمكن اضافة اكثر من ٥ صور.";
 
-
 "call_us" = "اتصل بنا";
 "our_website" = "موقعنا الاكتروني";
 "our_instagram" = "الانستاجرام";
 "our_facebook" = "الفيسبوك";
+"our_twitter" = "التويتر";
 
 "select_cost_range" = "اختر فئة السعر";
 "below_ten_kd" = "اقل من ١٠ د.ك";
 "above_ten_kd" = "اكبر من ١٠ د.ك";
+
+"to_location_desc" = "We used your current location as destination, you can search above or add your custom location on map.";
+"to_location_desc" = "استخدمنا موقعك كوجهة، يمكنك البحث عن مكان الوجهة او ضع المكان على الخريطة";
