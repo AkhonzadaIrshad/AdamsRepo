@@ -26,7 +26,7 @@
             ignoreCount = "0"
             continueAfterRunningActions = "No"
             filePath = "rzq/network/ApiService.swift"
-            timestampString = "581036790.439509"
+            timestampString = "581281067.510981"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
             startingLineNumber = "952"
@@ -48,22 +48,6 @@
             startingLineNumber = "402"
             endingLineNumber = "402"
             landmarkName = "getShopsByName(name:latitude:longitude:radius:)"
-            landmarkType = "7">
-         </BreakpointContent>
-      </BreakpointProxy>
-      <BreakpointProxy
-         BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
-         <BreakpointContent
-            shouldBeEnabled = "Yes"
-            ignoreCount = "0"
-            continueAfterRunningActions = "No"
-            filePath = "Pods/ZHChat/ZHCMessagesViewController/Controllers/ZHCMessagesViewController.m"
-            timestampString = "581182650.631372"
-            startingColumnNumber = "9223372036854775807"
-            endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "753"
-            endingLineNumber = "753"
-            landmarkName = "-showMoreView"
             landmarkType = "7">
          </BreakpointContent>
       </BreakpointProxy>

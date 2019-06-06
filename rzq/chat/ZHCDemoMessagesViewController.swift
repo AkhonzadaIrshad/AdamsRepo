@@ -472,13 +472,6 @@ class ZHCDemoMessagesViewController: ZHCMessagesViewController, BillDelegate, Ch
         if self.presentBool {
             self.navigationItem.leftBarButtonItem = UIBarButtonItem.init(barButtonSystemItem: UIBarButtonItem.SystemItem.stop, target: self, action:#selector(closePressed))
         }
-        
-//        self.inputMessageBarView.translatesAutoresizingMaskIntoConstraints = false
-//        if #available(iOS 11.0, *) {
-//             self.inputMessageBarView.bottomAnchor.constraint(equalTo: view.bottomAnchor, constant: 100).isActive = true
-//        } else {
-//            // Fallback on earlier versions
-//        }
 
     }
     

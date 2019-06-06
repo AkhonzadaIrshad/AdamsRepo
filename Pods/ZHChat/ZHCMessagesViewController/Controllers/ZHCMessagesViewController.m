@@ -35,9 +35,11 @@
 @property (strong, nonatomic) NSLayoutConstraint *messagesEmojiViewBottomContraint;
 
 @property (assign, nonatomic) BOOL showFunctionViewBool;
+@property (assign, nonatomic) int bottomMargin;
 @end
 
 @implementation ZHCMessagesViewController
+
 
 #pragma mark - Class methods
 
@@ -145,12 +147,31 @@
 #pragma mark - View lifecycle
 - (void)viewDidLoad {
     [super viewDidLoad];
+    
+    if ([self hasTopNotch]) {
+        self.bottomMargin = 30.0;
+    }else {
+        self.bottomMargin = 0.0;
+    }
+    
+    
     [[[self class] nib] instantiateWithOwner:self options:nil];
     [self zhc_configureMessagesViewController];
     [self zhc_registerForNotifications:YES];
     [self initialSubViews];
     // Do any additional setup after loading the view from its nib.
 }
+
+
+
+- (BOOL)hasTopNotch {
+    if (@available(iOS 11.0, *)) {
+        return [[[UIApplication sharedApplication] delegate] window].safeAreaInsets.top > 20.0;
+    }
+    
+    return  NO;
+}
+
 
 
 -(void)initialSubViews
@@ -194,6 +215,7 @@
 - (void)viewWillAppear:(BOOL)animated
 {
     [super viewWillAppear:animated];
+    self.inputViewBottomLayoutGuide.constant = [self bottomMargin];
 }
 
 
@@ -799,7 +821,10 @@
     if (self.tabBarController != nil && !self.hidesBottomBarWhenPushed) {
         constant -= CGRectGetHeight(self.tabBarController.tabBar.frame);
     }
-    self.inputViewBottomLayoutGuide.constant = MAX(constant, 0.0);
+    if (constant < [self bottomMargin]) {
+        constant = [self bottomMargin];
+    }
+    self.inputViewBottomLayoutGuide.constant = MAX(constant, [self bottomMargin]);
 }
 
 #pragma mark - TableView utilities
