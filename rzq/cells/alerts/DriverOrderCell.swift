@@ -22,6 +22,12 @@ class DriverOrderCell: UITableViewCell {
     
     @IBOutlet weak var ivType: UIImageView!
     
+    @IBOutlet weak var lblNotificationDate: MyUILabel!
+    @IBOutlet weak var lblNotificationTime: MyUILabel!
+    @IBOutlet weak var timeView: UIView!
+    
+    
+    
     var onTake : (() -> Void)? = nil
     
     @IBAction func takeOrderAction(_ sender: Any) {

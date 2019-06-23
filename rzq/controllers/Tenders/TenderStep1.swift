@@ -67,6 +67,9 @@ class TenderStep1: BaseVC, UICollectionViewDelegate, UICollectionViewDataSource,
             self.latitude = location.coordinate.latitude
             self.longitude = location.coordinate.longitude
             
+            UserDefaults.standard.setValue(self.latitude, forKey: Constants.LAST_LATITUDE)
+            UserDefaults.standard.setValue(self.longitude, forKey: Constants.LAST_LONGITUDE)
+            
 //                                    self.latitude = 29.273551
 //                                    self.longitude = 47.936161
             

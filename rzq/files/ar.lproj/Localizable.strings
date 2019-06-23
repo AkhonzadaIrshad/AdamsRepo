@@ -177,5 +177,11 @@
 "below_ten_kd" = "اقل من ١٠ د.ك";
 "above_ten_kd" = "اكبر من ١٠ د.ك";
 
-"to_location_desc" = "We used your current location as destination, you can search above or add your custom location on map.";
 "to_location_desc" = "استخدمنا موقعك كوجهة، يمكنك البحث عن مكان الوجهة او ضع المكان على الخريطة";
+
+"alerts" = "التنبيهات";
+"bids_and_orders" = "الطلبات و عروض الاسعار";
+"bids" = "عروض الاسعار";
+
+"account_balance" = "الرصيد:";
+"due" = "المبلغ المستحق:";

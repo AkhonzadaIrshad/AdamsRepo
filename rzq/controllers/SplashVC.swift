@@ -34,10 +34,7 @@ class SplashVC: BaseVC {
                                 
                                 let type = App.shared.notificationType ?? "0"
                                 if (type == "0") {
-                                    if let vc = UIStoryboard(name: "Main", bundle: nil).instantiateViewController(withIdentifier: "step1navigation") as? UINavigationController
-                                    {
-                                        self.present(vc, animated: true, completion: nil)
-                                    }
+                                    self.loadTracks()
                                 }else {
                                     let mainStoryboardIpad : UIStoryboard = UIStoryboard(name: "Main", bundle: nil)
                                     let initialViewControlleripad : UIViewController = mainStoryboardIpad.instantiateViewController(withIdentifier: self.getHomeView()) as! UINavigationController
@@ -66,6 +63,21 @@ class SplashVC: BaseVC {
                 }
             }else {
                 if let vc = UIStoryboard(name: "Main", bundle: nil).instantiateViewController(withIdentifier: "LanguageVC") as? LanguageVC
+                {
+                    self.present(vc, animated: true, completion: nil)
+                }
+            }
+        }
+    }
+    
+    func loadTracks() {
+        ApiService.getOnGoingDeliveries(Authorization: self.loadUser().data?.accessToken ?? "") { (response) in
+            if (response.data?.count ?? 0 > 0) {
+                let mainStoryboardIpad : UIStoryboard = UIStoryboard(name: "Main", bundle: nil)
+                let initialViewControlleripad : UIViewController = mainStoryboardIpad.instantiateViewController(withIdentifier: self.getHomeView()) as! UINavigationController
+                self.present(initialViewControlleripad, animated: true, completion: {})
+            }else {
+                if let vc = UIStoryboard(name: "Main", bundle: nil).instantiateViewController(withIdentifier: "step1navigation") as? UINavigationController
                 {
                     self.present(vc, animated: true, completion: nil)
                 }

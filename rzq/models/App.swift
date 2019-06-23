@@ -15,7 +15,8 @@ class App: NSObject {
     var config : ConfigData?
     var notificationType : String?
     var notificationValue : String?
-    var notificationDeliveryId : String?
+    var notificationDeliveryId : String?         
+    var notificationSegmentIndex : Int?
     var deepLinkShopId : String?
     // MARK:- Singleton
     static var shared : App = {

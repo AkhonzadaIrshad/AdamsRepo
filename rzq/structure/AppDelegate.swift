@@ -300,13 +300,20 @@ class AppDelegate: UIResponder, UIApplicationDelegate, MOLHResetable,MessagingDe
             if (notificationType == "3" || notificationType == "14") {
                 self.goToNotifications()
             }
-            if (notificationType == "4" || notificationType == "18") {
+            if (notificationType == "4" || notificationType == "18" || notificationType == "2") {
                 self.loadTracks()
             }
-            if (notificationType == "5" || notificationType == "19") {
+            if (notificationType == "5" || notificationType == "19" || notificationType == "17") {
                 self.loadTracks()
             }
                 self.showBanner(title: title, message: body, style: UIColor.colorPrimary)
+            
+            
+            if (notificationType != "11") {
+                self.updateNotificationCount()
+            }
+            
+            
         }
         
         // Print full message.
@@ -316,7 +323,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate, MOLHResetable,MessagingDe
     }
     
     func showBanner(title:String, message:String,style: UIColor) {
-        self.updateNotificationCount()
+      
         let banner = Banner(title: title, subtitle: message, image: nil, backgroundColor: style)
         banner.dismissesOnTap = true
         banner.textColor = UIColor.white
@@ -334,7 +341,11 @@ class AppDelegate: UIResponder, UIApplicationDelegate, MOLHResetable,MessagingDe
     }
     
     func scheduleNotifications(title : String, message : String, type : String, itemId : String) {
-        self.updateNotificationCount()
+        
+        if (type != "11") {
+          self.updateNotificationCount()
+        }
+        
         let requestIdentifier = "Notification"
         if #available(iOS 10.0, *) {
             let content = UNMutableNotificationContent()

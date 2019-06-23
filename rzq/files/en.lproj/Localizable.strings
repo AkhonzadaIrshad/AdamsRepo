@@ -177,3 +177,10 @@
 "above_ten_kd" = "Above 10 KD";
 
 "to_location_desc" = "We used your location as destination, you can search above or add your custom location on map.";
+
+"alerts" = "Alerts";
+"bids_and_orders" = "Orders & Bids";
+"bids" = "Bids";
+
+"account_balance" = "Balance:";
+"due" = "Due amount:";

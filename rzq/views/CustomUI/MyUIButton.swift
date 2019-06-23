@@ -10,7 +10,7 @@ import Foundation
 import UIKit
 import MOLH
 
-@IBDesignable
+//@IBDesignable
 class MyUIButton : UIButton {
     @IBInspectable var font_type: String = "15,1" {
         didSet {

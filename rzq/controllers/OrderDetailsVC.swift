@@ -73,6 +73,10 @@ class OrderDetailsVC: BaseVC, UICollectionViewDelegate, UICollectionViewDataSour
     @IBOutlet weak var descriptionHright: NSLayoutConstraint!
     @IBOutlet weak var descriptionView: UIView!
     
+    
+    @IBOutlet weak var viewNavigate: UIView!
+    @IBOutlet weak var viewNavigateHeight: NSLayoutConstraint!
+    
     override func viewDidLoad() {
         super.viewDidLoad()
         if (self.isArabic()) {
@@ -162,6 +166,19 @@ class OrderDetailsVC: BaseVC, UICollectionViewDelegate, UICollectionViewDataSour
             }else {
                 self.viewCancel.isHidden = true
             }
+        }
+        
+         if (self.order?.status == Constants.ORDER_PROCESSING) {
+            if (self.isProvider() && self.loadUser().data?.userID == self.order?.driverId ?? "") {
+                viewNavigate.isHidden = false
+                viewNavigateHeight.constant = 40
+            }else {
+                viewNavigate.isHidden = true
+                viewNavigateHeight.constant = 0
+            }
+         }else {
+            viewNavigate.isHidden = true
+            viewNavigateHeight.constant = 0
         }
         
     }
@@ -458,6 +475,56 @@ class OrderDetailsVC: BaseVC, UICollectionViewDelegate, UICollectionViewDataSour
             }
         })
     }
+    
+    
+    @IBAction func navigateToShopAction(_ sender: Any) {
+        self.startNavigation(longitude: self.order?.fromLatitude ?? 0.0, latitude: self.order?.fromLongitude ?? 0.0)
+    }
+    
+    
+    @IBAction func navigateToClientAction(_ sender: Any) {
+        self.startNavigation(longitude: self.order?.toLatitude ?? 0.0, latitude: self.order?.toLongitude ??  0.0)
+    }
+    
+    
+    func startNavigation(longitude : Double, latitude : Double) {
+        let sourceSelector = UIAlertController(title: "continueUsing".localized, message: nil, preferredStyle: .actionSheet)
+        
+        if let popoverController = sourceSelector.popoverPresentationController {
+            popoverController.sourceView = self.view //to set the source of your alert
+            popoverController.sourceRect = CGRect(x: self.view.bounds.midX, y: self.view.bounds.midY, width: 0, height: 0) // you can set this as per your requirement.
+            popoverController.permittedArrowDirections = [] //to hide the arrow of any particular direction
+        }
+        
+        let googleMapsAction = UIAlertAction(title: "googleMaps".localized, style: .default) { (action) in
+            
+            
+            let url = URL(string: "https://www.google.com/maps/dir/?api=1&destination=\(latitude),\(longitude)&directionsmode=driving")
+            
+            if #available(iOS 10.0, *) {
+                UIApplication.shared.open(url!, options: [:], completionHandler: nil)
+            } else {
+                UIApplication.shared.openURL(url!)
+            }
+        }
+        
+        let appleMapsAction = UIAlertAction(title: "appleMaps".localized, style: .default) { (action) in
+            
+            let coordinate = CLLocationCoordinate2DMake(latitude ,longitude)
+            let mapItem = MKMapItem(placemark: MKPlacemark(coordinate: coordinate, addressDictionary:nil))
+            mapItem.name = "\("") \("")"
+            mapItem.openInMaps(launchOptions: [MKLaunchOptionsDirectionsModeKey : MKLaunchOptionsDirectionsModeDriving])
+            
+        }
+        let cancelAction = UIAlertAction(title: "cancel".localized, style: .cancel) { (action) in }
+        
+        sourceSelector.addAction(googleMapsAction)
+        sourceSelector.addAction(appleMapsAction)
+        sourceSelector.addAction(cancelAction)
+        
+        self.present(sourceSelector, animated: true, completion: nil)
+    }
+    
     
 }
 extension OrderDetailsVC : GMSMapViewDelegate {

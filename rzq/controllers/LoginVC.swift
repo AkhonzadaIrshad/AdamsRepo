@@ -32,7 +32,7 @@ class LoginVC: BaseVC, CountryPickerViewDataSource, CountryPickerViewDelegate, P
         self.edtUserName.selectedTitle = "name".localized
         self.edtUserName.font = UIFont(name: self.getFontName(), size: 14)
         
-        self.edtMobileNumber.font = UIFont(name: self.getFontName(), size: 14)
+        self.edtMobileNumber.font = UIFont(name: Constants.ARABIC_FONT_REGULAR, size: 14)
         
         self.edtMobileNumber.title = "mobile_number".localized
         self.edtMobileNumber.placeholder = "mobile_number".localized

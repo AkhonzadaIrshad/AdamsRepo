@@ -538,6 +538,7 @@ class ZHCDemoMessagesViewController: ZHCMessagesViewController, BillDelegate, Ch
         let message: ZHCMessage = self.demoData.messages.object(at: indexPath.row) as! ZHCMessage;
         
         return self.demoData.avatars.object(forKey: message.senderId) as! ZHCMessageAvatarImageDataSource?
+        
     }
     
     override func tableView(_ tableView: ZHCMessagesTableView, attributedTextForCellTopLabelAt indexPath: IndexPath) -> NSAttributedString? {

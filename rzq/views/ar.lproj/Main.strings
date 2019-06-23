@@ -93,7 +93,7 @@
 "5XH-Lj-jhv.text" = "دفع";
 
 /* Class = "UILabel"; text = "Cost"; ObjectID = "5fN-GZ-qgJ"; */
-"5fN-GZ-qgJ.text" = "التكلفة";
+"5fN-GZ-qgJ.text" = "اعتقد ان تكلفة الطلب";
 
 /* Class = "UILabel"; text = "Add your pin point by long pressing on map."; ObjectID = "5mm-jv-nde"; */
 "5mm-jv-nde.text" = "اضف موقعك الخاص على الخريطة بالضغط المطول";
@@ -171,8 +171,8 @@
 /* Class = "UIButton"; normalTitle = "Back"; ObjectID = "A9r-Fe-iM8"; */
 "A9r-Fe-iM8.normalTitle" = "رجوع";
 
-"nfZ-bd-Wtl.text" = "للبحث من الاعلى";
-"hqX-pI-KDM.text" = "للبحث من الاعلى";
+"nfZ-bd-Wtl.text" = "ابحث عن المكان الذي تريد ان ترسل اليه من الاعلى";
+"hqX-pI-KDM.text" = "ابحث عن المكان الذي تريد ان تطلب منه من الاعلى";
 
 /* Class = "UILabel"; text = "Rate App"; ObjectID = "AIN-UD-k78"; */
 "AIN-UD-k78.text" = "قيم التطبيق";
@@ -449,7 +449,7 @@
 "PPP-md-7pM.text" = "دقيقة";
 
 /* Class = "UILabel"; text = "Cost"; ObjectID = "PWS-fH-0e5"; */
-"PWS-fH-0e5.text" = "التكلفة";
+"PWS-fH-0e5.text" = "اعتقد ان تكلفة الطلب";
 
 /* Class = "UILabel"; text = "Label"; ObjectID = "PbA-JQ-cLM"; */
 "PbA-JQ-cLM.text" = "Label";
@@ -1109,7 +1109,7 @@
 "t15-n1-Z03.text" = "اطلب";
 
 /* Class = "UILabel"; text = "Cost"; ObjectID = "t8W-M9-YHp"; */
-"t8W-M9-YHp.text" = "تكلفة الطلب";
+"t8W-M9-YHp.text" = "اعتقد ان تكلفة الطلب";
 
 /* Class = "UILabel"; text = "More Details"; ObjectID = "tCj-nF-syF"; */
 "tCj-nF-syF.text" = "اختياري";

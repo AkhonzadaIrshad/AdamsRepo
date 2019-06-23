@@ -99,7 +99,7 @@
 "5XH-Lj-jhv.text" = "Payment";
 
 /* Class = "UILabel"; text = "Cost"; ObjectID = "5fN-GZ-qgJ"; */
-"5fN-GZ-qgJ.text" = "Cost";
+"5fN-GZ-qgJ.text" = "Approximate cost";
 
 /* Class = "UILabel"; text = "Add your pin point by long pressing on map."; ObjectID = "5mm-jv-nde"; */
 "5mm-jv-nde.text" = "Add your pin point by long pressing on map.";
@@ -447,7 +447,7 @@
 "PPP-md-7pM.text" = "Min";
 
 /* Class = "UILabel"; text = "Cost"; ObjectID = "PWS-fH-0e5"; */
-"PWS-fH-0e5.text" = "Cost";
+"PWS-fH-0e5.text" = "Approximate cost";
 
 /* Class = "UILabel"; text = "Label"; ObjectID = "PbA-JQ-cLM"; */
 "PbA-JQ-cLM.text" = "Label";
@@ -884,8 +884,8 @@
 /* Class = "UILabel"; text = "Profile Picture"; ObjectID = "jQw-J5-5FV"; */
 "jQw-J5-5FV.text" = "Profile Picture";
 
-"nfZ-bd-Wtl.text" = "Search from above";
-"hqX-pI-KDM.text" = "Search from above";
+"nfZ-bd-Wtl.text" = "Search for drop off location from above";
+"hqX-pI-KDM.text" = "Search for pickup location from above";
 
 /* Class = "UILabel"; text = "From"; ObjectID = "jch-Wk-USi"; */
 "jch-Wk-USi.text" = "From";
@@ -1109,7 +1109,7 @@
 "t15-n1-Z03.text" = "Order";
 
 /* Class = "UILabel"; text = "Cost"; ObjectID = "t8W-M9-YHp"; */
-"t8W-M9-YHp.text" = "Cost";
+"t8W-M9-YHp.text" = "Approximate cost";
 
 /* Class = "UILabel"; text = "More Details"; ObjectID = "tCj-nF-syF"; */
 "tCj-nF-syF.text" = "More Details";

@@ -116,7 +116,7 @@ public protocol CBPinEntryViewDelegate: class {
 
 
     private var stackView: UIStackView?
-    private var textField: UITextField!
+     var textField: UITextField!
 
     open var errorMode: Bool = false
 

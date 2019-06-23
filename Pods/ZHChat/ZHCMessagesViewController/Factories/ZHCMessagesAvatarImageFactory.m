@@ -135,7 +135,9 @@
 #pragma mark - Private
 - (UIImage *)zhc_circularImage:(UIImage *)image withHighlightedColor:(UIColor *)highlightedColor
 {
-    NSParameterAssert(image != nil);
+    if (image == nil) {
+        return [UIImage imageNamed:@"profile_placeholder"];
+    }
     
     CGRect frame = CGRectMake(0.0f, 0.0f, self.diameter, self.diameter);
     UIImage *newImage = nil;

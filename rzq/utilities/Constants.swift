@@ -36,6 +36,8 @@ class Constants {
     static var DID_SEE_INTRO = "DID_SEE_INTRO"
     static var DID_CHOOSE_LANGUAGE = "DID_CHOOSE_LANGUAGE"
     
+    static var LAST_LATITUDE = "LAST_LATITUDE"
+    static var LAST_LONGITUDE = "LAST_LONGITUDE"
     
     static let INSTAGRAM_ACC = "rzqapp"
     static let FACEBOOK_URL = "https://www.facebook.com/rzqapp"

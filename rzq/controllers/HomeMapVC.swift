@@ -69,7 +69,7 @@ class HomeMapVC: BaseViewController,LabasLocationManagerDelegate, UICollectionVi
         self.btnAbout.addTarget(self, action: #selector(BaseViewController.onAboutPressed(_:)), for: UIControl.Event.touchUpInside)
         
         self.edtSearch.delegate = self
-        self.showLoading()
+       // self.showLoading()
         
         self.lblLocation.isHidden = true
         self.btnLocation.isHidden = true
@@ -140,7 +140,6 @@ class HomeMapVC: BaseViewController,LabasLocationManagerDelegate, UICollectionVi
                 DispatchQueue.main.async {
                     let messagesVC: ZHCDemoMessagesViewController = ZHCDemoMessagesViewController.init()
                     messagesVC.presentBool = true
-//                    let order = DatumDel(driverID: "", canReport: false, canTrack: false, id: response.data?.id ?? 0, chatId: response.data?.chatId ?? 0, fromAddress: response.data?.fromAddress ?? "", toAddress: response.data?.toAddress ?? "", title: response.data?.title ?? "", status: response.data?.status ?? 0, price: response.data?.cost ?? 0.0, time: response.data?.time ?? 0, statusString: response.data?.statusString ?? "", image: "", createdDate: response.data?.createdDate ?? "", toLatitude: response.data?.toLatitude ?? 0.0, toLongitude: response.data?.toLatitude ?? 0.0, fromLatitude: response.data?.fromLatitude ?? 0.0, fromLongitude: response.data?.fromLongitude ?? 0.0, driverName: "", driverImage: "", driverRate: 0, canRate: false, canCancel: false, canChat: false)
                     
                       let order = DatumDel(id: response.data?.id ?? 0, title: response.data?.title ?? "", status: response.data?.status ?? 0, statusString: response.data?.statusString ?? "", image: "", createdDate: response.data?.createdDate ?? "", chatId: response.data?.chatId ?? 0, fromAddress: response.data?.fromAddress ?? "", fromLatitude: response.data?.fromLatitude ?? 0.0, fromLongitude: response.data?.fromLongitude ?? 0.0, toAddress: response.data?.toAddress ?? "", toLatitude: response.data?.toLatitude ?? 0.0, toLongitude: response.data?.toLongitude ?? 0.0, providerID: response.data?.driverId, providerName: "", providerImage: "", providerRate: 0, time: response.data?.time ?? 0, price: response.data?.cost ?? 0.0, serviceName: "")
                     
@@ -157,30 +156,35 @@ class HomeMapVC: BaseViewController,LabasLocationManagerDelegate, UICollectionVi
             App.shared.notificationValue = "0"
             App.shared.notificationType = "0"
             App.shared.notificationDeliveryId = "0"
+            App.shared.notificationSegmentIndex = 1
             self.openViewControllerBasedOnIdentifier("NotificationsVC")
             break
         case "2":
             App.shared.notificationValue = "0"
             App.shared.notificationType = "0"
             App.shared.notificationDeliveryId = "0"
+            App.shared.notificationSegmentIndex = 0
             self.openViewControllerBasedOnIdentifier("NotificationsVC")
             break
         case "3":
             App.shared.notificationValue = "0"
             App.shared.notificationType = "0"
             App.shared.notificationDeliveryId = "0"
+            App.shared.notificationSegmentIndex = 1
             self.openViewControllerBasedOnIdentifier("NotificationsVC")
             break
         case "4":
             App.shared.notificationValue = "0"
             App.shared.notificationType = "0"
             App.shared.notificationDeliveryId = "0"
+            App.shared.notificationSegmentIndex = 0
             self.openViewControllerBasedOnIdentifier("NotificationsVC")
             break
         case "5":
             App.shared.notificationValue = "0"
             App.shared.notificationType = "0"
             App.shared.notificationDeliveryId = "0"
+            App.shared.notificationSegmentIndex = 0
             self.openViewControllerBasedOnIdentifier("NotificationsVC")
             
             let vc = UIStoryboard(name: "Main", bundle: nil).instantiateViewController(withIdentifier: "RateDriverDialog") as! RateDriverDialog
@@ -195,7 +199,65 @@ class HomeMapVC: BaseViewController,LabasLocationManagerDelegate, UICollectionVi
             App.shared.notificationValue = "0"
             App.shared.notificationType = "0"
             App.shared.notificationDeliveryId = "0"
-            self.openViewControllerBasedOnIdentifier("OrdersVC")
+            App.shared.notificationSegmentIndex = 0
+            self.openViewControllerBasedOnIdentifier("WorkingOrdersVC")
+            break
+            
+            //services
+        case "13":
+            App.shared.notificationValue = "0"
+            App.shared.notificationType = "0"
+            App.shared.notificationDeliveryId = "0"
+            App.shared.notificationSegmentIndex = 1
+            self.openViewControllerBasedOnIdentifier("NotificationsVC")
+            break
+            
+        case "14":
+            App.shared.notificationValue = "0"
+            App.shared.notificationType = "0"
+            App.shared.notificationDeliveryId = "0"
+            App.shared.notificationSegmentIndex = 1
+            self.openViewControllerBasedOnIdentifier("NotificationsVC")
+            break
+            
+        case "15":
+            App.shared.notificationValue = "0"
+            App.shared.notificationType = "0"
+            App.shared.notificationDeliveryId = "0"
+            App.shared.notificationSegmentIndex = 0
+            self.openViewControllerBasedOnIdentifier("WorkingOrdersVC")
+            break
+            
+        case "16":
+            App.shared.notificationValue = "0"
+            App.shared.notificationType = "0"
+            App.shared.notificationDeliveryId = "0"
+            App.shared.notificationSegmentIndex = 0
+            self.openViewControllerBasedOnIdentifier("NotificationsVC")
+            break
+            
+        case "17":
+            App.shared.notificationValue = "0"
+            App.shared.notificationType = "0"
+            App.shared.notificationDeliveryId = "0"
+            App.shared.notificationSegmentIndex = 0
+            self.openViewControllerBasedOnIdentifier("NotificationsVC")
+            break
+            
+        case "18":
+            App.shared.notificationValue = "0"
+            App.shared.notificationType = "0"
+            App.shared.notificationDeliveryId = "0"
+            App.shared.notificationSegmentIndex = 0
+            self.openViewControllerBasedOnIdentifier("NotificationsVC")
+            break
+            
+        case "19":
+            App.shared.notificationValue = "0"
+            App.shared.notificationType = "0"
+            App.shared.notificationDeliveryId = "0"
+            App.shared.notificationSegmentIndex = 0
+            self.openViewControllerBasedOnIdentifier("NotificationsVC")
             break
             
         default:
@@ -510,29 +572,37 @@ class HomeMapVC: BaseViewController,LabasLocationManagerDelegate, UICollectionVi
     }
     
     func labasLocationManager(didUpdateLocation location: CLLocation) {
+        
+        self.latitude = location.coordinate.latitude
+        self.longitude = location.coordinate.longitude
+        
+        UserDefaults.standard.setValue(self.latitude, forKey: Constants.LAST_LATITUDE)
+        UserDefaults.standard.setValue(self.longitude, forKey: Constants.LAST_LONGITUDE)
+        
         if (self.latitude ?? 0.0 == 0.0 || self.longitude ?? 0.0 == 0.0) {
             
             self.latitude = location.coordinate.latitude
             self.longitude = location.coordinate.longitude
             
+            UserDefaults.standard.setValue(self.latitude, forKey: Constants.LAST_LATITUDE)
+            UserDefaults.standard.setValue(self.longitude, forKey: Constants.LAST_LONGITUDE)
 //                        self.latitude = 29.273551
 //                        self.longitude = 47.936161
             
             self.hideLoading()
             self.setUpGoogleMap()
             
-            if (self.isProvider()) {
-                ApiService.updateLocation(Authorization: self.loadUser().data?.accessToken ?? "", latitude: self.latitude ?? 0.0, longitude: self.longitude ?? 0.0) { (response) in
-                    
-                }
-            }
-            
-            let cllLocation = CLLocation(latitude: self.latitude ?? 0.0, longitude: self.longitude ?? 0.0)
-            self.lblLocation.isHidden = false
-            self.btnLocation.isHidden = false
-            self.GetAnnotationUsingCoordinated(cllLocation)
-            
         }
+        if (self.isProvider()) {
+            ApiService.updateLocation(Authorization: self.loadUser().data?.accessToken ?? "", latitude: self.latitude ?? 0.0, longitude: self.longitude ?? 0.0) { (response) in
+                
+            }
+        }
+        
+        let cllLocation = CLLocation(latitude: self.latitude ?? 0.0, longitude: self.longitude ?? 0.0)
+        self.lblLocation.isHidden = false
+        self.btnLocation.isHidden = false
+        self.GetAnnotationUsingCoordinated(cllLocation)
       //  self.loadTracks()
     }
     
@@ -540,10 +610,43 @@ class HomeMapVC: BaseViewController,LabasLocationManagerDelegate, UICollectionVi
         super.viewWillAppear(animated)
         LabasLocationManager.shared.delegate = self
         if (self.latitude ?? 0.0 == 0.0 || self.longitude ?? 0.0 == 0.0) {
+            self.loadLastLocation()
             LabasLocationManager.shared.startUpdatingLocation()
         }else {
             self.setUpGoogleMap()
         }
+    }
+    
+    func loadLastLocation() {
+        self.latitude = UserDefaults.standard.value(forKey: Constants.LAST_LATITUDE) as? Double ?? 0.0
+        self.longitude = UserDefaults.standard.value(forKey: Constants.LAST_LONGITUDE) as? Double ?? 0.0
+        
+        let cllLocation = CLLocation(latitude: self.latitude ?? 0.0, longitude: self.longitude ?? 0.0)
+        self.lblLocation.isHidden = false
+        self.btnLocation.isHidden = false
+        self.GetAnnotationUsingCoordinated(cllLocation)
+        
+        let camera = GMSCameraPosition.camera(withLatitude: self.latitude ?? 0.0, longitude: self.longitude ?? 0.0, zoom: self.cameraZoom)
+        gMap = GMSMapView.map(withFrame: CGRect(x: 0, y: 0, width: self.mapView.frame.width, height: self.mapView.frame.height), camera: camera)
+        gMap?.delegate = self
+        let marker = GMSMarker()
+        marker.position = CLLocationCoordinate2D(latitude: self.latitude ?? 0.0, longitude: self.longitude ?? 0.0)
+        marker.title =  ""
+        marker.snippet = ""
+        marker.map = gMap
+        
+        self.mapView.addSubview(gMap!)
+        gMap?.bindFrameToSuperviewBounds()
+        self.view.layoutSubviews()
+        
+        
+        //        ApiService.getPlacesAPI(input: "mac", types: "geocode", latitude: self.latitude ?? 0.0, longitude: self.longitude ?? 0.0) { (response) in
+        //            let x = response.status ?? ""
+        //        }
+        
+        
+        //   self.getShopsList(radius: Float(Constants.DEFAULT_RADIUS), rating: 0, types : 64)
+        self.loadTracks()
     }
     
     func setUpGoogleMap() {
@@ -701,13 +804,6 @@ class HomeMapVC: BaseViewController,LabasLocationManagerDelegate, UICollectionVi
                 self.showAlertOK(title: "alert".localized, message: "due_amount".localized, actionTitle: "ok".localized)
             }
         }
-    }
-    
-    func isProvider() -> Bool {
-        if ((self.loadUser().data?.roles?.contains(find: "Driver"))! || (self.loadUser().data?.roles?.contains(find: "ServiceProvider"))! || (self.loadUser().data?.roles?.contains(find: "TenderProvider"))!) {
-            return true
-        }
-        return false
     }
     
     fileprivate func GetAnnotationUsingCoordinated(_ location : CLLocation) {

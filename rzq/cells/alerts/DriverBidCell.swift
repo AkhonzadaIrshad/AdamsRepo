@@ -21,6 +21,12 @@ class DriverBidCell: UITableViewCell {
     
     @IBOutlet weak var lblDistance: MyUILabel!
     
+    @IBOutlet weak var lblNotificationDate: MyUILabel!
+    @IBOutlet weak var lblNotificationTime: MyUILabel!
+    
+    @IBOutlet weak var timeView: UIView!
+ 
+    
     var onCheck : (() -> Void)? = nil
     
     @IBAction func checkOfferAction(_ sender: Any) {

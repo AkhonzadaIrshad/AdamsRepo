@@ -12,7 +12,7 @@ import CBPinEntryView
 protocol PhoneVerificationDelegate {
     func resend()
 }
-class PhoneVerificationDialog: BaseVC {
+class PhoneVerificationDialog: BaseVC, CBPinEntryViewDelegate {
 
     @IBOutlet weak var pinView: CBPinEntryView!
     
@@ -37,11 +37,20 @@ class PhoneVerificationDialog: BaseVC {
         }
         
         self.startTimer()
+        
+        self.pinView.delegate = self
     }
     
     override func viewDidDisappear(_ animated: Bool) {
         super.viewDidDisappear(true)
         stopTimer()
+    }
+    
+    func entryChanged(_ completed: Bool) {
+        if (completed) {
+            self.pinView.resignFirstResponder()
+            self.confirm()
+        }
     }
     
     @objc func updateTimer() {
@@ -50,8 +59,8 @@ class PhoneVerificationDialog: BaseVC {
             lblCounter.text = String(countDown)
         }else{
             // self.sendRequest()
-            self.btnResend.isHidden = false
-            self.resendView.isHidden = false
+            self.resendView.backgroundColor = UIColor.processing
+            self.btnResend.isEnabled = true
         }
     }
     
@@ -70,30 +79,34 @@ class PhoneVerificationDialog: BaseVC {
         
     }
     
-    
+
     @IBAction func resendAction(_ sender: Any) {
-        self.btnResend.isHidden = true
-        self.resendView.isHidden = true
+        self.resendView.backgroundColor = UIColor.appLightGray
+        self.btnResend.isEnabled = false
         self.startTimer()
         self.delegate?.resend()
     }
     
     @IBAction func confirmAction(_ sender: Any) {
+       self.confirm()
+    }
+    
+    func confirm() {
         if (self.pinView.getPinAsString().count == 4) {
             self.showLoading()
             ApiService.verifyPinCode(userId: self.userId ?? "", code: self.pinView.getPinAsString().replacedArabicDigitsWithEnglish) { (response, status) in
                 self.hideLoading()
                 if (status != 0) {
-                     self.showBanner(title: "alert".localized, message: "wrong_verification_code".localized, style: UIColor.INFO)
-                     return
+                    self.showBanner(title: "alert".localized, message: "wrong_verification_code".localized, style: UIColor.INFO)
+                    return
                 }
                 if (response?.errorCode == 0) {
                     self.deleteUsers()
                     self.updateUser(self.getRealmUser(userProfile: response!))
                     
-//                    let mainStoryboardIpad : UIStoryboard = UIStoryboard(name: "Main", bundle: nil)
-//                    let initialViewControlleripad : UIViewController = mainStoryboardIpad.instantiateViewController(withIdentifier: self.getHomeView()) as! UINavigationController
-//                    self.present(initialViewControlleripad, animated: true, completion: {})
+                    //                    let mainStoryboardIpad : UIStoryboard = UIStoryboard(name: "Main", bundle: nil)
+                    //                    let initialViewControlleripad : UIViewController = mainStoryboardIpad.instantiateViewController(withIdentifier: self.getHomeView()) as! UINavigationController
+                    //                    self.present(initialViewControlleripad, animated: true, completion: {})
                     
                     if let vc = UIStoryboard(name: "Main", bundle: nil).instantiateViewController(withIdentifier: "step1navigation") as? UINavigationController
                     {
@@ -104,13 +117,29 @@ class PhoneVerificationDialog: BaseVC {
                 }else if (response?.errorCode == 18) {
                     self.showBanner(title: "alert".localized, message: "account_inactive".localized, style: UIColor.INFO)
                 }else {
-                   self.showBanner(title: "alert".localized, message: "wrong_verification_code".localized, style: UIColor.INFO)
+                    self.showBanner(title: "alert".localized, message: "wrong_verification_code".localized, style: UIColor.INFO)
                 }
             }
         }else {
             self.showBanner(title: "alert".localized, message: "wrong_verification_code".localized, style: UIColor.INFO)
         }
     }
+    
+    func loadTracks() {
+        ApiService.getOnGoingDeliveries(Authorization: self.loadUser().data?.accessToken ?? "") { (response) in
+            if (response.data?.count ?? 0 > 0) {
+                let mainStoryboardIpad : UIStoryboard = UIStoryboard(name: "Main", bundle: nil)
+                let initialViewControlleripad : UIViewController = mainStoryboardIpad.instantiateViewController(withIdentifier: self.getHomeView()) as! UINavigationController
+                self.present(initialViewControlleripad, animated: true, completion: {})
+            }else {
+                if let vc = UIStoryboard(name: "Main", bundle: nil).instantiateViewController(withIdentifier: "step1navigation") as? UINavigationController
+                {
+                    self.present(vc, animated: true, completion: nil)
+                }
+            }
+        }
+    }
+    
     
     @IBAction func dismissAction(_ sender: Any) {
         self.dismiss(animated: true, completion: nil)

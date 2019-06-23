@@ -35,6 +35,9 @@ class MenuViewController: BaseVC {
     
     @IBOutlet weak var lblBalance: UILabel!
     
+    @IBOutlet weak var lblDue: UILabel!
+    
+    
     var selectedTag = 1
     
     @IBOutlet weak var viewMood: UIView!
@@ -75,7 +78,23 @@ class MenuViewController: BaseVC {
         self.lblName.text = user.data?.fullName ?? ""
         self.lblMobile.text = user.data?.phoneNumber ?? ""
         self.ratingView.rating = Double(user.data?.rate ?? 0)
-        self.lblBalance.text = "\(user.data?.balance ?? 0.0) \("currency".localized)"
+        
+        self.lblBalance.font = UIFont(name: Constants.ARABIC_FONT_SEMIBOLD, size: 12)
+        self.lblDue.font = UIFont(name: Constants.ARABIC_FONT_SEMIBOLD, size: 12)
+        
+        self.lblBalance.text = "\("account_balance".localized) \(user.data?.balance ?? 0.0) \("currency".localized)"
+        
+        if (self.isProvider()) {
+            self.lblDue.isHidden = false
+            let balance = self.loadUser().data?.balance ?? 0.0
+            let perc = App.shared.config?.configSettings?.percentage ?? 0.0
+            let total = balance * perc
+            let finalTotal = total / 10.0
+              self.lblDue.text = "\("due".localized) \(finalTotal) \("currency".localized)"
+        }else {
+            self.lblDue.isHidden = true
+        }
+      
         let urlStr = user.data?.profilePicture ?? ""
         if (urlStr.count > 0) {
             let url = URL(string: "\(Constants.IMAGE_URL)\(user.data?.profilePicture ?? "")")
@@ -109,6 +128,9 @@ class MenuViewController: BaseVC {
             lblMobile.isHidden = false
             ratingView.isHidden = false
             lblBalance.isHidden = false
+            if (self.isProvider()) {
+                lblDue.isHidden = false
+            }
             loginView.isHidden  = true
         }else {
             ivProfile.isHidden = true
@@ -116,6 +138,7 @@ class MenuViewController: BaseVC {
             lblMobile.isHidden = true
             ratingView.isHidden = true
             lblBalance.isHidden = true
+            lblDue.isHidden = true
             loginView.isHidden  = false
         }
         

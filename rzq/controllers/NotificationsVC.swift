@@ -24,7 +24,13 @@ class NotificationsVC: BaseViewController, UITableViewDelegate, UITableViewDataS
     
     @IBOutlet weak var lblSortBy: MyUILabel!
     
-    var items = [DatumNot]()
+    @IBOutlet weak var segmentControl: UISegmentedControl!
+    
+    @IBOutlet weak var sortViewHeight: NSLayoutConstraint!
+    @IBOutlet weak var sortView: UIView!
+    
+    var alerts = [DatumNot]()
+    var actions = [DatumNot]()
     
     var latitude : Double?
     var longitude : Double?
@@ -44,24 +50,65 @@ class NotificationsVC: BaseViewController, UITableViewDelegate, UITableViewDataS
         LabasLocationManager.shared.startUpdatingLocation()
         
         self.tableView.rowHeight = UITableView.automaticDimension
-        self.tableView.estimatedRowHeight = 138.0
+        self.tableView.estimatedRowHeight = 165.0
         
         // Do any additional setup after loading the view.
+        
+        self.segmentControl.setTitle("alerts".localized, forSegmentAt: 0)
+        if (self.isProvider()) {
+          self.segmentControl.setTitle("bids_and_orders".localized, forSegmentAt: 1)
+        }else {
+            self.segmentControl.setTitle("bids".localized, forSegmentAt: 1)
+        }
+        
+        let font = UIFont(name: self.getFontName(), size: 14)
+        self.segmentControl.setTitleTextAttributes([NSAttributedString.Key.font: font!],
+                                                for: .normal)
+        
+        if (App.shared.notificationSegmentIndex ?? 0 == 0) {
+            self.segmentControl.selectedSegmentIndex = 0
+        }else {
+            self.segmentControl.selectedSegmentIndex = 1
+        }
+        App.shared.notificationSegmentIndex = 0
+        
     }
     
     func updateNotifications() {
-        self.items.removeAll()
+        self.alerts.removeAll()
+        self.actions.removeAll()
         ApiService.getAllNotifications(Authorization: self.loadUser().data?.accessToken ?? "", sortBy: self.sortBy ?? 1) { (response) in
-            self.items.removeAll()
-            self.items.append(contentsOf: response.data ?? [DatumNot]())
-            if (self.items.count > 0) {
-                self.emptyView.isHidden = true
-                self.tableView.delegate = self
-                self.tableView.dataSource = self
-                self.tableView.reloadData()
-            }else {
-                self.emptyView.isHidden = false
+            self.alerts.removeAll()
+            self.actions.removeAll()
+            for not in response.data ?? [DatumNot]() {
+                if (not.type == Constants.DELIVERY_CREATED || not.type == Constants.SERVICE_CREATED || not.type == Constants.BID_CREATED || not.type == Constants.SERVICE_BID_CREATED) {
+                    self.actions.append(not)
+                }else {
+                    self.alerts.append(not)
+                }
             }
+            self.tableView.reloadData()
+            
+            if (self.segmentControl.selectedSegmentIndex == 0) {
+                if (self.alerts.count > 0) {
+                    self.emptyView.isHidden = true
+                    self.tableView.delegate = self
+                    self.tableView.dataSource = self
+                    self.tableView.reloadData()
+                }else {
+                    self.emptyView.isHidden = false
+                }
+            }else {
+                if (self.actions.count > 0) {
+                    self.emptyView.isHidden = true
+                    self.tableView.delegate = self
+                    self.tableView.dataSource = self
+                    self.tableView.reloadData()
+                }else {
+                    self.emptyView.isHidden = false
+                }
+            }
+           
       }
     }
     
@@ -133,24 +180,28 @@ class NotificationsVC: BaseViewController, UITableViewDelegate, UITableViewDataS
     
     override func viewDidAppear(_ animated: Bool) {
         super.viewDidAppear(animated)
-        ApiService.getAllNotifications(Authorization: self.loadUser().data?.accessToken ?? "", sortBy: self.sortBy ?? 1) { (response) in
-            self.items.removeAll()
-            self.items.append(contentsOf: response.data ?? [DatumNot]())
-            if (self.items.count > 0) {
-              self.emptyView.isHidden = true
-                self.tableView.delegate = self
-                self.tableView.dataSource = self
-                self.tableView.reloadData()
-            }else {
-              self.emptyView.isHidden = false
-            }
-            
-        }
+        self.updateNotifications()
         UserDefaults.standard.setValue(0, forKey: Constants.NOTIFICATION_COUNT)
+        
+    }
+    override func viewWillAppear(_ animated: Bool) {
+        super.viewWillAppear(animated)
+        if self.segmentControl.selectedSegmentIndex == 0 {
+            self.sortView.isHidden = true
+            self.sortViewHeight.constant = 0
+        }else {
+            self.sortView.isHidden = false
+            self.sortViewHeight.constant = 36
+        }
     }
     
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        return self.items.count
+        if (self.segmentControl.selectedSegmentIndex == 0) {
+            return self.alerts.count
+        }else {
+            return self.actions.count
+        }
+        
     }
     
 //    func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {
@@ -159,7 +210,7 @@ class NotificationsVC: BaseViewController, UITableViewDelegate, UITableViewDataS
 //        case Constants.DELIVERY_CREATED:
 //            return 138.0
 //        case Constants.BID_CREATED:
-//            return 138.0
+//            return 138.0s
 //        default:
 //            return 78.0
 //        }
@@ -182,7 +233,12 @@ class NotificationsVC: BaseViewController, UITableViewDelegate, UITableViewDataS
     }
     
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
-        let item = self.items[indexPath.row]
+        var item = DatumNot(id: 0, type: 0, createdDate: "", createdTime: "", data: "", userID: "", orderID: 0)
+        if (self.segmentControl.selectedSegmentIndex == 0) {
+            item = self.alerts[indexPath.row]
+        }else {
+            item = self.actions[indexPath.row]
+        }
         switch item.type {
         case Constants.DELIVERY_CREATED:
             let cell : DriverOrderCell = tableView.dequeueReusableCell(withIdentifier: "driverordercell", for: indexPath) as! DriverOrderCell
@@ -252,6 +308,15 @@ class NotificationsVC: BaseViewController, UITableViewDelegate, UITableViewDataS
                 }
             }
             
+            
+            cell.lblNotificationDate.text = item.createdDate ?? ""
+            if (item.createdTime?.count ?? 0 > 0) {
+                cell.timeView.isHidden = false
+                cell.lblNotificationTime.text = item.createdTime ?? ""
+            }else {
+                cell.timeView.isHidden = true
+            }
+            
             return cell
         case Constants.DELIVERY_CANCELLED:
             let cell : RegularAlertCell = tableView.dequeueReusableCell(withIdentifier: "regularalertcell", for: indexPath) as! RegularAlertCell
@@ -318,6 +383,14 @@ class NotificationsVC: BaseViewController, UITableViewDelegate, UITableViewDataS
                 vc.delegate = self
                 
                 self.present(vc, animated: true, completion: nil)
+            }
+            
+            cell.lblNotificationDate.text = item.createdDate ?? ""
+            if (item.createdTime?.count ?? 0 > 0) {
+                cell.timeView.isHidden = false
+                cell.lblNotificationTime.text = item.createdTime ?? ""
+            }else {
+                cell.timeView.isHidden = true
             }
             
             return cell
@@ -464,6 +537,14 @@ class NotificationsVC: BaseViewController, UITableViewDelegate, UITableViewDataS
                 }
             }
             
+            cell.lblNotificationDate.text = item.createdDate ?? ""
+            if (item.createdTime?.count ?? 0 > 0) {
+                cell.timeView.isHidden = false
+                cell.lblNotificationTime.text = item.createdTime ?? ""
+            }else {
+                cell.timeView.isHidden = true
+            }
+            
             return cell
             
             
@@ -519,6 +600,14 @@ class NotificationsVC: BaseViewController, UITableViewDelegate, UITableViewDataS
                 vc.delegate = self
                 
                 self.present(vc, animated: true, completion: nil)
+            }
+            
+            cell.lblNotificationDate.text = item.createdDate ?? ""
+            if (item.createdTime?.count ?? 0 > 0) {
+                cell.timeView.isHidden = false
+                cell.lblNotificationTime.text = item.createdTime ?? ""
+            }else {
+                cell.timeView.isHidden = true
             }
             
             return cell
@@ -590,15 +679,37 @@ class NotificationsVC: BaseViewController, UITableViewDelegate, UITableViewDataS
     
     func refreshNotifications() {
         ApiService.getAllNotifications(Authorization: self.loadUser().data?.accessToken ?? "", sortBy: self.sortBy ?? 1) { (response) in
-            self.items.removeAll()
-            self.items.append(contentsOf: response.data ?? [DatumNot]())
-            if (self.items.count > 0) {
-                self.emptyView.isHidden = true
-                self.tableView.delegate = self
-                self.tableView.dataSource = self
-                self.tableView.reloadData()
+            self.alerts.removeAll()
+            self.actions.removeAll()
+            
+            for not in response.data ?? [DatumNot]() {
+                if (not.type == Constants.DELIVERY_CREATED || not.type == Constants.SERVICE_CREATED || not.type == Constants.BID_CREATED || not.type == Constants.SERVICE_BID_CREATED) {
+                    self.actions.append(not)
+                }else {
+                    self.alerts.append(not)
+                }
+            }
+            
+            self.tableView.reloadData()
+            
+            if (self.segmentControl.selectedSegmentIndex == 0) {
+                if (self.alerts.count > 0) {
+                    self.emptyView.isHidden = true
+                    self.tableView.delegate = self
+                    self.tableView.dataSource = self
+                    self.tableView.reloadData()
+                }else {
+                    self.emptyView.isHidden = false
+                }
             }else {
-                self.emptyView.isHidden = false
+                if (self.actions.count > 0) {
+                    self.emptyView.isHidden = true
+                    self.tableView.delegate = self
+                    self.tableView.dataSource = self
+                    self.tableView.reloadData()
+                }else {
+                    self.emptyView.isHidden = false
+                }
             }
             
         }
@@ -609,6 +720,40 @@ class NotificationsVC: BaseViewController, UITableViewDelegate, UITableViewDataS
         let mainStoryboardIpad : UIStoryboard = UIStoryboard(name: "Main", bundle: nil)
         let initialViewControlleripad : UIViewController = mainStoryboardIpad.instantiateViewController(withIdentifier: self.getHomeView()) as! UINavigationController
         self.present(initialViewControlleripad, animated: true, completion: {})
+    }
+    
+    
+    @IBAction func segmentTabChanged(_ sender: Any) {
+         UserDefaults.standard.setValue(0, forKey: Constants.NOTIFICATION_COUNT)
+        if self.segmentControl.selectedSegmentIndex == 0 {
+             self.sortView.isHidden = true
+            self.sortViewHeight.constant = 0
+        }else {
+            self.sortView.isHidden = false
+            self.sortViewHeight.constant = 36
+        }
+        self.tableView.reloadData()
+        
+        if (self.segmentControl.selectedSegmentIndex == 0) {
+            if (self.alerts.count > 0) {
+                self.emptyView.isHidden = true
+                self.tableView.delegate = self
+                self.tableView.dataSource = self
+                self.tableView.reloadData()
+            }else {
+                self.emptyView.isHidden = false
+            }
+        }else {
+            if (self.actions.count > 0) {
+                self.emptyView.isHidden = true
+                self.tableView.delegate = self
+                self.tableView.dataSource = self
+                self.tableView.reloadData()
+            }else {
+                self.emptyView.isHidden = false
+            }
+        }
+        
     }
     
     

@@ -68,6 +68,13 @@ class BaseViewController: UIViewController, SlideMenuDelegate {
         }
     }
     
+    func isProvider() -> Bool {
+        if ((self.loadUser().data?.roles?.contains(find: "Driver"))! || (self.loadUser().data?.roles?.contains(find: "ServiceProvider"))! || (self.loadUser().data?.roles?.contains(find: "TenderProvider"))!) {
+            return true
+        }
+        return false
+    }
+    
     override func didReceiveMemoryWarning() {
         super.didReceiveMemoryWarning()
         // Dispose of any resources that can be recreated.
@@ -112,9 +119,9 @@ class BaseViewController: UIViewController, SlideMenuDelegate {
         case 11:
             //share action
             if (self.isArabic()) {
-                self.shareAction(content: App.shared.config?.configString?.arabicTellAFriend ?? "")
+                self.shareAction(content: "\(App.shared.config?.configString?.arabicTellAFriend ?? "")\n\n\(App.shared.config?.updateStatus?.iosAppURL ?? "")")
             }else {
-                self.shareAction(content: App.shared.config?.configString?.englishTellAFriend ?? "")
+               self.shareAction(content: "\(App.shared.config?.configString?.englishTellAFriend ?? "")\n\n\(App.shared.config?.updateStatus?.iosAppURL ?? "")")
             }
             break
         case 12:

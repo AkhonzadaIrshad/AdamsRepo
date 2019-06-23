@@ -30,6 +30,7 @@ class DatumNot: Codable {
     let id : Int?
     let type: Int?
     let createdDate, data, userID: String?
+    let createdTime : String?
     let orderID: Int?
     
     enum CodingKeys: String, CodingKey {
@@ -39,14 +40,16 @@ class DatumNot: Codable {
         case userID = "UserId"
         case orderID = "OrderId"
         case id = "Id"
+        case createdTime = "CreatedTime"
     }
     
-    init(id : Int?, type: Int?, createdDate: String?, data: String?, userID: String?, orderID: Int?) {
+    init(id : Int?, type: Int?, createdDate: String?,createdTime : String?, data: String?, userID: String?, orderID: Int?) {
         self.id = id
         self.type = type
         self.createdDate = createdDate
         self.data = data
         self.userID = userID
         self.orderID = orderID
+        self.createdTime = createdTime
     }
 }

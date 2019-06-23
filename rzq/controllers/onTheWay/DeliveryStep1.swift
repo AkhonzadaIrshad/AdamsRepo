@@ -13,6 +13,7 @@ import MapKit
 import CoreLocation
 import Firebase
 import AMPopTip
+import MarqueeLabel
 
 class DeliveryStep1: BaseVC,LabasLocationManagerDelegate, Step2Delegate {
     
@@ -31,8 +32,10 @@ class DeliveryStep1: BaseVC,LabasLocationManagerDelegate, Step2Delegate {
     
     @IBOutlet weak var viewSuggest: UIView!
     @IBOutlet weak var viewPin: UIView!
-    @IBOutlet weak var lblShopName: MyUILabel!
+
     @IBOutlet weak var shopNameHeight: NSLayoutConstraint!
+    
+    @IBOutlet weak var lblShopName: MarqueeLabel!
     
     @IBOutlet weak var btnCurrentLocation: UIButton!
     
@@ -137,7 +140,7 @@ class DeliveryStep1: BaseVC,LabasLocationManagerDelegate, Step2Delegate {
         popTip.bubbleColor = UIColor.processing
         popTip.textColor = UIColor.white
         if (self.isArabic()) {
-            popTip.show(text: "current_location_desc".localized, direction: .right, maxWidth: 200, in: self.view, from: self.btnCurrentLocation.frame)
+            popTip.show(text: "current_location_desc".localized, direction: .left, maxWidth: 200, in: self.view, from: self.btnCurrentLocation.frame)
         }else {
             popTip.show(text: "current_location_desc".localized, direction: .left, maxWidth: 200, in: self.view, from: self.btnCurrentLocation.frame)
         }
@@ -186,6 +189,9 @@ class DeliveryStep1: BaseVC,LabasLocationManagerDelegate, Step2Delegate {
             
             self.latitude = location.coordinate.latitude
             self.longitude = location.coordinate.longitude
+            
+            UserDefaults.standard.setValue(self.latitude, forKey: Constants.LAST_LATITUDE)
+            UserDefaults.standard.setValue(self.longitude, forKey: Constants.LAST_LONGITUDE)
             
 //            self.latitude = 29.273551
 //            self.longitude = 47.936161
@@ -328,24 +334,33 @@ class DeliveryStep1: BaseVC,LabasLocationManagerDelegate, Step2Delegate {
                             }
                         }
                         
+                        self.shopNameHeight.constant = 20
+                        self.lblShopName.text = strAddresMain
+                        
                         self.lblPickupLocation.text = strAddresMain
                         self.lblPickupLocation.textColor = UIColor.appDarkBlue
                         self.orderModel?.pickUpAddress = strAddresMain
                         
                     }
                     else {
+                        self.shopNameHeight.constant = 0
+                        self.lblShopName.text = ""
                         self.lblPickupLocation.text = "Loading".localized
                         self.lblPickupLocation.textColor = UIColor.appDarkBlue
                         self.orderModel?.pickUpAddress = ""
                     }
                 }
                 else {
+                    self.shopNameHeight.constant = 0
+                    self.lblShopName.text = ""
                     self.lblPickupLocation.text = "Loading".localized
                     self.lblPickupLocation.textColor = UIColor.appDarkBlue
                     self.orderModel?.pickUpAddress = ""
                 }
             }
             else {
+                self.shopNameHeight.constant = 0
+                self.lblShopName.text = ""
                 self.lblPickupLocation.text = "Loading".localized
                 self.orderModel?.pickUpAddress = ""
             }
@@ -394,6 +409,7 @@ class DeliveryStep1: BaseVC,LabasLocationManagerDelegate, Step2Delegate {
                 self.orderModel?.shop = shop
                 self.orderModel?.pickUpAddress = shop.name ?? ""
                 self.lblPickupLocation.text = shop.name ?? ""
+                self.lblShopName.text = shop.name ?? ""
                 self.lblPickupLocation.textColor = UIColor.appDarkBlue
                 
                 self.moreDetailsView.isHidden = false
@@ -480,6 +496,7 @@ class DeliveryStep1: BaseVC,LabasLocationManagerDelegate, Step2Delegate {
                 self.orderModel?.shop = shop
                 self.orderModel?.pickUpAddress = shop.name ?? ""
                 self.lblPickupLocation.text = shop.name ?? ""
+                self.lblShopName.text = shop.name ?? ""
                 self.lblPickupLocation.textColor = UIColor.appDarkBlue
                 
                  self.moreDetailsView.isHidden = false
@@ -578,7 +595,21 @@ class DeliveryStep1: BaseVC,LabasLocationManagerDelegate, Step2Delegate {
     
     
     @IBAction func clearFieldAction(_ sender: Any) {
+        self.moreDetailsView.isHidden = true
+        self.lblSearch.isHidden = false
+        self.ivShop.image = nil
         self.edtMoreDetails.text = ""
+        self.lblPickupLocation.text = ""
+        self.searchField.text = ""
+        self.ivShop.isHidden = true
+        self.viewShopDetails.isHidden = true
+        self.gMap?.clear()
+        self.getShopsList(radius: Float(Constants.DEFAULT_RADIUS), rating: 0)
+        
+        self.lblShopName.text = ""
+        self.shopNameHeight.constant = 0
+        self.viewPin.isHidden = false
+        self.viewSuggest.isHidden = true
     }
     
     
@@ -705,7 +736,7 @@ extension DeliveryStep1 : GMSMapViewDelegate {
         self.orderModel?.pickUpLongitude = coordinate.longitude
         self.getAddressForMapCenter()
         
-        self.lblShopName.text = ""
+  //      self.lblShopName.text = ""
         self.shopNameHeight.constant = 0
         self.viewPin.isHidden = true
         self.viewSuggest.isHidden = false

@@ -34,6 +34,7 @@ class SendingOrderVC: BaseVC {
     
     func goToNotifications() {
         let vc = UIStoryboard(name: "Main", bundle: nil).instantiateViewController(withIdentifier: "NotificationsNavigationController") as! UINavigationController
+        App.shared.notificationSegmentIndex = 1
         self.present(vc, animated: true, completion: nil)
     }
     

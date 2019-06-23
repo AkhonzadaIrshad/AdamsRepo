@@ -51,7 +51,7 @@ class DataClassDelObj: Codable {
         case pickUpDetails = "PickUpDetails"
         case dropOffDetails = "DropOffDetails"
         case id = "Id"
-        case driverId = "DriverId"
+        case driverId = "ProviderId"
         case title = "Title"
         case fromAddress = "FromAddress"
         case fromLatitude = "FromLatitude"
