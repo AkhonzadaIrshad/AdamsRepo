@@ -1111,6 +1111,37 @@ class ApiService : NSObject {
     }
     
     
+    
+    static func subscribeToPlace(Authorization : String,id: String, name: String, address: String, latitude: Double, longitude: Double, phoneNumber: String, workingHours: String, image: String, rate: Int, completion:@escaping(_ response : BaseResponse)-> Void) {
+        
+        let headers = [Constants.AUTH_HEADER: "bearer \(Authorization)",
+            Constants.LANG_HEADER : self.getLang()]
+        
+        let all : [String : Any] = ["Id" : "\(id)",
+                                    "Name" : name,
+                                    "Address" : address,
+                                    "Latitude": latitude,
+                                    "Longitude" : longitude,
+                                    "PhoneNumber" : phoneNumber,
+                                    "WorkingHours" : workingHours,
+                                    "Image" : image,
+                                    "Rate" : rate]
+        
+        AFManager.request("\(Constants.BASE_URL)Shop/SubscribeToPlace", method: .post, parameters: all ,encoding: JSONEncoding.default, headers: headers)
+            .responseJSON { response in
+                if let json = response.data {
+                    do {
+                        let decoder = JSONDecoder()
+                        let baseResponse = try decoder.decode(BaseResponse.self, from: json)
+                        completion(baseResponse)
+                    }catch let err{
+                        print(err)
+                    }
+                }
+        }
+    }
+    
+    
     static func unsubscribeToShop(Authorization : String,shopId: Int, completion:@escaping(_ response : BaseResponse)-> Void) {
         
         let headers = [Constants.AUTH_HEADER: "bearer \(Authorization)",
@@ -1119,6 +1150,27 @@ class ApiService : NSObject {
         let all : [String : Any] = ["ShopId" : shopId]
         
         AFManager.request("\(Constants.BASE_URL)Shop/Unsubscribe", method: .post, parameters: all ,encoding: JSONEncoding.default, headers: headers)
+            .responseJSON { response in
+                if let json = response.data {
+                    do {
+                        let decoder = JSONDecoder()
+                        let baseResponse = try decoder.decode(BaseResponse.self, from: json)
+                        completion(baseResponse)
+                    }catch let err{
+                        print(err)
+                    }
+                }
+        }
+    }
+    
+    static func unsubscribeFromPlace(Authorization : String,id: String, completion:@escaping(_ response : BaseResponse)-> Void) {
+        
+        let headers = [Constants.AUTH_HEADER: "bearer \(Authorization)",
+            Constants.LANG_HEADER : self.getLang()]
+        
+        let all : [String : Any] = ["Id" : id]
+        
+        AFManager.request("\(Constants.BASE_URL)Shop/UnsubscribeFromPlace", method: .post, parameters: all ,encoding: JSONEncoding.default, headers: headers)
             .responseJSON { response in
                 if let json = response.data {
                     do {
@@ -1201,6 +1253,5 @@ class ApiService : NSObject {
                 }
         }
     }
-    
     
 }

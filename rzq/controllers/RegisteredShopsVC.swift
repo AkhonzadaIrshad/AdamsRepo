@@ -22,8 +22,8 @@ class RegisteredShopsVC: BaseViewController, UITableViewDelegate, UITableViewDat
         
         self.tableView.rowHeight = UITableView.automaticDimension
         self.tableView.estimatedRowHeight = 140.0
-
-          self.btnMenu.addTarget(self, action: #selector(BaseViewController.onSlideMenuButtonPressed(_:)), for: UIControl.Event.touchUpInside)
+        
+        self.btnMenu.addTarget(self, action: #selector(BaseViewController.onSlideMenuButtonPressed(_:)), for: UIControl.Event.touchUpInside)
         
         self.loadShops()
         // Do any additional setup after loading the view.
@@ -83,7 +83,7 @@ class RegisteredShopsVC: BaseViewController, UITableViewDelegate, UITableViewDat
     
     
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
-       let cell : ShopRegisterCell = tableView.dequeueReusableCell(withIdentifier: "shopregistercell", for: indexPath) as! ShopRegisterCell
+        let cell : ShopRegisterCell = tableView.dequeueReusableCell(withIdentifier: "shopregistercell", for: indexPath) as! ShopRegisterCell
         
         let item = self.items[indexPath.row]
         
@@ -101,7 +101,16 @@ class RegisteredShopsVC: BaseViewController, UITableViewDelegate, UITableViewDat
         
         cell.onCancel = {
             self.showLoading()
-            ApiService.unsubscribeToShop(Authorization: self.loadUser().data?.accessToken ?? "", shopId: item.id ?? 0) { (response) in
+            //            ApiService.unsubscribeToShop(Authorization: self.loadUser().data?.accessToken ?? "", shopId: item.id ?? 0) { (response) in
+            //                self.hideLoading()
+            //                if (response.errorCode == 0) {
+            //                    self.showBanner(title: "alert".localized, message: "unregistered_to_shop".localized, style: UIColor.SUCCESS)
+            //                    self.loadShops()
+            //                }else {
+            //                    self.showBanner(title: "alert".localized, message: response.errorMessage ?? "", style: UIColor.INFO)
+            //                }
+            //            }
+            ApiService.unsubscribeFromPlace(Authorization: self.loadUser().data?.accessToken ?? "", id: item.placeId ?? "", completion: { (response) in
                 self.hideLoading()
                 if (response.errorCode == 0) {
                     self.showBanner(title: "alert".localized, message: "unregistered_to_shop".localized, style: UIColor.SUCCESS)
@@ -109,7 +118,7 @@ class RegisteredShopsVC: BaseViewController, UITableViewDelegate, UITableViewDat
                 }else {
                     self.showBanner(title: "alert".localized, message: response.errorMessage ?? "", style: UIColor.INFO)
                 }
-            }
+            })
         }
         
         return cell

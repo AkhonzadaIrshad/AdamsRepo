@@ -25,6 +25,16 @@ class AnswersVC: BaseVC {
         self.lblQuestion.text = item?.question ?? ""
         self.lblAnswer.text = item?.answer ?? ""
         // Do any additional setup after loading the view.
+        
+        if (self.isArabic()) {
+            let attributedString = NSMutableAttributedString(string: item?.answer ?? "")
+            let paragraphStyle = NSMutableParagraphStyle()
+            paragraphStyle.lineSpacing = 10
+            attributedString.addAttribute(NSAttributedString.Key.paragraphStyle, value:paragraphStyle, range:NSMakeRange(0, attributedString.length))
+            self.lblAnswer.attributedText = attributedString
+        }
+        
+        
     }
     
     @IBAction func backAction(_ sender: Any) {

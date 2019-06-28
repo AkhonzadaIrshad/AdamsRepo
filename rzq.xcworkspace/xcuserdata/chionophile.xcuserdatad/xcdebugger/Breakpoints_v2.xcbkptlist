@@ -10,12 +10,28 @@
             ignoreCount = "0"
             continueAfterRunningActions = "No"
             filePath = "rzq/controllers/onTheWay/DeliveryStep1.swift"
-            timestampString = "582985833.680918"
+            timestampString = "583438518.121556"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "561"
-            endingLineNumber = "561"
+            startingLineNumber = "617"
+            endingLineNumber = "617"
             landmarkName = "clearPickLocation(_:)"
+            landmarkType = "7">
+         </BreakpointContent>
+      </BreakpointProxy>
+      <BreakpointProxy
+         BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
+         <BreakpointContent
+            shouldBeEnabled = "Yes"
+            ignoreCount = "0"
+            continueAfterRunningActions = "No"
+            filePath = "rzq/controllers/onTheWay/DeliveryStep1.swift"
+            timestampString = "583438518.121613"
+            startingColumnNumber = "9223372036854775807"
+            endingColumnNumber = "9223372036854775807"
+            startingLineNumber = "465"
+            endingLineNumber = "465"
+            landmarkName = "getShopsByName(name:latitude:longitude:radius:)"
             landmarkType = "7">
          </BreakpointContent>
       </BreakpointProxy>

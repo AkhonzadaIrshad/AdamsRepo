@@ -180,6 +180,9 @@
 /* Class = "UILabel"; text = "Rate the driver."; ObjectID = "ASa-DH-BYw"; */
 "ASa-DH-BYw.text" = "قيم السائق";
 
+"zGP-ze-o5o.normalTitle" = "التوجه الى المتجر";
+"5D1-Yu-Sjf.normalTitle" = "التوجه الى الزبون";
+
 /* Class = "UILabel"; text = "Nearby Shops"; ObjectID = "AWR-iL-fTg"; */
 "AWR-iL-fTg.text" = "الاماكن القريبة";
 

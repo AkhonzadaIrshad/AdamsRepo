@@ -61,7 +61,7 @@ class ShopDetailsVC: BaseVC, UITableViewDelegate, UITableViewDataSource, UIColle
         if (self.isArabic()) {
             self.ivHandle.image = UIImage(named: "ic_back_arabic")
         }
-         self.infoView.isHidden = false
+        self.infoView.isHidden = false
         gMap = GMSMapView()
         self.setUpGoogleMap()
         if ((self.loadUser().data?.roles?.contains(find: "Driver"))!) {
@@ -95,7 +95,7 @@ class ShopDetailsVC: BaseVC, UITableViewDelegate, UITableViewDataSource, UIColle
         }else {
             self.ivLogo.image = UIImage(named: "ic_place_store")
         }
-     
+        
         self.lblName.text = self.shop?.name ?? ""
         self.lblAddress.text = self.shop?.address ?? ""
         self.ratingView.rating = self.shop?.rate ?? 0.0
@@ -105,7 +105,7 @@ class ShopDetailsVC: BaseVC, UITableViewDelegate, UITableViewDataSource, UIColle
         let hours = self.shop?.workingHours?.split(separator: ",")
         let dayWeek = Calendar.current.component(.weekday, from: Date()) + 1
         if (hours?.count ?? 0 > dayWeek) {
-         self.lblWorkingHours.text = String(hours?[dayWeek] ?? "")
+            self.lblWorkingHours.text = String(hours?[dayWeek] ?? "")
         }else if (hours?.count ?? 0 > 0) {
             self.lblWorkingHours.text = String(hours?[0] ?? "")
         }
@@ -126,7 +126,7 @@ class ShopDetailsVC: BaseVC, UITableViewDelegate, UITableViewDataSource, UIColle
             self.collectionViewHright.constant = 0
             self.lblImages.isHidden = true
         }
-    
+        
     }
     
     //collection delegates
@@ -178,18 +178,18 @@ class ShopDetailsVC: BaseVC, UITableViewDelegate, UITableViewDataSource, UIColle
     
     
     @objc func enlargeImage() {
-            if let vc = UIStoryboard(name: "Main", bundle: nil).instantiateViewController(withIdentifier: "ImageSliderVC") as? ImageSliderVC
-            {
-                var images = [String]()
-                  if (self.shop?.images?.count ?? 0 > 0) {
-                    images.append("\(self.shop?.images?[0] ?? "")")
-                  }else {
-                    images.append("\(self.shop?.type?.image ?? "")")
-                }
-                
-                vc.orderImages = images
-                self.navigationController?.pushViewController(vc, animated: true)
+        if let vc = UIStoryboard(name: "Main", bundle: nil).instantiateViewController(withIdentifier: "ImageSliderVC") as? ImageSliderVC
+        {
+            var images = [String]()
+            if (self.shop?.images?.count ?? 0 > 0) {
+                images.append("\(self.shop?.images?[0] ?? "")")
+            }else {
+                images.append("\(self.shop?.type?.image ?? "")")
             }
+            
+            vc.orderImages = images
+            self.navigationController?.pushViewController(vc, animated: true)
+        }
     }
     
     func getShopImageByType(type : Int) -> UIImage {
@@ -252,15 +252,15 @@ class ShopDetailsVC: BaseVC, UITableViewDelegate, UITableViewDataSource, UIColle
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
         return self.items.count
     }
-
+    
     func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {
         return 138.0
     }
-
+    
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
-
+        
     }
-
+    
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         let item = self.items[indexPath.row]
         
@@ -302,7 +302,7 @@ class ShopDetailsVC: BaseVC, UITableViewDelegate, UITableViewDataSource, UIColle
         }
         
         return cell
-
+        
     }
     
     func setUpGoogleMap() {
@@ -374,13 +374,21 @@ class ShopDetailsVC: BaseVC, UITableViewDelegate, UITableViewDataSource, UIColle
     
     @IBAction func registerAction(_ sender: Any) {
         self.showLoading()
-        ApiService.subscribeToShop(Authorization: self.loadUser().data?.accessToken ?? "", shopId: self.shop?.id ?? 0) { (response) in
+        //        ApiService.subscribeToShop(Authorization: self.loadUser().data?.accessToken ?? "", shopId: self.shop?.id ?? 0) { (response) in
+        //            self.hideLoading()
+        //            if (response.errorCode == 0) {
+        //                self.showBanner(title: "alert".localized, message: "registered_to_shop".localized, style: UIColor.SUCCESS)
+        //            }else {
+        //               // self.showBanner(title: "alert".localized, message: response.errorMessage ?? "", style: UIColor.INFO)
+        //                self.showBanner(title: "alert".localized, message: "registered_to_shop".localized, style: UIColor.SUCCESS)
+        //            }
+        //        }
+        ApiService.subscribeToPlace(Authorization: self.loadUser().data?.accessToken ?? "", id: shop?.placeId ?? "", name: shop?.name ?? "", address: shop?.address ?? "", latitude: shop?.latitude ?? 0.0, longitude: shop?.longitude ?? 0.0, phoneNumber: shop?.phoneNumber ?? "", workingHours: shop?.workingHours ?? "", image: "", rate: 0) { (response) in
             self.hideLoading()
             if (response.errorCode == 0) {
                 self.showBanner(title: "alert".localized, message: "registered_to_shop".localized, style: UIColor.SUCCESS)
             }else {
-               // self.showBanner(title: "alert".localized, message: response.errorMessage ?? "", style: UIColor.INFO)
-                self.showBanner(title: "alert".localized, message: "registered_to_shop".localized, style: UIColor.SUCCESS)
+                 self.showBanner(title: "alert".localized, message: response.errorMessage ?? "", style: UIColor.INFO)
             }
         }
     }
@@ -389,7 +397,7 @@ class ShopDetailsVC: BaseVC, UITableViewDelegate, UITableViewDataSource, UIColle
 }
 extension ShopDetailsVC : GMSMapViewDelegate {
     func mapView(_ mapView: GMSMapView, didChange position: GMSCameraPosition) {
-       
+        
     }
     func mapView(_ mapView: GMSMapView, idleAt position: GMSCameraPosition) {
         

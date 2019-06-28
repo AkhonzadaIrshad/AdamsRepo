@@ -184,3 +184,11 @@
 
 "account_balance" = "Balance:";
 "due" = "Due amount:";
+
+"mandatory_update" = "Mandatory Update";
+"new_update" = "New Update";
+"new_update_available" = "New update is available for RZQ";
+
+"close_title_btn" = "CLOSE APP";
+"update_title_btn" = "UPDATE";
+"cancel_title_btn" = "CANCEL";

@@ -8,7 +8,7 @@
 
 import UIKit
 
-class QuestionAnswerVC: UIViewController {
+class QuestionAnswerVC: BaseVC {
 
     var faq : FAQsDatum?
     
@@ -22,6 +22,13 @@ class QuestionAnswerVC: UIViewController {
         self.lblQuestion.text = self.faq?.answer ?? ""
         self.lblAnswer.text = self.faq?.question ?? ""
 
+        if (self.isArabic()) {
+            let attributedString = NSMutableAttributedString(string: self.faq?.answer ?? "")
+            let paragraphStyle = NSMutableParagraphStyle()
+            paragraphStyle.lineSpacing = 30
+            attributedString.addAttribute(NSAttributedString.Key.paragraphStyle, value:paragraphStyle, range:NSMakeRange(0, attributedString.length))
+            self.lblAnswer.attributedText = attributedString
+        }
         // Do any additional setup after loading the view.
     }
     

@@ -185,3 +185,11 @@
 
 "account_balance" = "الرصيد:";
 "due" = "المبلغ المستحق:";
+
+"mandatory_update" = "تحديث الزامي";
+"new_update" = "تحديث جديد";
+"new_update_available" = "يتوفر تحديث جديد لتطبيق رزق";
+
+"close_title_btn" = "اغلاق التطبيق";
+"update_title_btn" = "تحديث";
+"cancel_title_btn" = "الغاء";

@@ -34,6 +34,7 @@ class ShopData: Codable {
     let rate: Double?
     let images: [String]?
     let type: TypeClass?
+    var placeId : String?
     
     enum CodingKeys: String, CodingKey {
         case nearbyDriversCount = "NearbyDriversCount"

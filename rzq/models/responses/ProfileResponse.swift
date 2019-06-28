@@ -29,7 +29,7 @@ class ProfileResponse: Codable {
 class DataProfileObj: Codable {
     let id, fullName: String?
     let gender: Int?
-    let rate, balance : Double?
+    let rate, dueAmount, earnings : Double?
     let dateOfBirth, image, email, phoneNumber: String?
     let ordersCount: Int?
     let roles: String?
@@ -43,12 +43,13 @@ class DataProfileObj: Codable {
         case image = "Image"
         case email = "Email"
         case phoneNumber = "PhoneNumber"
-        case balance = "Balance"
+        case dueAmount = "DueAmount"
         case ordersCount = "OrdersCount"
         case roles = "Roles"
+        case earnings = "Earnings"
     }
     
-    init(id: String?, fullName: String?, gender: Int?, rate: Double?, dateOfBirth: String?, image: String?, email: String?, phoneNumber: String?, balance: Double?, ordersCount: Int?, roles: String?) {
+    init(id: String?, fullName: String?, gender: Int?, rate: Double?, dateOfBirth: String?, image: String?, email: String?, phoneNumber: String?, dueAmount: Double?, ordersCount: Int?, roles: String?, earnings : Double?) {
         self.id = id
         self.fullName = fullName
         self.gender = gender
@@ -57,8 +58,9 @@ class DataProfileObj: Codable {
         self.image = image
         self.email = email
         self.phoneNumber = phoneNumber
-        self.balance = balance
+        self.dueAmount = dueAmount
         self.ordersCount = ordersCount
         self.roles = roles
+        self.earnings = earnings
     }
 }

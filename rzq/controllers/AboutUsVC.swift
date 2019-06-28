@@ -30,6 +30,13 @@ class AboutUsVC: BaseVC {
             self.tvContent.textAlignment = NSTextAlignment.right
           self.tvContent.text = App.shared.config?.company?.arabicDescription ?? ""
               self.ivHandle.image = UIImage(named: "ic_back_arabic")
+            
+            let style = NSMutableParagraphStyle()
+            style.lineSpacing = 10
+            let attributes = [NSAttributedString.Key.paragraphStyle : style]
+            self.tvContent.attributedText = NSAttributedString(string: self.tvContent.text, attributes: attributes)
+            
+            
         }else {
          self.tvContent.text = App.shared.config?.company?.englishDescription ?? ""
         }
@@ -74,13 +81,13 @@ class AboutUsVC: BaseVC {
     
     func openWebsite() {
         let application = UIApplication.shared
-        let webURL = URL(string: "http://www.euroarabins.com/")!
+        let webURL = URL(string: App.shared.config?.company?.website ?? "")!
         application.open(webURL)
     }
     
     func callNumber()
     {
-        if let url = URL(string: "tel://+96265518935"), UIApplication.shared.canOpenURL(url) {
+        if let url = URL(string: "https://api.whatsapp.com/send?phone=\(App.shared.config?.company?.phone ?? "")"), UIApplication.shared.canOpenURL(url) {
             if #available(iOS 10, *) {
                 UIApplication.shared.open(url)
             } else {

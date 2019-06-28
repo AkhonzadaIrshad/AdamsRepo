@@ -68,7 +68,7 @@ class ProfileVC: BaseVC {
             }
          
             self.lblName.text = response.dataProfileObj?.fullName ?? ""
-            self.lblBalance.text = "\(response.dataProfileObj?.balance ?? 0) \("currency".localized)"
+            self.lblBalance.text = "\(response.dataProfileObj?.earnings ?? 0) \("currency".localized)"
             self.lblOrderCount.text = "\(response.dataProfileObj?.ordersCount ?? 0)"
             
             self.ratingView.rating = Double(response.dataProfileObj?.rate ?? 0)
@@ -102,11 +102,11 @@ class ProfileVC: BaseVC {
                 self.lineDueAmount.isHidden = false
                 self.dueTitleHeight.constant = 20
                 self.lblDueTitle.isHidden = false
-                let balance = response.dataProfileObj?.balance ?? 0.0
+                let balance = response.dataProfileObj?.earnings ?? 0.0
                 let perc = App.shared.config?.configSettings?.percentage ?? 0.0
                 let total = balance * perc
                 let finalTotal = total / 10.0
-                self.lblDueAmount.text = "\(finalTotal) \("currency".localized)"
+                self.lblDueAmount.text = "\(response.dataProfileObj?.dueAmount ?? 0.0) \("currency".localized)"
                 
             }else {
                 self.lineDueAmount.isHidden = true
@@ -150,7 +150,7 @@ class ProfileVC: BaseVC {
     
     @IBAction func logoutAction(_ sender: Any) {
         self.showAlert(title: "alert".localized, message: "confirm_logout".localized, actionTitle: "logout".localized, cancelTitle: "cancel".localized, actionHandler: {
-             self.updateUser(self.getRealmUser(userProfile: VerifyResponse(data: DataClass(accessToken: "", phoneNumber: "", username: "", fullName: "", userID: "", dateOfBirth: "", profilePicture: "", email: "", gender: 0, rate: 0, roles: "", isOnline: false,exceededDueAmount: false, balance: 0.0), errorCode: 0, errorMessage: "")))
+             self.updateUser(self.getRealmUser(userProfile: VerifyResponse(data: DataClass(accessToken: "", phoneNumber: "", username: "", fullName: "", userID: "", dateOfBirth: "", profilePicture: "", email: "", gender: 0, rate: 0, roles: "", isOnline: false,exceededDueAmount: false, dueAmount: 0.0, earnings: 0.0), errorCode: 0, errorMessage: "")))
             self.deleteUsers()
             if let vc = UIStoryboard(name: "Main", bundle: nil).instantiateViewController(withIdentifier: "LoginVC") as? LoginVC
             {

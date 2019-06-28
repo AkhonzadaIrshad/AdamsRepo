@@ -66,6 +66,61 @@ class LoginVC: BaseVC, CountryPickerViewDataSource, CountryPickerViewDelegate, P
         
         self.edtUserName.addDoneButtonOnKeyboard()
         self.edtMobileNumber.addDoneButtonOnKeyboard()
+        
+        if (App.shared.config?.configSettings?.flag ?? false) {
+            self.checkForUpdates()
+        }
+    }
+    
+    
+    func checkForUpdates() {
+        
+        let appVersion = Bundle.main.infoDictionary!["CFBundleShortVersionString"] as? String ?? "0.0"
+        let CMSVersion = App.shared.config?.updateStatus?.iosVersion ?? appVersion
+        let isMand = App.shared.config?.updateStatus?.iosIsMandatory ?? false
+        
+        if (appVersion != CMSVersion){
+            if (isMand){
+                //mandatory
+                if (self.isArabic()) {
+                    self.showMandUpdateDialog(titleStr: "mandatory_update".localized, desc: App.shared.config?.configString?.arabicNewVersionText ?? "new_update_available".localized)
+                } else {
+                    self.showMandUpdateDialog(titleStr: "mandatory_update".localized, desc: App.shared.config?.configString?.englishNewVersionText ?? "new_update_available".localized)
+                }
+                
+            }else {
+                //normal
+                let defaults = UserDefaults.standard
+                var updateCount = defaults.value(forKey: "UPDATE_COUNT_CLICK") as? Int ?? 4
+                if (updateCount >= 4) {
+                    defaults.setValue(1, forKey: "UPDATE_COUNT_CLICK")
+                    if (self.isArabic()) {
+                        self.showNormUpdateDialog(titleStr: "new_update".localized, desc: App.shared.config?.configString?.arabicNewVersionText ?? "new_update_available".localized)
+                    } else {
+                        self.showNormUpdateDialog(titleStr: "new_update".localized, desc: App.shared.config?.configString?.englishNewVersionText ?? "new_update_available".localized)
+                    }
+                }else {
+                    updateCount = defaults.value(forKey: "UPDATE_COUNT_CLICK") as? Int ?? 1
+                    defaults.setValue((updateCount + 1), forKey: "UPDATE_COUNT_CLICK")
+                }
+            }
+        }
+        
+    }
+    
+    
+    func showNormUpdateDialog(titleStr : String, desc : String) {
+        let viewController = UIStoryboard(name: "Main", bundle: nil).instantiateViewController(withIdentifier: "normdialogvc") as! NormUpdateDialog
+        viewController.dialogTitleStr = titleStr
+        viewController.dialogDescStr = desc
+        self.present(viewController, animated: true, completion: nil)
+    }
+    
+    func showMandUpdateDialog(titleStr : String, desc : String) {
+        let viewController = UIStoryboard(name: "Main", bundle: nil).instantiateViewController(withIdentifier: "manddialogvc") as! MandIUpdateDialog
+        viewController.dialogTitleStr = titleStr
+        viewController.dialogDescStr = desc
+        self.present(viewController, animated: true, completion: nil)
     }
     
     func countryPickerView(_ countryPickerView: CountryPickerView, didSelectCountry country: Country) {
@@ -130,7 +185,7 @@ class LoginVC: BaseVC, CountryPickerViewDataSource, CountryPickerViewDelegate, P
     }
     
     @IBAction func skipAction(_ sender: Any) {
-        self.updateUser(self.getRealmUser(userProfile: VerifyResponse(data: DataClass(accessToken: "", phoneNumber: "", username: "", fullName: "", userID: "", dateOfBirth: "", profilePicture: "", email: "", gender: 0, rate: 0, roles: "", isOnline: false,exceededDueAmount: false, balance: 0.0), errorCode: 0, errorMessage: "")))
+        self.updateUser(self.getRealmUser(userProfile: VerifyResponse(data: DataClass(accessToken: "", phoneNumber: "", username: "", fullName: "", userID: "", dateOfBirth: "", profilePicture: "", email: "", gender: 0, rate: 0, roles: "", isOnline: false,exceededDueAmount: false, dueAmount: 0.0, earnings: 0.0), errorCode: 0, errorMessage: "")))
         
         
         let mainStoryboardIpad : UIStoryboard = UIStoryboard(name: "Main", bundle: nil)

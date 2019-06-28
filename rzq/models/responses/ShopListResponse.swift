@@ -34,6 +34,7 @@ class DataShop: Codable {
     let images : [String]?
     let rate: Double?
     let type: TypeClass?
+    var placeId : String?
     
     enum CodingKeys: String, CodingKey {
         case id = "Id"

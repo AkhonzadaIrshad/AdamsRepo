@@ -149,7 +149,63 @@ class DeliveryStep1: BaseVC,LabasLocationManagerDelegate, Step2Delegate {
             popTip.hide()
         }
         
+        if (App.shared.config?.configSettings?.flag ?? false) {
+          self.checkForUpdates()
+        }
+        
     }
+    
+    
+    func checkForUpdates() {
+        
+        let appVersion = Bundle.main.infoDictionary!["CFBundleShortVersionString"] as? String ?? "0.0"
+        let CMSVersion = App.shared.config?.updateStatus?.iosVersion ?? appVersion
+        let isMand = App.shared.config?.updateStatus?.iosIsMandatory ?? false
+        
+        if (appVersion != CMSVersion){
+            if (isMand){
+                //mandatory
+                if (self.isArabic()) {
+                    self.showMandUpdateDialog(titleStr: "mandatory_update".localized, desc: App.shared.config?.configString?.arabicNewVersionText ?? "new_update_available".localized)
+                } else {
+                    self.showMandUpdateDialog(titleStr: "mandatory_update".localized, desc: App.shared.config?.configString?.englishNewVersionText ?? "new_update_available".localized)
+                }
+                
+            }else {
+                //normal
+                let defaults = UserDefaults.standard
+                var updateCount = defaults.value(forKey: "UPDATE_COUNT_CLICK") as? Int ?? 4
+                if (updateCount >= 4) {
+                    defaults.setValue(1, forKey: "UPDATE_COUNT_CLICK")
+                    if (self.isArabic()) {
+                        self.showNormUpdateDialog(titleStr: "new_update".localized, desc: App.shared.config?.configString?.arabicNewVersionText ?? "new_update_available".localized)
+                    } else {
+                        self.showNormUpdateDialog(titleStr: "new_update".localized, desc: App.shared.config?.configString?.englishNewVersionText ?? "new_update_available".localized)
+                    }
+                }else {
+                    updateCount = defaults.value(forKey: "UPDATE_COUNT_CLICK") as? Int ?? 1
+                    defaults.setValue((updateCount + 1), forKey: "UPDATE_COUNT_CLICK")
+                }
+            }
+        }
+        
+    }
+    
+    
+    func showNormUpdateDialog(titleStr : String, desc : String) {
+        let viewController = UIStoryboard(name: "Main", bundle: nil).instantiateViewController(withIdentifier: "normdialogvc") as! NormUpdateDialog
+        viewController.dialogTitleStr = titleStr
+        viewController.dialogDescStr = desc
+        self.present(viewController, animated: true, completion: nil)
+    }
+    
+    func showMandUpdateDialog(titleStr : String, desc : String) {
+        let viewController = UIStoryboard(name: "Main", bundle: nil).instantiateViewController(withIdentifier: "manddialogvc") as! MandIUpdateDialog
+        viewController.dialogTitleStr = titleStr
+        viewController.dialogDescStr = desc
+        self.present(viewController, animated: true, completion: nil)
+    }
+    
     
     @IBAction func myLocationAction(_ sender: Any) {
         let camera = GMSCameraPosition.camera(withLatitude: self.latitude ?? 0.0, longitude: self.longitude ?? 0.0, zoom: 20.0)
@@ -163,6 +219,8 @@ class DeliveryStep1: BaseVC,LabasLocationManagerDelegate, Step2Delegate {
             vc.longitude = self.longitude ?? 0.0
             
             let shopData = ShopData(nearbyDriversCount: 0, id: self.orderModel?.shop?.id ?? 0, name: self.orderModel?.shop?.name ?? "", address: self.orderModel?.shop?.address ?? "", latitude: self.orderModel?.shop?.latitude ?? 0.0, longitude: self.orderModel?.shop?.longitude ?? 0.0, phoneNumber: self.orderModel?.shop?.phoneNumber ?? "", workingHours: self.orderModel?.shop?.workingHours ?? "", images: self.orderModel?.shop?.images ?? [String](), rate: self.orderModel?.shop?.rate ?? 0.0, type: self.orderModel?.shop?.type ?? TypeClass(id: 0, name: "",image: ""))
+            shopData.placeId = self.orderModel?.shop?.placeId ?? ""
+            
             vc.shop = shopData
             self.navigationController?.pushViewController(vc, animated: true)
         }
@@ -475,7 +533,7 @@ class DeliveryStep1: BaseVC,LabasLocationManagerDelegate, Step2Delegate {
             self.filterShops.removeAll()
             for prediction in response.results ?? [Result]() {
                 let dataShop = DataShop(id: 0, name: prediction.name ?? "", address: prediction.vicinity ?? "", latitude: prediction.geometry?.location?.lat ?? 0.0, longitude: prediction.geometry?.location?.lng ?? 0.0, phoneNumber: "", workingHours: "", images: [String](), rate: prediction.rating ?? 0.0, type: TypeClass(id: 0, name: prediction.types?[0] ?? "", image: ""))
-                
+               dataShop.placeId = prediction.id ?? ""
                   self.filterShops.append(dataShop)
             }
             
