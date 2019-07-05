@@ -2142,10 +2142,10 @@
                                             <autoresizingMask key="autoresizingMask"/>
                                             <subviews>
                                                 <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="vWc-PI-YwY" customClass="CardView" customModule="rzq" customModuleProvider="target">
-                                                    <rect key="frame" x="0.0" y="0.0" width="315" height="130"/>
+                                                    <rect key="frame" x="0.0" y="0.0" width="260" height="130"/>
                                                     <subviews>
                                                         <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="2ts-B8-Rks" customClass="CardView" customModule="rzq" customModuleProvider="target">
-                                                            <rect key="frame" x="1" y="1" width="313" height="128"/>
+                                                            <rect key="frame" x="1" y="1" width="258" height="128"/>
                                                             <subviews>
                                                                 <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleAspectFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" translatesAutoresizingMaskIntoConstraints="NO" id="1rD-5J-urn">
                                                                     <rect key="frame" x="10" y="10" width="50" height="50"/>
@@ -2155,7 +2155,7 @@
                                                                     </constraints>
                                                                 </imageView>
                                                                 <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="252" text="Label" textAlignment="natural" lineBreakMode="tailTruncation" numberOfLines="3" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="dCi-Yw-rLQ" customClass="MyUILabel" customModule="rzq" customModuleProvider="target">
-                                                                    <rect key="frame" x="80" y="10" width="225" height="23"/>
+                                                                    <rect key="frame" x="80" y="10" width="170" height="23"/>
                                                                     <fontDescription key="fontDescription" type="system" pointSize="17"/>
                                                                     <nil key="textColor"/>
                                                                     <nil key="highlightedColor"/>
@@ -2164,10 +2164,10 @@
                                                                     </userDefinedRuntimeAttributes>
                                                                 </label>
                                                                 <stackView opaque="NO" contentMode="scaleToFill" distribution="fillEqually" translatesAutoresizingMaskIntoConstraints="NO" id="ekX-WN-G7l">
-                                                                    <rect key="frame" x="80" y="43" width="225" height="25"/>
+                                                                    <rect key="frame" x="80" y="43" width="170" height="25"/>
                                                                     <subviews>
                                                                         <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="auF-IR-VDK">
-                                                                            <rect key="frame" x="0.0" y="0.0" width="75" height="25"/>
+                                                                            <rect key="frame" x="0.0" y="0.0" width="56.666666666666664" height="25"/>
                                                                             <subviews>
                                                                                 <imageView userInteractionEnabled="NO" contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="ic_money" translatesAutoresizingMaskIntoConstraints="NO" id="1Pe-nP-Bi6">
                                                                                     <rect key="frame" x="5" y="5" width="15" height="15"/>
@@ -2177,7 +2177,7 @@
                                                                                     </constraints>
                                                                                 </imageView>
                                                                                 <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Label" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="T2w-Ps-jNB" customClass="MyUILabel" customModule="rzq" customModuleProvider="target">
-                                                                                    <rect key="frame" x="25" y="0.0" width="50" height="25"/>
+                                                                                    <rect key="frame" x="25" y="0.0" width="31.666666666666671" height="25"/>
                                                                                     <fontDescription key="fontDescription" type="system" pointSize="12"/>
                                                                                     <color key="textColor" red="0.31372549020000001" green="0.31372549020000001" blue="0.31372549020000001" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                                                                                     <nil key="highlightedColor"/>
@@ -2197,7 +2197,7 @@
                                                                             </constraints>
                                                                         </view>
                                                                         <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="PI1-GU-RIB">
-                                                                            <rect key="frame" x="75" y="0.0" width="75" height="25"/>
+                                                                            <rect key="frame" x="56.666666666666657" y="0.0" width="56.666666666666657" height="25"/>
                                                                             <subviews>
                                                                                 <imageView userInteractionEnabled="NO" contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="ic_time" translatesAutoresizingMaskIntoConstraints="NO" id="fM2-fA-jPY">
                                                                                     <rect key="frame" x="5" y="5" width="15" height="15"/>
@@ -2207,7 +2207,7 @@
                                                                                     </constraints>
                                                                                 </imageView>
                                                                                 <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Label" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="xaN-6W-MTT" customClass="MyUILabel" customModule="rzq" customModuleProvider="target">
-                                                                                    <rect key="frame" x="25" y="0.0" width="50" height="25"/>
+                                                                                    <rect key="frame" x="25" y="0.0" width="31.666666666666671" height="25"/>
                                                                                     <fontDescription key="fontDescription" type="system" pointSize="12"/>
                                                                                     <color key="textColor" red="0.31372549020000001" green="0.31372549020000001" blue="0.31372549020000001" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                                                                                     <nil key="highlightedColor"/>
@@ -2227,7 +2227,7 @@
                                                                             </constraints>
                                                                         </view>
                                                                         <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="fGV-Dh-MKQ">
-                                                                            <rect key="frame" x="150" y="0.0" width="75" height="25"/>
+                                                                            <rect key="frame" x="113.33333333333336" y="0.0" width="56.666666666666671" height="25"/>
                                                                             <subviews>
                                                                                 <imageView userInteractionEnabled="NO" contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="ic_distance" translatesAutoresizingMaskIntoConstraints="NO" id="hpf-ie-eho">
                                                                                     <rect key="frame" x="5" y="5" width="15" height="15"/>
@@ -2237,7 +2237,7 @@
                                                                                     </constraints>
                                                                                 </imageView>
                                                                                 <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Label" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="lvS-9S-rn1" customClass="MyUILabel" customModule="rzq" customModuleProvider="target">
-                                                                                    <rect key="frame" x="25" y="0.0" width="50" height="25"/>
+                                                                                    <rect key="frame" x="25" y="0.0" width="31.666666666666671" height="25"/>
                                                                                     <fontDescription key="fontDescription" type="system" pointSize="12"/>
                                                                                     <color key="textColor" red="0.31372549020000001" green="0.31372549020000001" blue="0.31372549020000001" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                                                                                     <nil key="highlightedColor"/>
@@ -2262,10 +2262,10 @@
                                                                     </constraints>
                                                                 </stackView>
                                                                 <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="UCu-pG-u7F" customClass="CardView" customModule="rzq" customModuleProvider="target">
-                                                                    <rect key="frame" x="10" y="78" width="293" height="40"/>
+                                                                    <rect key="frame" x="10" y="78" width="238" height="40"/>
                                                                     <subviews>
                                                                         <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="WvJ-1o-ged" customClass="MyUIButton" customModule="rzq" customModuleProvider="target">
-                                                                            <rect key="frame" x="0.0" y="0.0" width="293" height="40"/>
+                                                                            <rect key="frame" x="0.0" y="0.0" width="238" height="40"/>
                                                                             <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                                                             <fontDescription key="fontDescription" type="system" pointSize="13"/>
                                                                             <state key="normal" title="Take This Order">
@@ -2822,14 +2822,14 @@
                                             <autoresizingMask key="autoresizingMask"/>
                                             <subviews>
                                                 <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="X3o-jH-nPU">
-                                                    <rect key="frame" x="0.0" y="70" width="355" height="1"/>
+                                                    <rect key="frame" x="0.0" y="70" width="300" height="1"/>
                                                     <color key="backgroundColor" white="0.66666666666666663" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                                     <constraints>
                                                         <constraint firstAttribute="height" constant="1" id="Op8-bQ-4mH"/>
                                                     </constraints>
                                                 </view>
                                                 <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Label" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="W5B-vZ-Ft9" customClass="MyUILabel" customModule="rzq" customModuleProvider="target">
-                                                    <rect key="frame" x="8" y="8" width="339" height="23"/>
+                                                    <rect key="frame" x="8" y="8" width="284" height="23"/>
                                                     <fontDescription key="fontDescription" type="system" pointSize="19"/>
                                                     <nil key="textColor"/>
                                                     <nil key="highlightedColor"/>
@@ -2838,7 +2838,7 @@
                                                     </userDefinedRuntimeAttributes>
                                                 </label>
                                                 <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Label" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="gcX-ht-J50" customClass="MyUILabel" customModule="rzq" customModuleProvider="target">
-                                                    <rect key="frame" x="8" y="42.666666666666664" width="339" height="19.333333333333336"/>
+                                                    <rect key="frame" x="8" y="42.666666666666664" width="284" height="19.333333333333336"/>
                                                     <fontDescription key="fontDescription" type="system" pointSize="16"/>
                                                     <color key="textColor" red="0.4941176471" green="0.4941176471" blue="0.4941176471" alpha="1" colorSpace="calibratedRGB"/>
                                                     <nil key="highlightedColor"/>
@@ -3053,13 +3053,13 @@
                                             <autoresizingMask key="autoresizingMask"/>
                                             <subviews>
                                                 <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="406-Xg-UR5">
-                                                    <rect key="frame" x="0.0" y="0.0" width="345" height="110"/>
+                                                    <rect key="frame" x="0.0" y="0.0" width="290" height="110"/>
                                                     <subviews>
                                                         <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="HxC-ME-fLh" customClass="CardView" customModule="rzq" customModuleProvider="target">
-                                                            <rect key="frame" x="0.0" y="0.0" width="345" height="100"/>
+                                                            <rect key="frame" x="0.0" y="0.0" width="290" height="100"/>
                                                             <subviews>
                                                                 <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="145-hU-lR6" customClass="CardView" customModule="rzq" customModuleProvider="target">
-                                                                    <rect key="frame" x="1" y="1" width="343" height="98"/>
+                                                                    <rect key="frame" x="1" y="1" width="288" height="98"/>
                                                                     <subviews>
                                                                         <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="251" translatesAutoresizingMaskIntoConstraints="NO" id="aKR-H3-1fX" customClass="CircleImage" customModule="rzq" customModuleProvider="target">
                                                                             <rect key="frame" x="10" y="19" width="60" height="60"/>
@@ -3069,7 +3069,7 @@
                                                                             </constraints>
                                                                         </imageView>
                                                                         <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="254" text="Label" textAlignment="natural" lineBreakMode="tailTruncation" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="ixy-DN-Ofc" customClass="MyUILabel" customModule="rzq" customModuleProvider="target">
-                                                                            <rect key="frame" x="80" y="7.9999999999999982" width="255" height="20.333333333333329"/>
+                                                                            <rect key="frame" x="80" y="7.9999999999999982" width="200" height="20.333333333333329"/>
                                                                             <fontDescription key="fontDescription" type="system" pointSize="17"/>
                                                                             <color key="textColor" red="0.1450980392" green="0.10980392160000001" blue="0.37254901959999998" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                                                                             <nil key="highlightedColor"/>
@@ -3198,7 +3198,7 @@
                                                                             </userDefinedRuntimeAttributes>
                                                                         </view>
                                                                         <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="252" text="Label" textAlignment="natural" lineBreakMode="tailTruncation" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="60g-gR-gjc" customClass="MyUILabel" customModule="rzq" customModuleProvider="target">
-                                                                            <rect key="frame" x="78" y="33.333333333333336" width="255" height="30.666666666666664"/>
+                                                                            <rect key="frame" x="78" y="33.333333333333336" width="200" height="30.666666666666664"/>
                                                                             <fontDescription key="fontDescription" type="system" pointSize="15"/>
                                                                             <color key="textColor" red="0.4941176471" green="0.4941176471" blue="0.4941176471" alpha="1" colorSpace="calibratedRGB"/>
                                                                             <nil key="highlightedColor"/>
@@ -3482,10 +3482,10 @@
                                                     <autoresizingMask key="autoresizingMask"/>
                                                     <subviews>
                                                         <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="OEU-f6-95Q" customClass="CardView" customModule="rzq" customModuleProvider="target">
-                                                            <rect key="frame" x="0.0" y="0.0" width="355" height="220"/>
+                                                            <rect key="frame" x="0.0" y="0.0" width="300" height="220"/>
                                                             <subviews>
                                                                 <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="d5T-uq-WY4" customClass="CardView" customModule="rzq" customModuleProvider="target">
-                                                                    <rect key="frame" x="1" y="1" width="353" height="218"/>
+                                                                    <rect key="frame" x="1" y="1" width="298" height="218"/>
                                                                     <subviews>
                                                                         <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleAspectFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="placeholder_order" translatesAutoresizingMaskIntoConstraints="NO" id="3cL-U6-zOF" customClass="CircleImage" customModule="rzq" customModuleProvider="target">
                                                                             <rect key="frame" x="21" y="81.666666666666671" width="55" height="55.000000000000014"/>
@@ -3495,10 +3495,10 @@
                                                                             </constraints>
                                                                         </imageView>
                                                                         <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="pbx-Bf-dc5">
-                                                                            <rect key="frame" x="91" y="15" width="247" height="188"/>
+                                                                            <rect key="frame" x="91" y="15" width="192" height="188"/>
                                                                             <subviews>
                                                                                 <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Label" textAlignment="natural" lineBreakMode="tailTruncation" numberOfLines="2" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="w7S-L0-aEc" customClass="MyUILabel" customModule="rzq" customModuleProvider="target">
-                                                                                    <rect key="frame" x="0.0" y="0.0" width="247" height="40"/>
+                                                                                    <rect key="frame" x="0.0" y="0.0" width="192" height="40"/>
                                                                                     <fontDescription key="fontDescription" type="system" pointSize="19"/>
                                                                                     <nil key="textColor"/>
                                                                                     <nil key="highlightedColor"/>
@@ -3507,7 +3507,7 @@
                                                                                     </userDefinedRuntimeAttributes>
                                                                                 </label>
                                                                                 <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="252" text="delivery date" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="8T3-dm-quA" customClass="MyUILabel" customModule="rzq" customModuleProvider="target">
-                                                                                    <rect key="frame" x="0.0" y="48" width="247" height="18"/>
+                                                                                    <rect key="frame" x="0.0" y="48" width="192" height="18"/>
                                                                                     <fontDescription key="fontDescription" type="system" pointSize="15"/>
                                                                                     <color key="textColor" red="0.57647058823529407" green="0.59999999999999998" blue="0.63921568627450975" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                                                                                     <nil key="highlightedColor"/>
@@ -3516,7 +3516,7 @@
                                                                                     </userDefinedRuntimeAttributes>
                                                                                 </label>
                                                                                 <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="253" text="order number" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="Dgx-Wg-IeZ" customClass="MyUILabel" customModule="rzq" customModuleProvider="target">
-                                                                                    <rect key="frame" x="0.0" y="71" width="247" height="18"/>
+                                                                                    <rect key="frame" x="0.0" y="71" width="192" height="18"/>
                                                                                     <fontDescription key="fontDescription" type="system" pointSize="15"/>
                                                                                     <color key="textColor" red="0.57647058819999997" green="0.59999999999999998" blue="0.63921568630000003" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                                                                                     <nil key="highlightedColor"/>
@@ -3525,7 +3525,7 @@
                                                                                     </userDefinedRuntimeAttributes>
                                                                                 </label>
                                                                                 <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="255" text="From" textAlignment="natural" lineBreakMode="tailTruncation" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="q3C-tl-7cl" customClass="MyUILabel" customModule="rzq" customModuleProvider="target">
-                                                                                    <rect key="frame" x="0.0" y="94" width="247" height="18"/>
+                                                                                    <rect key="frame" x="0.0" y="94" width="192" height="18"/>
                                                                                     <fontDescription key="fontDescription" type="system" pointSize="15"/>
                                                                                     <color key="textColor" red="0.57647058819999997" green="0.59999999999999998" blue="0.63921568630000003" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                                                                                     <nil key="highlightedColor"/>
@@ -3534,7 +3534,7 @@
                                                                                     </userDefinedRuntimeAttributes>
                                                                                 </label>
                                                                                 <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="254" text="To" textAlignment="natural" lineBreakMode="tailTruncation" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="NTj-Fw-QyM" customClass="MyUILabel" customModule="rzq" customModuleProvider="target">
-                                                                                    <rect key="frame" x="0.0" y="117" width="247" height="18"/>
+                                                                                    <rect key="frame" x="0.0" y="117" width="192" height="18"/>
                                                                                     <fontDescription key="fontDescription" type="system" pointSize="15"/>
                                                                                     <color key="textColor" red="0.57647058819999997" green="0.59999999999999998" blue="0.63921568630000003" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                                                                                     <nil key="highlightedColor"/>
@@ -3543,7 +3543,7 @@
                                                                                     </userDefinedRuntimeAttributes>
                                                                                 </label>
                                                                                 <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="256" text="Order status" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="u7S-ZW-Cu1" customClass="MyUILabel" customModule="rzq" customModuleProvider="target">
-                                                                                    <rect key="frame" x="0.0" y="140" width="247" height="18"/>
+                                                                                    <rect key="frame" x="0.0" y="140" width="192" height="18"/>
                                                                                     <fontDescription key="fontDescription" type="system" pointSize="15"/>
                                                                                     <color key="textColor" red="1" green="0.7725490196" blue="0.015686274510000001" alpha="1" colorSpace="calibratedRGB"/>
                                                                                     <nil key="highlightedColor"/>
@@ -3749,7 +3749,7 @@
                                                 </userDefinedRuntimeAttributes>
                                             </label>
                                             <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="No Orders" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="wyo-25-FFx" customClass="MyUILabel" customModule="rzq" customModuleProvider="target">
-                                                <rect key="frame" x="20" y="466.33333333333337" width="295" height="28.666666666666686"/>
+                                                <rect key="frame" x="20" y="466" width="295" height="29"/>
                                                 <fontDescription key="fontDescription" type="system" pointSize="24"/>
                                                 <color key="textColor" red="0.24313725489999999" green="0.054901960780000002" blue="0.4039215686" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                                                 <nil key="highlightedColor"/>
@@ -3758,7 +3758,7 @@
                                                 </userDefinedRuntimeAttributes>
                                             </label>
                                             <imageView userInteractionEnabled="NO" contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="empty_orders" translatesAutoresizingMaskIntoConstraints="NO" id="gY1-Pq-vX0">
-                                                <rect key="frame" x="97.666666666666686" y="286.33333333333331" width="140" height="140"/>
+                                                <rect key="frame" x="97.666666666666686" y="286" width="140" height="140"/>
                                                 <constraints>
                                                     <constraint firstAttribute="height" constant="140" id="6ny-BR-3tQ"/>
                                                     <constraint firstAttribute="width" constant="140" id="8z8-4N-2Uz"/>
@@ -4653,7 +4653,7 @@
                                         <rect key="frame" x="0.0" y="44" width="355" height="36"/>
                                         <subviews>
                                             <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Sort Notifications By:" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="xy0-bL-tfB" customClass="MyUILabel" customModule="rzq" customModuleProvider="target">
-                                                <rect key="frame" x="0.0" y="9" width="145.33333333333334" height="18"/>
+                                                <rect key="frame" x="0.0" y="9" width="145.66666666666666" height="18"/>
                                                 <fontDescription key="fontDescription" type="system" pointSize="15"/>
                                                 <color key="textColor" red="0.31372549020000001" green="0.31372549020000001" blue="0.31372549020000001" alpha="1" colorSpace="calibratedRGB"/>
                                                 <nil key="highlightedColor"/>
@@ -4715,10 +4715,10 @@
                                                     <autoresizingMask key="autoresizingMask"/>
                                                     <subviews>
                                                         <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="u2U-YT-YTm" customClass="CardView" customModule="rzq" customModuleProvider="target">
-                                                            <rect key="frame" x="0.0" y="0.0" width="355" height="157"/>
+                                                            <rect key="frame" x="0.0" y="0.0" width="300" height="157"/>
                                                             <subviews>
                                                                 <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="Cpp-Wn-RgG" customClass="CardView" customModule="rzq" customModuleProvider="target">
-                                                                    <rect key="frame" x="1" y="1" width="353" height="155"/>
+                                                                    <rect key="frame" x="1" y="1" width="298" height="155"/>
                                                                     <subviews>
                                                                         <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleAspectFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="placeholder_order" translatesAutoresizingMaskIntoConstraints="NO" id="Vbb-1h-j6I" customClass="CircleImage" customModule="rzq" customModuleProvider="target">
                                                                             <rect key="frame" x="10" y="10" width="50" height="50"/>
@@ -4728,7 +4728,7 @@
                                                                             </constraints>
                                                                         </imageView>
                                                                         <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="252" text="Label" textAlignment="natural" lineBreakMode="tailTruncation" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="X5s-YS-n5K" customClass="MyUILabel" customModule="rzq" customModuleProvider="target">
-                                                                            <rect key="frame" x="80" y="10" width="239" height="19"/>
+                                                                            <rect key="frame" x="80" y="10" width="184" height="19"/>
                                                                             <fontDescription key="fontDescription" type="system" pointSize="17"/>
                                                                             <nil key="textColor"/>
                                                                             <nil key="highlightedColor"/>
@@ -4737,17 +4737,17 @@
                                                                             </userDefinedRuntimeAttributes>
                                                                         </label>
                                                                         <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="251" translatesAutoresizingMaskIntoConstraints="NO" id="ujv-RD-F42">
-                                                                            <rect key="frame" x="327" y="10" width="18" height="18"/>
+                                                                            <rect key="frame" x="272" y="10" width="18" height="18"/>
                                                                             <constraints>
                                                                                 <constraint firstAttribute="width" constant="18" id="c6G-A7-gSU"/>
                                                                                 <constraint firstAttribute="height" constant="18" id="oLF-aP-Xws"/>
                                                                             </constraints>
                                                                         </imageView>
                                                                         <stackView opaque="NO" contentMode="scaleToFill" distribution="fillEqually" translatesAutoresizingMaskIntoConstraints="NO" id="HnX-Kh-Hpp">
-                                                                            <rect key="frame" x="80" y="39" width="265" height="25"/>
+                                                                            <rect key="frame" x="80" y="39" width="210" height="25"/>
                                                                             <subviews>
                                                                                 <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="iLZ-FS-UI0">
-                                                                                    <rect key="frame" x="0.0" y="0.0" width="88.333333333333329" height="25"/>
+                                                                                    <rect key="frame" x="0.0" y="0.0" width="70" height="25"/>
                                                                                     <subviews>
                                                                                         <imageView userInteractionEnabled="NO" contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="ic_money" translatesAutoresizingMaskIntoConstraints="NO" id="w9X-Hx-pez">
                                                                                             <rect key="frame" x="5" y="5" width="15" height="15"/>
@@ -4757,7 +4757,7 @@
                                                                                             </constraints>
                                                                                         </imageView>
                                                                                         <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Label" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="FqX-Gc-1r4" customClass="MyUILabel" customModule="rzq" customModuleProvider="target">
-                                                                                            <rect key="frame" x="25.000000000000004" y="0.0" width="63.333333333333343" height="25"/>
+                                                                                            <rect key="frame" x="25" y="0.0" width="45" height="25"/>
                                                                                             <fontDescription key="fontDescription" type="system" pointSize="14"/>
                                                                                             <color key="textColor" red="0.31372549019607843" green="0.31372549019607843" blue="0.31372549019607843" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                                                                                             <nil key="highlightedColor"/>
@@ -4777,7 +4777,7 @@
                                                                                     </constraints>
                                                                                 </view>
                                                                                 <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="JdV-dN-yQq">
-                                                                                    <rect key="frame" x="88.333333333333343" y="0.0" width="88.333333333333343" height="25"/>
+                                                                                    <rect key="frame" x="70" y="0.0" width="70" height="25"/>
                                                                                     <subviews>
                                                                                         <imageView userInteractionEnabled="NO" contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="ic_time" translatesAutoresizingMaskIntoConstraints="NO" id="maK-BS-MKM">
                                                                                             <rect key="frame" x="5" y="5" width="15" height="15"/>
@@ -4787,7 +4787,7 @@
                                                                                             </constraints>
                                                                                         </imageView>
                                                                                         <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Label" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="ZQd-nd-4fu" customClass="MyUILabel" customModule="rzq" customModuleProvider="target">
-                                                                                            <rect key="frame" x="25.000000000000004" y="0.0" width="63.333333333333343" height="25"/>
+                                                                                            <rect key="frame" x="25" y="0.0" width="45" height="25"/>
                                                                                             <fontDescription key="fontDescription" type="system" pointSize="14"/>
                                                                                             <color key="textColor" red="0.31372549020000001" green="0.31372549020000001" blue="0.31372549020000001" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                                                                                             <nil key="highlightedColor"/>
@@ -4807,7 +4807,7 @@
                                                                                     </constraints>
                                                                                 </view>
                                                                                 <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="8cA-Nz-ou6">
-                                                                                    <rect key="frame" x="176.66666666666669" y="0.0" width="88.333333333333314" height="25"/>
+                                                                                    <rect key="frame" x="140" y="0.0" width="70" height="25"/>
                                                                                     <subviews>
                                                                                         <imageView userInteractionEnabled="NO" contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="ic_distance" translatesAutoresizingMaskIntoConstraints="NO" id="sxL-n4-sYw">
                                                                                             <rect key="frame" x="5" y="5" width="15" height="15"/>
@@ -4817,7 +4817,7 @@
                                                                                             </constraints>
                                                                                         </imageView>
                                                                                         <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Label" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="DZh-oQ-nh0" customClass="MyUILabel" customModule="rzq" customModuleProvider="target">
-                                                                                            <rect key="frame" x="25.000000000000004" y="0.0" width="63.333333333333343" height="25"/>
+                                                                                            <rect key="frame" x="25" y="0.0" width="45" height="25"/>
                                                                                             <fontDescription key="fontDescription" type="system" pointSize="14"/>
                                                                                             <color key="textColor" red="0.31372549020000001" green="0.31372549020000001" blue="0.31372549020000001" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                                                                                             <nil key="highlightedColor"/>
@@ -4842,10 +4842,10 @@
                                                                             </constraints>
                                                                         </stackView>
                                                                         <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="wsE-Rs-ziB" customClass="CardView" customModule="rzq" customModuleProvider="target">
-                                                                            <rect key="frame" x="10" y="105" width="333" height="40"/>
+                                                                            <rect key="frame" x="10" y="105" width="278" height="40"/>
                                                                             <subviews>
                                                                                 <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="Eib-nZ-4yb" customClass="MyUIButton" customModule="rzq" customModuleProvider="target">
-                                                                                    <rect key="frame" x="0.0" y="0.0" width="333" height="40"/>
+                                                                                    <rect key="frame" x="0.0" y="0.0" width="278" height="40"/>
                                                                                     <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                                                                     <fontDescription key="fontDescription" type="system" pointSize="13"/>
                                                                                     <state key="normal" title="Take This Order">
@@ -4883,13 +4883,13 @@
                                                                             </userDefinedRuntimeAttributes>
                                                                         </view>
                                                                         <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="ERL-ph-57r">
-                                                                            <rect key="frame" x="80" y="72" width="265" height="25"/>
+                                                                            <rect key="frame" x="80" y="72" width="210" height="25"/>
                                                                             <subviews>
                                                                                 <stackView opaque="NO" contentMode="scaleToFill" distribution="fillEqually" translatesAutoresizingMaskIntoConstraints="NO" id="lnL-G4-6CU">
-                                                                                    <rect key="frame" x="0.0" y="0.0" width="265" height="25"/>
+                                                                                    <rect key="frame" x="0.0" y="0.0" width="210" height="25"/>
                                                                                     <subviews>
                                                                                         <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="Wxf-BL-9fg">
-                                                                                            <rect key="frame" x="0.0" y="0.0" width="132.66666666666666" height="25"/>
+                                                                                            <rect key="frame" x="0.0" y="0.0" width="105" height="25"/>
                                                                                             <subviews>
                                                                                                 <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="ic_not_date" translatesAutoresizingMaskIntoConstraints="NO" id="iFH-Rl-yjg">
                                                                                                     <rect key="frame" x="0.0" y="3.6666666666666714" width="18" height="18"/>
@@ -4917,7 +4917,7 @@
                                                                                             </constraints>
                                                                                         </view>
                                                                                         <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="HHR-9u-BLG">
-                                                                                            <rect key="frame" x="132.66666666666663" y="0.0" width="132.33333333333337" height="25"/>
+                                                                                            <rect key="frame" x="105" y="0.0" width="105" height="25"/>
                                                                                             <subviews>
                                                                                                 <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="ic_not_time" translatesAutoresizingMaskIntoConstraints="NO" id="nMt-js-fNA">
                                                                                                     <rect key="frame" x="0.0" y="3.6666666666666714" width="18" height="18"/>
@@ -5043,10 +5043,10 @@
                                                     <autoresizingMask key="autoresizingMask"/>
                                                     <subviews>
                                                         <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="HX6-Gx-5Sx" customClass="CardView" customModule="rzq" customModuleProvider="target">
-                                                            <rect key="frame" x="0.0" y="0.0" width="355" height="157"/>
+                                                            <rect key="frame" x="0.0" y="0.0" width="300" height="157"/>
                                                             <subviews>
                                                                 <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="kLy-qG-cz7" customClass="CardView" customModule="rzq" customModuleProvider="target">
-                                                                    <rect key="frame" x="1" y="1" width="353" height="155"/>
+                                                                    <rect key="frame" x="1" y="1" width="298" height="155"/>
                                                                     <subviews>
                                                                         <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleAspectFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="placeholder_order" translatesAutoresizingMaskIntoConstraints="NO" id="slF-Qi-XQR" customClass="CircleImage" customModule="rzq" customModuleProvider="target">
                                                                             <rect key="frame" x="10" y="10" width="50" height="50"/>
@@ -5056,7 +5056,7 @@
                                                                             </constraints>
                                                                         </imageView>
                                                                         <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="252" text="Label" textAlignment="natural" lineBreakMode="tailTruncation" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="jtP-tH-QYh" customClass="MyUILabel" customModule="rzq" customModuleProvider="target">
-                                                                            <rect key="frame" x="80" y="10" width="265" height="19"/>
+                                                                            <rect key="frame" x="80" y="10" width="210" height="19"/>
                                                                             <fontDescription key="fontDescription" type="system" pointSize="17"/>
                                                                             <nil key="textColor"/>
                                                                             <nil key="highlightedColor"/>
@@ -5065,10 +5065,10 @@
                                                                             </userDefinedRuntimeAttributes>
                                                                         </label>
                                                                         <stackView opaque="NO" contentMode="scaleToFill" distribution="fillEqually" translatesAutoresizingMaskIntoConstraints="NO" id="EtW-iY-D4z">
-                                                                            <rect key="frame" x="80" y="39" width="265" height="25"/>
+                                                                            <rect key="frame" x="80" y="39" width="210" height="25"/>
                                                                             <subviews>
                                                                                 <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="uwl-XM-ToQ">
-                                                                                    <rect key="frame" x="0.0" y="0.0" width="88.333333333333329" height="25"/>
+                                                                                    <rect key="frame" x="0.0" y="0.0" width="70" height="25"/>
                                                                                     <subviews>
                                                                                         <imageView userInteractionEnabled="NO" contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="ic_money" translatesAutoresizingMaskIntoConstraints="NO" id="fy5-Lf-2VI">
                                                                                             <rect key="frame" x="5" y="5" width="15" height="15"/>
@@ -5078,7 +5078,7 @@
                                                                                             </constraints>
                                                                                         </imageView>
                                                                                         <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Label" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="vNJ-fR-wCx" customClass="MyUILabel" customModule="rzq" customModuleProvider="target">
-                                                                                            <rect key="frame" x="25.000000000000004" y="0.0" width="63.333333333333343" height="25"/>
+                                                                                            <rect key="frame" x="25" y="0.0" width="45" height="25"/>
                                                                                             <fontDescription key="fontDescription" type="system" pointSize="14"/>
                                                                                             <color key="textColor" red="0.31372549020000001" green="0.31372549020000001" blue="0.31372549020000001" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                                                                                             <nil key="highlightedColor"/>
@@ -5098,7 +5098,7 @@
                                                                                     </constraints>
                                                                                 </view>
                                                                                 <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="2F5-Kr-5eV">
-                                                                                    <rect key="frame" x="88.333333333333343" y="0.0" width="88.333333333333343" height="25"/>
+                                                                                    <rect key="frame" x="70" y="0.0" width="70" height="25"/>
                                                                                     <subviews>
                                                                                         <imageView userInteractionEnabled="NO" contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="ic_time" translatesAutoresizingMaskIntoConstraints="NO" id="YzP-OJ-ge4">
                                                                                             <rect key="frame" x="5" y="5" width="15" height="15"/>
@@ -5108,7 +5108,7 @@
                                                                                             </constraints>
                                                                                         </imageView>
                                                                                         <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Label" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="eZe-Qv-T7F" customClass="MyUILabel" customModule="rzq" customModuleProvider="target">
-                                                                                            <rect key="frame" x="25.000000000000004" y="0.0" width="63.333333333333343" height="25"/>
+                                                                                            <rect key="frame" x="25" y="0.0" width="45" height="25"/>
                                                                                             <fontDescription key="fontDescription" type="system" pointSize="14"/>
                                                                                             <color key="textColor" red="0.31372549020000001" green="0.31372549020000001" blue="0.31372549020000001" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                                                                                             <nil key="highlightedColor"/>
@@ -5128,7 +5128,7 @@
                                                                                     </constraints>
                                                                                 </view>
                                                                                 <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="kjK-76-lo3">
-                                                                                    <rect key="frame" x="176.66666666666669" y="0.0" width="88.333333333333314" height="25"/>
+                                                                                    <rect key="frame" x="140" y="0.0" width="70" height="25"/>
                                                                                     <subviews>
                                                                                         <imageView userInteractionEnabled="NO" contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="ic_distance" translatesAutoresizingMaskIntoConstraints="NO" id="5EZ-Hg-huI">
                                                                                             <rect key="frame" x="5" y="5" width="15" height="15"/>
@@ -5138,7 +5138,7 @@
                                                                                             </constraints>
                                                                                         </imageView>
                                                                                         <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Label" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="K6I-cY-Ac7" customClass="MyUILabel" customModule="rzq" customModuleProvider="target">
-                                                                                            <rect key="frame" x="25.000000000000004" y="0.0" width="63.333333333333343" height="25"/>
+                                                                                            <rect key="frame" x="25" y="0.0" width="45" height="25"/>
                                                                                             <fontDescription key="fontDescription" type="system" pointSize="14"/>
                                                                                             <color key="textColor" red="0.31372549020000001" green="0.31372549020000001" blue="0.31372549020000001" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                                                                                             <nil key="highlightedColor"/>
@@ -5163,13 +5163,13 @@
                                                                             </constraints>
                                                                         </stackView>
                                                                         <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="kkC-eH-HPw">
-                                                                            <rect key="frame" x="80" y="72" width="265" height="25"/>
+                                                                            <rect key="frame" x="80" y="72" width="210" height="25"/>
                                                                             <subviews>
                                                                                 <stackView opaque="NO" contentMode="scaleToFill" distribution="fillEqually" translatesAutoresizingMaskIntoConstraints="NO" id="ZUS-5o-UeC">
-                                                                                    <rect key="frame" x="0.0" y="0.0" width="265" height="25"/>
+                                                                                    <rect key="frame" x="0.0" y="0.0" width="210" height="25"/>
                                                                                     <subviews>
                                                                                         <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="fil-bN-Ujf">
-                                                                                            <rect key="frame" x="0.0" y="0.0" width="132.66666666666666" height="25"/>
+                                                                                            <rect key="frame" x="0.0" y="0.0" width="105" height="25"/>
                                                                                             <subviews>
                                                                                                 <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="ic_not_date" translatesAutoresizingMaskIntoConstraints="NO" id="FMl-KR-HO1">
                                                                                                     <rect key="frame" x="0.0" y="3.6666666666666714" width="18" height="18"/>
@@ -5197,7 +5197,7 @@
                                                                                             </constraints>
                                                                                         </view>
                                                                                         <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="Mrn-lE-tVG">
-                                                                                            <rect key="frame" x="132.66666666666663" y="0.0" width="132.33333333333337" height="25"/>
+                                                                                            <rect key="frame" x="105" y="0.0" width="105" height="25"/>
                                                                                             <subviews>
                                                                                                 <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="ic_not_time" translatesAutoresizingMaskIntoConstraints="NO" id="Gv4-5S-TSB">
                                                                                                     <rect key="frame" x="0.0" y="3.6666666666666714" width="18" height="18"/>
@@ -5237,10 +5237,10 @@
                                                                             </constraints>
                                                                         </view>
                                                                         <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="Eyd-Qy-OEC" customClass="CardView" customModule="rzq" customModuleProvider="target">
-                                                                            <rect key="frame" x="10" y="105" width="333" height="40"/>
+                                                                            <rect key="frame" x="10" y="105" width="278" height="40"/>
                                                                             <subviews>
                                                                                 <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="0mE-E5-yMM" customClass="MyUIButton" customModule="rzq" customModuleProvider="target">
-                                                                                    <rect key="frame" x="0.0" y="0.0" width="333" height="40"/>
+                                                                                    <rect key="frame" x="0.0" y="0.0" width="278" height="40"/>
                                                                                     <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                                                                     <fontDescription key="fontDescription" type="system" pointSize="13"/>
                                                                                     <state key="normal" title="Check This Offer">
@@ -5361,13 +5361,13 @@
                                                     <autoresizingMask key="autoresizingMask"/>
                                                     <subviews>
                                                         <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="YOl-Kx-Xt5" customClass="CardView" customModule="rzq" customModuleProvider="target">
-                                                            <rect key="frame" x="0.0" y="0.0" width="355" height="70"/>
+                                                            <rect key="frame" x="0.0" y="0.0" width="300" height="70"/>
                                                             <subviews>
                                                                 <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="aTp-RG-QC9" customClass="CardView" customModule="rzq" customModuleProvider="target">
-                                                                    <rect key="frame" x="1" y="1" width="353" height="68"/>
+                                                                    <rect key="frame" x="1" y="1" width="298" height="68"/>
                                                                     <subviews>
                                                                         <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Label" textAlignment="natural" lineBreakMode="tailTruncation" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="q5Z-zB-Wfd" customClass="MyUILabel" customModule="rzq" customModuleProvider="target">
-                                                                            <rect key="frame" x="5" y="5" width="343" height="33"/>
+                                                                            <rect key="frame" x="5" y="5" width="288" height="33"/>
                                                                             <fontDescription key="fontDescription" type="system" pointSize="17"/>
                                                                             <nil key="textColor"/>
                                                                             <nil key="highlightedColor"/>
@@ -5376,7 +5376,7 @@
                                                                             </userDefinedRuntimeAttributes>
                                                                         </label>
                                                                         <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="252" text="Label" textAlignment="natural" lineBreakMode="tailTruncation" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="ghK-dx-lHk" customClass="MyUILabel" customModule="rzq" customModuleProvider="target">
-                                                                            <rect key="frame" x="5" y="46" width="343" height="17"/>
+                                                                            <rect key="frame" x="5" y="46" width="288" height="17"/>
                                                                             <fontDescription key="fontDescription" type="system" pointSize="14"/>
                                                                             <color key="textColor" red="0.31372549020000001" green="0.31372549020000001" blue="0.31372549020000001" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                                                                             <nil key="highlightedColor"/>
@@ -5454,13 +5454,13 @@
                                                     <autoresizingMask key="autoresizingMask"/>
                                                     <subviews>
                                                         <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="0bo-Di-ZAV" customClass="CardView" customModule="rzq" customModuleProvider="target">
-                                                            <rect key="frame" x="0.0" y="0.0" width="355" height="130"/>
+                                                            <rect key="frame" x="0.0" y="0.0" width="300" height="129.66666666666666"/>
                                                             <subviews>
                                                                 <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="Qip-ey-e2P" customClass="CardView" customModule="rzq" customModuleProvider="target">
-                                                                    <rect key="frame" x="1" y="1" width="353" height="128"/>
+                                                                    <rect key="frame" x="1" y="1.0000000000000071" width="298" height="127.66666666666669"/>
                                                                     <subviews>
                                                                         <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="252" text="Label" textAlignment="natural" lineBreakMode="tailTruncation" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="y7C-SM-ytU" customClass="MyUILabel" customModule="rzq" customModuleProvider="target">
-                                                                            <rect key="frame" x="5" y="5" width="343" height="45"/>
+                                                                            <rect key="frame" x="5" y="5" width="288" height="44.666666666666664"/>
                                                                             <fontDescription key="fontDescription" type="system" pointSize="17"/>
                                                                             <nil key="textColor"/>
                                                                             <nil key="highlightedColor"/>
@@ -5469,7 +5469,7 @@
                                                                             </userDefinedRuntimeAttributes>
                                                                         </label>
                                                                         <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="253" text="Label" textAlignment="natural" lineBreakMode="tailTruncation" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="YjC-Qe-61q" customClass="MyUILabel" customModule="rzq" customModuleProvider="target">
-                                                                            <rect key="frame" x="5" y="58" width="343" height="17"/>
+                                                                            <rect key="frame" x="5" y="57.666666666666657" width="288" height="17"/>
                                                                             <fontDescription key="fontDescription" type="system" pointSize="14"/>
                                                                             <color key="textColor" red="0.31372549020000001" green="0.31372549020000001" blue="0.31372549020000001" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                                                                             <nil key="highlightedColor"/>
@@ -5478,10 +5478,10 @@
                                                                             </userDefinedRuntimeAttributes>
                                                                         </label>
                                                                         <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="CoN-Kv-QHA" customClass="CardView" customModule="rzq" customModuleProvider="target">
-                                                                            <rect key="frame" x="10" y="83" width="333" height="40"/>
+                                                                            <rect key="frame" x="10" y="82.666666666666671" width="278" height="40"/>
                                                                             <subviews>
                                                                                 <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="MYF-E1-6ps" customClass="MyUIButton" customModule="rzq" customModuleProvider="target">
-                                                                                    <rect key="frame" x="0.0" y="0.0" width="333" height="40"/>
+                                                                                    <rect key="frame" x="0.0" y="0.0" width="278" height="40"/>
                                                                                     <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                                                                     <fontDescription key="fontDescription" type="system" pointSize="13"/>
                                                                                     <state key="normal" title="Rate Driver">
@@ -5599,7 +5599,7 @@
                                                 </userDefinedRuntimeAttributes>
                                             </label>
                                             <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="No Notifications" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="opX-fr-VEN" customClass="MyUILabel" customModule="rzq" customModuleProvider="target">
-                                                <rect key="frame" x="20" y="254.33333333333329" width="295" height="28.666666666666657"/>
+                                                <rect key="frame" x="20" y="254" width="295" height="29"/>
                                                 <fontDescription key="fontDescription" type="system" pointSize="24"/>
                                                 <color key="textColor" red="0.24313725489999999" green="0.054901960780000002" blue="0.4039215686" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                                                 <nil key="highlightedColor"/>
@@ -5608,7 +5608,7 @@
                                                 </userDefinedRuntimeAttributes>
                                             </label>
                                             <imageView userInteractionEnabled="NO" contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="empty_notifications" translatesAutoresizingMaskIntoConstraints="NO" id="5GM-Wb-3eg">
-                                                <rect key="frame" x="97.666666666666686" y="94.333333333333314" width="140" height="140"/>
+                                                <rect key="frame" x="97.666666666666686" y="94" width="140" height="140"/>
                                                 <constraints>
                                                     <constraint firstAttribute="width" constant="140" id="V0K-tA-H1H"/>
                                                     <constraint firstAttribute="height" constant="140" id="en3-xK-525"/>
@@ -5774,10 +5774,10 @@
                                                     <autoresizingMask key="autoresizingMask"/>
                                                     <subviews>
                                                         <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="UXO-NA-dnQ" customClass="CardView" customModule="rzq" customModuleProvider="target">
-                                                            <rect key="frame" x="0.0" y="0.0" width="355" height="220"/>
+                                                            <rect key="frame" x="0.0" y="0.0" width="300" height="220"/>
                                                             <subviews>
                                                                 <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="8bW-ub-uTc" customClass="CardView" customModule="rzq" customModuleProvider="target">
-                                                                    <rect key="frame" x="1" y="1" width="353" height="218"/>
+                                                                    <rect key="frame" x="1" y="1" width="298" height="218"/>
                                                                     <subviews>
                                                                         <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleAspectFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="placeholder_order" translatesAutoresizingMaskIntoConstraints="NO" id="qCS-am-FXk" customClass="CircleImage" customModule="rzq" customModuleProvider="target">
                                                                             <rect key="frame" x="21" y="81.666666666666671" width="55" height="55.000000000000014"/>
@@ -5787,10 +5787,10 @@
                                                                             </constraints>
                                                                         </imageView>
                                                                         <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="kjn-Oj-vvo">
-                                                                            <rect key="frame" x="91" y="15" width="247" height="188"/>
+                                                                            <rect key="frame" x="91" y="15" width="192" height="188"/>
                                                                             <subviews>
                                                                                 <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Label" textAlignment="natural" lineBreakMode="tailTruncation" numberOfLines="2" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="puc-3j-GwM" customClass="MyUILabel" customModule="rzq" customModuleProvider="target">
-                                                                                    <rect key="frame" x="0.0" y="0.0" width="247" height="40"/>
+                                                                                    <rect key="frame" x="0.0" y="0.0" width="192" height="40"/>
                                                                                     <fontDescription key="fontDescription" type="system" pointSize="19"/>
                                                                                     <nil key="textColor"/>
                                                                                     <nil key="highlightedColor"/>
@@ -5799,7 +5799,7 @@
                                                                                     </userDefinedRuntimeAttributes>
                                                                                 </label>
                                                                                 <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="252" text="delivery date" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="seI-IY-tDW" customClass="MyUILabel" customModule="rzq" customModuleProvider="target">
-                                                                                    <rect key="frame" x="0.0" y="48" width="247" height="18"/>
+                                                                                    <rect key="frame" x="0.0" y="48" width="192" height="18"/>
                                                                                     <fontDescription key="fontDescription" type="system" pointSize="15"/>
                                                                                     <color key="textColor" red="0.57647058819999997" green="0.59999999999999998" blue="0.63921568630000003" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                                                                                     <nil key="highlightedColor"/>
@@ -5808,7 +5808,7 @@
                                                                                     </userDefinedRuntimeAttributes>
                                                                                 </label>
                                                                                 <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="253" text="order number" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="OaX-Mc-mSV" customClass="MyUILabel" customModule="rzq" customModuleProvider="target">
-                                                                                    <rect key="frame" x="0.0" y="71" width="247" height="18"/>
+                                                                                    <rect key="frame" x="0.0" y="71" width="192" height="18"/>
                                                                                     <fontDescription key="fontDescription" type="system" pointSize="15"/>
                                                                                     <color key="textColor" red="0.57647058819999997" green="0.59999999999999998" blue="0.63921568630000003" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                                                                                     <nil key="highlightedColor"/>
@@ -5817,7 +5817,7 @@
                                                                                     </userDefinedRuntimeAttributes>
                                                                                 </label>
                                                                                 <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="255" text="From" textAlignment="natural" lineBreakMode="tailTruncation" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="N8c-ak-Scl" customClass="MyUILabel" customModule="rzq" customModuleProvider="target">
-                                                                                    <rect key="frame" x="0.0" y="94" width="247" height="18"/>
+                                                                                    <rect key="frame" x="0.0" y="94" width="192" height="18"/>
                                                                                     <fontDescription key="fontDescription" type="system" pointSize="15"/>
                                                                                     <color key="textColor" red="0.57647058819999997" green="0.59999999999999998" blue="0.63921568630000003" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                                                                                     <nil key="highlightedColor"/>
@@ -5826,7 +5826,7 @@
                                                                                     </userDefinedRuntimeAttributes>
                                                                                 </label>
                                                                                 <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="254" text="To" textAlignment="natural" lineBreakMode="tailTruncation" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="vNT-Fe-9xX" customClass="MyUILabel" customModule="rzq" customModuleProvider="target">
-                                                                                    <rect key="frame" x="0.0" y="117" width="247" height="18"/>
+                                                                                    <rect key="frame" x="0.0" y="117" width="192" height="18"/>
                                                                                     <fontDescription key="fontDescription" type="system" pointSize="15"/>
                                                                                     <color key="textColor" red="0.57647058819999997" green="0.59999999999999998" blue="0.63921568630000003" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                                                                                     <nil key="highlightedColor"/>
@@ -5835,7 +5835,7 @@
                                                                                     </userDefinedRuntimeAttributes>
                                                                                 </label>
                                                                                 <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="256" text="Order status" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="lGk-bd-ilX" customClass="MyUILabel" customModule="rzq" customModuleProvider="target">
-                                                                                    <rect key="frame" x="0.0" y="140" width="247" height="18"/>
+                                                                                    <rect key="frame" x="0.0" y="140" width="192" height="18"/>
                                                                                     <fontDescription key="fontDescription" type="system" pointSize="15"/>
                                                                                     <color key="textColor" red="1" green="0.7725490196" blue="0.015686274510000001" alpha="1" colorSpace="calibratedRGB"/>
                                                                                     <nil key="highlightedColor"/>
@@ -6041,7 +6041,7 @@
                                                 </userDefinedRuntimeAttributes>
                                             </label>
                                             <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="No Orders" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="inS-jO-Cyq" customClass="MyUILabel" customModule="rzq" customModuleProvider="target">
-                                                <rect key="frame" x="20" y="466.33333333333337" width="295" height="28.666666666666686"/>
+                                                <rect key="frame" x="20" y="466" width="295" height="29"/>
                                                 <fontDescription key="fontDescription" type="system" pointSize="24"/>
                                                 <color key="textColor" red="0.24313725489999999" green="0.054901960780000002" blue="0.4039215686" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                                                 <nil key="highlightedColor"/>
@@ -6050,7 +6050,7 @@
                                                 </userDefinedRuntimeAttributes>
                                             </label>
                                             <imageView userInteractionEnabled="NO" contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="empty_orders" translatesAutoresizingMaskIntoConstraints="NO" id="UOq-hm-dg9">
-                                                <rect key="frame" x="97.666666666666686" y="286.33333333333331" width="140" height="140"/>
+                                                <rect key="frame" x="97.666666666666686" y="286" width="140" height="140"/>
                                                 <constraints>
                                                     <constraint firstAttribute="height" constant="140" id="nQx-Rj-o3A"/>
                                                     <constraint firstAttribute="width" constant="140" id="xYt-wT-qen"/>
@@ -6390,7 +6390,7 @@
                                                                 <rect key="frame" x="0.0" y="0.0" width="118.33333333333333" height="130"/>
                                                                 <subviews>
                                                                     <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Profile Picture" textAlignment="center" lineBreakMode="tailTruncation" numberOfLines="2" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="jQw-J5-5FV" customClass="MyUILabel" customModule="rzq" customModuleProvider="target">
-                                                                        <rect key="frame" x="5" y="5" width="108.33333333333333" height="85"/>
+                                                                        <rect key="frame" x="5" y="5" width="108.33333333333333" height="51"/>
                                                                         <fontDescription key="fontDescription" type="system" pointSize="12"/>
                                                                         <color key="textColor" red="0.24313725489999999" green="0.054901960780000002" blue="0.4039215686" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                                                                         <nil key="highlightedColor"/>
@@ -6399,10 +6399,10 @@
                                                                         </userDefinedRuntimeAttributes>
                                                                     </label>
                                                                     <imageView userInteractionEnabled="NO" contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="bg_add_image" translatesAutoresizingMaskIntoConstraints="NO" id="6TH-tR-TV5">
-                                                                        <rect key="frame" x="5" y="95" width="108.33333333333333" height="30"/>
+                                                                        <rect key="frame" x="5" y="61" width="108.33333333333333" height="64"/>
                                                                     </imageView>
                                                                     <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="RMF-Ir-mfM">
-                                                                        <rect key="frame" x="5" y="95" width="108.33333333333333" height="30"/>
+                                                                        <rect key="frame" x="5" y="61" width="108.33333333333333" height="64"/>
                                                                         <connections>
                                                                             <action selector="profileImageAction:" destination="uiv-mb-Jms" eventType="touchUpInside" id="rmF-3x-ABy"/>
                                                                         </connections>
@@ -6427,7 +6427,7 @@
                                                                 <rect key="frame" x="118.33333333333334" y="0.0" width="118.33333333333334" height="130"/>
                                                                 <subviews>
                                                                     <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Civil ID / Passport" textAlignment="center" lineBreakMode="tailTruncation" numberOfLines="2" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="o5E-Gx-ep3" customClass="MyUILabel" customModule="rzq" customModuleProvider="target">
-                                                                        <rect key="frame" x="5" y="5" width="108.33333333333333" height="85"/>
+                                                                        <rect key="frame" x="5" y="5" width="108.33333333333333" height="51"/>
                                                                         <fontDescription key="fontDescription" type="system" pointSize="12"/>
                                                                         <color key="textColor" red="0.24313725489999999" green="0.054901960780000002" blue="0.4039215686" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                                                                         <nil key="highlightedColor"/>
@@ -6436,10 +6436,10 @@
                                                                         </userDefinedRuntimeAttributes>
                                                                     </label>
                                                                     <imageView userInteractionEnabled="NO" contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="bg_add_image" translatesAutoresizingMaskIntoConstraints="NO" id="Ljt-Gd-Nhb">
-                                                                        <rect key="frame" x="5" y="95" width="108.33333333333333" height="30"/>
+                                                                        <rect key="frame" x="5" y="61" width="108.33333333333333" height="64"/>
                                                                     </imageView>
                                                                     <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="Fds-jH-PJ0">
-                                                                        <rect key="frame" x="5" y="95" width="108.33333333333333" height="30"/>
+                                                                        <rect key="frame" x="5" y="61" width="108.33333333333333" height="64"/>
                                                                         <connections>
                                                                             <action selector="civilIdImageAction:" destination="uiv-mb-Jms" eventType="touchUpInside" id="iVQ-N2-iX2"/>
                                                                         </connections>
@@ -6464,7 +6464,7 @@
                                                                 <rect key="frame" x="236.66666666666666" y="0.0" width="118.33333333333334" height="130"/>
                                                                 <subviews>
                                                                     <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Driving License" textAlignment="center" lineBreakMode="tailTruncation" numberOfLines="2" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="qAG-eP-6oG" customClass="MyUILabel" customModule="rzq" customModuleProvider="target">
-                                                                        <rect key="frame" x="5" y="5" width="108.33333333333333" height="85"/>
+                                                                        <rect key="frame" x="5" y="5" width="108.33333333333333" height="51"/>
                                                                         <fontDescription key="fontDescription" type="system" pointSize="12"/>
                                                                         <color key="textColor" red="0.24313725489999999" green="0.054901960780000002" blue="0.4039215686" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                                                                         <nil key="highlightedColor"/>
@@ -6473,10 +6473,10 @@
                                                                         </userDefinedRuntimeAttributes>
                                                                     </label>
                                                                     <imageView userInteractionEnabled="NO" contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="bg_add_image" translatesAutoresizingMaskIntoConstraints="NO" id="Akn-8o-qAN">
-                                                                        <rect key="frame" x="5" y="95" width="108.33333333333333" height="30"/>
+                                                                        <rect key="frame" x="5" y="61" width="108.33333333333333" height="64"/>
                                                                     </imageView>
                                                                     <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="EvO-97-hXv">
-                                                                        <rect key="frame" x="5" y="95" width="108.33333333333333" height="30"/>
+                                                                        <rect key="frame" x="5" y="61" width="108.33333333333333" height="64"/>
                                                                         <connections>
                                                                             <action selector="drivingLicenseImageAction:" destination="uiv-mb-Jms" eventType="touchUpInside" id="GBT-SS-xeQ"/>
                                                                         </connections>
@@ -6740,7 +6740,7 @@
                                                         <nil key="highlightedColor"/>
                                                     </label>
                                                     <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Label" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="12G-AH-mVh" customClass="MyUILabel" customModule="rzq" customModuleProvider="target">
-                                                        <rect key="frame" x="5" y="24.666666666666686" width="305" height="20.333333333333329"/>
+                                                        <rect key="frame" x="5" y="25.666666666666686" width="305" height="19.333333333333329"/>
                                                         <fontDescription key="fontDescription" type="system" pointSize="16"/>
                                                         <color key="textColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                                         <nil key="highlightedColor"/>
@@ -6780,7 +6780,7 @@
                                                         <nil key="highlightedColor"/>
                                                     </label>
                                                     <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Label" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="6ta-iA-Rq3" customClass="MyUILabel" customModule="rzq" customModuleProvider="target">
-                                                        <rect key="frame" x="5" y="24.666666666666686" width="305" height="20.333333333333329"/>
+                                                        <rect key="frame" x="5" y="25.666666666666686" width="305" height="19.333333333333329"/>
                                                         <fontDescription key="fontDescription" type="system" pointSize="16"/>
                                                         <color key="textColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                                         <nil key="highlightedColor"/>
@@ -6820,7 +6820,7 @@
                                                         <nil key="highlightedColor"/>
                                                     </label>
                                                     <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Label" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="KsM-EG-uml" customClass="MyUILabel" customModule="rzq" customModuleProvider="target">
-                                                        <rect key="frame" x="5" y="24.666666666666686" width="305" height="20.333333333333329"/>
+                                                        <rect key="frame" x="5" y="25.666666666666686" width="305" height="19.333333333333329"/>
                                                         <fontDescription key="fontDescription" type="system" pointSize="16"/>
                                                         <color key="textColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                                         <nil key="highlightedColor"/>
@@ -8108,7 +8108,7 @@
                                         </constraints>
                                     </imageView>
                                     <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="From" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="jch-Wk-USi" customClass="MyUILabel" customModule="rzq" customModuleProvider="target">
-                                        <rect key="frame" x="37" y="8" width="268" height="14.333333333333336"/>
+                                        <rect key="frame" x="37" y="7.9999999999999991" width="268" height="14.666666666666664"/>
                                         <fontDescription key="fontDescription" type="system" pointSize="12"/>
                                         <color key="textColor" red="0.31372549019607843" green="0.31372549019607843" blue="0.31372549019607843" alpha="1" colorSpace="calibratedRGB"/>
                                         <nil key="highlightedColor"/>
@@ -8117,7 +8117,7 @@
                                         </userDefinedRuntimeAttributes>
                                     </label>
                                     <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Add your pin point by long pressing on map." textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="5mm-jv-nde" customClass="MyUILabel" customModule="rzq" customModuleProvider="target">
-                                        <rect key="frame" x="37" y="25.333333333333329" width="263" height="17"/>
+                                        <rect key="frame" x="37" y="25.666666666666671" width="263" height="17"/>
                                         <fontDescription key="fontDescription" type="system" pointSize="14"/>
                                         <color key="textColor" red="0.63529411764705879" green="0.63529411764705879" blue="0.63529411764705879" alpha="1" colorSpace="calibratedRGB"/>
                                         <nil key="highlightedColor"/>
@@ -8588,6 +8588,71 @@
                                     <constraint firstItem="S2w-IB-enY" firstAttribute="top" secondItem="3sh-5Y-vjj" secondAttribute="top" id="vHQ-ez-hKR"/>
                                 </constraints>
                             </view>
+                            <view hidden="YES" contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="8GC-6D-Gpq">
+                                <rect key="frame" x="10" y="92" width="160" height="40"/>
+                                <subviews>
+                                    <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="location_car" translatesAutoresizingMaskIntoConstraints="NO" id="1Wz-uG-7Sb">
+                                        <rect key="frame" x="0.0" y="2.6666666666666714" width="35" height="35"/>
+                                        <constraints>
+                                            <constraint firstAttribute="width" constant="35" id="J3p-M9-MkC"/>
+                                            <constraint firstAttribute="height" constant="35" id="hiG-GM-REu"/>
+                                        </constraints>
+                                    </imageView>
+                                    <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="hjb-U0-Cjb" customClass="CardView" customModule="rzq" customModuleProvider="target">
+                                        <rect key="frame" x="40" y="5" width="112" height="30"/>
+                                        <subviews>
+                                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Become a driver" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="pIv-uu-KK5" customClass="MyUILabel" customModule="rzq" customModuleProvider="target">
+                                                <rect key="frame" x="0.0" y="0.0" width="112" height="30"/>
+                                                <fontDescription key="fontDescription" type="system" pointSize="13"/>
+                                                <color key="textColor" red="0.96078431372549022" green="0.65098039215686276" blue="0.13725490196078433" alpha="1" colorSpace="calibratedRGB"/>
+                                                <nil key="highlightedColor"/>
+                                                <userDefinedRuntimeAttributes>
+                                                    <userDefinedRuntimeAttribute type="string" keyPath="font_type" value="13,2"/>
+                                                </userDefinedRuntimeAttributes>
+                                            </label>
+                                        </subviews>
+                                        <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                                        <constraints>
+                                            <constraint firstAttribute="bottom" secondItem="pIv-uu-KK5" secondAttribute="bottom" id="c0p-hB-7dN"/>
+                                            <constraint firstAttribute="height" constant="30" id="cpF-Q1-NUm"/>
+                                            <constraint firstItem="pIv-uu-KK5" firstAttribute="top" secondItem="hjb-U0-Cjb" secondAttribute="top" id="fQg-7N-EW7"/>
+                                            <constraint firstItem="pIv-uu-KK5" firstAttribute="leading" secondItem="hjb-U0-Cjb" secondAttribute="leading" id="hQu-AW-Snj"/>
+                                            <constraint firstAttribute="trailing" secondItem="pIv-uu-KK5" secondAttribute="trailing" id="sep-XU-7HJ"/>
+                                        </constraints>
+                                        <userDefinedRuntimeAttributes>
+                                            <userDefinedRuntimeAttribute type="number" keyPath="cornerRadius">
+                                                <real key="value" value="5"/>
+                                            </userDefinedRuntimeAttribute>
+                                            <userDefinedRuntimeAttribute type="number" keyPath="shadowOffsetWidth">
+                                                <integer key="value" value="1"/>
+                                            </userDefinedRuntimeAttribute>
+                                            <userDefinedRuntimeAttribute type="number" keyPath="shadowOffsetHeight">
+                                                <integer key="value" value="1"/>
+                                            </userDefinedRuntimeAttribute>
+                                            <userDefinedRuntimeAttribute type="number" keyPath="shadowOpacity">
+                                                <real key="value" value="1"/>
+                                            </userDefinedRuntimeAttribute>
+                                            <userDefinedRuntimeAttribute type="color" keyPath="shadowColor">
+                                                <color key="value" white="0.66666666666666663" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                                            </userDefinedRuntimeAttribute>
+                                        </userDefinedRuntimeAttributes>
+                                    </view>
+                                </subviews>
+                                <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                                <gestureRecognizers/>
+                                <constraints>
+                                    <constraint firstItem="1Wz-uG-7Sb" firstAttribute="leading" secondItem="8GC-6D-Gpq" secondAttribute="leading" id="0XM-Of-Doa"/>
+                                    <constraint firstItem="hjb-U0-Cjb" firstAttribute="centerY" secondItem="8GC-6D-Gpq" secondAttribute="centerY" id="3qG-K0-ASo"/>
+                                    <constraint firstAttribute="height" constant="40" id="TkN-4L-LAf"/>
+                                    <constraint firstAttribute="width" constant="160" id="fmt-6h-M7P"/>
+                                    <constraint firstItem="hjb-U0-Cjb" firstAttribute="leading" secondItem="1Wz-uG-7Sb" secondAttribute="trailing" constant="5" id="iC4-QH-fZa"/>
+                                    <constraint firstItem="1Wz-uG-7Sb" firstAttribute="centerY" secondItem="8GC-6D-Gpq" secondAttribute="centerY" id="ucN-Ms-V4e"/>
+                                    <constraint firstAttribute="trailing" secondItem="hjb-U0-Cjb" secondAttribute="trailing" constant="8" id="zMB-y8-U4n"/>
+                                </constraints>
+                                <connections>
+                                    <outletCollection property="gestureRecognizers" destination="Myw-x9-N1H" appends="YES" id="3Rm-vq-4Z5"/>
+                                </connections>
+                            </view>
                             <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="LBa-dk-CdG">
                                 <rect key="frame" x="325" y="174" width="30" height="30"/>
                                 <constraints>
@@ -8607,6 +8672,7 @@
                             <constraint firstItem="kbU-q0-1TA" firstAttribute="leading" secondItem="d5N-D6-syc" secondAttribute="leading" id="J7L-zs-LgO"/>
                             <constraint firstItem="A9H-cE-hxA" firstAttribute="top" secondItem="Jju-3F-VyM" secondAttribute="top" id="V7V-Rg-8wx"/>
                             <constraint firstItem="A9H-cE-hxA" firstAttribute="leading" secondItem="d5N-D6-syc" secondAttribute="leading" id="Whu-6m-l2r"/>
+                            <constraint firstItem="8GC-6D-Gpq" firstAttribute="top" secondItem="A9H-cE-hxA" secondAttribute="bottom" constant="10" id="ZFj-A7-cZV"/>
                             <constraint firstItem="d5N-D6-syc" firstAttribute="trailing" secondItem="kbU-q0-1TA" secondAttribute="trailing" id="bGc-fM-9TY"/>
                             <constraint firstItem="d5N-D6-syc" firstAttribute="trailing" secondItem="w3z-Z6-4LH" secondAttribute="trailing" constant="30" id="cAL-eh-DtX"/>
                             <constraint firstItem="3sh-5Y-vjj" firstAttribute="top" secondItem="kbU-q0-1TA" secondAttribute="bottom" constant="-50" id="csb-qb-INM"/>
@@ -8615,6 +8681,7 @@
                             <constraint firstItem="w3z-Z6-4LH" firstAttribute="leading" secondItem="d5N-D6-syc" secondAttribute="leading" constant="30" id="mpa-tG-vMu"/>
                             <constraint firstItem="d5N-D6-syc" firstAttribute="trailing" secondItem="3sh-5Y-vjj" secondAttribute="trailing" id="qRL-0D-nBN"/>
                             <constraint firstAttribute="trailing" secondItem="A9H-cE-hxA" secondAttribute="trailing" id="tkx-ow-x2k"/>
+                            <constraint firstItem="8GC-6D-Gpq" firstAttribute="leading" secondItem="d5N-D6-syc" secondAttribute="leading" constant="10" id="tly-9h-Ksw"/>
                             <constraint firstItem="w3z-Z6-4LH" firstAttribute="top" secondItem="A9H-cE-hxA" secondAttribute="bottom" constant="12" id="vOG-HI-QYM"/>
                             <constraint firstItem="d5N-D6-syc" firstAttribute="right" secondItem="LBa-dk-CdG" secondAttribute="right" constant="20" id="xno-Yq-xpV"/>
                         </constraints>
@@ -8634,6 +8701,7 @@
                         <outlet property="moreDetailsView" destination="fMf-Sz-hZA" id="OHN-9R-1Zf"/>
                         <outlet property="searchField" destination="uoN-4e-Qtq" id="LNO-qS-20J"/>
                         <outlet property="shopNameHeight" destination="xGB-dN-xh3" id="H3W-Jt-IY6"/>
+                        <outlet property="viewBecomeDriver" destination="8GC-6D-Gpq" id="5fn-NW-pr5"/>
                         <outlet property="viewPin" destination="v3M-S9-KfI" id="7kt-HW-92Y"/>
                         <outlet property="viewShopDetails" destination="8vE-oE-t49" id="C42-mG-QYM"/>
                         <outlet property="viewSuggest" destination="5Q9-4c-azM" id="NBa-Sh-SP7"/>
@@ -8643,6 +8711,11 @@
                 <tapGestureRecognizer id="php-UR-wFn">
                     <connections>
                         <action selector="suggestAction:" destination="7Sx-hp-CWV" id="d8W-nJ-dKI"/>
+                    </connections>
+                </tapGestureRecognizer>
+                <tapGestureRecognizer id="Myw-x9-N1H">
+                    <connections>
+                        <action selector="becomeDriverAction:" destination="7Sx-hp-CWV" id="yul-0h-pGy"/>
                     </connections>
                 </tapGestureRecognizer>
             </objects>
@@ -11794,7 +11867,7 @@
                                 </userDefinedRuntimeAttributes>
                             </label>
                             <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Filter" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="y4B-oM-tcC" customClass="MyUILabel" customModule="rzq" customModuleProvider="target">
-                                <rect key="frame" x="30" y="285.33333333333331" width="315" height="26.333333333333314"/>
+                                <rect key="frame" x="30" y="285.66666666666669" width="315" height="26"/>
                                 <fontDescription key="fontDescription" type="system" pointSize="22"/>
                                 <color key="textColor" red="0.1960784314" green="0.23137254900000001" blue="0.27058823529999998" alpha="1" colorSpace="calibratedRGB"/>
                                 <nil key="highlightedColor"/>
@@ -14472,7 +14545,7 @@
                                                                 <rect key="frame" x="0.0" y="0.0" width="118.33333333333333" height="130"/>
                                                                 <subviews>
                                                                     <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Profile Picture" textAlignment="center" lineBreakMode="tailTruncation" numberOfLines="2" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="lTb-pK-iSq" customClass="MyUILabel" customModule="rzq" customModuleProvider="target">
-                                                                        <rect key="frame" x="5" y="5" width="108.33333333333333" height="85"/>
+                                                                        <rect key="frame" x="5" y="5" width="108.33333333333333" height="51"/>
                                                                         <fontDescription key="fontDescription" type="system" pointSize="12"/>
                                                                         <color key="textColor" red="0.24313725489999999" green="0.054901960780000002" blue="0.4039215686" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                                                                         <nil key="highlightedColor"/>
@@ -14481,10 +14554,10 @@
                                                                         </userDefinedRuntimeAttributes>
                                                                     </label>
                                                                     <imageView userInteractionEnabled="NO" contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="bg_add_image" translatesAutoresizingMaskIntoConstraints="NO" id="95s-lY-oBx">
-                                                                        <rect key="frame" x="5" y="95" width="108.33333333333333" height="30"/>
+                                                                        <rect key="frame" x="5" y="61" width="108.33333333333333" height="64"/>
                                                                     </imageView>
                                                                     <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="nBh-08-dpb">
-                                                                        <rect key="frame" x="5" y="95" width="108.33333333333333" height="30"/>
+                                                                        <rect key="frame" x="5" y="61" width="108.33333333333333" height="64"/>
                                                                         <connections>
                                                                             <action selector="profileImageAction:" destination="kLG-6Q-zJ5" eventType="touchUpInside" id="w2R-lH-o9o"/>
                                                                         </connections>
@@ -14509,7 +14582,7 @@
                                                                 <rect key="frame" x="118.33333333333334" y="0.0" width="118.33333333333334" height="130"/>
                                                                 <subviews>
                                                                     <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Civil ID / Passport" textAlignment="center" lineBreakMode="tailTruncation" numberOfLines="2" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="CyI-H6-jNZ" customClass="MyUILabel" customModule="rzq" customModuleProvider="target">
-                                                                        <rect key="frame" x="5" y="5" width="108.33333333333333" height="85"/>
+                                                                        <rect key="frame" x="5" y="5" width="108.33333333333333" height="51"/>
                                                                         <fontDescription key="fontDescription" type="system" pointSize="12"/>
                                                                         <color key="textColor" red="0.24313725489999999" green="0.054901960780000002" blue="0.4039215686" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                                                                         <nil key="highlightedColor"/>
@@ -14518,10 +14591,10 @@
                                                                         </userDefinedRuntimeAttributes>
                                                                     </label>
                                                                     <imageView userInteractionEnabled="NO" contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="bg_add_image" translatesAutoresizingMaskIntoConstraints="NO" id="rjk-VG-45w">
-                                                                        <rect key="frame" x="5" y="95" width="108.33333333333333" height="30"/>
+                                                                        <rect key="frame" x="5" y="61" width="108.33333333333333" height="64"/>
                                                                     </imageView>
                                                                     <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="TZc-Gb-ZBe">
-                                                                        <rect key="frame" x="5" y="95" width="108.33333333333333" height="30"/>
+                                                                        <rect key="frame" x="5" y="61" width="108.33333333333333" height="64"/>
                                                                         <connections>
                                                                             <action selector="civilIdImageAction:" destination="kLG-6Q-zJ5" eventType="touchUpInside" id="moV-ZC-XYm"/>
                                                                         </connections>
@@ -14546,7 +14619,7 @@
                                                                 <rect key="frame" x="236.66666666666666" y="0.0" width="118.33333333333334" height="130"/>
                                                                 <subviews>
                                                                     <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Driving License" textAlignment="center" lineBreakMode="tailTruncation" numberOfLines="2" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="hfO-1T-Wg3" customClass="MyUILabel" customModule="rzq" customModuleProvider="target">
-                                                                        <rect key="frame" x="5" y="5" width="108.33333333333333" height="85"/>
+                                                                        <rect key="frame" x="5" y="5" width="108.33333333333333" height="51"/>
                                                                         <fontDescription key="fontDescription" type="system" pointSize="12"/>
                                                                         <color key="textColor" red="0.24313725489999999" green="0.054901960780000002" blue="0.4039215686" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                                                                         <nil key="highlightedColor"/>
@@ -14555,10 +14628,10 @@
                                                                         </userDefinedRuntimeAttributes>
                                                                     </label>
                                                                     <imageView userInteractionEnabled="NO" contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="bg_add_image" translatesAutoresizingMaskIntoConstraints="NO" id="yVa-jz-WMS">
-                                                                        <rect key="frame" x="5" y="95" width="108.33333333333333" height="30"/>
+                                                                        <rect key="frame" x="5" y="61" width="108.33333333333333" height="64"/>
                                                                     </imageView>
                                                                     <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="cH1-XW-O1t">
-                                                                        <rect key="frame" x="5" y="95" width="108.33333333333333" height="30"/>
+                                                                        <rect key="frame" x="5" y="61" width="108.33333333333333" height="64"/>
                                                                         <connections>
                                                                             <action selector="drivingLicenseImageAction:" destination="kLG-6Q-zJ5" eventType="touchUpInside" id="54N-xl-eRC"/>
                                                                         </connections>
@@ -16647,14 +16720,14 @@
                                             <autoresizingMask key="autoresizingMask"/>
                                             <subviews>
                                                 <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="1Gc-gO-FYm">
-                                                    <rect key="frame" x="0.0" y="70" width="355" height="1"/>
+                                                    <rect key="frame" x="0.0" y="70" width="300" height="1"/>
                                                     <color key="backgroundColor" red="0.70196078429999997" green="0.70196078429999997" blue="0.70196078429999997" alpha="1" colorSpace="calibratedRGB"/>
                                                     <constraints>
                                                         <constraint firstAttribute="height" constant="1" id="Wop-G5-cs0"/>
                                                     </constraints>
                                                 </view>
                                                 <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Label" textAlignment="natural" lineBreakMode="tailTruncation" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="Sip-vs-WCG" customClass="MyUILabel" customModule="rzq" customModuleProvider="target">
-                                                    <rect key="frame" x="8" y="8.0000000000000018" width="339" height="26.666666666666671"/>
+                                                    <rect key="frame" x="8" y="8.0000000000000018" width="284" height="26.666666666666671"/>
                                                     <fontDescription key="fontDescription" type="system" pointSize="18"/>
                                                     <nil key="textColor"/>
                                                     <nil key="highlightedColor"/>
@@ -16663,7 +16736,7 @@
                                                     </userDefinedRuntimeAttributes>
                                                 </label>
                                                 <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="252" text="Label" textAlignment="natural" lineBreakMode="tailTruncation" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="SeL-pz-omw" customClass="MyUILabel" customModule="rzq" customModuleProvider="target">
-                                                    <rect key="frame" x="8" y="42.666666666666664" width="339" height="19.333333333333336"/>
+                                                    <rect key="frame" x="8" y="42.666666666666664" width="284" height="19.333333333333336"/>
                                                     <fontDescription key="fontDescription" type="system" pointSize="16"/>
                                                     <color key="textColor" red="0.4941176471" green="0.4941176471" blue="0.4941176471" alpha="1" colorSpace="calibratedRGB"/>
                                                     <nil key="highlightedColor"/>
@@ -16791,10 +16864,10 @@
                                             <autoresizingMask key="autoresizingMask"/>
                                             <subviews>
                                                 <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="t8Q-oz-XJf" customClass="CardView" customModule="rzq" customModuleProvider="target">
-                                                    <rect key="frame" x="0.0" y="0.0" width="355" height="140"/>
+                                                    <rect key="frame" x="0.0" y="0.0" width="300" height="140"/>
                                                     <subviews>
                                                         <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="Dar-BX-fp9" customClass="CardView" customModule="rzq" customModuleProvider="target">
-                                                            <rect key="frame" x="1" y="1" width="353" height="138"/>
+                                                            <rect key="frame" x="1" y="1" width="298" height="138"/>
                                                             <subviews>
                                                                 <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="251" translatesAutoresizingMaskIntoConstraints="NO" id="ml3-uy-7Wf" customClass="CircleImage" customModule="rzq" customModuleProvider="target">
                                                                     <rect key="frame" x="10" y="10" width="60" height="60"/>
@@ -16804,7 +16877,7 @@
                                                                     </constraints>
                                                                 </imageView>
                                                                 <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="252" text="Label" textAlignment="natural" lineBreakMode="tailTruncation" numberOfLines="2" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="pRp-CD-04d" customClass="MyUILabel" customModule="rzq" customModuleProvider="target">
-                                                                    <rect key="frame" x="80" y="10" width="263" height="41"/>
+                                                                    <rect key="frame" x="80" y="10" width="208" height="41"/>
                                                                     <fontDescription key="fontDescription" type="system" pointSize="16"/>
                                                                     <color key="textColor" red="0.11372549019607843" green="0.14901960784313725" blue="0.17254901960784313" alpha="1" colorSpace="calibratedRGB"/>
                                                                     <nil key="highlightedColor"/>
@@ -16813,7 +16886,7 @@
                                                                     </userDefinedRuntimeAttributes>
                                                                 </label>
                                                                 <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="253" text="Label" textAlignment="natural" lineBreakMode="tailTruncation" numberOfLines="2" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="tgL-ap-7N5" customClass="MyUILabel" customModule="rzq" customModuleProvider="target">
-                                                                    <rect key="frame" x="80" y="59" width="263" height="18"/>
+                                                                    <rect key="frame" x="80" y="59" width="208" height="18"/>
                                                                     <fontDescription key="fontDescription" type="system" pointSize="15"/>
                                                                     <color key="textColor" red="0.1137254902" green="0.14901960780000001" blue="0.17254901959999999" alpha="1" colorSpace="calibratedRGB"/>
                                                                     <nil key="highlightedColor"/>
@@ -16822,10 +16895,10 @@
                                                                     </userDefinedRuntimeAttributes>
                                                                 </label>
                                                                 <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="i1A-Jb-aDr" customClass="CardView" customModule="rzq" customModuleProvider="target">
-                                                                    <rect key="frame" x="10" y="85" width="333" height="45"/>
+                                                                    <rect key="frame" x="10" y="85" width="278" height="45"/>
                                                                     <subviews>
                                                                         <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="z0E-KX-qZO" customClass="MyUIButton" customModule="rzq" customModuleProvider="target">
-                                                                            <rect key="frame" x="4" y="4" width="325" height="37"/>
+                                                                            <rect key="frame" x="4" y="4" width="270" height="37"/>
                                                                             <fontDescription key="fontDescription" type="system" pointSize="14"/>
                                                                             <state key="normal" title="Cancel Registration">
                                                                                 <color key="titleColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
@@ -16944,7 +17017,7 @@
                                         </userDefinedRuntimeAttributes>
                                     </label>
                                     <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="No Registered Shops" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="uZX-QH-b8G" customClass="MyUILabel" customModule="rzq" customModuleProvider="target">
-                                        <rect key="frame" x="20" y="524.33333333333337" width="315" height="28.666666666666629"/>
+                                        <rect key="frame" x="20" y="524" width="315" height="29"/>
                                         <fontDescription key="fontDescription" type="system" pointSize="24"/>
                                         <color key="textColor" red="0.24313725489999999" green="0.054901960780000002" blue="0.4039215686" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                                         <nil key="highlightedColor"/>
@@ -16953,7 +17026,7 @@
                                         </userDefinedRuntimeAttributes>
                                     </label>
                                     <imageView userInteractionEnabled="NO" contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="empty_shops" translatesAutoresizingMaskIntoConstraints="NO" id="4Np-t8-AQR">
-                                        <rect key="frame" x="107.66666666666669" y="344.33333333333331" width="140" height="140"/>
+                                        <rect key="frame" x="107.66666666666669" y="344" width="140" height="140"/>
                                         <constraints>
                                             <constraint firstAttribute="width" constant="140" id="WFR-5h-Mac"/>
                                             <constraint firstAttribute="height" constant="140" id="nIp-qU-wYE"/>
@@ -17012,7 +17085,7 @@
                                 <rect key="frame" x="0.0" y="87" width="375" height="100"/>
                                 <subviews>
                                     <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Notifications" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="HO9-nX-gir" customClass="MyUILabel" customModule="rzq" customModuleProvider="target">
-                                        <rect key="frame" x="20" y="9.9999999999999982" width="112" height="23.333333333333329"/>
+                                        <rect key="frame" x="20" y="10.000000000000002" width="112" height="23.666666666666671"/>
                                         <fontDescription key="fontDescription" name="Cairo-Regular" family="Cairo" pointSize="20"/>
                                         <color key="textColor" red="0.24313725490196078" green="0.054901960784313725" blue="0.40392156862745099" alpha="1" colorSpace="calibratedRGB"/>
                                         <nil key="highlightedColor"/>
@@ -17021,7 +17094,7 @@
                                         </userDefinedRuntimeAttributes>
                                     </label>
                                     <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Turn Notifications ON or Off" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="NGg-52-YiS" customClass="MyUILabel" customModule="rzq" customModuleProvider="target">
-                                        <rect key="frame" x="20" y="43.333333333333343" width="198" height="24"/>
+                                        <rect key="frame" x="20" y="43.666666666666657" width="198" height="24"/>
                                         <constraints>
                                             <constraint firstAttribute="height" constant="24" id="elY-41-xTQ"/>
                                         </constraints>
@@ -17064,7 +17137,7 @@
                                 <rect key="frame" x="0.0" y="187" width="375" height="80"/>
                                 <subviews>
                                     <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Language" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="uGG-sH-IUg" customClass="MyUILabel" customModule="rzq" customModuleProvider="target">
-                                        <rect key="frame" x="20.000000000000007" y="28.333333333333343" width="88.666666666666686" height="23.333333333333329"/>
+                                        <rect key="frame" x="20" y="28.666666666666657" width="89" height="23"/>
                                         <fontDescription key="fontDescription" name="Cairo-Regular" family="Cairo" pointSize="20"/>
                                         <color key="textColor" red="0.24313725490196078" green="0.054901960784313725" blue="0.40392156862745099" alpha="1" colorSpace="calibratedRGB"/>
                                         <nil key="highlightedColor"/>
@@ -17452,14 +17525,14 @@
                                             <autoresizingMask key="autoresizingMask"/>
                                             <subviews>
                                                 <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="WqK-jt-Bvc">
-                                                    <rect key="frame" x="0.0" y="55" width="355" height="1"/>
+                                                    <rect key="frame" x="0.0" y="55" width="300" height="1"/>
                                                     <color key="backgroundColor" red="0.76078431369999999" green="0.76862745099999996" blue="0.79215686269999996" alpha="1" colorSpace="calibratedRGB"/>
                                                     <constraints>
                                                         <constraint firstAttribute="height" constant="1" id="C6A-AY-IXA"/>
                                                     </constraints>
                                                 </view>
                                                 <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="252" text="Label" textAlignment="natural" lineBreakMode="tailTruncation" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="yRU-b5-pfO" customClass="MyUILabel" customModule="rzq" customModuleProvider="target">
-                                                    <rect key="frame" x="10" y="10" width="335" height="35"/>
+                                                    <rect key="frame" x="10" y="10" width="280" height="35"/>
                                                     <fontDescription key="fontDescription" type="system" pointSize="17"/>
                                                     <color key="textColor" red="0.69803921568627447" green="0.69803921568627447" blue="0.69803921568627447" alpha="1" colorSpace="calibratedRGB"/>
                                                     <nil key="highlightedColor"/>
@@ -17672,7 +17745,7 @@
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
                             <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Subject" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="20L-Ol-Xcd" customClass="MyUILabel" customModule="rzq" customModuleProvider="target">
-                                <rect key="frame" x="10" y="92" width="355" height="26.333333333333329"/>
+                                <rect key="frame" x="10" y="92" width="355" height="26.666666666666671"/>
                                 <fontDescription key="fontDescription" type="system" pointSize="22"/>
                                 <color key="textColor" red="0.1137254902" green="0.14901960780000001" blue="0.17254901959999999" alpha="1" colorSpace="calibratedRGB"/>
                                 <nil key="highlightedColor"/>
@@ -17681,7 +17754,7 @@
                                 </userDefinedRuntimeAttributes>
                             </label>
                             <textField opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" borderStyle="roundedRect" textAlignment="natural" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="82r-fB-WtF" customClass="MyUITextField" customModule="rzq" customModuleProvider="target">
-                                <rect key="frame" x="10" y="128.33333333333334" width="355" height="50"/>
+                                <rect key="frame" x="10" y="128.66666666666666" width="355" height="50"/>
                                 <constraints>
                                     <constraint firstAttribute="height" constant="50" id="0uA-VC-NjT"/>
                                 </constraints>
@@ -17754,7 +17827,7 @@
                                 </userDefinedRuntimeAttributes>
                             </view>
                             <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Mobile Number" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="vlo-Om-Jkm" customClass="MyUILabel" customModule="rzq" customModuleProvider="target">
-                                <rect key="frame" x="10" y="198.33333333333334" width="355" height="26.333333333333343"/>
+                                <rect key="frame" x="10" y="198.66666666666666" width="355" height="26"/>
                                 <fontDescription key="fontDescription" type="system" pointSize="22"/>
                                 <color key="textColor" red="0.1137254902" green="0.14901960780000001" blue="0.17254901959999999" alpha="1" colorSpace="calibratedRGB"/>
                                 <nil key="highlightedColor"/>
@@ -18578,14 +18651,14 @@
                                             <autoresizingMask key="autoresizingMask"/>
                                             <subviews>
                                                 <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="Vii-1C-isD">
-                                                    <rect key="frame" x="0.0" y="70" width="355" height="1"/>
+                                                    <rect key="frame" x="0.0" y="70" width="300" height="1"/>
                                                     <color key="backgroundColor" red="0.70196078429999997" green="0.70196078429999997" blue="0.70196078429999997" alpha="1" colorSpace="calibratedRGB"/>
                                                     <constraints>
                                                         <constraint firstAttribute="height" constant="1" id="mm4-Ue-TLl"/>
                                                     </constraints>
                                                 </view>
                                                 <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Label" textAlignment="natural" lineBreakMode="tailTruncation" numberOfLines="2" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="oVV-Fh-1fQ" customClass="MyUILabel" customModule="rzq" customModuleProvider="target">
-                                                    <rect key="frame" x="70" y="10" width="275" height="50"/>
+                                                    <rect key="frame" x="70" y="10" width="220" height="50"/>
                                                     <fontDescription key="fontDescription" type="system" pointSize="18"/>
                                                     <nil key="textColor"/>
                                                     <nil key="highlightedColor"/>
@@ -18725,14 +18798,14 @@
                                             <autoresizingMask key="autoresizingMask"/>
                                             <subviews>
                                                 <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="JyB-eU-ZQt">
-                                                    <rect key="frame" x="0.0" y="150" width="355" height="1"/>
+                                                    <rect key="frame" x="0.0" y="150" width="300" height="1"/>
                                                     <color key="backgroundColor" red="0.70196078431372544" green="0.70196078431372544" blue="0.70196078431372544" alpha="1" colorSpace="calibratedRGB"/>
                                                     <constraints>
                                                         <constraint firstAttribute="height" constant="1" id="LYN-wl-LWj"/>
                                                     </constraints>
                                                 </view>
                                                 <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="56l-pV-qiZ">
-                                                    <rect key="frame" x="0.0" y="0.0" width="355" height="40"/>
+                                                    <rect key="frame" x="0.0" y="0.0" width="300" height="40"/>
                                                     <subviews>
                                                         <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="8L6-jr-Vtt" customClass="Checkbox" customModule="SimpleCheckbox">
                                                             <rect key="frame" x="10" y="10" width="20" height="20"/>
@@ -18758,7 +18831,7 @@
                                                             </userDefinedRuntimeAttributes>
                                                         </label>
                                                         <label hidden="YES" opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Closed" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="u8J-d2-PLv" customClass="MyUILabel" customModule="rzq" customModuleProvider="target">
-                                                            <rect key="frame" x="300" y="11.666666666666664" width="45" height="17"/>
+                                                            <rect key="frame" x="245" y="11.666666666666664" width="45" height="17"/>
                                                             <fontDescription key="fontDescription" type="system" pointSize="14"/>
                                                             <nil key="textColor"/>
                                                             <nil key="highlightedColor"/>
@@ -18779,10 +18852,10 @@
                                                     </constraints>
                                                 </view>
                                                 <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="11K-Ki-V4z">
-                                                    <rect key="frame" x="0.0" y="50" width="355" height="100"/>
+                                                    <rect key="frame" x="0.0" y="50" width="300" height="100"/>
                                                     <subviews>
                                                         <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="wkz-Vy-MUT">
-                                                            <rect key="frame" x="195.66666666666666" y="10" width="89.999999999999972" height="35"/>
+                                                            <rect key="frame" x="168" y="10" width="90" height="35"/>
                                                             <constraints>
                                                                 <constraint firstAttribute="width" constant="90" id="4ma-Tc-sF6"/>
                                                                 <constraint firstAttribute="height" constant="35" id="ROG-9v-a74"/>
@@ -18795,7 +18868,7 @@
                                                             </connections>
                                                         </button>
                                                         <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="2b5-Oe-nV3">
-                                                            <rect key="frame" x="167.66666666666666" y="26" width="20" height="1"/>
+                                                            <rect key="frame" x="140" y="26" width="20" height="1"/>
                                                             <color key="backgroundColor" white="0.0" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                                             <constraints>
                                                                 <constraint firstAttribute="width" constant="20" id="X00-6T-tMa"/>
@@ -18814,7 +18887,7 @@
                                                             </connections>
                                                         </view>
                                                         <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="034-7Y-5sp">
-                                                            <rect key="frame" x="69.666666666666671" y="10" width="90.000000000000014" height="35"/>
+                                                            <rect key="frame" x="42" y="10" width="90" height="35"/>
                                                             <constraints>
                                                                 <constraint firstAttribute="width" constant="90" id="6pb-F7-lC8"/>
                                                                 <constraint firstAttribute="height" constant="35" id="QVw-9k-shf"/>
@@ -18827,7 +18900,7 @@
                                                             </connections>
                                                         </button>
                                                         <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Open 24 hours" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="nTb-2d-iWW" customClass="MyUILabel" customModule="rzq" customModuleProvider="target">
-                                                            <rect key="frame" x="125" y="55" width="220" height="16"/>
+                                                            <rect key="frame" x="125" y="55" width="165" height="16"/>
                                                             <fontDescription key="fontDescription" type="system" pointSize="13"/>
                                                             <nil key="textColor"/>
                                                             <nil key="highlightedColor"/>
@@ -19644,7 +19717,7 @@
                                                                 <rect key="frame" x="0.0" y="0.0" width="177.66666666666666" height="130"/>
                                                                 <subviews>
                                                                     <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Profile Picture" textAlignment="center" lineBreakMode="tailTruncation" numberOfLines="2" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="nUU-Y9-HpB" customClass="MyUILabel" customModule="rzq" customModuleProvider="target">
-                                                                        <rect key="frame" x="5" y="5" width="167.66666666666666" height="85"/>
+                                                                        <rect key="frame" x="5" y="5" width="167.66666666666666" height="51"/>
                                                                         <fontDescription key="fontDescription" type="system" pointSize="12"/>
                                                                         <color key="textColor" red="0.24313725489999999" green="0.054901960780000002" blue="0.4039215686" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                                                                         <nil key="highlightedColor"/>
@@ -19653,10 +19726,10 @@
                                                                         </userDefinedRuntimeAttributes>
                                                                     </label>
                                                                     <imageView userInteractionEnabled="NO" contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="bg_add_image" translatesAutoresizingMaskIntoConstraints="NO" id="ixe-xa-kUd">
-                                                                        <rect key="frame" x="5" y="95" width="167.66666666666666" height="30"/>
+                                                                        <rect key="frame" x="5" y="61" width="167.66666666666666" height="64"/>
                                                                     </imageView>
                                                                     <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="rYt-W0-tp4">
-                                                                        <rect key="frame" x="5" y="95" width="167.66666666666666" height="30"/>
+                                                                        <rect key="frame" x="5" y="61" width="167.66666666666666" height="64"/>
                                                                         <connections>
                                                                             <action selector="profileImageAction:" destination="0Vw-tl-Eky" eventType="touchUpInside" id="pZI-De-i5K"/>
                                                                         </connections>
@@ -19681,7 +19754,7 @@
                                                                 <rect key="frame" x="177.66666666666663" y="0.0" width="177.33333333333337" height="130"/>
                                                                 <subviews>
                                                                     <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Civil ID / Passport" textAlignment="center" lineBreakMode="tailTruncation" numberOfLines="2" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="aHn-hh-vTm" customClass="MyUILabel" customModule="rzq" customModuleProvider="target">
-                                                                        <rect key="frame" x="5" y="5" width="167.33333333333334" height="85"/>
+                                                                        <rect key="frame" x="5" y="5" width="167.33333333333334" height="51"/>
                                                                         <fontDescription key="fontDescription" type="system" pointSize="12"/>
                                                                         <color key="textColor" red="0.24313725489999999" green="0.054901960780000002" blue="0.4039215686" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                                                                         <nil key="highlightedColor"/>
@@ -19690,10 +19763,10 @@
                                                                         </userDefinedRuntimeAttributes>
                                                                     </label>
                                                                     <imageView userInteractionEnabled="NO" contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="bg_add_image" translatesAutoresizingMaskIntoConstraints="NO" id="8dn-pd-KvK">
-                                                                        <rect key="frame" x="5" y="95" width="167.33333333333334" height="30"/>
+                                                                        <rect key="frame" x="5" y="61" width="167.33333333333334" height="64"/>
                                                                     </imageView>
                                                                     <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="XV9-19-Rj7">
-                                                                        <rect key="frame" x="5" y="95" width="167.33333333333334" height="30"/>
+                                                                        <rect key="frame" x="5" y="61" width="167.33333333333334" height="64"/>
                                                                         <connections>
                                                                             <action selector="civilIdImageAction:" destination="0Vw-tl-Eky" eventType="touchUpInside" id="bPa-wt-Tad"/>
                                                                         </connections>
@@ -19907,7 +19980,7 @@
                                             <autoresizingMask key="autoresizingMask"/>
                                             <subviews>
                                                 <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="OvP-HH-F0c">
-                                                    <rect key="frame" x="0.0" y="70" width="355" height="1"/>
+                                                    <rect key="frame" x="0.0" y="70" width="300" height="1"/>
                                                     <color key="backgroundColor" red="0.69803921570000005" green="0.69803921570000005" blue="0.69803921570000005" alpha="1" colorSpace="calibratedRGB"/>
                                                     <constraints>
                                                         <constraint firstAttribute="height" constant="1" id="H5U-ge-f8C"/>
@@ -19921,7 +19994,7 @@
                                                     </constraints>
                                                 </imageView>
                                                 <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Label" textAlignment="natural" lineBreakMode="tailTruncation" numberOfLines="2" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="f7e-Up-D2k" customClass="MyUILabel" customModule="rzq" customModuleProvider="target">
-                                                    <rect key="frame" x="70" y="10" width="247" height="50"/>
+                                                    <rect key="frame" x="70" y="10" width="192" height="50"/>
                                                     <fontDescription key="fontDescription" type="system" pointSize="16"/>
                                                     <nil key="textColor"/>
                                                     <nil key="highlightedColor"/>
@@ -19930,7 +20003,7 @@
                                                     </userDefinedRuntimeAttributes>
                                                 </label>
                                                 <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="fjE-fC-LNg" customClass="Checkbox" customModule="SimpleCheckbox">
-                                                    <rect key="frame" x="325" y="25.666666666666671" width="20" height="20"/>
+                                                    <rect key="frame" x="270" y="25.666666666666671" width="20" height="20"/>
                                                     <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                                     <constraints>
                                                         <constraint firstAttribute="width" constant="20" id="30L-9J-J7a"/>
@@ -21768,7 +21841,7 @@
         <!--Norm Update Dialog-->
         <scene sceneID="Ydd-Nt-4fW">
             <objects>
-                <viewController storyboardIdentifier="normdialogvc" id="f5d-LB-N3b" customClass="NormUpdateDialog" customModule="LabasEndUser" customModuleProvider="target" sceneMemberID="viewController">
+                <viewController storyboardIdentifier="normdialogvc" id="f5d-LB-N3b" customClass="NormUpdateDialog" customModule="rzq" customModuleProvider="target" sceneMemberID="viewController">
                     <layoutGuides>
                         <viewControllerLayoutGuide type="top" id="bJ8-FP-u4l"/>
                         <viewControllerLayoutGuide type="bottom" id="UoZ-jg-n6q"/>
@@ -21780,7 +21853,7 @@
                             <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="C0U-Xg-Wwd">
                                 <rect key="frame" x="0.0" y="44" width="375" height="734"/>
                                 <subviews>
-                                    <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="11H-6T-Ltx" customClass="CardView" customModule="LabasEndUser" customModuleProvider="target">
+                                    <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="11H-6T-Ltx" customClass="CardView" customModule="rzq" customModuleProvider="target">
                                         <rect key="frame" x="50" y="227" width="275" height="280"/>
                                         <subviews>
                                             <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="ic_update" translatesAutoresizingMaskIntoConstraints="NO" id="ykz-Of-u7l">
@@ -21903,7 +21976,7 @@
         <!--MandI Update Dialog-->
         <scene sceneID="GgU-YC-lqU">
             <objects>
-                <viewController storyboardIdentifier="manddialogvc" id="mda-FY-OmI" customClass="MandIUpdateDialog" customModule="LabasEndUser" customModuleProvider="target" sceneMemberID="viewController">
+                <viewController storyboardIdentifier="manddialogvc" id="mda-FY-OmI" customClass="MandIUpdateDialog" customModule="rzq" customModuleProvider="target" sceneMemberID="viewController">
                     <layoutGuides>
                         <viewControllerLayoutGuide type="top" id="EgB-IE-w3d"/>
                         <viewControllerLayoutGuide type="bottom" id="oEG-zb-uZt"/>
@@ -21915,7 +21988,7 @@
                             <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="0Fg-Rt-kG6">
                                 <rect key="frame" x="0.0" y="44" width="375" height="734"/>
                                 <subviews>
-                                    <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="sf1-Jf-xle" customClass="CardView" customModule="LabasEndUser" customModuleProvider="target">
+                                    <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="sf1-Jf-xle" customClass="CardView" customModule="rzq" customModuleProvider="target">
                                         <rect key="frame" x="50" y="227" width="275" height="280"/>
                                         <subviews>
                                             <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="ic_update" translatesAutoresizingMaskIntoConstraints="NO" id="qfz-qt-BZ9">
@@ -22129,6 +22202,7 @@
         <image name="intro1_indicator" width="71" height="4"/>
         <image name="intro2_indicator" width="71" height="4"/>
         <image name="intro3_indicator" width="71" height="4"/>
+        <image name="location_car" width="63" height="79.5"/>
         <image name="placeholder_order" width="105" height="105"/>
         <image name="profile_placeholder" width="64" height="64"/>
         <image name="red_indicator" width="32" height="32"/>

@@ -204,6 +204,7 @@ class TenderStep2: BaseVC {
         self.dropLocation = location
         self.GetAnnotationUsingCoordinated(location)
     }
+    
     fileprivate func getAddressForMapCenter(location : CLLocation) {
         self.dropLocation = location
         self.GetAnnotationUsingCoordinated(location)

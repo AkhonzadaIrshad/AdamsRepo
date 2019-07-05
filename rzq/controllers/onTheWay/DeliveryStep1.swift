@@ -45,6 +45,8 @@ class DeliveryStep1: BaseVC,LabasLocationManagerDelegate, Step2Delegate {
     
     @IBOutlet weak var lblSearch: MyUILabel!
     
+    @IBOutlet weak var viewBecomeDriver: UIView!
+    
     
     var markerLocation: GMSMarker?
     var currentZoom: Float = 0.0
@@ -153,6 +155,15 @@ class DeliveryStep1: BaseVC,LabasLocationManagerDelegate, Step2Delegate {
           self.checkForUpdates()
         }
         
+    }
+    
+    override func viewWillAppear(_ animated: Bool) {
+        super.viewWillAppear(animated)
+        if ((self.loadUser().data?.roles?.contains(find: "Driver"))!) {
+            self.viewBecomeDriver.isHidden = true
+        }else {
+            self.viewBecomeDriver.isHidden = false
+        }
     }
     
     
@@ -668,6 +679,14 @@ class DeliveryStep1: BaseVC,LabasLocationManagerDelegate, Step2Delegate {
         self.shopNameHeight.constant = 0
         self.viewPin.isHidden = false
         self.viewSuggest.isHidden = true
+    }
+    
+    
+    @IBAction func becomeDriverAction(_ sender: Any) {
+        if let vc = UIStoryboard(name: "Main", bundle: nil).instantiateViewController(withIdentifier: "RegisterDriverVC") as? RegisterDriverVC
+        {
+            self.navigationController?.pushViewController(vc, animated: true)
+        }
     }
     
     

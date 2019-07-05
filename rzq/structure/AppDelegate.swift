@@ -87,7 +87,6 @@ class AppDelegate: UIResponder, UIApplicationDelegate, MOLHResetable,MessagingDe
         configuration.timeoutIntervalForResource = 120 //seconds
         AFManager = Alamofire.SessionManager(configuration: configuration)
         
-        
         return true
     }
     
