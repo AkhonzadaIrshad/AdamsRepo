@@ -97,7 +97,7 @@ class ProfileVC: BaseVC {
                 self.viewRegisterPRovider.isHidden = true
             }else {
                 self.ivDriverBadge.isHidden = true
-                self.viewRegisterPRovider.isHidden = false
+                self.viewRegisterPRovider.isHidden = true
             }
             
             //            if ((response.dataProfileObj?.roles?.contains("ServiceProvider"))!) {

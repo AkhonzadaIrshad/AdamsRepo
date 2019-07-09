@@ -85,8 +85,8 @@ class HomeMapVC: BaseViewController,LabasLocationManagerDelegate, UICollectionVi
         
         self.validateDriverDueAmount()
         
-//        self.viewServices.isHidden = true
-//        self.viewTenders.isHidden = true
+        self.viewServices.isHidden = true
+        self.viewTenders.isHidden = true
         
     }
     
@@ -697,8 +697,8 @@ class HomeMapVC: BaseViewController,LabasLocationManagerDelegate, UICollectionVi
                 self.dropMarker?.map = nil
                 self.viewOnTheWay.isHidden = false
                 //back to false when u want to show them
-                self.viewServices.isHidden = false
-                self.viewTenders.isHidden = false
+                self.viewServices.isHidden = true
+                self.viewTenders.isHidden = true
             }
             
         }
