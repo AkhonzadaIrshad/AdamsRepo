@@ -18,6 +18,7 @@ import UserNotifications
 import BRYXBanner
 import Alamofire
 import Branch
+import RealmSwift
 
 var AFManager = SessionManager()
 @UIApplicationMain
@@ -86,6 +87,30 @@ class AppDelegate: UIResponder, UIApplicationDelegate, MOLHResetable,MessagingDe
         configuration.timeoutIntervalForRequest = 120 // seconds
         configuration.timeoutIntervalForResource = 120 //seconds
         AFManager = Alamofire.SessionManager(configuration: configuration)
+        
+        
+        var realmConfig = Realm.Configuration(
+            schemaVersion: 1,
+            migrationBlock: { migration, oldSchemaVersion in
+                if oldSchemaVersion < 1 {
+                    
+                    // if just the name of your model's property changed you can do this
+//                    migration.renameProperty(onType: NotSureItem.className(), from: "text", to: "title")
+//
+//                    // if you want to fill a new property with some values you have to enumerate
+//                    // the existing objects and set the new value
+//                    migration.enumerateObjects(ofType: NotSureItem.className()) { oldObject, newObject in
+//                        let text = oldObject!["text"] as! String
+//                        newObject!["textDescription"] = "The title is \(text)"
+//                    }
+                    
+                    // if you added a new property or removed a property you don't
+                    // have to do anything because Realm automatically detects that
+                }
+        }
+        )
+        Realm.Configuration.defaultConfiguration = realmConfig
+        
         
         return true
     }
@@ -305,6 +330,9 @@ class AppDelegate: UIResponder, UIApplicationDelegate, MOLHResetable,MessagingDe
             if (notificationType == "5" || notificationType == "19" || notificationType == "17") {
                 self.loadTracks()
             }
+            if (notificationType == "6" || notificationType == "15") {
+                self.openWorkingOrders()
+            }
                 self.showBanner(title: title, message: body, style: UIColor.colorPrimary)
             
             
@@ -431,6 +459,15 @@ class AppDelegate: UIResponder, UIApplicationDelegate, MOLHResetable,MessagingDe
         }
     }
     
+    
+    func openWorkingOrders() {
+        if let rootViewController = UIApplication.topViewController() {
+            if rootViewController is NotificationsVC {
+                let vc = rootViewController as! NotificationsVC
+                vc.goToWorkingOrders()
+            }
+        }
+    }
     
     func goToNotifications() {
         if let rootViewController = UIApplication.topViewController() {

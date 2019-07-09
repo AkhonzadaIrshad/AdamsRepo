@@ -45,6 +45,7 @@ class DataClassDelObj: Codable {
     let pickUpDetails : String?
     let dropOffDetails : String?
     let desc : String?
+    let paymentMethod: Int?
     
     enum CodingKeys: String, CodingKey {
         case type = "Type"
@@ -70,9 +71,10 @@ class DataClassDelObj: Codable {
         case chatId = "ChatId"
         case voiceFile = "VoiceFile"
         case desc = "Description"
+        case paymentMethod = "PaymentMethod"
     }
     
-    init(type :Int?, id: Int?,driverId : String?, chatId : Int?, title: String?, fromAddress: String?, fromLatitude: Double?, fromLongitude: Double?, toAddress: String?, toLatitude: Double?, toLongitude: Double?, time: Int?, cost: Double?, status: Int?, canCancel: Bool?, canChat: Bool?, statusString: String?, images: [String]?,voiceFile : String?, createdDate: String?, pickUpDetails: String?,dropOffDetails: String?,desc: String?) {
+    init(type :Int?, id: Int?,driverId : String?, chatId : Int?, title: String?, fromAddress: String?, fromLatitude: Double?, fromLongitude: Double?, toAddress: String?, toLatitude: Double?, toLongitude: Double?, time: Int?, cost: Double?, status: Int?, canCancel: Bool?, canChat: Bool?, statusString: String?, images: [String]?,voiceFile : String?, createdDate: String?, pickUpDetails: String?,dropOffDetails: String?,desc: String?, paymentMethod: Int?) {
         self.type = type
         self.id = id
         self.driverId = driverId
@@ -96,5 +98,6 @@ class DataClassDelObj: Codable {
         self.pickUpDetails = pickUpDetails
         self.dropOffDetails = dropOffDetails
         self.desc = desc
+        self.paymentMethod = paymentMethod
     }
 }

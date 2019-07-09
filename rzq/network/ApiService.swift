@@ -57,13 +57,14 @@ class ApiService : NSObject {
         }
     }
     
-    static func registerUser(phoneNumber:String ,fullName : String, email : String, birthDate : String, gender : Int, completion:@escaping(_ response : RegisterResponse)-> Void) {
+    static func registerUser(phoneNumber:String ,fullName : String, email : String, birthDate : String, gender : Int,isResend : Bool, completion:@escaping(_ response : RegisterResponse)-> Void) {
         
         let all : [String : Any] = ["PhoneNumber" : phoneNumber,
                                     "FullName" : fullName,
                                     "Email" : email,
                                     "DateOfBirth" : birthDate,
-                                    "Gender" : gender]
+                                    "Gender" : gender,
+                                    "IsResend" : isResend]
         
         AFManager.request("\(Constants.BASE_URL)User/Register", method: .post, parameters: all ,encoding: JSONEncoding.default, headers: nil)
             .responseJSON { response in
@@ -1253,5 +1254,27 @@ class ApiService : NSObject {
                 }
         }
     }
+    
+    
+    static func redeemCoupon(Authorization : String, code: String, completion:@escaping(_ response : BaseResponse)-> Void) {
+        
+        let headers = [Constants.AUTH_HEADER: "bearer \(Authorization)",
+            Constants.LANG_HEADER : self.getLang()]
+        
+        AFManager.request("\(Constants.BASE_URL)Coupon/Redeem?code=\(code)", method: .get, parameters: nil ,encoding: JSONEncoding.default, headers: headers)
+            .responseJSON { response in
+                if let json = response.data {
+                    do {
+                        let decoder = JSONDecoder()
+                        let baseResponse = try decoder.decode(BaseResponse.self, from: json)
+                        completion(baseResponse)
+                    }catch let err{
+                        print(err)
+                    }
+                }
+        }
+    }
+    
+    
     
 }

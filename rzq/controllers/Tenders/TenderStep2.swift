@@ -163,7 +163,6 @@ class TenderStep2: BaseVC {
         self.navigationController?.popViewController(animated: true)
     }
     
-    
     @IBAction func clearDropLocation(_ sender: Any) {
         self.moreDetailsView.isHidden = true
         self.lblDropLocation.text = ""

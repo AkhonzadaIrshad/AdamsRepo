@@ -35,7 +35,7 @@ class OrderDetailsVC: BaseVC, UICollectionViewDelegate, UICollectionViewDataSour
     @IBOutlet weak var btnTrack: MyUIButton!
     
     @IBOutlet weak var viewChat: UIView!
-    @IBOutlet weak var btnChat: MyUIButton!
+    @IBOutlet weak var btnChat: UIButton!
     
     @IBOutlet weak var viewCancel: UIView!
     @IBOutlet weak var btnCancel: MyUIButton!
@@ -53,6 +53,11 @@ class OrderDetailsVC: BaseVC, UICollectionViewDelegate, UICollectionViewDataSour
     
     @IBOutlet weak var pickupHeight: NSLayoutConstraint!
     @IBOutlet weak var pickUpLine: UIView!
+    
+    @IBOutlet weak var viewPaymentMethod: UIView!
+    @IBOutlet weak var paymentMethodHeight: NSLayoutConstraint!
+    
+    @IBOutlet weak var lblPaymentMethod: MyUILabel!
     
     var player : AVPlayer?
     
@@ -180,6 +185,14 @@ class OrderDetailsVC: BaseVC, UICollectionViewDelegate, UICollectionViewDataSour
             viewNavigate.isHidden = true
             viewNavigateHeight.constant = 0
         }
+        
+        
+        if (self.order?.paymentMethod ?? 1 == 1) {
+           self.lblPaymentMethod.text = "cash_on_delivery".localized
+        }else {
+            self.lblPaymentMethod.text = "by_coupon".localized
+        }
+        
         
     }
     

@@ -217,6 +217,8 @@
 /* Class = "UIButton"; normalTitle = "Redeem Coupon"; ObjectID = "D09-YZ-UNF"; */
 "D09-YZ-UNF.normalTitle" = "استبدال الكوبون";
 
+"QmB-3E-dgh.text" = "طريقة الدفع";
+"j20-gq-uOE.text" = "الأرباح";
 /* Class = "UIButton"; normalTitle = "Register to this shop"; ObjectID = "D4f-fI-Nvx"; */
 "D4f-fI-Nvx.normalTitle" = "سجل في هذا المكان";
 
@@ -888,7 +890,7 @@
 "j4t-8B-U2U.text" = "اقترح متجرك او بوتيكك الخاص";
 
 /* Class = "UILabel"; text = "Profile Picture"; ObjectID = "jQw-J5-5FV"; */
-"jQw-J5-5FV.text" = "صورة الملف";
+"jQw-J5-5FV.text" = "صورة سيلفي";
 
 /* Class = "UILabel"; text = "From"; ObjectID = "jch-Wk-USi"; */
 "jch-Wk-USi.text" = "من";
@@ -930,7 +932,7 @@
 "lIr-Bg-3hH.text" = "الى";
 
 /* Class = "UILabel"; text = "Profile Picture"; ObjectID = "lTb-pK-iSq"; */
-"lTb-pK-iSq.text" = "صورة الملف";
+"lTb-pK-iSq.text" = "صورة سيلفي";
 
 /* Class = "UILabel"; text = "From"; ObjectID = "lVq-25-6ZE"; */
 "lVq-25-6ZE.text" = "الخدمات";
@@ -984,7 +986,7 @@
 "nTb-2d-iWW.text" = "يعمل ٢٤ ساعة";
 
 /* Class = "UILabel"; text = "Profile Picture"; ObjectID = "nUU-Y9-HpB"; */
-"nUU-Y9-HpB.text" = "صورة الملف";
+"nUU-Y9-HpB.text" = "صورة سيلفي";
 
 /* Class = "UILabel"; text = "Account Balance"; ObjectID = "neB-q2-PUZ"; */
 "neB-q2-PUZ.text" = "رصيد الحساب";

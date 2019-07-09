@@ -193,3 +193,9 @@
 "close_title_btn" = "اغلاق التطبيق";
 "update_title_btn" = "تحديث";
 "cancel_title_btn" = "الغاء";
+"enter_coupon" = "أدخل رقم الكوبون أولاً!";
+"coupon_added" = "تم إضافة الكوبون بنجاح.";
+
+"cash_on_delivery" = "الدفع عند الإستلام";
+"by_coupon" = "باستخدام كوبون";
+"earnings" = "الأرباح:";

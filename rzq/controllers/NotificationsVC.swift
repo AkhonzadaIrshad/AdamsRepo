@@ -74,6 +74,11 @@ class NotificationsVC: BaseViewController, UITableViewDelegate, UITableViewDataS
         
     }
     
+    func goToWorkingOrders() {
+        if (self.isProvider()) {
+        self.openViewControllerBasedOnIdentifier("WorkingOrdersVC")
+        }
+    }
     func updateNotifications() {
         self.alerts.removeAll()
         self.actions.removeAll()

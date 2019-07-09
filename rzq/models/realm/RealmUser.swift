@@ -27,6 +27,7 @@ class RealmUser : Object {
     @objc dynamic var exceeded_amount = false
     @objc dynamic var dueAmount = 0.0
     @objc dynamic var earnings = 0.0
+    @objc dynamic var balance = 0.0
     
     override static func primaryKey() -> String? {
         return "userId"

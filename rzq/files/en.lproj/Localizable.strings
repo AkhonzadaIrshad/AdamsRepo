@@ -192,3 +192,9 @@
 "close_title_btn" = "CLOSE APP";
 "update_title_btn" = "UPDATE";
 "cancel_title_btn" = "CANCEL";
+"enter_coupon" = "Enter coupon number first!";
+"coupon_added" = "Coupon added successfully";
+
+"cash_on_delivery" = "Cash on delivery";
+"by_coupon" = "By coupon";
+"earnings" = "Earnings:";

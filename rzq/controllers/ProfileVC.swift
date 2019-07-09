@@ -41,6 +41,12 @@ class ProfileVC: BaseVC {
     @IBOutlet weak var lblDueTitle: MyUILabel!
     @IBOutlet weak var dueTitleHeight: NSLayoutConstraint!
     
+    
+    @IBOutlet weak var viewEarnings: UIView!
+    @IBOutlet weak var earningsHeight: NSLayoutConstraint!
+    @IBOutlet weak var lblEarnings: MyUILabel!
+    
+    
     var user : DataProfileObj?
     
     override func viewDidLoad() {
@@ -56,6 +62,10 @@ class ProfileVC: BaseVC {
     
     override func viewDidAppear(_ animated: Bool) {
         super.viewDidAppear(animated)
+       self.loadProfileData()
+    }
+    
+    func loadProfileData() {
         self.showLoading()
         ApiService.getProfile(Authorization: self.loadUser().data?.accessToken ?? "") { (response) in
             self.hideLoading()
@@ -66,9 +76,9 @@ class ProfileVC: BaseVC {
                 let url = URL(string: "\(Constants.IMAGE_URL)\(response.dataProfileObj?.image ?? "")")
                 self.ivProfile.kf.setImage(with: url)
             }
-         
+            
             self.lblName.text = response.dataProfileObj?.fullName ?? ""
-            self.lblBalance.text = "\(response.dataProfileObj?.earnings ?? 0) \("currency".localized)"
+            self.lblBalance.text = "\(response.dataProfileObj?.balance ?? 0) \("currency".localized)"
             self.lblOrderCount.text = "\(response.dataProfileObj?.ordersCount ?? 0)"
             
             self.ratingView.rating = Double(response.dataProfileObj?.rate ?? 0)
@@ -87,15 +97,15 @@ class ProfileVC: BaseVC {
                 self.viewRegisterPRovider.isHidden = true
             }else {
                 self.ivDriverBadge.isHidden = true
-                self.viewRegisterPRovider.isHidden = true
+                self.viewRegisterPRovider.isHidden = false
             }
             
-//            if ((response.dataProfileObj?.roles?.contains("ServiceProvider"))!) {
-//                self.ivProviderBadge.isHidden = false
-//            }else {
-//                self.ivProviderBadge.isHidden = true
-//            }
-          
+            //            if ((response.dataProfileObj?.roles?.contains("ServiceProvider"))!) {
+            //                self.ivProviderBadge.isHidden = false
+            //            }else {
+            //                self.ivProviderBadge.isHidden = true
+            //            }
+            
             if ((response.dataProfileObj?.roles?.contains("Driver"))! || (response.dataProfileObj?.roles?.contains("ServiceProvider"))! ||
                 (response.dataProfileObj?.roles?.contains("TenderProvider"))!) {
                 
@@ -108,11 +118,17 @@ class ProfileVC: BaseVC {
                 let finalTotal = total / 10.0
                 self.lblDueAmount.text = "\(response.dataProfileObj?.dueAmount ?? 0.0) \("currency".localized)"
                 
+                self.viewEarnings.isHidden = false
+                self.earningsHeight.constant = 51
+                self.lblEarnings.text = "\(response.dataProfileObj?.earnings ?? 0) \("currency".localized)"
+                
             }else {
                 self.lineDueAmount.isHidden = true
                 self.dueTitleHeight.constant = 0
                 self.lblDueTitle.isHidden = true
                 self.lblDueAmount.text = ""
+                self.viewEarnings.isHidden = true
+                self.earningsHeight.constant = 0
             }
             
         }
@@ -131,6 +147,21 @@ class ProfileVC: BaseVC {
     }
     
     @IBAction func redeemCouponAction(_ sender: Any) {
+        if (edtCoupon.text?.count ?? 0 > 0) {
+            self.showLoading()
+            ApiService.redeemCoupon(Authorization: self.loadUser().data?.accessToken ?? "", code: self.edtCoupon.text ?? "") { (response) in
+                self.hideLoading()
+                if (response.errorCode ?? 0 == 0) {
+                    self.edtCoupon.text = ""
+                    self.showBanner(title: "alert".localized, message: "coupon_added".localized, style: UIColor.SUCCESS)
+                    self.loadProfileData()
+                }else {
+                       self.showBanner(title: "alert".localized, message: response.errorMessage ?? "", style: UIColor.INFO)
+                }
+            }
+        }else {
+            self.showBanner(title: "alert".localized, message: "enter_coupon".localized, style: UIColor.INFO)
+        }
     }
     
     
@@ -150,7 +181,7 @@ class ProfileVC: BaseVC {
     
     @IBAction func logoutAction(_ sender: Any) {
         self.showAlert(title: "alert".localized, message: "confirm_logout".localized, actionTitle: "logout".localized, cancelTitle: "cancel".localized, actionHandler: {
-             self.updateUser(self.getRealmUser(userProfile: VerifyResponse(data: DataClass(accessToken: "", phoneNumber: "", username: "", fullName: "", userID: "", dateOfBirth: "", profilePicture: "", email: "", gender: 0, rate: 0, roles: "", isOnline: false,exceededDueAmount: false, dueAmount: 0.0, earnings: 0.0), errorCode: 0, errorMessage: "")))
+             self.updateUser(self.getRealmUser(userProfile: VerifyResponse(data: DataClass(accessToken: "", phoneNumber: "", username: "", fullName: "", userID: "", dateOfBirth: "", profilePicture: "", email: "", gender: 0, rate: 0, roles: "", isOnline: false,exceededDueAmount: false, dueAmount: 0.0, earnings: 0.0, balance: 0.0), errorCode: 0, errorMessage: "")))
             self.deleteUsers()
             if let vc = UIStoryboard(name: "Main", bundle: nil).instantiateViewController(withIdentifier: "LoginVC") as? LoginVC
             {

@@ -80,15 +80,13 @@ class HomeMapVC: BaseViewController,LabasLocationManagerDelegate, UICollectionVi
             
         }
         
-        
         NotificationCenter.default.addObserver(self, selector: #selector(appCameToForeground), name: UIApplication.willEnterForegroundNotification, object: nil)
         
         
         self.validateDriverDueAmount()
         
-        
-        self.viewServices.isHidden = true
-        self.viewTenders.isHidden = true
+//        self.viewServices.isHidden = true
+//        self.viewTenders.isHidden = true
         
     }
     
@@ -699,8 +697,8 @@ class HomeMapVC: BaseViewController,LabasLocationManagerDelegate, UICollectionVi
                 self.dropMarker?.map = nil
                 self.viewOnTheWay.isHidden = false
                 //back to false when u want to show them
-                self.viewServices.isHidden = true
-                self.viewTenders.isHidden = true
+                self.viewServices.isHidden = false
+                self.viewTenders.isHidden = false
             }
             
         }

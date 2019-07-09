@@ -131,7 +131,7 @@ class ZHModelData: NSObject {
                         KingfisherManager.shared.retrieveImage(with: url!, options: nil, progressBlock: nil, completionHandler: { image, error, cacheType, imageURL in
                             let photoItem = ZHCPhotoMediaItem.init(image: image)
                             photoItem.appliesMediaViewMaskAsOutgoing = false
-                            let photoMessage = ZHCMessage.init(senderId: avatarId! as String, displayName: displayName! as String, media: photoItem)
+                            let photoMessage = ZHCMessage.init(senderId: avatarId! as String, displayName: model.image ?? "", media: photoItem)
                             self.messages.add(photoMessage)
                             self.delegate?.reloadChat()
                         })

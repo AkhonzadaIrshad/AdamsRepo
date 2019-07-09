@@ -39,7 +39,7 @@ class ZHCDemoMessagesViewController: ZHCMessagesViewController, BillDelegate, Ch
         case camera
     }
     
-     var hasSafeArea: Bool {
+    var hasSafeArea: Bool {
         guard #available(iOS 11.0, *), let topPadding = UIApplication.shared.keyWindow?.safeAreaInsets.top, topPadding > 24 else {
             return false
         }
@@ -66,7 +66,7 @@ class ZHCDemoMessagesViewController: ZHCMessagesViewController, BillDelegate, Ch
         // Do any additional setup after loading the view.
         self.gif = UIImageView()
         self.gif?.frame = CGRect(x: self.view.frame.midX, y: self.view.frame.midY, width: 70, height: 70)
-       self.gif?.center = self.view.center
+        self.gif?.center = self.view.center
         let gf = UIImage(gifName: "recording.gif")
         self.gif?.setGifImage(gf)
         
@@ -111,9 +111,9 @@ class ZHCDemoMessagesViewController: ZHCMessagesViewController, BillDelegate, Ch
             self.gif?.isHidden = true
             recorder.stop()
             if (recorder.time > 1) {
-               self.sendVoiceMessage()
+                self.sendVoiceMessage()
             }else {
-               
+                
             }
         }else {
             //record
@@ -143,9 +143,9 @@ class ZHCDemoMessagesViewController: ZHCMessagesViewController, BillDelegate, Ch
         self.gif?.isHidden = true
         recorder.stop()
         if (recorder.time > 1) {
-             self.sendVoiceMessage()
+            self.sendVoiceMessage()
         }else {
-           
+            
         }
     }
     
@@ -472,7 +472,7 @@ class ZHCDemoMessagesViewController: ZHCMessagesViewController, BillDelegate, Ch
         if self.presentBool {
             self.navigationItem.leftBarButtonItem = UIBarButtonItem.init(barButtonSystemItem: UIBarButtonItem.SystemItem.stop, target: self, action:#selector(closePressed))
         }
-
+        
     }
     
     override func didReceiveMemoryWarning() {
@@ -499,18 +499,6 @@ class ZHCDemoMessagesViewController: ZHCMessagesViewController, BillDelegate, Ch
         return self.demoData.messages.object(at: indexPath.row) as! ZHCMessageData;
     }
     
-    //    override func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
-    //         let message: ZHCMessage = self.demoData.messages.object(at: indexPath.row) as! ZHCMessage;
-    //        if (message.isMediaMessage) {
-    //            var images = [String]()
-    //            let str = message.media.mediaData?() as? String ?? ""
-    //            images.append(str)
-    //            if let vc = UIStoryboard(name: "Main", bundle: nil).instantiateViewController(withIdentifier: "ImageSliderVC") as? ImageSliderVC
-    //            {
-    //                self.navigationController?.pushViewController(vc, animated: true)
-    //            }
-    //        }
-    //    }
     
     override func tableView(_ tableView: UITableView, didDeselectRowAt indexPath: IndexPath) {
         self.demoData.messages.removeObject(at: indexPath.row);
@@ -619,6 +607,18 @@ class ZHCDemoMessagesViewController: ZHCMessagesViewController, BillDelegate, Ch
     
     override func tableView(_ tableView: ZHCMessagesTableView, didTapMessageBubbleAt indexPath: IndexPath) {
         super.tableView(tableView, didTapMessageBubbleAt: indexPath);
+        let message: ZHCMessage = self.demoData.messages.object(at: indexPath.row) as! ZHCMessage;
+        if (message.isMediaMessage) {
+            var images = [String]()
+           // let str = message.media.mediaData?() as? String ?? ""
+            let str = message.senderDisplayName
+            images.append(str)
+            if let vc = UIStoryboard(name: "Main", bundle: nil).instantiateViewController(withIdentifier: "ImageSliderVC") as? ImageSliderVC
+            {
+                vc.orderImages = images
+                self.navigationController?.pushViewController(vc, animated: true)
+            }
+        }
     }
     
     override func tableView(_ tableView: ZHCMessagesTableView, performAction action: Selector, forcellAt indexPath: IndexPath, withSender sender: Any?) {

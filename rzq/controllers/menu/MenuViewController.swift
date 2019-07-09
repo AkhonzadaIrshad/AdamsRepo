@@ -37,6 +37,8 @@ class MenuViewController: BaseVC {
     
     @IBOutlet weak var lblDue: UILabel!
     
+    @IBOutlet weak var lblEarnings: UILabel!
+    
     
     var selectedTag = 1
     
@@ -81,18 +83,24 @@ class MenuViewController: BaseVC {
         
         self.lblBalance.font = UIFont(name: Constants.ARABIC_FONT_SEMIBOLD, size: 12)
         self.lblDue.font = UIFont(name: Constants.ARABIC_FONT_SEMIBOLD, size: 12)
+        self.lblEarnings.font = UIFont(name: Constants.ARABIC_FONT_SEMIBOLD, size: 12)
         
-        self.lblBalance.text = "\("account_balance".localized) \(user.data?.earnings ?? 0.0) \("currency".localized)"
+        self.lblBalance.text = "\("account_balance".localized) \(user.data?.balance ?? 0.0) \("currency".localized)"
+      
         
         if (self.isProvider()) {
             self.lblDue.isHidden = false
+            self.lblEarnings.isHidden = false
             let balance = self.loadUser().data?.earnings ?? 0.0
             let perc = App.shared.config?.configSettings?.percentage ?? 0.0
             let total = balance * perc
             let finalTotal = total / 10.0
-              self.lblDue.text = "\("due".localized) \(user.data?.dueAmount ?? 0.0) \("currency".localized)"
+            self.lblDue.text = "\("due".localized) \(user.data?.dueAmount ?? 0.0) \("currency".localized)"
+            
+            self.lblEarnings.text = "\("earnings".localized) \(user.data?.earnings ?? 0.0) \("currency".localized)"
         }else {
             self.lblDue.isHidden = true
+            self.lblEarnings.isHidden = true
         }
       
         let urlStr = user.data?.profilePicture ?? ""
@@ -230,13 +238,13 @@ class MenuViewController: BaseVC {
         if (sender.isOn) {
             ApiService.goOnline(Authorization: self.loadUser().data?.accessToken ?? "") { (response) in
                 self.hideLoading()
-                self.updateUser(self.getRealmUser(userProfile: VerifyResponse(data: DataClass(accessToken: self.loadUser().data?.accessToken ?? "", phoneNumber: self.loadUser().data?.phoneNumber ?? "", username: self.loadUser().data?.username ?? "", fullName: self.loadUser().data?.fullName ?? "", userID: self.loadUser().data?.userID ?? "", dateOfBirth: self.loadUser().data?.dateOfBirth ?? "", profilePicture: self.loadUser().data?.profilePicture ?? "", email: self.loadUser().data?.email ?? "", gender: self.loadUser().data?.gender ?? 1, rate: self.loadUser().data?.rate ?? 0, roles: self.loadUser().data?.roles ?? "", isOnline: true,exceededDueAmount: self.loadUser().data?.exceededDueAmount ?? false,dueAmount: self.loadUser().data?.dueAmount ?? 0.0, earnings: self.loadUser().data?.earnings ?? 0.0), errorCode: 0, errorMessage: "")))
+                self.updateUser(self.getRealmUser(userProfile: VerifyResponse(data: DataClass(accessToken: self.loadUser().data?.accessToken ?? "", phoneNumber: self.loadUser().data?.phoneNumber ?? "", username: self.loadUser().data?.username ?? "", fullName: self.loadUser().data?.fullName ?? "", userID: self.loadUser().data?.userID ?? "", dateOfBirth: self.loadUser().data?.dateOfBirth ?? "", profilePicture: self.loadUser().data?.profilePicture ?? "", email: self.loadUser().data?.email ?? "", gender: self.loadUser().data?.gender ?? 1, rate: self.loadUser().data?.rate ?? 0, roles: self.loadUser().data?.roles ?? "", isOnline: true,exceededDueAmount: self.loadUser().data?.exceededDueAmount ?? false,dueAmount: self.loadUser().data?.dueAmount ?? 0.0, earnings: self.loadUser().data?.earnings ?? 0.0,balance: self.loadUser().data?.balance ?? 0.0), errorCode: 0, errorMessage: "")))
                 self.moodSwitch.isOn = true
             }
         }else {
             ApiService.goOffline(Authorization: self.loadUser().data?.accessToken ?? "") { (response) in
                 self.hideLoading()
-                    self.updateUser(self.getRealmUser(userProfile: VerifyResponse(data: DataClass(accessToken: self.loadUser().data?.accessToken ?? "", phoneNumber: self.loadUser().data?.phoneNumber ?? "", username: self.loadUser().data?.username ?? "", fullName: self.loadUser().data?.fullName ?? "", userID: self.loadUser().data?.userID ?? "", dateOfBirth: self.loadUser().data?.dateOfBirth ?? "", profilePicture: self.loadUser().data?.profilePicture ?? "", email: self.loadUser().data?.email ?? "", gender: self.loadUser().data?.gender ?? 1, rate: self.loadUser().data?.rate ?? 0, roles: self.loadUser().data?.roles ?? "", isOnline: false,exceededDueAmount: self.loadUser().data?.exceededDueAmount ?? false,dueAmount: self.loadUser().data?.dueAmount ?? 0.0, earnings: self.loadUser().data?.earnings ?? 0.0), errorCode: 0, errorMessage: "")))
+                    self.updateUser(self.getRealmUser(userProfile: VerifyResponse(data: DataClass(accessToken: self.loadUser().data?.accessToken ?? "", phoneNumber: self.loadUser().data?.phoneNumber ?? "", username: self.loadUser().data?.username ?? "", fullName: self.loadUser().data?.fullName ?? "", userID: self.loadUser().data?.userID ?? "", dateOfBirth: self.loadUser().data?.dateOfBirth ?? "", profilePicture: self.loadUser().data?.profilePicture ?? "", email: self.loadUser().data?.email ?? "", gender: self.loadUser().data?.gender ?? 1, rate: self.loadUser().data?.rate ?? 0, roles: self.loadUser().data?.roles ?? "", isOnline: false,exceededDueAmount: self.loadUser().data?.exceededDueAmount ?? false,dueAmount: self.loadUser().data?.dueAmount ?? 0.0, earnings: self.loadUser().data?.earnings ?? 0.0,balance: self.loadUser().data?.balance ?? 0.0), errorCode: 0, errorMessage: "")))
                 self.moodSwitch.isOn = false
             }
         }
