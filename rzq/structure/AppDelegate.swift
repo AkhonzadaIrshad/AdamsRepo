@@ -60,8 +60,8 @@ class AppDelegate: UIResponder, UIApplicationDelegate, MOLHResetable,MessagingDe
         
         application.registerForRemoteNotifications()
         
-        //branch
         
+        //branch
         // Branch.setUseTestBranchKey(true)
         // listener for Branch Deep Link data
         Branch.getInstance().initSession(launchOptions: launchOptions) { (params, error) in
@@ -95,14 +95,14 @@ class AppDelegate: UIResponder, UIApplicationDelegate, MOLHResetable,MessagingDe
                 if oldSchemaVersion < 1 {
                     
                     // if just the name of your model's property changed you can do this
-//                    migration.renameProperty(onType: NotSureItem.className(), from: "text", to: "title")
-//
-//                    // if you want to fill a new property with some values you have to enumerate
-//                    // the existing objects and set the new value
-//                    migration.enumerateObjects(ofType: NotSureItem.className()) { oldObject, newObject in
-//                        let text = oldObject!["text"] as! String
-//                        newObject!["textDescription"] = "The title is \(text)"
-//                    }
+                    //                    migration.renameProperty(onType: NotSureItem.className(), from: "text", to: "title")
+                    //
+                    //                    // if you want to fill a new property with some values you have to enumerate
+                    //                    // the existing objects and set the new value
+                    //                    migration.enumerateObjects(ofType: NotSureItem.className()) { oldObject, newObject in
+                    //                        let text = oldObject!["text"] as! String
+                    //                        newObject!["textDescription"] = "The title is \(text)"
+                    //                    }
                     
                     // if you added a new property or removed a property you don't
                     // have to do anything because Realm automatically detects that
@@ -319,8 +319,8 @@ class AppDelegate: UIResponder, UIApplicationDelegate, MOLHResetable,MessagingDe
         if state == .background {
             scheduleNotifications(title: title , message: body,type: type,itemId: itemId)
         } else if state == .active {
-                self.updateChat()
-                self.updateNotifications()
+            self.updateChat()
+            self.updateNotifications()
             if (notificationType == "3" || notificationType == "14") {
                 self.goToNotifications()
             }
@@ -331,9 +331,11 @@ class AppDelegate: UIResponder, UIApplicationDelegate, MOLHResetable,MessagingDe
                 self.loadTracks()
             }
             if (notificationType == "6" || notificationType == "15") {
+                let orderIdStr = userInfo["OrderId"] as? String ?? "0"
+                UserDefaults.standard.setValue(Int(orderIdStr), forKey: Constants.BID_ACCEPTED_ORDER)
                 self.openWorkingOrders()
             }
-                self.showBanner(title: title, message: body, style: UIColor.colorPrimary)
+            self.showBanner(title: title, message: body, style: UIColor.colorPrimary)
             
             
             if (notificationType != "11") {
@@ -350,7 +352,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate, MOLHResetable,MessagingDe
     }
     
     func showBanner(title:String, message:String,style: UIColor) {
-      
+        
         let banner = Banner(title: title, subtitle: message, image: nil, backgroundColor: style)
         banner.dismissesOnTap = true
         banner.textColor = UIColor.white
@@ -370,7 +372,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate, MOLHResetable,MessagingDe
     func scheduleNotifications(title : String, message : String, type : String, itemId : String) {
         
         if (type != "11") {
-          self.updateNotificationCount()
+            self.updateNotificationCount()
         }
         
         let requestIdentifier = "Notification"
@@ -691,7 +693,7 @@ extension UIColor {
         return #colorLiteral(red: 0.1450980392, green: 0.1098039216, blue: 0.3725490196, alpha: 1)
     }
     static var appDarkBlue:UIColor {
-          return #colorLiteral(red: 0.2431372549, green: 0.05490196078, blue: 0.4039215686, alpha: 1)
+        return #colorLiteral(red: 0.2431372549, green: 0.05490196078, blue: 0.4039215686, alpha: 1)
     }
     static var appLightGray:UIColor {
         return #colorLiteral(red: 0.7333333333, green: 0.7333333333, blue: 0.7333333333, alpha: 1)
@@ -758,7 +760,7 @@ extension UIColor {
 extension UIButton {
     open override func touchesBegan(_ touches: Set<UITouch>, with event: UIEvent?) {
         super.touchesBegan(touches, with: event)
-         if ((self.restorationIdentifier?.contains(find: "dont_touch") ?? false) == false) {
+        if ((self.restorationIdentifier?.contains(find: "dont_touch") ?? false) == false) {
             let colorAnimation = CABasicAnimation(keyPath: "backgroundColor")
             colorAnimation.fromValue = UIColor.appLightGray.cgColor
             colorAnimation.duration = 1  // animation duration
@@ -784,7 +786,7 @@ extension UIImageView {
 
 extension UIView {
     
- 
+    
     class func fromNib<T: UIView>() -> T {
         return Bundle.main.loadNibNamed(String(describing: T.self), owner: nil, options: nil)![0] as! T
     }

@@ -33,6 +33,8 @@ class ZHCDemoMessagesViewController: ZHCMessagesViewController, BillDelegate, Ch
     
     var bottomMargin = 0.0
     
+    var sendWelcomeMessage : Bool?
+    
     var imagePicker: UIImagePickerController!
     enum ImageSource {
         case photoLibrary
@@ -59,7 +61,7 @@ class ZHCDemoMessagesViewController: ZHCMessagesViewController, BillDelegate, Ch
         
         if (self.isProvider() && self.user?.data?.userID == self.order?.providerID) {
             self.setupFloating()
-        }else if (self.order?.status != Constants.ORDER_ON_THE_WAY) {
+        }else {
             self.setupUserFloating()
         }
         
@@ -79,6 +81,17 @@ class ZHCDemoMessagesViewController: ZHCMessagesViewController, BillDelegate, Ch
             self.bottomMargin = 20.0
         }else {
             self.bottomMargin = 0.0
+        }
+        
+        if (self.sendWelcomeMessage ?? false) {
+            ApiService.sendChatMessage(Authorization: self.user?.data?.accessToken ?? "", chatId: self.order?.chatId ?? 0, type: 1, message: "اهلا وسهلا, يسرني أن أقوم بخدمتك.. والآن انا متوجه لأخذ طلبك يمكنك تتبع المسار عند اصدار الفاتوره..\n\n\nWelcome, I'm happy to serve you, I'm on my way to take your order, you can track your order when i pick it up.\n", image: "", voice: "") { (response) in
+                if (response.errorCode == 0) {
+                    SVProgressHUD.dismiss()
+                    let message: ZHCMessage = ZHCMessage.init(senderId: self.user?.data?.userID ?? "", senderDisplayName: self.user?.data?.fullName ?? "", date: Date(), text: "اهلا وسهلا, يسرني أن أقوم بخدمتك.. والآن انا متوجه لأخذ طلبك يمكنك تتبع المسار عند اصدار الفاتوره..\n\n\nWelcome, I'm happy to serve you, I'm on my way to take your order, you can track your order when i pick it up.\n")
+                    self.demoData.messages.add(message)
+                    self.finishSendingMessage(animated: true)
+                }
+            }
         }
     }
     
@@ -161,14 +174,24 @@ class ZHCDemoMessagesViewController: ZHCMessagesViewController, BillDelegate, Ch
         
     }
     
+//    func removeCancel() {
+//        self.order?.status = Constants.ORDER_ON_THE_WAY
+//        if (self.isProvider() && self.user?.data?.userID == self.order?.providerID) {
+//            self.setupFloating()
+//        }else if (self.order?.status == Constants.ORDER_ON_THE_WAY) {
+//            self.actionButton?.removeFromSuperview()
+//        }
+//    }
+    
     func removeCancel() {
         self.order?.status = Constants.ORDER_ON_THE_WAY
         if (self.isProvider() && self.user?.data?.userID == self.order?.providerID) {
             self.setupFloating()
-        }else if (self.order?.status == Constants.ORDER_ON_THE_WAY) {
-            self.actionButton?.removeFromSuperview()
+        }else {
+            self.setupUserFloating()
         }
     }
+    
     
     func reloadChat() {
         self.messageTableView?.reloadData()
@@ -210,6 +233,25 @@ class ZHCDemoMessagesViewController: ZHCMessagesViewController, BillDelegate, Ch
             })
             
         }
+        
+        if (self.isProvider() && self.user?.data?.userID == self.order?.providerID) {
+          
+        }else {
+            if (self.order?.status == Constants.ORDER_ON_THE_WAY) {
+                let item0 = self.driverActionButton?.addItem()
+                item0?.titleLabel.text = "track_order".localized
+                item0?.titleLabel.font = UIFont(name: self.getFontName(), size: 13)
+                item0?.imageView.image = UIImage(named: "chat_track")
+                item0?.buttonColor = UIColor.appLogoColor
+                item0?.buttonImageColor = .white
+                item0?.action = { item in
+                    self.goToHome()
+                }
+            }
+           
+        }
+        
+        
         
         let item2 = self.driverActionButton?.addItem()
         if (self.order?.status == Constants.ORDER_PROCESSING) {
@@ -309,29 +351,59 @@ class ZHCDemoMessagesViewController: ZHCMessagesViewController, BillDelegate, Ch
         }
     }
     
+    func goToHome() {
+        let mainStoryboardIpad : UIStoryboard = UIStoryboard(name: "Main", bundle: nil)
+        let initialViewControlleripad : UIViewController = mainStoryboardIpad.instantiateViewController(withIdentifier: "MapNavigationController") as! UINavigationController
+        
+        self.present(initialViewControlleripad, animated: true, completion: {})
+    }
+    
     func setupUserFloating() {
         self.actionButton?.removeFromSuperview()
         self.actionButton = JJFloatingActionButton()
         
         
-        let item = actionButton?.addItem()
-        item?.titleLabel.text = "cancel_order".localized
-        item?.titleLabel.font = UIFont(name: self.getFontName(), size: 13)
-        item?.imageView.image = UIImage(named: "chat_cancelorder")
-        item?.buttonColor = UIColor.appLogoColor
-        item?.buttonImageColor = .white
-        item?.action = { item in
+        if (self.order?.status != Constants.ORDER_ON_THE_WAY) {
+            let item = actionButton?.addItem()
+            item?.titleLabel.text = "cancel_order".localized
+            item?.titleLabel.font = UIFont(name: self.getFontName(), size: 13)
+            item?.imageView.image = UIImage(named: "chat_cancelorder")
+            item?.buttonColor = UIColor.appLogoColor
+            item?.buttonImageColor = .white
+            item?.action = { item in
+                
+                //cancel order
+                self.showAlert(title: "alert".localized, message: "confirm_cancel_delivery".localized, actionTitle: "yes".localized, cancelTitle: "no".localized, actionHandler: {
+                    if (self.isProvider() && self.user?.data?.userID == self.order?.providerID) {
+                        self.cancelDeliveryByDriver()
+                    }else {
+                        self.cancelDeliveryByUser()
+                    }
+                })
+                
+            }
+        }
+        
+        
+        
+        if (self.isProvider() && self.user?.data?.userID == self.order?.providerID) {
             
-            //cancel order
-            self.showAlert(title: "alert".localized, message: "confirm_cancel_delivery".localized, actionTitle: "yes".localized, cancelTitle: "no".localized, actionHandler: {
-                if (self.isProvider() && self.user?.data?.userID == self.order?.providerID) {
-                    self.cancelDeliveryByDriver()
-                }else {
-                    self.cancelDeliveryByUser()
+        }else {
+            if (self.order?.status == Constants.ORDER_ON_THE_WAY) {
+                let item0 = self.actionButton?.addItem()
+                item0?.titleLabel.text = "track_order".localized
+                item0?.titleLabel.font = UIFont(name: self.getFontName(), size: 13)
+                item0?.imageView.image = UIImage(named: "chat_track")
+                item0?.buttonColor = UIColor.appLogoColor
+                item0?.buttonImageColor = .white
+                item0?.action = { item in
+                    self.goToHome()
                 }
-            })
+            }
             
         }
+        
+
         
         self.actionButton?.buttonColor = UIColor.appLogoColor
         self.actionButton?.shadowColor = UIColor.blue
@@ -610,7 +682,7 @@ class ZHCDemoMessagesViewController: ZHCMessagesViewController, BillDelegate, Ch
         let message: ZHCMessage = self.demoData.messages.object(at: indexPath.row) as! ZHCMessage;
         if (message.isMediaMessage) {
             var images = [String]()
-           // let str = message.media.mediaData?() as? String ?? ""
+            // let str = message.media.mediaData?() as? String ?? ""
             let str = message.senderDisplayName
             images.append(str)
             if let vc = UIStoryboard(name: "Main", bundle: nil).instantiateViewController(withIdentifier: "ImageSliderVC") as? ImageSliderVC

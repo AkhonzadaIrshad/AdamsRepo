@@ -330,6 +330,7 @@ class DeliveryStep1: BaseVC,LabasLocationManagerDelegate, Step2Delegate {
     }
     
     @IBAction func backAction(_ sender: Any) {
+        UserDefaults.standard.setValue(true, forKey: Constants.OPEN_MENU)
         if (fromHome ?? false) {
             self.navigationController?.popViewController(animated: true)
         }else {

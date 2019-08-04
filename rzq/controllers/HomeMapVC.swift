@@ -94,6 +94,12 @@ class HomeMapVC: BaseViewController,LabasLocationManagerDelegate, UICollectionVi
         super.viewDidAppear(animated)
         self.checkForDeepLinkValues()
         self.handleNotification()
+        
+        let openMenu = UserDefaults.standard.value(forKey: Constants.OPEN_MENU) as? Bool ?? false
+        if (openMenu) {
+            UserDefaults.standard.setValue(false, forKey: Constants.OPEN_MENU)
+            self.onSlideMenuButtonPressed(self.btnMenu)
+        }
     }
     
     func checkForDeepLinkValues() {
@@ -322,6 +328,7 @@ class HomeMapVC: BaseViewController,LabasLocationManagerDelegate, UICollectionVi
             }
         }
     }
+    
     
     func scrollViewDidEndDecelerating(_ scrollView: UIScrollView) {
         scrollToNearestVisibleCollectionViewCell()
@@ -846,7 +853,7 @@ class HomeMapVC: BaseViewController,LabasLocationManagerDelegate, UICollectionVi
                             }
                         }
                         
-                        if let country = address.country {
+                        if let country = address.country { 
                             if strSubTitle.characters.count > 0 {
                                 strSubTitle = "\(strSubTitle), \(country)"
                             }

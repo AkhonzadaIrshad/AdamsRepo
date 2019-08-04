@@ -77,8 +77,29 @@ class NotificationsVC: BaseViewController, UITableViewDelegate, UITableViewDataS
     func goToWorkingOrders() {
         if (self.isProvider()) {
         self.openViewControllerBasedOnIdentifier("WorkingOrdersVC")
+            
+            let itemId = UserDefaults.standard.value(forKey: Constants.BID_ACCEPTED_ORDER) as? Int ?? 0
+            
+            ApiService.getDelivery(id: itemId) { (response) in
+                DispatchQueue.main.async {
+                    let messagesVC: ZHCDemoMessagesViewController = ZHCDemoMessagesViewController.init()
+                    messagesVC.presentBool = true
+                    
+                    let order = DatumDel(id: response.data?.id ?? 0, title: response.data?.title ?? "", status: response.data?.status ?? 0, statusString: response.data?.statusString ?? "", image: "", createdDate: response.data?.createdDate ?? "", chatId: response.data?.chatId ?? 0, fromAddress: response.data?.fromAddress ?? "", fromLatitude: response.data?.fromLatitude ?? 0.0, fromLongitude: response.data?.fromLongitude ?? 0.0, toAddress: response.data?.toAddress ?? "", toLatitude: response.data?.toLatitude ?? 0.0, toLongitude: response.data?.toLongitude ?? 0.0, providerID: response.data?.driverId, providerName: "", providerImage: "", providerRate: 0, time: response.data?.time ?? 0, price: response.data?.cost ?? 0.0, serviceName: "")
+                    
+                    
+                    messagesVC.order = order
+                    messagesVC.user = self.loadUser()
+                    messagesVC.sendWelcomeMessage = true
+                    let nav: UINavigationController = UINavigationController.init(rootViewController: messagesVC)
+                    self.navigationController?.present(nav, animated: true, completion: nil)
+                }
+            }
+            
+            
         }
     }
+    
     func updateNotifications() {
         self.alerts.removeAll()
         self.actions.removeAll()

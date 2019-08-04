@@ -159,6 +159,7 @@ class TenderStep1: BaseVC, UICollectionViewDelegate, UICollectionViewDataSource,
     
     
     @IBAction func backAction(_ sender: Any) {
+        UserDefaults.standard.setValue(true, forKey: Constants.OPEN_MENU)
         self.navigationController?.popViewController(animated: true)
     }
     
