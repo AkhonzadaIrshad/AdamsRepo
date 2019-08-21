@@ -9,7 +9,7 @@
 import Foundation
 import UIKit
 
-@IBDesignable
+//@IBDesignable
 class FormTextField: UITextField {
     
     @IBInspectable var borderColor: UIColor? {

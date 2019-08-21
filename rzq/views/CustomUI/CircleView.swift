@@ -8,7 +8,7 @@
 
 import UIKit
 
-@IBDesignable
+//@IBDesignable
 class CircleView: UIView {
     override func layoutSubviews() {
         super.layoutSubviews()

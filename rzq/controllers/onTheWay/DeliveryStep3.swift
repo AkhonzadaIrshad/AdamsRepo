@@ -55,6 +55,8 @@ class DeliveryStep3: BaseVC, UINavigationControllerDelegate, ImagePickerDelegate
     
     var longitude : Double?
     
+    var orderModel : OTWOrder?
+    
     var delegate : Step3Delegate?
 
     @IBOutlet weak var btnRecord: UIButton!
@@ -63,7 +65,7 @@ class DeliveryStep3: BaseVC, UINavigationControllerDelegate, ImagePickerDelegate
     
     var selectedTime : Int?
     
-    var orderModel : OTWOrder?
+    
     
     var selectedRoute: NSDictionary!
     

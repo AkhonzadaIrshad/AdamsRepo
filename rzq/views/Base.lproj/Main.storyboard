@@ -12,10 +12,10 @@
     <customFonts key="customFonts">
         <array key="arabic_regular.ttf">
             <string>Cairo-Regular</string>
-            <string>Tajawal-Regular</string>
         </array>
         <array key="arabic_semibold.ttf">
             <string>Tajawal-Medium</string>
+            <string>Tajawal-Regular</string>
         </array>
         <array key="english_regular.otf">
             <string>SFProDisplay-Regular</string>

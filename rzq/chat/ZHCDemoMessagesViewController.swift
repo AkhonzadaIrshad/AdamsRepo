@@ -90,6 +90,8 @@ class ZHCDemoMessagesViewController: ZHCMessagesViewController, BillDelegate, Ch
                     let message: ZHCMessage = ZHCMessage.init(senderId: self.user?.data?.userID ?? "", senderDisplayName: self.user?.data?.fullName ?? "", date: Date(), text: "اهلا وسهلا, يسرني أن أقوم بخدمتك.. والآن انا متوجه لأخذ طلبك يمكنك تتبع المسار عند اصدار الفاتوره..\n\n\nWelcome, I'm happy to serve you, I'm on my way to take your order, you can track your order when i pick it up.\n")
                     self.demoData.messages.add(message)
                     self.finishSendingMessage(animated: true)
+                }else {
+                    self.closeChat()
                 }
             }
         }
@@ -732,6 +734,8 @@ class ZHCDemoMessagesViewController: ZHCMessagesViewController, BillDelegate, Ch
                 let message: ZHCMessage = ZHCMessage.init(senderId: senderId, senderDisplayName: senderDisplayName, date: date, text: text)
                 self.demoData.messages.add(message)
                 self.finishSendingMessage(animated: true)
+            }else {
+                self.closeChat()
             }
         }
     }

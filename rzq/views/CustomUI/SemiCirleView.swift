@@ -8,7 +8,7 @@
 
 import UIKit
 
-@IBDesignable
+//@IBDesignable
 class SemiCirleView: UIView {
     
     var semiCirleLayer: CAShapeLayer!

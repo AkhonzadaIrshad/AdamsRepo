@@ -491,12 +491,12 @@ class OrderDetailsVC: BaseVC, UICollectionViewDelegate, UICollectionViewDataSour
     
     
     @IBAction func navigateToShopAction(_ sender: Any) {
-        self.startNavigation(longitude: self.order?.fromLatitude ?? 0.0, latitude: self.order?.fromLongitude ?? 0.0)
+        self.startNavigation(longitude: self.order?.fromLongitude ?? 0.0, latitude: self.order?.fromLatitude ?? 0.0)
     }
     
     
     @IBAction func navigateToClientAction(_ sender: Any) {
-        self.startNavigation(longitude: self.order?.toLatitude ?? 0.0, latitude: self.order?.toLongitude ??  0.0)
+        self.startNavigation(longitude: self.order?.toLongitude ?? 0.0, latitude: self.order?.toLatitude ??  0.0)
     }
     
     
