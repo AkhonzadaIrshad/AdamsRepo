@@ -49,6 +49,8 @@ class ShopDetailsVC: BaseVC, UITableViewDelegate, UITableViewDataSource, UIColle
     
     @IBOutlet weak var segmentHeight: NSLayoutConstraint!
     
+    @IBOutlet weak var ivEdit: UIButton!
+    
     var currentZoom: Float = 0.0
     var gMap : GMSMapView?
     
@@ -125,6 +127,12 @@ class ShopDetailsVC: BaseVC, UITableViewDelegate, UITableViewDataSource, UIColle
         }else {
             self.collectionViewHright.constant = 0
             self.lblImages.isHidden = true
+        }
+        
+        if (self.shop?.ownerId?.elementsEqual(self.loadUser().data?.userID ?? "") ?? false) {
+            self.ivEdit.isHidden = false
+        }else {
+            self.ivEdit.isHidden = true
         }
         
     }
@@ -390,6 +398,17 @@ class ShopDetailsVC: BaseVC, UITableViewDelegate, UITableViewDataSource, UIColle
             }else {
                  self.showBanner(title: "alert".localized, message: response.errorMessage ?? "", style: UIColor.INFO)
             }
+        }
+    }
+    
+    
+    @IBAction func editShopAction(_ sender: Any) {
+        if let vc = UIStoryboard(name: "Main", bundle: nil).instantiateViewController(withIdentifier: "EditShopVC") as? EditShopVC
+        {
+            vc.shop = self.shop
+            vc.latitude = self.latitude ?? 0.0
+            vc.longitude = self.longitude ?? 0.0
+            self.navigationController?.pushViewController(vc, animated: true)
         }
     }
     

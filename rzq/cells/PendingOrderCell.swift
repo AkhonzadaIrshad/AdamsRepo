@@ -25,6 +25,8 @@ class PendingOrderCell: UICollectionViewCell {
     
     @IBOutlet weak var lblPayment: MyUILabel!
     
+    @IBOutlet weak var ivDot: UIImageView!
+    
     var onChat : (() -> Void)? = nil
     
     @IBAction func chatAction(_ sender: Any) {

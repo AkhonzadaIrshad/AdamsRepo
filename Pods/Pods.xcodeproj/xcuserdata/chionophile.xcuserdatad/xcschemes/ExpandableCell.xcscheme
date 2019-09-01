@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <Scheme
-   LastUpgradeVersion = "0930"
+   LastUpgradeVersion = "1100"
    version = "1.3">
    <BuildAction
       parallelizeBuildables = "YES"
@@ -14,10 +14,10 @@
             buildForArchiving = "YES">
             <BuildableReference
                BuildableIdentifier = "primary"
-               BlueprintIdentifier = "8D8CA33CED278A55C6B9E79BD3642E03"
+               BlueprintIdentifier = "F1AF3B7650BDFBF8B76B95E5E445176F"
+               BuildableName = "ExpandableCell.framework"
                BlueprintName = "ExpandableCell"
-               ReferencedContainer = "container:Pods.xcodeproj"
-               BuildableName = "ExpandableCell.framework">
+               ReferencedContainer = "container:Pods.xcodeproj">
             </BuildableReference>
          </BuildActionEntry>
       </BuildActionEntries>

@@ -88,7 +88,35 @@ class HomeMapVC: BaseViewController,LabasLocationManagerDelegate, UICollectionVi
         self.viewServices.isHidden = true
         self.viewTenders.isHidden = true
         
+        
+        if (self.isProvider()) {
+            self.getDriverOnGoingDeliveries()
+        }
+        
     }
+    
+    func getDriverOnGoingDeliveries() {
+        self.showLoading()
+        ApiService.getDriverOnGoingDeliveries(Authorization: self.loadUser().data?.accessToken ?? "") { (response) in
+            self.hideLoading()
+            for item in response.data ?? [DatumDriverDel]() {
+                if (item.time ?? 0 <= 1) {
+                    DispatchQueue.main.async {
+                        let messagesVC: ZHCDemoMessagesViewController = ZHCDemoMessagesViewController.init()
+                        messagesVC.presentBool = true
+                        
+                        let dumOrder = DatumDel(id: item.id ?? 0, title: item.title ?? "", status: item.status ?? 0, statusString: item.statusString ?? "", image: item.image ?? "", createdDate: item.createdDate ?? "", chatId: item.chatId ?? 0, fromAddress: item.fromAddress ?? "", fromLatitude: item.fromLatitude ?? 0.0, fromLongitude: item.fromLongitude ?? 0.0, toAddress: item.toAddress ?? "", toLatitude: item.toLatitude ?? 0.0, toLongitude: item.toLongitude ?? 0.0, providerID: item.providerID ?? "", providerName: item.providerName ?? "", providerImage: item.providerImage ?? "", providerRate: item.providerRate ?? 0.0, time: item.time ?? 0, price: item.price ?? 0.0, serviceName: item.serviceName ?? "")
+                        
+                        messagesVC.order = dumOrder
+                        messagesVC.user = self.loadUser()
+                        let nav: UINavigationController = UINavigationController.init(rootViewController: messagesVC)
+                        self.navigationController?.present(nav, animated: true, completion: nil)
+                    }
+                }
+            }
+        }
+    }
+    
     
     override func viewDidAppear(_ animated: Bool) {
         super.viewDidAppear(animated)
@@ -100,12 +128,18 @@ class HomeMapVC: BaseViewController,LabasLocationManagerDelegate, UICollectionVi
             UserDefaults.standard.setValue(false, forKey: Constants.OPEN_MENU)
             self.onSlideMenuButtonPressed(self.btnMenu)
         }
+        
+//        let notificationsCount = UserDefaults.standard.value(forKey: Constants.NOTIFICATION_COUNT) as? Int ?? 0
+//        if (notificationsCount > 0) {
+//            self.openViewControllerBasedOnIdentifier("NotificationsVC")
+//        }
+        
     }
     
     func checkForDeepLinkValues() {
         if (App.shared.deepLinkShopId != nil && Int(App.shared.deepLinkShopId ?? "0") ?? 0 > 0) {
             //open shop
-            ApiService.getShopDetails(id: Int(App.shared.deepLinkShopId ?? "0")!) { (response) in
+            ApiService.getShopDetails(Authorization: self.loadUser().data?.accessToken ?? "", id: Int(App.shared.deepLinkShopId ?? "0")!) { (response) in
                 if let vc = UIStoryboard(name: "Main", bundle: nil).instantiateViewController(withIdentifier: "ShopDetailsVC") as? ShopDetailsVC
                 {
                     vc.latitude = self.latitude ?? 0.0
@@ -307,6 +341,13 @@ class HomeMapVC: BaseViewController,LabasLocationManagerDelegate, UICollectionVi
         let visibleIndexPath = self.collectionView.indexPathForItem(at: visiblePoint)
         let cell = self.collectionView.cellForItem(at: visibleIndexPath!) as! PendingOrderCell
         
+        let count = UserDefaults.standard.value(forKey: Constants.NOTIFICATION_CHAT_COUNT) as? Int ?? 0
+        if (count > 0) {
+            cell.ivDot.isHidden = false
+        }else {
+           cell.ivDot.isHidden = true
+        }
+        
         let item = self.items[(visibleIndexPath?.row)!]
         ApiService.getOrderLocation(Authorization: self.loadUser().data?.accessToken ?? "", deliveryId: item.id ?? 0) { (response) in
             let myLatLng = CLLocation(latitude: self.latitude ?? 0.0, longitude: self.longitude ?? 0.0)
@@ -372,6 +413,13 @@ class HomeMapVC: BaseViewController,LabasLocationManagerDelegate, UICollectionVi
     
     func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
         let cell: PendingOrderCell = collectionView.dequeueReusableCell(withReuseIdentifier: "pendingordercell", for: indexPath as IndexPath) as! PendingOrderCell
+        
+        let count = UserDefaults.standard.value(forKey: Constants.NOTIFICATION_CHAT_COUNT) as? Int ?? 0
+        if (count > 0) {
+            cell.ivDot.isHidden = false
+        }else {
+            cell.ivDot.isHidden = true
+        }
         
         let item = self.items[indexPath.row]
         let url = URL(string: "\(Constants.IMAGE_URL)\(item.providerImage ?? "")")
@@ -591,8 +639,10 @@ class HomeMapVC: BaseViewController,LabasLocationManagerDelegate, UICollectionVi
             
             UserDefaults.standard.setValue(self.latitude, forKey: Constants.LAST_LATITUDE)
             UserDefaults.standard.setValue(self.longitude, forKey: Constants.LAST_LONGITUDE)
-//                        self.latitude = 29.273551
-//                        self.longitude = 47.936161
+            
+            
+//            self.latitude = 29.363534
+//            self.longitude = 47.989769
             
             self.hideLoading()
             self.setUpGoogleMap()
@@ -729,7 +779,7 @@ class HomeMapVC: BaseViewController,LabasLocationManagerDelegate, UICollectionVi
         let camera = GMSCameraPosition.camera(withLatitude: shop.latitude ?? 0.0, longitude: shop.longitude ?? 0.0, zoom: self.cameraZoom)
         self.gMap?.animate(to: camera)
         // marker.icon = UIImage(named: "ic_map_shop_selected")
-        ApiService.getShopDetails(id: shop.id ?? 0) { (response) in
+        ApiService.getShopDetails(Authorization: self.loadUser().data?.accessToken ?? "", id: shop.id ?? 0) { (response) in
             self.showShopDetailsSheet(shop: response.shopData!)
         }
     }
@@ -909,7 +959,7 @@ extension HomeMapVC : GMSMapViewDelegate {
         let camera = GMSCameraPosition.camera(withLatitude: marker.position.latitude, longitude: marker.position.longitude, zoom: self.cameraZoom)
         self.gMap?.animate(to: camera)
         // marker.icon = UIImage(named: "ic_map_shop_selected")
-        ApiService.getShopDetails(id: Int(id)!) { (response) in
+        ApiService.getShopDetails(Authorization: self.loadUser().data?.accessToken ?? "", id: Int(id)!) { (response) in
             self.showShopDetailsSheet(shop: response.shopData!)
         }
         

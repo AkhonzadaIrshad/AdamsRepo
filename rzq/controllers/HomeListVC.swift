@@ -78,7 +78,7 @@ class HomeListVC: BaseViewController, UITableViewDelegate, UITableViewDataSource
     func checkForDeepLinkValues() {
         if (App.shared.deepLinkShopId != nil && Int(App.shared.deepLinkShopId ?? "0") ?? 0 > 0) {
             //open shop
-            ApiService.getShopDetails(id: Int(App.shared.deepLinkShopId ?? "0")!) { (response) in
+            ApiService.getShopDetails(Authorization: self.loadUser().data?.accessToken ?? "", id: Int(App.shared.deepLinkShopId ?? "0")!) { (response) in
                 if let vc = UIStoryboard(name: "Main", bundle: nil).instantiateViewController(withIdentifier: "ShopDetailsVC") as? ShopDetailsVC
                 {
                     vc.latitude = self.latitude ?? 0.0
@@ -175,7 +175,7 @@ class HomeListVC: BaseViewController, UITableViewDelegate, UITableViewDataSource
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
         let shop = self.shops[indexPath.row]
         self.showLoading()
-        ApiService.getShopDetails(id: shop.id ?? 0, completion: { (response) in
+        ApiService.getShopDetails(Authorization: self.loadUser().data?.accessToken ?? "", id: shop.id ?? 0, completion: { (response) in
             self.hideLoading()
             if let vc = UIStoryboard(name: "Main", bundle: nil).instantiateViewController(withIdentifier: "ShopDetailsVC") as? ShopDetailsVC
             {

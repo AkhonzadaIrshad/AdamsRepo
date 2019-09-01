@@ -115,6 +115,13 @@ class AppDelegate: UIResponder, UIApplicationDelegate, MOLHResetable,MessagingDe
         return true
     }
     
+    func updateNotificationChatCount() {
+        let defaults = UserDefaults.standard
+        var notificationCount : Int = defaults.value(forKey: Constants.NOTIFICATION_CHAT_COUNT) as? Int ?? 0
+        notificationCount = notificationCount + 1
+        defaults.setValue(notificationCount, forKey: Constants.NOTIFICATION_CHAT_COUNT)
+    }
+    
     func updateNotificationCount() {
         let defaults = UserDefaults.standard
         var notificationCount : Int = defaults.value(forKey: Constants.NOTIFICATION_COUNT) as? Int ?? 0
@@ -338,8 +345,11 @@ class AppDelegate: UIResponder, UIApplicationDelegate, MOLHResetable,MessagingDe
             self.showBanner(title: title, message: body, style: UIColor.colorPrimary)
             
             
-            if (notificationType != "11") {
-                self.updateNotificationCount()
+            if (notificationType == "11") {
+                self.updateNotificationChatCount()
+                self.loadTracks()
+            }else {
+             self.updateNotificationCount()
             }
             
             
@@ -371,7 +381,9 @@ class AppDelegate: UIResponder, UIApplicationDelegate, MOLHResetable,MessagingDe
     
     func scheduleNotifications(title : String, message : String, type : String, itemId : String) {
         
-        if (type != "11") {
+        if (type == "11") {
+            self.updateNotificationChatCount()
+        }else {
             self.updateNotificationCount()
         }
         

@@ -17,7 +17,6 @@ class ImageSliderVC: BaseVC {
     @IBOutlet weak var ivHandle: UIImageView!
     
     
-    
     var orderImages = [String]()
     var images = [InputSource]()
     
@@ -32,6 +31,8 @@ class ImageSliderVC: BaseVC {
         }
         
         self.slideShow.setImageInputs(images)
+        
+        self.slideShow.zoomEnabled = true
         
     }
     

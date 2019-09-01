@@ -80,7 +80,7 @@ class ShopDetailsSheet: BaseVC {
             
                 let model = OTWOrder()
                 
-            let shopData = DataShop(id: self.shop?.id ?? 0, name: self.shop?.name ?? "", address: self.shop?.address ?? "", latitude: self.shop?.latitude ?? 0.0, longitude: self.shop?.longitude ?? 0.0, phoneNumber: self.shop?.phoneNumber ?? "", workingHours: self.shop?.workingHours ?? "", images: self.shop?.images ?? [String](), rate: self.shop?.rate ?? 0.0, type: self.shop?.type ?? TypeClass(id: 0, name: "",image: ""))
+            let shopData = DataShop(id: self.shop?.id ?? 0, name: self.shop?.name ?? "", address: self.shop?.address ?? "", latitude: self.shop?.latitude ?? 0.0, longitude: self.shop?.longitude ?? 0.0, phoneNumber: self.shop?.phoneNumber ?? "", workingHours: self.shop?.workingHours ?? "", images: self.shop?.images ?? [String](), rate: self.shop?.rate ?? 0.0, type: self.shop?.type ?? TypeClass(id: 0, name: "",image: ""),ownerId: self.shop?.ownerId ?? "")
                 
                 model.shop = shopData
                 model.pickUpAddress = shop?.name
@@ -95,7 +95,7 @@ class ShopDetailsSheet: BaseVC {
     
     @IBAction func detailsAction(_ sender: Any) {
         self.showLoading()
-        ApiService.getShopDetails(id: shop?.id ?? 0, completion: { (response) in
+        ApiService.getShopDetails(Authorization: self.loadUser().data?.accessToken ?? "", id: shop?.id ?? 0, completion: { (response) in
            self.delegate?.onDetails(shopData: response.shopData!)
         })
     }

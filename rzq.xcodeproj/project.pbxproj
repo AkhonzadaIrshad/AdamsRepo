@@ -3,7 +3,7 @@
 	archiveVersion = 1;
 	classes = {
 	};
-	objectVersion = 50;
+	objectVersion = 51;
 	objects = {
 
 /* Begin PBXBuildFile section */
@@ -35,6 +35,8 @@
 		8B3BE04122635720009590BC /* AcceptBidDialog.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8B3BE04022635720009590BC /* AcceptBidDialog.swift */; };
 		8B56C0412270D01400E2DDC5 /* ChatResponse.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8B56C0402270D01400E2DDC5 /* ChatResponse.swift */; };
 		8B56C0432270D21000E2DDC5 /* AcceptBidResponse.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8B56C0422270D21000E2DDC5 /* AcceptBidResponse.swift */; };
+		8B5808B8231271D2004C2A19 /* ChatProviderSheet.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8B5808B7231271D2004C2A19 /* ChatProviderSheet.swift */; };
+		8B5808BA231271DD004C2A19 /* ChatUserSheet.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8B5808B9231271DD004C2A19 /* ChatUserSheet.swift */; };
 		8B5EB8B02250EC6E00DC657C /* MenuViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8B5EB8AF2250EC6E00DC657C /* MenuViewController.swift */; };
 		8B5EB8B22250EC8D00DC657C /* BaseViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8B5EB8B12250EC8D00DC657C /* BaseViewController.swift */; };
 		8B5EB8B42250F27000DC657C /* HomeMapVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8B5EB8B32250F27000DC657C /* HomeMapVC.swift */; };
@@ -42,6 +44,7 @@
 		8B6857B52295B9D200E93837 /* AllTypesResponse.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8B6857B42295B9D200E93837 /* AllTypesResponse.swift */; };
 		8B84A167225A300B0090CB5D /* GoogleService-Info.plist in Resources */ = {isa = PBXBuildFile; fileRef = 8B84A166225A300B0090CB5D /* GoogleService-Info.plist */; };
 		8B84A169225A31560090CB5D /* App.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8B84A168225A31560090CB5D /* App.swift */; };
+		8B99372C231ADA34009DC060 /* EditShopVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8B99372B231ADA34009DC060 /* EditShopVC.swift */; };
 		8B9CA82D2250C9EA00DE0DC4 /* LanguageVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8B9CA82C2250C9EA00DE0DC4 /* LanguageVC.swift */; };
 		8B9CA8322250CA8400DE0DC4 /* MyUIButton.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8B9CA8312250CA8400DE0DC4 /* MyUIButton.swift */; };
 		8B9CA8342250CA9C00DE0DC4 /* MyUILabel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8B9CA8332250CA9C00DE0DC4 /* MyUILabel.swift */; };
@@ -211,6 +214,8 @@
 		8B3BE04022635720009590BC /* AcceptBidDialog.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AcceptBidDialog.swift; sourceTree = "<group>"; };
 		8B56C0402270D01400E2DDC5 /* ChatResponse.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ChatResponse.swift; sourceTree = "<group>"; };
 		8B56C0422270D21000E2DDC5 /* AcceptBidResponse.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AcceptBidResponse.swift; sourceTree = "<group>"; };
+		8B5808B7231271D2004C2A19 /* ChatProviderSheet.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ChatProviderSheet.swift; sourceTree = "<group>"; };
+		8B5808B9231271DD004C2A19 /* ChatUserSheet.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ChatUserSheet.swift; sourceTree = "<group>"; };
 		8B5EB8AF2250EC6E00DC657C /* MenuViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MenuViewController.swift; sourceTree = "<group>"; };
 		8B5EB8B12250EC8D00DC657C /* BaseViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BaseViewController.swift; sourceTree = "<group>"; };
 		8B5EB8B32250F27000DC657C /* HomeMapVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HomeMapVC.swift; sourceTree = "<group>"; };
@@ -218,6 +223,7 @@
 		8B6857B42295B9D200E93837 /* AllTypesResponse.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AllTypesResponse.swift; sourceTree = "<group>"; };
 		8B84A166225A300B0090CB5D /* GoogleService-Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = "GoogleService-Info.plist"; sourceTree = "<group>"; };
 		8B84A168225A31560090CB5D /* App.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = App.swift; sourceTree = "<group>"; };
+		8B99372B231ADA34009DC060 /* EditShopVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EditShopVC.swift; sourceTree = "<group>"; };
 		8B9CA82C2250C9EA00DE0DC4 /* LanguageVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LanguageVC.swift; sourceTree = "<group>"; };
 		8B9CA8312250CA8400DE0DC4 /* MyUIButton.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MyUIButton.swift; sourceTree = "<group>"; };
 		8B9CA8332250CA9C00DE0DC4 /* MyUILabel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MyUILabel.swift; sourceTree = "<group>"; };
@@ -482,6 +488,7 @@
 				8BAE41DE2299ADA300C7D897 /* RegisterAsServiceProviderVC.swift */,
 				8BAE41E22299B17300C7D897 /* SelectServicesVC.swift */,
 				8BE176DA229A9F9D0057CAF1 /* TakeServiceOrderVC.swift */,
+				8B99372B231ADA34009DC060 /* EditShopVC.swift */,
 			);
 			path = controllers;
 			sourceTree = "<group>";
@@ -633,6 +640,8 @@
 				8BF222342271B51B005BE71D /* ShopDetailsSheet.swift */,
 				8BA815922251F54C004EE1A8 /* FilterSheet.swift */,
 				8BCB77F92254BA2000E52ED0 /* OrderSubmittedSheet.swift */,
+				8B5808B9231271DD004C2A19 /* ChatUserSheet.swift */,
+				8B5808B7231271D2004C2A19 /* ChatProviderSheet.swift */,
 			);
 			path = sheets;
 			sourceTree = "<group>";
@@ -887,19 +896,16 @@
 			buildActionMask = 2147483647;
 			files = (
 			);
-			inputPaths = (
-				"${SRCROOT}/Pods/Target Support Files/Pods-rzq/Pods-rzq-resources.sh",
-				"${PODS_ROOT}/GoogleMaps/Maps/Frameworks/GoogleMaps.framework/Resources/GoogleMaps.bundle",
-				"${PODS_ROOT}/GooglePlaces/Frameworks/GooglePlaces.framework/Resources/GooglePlaces.bundle",
+			inputFileListPaths = (
+				"${PODS_ROOT}/Target Support Files/Pods-rzq/Pods-rzq-resources-${CONFIGURATION}-input-files.xcfilelist",
 			);
 			name = "[CP] Copy Pods Resources";
-			outputPaths = (
-				"${TARGET_BUILD_DIR}/${UNLOCALIZED_RESOURCES_FOLDER_PATH}/GoogleMaps.bundle",
-				"${TARGET_BUILD_DIR}/${UNLOCALIZED_RESOURCES_FOLDER_PATH}/GooglePlaces.bundle",
+			outputFileListPaths = (
+				"${PODS_ROOT}/Target Support Files/Pods-rzq/Pods-rzq-resources-${CONFIGURATION}-output-files.xcfilelist",
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 			shellPath = /bin/sh;
-			shellScript = "\"${SRCROOT}/Pods/Target Support Files/Pods-rzq/Pods-rzq-resources.sh\"\n";
+			shellScript = "\"${PODS_ROOT}/Target Support Files/Pods-rzq/Pods-rzq-resources.sh\"\n";
 			showEnvVarsInLog = 0;
 		};
 		C9D16E5B9FDBA3B42B5432ED /* [CP] Embed Pods Frameworks */ = {
@@ -907,91 +913,16 @@
 			buildActionMask = 2147483647;
 			files = (
 			);
-			inputPaths = (
-				"${SRCROOT}/Pods/Target Support Files/Pods-rzq/Pods-rzq-frameworks.sh",
-				"${BUILT_PRODUCTS_DIR}/AMPopTip/AMPopTip.framework",
-				"${BUILT_PRODUCTS_DIR}/Alamofire/Alamofire.framework",
-				"${BUILT_PRODUCTS_DIR}/AlamofireImage/AlamofireImage.framework",
-				"${BUILT_PRODUCTS_DIR}/BRYXBanner/BRYXBanner.framework",
-				"${BUILT_PRODUCTS_DIR}/Branch/Branch.framework",
-				"${BUILT_PRODUCTS_DIR}/CBPinEntryView/CBPinEntryView.framework",
-				"${BUILT_PRODUCTS_DIR}/Cosmos/Cosmos.framework",
-				"${BUILT_PRODUCTS_DIR}/CountryPickerView/CountryPickerView.framework",
-				"${BUILT_PRODUCTS_DIR}/DatePickerDialog/DatePickerDialog.framework",
-				"${BUILT_PRODUCTS_DIR}/DropDown/DropDown.framework",
-				"${BUILT_PRODUCTS_DIR}/EAIntroView/EAIntroView.framework",
-				"${BUILT_PRODUCTS_DIR}/EARestrictedScrollView/EARestrictedScrollView.framework",
-				"${BUILT_PRODUCTS_DIR}/ExpandableCell/ExpandableCell.framework",
-				"${BUILT_PRODUCTS_DIR}/FittedSheets/FittedSheets.framework",
-				"${BUILT_PRODUCTS_DIR}/GoogleUtilities/GoogleUtilities.framework",
-				"${BUILT_PRODUCTS_DIR}/IQKeyboardManagerSwift/IQKeyboardManagerSwift.framework",
-				"${BUILT_PRODUCTS_DIR}/ImageSlideshow/ImageSlideshow.framework",
-				"${BUILT_PRODUCTS_DIR}/JJFloatingActionButton/JJFloatingActionButton.framework",
-				"${BUILT_PRODUCTS_DIR}/Kingfisher/Kingfisher.framework",
-				"${BUILT_PRODUCTS_DIR}/MOLH/MOLH.framework",
-				"${BUILT_PRODUCTS_DIR}/MarqueeLabel/MarqueeLabel.framework",
-				"${BUILT_PRODUCTS_DIR}/MaterialComponents/MaterialComponents.framework",
-				"${BUILT_PRODUCTS_DIR}/MultilineTextField/MultilineTextField.framework",
-				"${BUILT_PRODUCTS_DIR}/Protobuf/Protobuf.framework",
-				"${BUILT_PRODUCTS_DIR}/RangeSeekSlider/RangeSeekSlider.framework",
-				"${BUILT_PRODUCTS_DIR}/ReadMoreTextView/ReadMoreTextView.framework",
-				"${BUILT_PRODUCTS_DIR}/Realm/Realm.framework",
-				"${BUILT_PRODUCTS_DIR}/RealmSwift/RealmSwift.framework",
-				"${BUILT_PRODUCTS_DIR}/SVProgressHUD/SVProgressHUD.framework",
-				"${BUILT_PRODUCTS_DIR}/Sheeeeeeeeet/Sheeeeeeeeet.framework",
-				"${BUILT_PRODUCTS_DIR}/SimpleCheckbox/SimpleCheckbox.framework",
-				"${BUILT_PRODUCTS_DIR}/SkyFloatingLabelTextField/SkyFloatingLabelTextField.framework",
-				"${BUILT_PRODUCTS_DIR}/SnapKit/SnapKit.framework",
-				"${BUILT_PRODUCTS_DIR}/SwiftDate/SwiftDate.framework",
-				"${BUILT_PRODUCTS_DIR}/SwiftyGif/SwiftyGif.framework",
-				"${BUILT_PRODUCTS_DIR}/SwiftyJSON/SwiftyJSON.framework",
-				"${BUILT_PRODUCTS_DIR}/ZHChat/ZHChat.framework",
-				"${BUILT_PRODUCTS_DIR}/nanopb/nanopb.framework",
+			inputFileListPaths = (
+				"${PODS_ROOT}/Target Support Files/Pods-rzq/Pods-rzq-frameworks-${CONFIGURATION}-input-files.xcfilelist",
 			);
 			name = "[CP] Embed Pods Frameworks";
-			outputPaths = (
-				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/AMPopTip.framework",
-				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/Alamofire.framework",
-				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/AlamofireImage.framework",
-				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/BRYXBanner.framework",
-				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/Branch.framework",
-				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/CBPinEntryView.framework",
-				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/Cosmos.framework",
-				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/CountryPickerView.framework",
-				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/DatePickerDialog.framework",
-				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/DropDown.framework",
-				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/EAIntroView.framework",
-				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/EARestrictedScrollView.framework",
-				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/ExpandableCell.framework",
-				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/FittedSheets.framework",
-				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/GoogleUtilities.framework",
-				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/IQKeyboardManagerSwift.framework",
-				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/ImageSlideshow.framework",
-				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/JJFloatingActionButton.framework",
-				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/Kingfisher.framework",
-				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/MOLH.framework",
-				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/MarqueeLabel.framework",
-				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/MaterialComponents.framework",
-				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/MultilineTextField.framework",
-				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/Protobuf.framework",
-				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/RangeSeekSlider.framework",
-				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/ReadMoreTextView.framework",
-				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/Realm.framework",
-				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/RealmSwift.framework",
-				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/SVProgressHUD.framework",
-				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/Sheeeeeeeeet.framework",
-				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/SimpleCheckbox.framework",
-				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/SkyFloatingLabelTextField.framework",
-				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/SnapKit.framework",
-				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/SwiftDate.framework",
-				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/SwiftyGif.framework",
-				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/SwiftyJSON.framework",
-				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/ZHChat.framework",
-				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/nanopb.framework",
+			outputFileListPaths = (
+				"${PODS_ROOT}/Target Support Files/Pods-rzq/Pods-rzq-frameworks-${CONFIGURATION}-output-files.xcfilelist",
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 			shellPath = /bin/sh;
-			shellScript = "\"${SRCROOT}/Pods/Target Support Files/Pods-rzq/Pods-rzq-frameworks.sh\"\n";
+			shellScript = "\"${PODS_ROOT}/Target Support Files/Pods-rzq/Pods-rzq-frameworks.sh\"\n";
 			showEnvVarsInLog = 0;
 		};
 		D7CB8F37266BE90E9B62EAF1 /* [CP] Check Pods Manifest.lock */ = {
@@ -1079,6 +1010,7 @@
 				8BD45FAD2267A01F000FB47A /* SnappingCollectionViewLayout.swift in Sources */,
 				8BBBC8A92262284C00903719 /* ShopListResponse.swift in Sources */,
 				8BD329C0225C964F0060900A /* VerifyResponse.swift in Sources */,
+				8B5808BA231271DD004C2A19 /* ChatUserSheet.swift in Sources */,
 				8BC54B0A2268BAB000B70A97 /* MySubscriptionsResponse.swift in Sources */,
 				8BB7CA06227F55F200D7C8F2 /* FilterModel.swift in Sources */,
 				8BF4242B229B137F0014596F /* TenderStep3.swift in Sources */,
@@ -1102,6 +1034,7 @@
 				8BD45FA222672D44000FB47A /* ShopDeliveriesResponse.swift in Sources */,
 				8BE1FA8A228C321E00B98E5E /* ShopTypeCell.swift in Sources */,
 				8BEF649B2253959E003AE522 /* HomeServiceCell.swift in Sources */,
+				8B99372C231ADA34009DC060 /* EditShopVC.swift in Sources */,
 				8BD99C5E2259EC1D00E00A0A /* ProfileVC.swift in Sources */,
 				8B84A169225A31560090CB5D /* App.swift in Sources */,
 				8BF29CA22279BA5E0001EF21 /* TermsPushVC.swift in Sources */,
@@ -1147,6 +1080,7 @@
 				8B9CA85D2250E1E900DE0DC4 /* CardView.swift in Sources */,
 				8B56C0432270D21000E2DDC5 /* AcceptBidResponse.swift in Sources */,
 				8BE176DB229A9F9D0057CAF1 /* TakeServiceOrderVC.swift in Sources */,
+				8B5808B8231271D2004C2A19 /* ChatProviderSheet.swift in Sources */,
 				8BF2223F227207BF005BE71D /* RateUserDialog.swift in Sources */,
 				8BD329CB225CAD080060900A /* DeliveryCreatedResponse.swift in Sources */,
 				8BF222352271B51B005BE71D /* ShopDetailsSheet.swift in Sources */,

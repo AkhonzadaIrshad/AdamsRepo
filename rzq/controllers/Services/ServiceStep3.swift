@@ -80,6 +80,7 @@ class ServiceStep3: BaseVC, UINavigationControllerDelegate, ImagePickerDelegate 
         if (self.isArabic()) {
             self.ivHandle.image = UIImage(named: "ic_back_arabic")
         }
+        self.btnTime.setTitle("asap".localized, for: .normal)
         // below are properties that can be optionally customized
         edtOrderDetails.placeholder = "order_details".localized
         edtOrderDetails.placeholderColor = UIColor.lightGray
@@ -256,7 +257,7 @@ class ServiceStep3: BaseVC, UINavigationControllerDelegate, ImagePickerDelegate 
     
     @IBAction func placeOrderAction(_ sender: Any) {
         if (self.validate()) {
-            ApiService.createService(Authorization: self.loadUser().data?.accessToken ?? "", desc: self.edtOrderDetails.text ?? "", toLongitude: self.orderModel?.dropOffLongitude ?? 0.0, toLatitude: self.orderModel?.dropOffLatitude ?? 0.0, time: self.selectedTime ?? 1, price: "\(self.getCost())", address: self.orderModel?.dropOffAddress ?? "", serviceId: self.orderModel?.service?.id ?? 0, dropOffDetails: self.orderModel?.dropOffDetails ?? "") { (response) in
+            ApiService.createService(Authorization: self.loadUser().data?.accessToken ?? "", desc: self.edtOrderDetails.text ?? "", toLongitude: self.orderModel?.dropOffLongitude ?? 0.0, toLatitude: self.orderModel?.dropOffLatitude ?? 0.0, time: self.selectedTime ?? 0, price: "\(self.getCost())", address: self.orderModel?.dropOffAddress ?? "", serviceId: self.orderModel?.service?.id ?? 0, dropOffDetails: self.orderModel?.dropOffDetails ?? "") { (response) in
                 if (response.data ?? 0 > 0) {
                     self.handleUploadingMedia(id : response.data ?? 0)
                 }else {

@@ -46,6 +46,8 @@ class SuggestShopVC: BaseVC, SelectLocationDelegate,UINavigationControllerDelega
         case camera
     }
     
+    @IBOutlet weak var viewEditShop: UIView!
+    
     override func viewDidLoad() {
         super.viewDidLoad()
 
@@ -224,7 +226,7 @@ class SuggestShopVC: BaseVC, SelectLocationDelegate,UINavigationControllerDelega
     @IBAction func submitAction(_ sender: Any) {
         if (self.validate()) {
             self.showLoading()
-            ApiService.suggestShop(address: self.edtAddress.text ?? "", latitude: self.selectedLocation?.coordinate.latitude ?? 0.0, longitude: self.selectedLocation?.coordinate.longitude ?? 0.0, phoneNumber: "", workingHours: self.chosenHours ?? "", name: self.edtName.text ?? "", type: self.selectedType?.id ?? 0) { (response) in
+            ApiService.suggestShop(Authorization: self.loadUser().data?.accessToken ?? "", address: self.edtAddress.text ?? "", latitude: self.selectedLocation?.coordinate.latitude ?? 0.0, longitude: self.selectedLocation?.coordinate.longitude ?? 0.0, phoneNumber: "", workingHours: self.chosenHours ?? "", name: self.edtName.text ?? "", type: self.selectedType?.id ?? 0) { (response) in
                 self.hideLoading()
                 if (response.errorCode == 0) {
                    self.handleUploadingMedia(id : response.data ?? 0)
@@ -333,8 +335,7 @@ class SuggestShopVC: BaseVC, SelectLocationDelegate,UINavigationControllerDelega
             }
         }
     }
-    
-    
+     
 }
 extension SuggestShopVC: UIImagePickerControllerDelegate {
     

@@ -200,3 +200,14 @@
 "by_coupon" = "By coupon";
 "earnings" = "Earnings:";
 "track_order" = "Track your order";
+
+"navigate_to_store" = "Navigate to store";
+"navigate_to_client" = "Navigate to client";
+
+"shop_saved" = "Shop data saved successfully";
+
+"details" = "Details";
+
+"complete_delivery_first" = "Complete your delivery first!";
+
+"release_receipt" = "Release Receipt";

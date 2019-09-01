@@ -760,9 +760,10 @@ class ApiService : NSObject {
     }
     
     
-    static func suggestShop(address: String, latitude : Double,longitude : Double, phoneNumber : String, workingHours : String, name : String, type : Int,completion:@escaping(_ response : DeliveryCreatedResponse)-> Void) {
+    static func suggestShop(Authorization: String,address: String, latitude : Double,longitude : Double, phoneNumber : String, workingHours : String, name : String, type : Int,completion:@escaping(_ response : DeliveryCreatedResponse)-> Void) {
         
-        let headers = [Constants.LANG_HEADER : self.getLang()]
+        let headers = [Constants.AUTH_HEADER: "bearer \(Authorization)",
+                      Constants.LANG_HEADER : self.getLang()]
         
         let all : [String : Any] = ["Address" : address,
                                     "Latitude" : latitude,
@@ -771,6 +772,35 @@ class ApiService : NSObject {
                                     "WorkingHours" : workingHours,
                                     "Name" : name,
                                     "Type" : type]
+        
+        AFManager.request("\(Constants.BASE_URL)Shop/Suggest", method: .post, parameters: all ,encoding: JSONEncoding.default, headers: headers)
+            .responseJSON { response in
+                if let json = response.data {
+                    do {
+                        let decoder = JSONDecoder()
+                        let baseResponse = try decoder.decode(DeliveryCreatedResponse.self, from: json)
+                        completion(baseResponse)
+                    }catch let err{
+                        print(err)
+                    }
+                }
+        }
+    }
+    
+    
+    static func editShop(Authorization: String, address: String, latitude : Double,longitude : Double, phoneNumber : String, workingHours : String, name : String, type : Int, shopId: Int,completion:@escaping(_ response : DeliveryCreatedResponse)-> Void) {
+        
+        let headers = [Constants.AUTH_HEADER: "bearer \(Authorization)",
+                      Constants.LANG_HEADER : self.getLang()]
+        
+        let all : [String : Any] = ["Address" : address,
+                                    "Latitude" : latitude,
+                                    "Longitude" : longitude,
+                                    "PhoneNumber" : phoneNumber,
+                                    "WorkingHours" : workingHours,
+                                    "Name" : name,
+                                    "Type" : type,
+                                    "ShopId" : shopId]
         
         AFManager.request("\(Constants.BASE_URL)Shop/Suggest", method: .post, parameters: all ,encoding: JSONEncoding.default, headers: headers)
             .responseJSON { response in
@@ -827,9 +857,10 @@ class ApiService : NSObject {
     }
     
     
-    static func getShopDetails(id : Int, completion:@escaping(_ response : ShopDetailsResponse)-> Void) {
+    static func getShopDetails(Authorization: String, id : Int, completion:@escaping(_ response : ShopDetailsResponse)-> Void) {
         
-        let headers = [Constants.LANG_HEADER : self.getLang()]
+        let headers = [Constants.AUTH_HEADER: "bearer \(Authorization)",
+                      Constants.LANG_HEADER : self.getLang()]
         
         AFManager.request("\(Constants.BASE_URL)Shop/Get?id=\(id)", method: .get, parameters: nil ,encoding: JSONEncoding.default, headers: headers)
             .responseJSON { response in

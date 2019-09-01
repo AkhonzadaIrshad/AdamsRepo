@@ -95,6 +95,26 @@ class ZHCDemoMessagesViewController: ZHCMessagesViewController, BillDelegate, Ch
                 }
             }
         }
+        
+        
+        let infoBarButtonItem = UIBarButtonItem(title: "details".localized, style: .done, target: self, action: #selector(orderInfoAction))
+        self.navigationItem.rightBarButtonItem  = infoBarButtonItem
+        
+    }
+    
+    @objc func orderInfoAction() {
+        if let vc = UIStoryboard(name: "Main", bundle: nil).instantiateViewController(withIdentifier: "OrderDetailsVC") as? OrderDetailsVC
+        {
+            ApiService.getDelivery(id: self.order?.id ?? 0) { (response) in
+                vc.order = response.data
+                self.navigationController?.pushViewController(vc, animated: true)
+            }
+        }
+    }
+    
+    override func viewDidAppear(_ animated: Bool) {
+        super.viewDidAppear(animated)
+        UserDefaults.standard.setValue(0, forKey: Constants.NOTIFICATION_CHAT_COUNT)
     }
     
     func setUpRecordButton() {
@@ -257,7 +277,7 @@ class ZHCDemoMessagesViewController: ZHCMessagesViewController, BillDelegate, Ch
         
         let item2 = self.driverActionButton?.addItem()
         if (self.order?.status == Constants.ORDER_PROCESSING) {
-            item2?.titleLabel.text = "on_my_way".localized
+            item2?.titleLabel.text = "release_receipt".localized
         }else {
             item2?.titleLabel.text = "complete_delivery".localized
         }
@@ -295,6 +315,29 @@ class ZHCDemoMessagesViewController: ZHCMessagesViewController, BillDelegate, Ch
             }
         }
         
+        //navigate new button in chat
+        if (self.order?.status == Constants.ORDER_PROCESSING || self.order?.status == Constants.ORDER_ON_THE_WAY) {
+            let item3 = self.driverActionButton?.addItem()
+            if (self.order?.status == Constants.ORDER_PROCESSING) {
+                item3?.titleLabel.text = "navigate_to_store".localized
+            }else {
+                item3?.titleLabel.text = "navigate_to_client".localized
+            }
+            
+            item3?.titleLabel.font = UIFont(name: self.getFontName(), size: 13)
+            item3?.imageView.image = UIImage(named: "chat_navigate")
+            item3?.buttonColor = UIColor.appLogoColor
+            item3?.buttonImageColor = .white
+            item3?.action = { item in
+                if (self.order?.status == Constants.ORDER_PROCESSING) {
+                    self.startNavigation(longitude: self.order?.fromLongitude ?? 0.0, latitude: self.order?.fromLatitude ?? 0.0)
+                }else {
+                    self.startNavigation(longitude: self.order?.toLongitude ?? 0.0, latitude: self.order?.toLatitude ?? 0.0)
+                }
+            }
+        }
+        
+        
         self.driverActionButton?.buttonColor = UIColor.appLogoColor
         self.driverActionButton?.shadowColor = UIColor.blue
         self.driverActionButton?.buttonImage = UIImage(named: "chat_floating")
@@ -311,7 +354,6 @@ class ZHCDemoMessagesViewController: ZHCMessagesViewController, BillDelegate, Ch
         } else {
             // Fallback on earlier versions
         }
-        
         // last 4 lines can be replaced with
         // actionButton.display(inViewController: self)
     }
@@ -449,6 +491,7 @@ class ZHCDemoMessagesViewController: ZHCMessagesViewController, BillDelegate, Ch
         
     }
     
+    
     func startDelivery(cost : Double) {
         ApiService.startDelivery(Authorization: self.user?.data?.accessToken ?? "", deliveryId: self.order?.id ?? 0, actualPrice: cost) { (response) in
             if (response.errorCode == 0) {
@@ -466,7 +509,7 @@ class ZHCDemoMessagesViewController: ZHCMessagesViewController, BillDelegate, Ch
     
     
     func startNavigation(longitude : Double, latitude : Double) {
-        let sourceSelector = UIAlertController(title: "continueUsing".localized, message: nil, preferredStyle: .actionSheet)
+        let sourceSelector = UIAlertController(title: "navigate_to_client".localized, message: nil, preferredStyle: .actionSheet)
         
         if let popoverController = sourceSelector.popoverPresentationController {
             popoverController.sourceView = self.view //to set the source of your alert
@@ -556,7 +599,15 @@ class ZHCDemoMessagesViewController: ZHCMessagesViewController, BillDelegate, Ch
     
     
     @objc func closePressed() -> Void {
-        self.navigationController?.dismiss(animated: true, completion: nil);
+         if (self.isProvider() && self.user?.data?.userID == self.order?.providerID) {
+            if (self.order?.time ?? 0 <= 1) {
+                self.showBanner(title: "alert".localized, message: "complete_delivery_first".localized, style: UIColor.INFO)
+            }else {
+              self.navigationController?.dismiss(animated: true, completion: nil);
+            }
+         }else {
+           self.navigationController?.dismiss(animated: true, completion: nil);
+        }
     }
     
     // MARK: ZHCMessagesTableViewDataSource

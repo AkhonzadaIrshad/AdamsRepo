@@ -151,14 +151,7 @@ class MenuViewController: BaseVC {
         }
         
     }
-    
-    
-    func isProvider() -> Bool {
-        if ((self.loadUser().data?.roles?.contains(find: "Driver"))! || (self.loadUser().data?.roles?.contains(find: "ServiceProvider"))! || (self.loadUser().data?.roles?.contains(find: "TenderProvider"))!) {
-            return true
-        }
-        return false
-    }
+
     
     func handleNotificationCounter() {
         let count = UserDefaults.standard.value(forKey: Constants.NOTIFICATION_COUNT) as? Int ?? 0

@@ -44,4 +44,5 @@ pod 'RealmSwift'
    pod 'MultilineTextField'
    pod 'DropDown'
    pod 'AMPopTip'
+   pod 'ZoomImageView'
 end

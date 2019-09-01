@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <Scheme
-   LastUpgradeVersion = "0930"
+   LastUpgradeVersion = "1100"
    version = "1.3">
    <BuildAction
       parallelizeBuildables = "YES"
@@ -14,10 +14,10 @@
             buildForArchiving = "YES">
             <BuildableReference
                BuildableIdentifier = "primary"
-               BlueprintIdentifier = "175411E61F3601E604755B3AE5109741"
+               BlueprintIdentifier = "19814C6B4C01B630C98E0333EC89A430"
+               BuildableName = "ZHChat.framework"
                BlueprintName = "ZHChat"
-               ReferencedContainer = "container:Pods.xcodeproj"
-               BuildableName = "ZHChat.framework">
+               ReferencedContainer = "container:Pods.xcodeproj">
             </BuildableReference>
          </BuildActionEntry>
       </BuildActionEntries>

@@ -31,7 +31,7 @@
 "choose_shop_or_pickup" = "اختر مكان او قم بوضع مكانك على الخريطة";
 "choose_drop_location" = "اختر موقع التوصيل اولاً";
 "enter_order_details" = "ادخل تفاصيل الطلب اولاً";
-"enter_order_cost" = "ادخل كلفة الطلب اولاً!";
+"enter_order_cost" = "ادخل تكلفة الطلب اولاً!";
 
 "currency" = "د.ك";
 "hours" = "ساعة";
@@ -69,9 +69,9 @@
 "on_my_way" = "في الطريق";
 "minutes" = "دقيقة";
 
-"order_cost" = "كلفة الطلب";
-"delivery_cost" = "كلفة التوصيل";
-"total_cost" = "الكلفة الكلية";
+"order_cost" = "تكلفة الطلب";
+"delivery_cost" = "تكلفة التوصيل";
+"total_cost" = "التكلفة الكلية";
 "delivery_started" = "تم بدأ توصيل الطلب.";
 "registered_to_shop" = "تم التسجيل بنجاح";
 "unregistered_to_shop" = "تم الغاء التسجيل";
@@ -84,7 +84,7 @@
 "login" = "الدخول";
 "enter_pickup_details" = "ادخل تفاصيل مكان الطلب";
 "enter_dropoff_details" = "ادخل تفاصيل مكان التوصيل";
-"enter_order_actual_cost" = "ادخل كلفة الطلب اولاً!";
+"enter_order_actual_cost" = "ادخل تكلفة الطلب اولاً!";
 
 "bakery" = "مخبز";
 "book_store" = "محل كتب";
@@ -175,7 +175,7 @@
 
 "select_cost_range" = "اختر فئة السعر";
 "below_ten_kd" = "اقل من ١٠ د.ك";
-"above_ten_kd" = "اكبر من ١٠ د.ك";
+"above_ten_kd" = "اكثر من ١٠ د.ك";
 
 "to_location_desc" = "استخدمنا موقعك كوجهة، يمكنك البحث عن مكان الوجهة او ضع المكان على الخريطة";
 
@@ -200,3 +200,14 @@
 "by_coupon" = "باستخدام كوبون";
 "earnings" = "الأرباح:";
 "track_order" = "تتبع طلبك";
+
+"navigate_to_store" = "التوجه الى المتجر";
+"navigate_to_client" = "التوجه الى الزبون";
+
+"shop_saved" = "تم الحفظ بنجاح";
+
+"details" = "التفاصيل";
+
+"complete_delivery_first" = "قم بانهاء الطلب اولاً!";
+
+"release_receipt" = "إصدار الفاتورة";

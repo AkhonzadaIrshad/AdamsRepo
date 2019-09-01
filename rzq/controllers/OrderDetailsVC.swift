@@ -196,13 +196,6 @@ class OrderDetailsVC: BaseVC, UICollectionViewDelegate, UICollectionViewDataSour
         
     }
     
-    func isProvider() -> Bool {
-        if ((self.loadUser().data?.roles?.contains(find: "Driver"))! || (self.loadUser().data?.roles?.contains(find: "ServiceProvider"))! || (self.loadUser().data?.roles?.contains(find: "TenderProvider"))!) {
-            return true
-        }
-        return false
-    }
-    
     
     func getStatusColor(status : Int) -> UIColor {
         switch status {

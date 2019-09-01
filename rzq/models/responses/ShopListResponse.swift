@@ -35,6 +35,7 @@ class DataShop: Codable {
     let rate: Double?
     let type: TypeClass?
     var placeId : String?
+    var ownerId : String?
     
     enum CodingKeys: String, CodingKey {
         case id = "Id"
@@ -47,9 +48,10 @@ class DataShop: Codable {
         case images = "Images"
         case rate = "Rate"
         case type = "Type"
+        case ownerId = "OwnerId"
     }
     
-    init(id: Int?, name: String?, address: String?, latitude: Double?, longitude: Double?, phoneNumber: String?, workingHours: String?, images: [String]?, rate: Double?, type: TypeClass?) {
+    init(id: Int?, name: String?, address: String?, latitude: Double?, longitude: Double?, phoneNumber: String?, workingHours: String?, images: [String]?, rate: Double?, type: TypeClass?, ownerId : String) {
         self.id = id
         self.name = name
         self.address = address
@@ -60,5 +62,6 @@ class DataShop: Codable {
         self.images = images
         self.rate = rate
         self.type = type
+        self.ownerId = ownerId
     }
 }

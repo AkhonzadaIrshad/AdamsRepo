@@ -7,6 +7,7 @@
 //
 
 import UIKit
+import Firebase
 
 class SplashVC: BaseVC {
     
@@ -17,6 +18,11 @@ class SplashVC: BaseVC {
         ApiService.getAppConfig { (response) in
             App.shared.config = response.data
             self.startSplashLoader()
+        }
+        
+        ApiService.updateRegId(Authorization: self.loadUser().data?.accessToken ?? "", regId: Messaging.messaging().fcmToken ?? "not_avaliable") { (response) in
+            
+            
         }
     }
     

@@ -32,6 +32,8 @@ class Constants {
     
     static var NOTIFICATION_COUNT = "KEY_NOTIFICATION_COUNT"
     
+    static var NOTIFICATION_CHAT_COUNT = "NOTIFICATION_CHAT_COUNT"
+    
     static var BID_ACCEPTED_ORDER = "BID_ACCEPTED_ORDER"
     
     static var OPEN_MENU = "OPEN_MENU"
