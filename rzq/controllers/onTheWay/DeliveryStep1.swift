@@ -493,9 +493,11 @@ class DeliveryStep1: BaseVC,LabasLocationManagerDelegate, Step2Delegate {
                 filterItems.append(item1)
             }
             
+//            self.searchField.theme.font = UIFont.systemFont(ofSize: 13)
+//            self.searchField.startVisibleWithoutInteraction = true
+//            self.searchField.startSuggestingInmediately = true
             self.searchField.theme.font = UIFont.systemFont(ofSize: 13)
-            self.searchField.startVisibleWithoutInteraction = true
-            self.searchField.startSuggestingInmediately = true
+            self.searchField.forceNoFiltering = true
             self.searchField.filterItems(filterItems)
             self.searchField.itemSelectionHandler = { filteredResults, itemPosition in
                 // Just in case you need the item position

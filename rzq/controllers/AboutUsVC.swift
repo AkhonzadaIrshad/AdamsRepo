@@ -135,10 +135,10 @@ class AboutUsVC: BaseVC {
         }
         
         let item4 = actionButton.addItem()
-        item4.titleLabel.text = "call_us".localized
+        item4.titleLabel.text = "whatsapp".localized
         item4.titleLabel.font = UIFont(name: self.getFontName(), size: 13)
         item4.imageView.image = UIImage(named: "ic_about4")
-        item4.buttonColor = UIColor.colorPrimary
+        item4.buttonColor = UIColor.whatsapp_color
         item4.buttonImageColor = .white
         item4.action = { item in
             self.callNumber()

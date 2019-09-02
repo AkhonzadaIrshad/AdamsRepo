@@ -44,6 +44,8 @@ class ShopDetailsVC: BaseVC, UITableViewDelegate, UITableViewDataSource, UIColle
     
     @IBOutlet weak var lblImages: MyUILabel!
     
+    @IBOutlet weak var ivShare: UIButton!
+    
     var latitude : Double?
     var longitude : Double?
     
@@ -133,6 +135,18 @@ class ShopDetailsVC: BaseVC, UITableViewDelegate, UITableViewDataSource, UIColle
             self.ivEdit.isHidden = false
         }else {
             self.ivEdit.isHidden = true
+        }
+        
+        if (self.shop?.id == 0) {
+            self.ivShare.isHidden = true
+        }else {
+            self.ivShare.isHidden = false
+        }
+        
+        if (self.shop?.id ?? 0 == 0 && self.shop?.placeId ?? "" == "") {
+            self.viewRegister.isHidden = true
+        }else {
+            self.viewRegister.isHidden = false
         }
         
     }
@@ -381,22 +395,38 @@ class ShopDetailsVC: BaseVC, UITableViewDelegate, UITableViewDataSource, UIColle
     }
     
     @IBAction func registerAction(_ sender: Any) {
+        if (self.shop?.id ?? 0 > 0) {
+            self.subscribeToShop()
+        }else if (self.shop?.placeId?.count ?? 0 > 0) {
+            self.subscribeToPlace()
+        }else {
+            self.showBanner(title: "alert".localized, message: "cant_subscribe", style: UIColor.INFO)
+        }
+        
+    }
+    
+    
+    func subscribeToPlace() {
         self.showLoading()
-        //        ApiService.subscribeToShop(Authorization: self.loadUser().data?.accessToken ?? "", shopId: self.shop?.id ?? 0) { (response) in
-        //            self.hideLoading()
-        //            if (response.errorCode == 0) {
-        //                self.showBanner(title: "alert".localized, message: "registered_to_shop".localized, style: UIColor.SUCCESS)
-        //            }else {
-        //               // self.showBanner(title: "alert".localized, message: response.errorMessage ?? "", style: UIColor.INFO)
-        //                self.showBanner(title: "alert".localized, message: "registered_to_shop".localized, style: UIColor.SUCCESS)
-        //            }
-        //        }
         ApiService.subscribeToPlace(Authorization: self.loadUser().data?.accessToken ?? "", id: shop?.placeId ?? "", name: shop?.name ?? "", address: shop?.address ?? "", latitude: shop?.latitude ?? 0.0, longitude: shop?.longitude ?? 0.0, phoneNumber: shop?.phoneNumber ?? "", workingHours: shop?.workingHours ?? "", image: "", rate: 0) { (response) in
             self.hideLoading()
             if (response.errorCode == 0) {
                 self.showBanner(title: "alert".localized, message: "registered_to_shop".localized, style: UIColor.SUCCESS)
             }else {
-                 self.showBanner(title: "alert".localized, message: response.errorMessage ?? "", style: UIColor.INFO)
+                self.showBanner(title: "alert".localized, message: response.errorMessage ?? "", style: UIColor.INFO)
+            }
+        }
+    }
+    
+    func subscribeToShop() {
+        self.showLoading()
+        ApiService.subscribeToShop(Authorization: self.loadUser().data?.accessToken ?? "", shopId: self.shop?.id ?? 0) { (response) in
+            self.hideLoading()
+            if (response.errorCode == 0) {
+                self.showBanner(title: "alert".localized, message: "registered_to_shop".localized, style: UIColor.SUCCESS)
+            }else {
+                // self.showBanner(title: "alert".localized, message: response.errorMessage ?? "", style: UIColor.INFO)
+                self.showBanner(title: "alert".localized, message: "registered_to_shop".localized, style: UIColor.SUCCESS)
             }
         }
     }

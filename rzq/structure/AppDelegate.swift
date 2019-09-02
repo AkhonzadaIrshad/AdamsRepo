@@ -733,6 +733,9 @@ extension UIColor {
     static var twitterColor:UIColor {
         return #colorLiteral(red: 0.2549019608, green: 0.5647058824, blue: 0.8039215686, alpha: 1)
     }
+    static var whatsapp_color:UIColor {
+        return #colorLiteral(red: 0.1450980392, green: 0.8274509804, blue: 0.4, alpha: 1)
+    }
     static var linkedinColor:UIColor {
         return #colorLiteral(red: 0, green: 0.4666666667, blue: 0.7098039216, alpha: 1)
     }

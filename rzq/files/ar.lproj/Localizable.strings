@@ -109,7 +109,7 @@
 "location" = "الموقع";
 "navigate_to_us" = "توجه الينا";
 "bid_declined_successfully" = "تم رفض عرض السعر";
-"complete_delivery" = "انهاء الطلب";
+"complete_delivery" = "تم تسليم الطلب";
 "delivery_completed" = "تم استكمال الطلب، الرجاء التقييم";
 "delivery_completed_user" = "تم استكمال الطلب";
 "thank_you_for_rating" = "شكراً لك على التقييم";
@@ -211,3 +211,7 @@
 "complete_delivery_first" = "قم بانهاء الطلب اولاً!";
 
 "release_receipt" = "إصدار الفاتورة";
+
+"cant_subscribe" = "هذا المتجر غير متوفر للتسجيل.";
+
+"whatsapp" = "واتس اب";

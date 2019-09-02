@@ -109,7 +109,7 @@
 "location" = "Location";
 "navigate_to_us" = "Navigate to us";
 "bid_declined_successfully" = "Bid declined successfully.";
-"complete_delivery" = "Complete Order";
+"complete_delivery" = "Order is delivered";
 "delivery_completed" = "Order is completed, please rate the client.";
 "delivery_completed_user" = "Order is completed.";
 "thank_you_for_rating" = "Thank you for rating.";
@@ -211,3 +211,7 @@
 "complete_delivery_first" = "Complete your delivery first!";
 
 "release_receipt" = "Release Receipt";
+
+"cant_subscribe" = "This shop is not available for subscription";
+
+"whatsapp" = "Whatsapp";

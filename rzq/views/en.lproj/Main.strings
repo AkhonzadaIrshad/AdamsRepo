@@ -414,7 +414,7 @@
 "NTj-Fw-QyM.text" = "To";
 
 /* Class = "UILabel"; text = "From"; ObjectID = "NU9-gr-UDw"; */
-"NU9-gr-UDw.text" = "From";
+"NU9-gr-UDw.text" = "Order From";
 
 /* Class = "UILabel"; text = "We sent your delivery order to all nearby drivers, waiting for their bids."; ObjectID = "NXH-XR-aMb"; */
 "NXH-XR-aMb.text" = "We sent your delivery order to all nearby drivers, waiting for their bids.";
@@ -506,13 +506,13 @@
 "TQj-QB-GWS.text" = "Registered Shops";
 
 /* Class = "UILabel"; text = "To"; ObjectID = "TQp-MF-OZC"; */
-"TQp-MF-OZC.text" = "To";
+"TQp-MF-OZC.text" = "Deliver To";
 
 /* Class = "UILabel"; text = "From"; ObjectID = "Tao-wo-bxH"; */
-"Tao-wo-bxH.text" = "From";
+"Tao-wo-bxH.text" = "Order From";
 
 /* Class = "UILabel"; text = "To"; ObjectID = "Tda-f0-cfv"; */
-"Tda-f0-cfv.text" = "To";
+"Tda-f0-cfv.text" = "Deliver To";
 
 /* Class = "UILabel"; text = "All Clear!"; ObjectID = "Tpf-Fk-kw3"; */
 "Tpf-Fk-kw3.text" = "All Clear!";
@@ -557,7 +557,7 @@
 "UuG-bi-lCk.text" = "Service";
 
 /* Class = "UILabel"; text = "From"; ObjectID = "UuV-t1-atN"; */
-"UuV-t1-atN.text" = "From";
+"UuV-t1-atN.text" = "Order From";
 
 /* Class = "UISegmentedControl"; Uwv-JB-sZi.segmentTitles[0] = "Pending"; ObjectID = "Uwv-JB-sZi"; */
 "Uwv-JB-sZi.segmentTitles[0]" = "Pending";
@@ -1049,7 +1049,7 @@
 "pRp-CD-04d.text" = "Label";
 
 /* Class = "UILabel"; text = "To"; ObjectID = "pcG-mP-HG8"; */
-"pcG-mP-HG8.text" = "To";
+"pcG-mP-HG8.text" = "Deliver To";
 
 /* Class = "UILabel"; text = "Take This Order"; ObjectID = "pjh-44-Suv"; */
 "pjh-44-Suv.text" = "Take This Order";

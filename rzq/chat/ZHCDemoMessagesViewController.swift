@@ -236,9 +236,18 @@ class ZHCDemoMessagesViewController: ZHCMessagesViewController, BillDelegate, Ch
     func setupFloating() {
         self.driverActionButton?.removeFromSuperview()
         self.driverActionButton = JJFloatingActionButton()
+        self.driverActionButton?.delegate = self
+        self.driverActionButton?.overlayView.isHidden = true
+        
+        self.driverActionButton?.layer.shadowColor = UIColor.black.cgColor
+        self.driverActionButton?.layer.shadowOffset = CGSize(width: 0, height: 1)
+        self.driverActionButton?.layer.shadowOpacity = Float(0.4)
+        self.driverActionButton?.layer.shadowRadius = CGFloat(2)
+        
         
         let item = self.driverActionButton?.addItem()
         item?.titleLabel.text = "cancel_order".localized
+        item?.titleLabel.textColor = UIColor.black
         item?.titleLabel.font = UIFont(name: self.getFontName(), size: 13)
         item?.imageView.image = UIImage(named: "chat_cancelorder")
         item?.buttonColor = UIColor.appLogoColor
@@ -262,6 +271,7 @@ class ZHCDemoMessagesViewController: ZHCMessagesViewController, BillDelegate, Ch
             if (self.order?.status == Constants.ORDER_ON_THE_WAY) {
                 let item0 = self.driverActionButton?.addItem()
                 item0?.titleLabel.text = "track_order".localized
+                item0?.titleLabel.textColor = UIColor.black
                 item0?.titleLabel.font = UIFont(name: self.getFontName(), size: 13)
                 item0?.imageView.image = UIImage(named: "chat_track")
                 item0?.buttonColor = UIColor.appLogoColor
@@ -284,6 +294,7 @@ class ZHCDemoMessagesViewController: ZHCMessagesViewController, BillDelegate, Ch
         
         item2?.titleLabel.font = UIFont(name: self.getFontName(), size: 13)
         item2?.imageView.image = UIImage(named: "chat_onmyway")
+        item2?.titleLabel.textColor = UIColor.black
         item2?.buttonColor = UIColor.appLogoColor
         item2?.buttonImageColor = .white
         item2?.action = { item in
@@ -326,6 +337,7 @@ class ZHCDemoMessagesViewController: ZHCMessagesViewController, BillDelegate, Ch
             
             item3?.titleLabel.font = UIFont(name: self.getFontName(), size: 13)
             item3?.imageView.image = UIImage(named: "chat_navigate")
+            item3?.titleLabel.textColor = UIColor.black
             item3?.buttonColor = UIColor.appLogoColor
             item3?.buttonImageColor = .white
             item3?.action = { item in
@@ -356,6 +368,9 @@ class ZHCDemoMessagesViewController: ZHCMessagesViewController, BillDelegate, Ch
         }
         // last 4 lines can be replaced with
         // actionButton.display(inViewController: self)
+        
+         self.driverActionButton?.open()
+        
     }
     
     
@@ -405,11 +420,17 @@ class ZHCDemoMessagesViewController: ZHCMessagesViewController, BillDelegate, Ch
     func setupUserFloating() {
         self.actionButton?.removeFromSuperview()
         self.actionButton = JJFloatingActionButton()
+        self.actionButton?.delegate = self
         
+        self.actionButton?.layer.shadowColor = UIColor.black.cgColor
+        self.actionButton?.layer.shadowOffset = CGSize(width: 0, height: 1)
+        self.actionButton?.layer.shadowOpacity = Float(0.4)
+        self.actionButton?.layer.shadowRadius = CGFloat(2)
         
         if (self.order?.status != Constants.ORDER_ON_THE_WAY) {
             let item = actionButton?.addItem()
             item?.titleLabel.text = "cancel_order".localized
+            item?.titleLabel.textColor = UIColor.black
             item?.titleLabel.font = UIFont(name: self.getFontName(), size: 13)
             item?.imageView.image = UIImage(named: "chat_cancelorder")
             item?.buttonColor = UIColor.appLogoColor
@@ -436,6 +457,7 @@ class ZHCDemoMessagesViewController: ZHCMessagesViewController, BillDelegate, Ch
             if (self.order?.status == Constants.ORDER_ON_THE_WAY) {
                 let item0 = self.actionButton?.addItem()
                 item0?.titleLabel.text = "track_order".localized
+                item0?.titleLabel.textColor = UIColor.black
                 item0?.titleLabel.font = UIFont(name: self.getFontName(), size: 13)
                 item0?.imageView.image = UIImage(named: "chat_track")
                 item0?.buttonColor = UIColor.appLogoColor
@@ -469,6 +491,8 @@ class ZHCDemoMessagesViewController: ZHCMessagesViewController, BillDelegate, Ch
         
         // last 4 lines can be replaced with
         // actionButton.display(inViewController: self)
+          self.actionButton?.open()
+        
     }
     
     
@@ -941,3 +965,20 @@ extension ZHCDemoMessagesViewController: UIImagePickerControllerDelegate {
     }
 }
 
+
+extension ZHCDemoMessagesViewController: JJFloatingActionButtonDelegate {
+    func floatingActionButtonWillOpen(_ button: JJFloatingActionButton) {
+        
+    }
+    func floatingActionButtonDidOpen(_ button: JJFloatingActionButton) {
+        
+    }
+    func floatingActionButtonWillClose(_ button: JJFloatingActionButton) {
+       // self.driverActionButton?.open()
+      //  self.actionButton?.open()
+    }
+    func floatingActionButtonDidClose(_ button: JJFloatingActionButton) {
+      //  self.driverActionButton?.open()
+      //  self.actionButton?.open()
+    }
+}
