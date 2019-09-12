@@ -286,8 +286,8 @@ class HomeListVC: BaseViewController, UITableViewDelegate, UITableViewDataSource
             self.hideLoading()
             
             if (self.isProvider()) {
-                ApiService.updateLocation(Authorization: self.loadUser().data?.accessToken ?? "", latitude: self.latitude ?? 0.0, longitude: self.longitude ?? 0.0) { (response) in
-                  
+                ApiService.updateLocation(Authorization: self.loadUser().data?.accessToken ?? "", latitude: location.coordinate.latitude, longitude: location.coordinate.longitude) { (response) in
+                    
                 }
             }
             

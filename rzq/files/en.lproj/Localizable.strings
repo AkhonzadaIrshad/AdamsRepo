@@ -215,3 +215,5 @@
 "cant_subscribe" = "This shop is not available for subscription";
 
 "whatsapp" = "Whatsapp";
+"this_shop_is_closed" = "This shop is closed now.";
+"chat_order_details" = "Order Details";

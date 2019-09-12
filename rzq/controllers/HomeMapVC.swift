@@ -361,7 +361,15 @@ class HomeMapVC: BaseViewController,LabasLocationManagerDelegate, UICollectionVi
             if (response.locationData != nil) {
                 if (item.status == Constants.ORDER_ON_THE_WAY) {
                     self.drawLocationLine(driverLocation: response.locationData!, order: item)
-                }else {
+                }else if (item.status == Constants.ORDER_PROCESSING) {
+                    if (item.time ?? 0 <= 1) {
+                        self.drawLocationLine(driverLocation: response.locationData!, order: item)
+                    }else {
+                        self.polyline?.map = nil
+                        self.pickMarker?.map = nil
+                        self.dropMarker?.map = nil
+                    }
+                } else {
                     self.polyline?.map = nil
                     self.pickMarker?.map = nil
                     self.dropMarker?.map = nil
@@ -454,6 +462,14 @@ class HomeMapVC: BaseViewController,LabasLocationManagerDelegate, UICollectionVi
             if (response.locationData != nil) {
                 if (item.status == Constants.ORDER_ON_THE_WAY) {
                     self.drawLocationLine(driverLocation: response.locationData!, order: item)
+                }else if (item.status == Constants.ORDER_PROCESSING) {
+                    if (item.time ?? 0 <= 1) {
+                        self.drawLocationLine(driverLocation: response.locationData!, order: item)
+                    }else {
+                        self.polyline?.map = nil
+                        self.pickMarker?.map = nil
+                        self.dropMarker?.map = nil
+                    }
                 }else {
                     self.polyline?.map = nil
                     self.pickMarker?.map = nil
@@ -637,19 +653,23 @@ class HomeMapVC: BaseViewController,LabasLocationManagerDelegate, UICollectionVi
             self.latitude = location.coordinate.latitude
             self.longitude = location.coordinate.longitude
             
+//                        self.latitude = 29.363534
+//                        self.longitude = 47.989769
+            
+            
             UserDefaults.standard.setValue(self.latitude, forKey: Constants.LAST_LATITUDE)
             UserDefaults.standard.setValue(self.longitude, forKey: Constants.LAST_LONGITUDE)
             
             
-//            self.latitude = 29.363534
-//            self.longitude = 47.989769
+
             
             self.hideLoading()
             self.setUpGoogleMap()
             
         }
+        
         if (self.isProvider()) {
-            ApiService.updateLocation(Authorization: self.loadUser().data?.accessToken ?? "", latitude: self.latitude ?? 0.0, longitude: self.longitude ?? 0.0) { (response) in
+            ApiService.updateLocation(Authorization: self.loadUser().data?.accessToken ?? "", latitude: location.coordinate.latitude, longitude: location.coordinate.longitude) { (response) in
                 
             }
         }

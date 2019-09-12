@@ -301,7 +301,7 @@ class TenderStep2: BaseVC {
             var filterItems = [SearchTextFieldItem]()
             self.filterShops.removeAll()
             for prediction in response.results ?? [Result]() {
-                let dataShop = DataShop(id: 0, name: prediction.name ?? "", address: prediction.vicinity ?? "", latitude: prediction.geometry?.location?.lat ?? 0.0, longitude: prediction.geometry?.location?.lng ?? 0.0, phoneNumber: "", workingHours: "", images: [String](), rate: prediction.rating ?? 0.0, type: TypeClass(id: 0, name: prediction.types?[0] ?? "", image: ""), ownerId: "")
+                let dataShop = DataShop(id: 0, name: prediction.name ?? "", address: prediction.vicinity ?? "", latitude: prediction.geometry?.location?.lat ?? 0.0, longitude: prediction.geometry?.location?.lng ?? 0.0, phoneNumber: "", workingHours: "", images: [String](), rate: prediction.rating ?? 0.0, type: TypeClass(id: 0, name: prediction.types?[0] ?? "", image: ""), ownerId: "", googlePlaceId:  "", openNow: prediction.openingHours?.openNow ?? false)
                 
                 self.filterShops.append(dataShop)
             }

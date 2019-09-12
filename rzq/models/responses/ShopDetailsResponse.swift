@@ -36,6 +36,8 @@ class ShopData: Codable {
     let type: TypeClass?
     var placeId : String?
     var ownerId : String?
+    var googlePlaceId : String?
+    var openNow : Bool?
     
     enum CodingKeys: String, CodingKey {
         case nearbyDriversCount = "NearbyDriversCount"
@@ -50,9 +52,11 @@ class ShopData: Codable {
         case rate = "Rate"
         case type = "Type"
         case ownerId = "OwnerId"
+        case googlePlaceId = "GooglePlaceId"
+        case openNow = "OpenNow"
     }
     
-    init(nearbyDriversCount: Int?, id: Int?, name: String?, address: String?, latitude: Double?, longitude: Double?, phoneNumber: String?, workingHours: String?, images: [String]?, rate: Double?, type: TypeClass?, ownerId: String?) {
+    init(nearbyDriversCount: Int?, id: Int?, name: String?, address: String?, latitude: Double?, longitude: Double?, phoneNumber: String?, workingHours: String?, images: [String]?, rate: Double?, type: TypeClass?, ownerId: String?, googlePlaceId: String?, openNow : Bool?) {
         self.nearbyDriversCount = nearbyDriversCount
         self.id = id
         self.name = name
@@ -65,10 +69,13 @@ class ShopData: Codable {
         self.rate = rate
         self.type = type
         self.ownerId = ownerId
+        self.googlePlaceId = googlePlaceId
+        self.openNow = openNow
     }
 }
 
 class TypeClass: Codable {
+    
     let id: Int?
     let name, image: String?
     
@@ -77,6 +84,7 @@ class TypeClass: Codable {
         case name = "Name"
         case image = "Image"
     }
+    
     init(id: Int?, name: String?, image: String?) {
         self.id = id
         self.name = name

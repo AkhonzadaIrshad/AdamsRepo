@@ -17,6 +17,8 @@ class WorkingHoursVC: BaseVC, UITableViewDelegate, UITableViewDataSource {
     
     var items = [String]()
     
+    var isGooglePlace : Bool?
+    
     override func viewDidLoad() {
         super.viewDidLoad()
         if (self.isArabic()) {
@@ -49,24 +51,68 @@ class WorkingHoursVC: BaseVC, UITableViewDelegate, UITableViewDataSource {
     }
     
     func getDayText(index : Int) -> String {
-        switch index {
-        case 0:
-            return "monday".localized
-        case 1:
-            return "tuesday".localized
-        case 2:
-            return "wednesday".localized
-        case 3:
-            return "thursday".localized
-        case 4:
-            return "friday".localized
-        case 5:
-            return "saturday".localized
-        case 6:
-            return "sunday".localized
-        default:
-            return "monday".localized
+        if (self.isArabic()) {
+            if (self.isGooglePlace ?? false) {
+                switch index {
+                case 0:
+                    return "saturday".localized
+                case 1:
+                    return "sunday".localized
+                case 2:
+                    return "monday".localized
+                case 3:
+                    return "tuesday".localized
+                case 4:
+                    return "wednesday".localized
+                case 5:
+                    return "thursday".localized
+                case 6:
+                    return "friday".localized
+                default:
+                    return "saturday".localized
+                }
+            }else {
+                switch index {
+                case 0:
+                    return "monday".localized
+                case 1:
+                    return "tuesday".localized
+                case 2:
+                    return "wednesday".localized
+                case 3:
+                    return "thursday".localized
+                case 4:
+                    return "friday".localized
+                case 5:
+                    return "saturday".localized
+                case 6:
+                    return "sunday".localized
+                default:
+                    return "monday".localized
+                }
+            }
+           
+        }else {
+            switch index {
+            case 0:
+                return "monday".localized
+            case 1:
+                return "tuesday".localized
+            case 2:
+                return "wednesday".localized
+            case 3:
+                return "thursday".localized
+            case 4:
+                return "friday".localized
+            case 5:
+                return "saturday".localized
+            case 6:
+                return "sunday".localized
+            default:
+                return "monday".localized
+            }
         }
+       
     }
     
     @IBAction func backAction(_ sender: Any) {

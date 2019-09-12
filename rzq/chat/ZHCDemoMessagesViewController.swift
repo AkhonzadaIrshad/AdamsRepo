@@ -14,10 +14,10 @@ import BRYXBanner
 import SVProgressHUD
 import SwiftyGif
 
-class ZHCDemoMessagesViewController: ZHCMessagesViewController, BillDelegate, ChatDelegate,UINavigationControllerDelegate {
+class ZHCDemoMessagesViewController: ZHCMessagesViewController, BillDelegate, ChatDelegate,UINavigationControllerDelegate, LabasLocationManagerDelegate {
     
-    var demoData: ZHModelData = ZHModelData.init();
-    var presentBool: Bool = false;
+    var demoData: ZHModelData = ZHModelData.init()
+    var presentBool: Bool = false
     
     var order : DatumDel?
     var user : VerifyResponse?
@@ -47,6 +47,9 @@ class ZHCDemoMessagesViewController: ZHCMessagesViewController, BillDelegate, Ch
         }
         return true
     }
+    
+    var latitude : Double?
+    var longitude : Double?
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -97,10 +100,45 @@ class ZHCDemoMessagesViewController: ZHCMessagesViewController, BillDelegate, Ch
         }
         
         
-        let infoBarButtonItem = UIBarButtonItem(title: "details".localized, style: .done, target: self, action: #selector(orderInfoAction))
+        let infoBarButtonItem = UIBarButtonItem(title: "chat_order_details".localized, style: .done, target: self, action: #selector(orderInfoAction))
         self.navigationItem.rightBarButtonItem  = infoBarButtonItem
         
+        if (self.isProvider()) {
+            LabasLocationManager.shared.delegate = self
+            LabasLocationManager.shared.startUpdatingLocation()
+        }
+        
     }
+    
+    
+    
+    func labasLocationManager(didUpdateLocation location: CLLocation) {
+        
+        self.latitude = location.coordinate.latitude
+        self.longitude = location.coordinate.longitude
+        
+        UserDefaults.standard.setValue(self.latitude, forKey: Constants.LAST_LATITUDE)
+        UserDefaults.standard.setValue(self.longitude, forKey: Constants.LAST_LONGITUDE)
+        
+        if (self.latitude ?? 0.0 == 0.0 || self.longitude ?? 0.0 == 0.0) {
+            
+            self.latitude = location.coordinate.latitude
+            self.longitude = location.coordinate.longitude
+            
+           
+            UserDefaults.standard.setValue(self.latitude, forKey: Constants.LAST_LATITUDE)
+            UserDefaults.standard.setValue(self.longitude, forKey: Constants.LAST_LONGITUDE)
+            
+        }
+        if (self.isProvider()) {
+            ApiService.updateLocation(Authorization: self.user?.data?.accessToken ?? "", latitude: location.coordinate.latitude , longitude: location.coordinate.longitude) { (response) in
+                
+            }
+        }
+        
+    }
+    
+    
     
     @objc func orderInfoAction() {
         if let vc = UIStoryboard(name: "Main", bundle: nil).instantiateViewController(withIdentifier: "OrderDetailsVC") as? OrderDetailsVC
@@ -943,6 +981,7 @@ class ZHCDemoMessagesViewController: ZHCMessagesViewController, BillDelegate, Ch
         }
         return false
     }
+    
     
 }
 

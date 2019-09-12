@@ -106,14 +106,6 @@ class ShopDetailsVC: BaseVC, UITableViewDelegate, UITableViewDataSource, UIColle
         self.lblDistance.text = self.getShopDistance()
         
         
-        let hours = self.shop?.workingHours?.split(separator: ",")
-        let dayWeek = Calendar.current.component(.weekday, from: Date()) + 1
-        if (hours?.count ?? 0 > dayWeek) {
-            self.lblWorkingHours.text = String(hours?[dayWeek] ?? "")
-        }else if (hours?.count ?? 0 > 0) {
-            self.lblWorkingHours.text = String(hours?[0] ?? "")
-        }
-        
         self.lblNearbyDrivers.text = "\((self.shop?.nearbyDriversCount ?? 0 + 10)) \("drivers".localized)"
         // Do any additional setup after loading the view.
         
@@ -145,10 +137,62 @@ class ShopDetailsVC: BaseVC, UITableViewDelegate, UITableViewDataSource, UIColle
         
         if (self.shop?.id ?? 0 == 0 && self.shop?.placeId ?? "" == "") {
             self.viewRegister.isHidden = true
-        }else {
+           
+        } else {
             self.viewRegister.isHidden = false
         }
         
+        if (self.shop?.googlePlaceId?.count ?? 0 > 0) {
+            self.loadShopHours()
+        }else {
+            let hours = self.shop?.workingHours?.split(separator: ",")
+            let dayWeek = self.getWeekDay()
+            if (hours?.count ?? 0 > dayWeek) {
+                self.lblWorkingHours.text = String(hours?[dayWeek] ?? "")
+                
+                let hoursWithoutSpace = hours?[dayWeek].replacingOccurrences(of: " ", with: "")
+                let hoursSplit = hoursWithoutSpace?.split(separator: "-")
+                
+                if (hoursSplit?.count ?? 0 > 0) {
+                    //  let fromHour = hoursSplit?[0]
+                    let toHour = hoursSplit?[1]
+                    
+                    let currentHour = self.getCurrentHour()
+                    
+                    let toHourOnly = String(toHour?.prefix(2) ?? "00")
+                    
+                    let toHourInt = Int(toHourOnly) ?? 0
+                    
+                    if (currentHour > toHourInt) {
+                        self.showBanner(title: "alert".localized, message: "this_shop_is_closed".localized, style: UIColor.INFO)
+                    }
+                }else {
+                   self.lblWorkingHours.text = "---"
+                }
+                
+            }else if (hours?.count ?? 0 > 0) {
+                self.lblWorkingHours.text = "---"
+            }
+        }
+        
+    }
+    
+    func loadShopHours() {
+        self.showLoading()
+        ApiService.getPlaceDetails(placeid: self.shop?.googlePlaceId ?? "") { (response) in
+            self.hideLoading()
+             let dayWeek = self.getWeekDay()
+            let arr = response.detailsResult?.openingHours?.weekdayText
+            if (arr?.count ?? 0 > dayWeek) {
+              self.lblWorkingHours.text = response.detailsResult?.openingHours?.weekdayText?[dayWeek]
+            }else {
+                self.lblWorkingHours.text = "---"
+            }
+            let bool = response.detailsResult?.openingHours?.openNow ?? false
+            if (!bool) {
+                self.showBanner(title: "alert".localized, message: "this_shop_is_closed".localized, style: UIColor.INFO)
+            }
+        }
     }
     
     //collection delegates
@@ -378,15 +422,42 @@ class ShopDetailsVC: BaseVC, UITableViewDelegate, UITableViewDataSource, UIColle
     }
     
     @IBAction func workingHoursAction(_ sender: Any) {
-        let hours = (self.shop?.workingHours?.split(separator: ","))!
-        var items = [String]()
-        for hour in hours {
-            items.append(String(hour))
-        }
-        if let vc = UIStoryboard(name: "Main", bundle: nil).instantiateViewController(withIdentifier: "WorkingHoursVC") as? WorkingHoursVC
-        {
-            vc.items = items
-            self.navigationController?.pushViewController(vc, animated: true)
+        if (self.shop?.googlePlaceId?.count ?? 0 > 0) {
+            
+            self.showLoading()
+            ApiService.getPlaceDetails(placeid: self.shop?.googlePlaceId ?? "") { (response) in
+                self.hideLoading()
+                let arr = response.detailsResult?.openingHours?.weekdayText ?? [String]()
+                
+                if let vc = UIStoryboard(name: "Main", bundle: nil).instantiateViewController(withIdentifier: "WorkingHoursVC") as? WorkingHoursVC
+                {
+                    vc.items = arr
+                    if (self.shop?.googlePlaceId?.count ?? 0 > 0) {
+                        vc.isGooglePlace = true
+                    }else {
+                        vc.isGooglePlace = false
+                    }
+                    self.navigationController?.pushViewController(vc, animated: true)
+                }
+            }
+            
+            
+        }else {
+            let hours = (self.shop?.workingHours?.split(separator: ","))!
+            var items = [String]()
+            for hour in hours {
+                items.append(String(hour))
+            }
+            if let vc = UIStoryboard(name: "Main", bundle: nil).instantiateViewController(withIdentifier: "WorkingHoursVC") as? WorkingHoursVC
+            {
+                vc.items = items
+                if (self.shop?.googlePlaceId?.count ?? 0 > 0) {
+                    vc.isGooglePlace = true
+                }else {
+                    vc.isGooglePlace = false
+                }
+                self.navigationController?.pushViewController(vc, animated: true)
+            }
         }
     }
     
@@ -442,8 +513,37 @@ class ShopDetailsVC: BaseVC, UITableViewDelegate, UITableViewDataSource, UIColle
         }
     }
     
+    func getWeekDay() -> Int {
+        var calendar = Calendar.current
+        calendar.locale = Locale(identifier: "KW")
+        var dayOfWeek = 0
+        if (self.isArabic()) {
+            if (self.shop?.googlePlaceId?.count ?? 0 > 0) {
+                dayOfWeek = calendar.component(.weekday, from: Date()) + 2 - calendar.firstWeekday
+            }else {
+               dayOfWeek = calendar.component(.weekday, from: Date())  - calendar.firstWeekday
+            }
+           
+        }else {
+           dayOfWeek = calendar.component(.weekday, from: Date()) - calendar.firstWeekday
+        }
+        if dayOfWeek <= 0 {
+            dayOfWeek += 7
+        }
+        return dayOfWeek
+    }
+    
+    func getCurrentHour() -> Int {
+        let date = Date()// Aug 25, 2017, 11:55 AM
+        let calendar = Calendar.current
+        
+        let hour = calendar.component(.hour, from: date)
+        
+        return hour
+    }
     
 }
+
 extension ShopDetailsVC : GMSMapViewDelegate {
     func mapView(_ mapView: GMSMapView, didChange position: GMSCameraPosition) {
         

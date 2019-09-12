@@ -215,3 +215,5 @@
 "cant_subscribe" = "هذا المتجر غير متوفر للتسجيل.";
 
 "whatsapp" = "واتس اب";
+"this_shop_is_closed" = "هاذا المتجر مغلق في الوقت الحالي.";
+"chat_order_details" = "تفاصيل الطلب";

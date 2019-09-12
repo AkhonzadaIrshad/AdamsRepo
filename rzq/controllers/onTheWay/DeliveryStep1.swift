@@ -256,7 +256,7 @@ class DeliveryStep1: BaseVC,LabasLocationManagerDelegate, Step2Delegate {
             vc.latitude = self.latitude ?? 0.0
             vc.longitude = self.longitude ?? 0.0
             
-            let shopData = ShopData(nearbyDriversCount: 0, id: self.orderModel?.shop?.id ?? 0, name: self.orderModel?.shop?.name ?? "", address: self.orderModel?.shop?.address ?? "", latitude: self.orderModel?.shop?.latitude ?? 0.0, longitude: self.orderModel?.shop?.longitude ?? 0.0, phoneNumber: self.orderModel?.shop?.phoneNumber ?? "", workingHours: self.orderModel?.shop?.workingHours ?? "", images: self.orderModel?.shop?.images ?? [String](), rate: self.orderModel?.shop?.rate ?? 0.0, type: self.orderModel?.shop?.type ?? TypeClass(id: 0, name: "",image: ""), ownerId: self.orderModel?.shop?.ownerId ?? "")
+            let shopData = ShopData(nearbyDriversCount: 0, id: self.orderModel?.shop?.id ?? 0, name: self.orderModel?.shop?.name ?? "", address: self.orderModel?.shop?.address ?? "", latitude: self.orderModel?.shop?.latitude ?? 0.0, longitude: self.orderModel?.shop?.longitude ?? 0.0, phoneNumber: self.orderModel?.shop?.phoneNumber ?? "", workingHours: self.orderModel?.shop?.workingHours ?? "", images: self.orderModel?.shop?.images ?? [String](), rate: self.orderModel?.shop?.rate ?? 0.0, type: self.orderModel?.shop?.type ?? TypeClass(id: 0, name: "",image: ""), ownerId: self.orderModel?.shop?.ownerId ?? "",googlePlaceId:  self.orderModel?.shop?.googlePlaceId ?? "", openNow: self.orderModel?.shop?.openNow ?? false)
             shopData.placeId = self.orderModel?.shop?.placeId ?? ""
             
             vc.shop = shopData
@@ -286,11 +286,14 @@ class DeliveryStep1: BaseVC,LabasLocationManagerDelegate, Step2Delegate {
             self.latitude = location.coordinate.latitude
             self.longitude = location.coordinate.longitude
             
+//                        self.latitude = 29.363534
+//                        self.longitude = 47.989769
+            
+            
             UserDefaults.standard.setValue(self.latitude, forKey: Constants.LAST_LATITUDE)
             UserDefaults.standard.setValue(self.longitude, forKey: Constants.LAST_LONGITUDE)
             
-//            self.latitude = 29.363534
-//            self.longitude = 47.989769
+
 
             self.setUpGoogleMap()
         }
@@ -573,7 +576,7 @@ class DeliveryStep1: BaseVC,LabasLocationManagerDelegate, Step2Delegate {
             var filterItems = [SearchTextFieldItem]()
             self.filterShops.removeAll()
             for prediction in response.results ?? [Result]() {
-                let dataShop = DataShop(id: 0, name: prediction.name ?? "", address: prediction.vicinity ?? "", latitude: prediction.geometry?.location?.lat ?? 0.0, longitude: prediction.geometry?.location?.lng ?? 0.0, phoneNumber: "", workingHours: "", images: [String](), rate: prediction.rating ?? 0.0, type: TypeClass(id: 0, name: prediction.types?[0] ?? "", image: ""), ownerId: "")
+                let dataShop = DataShop(id: 0, name: prediction.name ?? "", address: prediction.vicinity ?? "", latitude: prediction.geometry?.location?.lat ?? 0.0, longitude: prediction.geometry?.location?.lng ?? 0.0, phoneNumber: "", workingHours: "", images: [String](), rate: prediction.rating ?? 0.0, type: TypeClass(id: 0, name: prediction.types?[0] ?? "", image: ""), ownerId: "", googlePlaceId: prediction.placeID ?? "", openNow: prediction.openingHours?.openNow ?? false)
                dataShop.placeId = prediction.id ?? ""
                   self.filterShops.append(dataShop)
             }
@@ -745,7 +748,7 @@ extension DeliveryStep1 : GMSMapViewDelegate {
                 self.pinMarker?.map = nil
                 self.lblPickupLocation.textColor = UIColor.appDarkBlue
                 self.lblPickupLocation.text = response.shopData?.name ?? ""
-                let dataShop = DataShop(id: response.shopData?.id ?? 0, name: response.shopData?.name ?? "", address: response.shopData?.address ?? "", latitude: response.shopData?.latitude ?? 0.0, longitude: response.shopData?.longitude ?? 0.0, phoneNumber: response.shopData?.phoneNumber ?? "", workingHours: response.shopData?.workingHours ?? "", images: response.shopData?.images ?? [String](), rate: response.shopData?.rate ?? 0.0, type: response.shopData?.type ?? TypeClass(id: 0, name: "",image: ""),ownerId: response.shopData?.ownerId ?? "")
+                let dataShop = DataShop(id: response.shopData?.id ?? 0, name: response.shopData?.name ?? "", address: response.shopData?.address ?? "", latitude: response.shopData?.latitude ?? 0.0, longitude: response.shopData?.longitude ?? 0.0, phoneNumber: response.shopData?.phoneNumber ?? "", workingHours: response.shopData?.workingHours ?? "", images: response.shopData?.images ?? [String](), rate: response.shopData?.rate ?? 0.0, type: response.shopData?.type ?? TypeClass(id: 0, name: "",image: ""),ownerId: response.shopData?.ownerId ?? "", googlePlaceId: response.shopData?.googlePlaceId ?? "", openNow : response.shopData?.openNow ?? false)
                 self.orderModel?.shop = dataShop
                 self.orderModel?.pickUpAddress = response.shopData?.name ?? ""
                 self.orderModel?.pickUpLatitude = response.shopData?.latitude ?? 0.0

@@ -1287,6 +1287,29 @@ class ApiService : NSObject {
     }
     
     
+    static func getPlaceDetails(placeid : String, completion:@escaping(_ response : GooglePlaceDetailsResponse)-> Void) {
+        
+        let headers = ["Content-Type": "application/json"]
+        
+        let url = "https://maps.googleapis.com/maps/api/place/details/json?placeid=\(placeid)&fields=opening_hours&language=\(self.getLang())&key=\(Constants.GOOGLE_API_KEY)"
+        
+        let encodedUrl = url.addingPercentEncoding(withAllowedCharacters: .urlQueryAllowed) ?? url
+        
+        AFManager.request(encodedUrl, method: .get, parameters: nil ,encoding: JSONEncoding.default, headers: headers)
+            .responseJSON { response in
+                if let json = response.data {
+                    do {
+                        let decoder = JSONDecoder()
+                        let baseResponse = try decoder.decode(GooglePlaceDetailsResponse.self, from: json)
+                        completion(baseResponse)
+                    }catch let err{
+                        print(err)
+                    }
+                }
+        }
+    }
+    
+    
     static func redeemCoupon(Authorization : String, code: String, completion:@escaping(_ response : BaseResponse)-> Void) {
         
         let headers = [Constants.AUTH_HEADER: "bearer \(Authorization)",
