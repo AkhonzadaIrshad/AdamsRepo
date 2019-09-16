@@ -440,6 +440,9 @@ class AppDelegate: UIResponder, UIApplicationDelegate, MOLHResetable,MessagingDe
     
     
     func updateChat() {
+        App.shared.notificationValue = "0"
+        App.shared.notificationType = "0"
+        App.shared.notificationDeliveryId = "0"
         if let rootViewController = UIApplication.topViewController() {
             if rootViewController is ZHCDemoMessagesViewController {
                 let vc = rootViewController as! ZHCDemoMessagesViewController
@@ -449,6 +452,9 @@ class AppDelegate: UIResponder, UIApplicationDelegate, MOLHResetable,MessagingDe
     }
     
     func closeChat() {
+        App.shared.notificationValue = "0"
+        App.shared.notificationType = "0"
+        App.shared.notificationDeliveryId = "0"
         if let rootViewController = UIApplication.topViewController() {
             if rootViewController is ZHCDemoMessagesViewController {
                 let vc = rootViewController as! ZHCDemoMessagesViewController
@@ -458,6 +464,9 @@ class AppDelegate: UIResponder, UIApplicationDelegate, MOLHResetable,MessagingDe
     }
     
     func removeCancelFromChat() {
+        App.shared.notificationValue = "0"
+        App.shared.notificationType = "0"
+        App.shared.notificationDeliveryId = "0"
         if let rootViewController = UIApplication.topViewController() {
             if rootViewController is ZHCDemoMessagesViewController {
                 let vc = rootViewController as! ZHCDemoMessagesViewController
@@ -466,6 +475,9 @@ class AppDelegate: UIResponder, UIApplicationDelegate, MOLHResetable,MessagingDe
         }
     }
     func updateNotifications() {
+        App.shared.notificationValue = "0"
+        App.shared.notificationType = "0"
+        App.shared.notificationDeliveryId = "0"
         if let rootViewController = UIApplication.topViewController() {
             if rootViewController is NotificationsVC {
                 let vc = rootViewController as! NotificationsVC
@@ -476,6 +488,9 @@ class AppDelegate: UIResponder, UIApplicationDelegate, MOLHResetable,MessagingDe
     
     
     func openWorkingOrders() {
+        App.shared.notificationValue = "0"
+        App.shared.notificationType = "0"
+        App.shared.notificationDeliveryId = "0"
         if let rootViewController = UIApplication.topViewController() {
             if rootViewController is NotificationsVC {
                 let vc = rootViewController as! NotificationsVC
@@ -485,6 +500,9 @@ class AppDelegate: UIResponder, UIApplicationDelegate, MOLHResetable,MessagingDe
     }
     
     func goToNotifications() {
+        App.shared.notificationValue = "0"
+        App.shared.notificationType = "0"
+        App.shared.notificationDeliveryId = "0"
         if let rootViewController = UIApplication.topViewController() {
             if rootViewController is SendingOrderVC {
                 let vc = rootViewController as! SendingOrderVC
@@ -494,6 +512,9 @@ class AppDelegate: UIResponder, UIApplicationDelegate, MOLHResetable,MessagingDe
     }
     
     func loadTracks() {
+        App.shared.notificationValue = "0"
+        App.shared.notificationType = "0"
+        App.shared.notificationDeliveryId = "0"
         if let rootViewController = UIApplication.topViewController() {
             if rootViewController is HomeMapVC {
                 let vc = rootViewController as! HomeMapVC
@@ -772,6 +793,13 @@ extension UIColor {
     }
     static var expired:UIColor {
         return #colorLiteral(red: 0.7411764706, green: 0.06274509804, blue: 0.8784313725, alpha: 1)
+    }
+    
+    static var app_green:UIColor {
+        return #colorLiteral(red: 0.4078431373, green: 0.6235294118, blue: 0.2196078431, alpha: 1)
+    }
+    static var app_red:UIColor {
+        return #colorLiteral(red: 0.9019607843, green: 0.2901960784, blue: 0.09803921569, alpha: 1)
     }
 }
 

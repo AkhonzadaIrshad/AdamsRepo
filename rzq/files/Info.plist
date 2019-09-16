@@ -17,7 +17,7 @@
 	<key>CFBundlePackageType</key>
 	<string>APPL</string>
 	<key>CFBundleShortVersionString</key>
-	<string>2.1</string>
+	<string>2.2</string>
 	<key>CFBundleURLTypes</key>
 	<array>
 		<dict>
@@ -28,7 +28,7 @@
 		</dict>
 	</array>
 	<key>CFBundleVersion</key>
-	<string>23</string>
+	<string>26</string>
 	<key>LSApplicationQueriesSchemes</key>
 	<array>
 		<string>tel</string>
@@ -49,6 +49,8 @@
 	</dict>
 	<key>NSCameraUsageDescription</key>
 	<string>This app will use camera to take photos for your order.</string>
+	<key>NSLocationAlwaysUsageDescription</key>
+	<string>RZQ needs to access your location to keep the client updated with order estimated arrival.</string>
 	<key>NSLocationWhenInUseUsageDescription</key>
 	<string>RZQ needs to access your location to show you nearby shops and track orders.</string>
 	<key>NSMicrophoneUsageDescription</key>

@@ -8,6 +8,7 @@
 
 import UIKit
 import SwiftyGif
+import Firebase
 
 class SendingOrderVC: BaseVC {
 
@@ -29,6 +30,12 @@ class SendingOrderVC: BaseVC {
             self.lblTitle.text = "waiting_provider_bids".localized
             self.lblDesc.text = "waiting_provider_bids_desc".localized
         }
+        
+        ApiService.updateRegId(Authorization: self.loadUser().data?.accessToken ?? "", regId: Messaging.messaging().fcmToken ?? "not_avaliable") { (response) in
+            
+            
+        }
+        
         
     }
     

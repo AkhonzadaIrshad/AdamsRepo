@@ -53,12 +53,17 @@ class ShopDetailsVC: BaseVC, UITableViewDelegate, UITableViewDataSource, UIColle
     
     @IBOutlet weak var ivEdit: UIButton!
     
+    @IBOutlet weak var lblOpenNow: MyUILabel!
+    
+    
     var currentZoom: Float = 0.0
     var gMap : GMSMapView?
     
     var shop : ShopData?
     
     var items = [ShopDelDatum]()
+    
+    
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -165,13 +170,18 @@ class ShopDetailsVC: BaseVC, UITableViewDelegate, UITableViewDataSource, UIColle
                     
                     if (currentHour > toHourInt) {
                         self.showBanner(title: "alert".localized, message: "this_shop_is_closed".localized, style: UIColor.INFO)
+                        self.handleOpenNowViews(isOpen: false, show: true)
+                    }else {
+                        self.handleOpenNowViews(isOpen: true, show: true)
                     }
                 }else {
                    self.lblWorkingHours.text = "---"
+                    self.handleOpenNowViews(isOpen: false, show: false)
                 }
                 
             }else if (hours?.count ?? 0 > 0) {
                 self.lblWorkingHours.text = "---"
+                self.handleOpenNowViews(isOpen: false, show: false)
             }
         }
         
@@ -187,10 +197,14 @@ class ShopDetailsVC: BaseVC, UITableViewDelegate, UITableViewDataSource, UIColle
               self.lblWorkingHours.text = response.detailsResult?.openingHours?.weekdayText?[dayWeek]
             }else {
                 self.lblWorkingHours.text = "---"
+                self.handleOpenNowViews(isOpen: false, show: false)
             }
             let bool = response.detailsResult?.openingHours?.openNow ?? false
             if (!bool) {
                 self.showBanner(title: "alert".localized, message: "this_shop_is_closed".localized, style: UIColor.INFO)
+                self.handleOpenNowViews(isOpen: false, show: true)
+            }else {
+                self.handleOpenNowViews(isOpen: true, show: true)
             }
         }
     }
@@ -540,6 +554,22 @@ class ShopDetailsVC: BaseVC, UITableViewDelegate, UITableViewDataSource, UIColle
         let hour = calendar.component(.hour, from: date)
         
         return hour
+    }
+    
+    func handleOpenNowViews(isOpen : Bool, show: Bool) {
+        if (show == false) {
+            self.lblOpenNow.isHidden = true
+            return
+        }
+        self.lblOpenNow.isHidden = false
+        
+        if (isOpen) {
+            self.lblOpenNow.text = "open_now".localized
+            self.lblOpenNow.textColor = UIColor.app_green
+        }else {
+            self.lblOpenNow.text = "closed_now".localized
+            self.lblOpenNow.textColor = UIColor.app_red
+        }
     }
     
 }

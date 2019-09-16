@@ -239,7 +239,7 @@ class EditShopVC: BaseVC, SelectLocationDelegate,UINavigationControllerDelegate,
     @IBAction func submitAction(_ sender: Any) {
         if (self.validate()) {
             self.showLoading()
-            ApiService.editShop(Authorization: self.loadUser().data?.accessToken ?? "",address: self.edtAddress.text ?? "", latitude: self.selectedLocation?.coordinate.latitude ?? 0.0, longitude: self.selectedLocation?.coordinate.longitude ?? 0.0, phoneNumber: "", workingHours: self.chosenHours ?? "", name: self.edtName.text ?? "", type: self.selectedType?.id ?? 0, shopId : self.shop?.id ?? 0) { (response) in
+            ApiService.editShop(Authorization: self.loadUser().data?.accessToken ?? "",address: self.edtAddress.text ?? "", latitude: self.selectedLocation?.coordinate.latitude ?? 0.0, longitude: self.selectedLocation?.coordinate.longitude ?? 0.0, phoneNumber: self.loadUser().data?.phoneNumber ?? "", workingHours: self.chosenHours ?? "", name: self.edtName.text ?? "", type: self.selectedType?.id ?? 0, shopId : self.shop?.id ?? 0) { (response) in
                 self.hideLoading()
                 if (response.errorCode == 0) {
                     self.handleUploadingMedia(id : response.data ?? 0)

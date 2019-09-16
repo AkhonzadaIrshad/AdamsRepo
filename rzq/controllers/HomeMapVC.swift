@@ -61,6 +61,9 @@ class HomeMapVC: BaseViewController,LabasLocationManagerDelegate, UICollectionVi
     
     var collectionViewFlowLayout : UICollectionViewFlowLayout?
     
+    weak var timer: Timer?
+    var timerDispatchSourceTimer : DispatchSourceTimer?
+    
     override func viewDidLoad() {
         super.viewDidLoad()
         gMap = GMSMapView()
@@ -349,33 +352,7 @@ class HomeMapVC: BaseViewController,LabasLocationManagerDelegate, UICollectionVi
         }
         
         let item = self.items[(visibleIndexPath?.row)!]
-        ApiService.getOrderLocation(Authorization: self.loadUser().data?.accessToken ?? "", deliveryId: item.id ?? 0) { (response) in
-            let myLatLng = CLLocation(latitude: self.latitude ?? 0.0, longitude: self.longitude ?? 0.0)
-            let driverLatLng = CLLocation(latitude: response.locationData?.latitude ?? 0.0, longitude: response.locationData?.longitude ?? 0.0)
-            let distanceInMeters = driverLatLng.distance(from: myLatLng)
-            let distanceInKM = distanceInMeters / 1000.0
-            let distanceStr = String(format: "%.2f", distanceInKM)
-            
-            cell.lblDistance.text = "\(distanceStr) \("km".localized)"
-            cell.lblTime.text = "\(String(format: "%.1f", (distanceInKM * 1.1))) \("minutes".localized)"
-            if (response.locationData != nil) {
-                if (item.status == Constants.ORDER_ON_THE_WAY) {
-                    self.drawLocationLine(driverLocation: response.locationData!, order: item)
-                }else if (item.status == Constants.ORDER_PROCESSING) {
-                    if (item.time ?? 0 <= 1) {
-                        self.drawLocationLine(driverLocation: response.locationData!, order: item)
-                    }else {
-                        self.polyline?.map = nil
-                        self.pickMarker?.map = nil
-                        self.dropMarker?.map = nil
-                    }
-                } else {
-                    self.polyline?.map = nil
-                    self.pickMarker?.map = nil
-                    self.dropMarker?.map = nil
-                }
-            }
-        }
+        self.getDriverLocation(item: item)
     }
     
     
@@ -450,7 +427,68 @@ class HomeMapVC: BaseViewController,LabasLocationManagerDelegate, UICollectionVi
             }
         }
         
+        self.getDriverLocation(item: item)
+        
+        return cell
+        
+    }
+    
+    
+    
+    func stopTimer() {
+        timer?.invalidate()
+        //timerDispatchSourceTimer?.suspend() // if you want to suspend timer
+        timerDispatchSourceTimer?.cancel()
+    }
+    
+    // if appropriate, make sure to stop your timer in `deinit`
+    deinit {
+        stopTimer()
+    }
+    
+    
+    func getDriverLocation(item : DatumDel) {
+        stopTimer()
+        self.getDriverLocationAPI(item: item)
+        if #available(iOS 10.0, *) {
+            timer = Timer.scheduledTimer(withTimeInterval: 5, repeats: true) { [weak self] _ in
+                // do something here
+                self?.getDriverLocationAPI(item: item)
+            }
+            
+        } else {
+            // Fallback on earlier versions
+            timerDispatchSourceTimer = DispatchSource.makeTimerSource(flags: [], queue: DispatchQueue.main)
+            timerDispatchSourceTimer?.scheduleRepeating(deadline: .now(), interval: .seconds(5))
+            timerDispatchSourceTimer?.setEventHandler{
+                // do something here
+                self.getDriverLocationAPI(item: item)
+                
+            }
+            timerDispatchSourceTimer?.resume()
+        }
+    }
+    
+    
+    func getDriverLocationAPI(item : DatumDel) {
+        
+        let visibleRect = CGRect(origin: self.collectionView.contentOffset, size: self.collectionView.bounds.size)
+        let visiblePoint = CGPoint(x: visibleRect.midX, y: visibleRect.midY)
+        let visibleIndexPath = self.collectionView.indexPathForItem(at: visiblePoint)
+        if (self.collectionView.visibleCells.count == 0) {
+            return
+        }
+        let cell = self.collectionView.cellForItem(at: visibleIndexPath!) as! PendingOrderCell
+        
+        let count = UserDefaults.standard.value(forKey: Constants.NOTIFICATION_CHAT_COUNT) as? Int ?? 0
+        if (count > 0) {
+            cell.ivDot.isHidden = false
+        }else {
+            cell.ivDot.isHidden = true
+        }
+        
         ApiService.getOrderLocation(Authorization: self.loadUser().data?.accessToken ?? "", deliveryId: item.id ?? 0) { (response) in
+            print("shit shit shit")
             let myLatLng = CLLocation(latitude: self.latitude ?? 0.0, longitude: self.longitude ?? 0.0)
             let driverLatLng = CLLocation(latitude: response.locationData?.latitude ?? 0.0, longitude: response.locationData?.longitude ?? 0.0)
             let distanceInMeters = driverLatLng.distance(from: myLatLng)
@@ -477,9 +515,6 @@ class HomeMapVC: BaseViewController,LabasLocationManagerDelegate, UICollectionVi
                 }
             }
         }
-        
-        return cell
-        
     }
     
     
@@ -776,6 +811,7 @@ class HomeMapVC: BaseViewController,LabasLocationManagerDelegate, UICollectionVi
                 //back to false when u want to show them
                 self.viewServices.isHidden = true
                 self.viewTenders.isHidden = true
+                self.stopTimer()
             }
             
         }

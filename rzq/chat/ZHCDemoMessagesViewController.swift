@@ -114,6 +114,8 @@ class ZHCDemoMessagesViewController: ZHCMessagesViewController, BillDelegate, Ch
     
     func labasLocationManager(didUpdateLocation location: CLLocation) {
         
+        print("location update")
+        
         self.latitude = location.coordinate.latitude
         self.longitude = location.coordinate.longitude
         

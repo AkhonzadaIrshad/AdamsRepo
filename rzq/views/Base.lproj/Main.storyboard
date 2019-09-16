@@ -10,12 +10,12 @@
         <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
     </dependencies>
     <customFonts key="customFonts">
-        <array key="arabic_medium.ttf">
-            <string>Tajawal-Medium</string>
-        </array>
         <array key="arabic_regular.ttf">
             <string>Cairo-Regular</string>
             <string>Tajawal-Regular</string>
+        </array>
+        <array key="arabic_semibold.ttf">
+            <string>Tajawal-Medium</string>
         </array>
         <array key="english_regular.otf">
             <string>SFProDisplay-Regular</string>
@@ -2499,7 +2499,7 @@
                                         <rect key="frame" x="0.0" y="162" width="335" height="50"/>
                                         <subviews>
                                             <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Working Hours" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="F6f-gO-h0q" customClass="MyUILabel" customModule="rzq" customModuleProvider="target">
-                                                <rect key="frame" x="5" y="4.9999999999999991" width="325" height="14.666666666666664"/>
+                                                <rect key="frame" x="5" y="4.9999999999999991" width="83.666666666666671" height="14.666666666666664"/>
                                                 <fontDescription key="fontDescription" type="system" pointSize="12"/>
                                                 <color key="textColor" red="0.24313725489999999" green="0.054901960780000002" blue="0.4039215686" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                                                 <nil key="highlightedColor"/>
@@ -2516,17 +2516,27 @@
                                                     <userDefinedRuntimeAttribute type="string" keyPath="font_type" value="15,3"/>
                                                 </userDefinedRuntimeAttributes>
                                             </label>
+                                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="eUd-zf-Wgw" customClass="MyUILabel" customModule="rzq" customModuleProvider="target">
+                                                <rect key="frame" x="330" y="5" width="0.0" height="0.0"/>
+                                                <fontDescription key="fontDescription" type="system" pointSize="12"/>
+                                                <nil key="textColor"/>
+                                                <nil key="highlightedColor"/>
+                                                <userDefinedRuntimeAttributes>
+                                                    <userDefinedRuntimeAttribute type="string" keyPath="font_type" value="12,2"/>
+                                                </userDefinedRuntimeAttributes>
+                                            </label>
                                         </subviews>
                                         <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                         <gestureRecognizers/>
                                         <constraints>
+                                            <constraint firstAttribute="trailing" secondItem="eUd-zf-Wgw" secondAttribute="trailing" constant="5" id="5MM-eB-mPo"/>
                                             <constraint firstAttribute="trailing" secondItem="zPv-Ye-SEg" secondAttribute="trailing" constant="5" id="8Fr-RX-ajf"/>
                                             <constraint firstItem="zPv-Ye-SEg" firstAttribute="leading" secondItem="XXO-Bg-IfF" secondAttribute="leading" constant="5" id="9pF-AL-eza"/>
                                             <constraint firstAttribute="height" constant="50" id="Cuh-ot-RSo"/>
-                                            <constraint firstAttribute="trailing" secondItem="F6f-gO-h0q" secondAttribute="trailing" constant="5" id="I75-DO-yU8"/>
                                             <constraint firstItem="F6f-gO-h0q" firstAttribute="top" secondItem="XXO-Bg-IfF" secondAttribute="top" constant="5" id="Nue-w2-Cgb"/>
                                             <constraint firstAttribute="bottom" secondItem="zPv-Ye-SEg" secondAttribute="bottom" constant="5" id="RXs-bk-M5g"/>
                                             <constraint firstItem="F6f-gO-h0q" firstAttribute="leading" secondItem="XXO-Bg-IfF" secondAttribute="leading" constant="5" id="ZbW-fr-KnL"/>
+                                            <constraint firstItem="eUd-zf-Wgw" firstAttribute="top" secondItem="XXO-Bg-IfF" secondAttribute="top" constant="5" id="oJW-l2-EMF"/>
                                         </constraints>
                                         <connections>
                                             <outletCollection property="gestureRecognizers" destination="mF8-SZ-aG1" appends="YES" id="BrR-0f-bTg"/>
@@ -2749,6 +2759,7 @@
                         <outlet property="lblImages" destination="e3B-g0-1kP" id="l7O-aH-7tD"/>
                         <outlet property="lblName" destination="BbP-Ip-wMs" id="pX3-Wr-Ff2"/>
                         <outlet property="lblNearbyDrivers" destination="USb-XI-f7g" id="EKA-ve-UW4"/>
+                        <outlet property="lblOpenNow" destination="eUd-zf-Wgw" id="PYe-cJ-2zy"/>
                         <outlet property="lblWorkingHours" destination="zPv-Ye-SEg" id="0ES-Ff-OVv"/>
                         <outlet property="mapView" destination="BC0-vU-rZd" id="I6N-kV-jiA"/>
                         <outlet property="ratingView" destination="9x5-0P-Zxx" id="upS-bT-zEt"/>

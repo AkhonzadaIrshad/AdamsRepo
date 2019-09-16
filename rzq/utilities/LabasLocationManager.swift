@@ -31,6 +31,7 @@ class LabasLocationManager: NSObject {
         super.init()
         
         self.locationManager = CLLocationManager()
+        self.locationManager?.allowsBackgroundLocationUpdates = true
         guard let locationManager = self.locationManager else {
             return
         }
@@ -42,7 +43,7 @@ class LabasLocationManager: NSObject {
     
     static let shared : LabasLocationManager = {
         let instance = LabasLocationManager()
-        return instance
+        return instance 
     }()
     
     func getLocationServiceState() -> LocationServiceState {
