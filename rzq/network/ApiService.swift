@@ -1302,7 +1302,7 @@ class ApiService : NSObject {
                         let decoder = JSONDecoder()
                         let baseResponse = try decoder.decode(GooglePlaceDetailsResponse.self, from: json)
                         completion(baseResponse)
-                    }catch let err{
+                    }catch let err {
                         print(err)
                     }
                 }

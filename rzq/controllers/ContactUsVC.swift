@@ -72,9 +72,15 @@ class ContactUsVC: BaseVC {
     }
     
     func openWebsite() {
-        let application = UIApplication.shared
-        let webURL = URL(string: App.shared.config?.company?.website ?? "")!
-        application.open(webURL)
+        if (App.shared.config?.company?.website?.contains(find: "http") ?? false || App.shared.config?.company?.website?.contains(find: "https") ?? false) {
+            let application = UIApplication.shared
+            let webURL = URL(string: App.shared.config?.company?.website ?? "")!
+            application.open(webURL)
+        }else {
+            let application = UIApplication.shared
+            let webURL = URL(string: "http://\(App.shared.config?.company?.website ?? "")")!
+            application.open(webURL)
+        }
     }
     
     func callNumber()

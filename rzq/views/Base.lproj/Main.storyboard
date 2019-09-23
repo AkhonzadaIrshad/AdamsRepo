@@ -10,12 +10,12 @@
         <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
     </dependencies>
     <customFonts key="customFonts">
+        <array key="arabic_medium.ttf">
+            <string>Tajawal-Medium</string>
+        </array>
         <array key="arabic_regular.ttf">
             <string>Cairo-Regular</string>
             <string>Tajawal-Regular</string>
-        </array>
-        <array key="arabic_semibold.ttf">
-            <string>Tajawal-Medium</string>
         </array>
         <array key="english_regular.otf">
             <string>SFProDisplay-Regular</string>
@@ -2133,7 +2133,7 @@
                                 </userDefinedRuntimeAttributes>
                             </view>
                             <segmentedControl opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="top" segmentControlStyle="plain" selectedSegmentIndex="0" translatesAutoresizingMaskIntoConstraints="NO" id="n5j-o6-tmw">
-                                <rect key="frame" x="20" y="92" width="335" height="31"/>
+                                <rect key="frame" x="20" y="89" width="335" height="31"/>
                                 <constraints>
                                     <constraint firstAttribute="height" constant="30" id="T3A-lv-roF"/>
                                 </constraints>
@@ -2147,14 +2147,14 @@
                                 </connections>
                             </segmentedControl>
                             <view userInteractionEnabled="NO" contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="BC0-vU-rZd">
-                                <rect key="frame" x="20" y="132" width="335" height="130"/>
+                                <rect key="frame" x="20" y="129" width="335" height="125"/>
                                 <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                 <constraints>
-                                    <constraint firstAttribute="height" constant="130" id="eqD-lg-Z6V"/>
+                                    <constraint firstAttribute="height" constant="125" id="eqD-lg-Z6V"/>
                                 </constraints>
                             </view>
                             <tableView hidden="YES" clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" dataMode="prototypes" style="plain" separatorStyle="none" rowHeight="-1" estimatedRowHeight="-1" sectionHeaderHeight="28" sectionFooterHeight="28" translatesAutoresizingMaskIntoConstraints="NO" id="UfY-Jr-Od6">
-                                <rect key="frame" x="30" y="272" width="315" height="496"/>
+                                <rect key="frame" x="30" y="264" width="315" height="504"/>
                                 <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                 <prototypes>
                                     <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" preservesSuperviewLayoutMargins="YES" selectionStyle="none" indentationWidth="10" reuseIdentifier="driverordercell" rowHeight="138" id="Z40-o4-wOm" customClass="DriverOrderCell" customModule="rzq" customModuleProvider="target">
@@ -2398,7 +2398,7 @@
                                 </prototypes>
                             </tableView>
                             <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="xMc-PQ-MAh">
-                                <rect key="frame" x="20" y="272" width="335" height="496"/>
+                                <rect key="frame" x="20" y="264" width="335" height="504"/>
                                 <subviews>
                                     <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" translatesAutoresizingMaskIntoConstraints="NO" id="SKg-TC-cjV">
                                         <rect key="frame" x="0.0" y="10" width="50" height="50"/>
@@ -2408,7 +2408,7 @@
                                         </constraints>
                                     </imageView>
                                     <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="6BJ-uQ-55y">
-                                        <rect key="frame" x="80" y="10" width="255" height="90"/>
+                                        <rect key="frame" x="80" y="10" width="255" height="85"/>
                                         <subviews>
                                             <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="" textAlignment="natural" lineBreakMode="tailTruncation" numberOfLines="2" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="BbP-Ip-wMs" customClass="MyUILabel" customModule="rzq" customModuleProvider="target">
                                                 <rect key="frame" x="0.0" y="0.0" width="255" height="0.0"/>
@@ -2444,7 +2444,7 @@
                                         </subviews>
                                         <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                         <constraints>
-                                            <constraint firstAttribute="height" constant="90" id="4Uj-Ok-Jk1"/>
+                                            <constraint firstAttribute="height" constant="85" id="4Uj-Ok-Jk1"/>
                                             <constraint firstItem="BbP-Ip-wMs" firstAttribute="leading" secondItem="6BJ-uQ-55y" secondAttribute="leading" id="Ex5-Zu-Ha1"/>
                                             <constraint firstItem="jGE-zG-4jh" firstAttribute="top" secondItem="BbP-Ip-wMs" secondAttribute="bottom" constant="10" id="H5q-Bz-UPc"/>
                                             <constraint firstItem="9x5-0P-Zxx" firstAttribute="leading" secondItem="6BJ-uQ-55y" secondAttribute="leading" id="ZNN-hX-cS0"/>
@@ -2456,14 +2456,14 @@
                                         </constraints>
                                     </view>
                                     <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="qDU-Ql-nor">
-                                        <rect key="frame" x="0.0" y="105" width="335" height="1"/>
+                                        <rect key="frame" x="0.0" y="100" width="335" height="1"/>
                                         <color key="backgroundColor" red="0.84705882352941175" green="0.84705882352941175" blue="0.84705882352941175" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                                         <constraints>
                                             <constraint firstAttribute="height" constant="1" id="cZ4-Un-TrQ"/>
                                         </constraints>
                                     </view>
                                     <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="JpF-tc-JTJ">
-                                        <rect key="frame" x="0.0" y="106" width="335" height="50"/>
+                                        <rect key="frame" x="0.0" y="101" width="335" height="50"/>
                                         <subviews>
                                             <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Distance" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="ohg-ih-5fT" customClass="MyUILabel" customModule="rzq" customModuleProvider="target">
                                                 <rect key="frame" x="5" y="4.9999999999999991" width="325" height="14.666666666666664"/>
@@ -2496,7 +2496,7 @@
                                         </constraints>
                                     </view>
                                     <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="XXO-Bg-IfF">
-                                        <rect key="frame" x="0.0" y="162" width="335" height="50"/>
+                                        <rect key="frame" x="0.0" y="157" width="335" height="50"/>
                                         <subviews>
                                             <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Working Hours" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="F6f-gO-h0q" customClass="MyUILabel" customModule="rzq" customModuleProvider="target">
                                                 <rect key="frame" x="5" y="4.9999999999999991" width="83.666666666666671" height="14.666666666666664"/>
@@ -2543,7 +2543,7 @@
                                         </connections>
                                     </view>
                                     <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="nxo-7t-lsi">
-                                        <rect key="frame" x="0.0" y="218" width="335" height="50"/>
+                                        <rect key="frame" x="0.0" y="213" width="335" height="50"/>
                                         <subviews>
                                             <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="How many drivers around this shop?" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="suv-wH-pkx" customClass="MyUILabel" customModule="rzq" customModuleProvider="target">
                                                 <rect key="frame" x="5" y="4.9999999999999991" width="325" height="14.666666666666664"/>
@@ -2576,28 +2576,28 @@
                                         </constraints>
                                     </view>
                                     <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="jf2-31-efr">
-                                        <rect key="frame" x="0.0" y="161" width="335" height="1"/>
+                                        <rect key="frame" x="0.0" y="156" width="335" height="1"/>
                                         <color key="backgroundColor" red="0.84705882349999995" green="0.84705882349999995" blue="0.84705882349999995" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                                         <constraints>
                                             <constraint firstAttribute="height" constant="1" id="IO1-NY-2Pa"/>
                                         </constraints>
                                     </view>
                                     <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="tKF-Fs-drG">
-                                        <rect key="frame" x="0.0" y="217" width="335" height="1"/>
+                                        <rect key="frame" x="0.0" y="212" width="335" height="1"/>
                                         <color key="backgroundColor" red="0.84705882349999995" green="0.84705882349999995" blue="0.84705882349999995" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                                         <constraints>
                                             <constraint firstAttribute="height" constant="1" id="aXj-iz-Ugv"/>
                                         </constraints>
                                     </view>
                                     <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="CkD-ua-jcD">
-                                        <rect key="frame" x="0.0" y="273" width="335" height="1"/>
+                                        <rect key="frame" x="0.0" y="268" width="335" height="1"/>
                                         <color key="backgroundColor" red="0.84705882349999995" green="0.84705882349999995" blue="0.84705882349999995" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                                         <constraints>
                                             <constraint firstAttribute="height" constant="1" id="2Zd-WI-c0r"/>
                                         </constraints>
                                     </view>
                                     <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="G8s-pA-TOj" customClass="CardView" customModule="rzq" customModuleProvider="target">
-                                        <rect key="frame" x="10" y="389.66666666666663" width="315" height="50"/>
+                                        <rect key="frame" x="10" y="384.66666666666663" width="315" height="50"/>
                                         <subviews>
                                             <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="D4f-fI-Nvx" customClass="MyUIButton" customModule="rzq" customModuleProvider="target">
                                                 <rect key="frame" x="0.0" y="0.0" width="315" height="50"/>
@@ -2637,7 +2637,7 @@
                                         </userDefinedRuntimeAttributes>
                                     </view>
                                     <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Place Images" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="e3B-g0-1kP" customClass="MyUILabel" customModule="rzq" customModuleProvider="target">
-                                        <rect key="frame" x="0.0" y="279" width="335" height="14.666666666666686"/>
+                                        <rect key="frame" x="0.0" y="274" width="335" height="14.666666666666686"/>
                                         <fontDescription key="fontDescription" type="system" pointSize="12"/>
                                         <color key="textColor" red="0.24313725489999999" green="0.054901960780000002" blue="0.4039215686" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                                         <nil key="highlightedColor"/>
@@ -2646,7 +2646,7 @@
                                         </userDefinedRuntimeAttributes>
                                     </label>
                                     <collectionView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" dataMode="prototypes" translatesAutoresizingMaskIntoConstraints="NO" id="9Ie-X6-epP">
-                                        <rect key="frame" x="0.0" y="301.66666666666663" width="335" height="80"/>
+                                        <rect key="frame" x="0.0" y="296.66666666666663" width="335" height="80"/>
                                         <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                         <constraints>
                                             <constraint firstAttribute="height" constant="80" id="arg-ke-wl1"/>
@@ -2728,7 +2728,7 @@
                             <constraint firstItem="n5j-o6-tmw" firstAttribute="leading" secondItem="o1r-I8-FZL" secondAttribute="leading" constant="20" id="2dA-HW-XAa"/>
                             <constraint firstItem="o1r-I8-FZL" firstAttribute="trailing" secondItem="UfY-Jr-Od6" secondAttribute="trailing" constant="30" id="EMH-RD-t5c"/>
                             <constraint firstItem="xMc-PQ-MAh" firstAttribute="top" secondItem="BC0-vU-rZd" secondAttribute="bottom" constant="10" id="LAM-hc-4Tm"/>
-                            <constraint firstItem="n5j-o6-tmw" firstAttribute="top" secondItem="su1-cS-z09" secondAttribute="bottom" constant="10" id="NGQ-wO-eHQ"/>
+                            <constraint firstItem="n5j-o6-tmw" firstAttribute="top" secondItem="su1-cS-z09" secondAttribute="bottom" constant="7" id="NGQ-wO-eHQ"/>
                             <constraint firstItem="BC0-vU-rZd" firstAttribute="leading" secondItem="o1r-I8-FZL" secondAttribute="leading" constant="20" id="Rg8-rU-qSJ"/>
                             <constraint firstItem="o1r-I8-FZL" firstAttribute="trailing" secondItem="n5j-o6-tmw" secondAttribute="trailing" constant="20" id="aXD-Yw-hEd"/>
                             <constraint firstItem="su1-cS-z09" firstAttribute="top" secondItem="MoA-lS-2Qe" secondAttribute="top" id="azc-mm-I6p"/>
@@ -6472,7 +6472,7 @@
                                                                 <rect key="frame" x="0.0" y="0.0" width="118.33333333333333" height="130"/>
                                                                 <subviews>
                                                                     <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Profile Picture" textAlignment="center" lineBreakMode="tailTruncation" numberOfLines="2" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="jQw-J5-5FV" customClass="MyUILabel" customModule="rzq" customModuleProvider="target">
-                                                                        <rect key="frame" x="5" y="5" width="108.33333333333333" height="85"/>
+                                                                        <rect key="frame" x="5" y="5" width="108.33333333333333" height="51"/>
                                                                         <fontDescription key="fontDescription" type="system" pointSize="12"/>
                                                                         <color key="textColor" red="0.24313725489999999" green="0.054901960780000002" blue="0.4039215686" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                                                                         <nil key="highlightedColor"/>
@@ -6481,10 +6481,10 @@
                                                                         </userDefinedRuntimeAttributes>
                                                                     </label>
                                                                     <imageView userInteractionEnabled="NO" contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="bg_add_image" translatesAutoresizingMaskIntoConstraints="NO" id="6TH-tR-TV5">
-                                                                        <rect key="frame" x="5" y="95" width="108.33333333333333" height="30"/>
+                                                                        <rect key="frame" x="5" y="61" width="108.33333333333333" height="64"/>
                                                                     </imageView>
                                                                     <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="RMF-Ir-mfM">
-                                                                        <rect key="frame" x="5" y="95" width="108.33333333333333" height="30"/>
+                                                                        <rect key="frame" x="5" y="61" width="108.33333333333333" height="64"/>
                                                                         <connections>
                                                                             <action selector="profileImageAction:" destination="uiv-mb-Jms" eventType="touchUpInside" id="rmF-3x-ABy"/>
                                                                         </connections>
@@ -6509,7 +6509,7 @@
                                                                 <rect key="frame" x="118.33333333333334" y="0.0" width="118.33333333333334" height="130"/>
                                                                 <subviews>
                                                                     <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Civil ID / Passport" textAlignment="center" lineBreakMode="tailTruncation" numberOfLines="2" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="o5E-Gx-ep3" customClass="MyUILabel" customModule="rzq" customModuleProvider="target">
-                                                                        <rect key="frame" x="5" y="5" width="108.33333333333333" height="85"/>
+                                                                        <rect key="frame" x="5" y="5" width="108.33333333333333" height="51"/>
                                                                         <fontDescription key="fontDescription" type="system" pointSize="12"/>
                                                                         <color key="textColor" red="0.24313725489999999" green="0.054901960780000002" blue="0.4039215686" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                                                                         <nil key="highlightedColor"/>
@@ -6518,10 +6518,10 @@
                                                                         </userDefinedRuntimeAttributes>
                                                                     </label>
                                                                     <imageView userInteractionEnabled="NO" contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="bg_add_image" translatesAutoresizingMaskIntoConstraints="NO" id="Ljt-Gd-Nhb">
-                                                                        <rect key="frame" x="5" y="95" width="108.33333333333333" height="30"/>
+                                                                        <rect key="frame" x="5" y="61" width="108.33333333333333" height="64"/>
                                                                     </imageView>
                                                                     <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="Fds-jH-PJ0">
-                                                                        <rect key="frame" x="5" y="95" width="108.33333333333333" height="30"/>
+                                                                        <rect key="frame" x="5" y="61" width="108.33333333333333" height="64"/>
                                                                         <connections>
                                                                             <action selector="civilIdImageAction:" destination="uiv-mb-Jms" eventType="touchUpInside" id="iVQ-N2-iX2"/>
                                                                         </connections>
@@ -6546,7 +6546,7 @@
                                                                 <rect key="frame" x="236.66666666666666" y="0.0" width="118.33333333333334" height="130"/>
                                                                 <subviews>
                                                                     <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Driving License" textAlignment="center" lineBreakMode="tailTruncation" numberOfLines="2" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="qAG-eP-6oG" customClass="MyUILabel" customModule="rzq" customModuleProvider="target">
-                                                                        <rect key="frame" x="5" y="5" width="108.33333333333333" height="85"/>
+                                                                        <rect key="frame" x="5" y="5" width="108.33333333333333" height="51"/>
                                                                         <fontDescription key="fontDescription" type="system" pointSize="12"/>
                                                                         <color key="textColor" red="0.24313725489999999" green="0.054901960780000002" blue="0.4039215686" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                                                                         <nil key="highlightedColor"/>
@@ -6555,10 +6555,10 @@
                                                                         </userDefinedRuntimeAttributes>
                                                                     </label>
                                                                     <imageView userInteractionEnabled="NO" contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="bg_add_image" translatesAutoresizingMaskIntoConstraints="NO" id="Akn-8o-qAN">
-                                                                        <rect key="frame" x="5" y="95" width="108.33333333333333" height="30"/>
+                                                                        <rect key="frame" x="5" y="61" width="108.33333333333333" height="64"/>
                                                                     </imageView>
                                                                     <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="EvO-97-hXv">
-                                                                        <rect key="frame" x="5" y="95" width="108.33333333333333" height="30"/>
+                                                                        <rect key="frame" x="5" y="61" width="108.33333333333333" height="64"/>
                                                                         <connections>
                                                                             <action selector="drivingLicenseImageAction:" destination="uiv-mb-Jms" eventType="touchUpInside" id="GBT-SS-xeQ"/>
                                                                         </connections>
@@ -8814,28 +8814,11 @@
                             <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="7LG-Aq-1wG" customClass="CardView" customModule="rzq" customModuleProvider="target">
                                 <rect key="frame" x="0.0" y="0.0" width="375" height="82"/>
                                 <subviews>
-                                    <imageView userInteractionEnabled="NO" contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="ic_back" translatesAutoresizingMaskIntoConstraints="NO" id="xNZ-If-4RZ">
-                                        <rect key="frame" x="18" y="43" width="22" height="22"/>
-                                        <constraints>
-                                            <constraint firstAttribute="height" constant="22" id="8gf-1j-N4n"/>
-                                            <constraint firstAttribute="width" constant="22" id="JZk-vZ-Vgg"/>
-                                        </constraints>
-                                    </imageView>
-                                    <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="HZP-cz-rTZ">
-                                        <rect key="frame" x="18" y="43" width="22" height="22"/>
-                                        <constraints>
-                                            <constraint firstAttribute="height" constant="22" id="ExG-kJ-4hf"/>
-                                            <constraint firstAttribute="width" constant="22" id="ijF-uh-LCJ"/>
-                                        </constraints>
-                                        <connections>
-                                            <action selector="backAction:" destination="PZZ-v7-ucg" eventType="touchUpInside" id="cRs-Io-Ig2"/>
-                                        </connections>
-                                    </button>
                                     <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="Hk4-F8-6bY" customClass="CardView" customModule="rzq" customModuleProvider="target">
-                                        <rect key="frame" x="50" y="34" width="315" height="40"/>
+                                        <rect key="frame" x="10" y="34" width="355" height="40"/>
                                         <subviews>
                                             <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="ilm-Kq-Rxn">
-                                                <rect key="frame" x="289" y="12" width="16" height="16"/>
+                                                <rect key="frame" x="329" y="12" width="16" height="16"/>
                                                 <constraints>
                                                     <constraint firstAttribute="height" constant="16" id="9Zk-TV-nbV"/>
                                                     <constraint firstAttribute="width" constant="16" id="btY-8Q-SLA"/>
@@ -8846,7 +8829,7 @@
                                                 </connections>
                                             </button>
                                             <textField opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" placeholder="Search for drop off location" textAlignment="natural" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="PYs-tI-OoW" customClass="SearchTextField" customModule="rzq" customModuleProvider="target">
-                                                <rect key="frame" x="12" y="5" width="265" height="30"/>
+                                                <rect key="frame" x="12" y="5" width="305" height="30"/>
                                                 <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                                 <nil key="textColor"/>
                                                 <fontDescription key="fontDescription" type="system" pointSize="13"/>
@@ -8884,13 +8867,9 @@
                                 </subviews>
                                 <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                 <constraints>
-                                    <constraint firstItem="xNZ-If-4RZ" firstAttribute="leading" secondItem="7LG-Aq-1wG" secondAttribute="leading" constant="18" id="79r-Xv-5jK"/>
-                                    <constraint firstItem="Hk4-F8-6bY" firstAttribute="leading" secondItem="xNZ-If-4RZ" secondAttribute="trailing" constant="10" id="Eb6-fz-Wsk"/>
                                     <constraint firstAttribute="bottom" secondItem="Hk4-F8-6bY" secondAttribute="bottom" constant="8" id="Evu-zE-gH5"/>
-                                    <constraint firstAttribute="bottom" secondItem="HZP-cz-rTZ" secondAttribute="bottom" constant="17" id="Fpg-pZ-Br9"/>
-                                    <constraint firstItem="HZP-cz-rTZ" firstAttribute="leading" secondItem="7LG-Aq-1wG" secondAttribute="leading" constant="18" id="UCd-oK-DmI"/>
                                     <constraint firstAttribute="trailing" secondItem="Hk4-F8-6bY" secondAttribute="trailing" constant="10" id="WvP-RA-f8a"/>
-                                    <constraint firstAttribute="bottom" secondItem="xNZ-If-4RZ" secondAttribute="bottom" constant="17" id="cRW-A9-J7E"/>
+                                    <constraint firstItem="Hk4-F8-6bY" firstAttribute="leading" secondItem="7LG-Aq-1wG" secondAttribute="leading" constant="10" id="b8J-NS-U22"/>
                                     <constraint firstAttribute="height" constant="82" id="dHt-cH-hJ8"/>
                                 </constraints>
                                 <userDefinedRuntimeAttributes>
@@ -9437,7 +9416,6 @@
                     <navigationItem key="navigationItem" id="qsQ-3e-ClV"/>
                     <connections>
                         <outlet property="edtMoreDetails" destination="zIA-Ft-Xgn" id="Hpg-Vf-vDS"/>
-                        <outlet property="ivHandle" destination="xNZ-If-4RZ" id="lh5-mf-xCp"/>
                         <outlet property="lblDistance" destination="JVX-6S-R8Q" id="CeS-3H-pYS"/>
                         <outlet property="lblDropLocation" destination="a3Y-zy-pBI" id="I4o-Ro-S3L"/>
                         <outlet property="lblPickupLocation" destination="6Q8-YU-xqK" id="6oi-7M-bMW"/>
@@ -14686,7 +14664,7 @@
                                                                 <rect key="frame" x="0.0" y="0.0" width="118.33333333333333" height="130"/>
                                                                 <subviews>
                                                                     <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Profile Picture" textAlignment="center" lineBreakMode="tailTruncation" numberOfLines="2" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="lTb-pK-iSq" customClass="MyUILabel" customModule="rzq" customModuleProvider="target">
-                                                                        <rect key="frame" x="5" y="5" width="108.33333333333333" height="85"/>
+                                                                        <rect key="frame" x="5" y="5" width="108.33333333333333" height="51"/>
                                                                         <fontDescription key="fontDescription" type="system" pointSize="12"/>
                                                                         <color key="textColor" red="0.24313725489999999" green="0.054901960780000002" blue="0.4039215686" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                                                                         <nil key="highlightedColor"/>
@@ -14695,10 +14673,10 @@
                                                                         </userDefinedRuntimeAttributes>
                                                                     </label>
                                                                     <imageView userInteractionEnabled="NO" contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="bg_add_image" translatesAutoresizingMaskIntoConstraints="NO" id="95s-lY-oBx">
-                                                                        <rect key="frame" x="5" y="95" width="108.33333333333333" height="30"/>
+                                                                        <rect key="frame" x="5" y="61" width="108.33333333333333" height="64"/>
                                                                     </imageView>
                                                                     <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="nBh-08-dpb">
-                                                                        <rect key="frame" x="5" y="95" width="108.33333333333333" height="30"/>
+                                                                        <rect key="frame" x="5" y="61" width="108.33333333333333" height="64"/>
                                                                         <connections>
                                                                             <action selector="profileImageAction:" destination="kLG-6Q-zJ5" eventType="touchUpInside" id="w2R-lH-o9o"/>
                                                                         </connections>
@@ -14723,7 +14701,7 @@
                                                                 <rect key="frame" x="118.33333333333334" y="0.0" width="118.33333333333334" height="130"/>
                                                                 <subviews>
                                                                     <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Civil ID / Passport" textAlignment="center" lineBreakMode="tailTruncation" numberOfLines="2" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="CyI-H6-jNZ" customClass="MyUILabel" customModule="rzq" customModuleProvider="target">
-                                                                        <rect key="frame" x="5" y="5" width="108.33333333333333" height="85"/>
+                                                                        <rect key="frame" x="5" y="5" width="108.33333333333333" height="51"/>
                                                                         <fontDescription key="fontDescription" type="system" pointSize="12"/>
                                                                         <color key="textColor" red="0.24313725489999999" green="0.054901960780000002" blue="0.4039215686" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                                                                         <nil key="highlightedColor"/>
@@ -14732,10 +14710,10 @@
                                                                         </userDefinedRuntimeAttributes>
                                                                     </label>
                                                                     <imageView userInteractionEnabled="NO" contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="bg_add_image" translatesAutoresizingMaskIntoConstraints="NO" id="rjk-VG-45w">
-                                                                        <rect key="frame" x="5" y="95" width="108.33333333333333" height="30"/>
+                                                                        <rect key="frame" x="5" y="61" width="108.33333333333333" height="64"/>
                                                                     </imageView>
                                                                     <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="TZc-Gb-ZBe">
-                                                                        <rect key="frame" x="5" y="95" width="108.33333333333333" height="30"/>
+                                                                        <rect key="frame" x="5" y="61" width="108.33333333333333" height="64"/>
                                                                         <connections>
                                                                             <action selector="civilIdImageAction:" destination="kLG-6Q-zJ5" eventType="touchUpInside" id="moV-ZC-XYm"/>
                                                                         </connections>
@@ -14760,7 +14738,7 @@
                                                                 <rect key="frame" x="236.66666666666666" y="0.0" width="118.33333333333334" height="130"/>
                                                                 <subviews>
                                                                     <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Driving License" textAlignment="center" lineBreakMode="tailTruncation" numberOfLines="2" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="hfO-1T-Wg3" customClass="MyUILabel" customModule="rzq" customModuleProvider="target">
-                                                                        <rect key="frame" x="5" y="5" width="108.33333333333333" height="85"/>
+                                                                        <rect key="frame" x="5" y="5" width="108.33333333333333" height="51"/>
                                                                         <fontDescription key="fontDescription" type="system" pointSize="12"/>
                                                                         <color key="textColor" red="0.24313725489999999" green="0.054901960780000002" blue="0.4039215686" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                                                                         <nil key="highlightedColor"/>
@@ -14769,10 +14747,10 @@
                                                                         </userDefinedRuntimeAttributes>
                                                                     </label>
                                                                     <imageView userInteractionEnabled="NO" contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="bg_add_image" translatesAutoresizingMaskIntoConstraints="NO" id="yVa-jz-WMS">
-                                                                        <rect key="frame" x="5" y="95" width="108.33333333333333" height="30"/>
+                                                                        <rect key="frame" x="5" y="61" width="108.33333333333333" height="64"/>
                                                                     </imageView>
                                                                     <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="cH1-XW-O1t">
-                                                                        <rect key="frame" x="5" y="95" width="108.33333333333333" height="30"/>
+                                                                        <rect key="frame" x="5" y="61" width="108.33333333333333" height="64"/>
                                                                         <connections>
                                                                             <action selector="drivingLicenseImageAction:" destination="kLG-6Q-zJ5" eventType="touchUpInside" id="54N-xl-eRC"/>
                                                                         </connections>
@@ -19858,7 +19836,7 @@
                                                                 <rect key="frame" x="0.0" y="0.0" width="177.66666666666666" height="130"/>
                                                                 <subviews>
                                                                     <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Profile Picture" textAlignment="center" lineBreakMode="tailTruncation" numberOfLines="2" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="nUU-Y9-HpB" customClass="MyUILabel" customModule="rzq" customModuleProvider="target">
-                                                                        <rect key="frame" x="5" y="5" width="167.66666666666666" height="85"/>
+                                                                        <rect key="frame" x="5" y="5" width="167.66666666666666" height="51"/>
                                                                         <fontDescription key="fontDescription" type="system" pointSize="12"/>
                                                                         <color key="textColor" red="0.24313725489999999" green="0.054901960780000002" blue="0.4039215686" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                                                                         <nil key="highlightedColor"/>
@@ -19867,10 +19845,10 @@
                                                                         </userDefinedRuntimeAttributes>
                                                                     </label>
                                                                     <imageView userInteractionEnabled="NO" contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="bg_add_image" translatesAutoresizingMaskIntoConstraints="NO" id="ixe-xa-kUd">
-                                                                        <rect key="frame" x="5" y="95" width="167.66666666666666" height="30"/>
+                                                                        <rect key="frame" x="5" y="61" width="167.66666666666666" height="64"/>
                                                                     </imageView>
                                                                     <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="rYt-W0-tp4">
-                                                                        <rect key="frame" x="5" y="95" width="167.66666666666666" height="30"/>
+                                                                        <rect key="frame" x="5" y="61" width="167.66666666666666" height="64"/>
                                                                         <connections>
                                                                             <action selector="profileImageAction:" destination="0Vw-tl-Eky" eventType="touchUpInside" id="pZI-De-i5K"/>
                                                                         </connections>
@@ -19895,7 +19873,7 @@
                                                                 <rect key="frame" x="177.66666666666663" y="0.0" width="177.33333333333337" height="130"/>
                                                                 <subviews>
                                                                     <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Civil ID / Passport" textAlignment="center" lineBreakMode="tailTruncation" numberOfLines="2" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="aHn-hh-vTm" customClass="MyUILabel" customModule="rzq" customModuleProvider="target">
-                                                                        <rect key="frame" x="5" y="5" width="167.33333333333334" height="85"/>
+                                                                        <rect key="frame" x="5" y="5" width="167.33333333333334" height="51"/>
                                                                         <fontDescription key="fontDescription" type="system" pointSize="12"/>
                                                                         <color key="textColor" red="0.24313725489999999" green="0.054901960780000002" blue="0.4039215686" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                                                                         <nil key="highlightedColor"/>
@@ -19904,10 +19882,10 @@
                                                                         </userDefinedRuntimeAttributes>
                                                                     </label>
                                                                     <imageView userInteractionEnabled="NO" contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="bg_add_image" translatesAutoresizingMaskIntoConstraints="NO" id="8dn-pd-KvK">
-                                                                        <rect key="frame" x="5" y="95" width="167.33333333333334" height="30"/>
+                                                                        <rect key="frame" x="5" y="61" width="167.33333333333334" height="64"/>
                                                                     </imageView>
                                                                     <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="XV9-19-Rj7">
-                                                                        <rect key="frame" x="5" y="95" width="167.33333333333334" height="30"/>
+                                                                        <rect key="frame" x="5" y="61" width="167.33333333333334" height="64"/>
                                                                         <connections>
                                                                             <action selector="civilIdImageAction:" destination="0Vw-tl-Eky" eventType="touchUpInside" id="bPa-wt-Tad"/>
                                                                         </connections>

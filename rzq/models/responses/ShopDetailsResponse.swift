@@ -78,16 +78,21 @@ class TypeClass: Codable {
     
     let id: Int?
     let name, image: String?
+    let selectedIcon, icon: String?
     
     enum CodingKeys: String, CodingKey {
         case id = "Id"
         case name = "Name"
         case image = "Image"
+        case selectedIcon = "SelectedIcon"
+        case icon = "Icon"
     }
     
-    init(id: Int?, name: String?, image: String?) {
+    init(id: Int?, name: String?, image: String?, selectedIcon: String?, icon: String?) {
         self.id = id
         self.name = name
         self.image = image
+        self.selectedIcon = selectedIcon
+        self.icon = icon
     }
 }

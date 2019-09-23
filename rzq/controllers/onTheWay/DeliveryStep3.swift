@@ -14,6 +14,7 @@ import CoreLocation
 import Sheeeeeeeeet
 import SwiftyGif
 import MultilineTextField
+import SVProgressHUD
 
 protocol Step3Delegate {
     func updateModel(model : OTWOrder)
@@ -84,6 +85,9 @@ class DeliveryStep3: BaseVC, UINavigationControllerDelegate, ImagePickerDelegate
     
     override func viewDidLoad() {
         super.viewDidLoad()
+        
+        SVProgressHUD.setDefaultMaskType(.clear)
+        
         if (self.isArabic()) {
             self.ivHandle.image = UIImage(named: "ic_back_arabic")
         }
@@ -142,7 +146,7 @@ class DeliveryStep3: BaseVC, UINavigationControllerDelegate, ImagePickerDelegate
                                     polyline.strokeColor = UIColor.appDarkBlue
                                     
                                     let bounds = GMSCoordinateBounds(path: path!)
-                                    self.gMap?.animate(with: GMSCameraUpdate.fit(bounds, withPadding: 30.0))
+                                    self.gMap?.animate(with: GMSCameraUpdate.fit(bounds, withPadding: 100.0))
                                     
                                     polyline.map = self.gMap
                                     
@@ -333,10 +337,12 @@ class DeliveryStep3: BaseVC, UINavigationControllerDelegate, ImagePickerDelegate
     
     @IBAction func placeOrderAction(_ sender: Any) {
         if (self.validate()) {
+            self.showLoading()
             ApiService.createDelivery(Authorization: self.loadUser().data?.accessToken ?? "", desc: self.edtOrderDetails.text ?? "", fromLongitude: self.orderModel?.pickUpLongitude ?? 0.0, fromLatitude: self.orderModel?.pickUpLatitude ?? 0.0, toLongitude: self.orderModel?.dropOffLongitude ?? 0.0, toLatitude: self.orderModel?.dropOffLatitude ?? 0.0, time: self.selectedTime ?? 0, estimatedPrice: "\(self.getCost())", fromAddress: self.orderModel?.pickUpAddress ?? "", toAddress: self.orderModel?.dropOffAddress ?? "", shopId: self.orderModel?.shop?.id ?? 0, pickUpDetails : self.orderModel?.pickUpDetails ?? "", dropOffDetails : self.orderModel?.dropOffDetails ?? "") { (response) in
                 if (response.data ?? 0 > 0) {
                     self.handleUploadingMedia(id : response.data ?? 0)
                 }else {
+                    self.hideLoading()
                     self.showBanner(title: "alert".localized, message: response.errorMessage ?? "", style: UIColor.INFO)
                 }
             }

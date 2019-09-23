@@ -105,7 +105,10 @@ class DeliveryStep1: BaseVC,LabasLocationManagerDelegate, Step2Delegate {
             self.pinMarker = GMSMarker()
             self.pinMarker?.position = CLLocationCoordinate2D(latitude: self.orderModel?.pickUpLatitude ?? 0.0, longitude: self.orderModel?.pickUpLongitude ?? 0.0)
             self.pinMarker?.title =  "\(self.orderModel?.shop?.id ?? 0)"
-            self.pinMarker?.icon = UIImage(named: "ic_map_shop")
+          self.singleMarker?.icon = UIImage(named: "ic_shop_empty")
+            // snuff1
+            let url = URL(string: "\(Constants.IMAGE_URL)\(self.orderModel?.shop?.type?.icon ?? "")")
+            self.applyMarkerImage(from: url!, to: self.pinMarker!)
             self.pinMarker?.snippet = ""
             self.pinMarker?.map = gMap
             
@@ -256,7 +259,7 @@ class DeliveryStep1: BaseVC,LabasLocationManagerDelegate, Step2Delegate {
             vc.latitude = self.latitude ?? 0.0
             vc.longitude = self.longitude ?? 0.0
             
-            let shopData = ShopData(nearbyDriversCount: 0, id: self.orderModel?.shop?.id ?? 0, name: self.orderModel?.shop?.name ?? "", address: self.orderModel?.shop?.address ?? "", latitude: self.orderModel?.shop?.latitude ?? 0.0, longitude: self.orderModel?.shop?.longitude ?? 0.0, phoneNumber: self.orderModel?.shop?.phoneNumber ?? "", workingHours: self.orderModel?.shop?.workingHours ?? "", images: self.orderModel?.shop?.images ?? [String](), rate: self.orderModel?.shop?.rate ?? 0.0, type: self.orderModel?.shop?.type ?? TypeClass(id: 0, name: "",image: ""), ownerId: self.orderModel?.shop?.ownerId ?? "",googlePlaceId:  self.orderModel?.shop?.googlePlaceId ?? "", openNow: self.orderModel?.shop?.openNow ?? false)
+            let shopData = ShopData(nearbyDriversCount: 0, id: self.orderModel?.shop?.id ?? 0, name: self.orderModel?.shop?.name ?? "", address: self.orderModel?.shop?.address ?? "", latitude: self.orderModel?.shop?.latitude ?? 0.0, longitude: self.orderModel?.shop?.longitude ?? 0.0, phoneNumber: self.orderModel?.shop?.phoneNumber ?? "", workingHours: self.orderModel?.shop?.workingHours ?? "", images: self.orderModel?.shop?.images ?? [String](), rate: self.orderModel?.shop?.rate ?? 0.0, type: self.orderModel?.shop?.type ?? TypeClass(id: 0, name: "",image: "", selectedIcon: "", icon: ""), ownerId: self.orderModel?.shop?.ownerId ?? "",googlePlaceId:  self.orderModel?.shop?.googlePlaceId ?? "", openNow: self.orderModel?.shop?.openNow ?? false)
             shopData.placeId = self.orderModel?.shop?.placeId ?? ""
             
             vc.shop = shopData
@@ -534,7 +537,10 @@ class DeliveryStep1: BaseVC,LabasLocationManagerDelegate, Step2Delegate {
                 self.singleMarker?.position = CLLocationCoordinate2D(latitude: shop.latitude ?? 0.0, longitude: shop.longitude ?? 0.0)
                 self.singleMarker?.title =  "\(shop.id ?? 0)"
                 self.singleMarker?.snippet = "\(shop.phoneNumber ?? "")"
-                self.singleMarker?.icon = UIImage(named: "ic_map_shop_selected")
+                self.singleMarker?.icon = UIImage(named: "ic_shop_empty_selected")
+                //snuff1
+                let url = URL(string: "\(Constants.IMAGE_URL)\(shop.type?.selectedIcon ?? "")")
+                self.applyMarkerImage(from: url!, to: self.singleMarker!)
                 self.singleMarker?.map = self.gMap
                 
                 self.ivShop.isHidden = false
@@ -576,7 +582,7 @@ class DeliveryStep1: BaseVC,LabasLocationManagerDelegate, Step2Delegate {
             var filterItems = [SearchTextFieldItem]()
             self.filterShops.removeAll()
             for prediction in response.results ?? [Result]() {
-                let dataShop = DataShop(id: 0, name: prediction.name ?? "", address: prediction.vicinity ?? "", latitude: prediction.geometry?.location?.lat ?? 0.0, longitude: prediction.geometry?.location?.lng ?? 0.0, phoneNumber: "", workingHours: "", images: [String](), rate: prediction.rating ?? 0.0, type: TypeClass(id: 0, name: prediction.types?[0] ?? "", image: ""), ownerId: "", googlePlaceId: prediction.placeID ?? "", openNow: prediction.openingHours?.openNow ?? false)
+                let dataShop = DataShop(id: 0, name: prediction.name ?? "", address: prediction.vicinity ?? "", latitude: prediction.geometry?.location?.lat ?? 0.0, longitude: prediction.geometry?.location?.lng ?? 0.0, phoneNumber: "", workingHours: "", images: [String](), rate: prediction.rating ?? 0.0, type: TypeClass(id: 0, name: prediction.types?[0] ?? "", image: "", selectedIcon: "", icon: ""), ownerId: "", googlePlaceId: prediction.placeID ?? "", openNow: prediction.openingHours?.openNow ?? false)
                dataShop.placeId = prediction.id ?? ""
                   self.filterShops.append(dataShop)
             }
@@ -615,7 +621,10 @@ class DeliveryStep1: BaseVC,LabasLocationManagerDelegate, Step2Delegate {
                 self.singleMarker?.position = CLLocationCoordinate2D(latitude: shop.latitude ?? 0.0, longitude: shop.longitude ?? 0.0)
                 self.singleMarker?.title =  "\(shop.id ?? 0)"
                 self.singleMarker?.snippet = "\(shop.phoneNumber ?? "")"
-                self.singleMarker?.icon = UIImage(named: "ic_map_shop_selected")
+               self.singleMarker?.icon = UIImage(named: "ic_shop_empty_selected")
+               // snuff1
+                let url = URL(string: "\(Constants.IMAGE_URL)\(shop.type?.selectedIcon ?? "")")
+                self.applyMarkerImage(from: url!, to: self.singleMarker!)
                 self.singleMarker?.map = self.gMap
                 
                 self.ivShop.isHidden = false
@@ -684,7 +693,11 @@ class DeliveryStep1: BaseVC,LabasLocationManagerDelegate, Step2Delegate {
             marker.position = CLLocationCoordinate2D(latitude: center.latitude ?? 0.0, longitude: center.longitude ?? 0.0)
             marker.title =  "\(center.id ?? 0)"
             marker.snippet = "\(center.phoneNumber ?? "")"
-            marker.icon = UIImage(named: "ic_map_shop")
+          self.singleMarker?.icon = UIImage(named: "ic_shop_empty")
+            // snuff1
+            let url = URL(string: "\(Constants.IMAGE_URL)\(center.type?.icon ?? "")")
+            self.applyMarkerImage(from: url!, to: marker)
+            self.singleMarker?.map = self.gMap
             marker.map = gMap
             self.shopMarkers.append(marker)
         }
@@ -695,6 +708,27 @@ class DeliveryStep1: BaseVC,LabasLocationManagerDelegate, Step2Delegate {
         marker.map = gMap
     }
     
+    func applyMarkerImage(from url: URL, to marker: GMSMarker) {
+        DispatchQueue.global(qos: .background).async {
+            guard let data = try? Data(contentsOf: url),
+               // let image = UIImage(data: data)?.cropped()
+                let image = UIImage(data: data)
+                else { return }
+            
+            DispatchQueue.main.async {
+                marker.icon = self.imageWithImage(image: image, scaledToSize: CGSize(width: 48.0, height: 48.0))
+              //  marker.icon = image
+            }
+        }
+    }
+    
+    func imageWithImage(image:UIImage, scaledToSize newSize:CGSize) -> UIImage{
+        UIGraphicsBeginImageContextWithOptions(newSize, false, 0.0)
+        image.draw(in: CGRect(x: 0, y: 0, width: newSize.width, height: newSize.height))
+        let newImage:UIImage = UIGraphicsGetImageFromCurrentImageContext()!
+        UIGraphicsEndImageContext()
+        return newImage
+    }
     
     @IBAction func clearFieldAction(_ sender: Any) {
         self.moreDetailsView.isHidden = true
@@ -748,7 +782,7 @@ extension DeliveryStep1 : GMSMapViewDelegate {
                 self.pinMarker?.map = nil
                 self.lblPickupLocation.textColor = UIColor.appDarkBlue
                 self.lblPickupLocation.text = response.shopData?.name ?? ""
-                let dataShop = DataShop(id: response.shopData?.id ?? 0, name: response.shopData?.name ?? "", address: response.shopData?.address ?? "", latitude: response.shopData?.latitude ?? 0.0, longitude: response.shopData?.longitude ?? 0.0, phoneNumber: response.shopData?.phoneNumber ?? "", workingHours: response.shopData?.workingHours ?? "", images: response.shopData?.images ?? [String](), rate: response.shopData?.rate ?? 0.0, type: response.shopData?.type ?? TypeClass(id: 0, name: "",image: ""),ownerId: response.shopData?.ownerId ?? "", googlePlaceId: response.shopData?.googlePlaceId ?? "", openNow : response.shopData?.openNow ?? false)
+                let dataShop = DataShop(id: response.shopData?.id ?? 0, name: response.shopData?.name ?? "", address: response.shopData?.address ?? "", latitude: response.shopData?.latitude ?? 0.0, longitude: response.shopData?.longitude ?? 0.0, phoneNumber: response.shopData?.phoneNumber ?? "", workingHours: response.shopData?.workingHours ?? "", images: response.shopData?.images ?? [String](), rate: response.shopData?.rate ?? 0.0, type: response.shopData?.type ?? TypeClass(id: 0, name: "",image: "", selectedIcon: "", icon: ""),ownerId: response.shopData?.ownerId ?? "", googlePlaceId: response.shopData?.googlePlaceId ?? "", openNow : response.shopData?.openNow ?? false)
                 self.orderModel?.shop = dataShop
                 self.orderModel?.pickUpAddress = response.shopData?.name ?? ""
                 self.orderModel?.pickUpLatitude = response.shopData?.latitude ?? 0.0
@@ -782,7 +816,10 @@ extension DeliveryStep1 : GMSMapViewDelegate {
                 self.singleMarker?.position = CLLocationCoordinate2D(latitude: marker.position.latitude, longitude: marker.position.longitude)
                 self.singleMarker?.title =  id
                 self.singleMarker?.snippet = ""
-                self.singleMarker?.icon = UIImage(named: "ic_map_shop_selected")
+               self.singleMarker?.icon = UIImage(named: "ic_shop_empty_selected")
+                // snuff1
+                let url = URL(string: "\(Constants.IMAGE_URL)\(response.shopData?.type?.selectedIcon ?? "")")
+                self.applyMarkerImage(from: url!, to: self.singleMarker!)
                 self.singleMarker?.map = self.gMap
                 
                 let camera = GMSCameraPosition.camera(withLatitude: self.orderModel?.pickUpLatitude ?? 0.0, longitude: self.orderModel?.pickUpLongitude ?? 0.0, zoom: 15.0)

@@ -142,7 +142,7 @@ class ShopDetailsVC: BaseVC, UITableViewDelegate, UITableViewDataSource, UIColle
         
         if (self.shop?.id ?? 0 == 0 && self.shop?.placeId ?? "" == "") {
             self.viewRegister.isHidden = true
-           
+            
         } else {
             self.viewRegister.isHidden = false
         }
@@ -159,23 +159,27 @@ class ShopDetailsVC: BaseVC, UITableViewDelegate, UITableViewDataSource, UIColle
                 let hoursSplit = hoursWithoutSpace?.split(separator: "-")
                 
                 if (hoursSplit?.count ?? 0 > 0) {
-                    //  let fromHour = hoursSplit?[0]
+                    let fromHour = hoursSplit?[0]
                     let toHour = hoursSplit?[1]
                     
                     let currentHour = self.getCurrentHour()
                     
-                    let toHourOnly = String(toHour?.prefix(2) ?? "00")
                     
+                    let fromHourOnly = String(fromHour?.prefix(2) ?? "00")
+                    let fromHourInt = Int(fromHourOnly) ?? 0
+                    
+                    
+                    let toHourOnly = String(toHour?.prefix(2) ?? "00")
                     let toHourInt = Int(toHourOnly) ?? 0
                     
-                    if (currentHour > toHourInt) {
+                    if (currentHour <= toHourInt && currentHour >= fromHourInt) {
+                        self.handleOpenNowViews(isOpen: true, show: true)
+                    }else {
                         self.showBanner(title: "alert".localized, message: "this_shop_is_closed".localized, style: UIColor.INFO)
                         self.handleOpenNowViews(isOpen: false, show: true)
-                    }else {
-                        self.handleOpenNowViews(isOpen: true, show: true)
                     }
                 }else {
-                   self.lblWorkingHours.text = "---"
+                    self.lblWorkingHours.text = "---"
                     self.handleOpenNowViews(isOpen: false, show: false)
                 }
                 
@@ -191,10 +195,10 @@ class ShopDetailsVC: BaseVC, UITableViewDelegate, UITableViewDataSource, UIColle
         self.showLoading()
         ApiService.getPlaceDetails(placeid: self.shop?.googlePlaceId ?? "") { (response) in
             self.hideLoading()
-             let dayWeek = self.getWeekDay()
+            let dayWeek = self.getWeekDay()
             let arr = response.detailsResult?.openingHours?.weekdayText
             if (arr?.count ?? 0 > dayWeek) {
-              self.lblWorkingHours.text = response.detailsResult?.openingHours?.weekdayText?[dayWeek]
+                self.lblWorkingHours.text = response.detailsResult?.openingHours?.weekdayText?[dayWeek]
             }else {
                 self.lblWorkingHours.text = "---"
                 self.handleOpenNowViews(isOpen: false, show: false)
@@ -535,11 +539,11 @@ class ShopDetailsVC: BaseVC, UITableViewDelegate, UITableViewDataSource, UIColle
             if (self.shop?.googlePlaceId?.count ?? 0 > 0) {
                 dayOfWeek = calendar.component(.weekday, from: Date()) + 2 - calendar.firstWeekday
             }else {
-               dayOfWeek = calendar.component(.weekday, from: Date())  - calendar.firstWeekday
+                dayOfWeek = calendar.component(.weekday, from: Date())  - calendar.firstWeekday
             }
-           
+            
         }else {
-           dayOfWeek = calendar.component(.weekday, from: Date()) - calendar.firstWeekday
+            dayOfWeek = calendar.component(.weekday, from: Date()) - calendar.firstWeekday
         }
         if dayOfWeek <= 0 {
             dayOfWeek += 7

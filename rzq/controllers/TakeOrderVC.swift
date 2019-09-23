@@ -150,6 +150,7 @@ class TakeOrderVC: BaseVC, AVAudioPlayerDelegate {
         self.view.layoutSubviews()
         
         self.drawLocationLine()
+        self.drawShopDestinationLine()
         
     }
     
@@ -221,8 +222,8 @@ class TakeOrderVC: BaseVC, AVAudioPlayerDelegate {
     }
     
     func drawLocationLine() {
-        let origin = "\(self.fromLatitude ?? 0),\(self.fromLongitude ?? 0)"
-        let destination = "\(self.toLatitude ?? 0),\(self.toLongitude ?? 0)"
+        let origin = "\(self.latitude ?? 0),\(self.longitude ?? 0)"
+        let destination = "\(self.fromLatitude ?? 0),\(self.fromLongitude ?? 0)"
         
         let urlString = "https://maps.googleapis.com/maps/api/directions/json?origin=\(origin)&destination=\(destination)&mode=driving&key=\(Constants.GOOGLE_API_KEY)"
         
@@ -236,7 +237,7 @@ class TakeOrderVC: BaseVC, AVAudioPlayerDelegate {
                     let json = try JSONSerialization.jsonObject(with: data!, options:.allowFragments) as! [String : AnyObject]
                     if let routes = json["routes"] as? NSArray {
                         if (routes.count > 0) {
-                            self.gMap?.clear()
+                           // self.gMap?.clear()
                             
                             self.selectedRoute = (json["routes"] as! Array<NSDictionary>)[0]
                             //  self.loadDistanceAndDuration()
@@ -245,6 +246,7 @@ class TakeOrderVC: BaseVC, AVAudioPlayerDelegate {
                                 for route in routes
                                 {
                                     let routeOverviewPolyline:NSDictionary = (route as! NSDictionary).value(forKey: "overview_polyline") as! NSDictionary
+                                   
                                     let points = routeOverviewPolyline.object(forKey: "points")
                                     let path = GMSPath.init(fromEncodedPath: points! as! String)
                                     let polyline = GMSPolyline.init(path: path)
@@ -256,19 +258,20 @@ class TakeOrderVC: BaseVC, AVAudioPlayerDelegate {
                                     
                                     polyline.map = self.gMap
                                     
+    
+                                    let driverPosition = CLLocationCoordinate2D(latitude: self.latitude ?? 0, longitude: self.longitude ?? 0)
+                                    let driverMarker = GMSMarker(position: driverPosition)
+                                    driverMarker.title = ""
+                                    driverMarker.icon = UIImage(named: "ic_map2_driver")
+                                    driverMarker.map = self.gMap
+                                    
                                     
                                     let pickUpPosition = CLLocationCoordinate2D(latitude: self.fromLatitude ?? 0, longitude: self.fromLongitude ?? 0)
                                     let pickMarker = GMSMarker(position: pickUpPosition)
                                     pickMarker.title = ""
-                                    pickMarker.icon = UIImage(named: "ic_map_shop")
+                                    pickMarker.icon = UIImage(named: "ic_map2_shop")
                                     pickMarker.map = self.gMap
                                     
-                                    
-                                    let dropOffPosition = CLLocationCoordinate2D(latitude: self.toLatitude ?? 0, longitude: self.toLongitude ?? 0)
-                                    let dropMarker = GMSMarker(position: dropOffPosition)
-                                    dropMarker.title = ""
-                                    dropMarker.icon = UIImage(named: "ic_location")
-                                    dropMarker.map = self.gMap
                                     
                                 }
                             })
@@ -287,6 +290,77 @@ class TakeOrderVC: BaseVC, AVAudioPlayerDelegate {
         }).resume()
     }
     
+    
+    
+    
+    func drawShopDestinationLine() {
+        let origin = "\(self.fromLatitude ?? 0),\(self.fromLongitude ?? 0)"
+        let destination = "\(self.toLatitude ?? 0),\(self.toLongitude ?? 0)"
+        
+        let urlString = "https://maps.googleapis.com/maps/api/directions/json?origin=\(origin)&destination=\(destination)&mode=driving&key=\(Constants.GOOGLE_API_KEY)"
+        
+        let url = URL(string: urlString)
+        URLSession.shared.dataTask(with: url!, completionHandler: {
+            (data, response, error) in
+            if(error != nil){
+                print("error")
+            } else {
+                do{
+                    let json = try JSONSerialization.jsonObject(with: data!, options:.allowFragments) as! [String : AnyObject]
+                    if let routes = json["routes"] as? NSArray {
+                        if (routes.count > 0) {
+                           // self.gMap?.clear()
+                            
+                            self.selectedRoute = (json["routes"] as! Array<NSDictionary>)[0]
+                            //  self.loadDistanceAndDuration()
+                            
+                            OperationQueue.main.addOperation({
+                                for route in routes
+                                {
+                                    let routeOverviewPolyline:NSDictionary = (route as! NSDictionary).value(forKey: "overview_polyline") as! NSDictionary
+                                    
+                                    let points = routeOverviewPolyline.object(forKey: "points")
+                                    let path = GMSPath.init(fromEncodedPath: points! as! String)
+                                    let polyline = GMSPolyline.init(path: path)
+                                    polyline.strokeWidth = 2
+                                    polyline.strokeColor = UIColor.appDarkBlue
+                                    
+                                    let bounds = GMSCoordinateBounds(path: path!)
+                                    self.gMap?.animate(with: GMSCameraUpdate.fit(bounds, withPadding: 30.0))
+                                    
+                                    polyline.map = self.gMap
+                                    
+                                    
+                                    let pickUpPosition = CLLocationCoordinate2D(latitude: self.fromLatitude ?? 0, longitude: self.fromLongitude ?? 0)
+                                    let pickMarker = GMSMarker(position: pickUpPosition)
+                                    pickMarker.title = ""
+                                    pickMarker.icon = UIImage(named: "ic_map2_shop")
+                                    pickMarker.map = self.gMap
+                                    
+                                    
+                                    
+                                    let dropOffPosition = CLLocationCoordinate2D(latitude: self.toLatitude ?? 0, longitude: self.toLongitude ?? 0)
+                                    let dropMarker = GMSMarker(position: dropOffPosition)
+                                    dropMarker.title = ""
+                                    dropMarker.icon = UIImage(named: "ic_map2_client")
+                                    dropMarker.map = self.gMap
+                                    
+                                }
+                            })
+                        }else {
+                            //no routes
+                        }
+                        
+                    }else {
+                        //no routes
+                    }
+                    
+                }catch let error as NSError{
+                    print("error:\(error)")
+                }
+            }
+        }).resume()
+    }
     
     
     @IBAction func backAction(_ sender: Any) {

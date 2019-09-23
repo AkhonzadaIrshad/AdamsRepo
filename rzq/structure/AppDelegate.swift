@@ -901,6 +901,14 @@ extension UIImage {
         guard let imageData = self.jpegData(compressionQuality: 0.1) else { return nil }
         return imageData.base64EncodedString(options: Data.Base64EncodingOptions.lineLength64Characters)
     }
+    
+    func cropped() -> UIImage? {
+        let cropRect = CGRect(x: 0, y: 0, width: 44 * scale, height: 44 * scale)
+        
+        guard let croppedCGImage = cgImage?.cropping(to: cropRect) else { return nil }
+        
+        return UIImage(cgImage: croppedCGImage, scale: scale, orientation: imageOrientation)
+    }
 }
 extension UIApplication {
     class func topViewController(base: UIViewController? = UIApplication.shared.keyWindow?.rootViewController) -> UIViewController? {

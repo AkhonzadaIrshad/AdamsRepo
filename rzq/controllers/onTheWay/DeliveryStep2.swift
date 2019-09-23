@@ -63,9 +63,9 @@ class DeliveryStep2: BaseVC, Step3Delegate {
     
     override func viewDidLoad() {
         super.viewDidLoad()
-        if (self.isArabic()) {
-            self.ivHandle.image = UIImage(named: "ic_back_arabic")
-        }
+//        if (self.isArabic()) {
+//            self.ivHandle.image = UIImage(named: "ic_back_arabic")
+//        }
         gMap = GMSMapView()
         self.searchField.delegate = self
         self.lblPickupLocation.text = self.orderModel?.pickUpAddress ?? ""
@@ -179,10 +179,9 @@ class DeliveryStep2: BaseVC, Step3Delegate {
 //        }
     }
     
-    
-    @IBAction func backAction(_ sender: Any) {
-        self.saveBackModel()
-    }
+//    @IBAction func backAction(_ sender: Any) {
+//        self.saveBackModel()
+//    }
     
     func saveBackModel() {
         self.orderModel?.dropOffDetails = self.edtMoreDetails.text ?? ""
@@ -225,7 +224,7 @@ class DeliveryStep2: BaseVC, Step3Delegate {
                                     polyline.strokeColor = UIColor.appDarkBlue
                                     
                                     let bounds = GMSCoordinateBounds(path: path!)
-                                    self.gMap?.animate(with: GMSCameraUpdate.fit(bounds, withPadding: 30.0))
+                                    self.gMap?.animate(with: GMSCameraUpdate.fit(bounds, withPadding: 170.0))
                                     
                                     polyline.map = self.gMap
                                     
@@ -249,6 +248,7 @@ class DeliveryStep2: BaseVC, Step3Delegate {
                                     
                                 }
                             })
+                            
                         }else {
                             //no routes
                         }
@@ -400,7 +400,7 @@ class DeliveryStep2: BaseVC, Step3Delegate {
             var filterItems = [SearchTextFieldItem]()
             self.filterShops.removeAll()
             for prediction in response.results ?? [Result]() {
-                let dataShop = DataShop(id: 0, name: prediction.name ?? "", address: prediction.vicinity ?? "", latitude: prediction.geometry?.location?.lat ?? 0.0, longitude: prediction.geometry?.location?.lng ?? 0.0, phoneNumber: "", workingHours: "", images: [String](), rate: prediction.rating ?? 0.0, type: TypeClass(id: 0, name: prediction.types?[0] ?? "", image: ""), ownerId: "", googlePlaceId:  prediction.placeID ?? "", openNow: prediction.openingHours?.openNow ?? false)
+                let dataShop = DataShop(id: 0, name: prediction.name ?? "", address: prediction.vicinity ?? "", latitude: prediction.geometry?.location?.lat ?? 0.0, longitude: prediction.geometry?.location?.lng ?? 0.0, phoneNumber: "", workingHours: "", images: [String](), rate: prediction.rating ?? 0.0, type: TypeClass(id: 0, name: prediction.types?[0] ?? "", image: "", selectedIcon: "", icon: ""), ownerId: "", googlePlaceId:  prediction.placeID ?? "", openNow: prediction.openingHours?.openNow ?? false)
                 dataShop.placeId = prediction.id ?? ""
                 
                 self.filterShops.append(dataShop)

@@ -288,7 +288,7 @@ class ZHCDemoMessagesViewController: ZHCMessagesViewController, BillDelegate, Ch
         let item = self.driverActionButton?.addItem()
         item?.titleLabel.text = "cancel_order".localized
         item?.titleLabel.textColor = UIColor.black
-        item?.titleLabel.font = UIFont(name: self.getFontName(), size: 13)
+        item?.titleLabel.font = UIFont(name: self.getBoldFontName(), size: 13)
         item?.imageView.image = UIImage(named: "chat_cancelorder")
         item?.buttonColor = UIColor.appLogoColor
         item?.buttonImageColor = .white
@@ -312,7 +312,7 @@ class ZHCDemoMessagesViewController: ZHCMessagesViewController, BillDelegate, Ch
                 let item0 = self.driverActionButton?.addItem()
                 item0?.titleLabel.text = "track_order".localized
                 item0?.titleLabel.textColor = UIColor.black
-                item0?.titleLabel.font = UIFont(name: self.getFontName(), size: 13)
+                item0?.titleLabel.font = UIFont(name: self.getBoldFontName(), size: 13)
                 item0?.imageView.image = UIImage(named: "chat_track")
                 item0?.buttonColor = UIColor.appLogoColor
                 item0?.buttonImageColor = .white
@@ -332,7 +332,7 @@ class ZHCDemoMessagesViewController: ZHCMessagesViewController, BillDelegate, Ch
             item2?.titleLabel.text = "complete_delivery".localized
         }
         
-        item2?.titleLabel.font = UIFont(name: self.getFontName(), size: 13)
+        item2?.titleLabel.font = UIFont(name: self.getBoldFontName(), size: 13)
         item2?.imageView.image = UIImage(named: "chat_onmyway")
         item2?.titleLabel.textColor = UIColor.black
         item2?.buttonColor = UIColor.appLogoColor
@@ -375,7 +375,7 @@ class ZHCDemoMessagesViewController: ZHCMessagesViewController, BillDelegate, Ch
                 item3?.titleLabel.text = "navigate_to_client".localized
             }
             
-            item3?.titleLabel.font = UIFont(name: self.getFontName(), size: 13)
+            item3?.titleLabel.font = UIFont(name: self.getBoldFontName(), size: 13)
             item3?.imageView.image = UIImage(named: "chat_navigate")
             item3?.titleLabel.textColor = UIColor.black
             item3?.buttonColor = UIColor.appLogoColor
@@ -471,7 +471,7 @@ class ZHCDemoMessagesViewController: ZHCMessagesViewController, BillDelegate, Ch
             let item = actionButton?.addItem()
             item?.titleLabel.text = "cancel_order".localized
             item?.titleLabel.textColor = UIColor.black
-            item?.titleLabel.font = UIFont(name: self.getFontName(), size: 13)
+            item?.titleLabel.font = UIFont(name: self.getBoldFontName(), size: 13)
             item?.imageView.image = UIImage(named: "chat_cancelorder")
             item?.buttonColor = UIColor.appLogoColor
             item?.buttonImageColor = .white
@@ -498,7 +498,7 @@ class ZHCDemoMessagesViewController: ZHCMessagesViewController, BillDelegate, Ch
                 let item0 = self.actionButton?.addItem()
                 item0?.titleLabel.text = "track_order".localized
                 item0?.titleLabel.textColor = UIColor.black
-                item0?.titleLabel.font = UIFont(name: self.getFontName(), size: 13)
+                item0?.titleLabel.font = UIFont(name: self.getBoldFontName(), size: 13)
                 item0?.imageView.image = UIImage(named: "chat_track")
                 item0?.buttonColor = UIColor.appLogoColor
                 item0?.buttonImageColor = .white
@@ -844,6 +844,7 @@ class ZHCDemoMessagesViewController: ZHCMessagesViewController, BillDelegate, Ch
     //MARK: Messages view controller
     
     override func didPressSend(_ button: UIButton?, withMessageText text: String, senderId: String, senderDisplayName: String, date: Date) {
+        self.finishSendingMessage(animated: true)
         ApiService.sendChatMessage(Authorization: self.user?.data?.accessToken ?? "", chatId: self.order?.chatId ?? 0, type: 1, message: text, image: "", voice: "") { (response) in
             if (response.errorCode == 0) {
                 let message: ZHCMessage = ZHCMessage.init(senderId: senderId, senderDisplayName: senderDisplayName, date: date, text: text)
@@ -856,11 +857,9 @@ class ZHCDemoMessagesViewController: ZHCMessagesViewController, BillDelegate, Ch
     }
     
     func sendVoiceMessage() {
-        
         var audioData : Data?
         do {
             audioData = try Data.init(contentsOf: self.recorder.getUrl())
-            
         }catch let err {
             audioData = Data(base64Encoded: "")
         }
@@ -892,7 +891,6 @@ class ZHCDemoMessagesViewController: ZHCMessagesViewController, BillDelegate, Ch
                 self.finishSendingMessage(animated: true);
             }
         }
-        
     }
     
     //MARK: ZHCMessagesMoreViewDelegate
@@ -938,6 +936,14 @@ class ZHCDemoMessagesViewController: ZHCMessagesViewController, BillDelegate, Ch
             return Constants.ARABIC_FONT_REGULAR
         }else {
             return Constants.ENGLISH_FONT_REGULAR
+        }
+    }
+    
+    func getBoldFontName() -> String {
+        if (self.isArabic()) {
+            return Constants.ARABIC_FONT_SEMIBOLD
+        }else {
+            return Constants.ENGLISH_FONT_SEMIBOLD
         }
     }
     

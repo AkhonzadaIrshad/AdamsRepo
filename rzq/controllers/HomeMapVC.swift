@@ -680,6 +680,9 @@ class HomeMapVC: BaseViewController,LabasLocationManagerDelegate, UICollectionVi
         self.latitude = location.coordinate.latitude
         self.longitude = location.coordinate.longitude
         
+//        self.latitude = 29.363534
+//        self.longitude = 47.989769
+        
         UserDefaults.standard.setValue(self.latitude, forKey: Constants.LAST_LATITUDE)
         UserDefaults.standard.setValue(self.longitude, forKey: Constants.LAST_LONGITUDE)
         
@@ -687,9 +690,6 @@ class HomeMapVC: BaseViewController,LabasLocationManagerDelegate, UICollectionVi
             
             self.latitude = location.coordinate.latitude
             self.longitude = location.coordinate.longitude
-            
-//                        self.latitude = 29.363534
-//                        self.longitude = 47.989769
             
             
             UserDefaults.standard.setValue(self.latitude, forKey: Constants.LAST_LATITUDE)
@@ -802,6 +802,7 @@ class HomeMapVC: BaseViewController,LabasLocationManagerDelegate, UICollectionVi
                 self.viewServices.isHidden = true
                 self.viewTenders.isHidden = true
             }else {
+               self.stopTimer()
                 // self.searchView.isHidden = false
                 self.collectionView.isHidden = true
                 self.polyline?.map = nil
