@@ -53,6 +53,10 @@ class ZHCDemoMessagesViewController: ZHCMessagesViewController, BillDelegate, Ch
     
     override func viewDidLoad() {
         super.viewDidLoad()
+        
+        self.latitude = UserDefaults.standard.value(forKey: Constants.LAST_LATITUDE) as? Double ?? 0.0
+        self.longitude = UserDefaults.standard.value(forKey: Constants.LAST_LONGITUDE) as? Double ?? 0.0
+        
         demoData.user = self.user
         demoData.order = self.order
         demoData.delegate = self
@@ -103,10 +107,10 @@ class ZHCDemoMessagesViewController: ZHCMessagesViewController, BillDelegate, Ch
         let infoBarButtonItem = UIBarButtonItem(title: "chat_order_details".localized, style: .done, target: self, action: #selector(orderInfoAction))
         self.navigationItem.rightBarButtonItem  = infoBarButtonItem
         
-        if (self.isProvider()) {
+      //  if (self.isProvider()) {
             LabasLocationManager.shared.delegate = self
             LabasLocationManager.shared.startUpdatingLocation()
-        }
+       // }
         
     }
     
@@ -122,16 +126,7 @@ class ZHCDemoMessagesViewController: ZHCMessagesViewController, BillDelegate, Ch
         UserDefaults.standard.setValue(self.latitude, forKey: Constants.LAST_LATITUDE)
         UserDefaults.standard.setValue(self.longitude, forKey: Constants.LAST_LONGITUDE)
         
-        if (self.latitude ?? 0.0 == 0.0 || self.longitude ?? 0.0 == 0.0) {
-            
-            self.latitude = location.coordinate.latitude
-            self.longitude = location.coordinate.longitude
-            
-           
-            UserDefaults.standard.setValue(self.latitude, forKey: Constants.LAST_LATITUDE)
-            UserDefaults.standard.setValue(self.longitude, forKey: Constants.LAST_LONGITUDE)
-            
-        }
+        
         if (self.isProvider()) {
             ApiService.updateLocation(Authorization: self.user?.data?.accessToken ?? "", latitude: location.coordinate.latitude , longitude: location.coordinate.longitude) { (response) in
                 
@@ -224,6 +219,22 @@ class ZHCDemoMessagesViewController: ZHCMessagesViewController, BillDelegate, Ch
         }
     }
     
+    func sendCurrentLocation() {
+        let link = "\("current_location".localized)\n\n\n\("https://www.google.com/maps/dir/?api=1&destination=\(self.latitude ?? 0.0),\(self.longitude ?? 0.0)&directionsmode=driving")"
+  
+        self.finishSendingMessage(animated: true)
+        ApiService.sendChatMessage(Authorization: self.user?.data?.accessToken ?? "", chatId: self.order?.chatId ?? 0, type: 1, message: link, image: "", voice: "") { (response) in
+            if (response.errorCode == 0) {
+                 let message: ZHCMessage = ZHCMessage.init(senderId: self.user?.data?.userID ?? "", senderDisplayName: self.user?.data?.fullName ?? "", date: Date(), text: link)
+                self.demoData.messages.add(message)
+                self.finishSendingMessage(animated: true)
+            }else {
+                self.closeChat()
+            }
+        }
+    
+    }
+    
     func getChatMessages() {
         demoData.loadMessages()
     }
@@ -304,6 +315,19 @@ class ZHCDemoMessagesViewController: ZHCMessagesViewController, BillDelegate, Ch
             })
             
         }
+        
+        
+        let item4 = self.driverActionButton?.addItem()
+        item4?.titleLabel.text = "send_current_location".localized
+        item4?.titleLabel.textColor = UIColor.black
+        item4?.titleLabel.font = UIFont(name: self.getBoldFontName(), size: 13)
+        item4?.imageView.image = UIImage(named: "chat_send_location")
+        item4?.buttonColor = UIColor.appLogoColor
+        item4?.buttonImageColor = .white
+        item4?.action = { item in
+            self.sendCurrentLocation()
+        }
+        
         
         if (self.isProvider() && self.user?.data?.userID == self.order?.providerID) {
           
@@ -461,6 +485,7 @@ class ZHCDemoMessagesViewController: ZHCMessagesViewController, BillDelegate, Ch
         self.actionButton?.removeFromSuperview()
         self.actionButton = JJFloatingActionButton()
         self.actionButton?.delegate = self
+        self.driverActionButton?.overlayView.isHidden = true
         
         self.actionButton?.layer.shadowColor = UIColor.black.cgColor
         self.actionButton?.layer.shadowOffset = CGSize(width: 0, height: 1)
@@ -510,6 +535,18 @@ class ZHCDemoMessagesViewController: ZHCMessagesViewController, BillDelegate, Ch
         }
         
 
+        let item4 = self.actionButton?.addItem()
+        item4?.titleLabel.text = "send_current_location".localized
+        item4?.titleLabel.textColor = UIColor.black
+        item4?.titleLabel.font = UIFont(name: self.getBoldFontName(), size: 13)
+        item4?.imageView.image = UIImage(named: "chat_send_location")
+        item4?.buttonColor = UIColor.appLogoColor
+        item4?.buttonImageColor = .white
+        item4?.action = { item in
+            self.sendCurrentLocation()
+        }
+        
+        
         
         self.actionButton?.buttonColor = UIColor.appLogoColor
         self.actionButton?.shadowColor = UIColor.blue

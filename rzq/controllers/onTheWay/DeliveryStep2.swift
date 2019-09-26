@@ -86,6 +86,30 @@ class DeliveryStep2: BaseVC, Step3Delegate {
         
     }
     
+    func applyMarkerImage(from url: URL, to marker: GMSMarker) {
+        DispatchQueue.global(qos: .background).async {
+            guard let data = try? Data(contentsOf: url),
+                // let image = UIImage(data: data)?.cropped()
+                let image = UIImage(data: data)
+                else { return }
+            
+            DispatchQueue.main.async {
+                marker.icon = self.imageWithImage(image: image, scaledToSize: CGSize(width: 48.0, height: 48.0))
+                //  marker.icon = image
+            }
+        }
+    }
+    
+    
+    func imageWithImage(image:UIImage, scaledToSize newSize:CGSize) -> UIImage{
+        UIGraphicsBeginImageContextWithOptions(newSize, false, 0.0)
+        image.draw(in: CGRect(x: 0, y: 0, width: newSize.width, height: newSize.height))
+        let newImage:UIImage = UIGraphicsGetImageFromCurrentImageContext()!
+        UIGraphicsEndImageContext()
+        return newImage
+    }
+    
+    
     func selectDefaultDrop() {
         self.moreDetailsView.isHidden = false
         self.lblSearch.isHidden = true
@@ -234,6 +258,8 @@ class DeliveryStep2: BaseVC, Step3Delegate {
                                     pickMarker.title = "\(self.orderModel?.shop?.id ?? 0)"
                                     if (self.orderModel?.shop?.id ?? 0 > 0) {
                                         pickMarker.icon = UIImage(named: "ic_map_shop")
+                                        let url = URL(string: "\(Constants.IMAGE_URL)\(self.orderModel?.shop?.type?.selectedIcon ?? "")")
+                                        self.applyMarkerImage(from: url!, to: pickMarker)
                                     }else {
                                         pickMarker.icon = UIImage(named: "ic_location_pin")
                                     }

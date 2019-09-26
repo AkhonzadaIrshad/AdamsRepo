@@ -25,6 +25,8 @@ class DeliveryStep1: BaseVC,LabasLocationManagerDelegate, Step2Delegate {
     
     @IBOutlet weak var searchField: SearchTextField!
     
+    @IBOutlet weak var viewParentSearch: CardView!
+    
     @IBOutlet weak var ivHandle: UIImageView!
     
     @IBOutlet weak var ivShop: CircleImage!
@@ -141,18 +143,18 @@ class DeliveryStep1: BaseVC,LabasLocationManagerDelegate, Step2Delegate {
             
         }
         
-        let popTip = PopTip()
-        popTip.bubbleColor = UIColor.processing
-        popTip.textColor = UIColor.white
-        if (self.isArabic()) {
-            popTip.show(text: "current_location_desc".localized, direction: .left, maxWidth: 200, in: self.view, from: self.btnCurrentLocation.frame)
-        }else {
-            popTip.show(text: "current_location_desc".localized, direction: .left, maxWidth: 200, in: self.view, from: self.btnCurrentLocation.frame)
-        }
-      
-        DispatchQueue.main.asyncAfter(deadline: .now() + 3) {
-            popTip.hide()
-        }
+//        let popTip = PopTip()
+//        popTip.bubbleColor = UIColor.processing
+//        popTip.textColor = UIColor.white
+//        if (self.isArabic()) {
+//            popTip.show(text: "current_location_desc".localized, direction: .left, maxWidth: 200, in: self.view, from: self.btnCurrentLocation.frame)
+//        }else {
+//            popTip.show(text: "current_location_desc".localized, direction: .left, maxWidth: 200, in: self.view, from: self.btnCurrentLocation.frame)
+//        }
+//
+//        DispatchQueue.main.asyncAfter(deadline: .now() + 3) {
+//            popTip.hide()
+//        }
         
         if (App.shared.config?.configSettings?.flag ?? false) {
           self.checkForUpdates()
@@ -162,6 +164,21 @@ class DeliveryStep1: BaseVC,LabasLocationManagerDelegate, Step2Delegate {
         if (self.isProvider()) {
             self.getDriverOnGoingDeliveries()
         }
+        
+        
+        self.showSearchFieldToolTip()
+        
+    }
+    
+    func showSearchFieldToolTip() {
+        let popTip = PopTip()
+        popTip.bubbleColor = UIColor.processing
+        popTip.textColor = UIColor.white
+         popTip.show(text: "searchfield_tooltip".localized, direction: .down, maxWidth: 900, in: self.view, from: self.viewParentSearch.frame)
+        
+//        DispatchQueue.main.asyncAfter(deadline: .now() + 3) {
+//            popTip.hide()
+//        }
         
     }
     
@@ -270,7 +287,7 @@ class DeliveryStep1: BaseVC,LabasLocationManagerDelegate, Step2Delegate {
     
     func validate() -> Bool {
         if (self.orderModel?.pickUpLatitude ?? 0.0 == 0.0 || self.orderModel?.pickUpLongitude ?? 0.0 == 0.0) {
-            self.showBanner(title: "alert".localized, message: "choose_shop_or_pickup".localized, style: UIColor.INFO)
+            self.showBanner(title: "alert".localized, message: "searchfield_tooltip".localized, style: UIColor.INFO)
             return false
         }
         //        if (self.orderModel?.shop?.id ?? 0 == 0) {

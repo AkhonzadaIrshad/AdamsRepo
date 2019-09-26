@@ -298,9 +298,9 @@ class NotificationsVC: BaseViewController, UITableViewDelegate, UITableViewDataS
             cell.lblTitle.text = desc
             let price = dict?["EstimatedPrice"] as? Double ?? 0.0
             if (price > 10) {
-                cell.lblMoney.text = "> 10 \("currency".localized)"
+                cell.lblMoney.text = "\("more_10".localized) \("currency".localized)"
             }else {
-                cell.lblMoney.text = "< 10 \("currency".localized)"
+                cell.lblMoney.text = "\("less_10".localized) \("currency".localized)"
             }
 //            cell.lblMoney.text = "\(dict?["EstimatedPrice"] as? Double ?? 0.0) \("currency".localized)"
             let time = dict?["EstimatedTime"] as? Int ?? 0

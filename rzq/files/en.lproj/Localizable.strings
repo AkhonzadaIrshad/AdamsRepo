@@ -151,6 +151,9 @@
 
 "current_location_desc" = "Go to your current location on map.";
 
+"current_location" = "My Current Location:";
+
+"send_current_location" = "Send Location";
 
 "mobile_number" = "Mobile Number";
 "name" = "Name";
@@ -220,3 +223,8 @@
 
 "open_now" = "Open Now";
 "closed_now" = "Closed Now";
+
+"searchfield_tooltip" = "Search from place or shop you want to order from.";
+
+"more_10" = "More than 10";
+"less_10" = "Less than 10";
