@@ -413,15 +413,15 @@ class DeliveryStep1: BaseVC,LabasLocationManagerDelegate, Step2Delegate {
                 if let lines = address.lines  {
                     if (lines.count > 0) {
                         if lines.count > 0 {
-                            if lines[0].characters.count > 0 {
+                            if lines[0].count > 0 {
                                 strAddresMain = strAddresMain + lines[0]
                             }
                         }
                     }
                     
                     if lines.count > 1 {
-                        if lines[1].characters.count > 0 {
-                            if strAddresMain.characters.count > 0 {
+                        if lines[1].count > 0 {
+                            if strAddresMain.count > 0 {
                                 strAddresMain = strAddresMain + ", \(lines[1])"
                             } else {
                                 strAddresMain = strAddresMain + "\(lines[1])"
@@ -429,7 +429,7 @@ class DeliveryStep1: BaseVC,LabasLocationManagerDelegate, Step2Delegate {
                         }
                     }
                     
-                    if (strAddresMain.characters.count > 0) {
+                    if (strAddresMain.count > 0) {
                         
                         var strSubTitle = ""
                         if let locality = address.locality {
@@ -437,7 +437,7 @@ class DeliveryStep1: BaseVC,LabasLocationManagerDelegate, Step2Delegate {
                         }
                         
                         if let administrativeArea = address.administrativeArea {
-                            if strSubTitle.characters.count > 0 {
+                            if strSubTitle.count > 0 {
                                 strSubTitle = "\(strSubTitle), \(administrativeArea)"
                             }
                             else {
@@ -446,7 +446,7 @@ class DeliveryStep1: BaseVC,LabasLocationManagerDelegate, Step2Delegate {
                         }
                         
                         if let country = address.country {
-                            if strSubTitle.characters.count > 0 {
+                            if strSubTitle.count > 0 {
                                 strSubTitle = "\(strSubTitle), \(country)"
                             }
                             else {

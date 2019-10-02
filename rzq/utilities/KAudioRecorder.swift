@@ -16,7 +16,7 @@ class KAudioRecorder: NSObject {
     
     private var audioSession:AVAudioSession = AVAudioSession.sharedInstance()
     private var audioRecorder:AVAudioRecorder!
-    private var audioPlayer:AVAudioPlayer = AVAudioPlayer()
+    var audioPlayer: AVAudioPlayer?
     private let settings = [AVFormatIDKey: Int(kAudioFormatMPEG4AAC), AVSampleRateKey: 12000, AVNumberOfChannelsKey: 1, AVEncoderAudioQualityKey: AVAudioQuality.high.rawValue]
     fileprivate var timer:Timer!
     
@@ -122,16 +122,16 @@ class KAudioRecorder: NSObject {
             if let recorder = self.audioRecorder  {
                 
                 if recorder.url.path == url?.path && url != nil {
-                    audioPlayer.play()
+                    audioPlayer?.play()
                     return
                 }
                 
                 do {
                     
                     audioPlayer = try AVAudioPlayer(contentsOf: recorder.url)
-                    audioPlayer.delegate = self as AVAudioPlayerDelegate
+                    audioPlayer?.delegate = self as AVAudioPlayerDelegate
                     url = audioRecorder.url
-                    audioPlayer.play()
+                    audioPlayer?.play()
                     
                 } catch {
                     print("play(), ",error.localizedDescription)
@@ -150,10 +150,10 @@ class KAudioRecorder: NSObject {
         if FileManager.default.fileExists(atPath: bundle.path) && !isRecording && !isPlaying {
             
             do {
-                
-                audioPlayer = try AVAudioPlayer(contentsOf: bundle)
-                audioPlayer.delegate = self as AVAudioPlayerDelegate
-                audioPlayer.play()
+                self.audioPlayer?.pause()
+                self.audioPlayer = try AVAudioPlayer(contentsOf: bundle)
+                self.audioPlayer?.delegate = self as AVAudioPlayerDelegate
+                self.audioPlayer?.play()
                 
             } catch {
                 print("play(with name:), ",error.localizedDescription)
@@ -183,7 +183,7 @@ class KAudioRecorder: NSObject {
     }
     
     func stopPlaying() {
-        audioPlayer.stop()
+        audioPlayer?.stop()
         isPlaying = false
     }
     

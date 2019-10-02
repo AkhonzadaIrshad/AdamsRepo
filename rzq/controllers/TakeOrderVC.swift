@@ -76,6 +76,8 @@ class TakeOrderVC: BaseVC, AVAudioPlayerDelegate {
     
     var selectedRoute: NSDictionary!
     
+    var audioPlayer: AVAudioPlayer?
+    
     override func viewDidLoad() {
         super.viewDidLoad()
         if (self.isArabic()) {
@@ -133,6 +135,15 @@ class TakeOrderVC: BaseVC, AVAudioPlayerDelegate {
                 self.btnPlay.isHidden = true
             }
         }
+        
+        do {
+            try AVAudioSession.sharedInstance().setCategory(.playback, mode: .default, options: [])
+        }
+        catch {
+            print("Setting category to AVAudioSessionCategoryPlayback failed.")
+        }
+        
+        
     }
     
     func setUpGoogleMap() {
@@ -176,17 +187,32 @@ class TakeOrderVC: BaseVC, AVAudioPlayerDelegate {
     
     
     func playRecord(path : URL) {
-        let playerItem:AVPlayerItem = AVPlayerItem(url: path)
-        let audioPlayer = AVPlayer(playerItem: playerItem)
-        audioPlayer.volume = 1.0
-        audioPlayer.isMuted = false
-        audioPlayer.play()
+        
+        do {
+            self.audioPlayer?.pause()
+            self.audioPlayer = try AVAudioPlayer(contentsOf: path)
+            self.audioPlayer?.delegate = self as AVAudioPlayerDelegate
+            self.audioPlayer?.rate = 1.0
+            self.audioPlayer?.volume = 1.0
+            self.audioPlayer?.play()
+            
+        } catch {
+            print("play(with name:), ",error.localizedDescription)
+        }
+        
+        //        let playerItem:AVPlayerItem = AVPlayerItem(url: path)
+        //       // let audioPlayer = AVPlayer(playerItem: playerItem)
+        //        self.audioPlayer = try AVPlayer(playerItem: playerItem)
+        //        self.audioPlayer.volume = 1.0
+        //        self.audioPlayer.rate = 1.0
+        //        self.audioPlayer.isMuted = false
+        //        self.audioPlayer.play()
     }
     
-    func downloadFileFromURL(url:URL){
+    func downloadFileFromURL(urlContent:URL){
         
         var downloadTask:URLSessionDownloadTask
-        downloadTask = URLSession.shared.downloadTask(with: url, completionHandler: { (url, response, error) in
+        downloadTask = URLSession.shared.downloadTask(with: urlContent, completionHandler: { (url, response, error) in
             // self.play(url: url!)
             self.playRecord(path: url!)
         })
@@ -237,7 +263,7 @@ class TakeOrderVC: BaseVC, AVAudioPlayerDelegate {
                     let json = try JSONSerialization.jsonObject(with: data!, options:.allowFragments) as! [String : AnyObject]
                     if let routes = json["routes"] as? NSArray {
                         if (routes.count > 0) {
-                           // self.gMap?.clear()
+                            // self.gMap?.clear()
                             
                             self.selectedRoute = (json["routes"] as! Array<NSDictionary>)[0]
                             //  self.loadDistanceAndDuration()
@@ -246,7 +272,7 @@ class TakeOrderVC: BaseVC, AVAudioPlayerDelegate {
                                 for route in routes
                                 {
                                     let routeOverviewPolyline:NSDictionary = (route as! NSDictionary).value(forKey: "overview_polyline") as! NSDictionary
-                                   
+                                    
                                     let points = routeOverviewPolyline.object(forKey: "points")
                                     let path = GMSPath.init(fromEncodedPath: points! as! String)
                                     let polyline = GMSPolyline.init(path: path)
@@ -258,7 +284,7 @@ class TakeOrderVC: BaseVC, AVAudioPlayerDelegate {
                                     
                                     polyline.map = self.gMap
                                     
-    
+                                    
                                     let driverPosition = CLLocationCoordinate2D(latitude: self.latitude ?? 0, longitude: self.longitude ?? 0)
                                     let driverMarker = GMSMarker(position: driverPosition)
                                     driverMarker.title = ""
@@ -309,7 +335,7 @@ class TakeOrderVC: BaseVC, AVAudioPlayerDelegate {
                     let json = try JSONSerialization.jsonObject(with: data!, options:.allowFragments) as! [String : AnyObject]
                     if let routes = json["routes"] as? NSArray {
                         if (routes.count > 0) {
-                           // self.gMap?.clear()
+                            // self.gMap?.clear()
                             
                             self.selectedRoute = (json["routes"] as! Array<NSDictionary>)[0]
                             //  self.loadDistanceAndDuration()
@@ -465,16 +491,20 @@ class TakeOrderVC: BaseVC, AVAudioPlayerDelegate {
     
     
     func validate() -> Bool {
-//        if (self.edtCost.text?.count ?? 0 == 0) {
-//            self.showBanner(title: "alert".localized, message: "enter_order_cost".localized, style: UIColor.INFO)
-//            return false
-//        }
+        //        if (self.edtCost.text?.count ?? 0 == 0) {
+        //            self.showBanner(title: "alert".localized, message: "enter_order_cost".localized, style: UIColor.INFO)
+        //            return false
+        //        }
         return true
     }
     
     @IBAction func playAction(_ sender: Any) {
-        let url = URL(string: ("\(Constants.IMAGE_URL)\(self.voiceRecord ?? "")"))
-        self.downloadFileFromURL(url: url!)
+        let urlz = URL(string: "\(Constants.IMAGE_URL)\(self.voiceRecord ?? "")")
+        
+        self.downloadFileFromURL(urlContent: urlz!)
+        
+        //  self.playRecord(path: urlz!)
+        
     }
     
     @IBAction func openImagesAction(_ sender: Any) {
@@ -505,6 +535,9 @@ class TakeOrderVC: BaseVC, AVAudioPlayerDelegate {
         }
     }
     
+    func audioPlayerDecodeErrorDidOccur(_ player: AVAudioPlayer, error: Error?) {
+        let x = error?.localizedDescription ?? ""
+    }
     
     
 }

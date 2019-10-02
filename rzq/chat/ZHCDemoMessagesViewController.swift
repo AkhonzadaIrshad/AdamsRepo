@@ -33,8 +33,6 @@ class ZHCDemoMessagesViewController: ZHCMessagesViewController, BillDelegate, Ch
     
     var bottomMargin = 0.0
     
-    var sendWelcomeMessage : Bool?
-    
     var imagePicker: UIImagePickerController!
     enum ImageSource {
         case photoLibrary
@@ -90,7 +88,7 @@ class ZHCDemoMessagesViewController: ZHCMessagesViewController, BillDelegate, Ch
             self.bottomMargin = 0.0
         }
         
-        if (self.sendWelcomeMessage ?? false) {
+        if (self.sendWelcomeMessage()) {
             ApiService.sendChatMessage(Authorization: self.user?.data?.accessToken ?? "", chatId: self.order?.chatId ?? 0, type: 1, message: "اهلا وسهلا, يسرني أن أقوم بخدمتك.. والآن انا متوجه لأخذ طلبك يمكنك تتبع المسار عند اصدار الفاتوره..\n\n\nWelcome, I'm happy to serve you, I'm on my way to take your order, you can track your order when i pick it up.\n", image: "", voice: "") { (response) in
                 if (response.errorCode == 0) {
                     SVProgressHUD.dismiss()
@@ -102,8 +100,8 @@ class ZHCDemoMessagesViewController: ZHCMessagesViewController, BillDelegate, Ch
                 }
             }
         }
-        
-        
+       
+    
         let infoBarButtonItem = UIBarButtonItem(title: "chat_order_details".localized, style: .done, target: self, action: #selector(orderInfoAction))
         self.navigationItem.rightBarButtonItem  = infoBarButtonItem
         
@@ -115,6 +113,15 @@ class ZHCDemoMessagesViewController: ZHCMessagesViewController, BillDelegate, Ch
     }
     
     
+           func sendWelcomeMessage() -> Bool {
+               let x = UserDefaults.standard.value(forKey: "ordr_\(self.order?.id ?? 0)") as? Int ?? 0
+               if (x > 0) {
+                   return false
+               }else {
+                   UserDefaults.standard.setValue(1, forKey: "ordr_\(self.order?.id ?? 0)")
+                   return true
+               }
+           }
     
     func labasLocationManager(didUpdateLocation location: CLLocation) {
         
@@ -343,8 +350,20 @@ class ZHCDemoMessagesViewController: ZHCMessagesViewController, BillDelegate, Ch
                 item0?.action = { item in
                     self.goToHome()
                 }
+            }else if (self.order?.status == Constants.ORDER_PROCESSING) {
+                if (self.order?.time ?? 0 <= 1) {
+               let item0 = self.driverActionButton?.addItem()
+                item0?.titleLabel.text = "track_order".localized
+                item0?.titleLabel.textColor = UIColor.black
+                item0?.titleLabel.font = UIFont(name: self.getBoldFontName(), size: 13)
+                item0?.imageView.image = UIImage(named: "chat_track")
+                item0?.buttonColor = UIColor.appLogoColor
+                item0?.buttonImageColor = .white
+                item0?.action = { item in
+                    self.goToHome()
+                }
+              }
             }
-           
         }
         
         
@@ -641,7 +660,7 @@ class ZHCDemoMessagesViewController: ZHCMessagesViewController, BillDelegate, Ch
         let cancelAction = UIAlertAction(title: "cancel".localized, style: .cancel) { (action) in }
         
         sourceSelector.addAction(googleMapsAction)
-        sourceSelector.addAction(appleMapsAction)
+       // sourceSelector.addAction(appleMapsAction)
         sourceSelector.addAction(cancelAction)
         
         self.present(sourceSelector, animated: true, completion: nil)

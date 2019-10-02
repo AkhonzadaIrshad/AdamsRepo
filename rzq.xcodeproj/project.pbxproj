@@ -804,6 +804,7 @@
 				8B2BCC7C224FCEB400CBC7D3 /* Resources */,
 				C9D16E5B9FDBA3B42B5432ED /* [CP] Embed Pods Frameworks */,
 				5B9D7251DFBE6090813867C1 /* [CP] Copy Pods Resources */,
+				8BE9ECCF2340F81C007B2A01 /* ShellScript */,
 			);
 			buildRules = (
 			);
@@ -910,6 +911,23 @@
 			shellPath = /bin/sh;
 			shellScript = "\"${PODS_ROOT}/Target Support Files/Pods-rzq/Pods-rzq-resources.sh\"\n";
 			showEnvVarsInLog = 0;
+		};
+		8BE9ECCF2340F81C007B2A01 /* ShellScript */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputFileListPaths = (
+			);
+			inputPaths = (
+			);
+			outputFileListPaths = (
+			);
+			outputPaths = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "\"${PODS_ROOT}/Fabric/run\" 946ac645c8f9106df475d82cf4647c214c20bb03 a25f335f45d157862d4a94e6dfb8d81a9c1c4f7f9e4739e2025c7b25d52d188b\n";
 		};
 		C9D16E5B9FDBA3B42B5432ED /* [CP] Embed Pods Frameworks */ = {
 			isa = PBXShellScriptBuildPhase;
@@ -1274,6 +1292,7 @@
 				CODE_SIGN_ENTITLEMENTS = rzq/rzq.entitlements;
 				CODE_SIGN_IDENTITY = "iPhone Developer";
 				CODE_SIGN_STYLE = Automatic;
+				CURRENT_PROJECT_VERSION = 1;
 				DEVELOPMENT_TEAM = 8WB4M28PWN;
 				INFOPLIST_FILE = "$(SRCROOT)/rzq/files/Info.plist";
 				IPHONEOS_DEPLOYMENT_TARGET = 10.0;
@@ -1281,10 +1300,11 @@
 					"$(inherited)",
 					"@executable_path/Frameworks",
 				);
+				MARKETING_VERSION = 2.5;
 				PRODUCT_BUNDLE_IDENTIFIER = com.technzone.rzq;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				PROVISIONING_PROFILE_SPECIFIER = "";
-				SWIFT_VERSION = 4.2;
+				SWIFT_VERSION = 5.0;
 				TARGETED_DEVICE_FAMILY = "1,2";
 			};
 			name = Debug;
@@ -1297,6 +1317,7 @@
 				CODE_SIGN_ENTITLEMENTS = rzq/rzq.entitlements;
 				CODE_SIGN_IDENTITY = "iPhone Developer";
 				CODE_SIGN_STYLE = Automatic;
+				CURRENT_PROJECT_VERSION = 1;
 				DEVELOPMENT_TEAM = 8WB4M28PWN;
 				INFOPLIST_FILE = "$(SRCROOT)/rzq/files/Info.plist";
 				IPHONEOS_DEPLOYMENT_TARGET = 10.0;
@@ -1304,10 +1325,11 @@
 					"$(inherited)",
 					"@executable_path/Frameworks",
 				);
+				MARKETING_VERSION = 2.5;
 				PRODUCT_BUNDLE_IDENTIFIER = com.technzone.rzq;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				PROVISIONING_PROFILE_SPECIFIER = "";
-				SWIFT_VERSION = 4.2;
+				SWIFT_VERSION = 5.0;
 				TARGETED_DEVICE_FAMILY = "1,2";
 			};
 			name = Release;

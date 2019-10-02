@@ -82,6 +82,8 @@ class OrderDetailsVC: BaseVC, UICollectionViewDelegate, UICollectionViewDataSour
     @IBOutlet weak var viewNavigate: UIView!
     @IBOutlet weak var viewNavigateHeight: NSLayoutConstraint!
     
+    var audioPlayer: AVAudioPlayer?
+    
     override func viewDidLoad() {
         super.viewDidLoad()
         if (self.isArabic()) {
@@ -373,11 +375,23 @@ class OrderDetailsVC: BaseVC, UICollectionViewDelegate, UICollectionViewDataSour
     }
     
     func playRecord(path : URL) {
-        let playerItem:AVPlayerItem = AVPlayerItem(url: path)
-        let audioPlayer = AVPlayer(playerItem: playerItem)
-        audioPlayer.volume = 1.0
-        audioPlayer.isMuted = false
-        audioPlayer.play()
+//        let playerItem:AVPlayerItem = AVPlayerItem(url: path)
+//        let audioPlayer = AVPlayer(playerItem: playerItem)
+//        audioPlayer.volume = 1.0
+//        audioPlayer.isMuted = false
+//        audioPlayer.play()
+        
+        do {
+                  self.audioPlayer?.pause()
+                  self.audioPlayer = try AVAudioPlayer(contentsOf: path)
+                  self.audioPlayer?.delegate = self as AVAudioPlayerDelegate
+                  self.audioPlayer?.rate = 1.0
+                  self.audioPlayer?.volume = 1.0
+                  self.audioPlayer?.play()
+                  
+              } catch {
+                  print("play(with name:), ",error.localizedDescription)
+              }
     }
     
     func downloadFileFromURL(url:URL){
@@ -525,7 +539,7 @@ class OrderDetailsVC: BaseVC, UICollectionViewDelegate, UICollectionViewDataSour
         let cancelAction = UIAlertAction(title: "cancel".localized, style: .cancel) { (action) in }
         
         sourceSelector.addAction(googleMapsAction)
-        sourceSelector.addAction(appleMapsAction)
+      //  sourceSelector.addAction(appleMapsAction)
         sourceSelector.addAction(cancelAction)
         
         self.present(sourceSelector, animated: true, completion: nil)

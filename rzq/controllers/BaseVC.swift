@@ -181,7 +181,6 @@ class BaseVC: UIViewController,UIGestureRecognizerDelegate {
         
         return realmUser
     }
-
     
     func getUser (realmUser  : RealmUser) -> VerifyResponse {
          let userData = DataClass(accessToken: realmUser.access_token, phoneNumber: realmUser.phone_number, username: realmUser.user_name, fullName: realmUser.full_name, userID: realmUser.userId, dateOfBirth: realmUser.date_of_birth, profilePicture: realmUser.profile_picture, email: realmUser.email, gender: realmUser.gender, rate: realmUser.rate, roles: realmUser.roles, isOnline: realmUser.isOnline,exceededDueAmount: realmUser.exceeded_amount, dueAmount: realmUser.dueAmount, earnings: realmUser.earnings, balance: realmUser.balance)

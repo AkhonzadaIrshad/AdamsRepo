@@ -164,7 +164,7 @@ class RegisterAsServiceProviderVC: BaseVC, UINavigationControllerDelegate, Selec
             self.showBanner(title: "alert".localized, message: "enter_name_first".localized, style: UIColor.INFO)
             return false
         }
-        if (self.edtEmail.text?.count ?? 0 == 0) {
+        if (self.edtEmail.text?.count ?? 0 == 0 || !(self.edtEmail.text?.isValidEmail() ?? false)) {
             self.showBanner(title: "alert".localized, message: "enter_email_first".localized, style: UIColor.INFO)
             return false
         }

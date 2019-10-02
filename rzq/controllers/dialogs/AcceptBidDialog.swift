@@ -70,7 +70,7 @@ class AcceptBidDialog: BaseVC {
                 self.lblTime.text = "asap".localized
             }
             
-            self.lblDistance.text = "\(distance) \("km".localized)"
+            self.lblDistance.text = "\(String(format: "%.2f", (distance))) \("km".localized)"
             self.lblOrdersCount.text = "\(orderCount) \("orders".localized)"
         }else if (item?.type == Constants.SERVICE_BID_CREATED) {
             let driver = dict?["ProviderName"] as? String ?? ""

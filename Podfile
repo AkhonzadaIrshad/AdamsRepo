@@ -7,7 +7,7 @@ target 'rzq' do
 
   # Pods for rzq
 
-pod 'RealmSwift'
+
    pod 'Alamofire'
    pod 'MOLH'
    pod 'SwiftyJSON', '~> 4.0'
@@ -33,8 +33,6 @@ pod 'RealmSwift'
    pod 'Cosmos', '~> 18.0'
    pod 'SimpleCheckbox'
    pod 'DatePickerDialog'
-   pod 'Firebase/Core'
-   pod 'Firebase/Messaging'
    pod 'EAIntroView'
    pod 'SnapKit', '~> 4.0.0'
    pod 'ExpandableCell'
@@ -45,4 +43,10 @@ pod 'RealmSwift'
    pod 'DropDown'
    pod 'AMPopTip'
    pod 'ZoomImageView'
+   pod 'Fabric'
+   pod 'Crashlytics'
+   pod 'RealmSwift'
+   pod 'Firebase/Core'
+   pod 'Firebase/Messaging'
+   
 end

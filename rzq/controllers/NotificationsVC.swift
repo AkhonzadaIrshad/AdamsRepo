@@ -40,7 +40,6 @@ class NotificationsVC: BaseViewController, UITableViewDelegate, UITableViewDataS
     override func viewDidLoad() {
         super.viewDidLoad()
         
-        
         self.latitude = UserDefaults.standard.value(forKey: Constants.LAST_LATITUDE) as? Double ?? 0.0
         self.longitude = UserDefaults.standard.value(forKey: Constants.LAST_LONGITUDE) as? Double ?? 0.0
         
@@ -48,7 +47,7 @@ class NotificationsVC: BaseViewController, UITableViewDelegate, UITableViewDataS
         
         self.btnMenu.addTarget(self, action: #selector(BaseViewController.onSlideMenuButtonPressed(_:)), for: UIControl.Event.touchUpInside)
         
-          self.btnAbout.addTarget(self, action: #selector(BaseViewController.onAboutPressed(_:)), for: UIControl.Event.touchUpInside)
+        self.btnAbout.addTarget(self, action: #selector(BaseViewController.onAboutPressed(_:)), for: UIControl.Event.touchUpInside)
         
         LabasLocationManager.shared.delegate = self
         LabasLocationManager.shared.startUpdatingLocation()
@@ -60,14 +59,14 @@ class NotificationsVC: BaseViewController, UITableViewDelegate, UITableViewDataS
         
         self.segmentControl.setTitle("alerts".localized, forSegmentAt: 0)
         if (self.isProvider()) {
-          self.segmentControl.setTitle("bids_and_orders".localized, forSegmentAt: 1)
+            self.segmentControl.setTitle("bids_and_orders".localized, forSegmentAt: 1)
         }else {
             self.segmentControl.setTitle("bids".localized, forSegmentAt: 1)
         }
         
         let font = UIFont(name: self.getFontName(), size: 14)
         self.segmentControl.setTitleTextAttributes([NSAttributedString.Key.font: font!],
-                                                for: .normal)
+                                                   for: .normal)
         
         if (App.shared.notificationSegmentIndex ?? 0 == 0) {
             self.segmentControl.selectedSegmentIndex = 0
@@ -80,7 +79,7 @@ class NotificationsVC: BaseViewController, UITableViewDelegate, UITableViewDataS
     
     func goToWorkingOrders() {
         if (self.isProvider()) {
-        self.openViewControllerBasedOnIdentifier("WorkingOrdersVC")
+            self.openViewControllerBasedOnIdentifier("WorkingOrdersVC")
             
             let itemId = UserDefaults.standard.value(forKey: Constants.BID_ACCEPTED_ORDER) as? Int ?? 0
             
@@ -94,7 +93,7 @@ class NotificationsVC: BaseViewController, UITableViewDelegate, UITableViewDataS
                     
                     messagesVC.order = order
                     messagesVC.user = self.loadUser()
-                    messagesVC.sendWelcomeMessage = true
+                   // messagesVC.sendWelcomeMessage = true
                     let nav: UINavigationController = UINavigationController.init(rootViewController: messagesVC)
                     self.navigationController?.present(nav, animated: true, completion: nil)
                 }
@@ -138,8 +137,8 @@ class NotificationsVC: BaseViewController, UITableViewDelegate, UITableViewDataS
                     self.emptyView.isHidden = false
                 }
             }
-           
-      }
+            
+        }
     }
     
     @IBAction func sortByAction(_ sender: Any) {
@@ -199,7 +198,7 @@ class NotificationsVC: BaseViewController, UITableViewDelegate, UITableViewDataS
         return actionSheet
     }
     
-
+    
     func labasLocationManager(didUpdateLocation location: CLLocation) {
         if (self.latitude ?? 0.0 == 0.0 || self.longitude ?? 0.0 == 0.0) {
             self.latitude = location.coordinate.latitude
@@ -234,32 +233,32 @@ class NotificationsVC: BaseViewController, UITableViewDelegate, UITableViewDataS
         
     }
     
-//    func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {
-//        let item = self.items[indexPath.row]
-//        switch item.type {
-//        case Constants.DELIVERY_CREATED:
-//            return 138.0
-//        case Constants.BID_CREATED:
-//            return 138.0s
-//        default:
-//            return 78.0
-//        }
-//    }
+    //    func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {
+    //        let item = self.items[indexPath.row]
+    //        switch item.type {
+    //        case Constants.DELIVERY_CREATED:
+    //            return 138.0
+    //        case Constants.BID_CREATED:
+    //            return 138.0s
+    //        default:
+    //            return 78.0
+    //        }
+    //    }
     
     func reloadFromRateDriver() {
         self.refreshNotifications()
     }
     
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
-//        let item = self.items[indexPath.row]
-//        if (item.type == Constants.DELIVERY_COMPLETED) {
-//            let vc = UIStoryboard(name: "Main", bundle: nil).instantiateViewController(withIdentifier: "RateDriverDialog") as! RateDriverDialog
-//            vc.deliveryId = item.deliveryID ?? 0
-//            self.definesPresentationContext = true
-//            vc.modalPresentationStyle = UIModalPresentationStyle.overCurrentContext
-//            vc.view.backgroundColor = UIColor.clear
-//            self.present(vc, animated: true, completion: nil)
-//        }
+        //        let item = self.items[indexPath.row]
+        //        if (item.type == Constants.DELIVERY_COMPLETED) {
+        //            let vc = UIStoryboard(name: "Main", bundle: nil).instantiateViewController(withIdentifier: "RateDriverDialog") as! RateDriverDialog
+        //            vc.deliveryId = item.deliveryID ?? 0
+        //            self.definesPresentationContext = true
+        //            vc.modalPresentationStyle = UIModalPresentationStyle.overCurrentContext
+        //            vc.view.backgroundColor = UIColor.clear
+        //            self.present(vc, animated: true, completion: nil)
+        //        }
     }
     
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
@@ -302,22 +301,31 @@ class NotificationsVC: BaseViewController, UITableViewDelegate, UITableViewDataS
             }else {
                 cell.lblMoney.text = "\("less_10".localized) \("currency".localized)"
             }
-//            cell.lblMoney.text = "\(dict?["EstimatedPrice"] as? Double ?? 0.0) \("currency".localized)"
+            //            cell.lblMoney.text = "\(dict?["EstimatedPrice"] as? Double ?? 0.0) \("currency".localized)"
             let time = dict?["EstimatedTime"] as? Int ?? 0
             
             if (time > 0) {
-             cell.lblTime.text = "\(dict?["EstimatedTime"] as? Int ?? 0) \("hours".localized)"
+                cell.lblTime.text = "\(dict?["EstimatedTime"] as? Int ?? 0) \("hours".localized)"
             }else {
                 cell.lblTime.text = "asap".localized
             }
             
             let driverLatLng = CLLocation(latitude: self.latitude ?? 0.0, longitude: self.longitude ?? 0.0)
+            let pickupLatLng = CLLocation(latitude: fromLatitude, longitude: fromLongitude)
             let dropOffLatLng = CLLocation(latitude: toLatitude, longitude: toLongitude)
-            let distanceInMeters = dropOffLatLng.distance(from: driverLatLng)
-            let distanceInKM = distanceInMeters / 1000.0
-            let distanceStr = String(format: "%.2f", distanceInKM)
             
-            cell.lblDistance.text = "\(distanceStr) \("km".localized)"
+          
+            let fromDistanceInMeters = pickupLatLng.distance(from: driverLatLng)
+            let fromDistanceInKM = fromDistanceInMeters / 1000.0
+            
+            let toDistanceInMeters = dropOffLatLng.distance(from: pickupLatLng)
+            let toDistanceInKM = toDistanceInMeters / 1000.0
+            
+            
+            let totalDistanceStr = String(format: "%.2f", (fromDistanceInKM + toDistanceInKM))
+                      
+                      
+            cell.lblDistance.text = "\(totalDistanceStr) \("km".localized)"
             
             cell.onTake = {
                 if let vc = UIStoryboard(name: "Main", bundle: nil).instantiateViewController(withIdentifier: "TakeOrderVC") as? TakeOrderVC
@@ -383,9 +391,9 @@ class NotificationsVC: BaseViewController, UITableViewDelegate, UITableViewDataS
             
             var desc = ""
             if (self.isArabic()) {
-              desc = dict?["ArabicBody"] as? String ?? ""
+                desc = dict?["ArabicBody"] as? String ?? ""
             }else {
-              desc = dict?["EnglishBody"] as? String ?? ""
+                desc = dict?["EnglishBody"] as? String ?? ""
             }
             let distance = dict?["Distance"] as? Double ?? 0.0
             
@@ -398,7 +406,7 @@ class NotificationsVC: BaseViewController, UITableViewDelegate, UITableViewDataS
                 cell.lblTime.text = "asap".localized
             }
             
-            let distanceStr = String(format: "%.2f", (distance / 1000.0))
+            let distanceStr = String(format: "%.2f", (distance))
             
             cell.lblDistance.text = "\(distanceStr) \("km".localized)"
             
@@ -407,7 +415,7 @@ class NotificationsVC: BaseViewController, UITableViewDelegate, UITableViewDataS
                 self.definesPresentationContext = true
                 vc.modalPresentationStyle = UIModalPresentationStyle.overCurrentContext
                 vc.view.backgroundColor = UIColor.clear
-              let notificationId = dict?["Id"] as? Int ?? 0
+                let notificationId = dict?["Id"] as? Int ?? 0
                 vc.item = item
                 vc.notificationId = notificationId
                 vc.delegate = self
@@ -497,7 +505,7 @@ class NotificationsVC: BaseViewController, UITableViewDelegate, UITableViewDataS
             }
             return cell
             
-            //service
+        //service
         case Constants.SERVICE_CREATED:
             let cell : DriverOrderCell = tableView.dequeueReusableCell(withIdentifier: "driverordercell", for: indexPath) as! DriverOrderCell
             
@@ -507,9 +515,9 @@ class NotificationsVC: BaseViewController, UITableViewDelegate, UITableViewDataS
             let toLongitude = dict?["ToLongitude"] as? Double ?? 0.0
             var serviceName = ""
             if (self.isArabic()) {
-               serviceName = dict?["ServiceArabicName"] as? String ?? ""
+                serviceName = dict?["ServiceArabicName"] as? String ?? ""
             }else {
-               serviceName = dict?["ServiceEnglishName"] as? String ?? ""
+                serviceName = dict?["ServiceEnglishName"] as? String ?? ""
             }
             let toAddress = dict?["ToAddress"] as? String ?? ""
             let desc = dict?["Description"] as? String ?? ""
@@ -754,9 +762,9 @@ class NotificationsVC: BaseViewController, UITableViewDelegate, UITableViewDataS
     
     
     @IBAction func segmentTabChanged(_ sender: Any) {
-         UserDefaults.standard.setValue(0, forKey: Constants.NOTIFICATION_COUNT)
+        UserDefaults.standard.setValue(0, forKey: Constants.NOTIFICATION_COUNT)
         if self.segmentControl.selectedSegmentIndex == 0 {
-             self.sortView.isHidden = true
+            self.sortView.isHidden = true
             self.sortViewHeight.constant = 0
         }else {
             self.sortView.isHidden = false

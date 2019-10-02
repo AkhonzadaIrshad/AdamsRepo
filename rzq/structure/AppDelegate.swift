@@ -19,6 +19,8 @@ import BRYXBanner
 import Alamofire
 import Branch
 import RealmSwift
+import Fabric
+import Crashlytics
 
 var AFManager = SessionManager()
 @UIApplicationMain
@@ -28,6 +30,8 @@ class AppDelegate: UIResponder, UIApplicationDelegate, MOLHResetable,MessagingDe
     
     func application(_ application: UIApplication, didFinishLaunchingWithOptions launchOptions: [UIApplication.LaunchOptionsKey: Any]?) -> Bool {
         // Override point for customization after application launch.
+        
+        
         
         //maps
         GMSServices.provideAPIKey("\(Constants.GOOGLE_API_KEY)")
@@ -111,6 +115,8 @@ class AppDelegate: UIResponder, UIApplicationDelegate, MOLHResetable,MessagingDe
         )
         
         Realm.Configuration.defaultConfiguration = realmConfig
+        
+         Fabric.with([Crashlytics.self])
         
         return true
     }
@@ -389,7 +395,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate, MOLHResetable,MessagingDe
         }
         
         let requestIdentifier = "Notification"
-        if #available(iOS 10.0, *) {
+     //   if #available(iOS 10.0, *) {
             let content = UNMutableNotificationContent()
             
             content.badge = 1
@@ -398,7 +404,6 @@ class AppDelegate: UIResponder, UIApplicationDelegate, MOLHResetable,MessagingDe
             content.body = message
             content.categoryIdentifier = "actionCategory"
             content.sound = UNNotificationSound.default
-            
             
             self.updateChat()
             
@@ -416,15 +421,15 @@ class AppDelegate: UIResponder, UIApplicationDelegate, MOLHResetable,MessagingDe
                 }
             }
             
-        } else {
+      //  } else {
             // Fallback on earlier versions
-            let content = UILocalNotification()
+//            let content = UILocalNotification()
+//
+//            content.alertTitle = title
+//            content.alertBody = message
+//            content.category = ""
             
-            content.alertTitle = title
-            content.alertBody = message
-            content.category = ""
-            
-        }
+     //   }
         
     }
     
