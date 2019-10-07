@@ -32,6 +32,7 @@ class RateUserDialog: BaseVC {
                 self.showBanner(title: "alert".localized, message: "thank_you_for_rating".localized, style: UIColor.SUCCESS)
                 DispatchQueue.main.asyncAfter(deadline: .now() + 2, execute: {
                     let vc = UIStoryboard(name: "Main", bundle: nil).instantiateViewController(withIdentifier: self.getHomeView()) as! UINavigationController
+                    vc.modalPresentationStyle = .fullScreen
                     self.present(vc, animated: true, completion: nil)
                 })
             }else {

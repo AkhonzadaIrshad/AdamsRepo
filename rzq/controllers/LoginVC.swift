@@ -74,12 +74,13 @@ class LoginVC: BaseVC, CountryPickerViewDataSource, CountryPickerViewDelegate, P
     
     
     func checkForUpdates() {
-        
-        let appVersion = Bundle.main.infoDictionary!["CFBundleShortVersionString"] as? String ?? "0.0"
-        let CMSVersion = App.shared.config?.updateStatus?.iosVersion ?? appVersion
-        let isMand = App.shared.config?.updateStatus?.iosIsMandatory ?? false
-        
-        if (appVersion != CMSVersion){
+         let appVersion = Bundle.main.infoDictionary!["CFBundleShortVersionString"] as? String ?? "0.0"
+            let doubleAppVersion : Double = appVersion.toDouble()!
+            let CMSVersion = App.shared.config?.updateStatus?.iosVersion ?? appVersion
+            let doubleCmsVersion : Double = CMSVersion.toDouble()!
+            let isMand = App.shared.config?.updateStatus?.iosIsMandatory ?? false
+            
+            if (doubleAppVersion < doubleCmsVersion){
             if (isMand){
                 //mandatory
                 if (self.isArabic()) {
@@ -190,6 +191,7 @@ class LoginVC: BaseVC, CountryPickerViewDataSource, CountryPickerViewDelegate, P
         
         let mainStoryboardIpad : UIStoryboard = UIStoryboard(name: "Main", bundle: nil)
         let initialViewControlleripad : UIViewController = mainStoryboardIpad.instantiateViewController(withIdentifier: self.getHomeView()) as! UINavigationController
+        initialViewControlleripad.modalPresentationStyle = .fullScreen
         self.present(initialViewControlleripad, animated: true, completion: {})
         
     
@@ -212,6 +214,7 @@ class LoginVC: BaseVC, CountryPickerViewDataSource, CountryPickerViewDelegate, P
     @objc func openTerms(sender:UITapGestureRecognizer) {
         if let vc = UIStoryboard(name: "Main", bundle: nil).instantiateViewController(withIdentifier: "TermsPushVC") as? TermsPushVC
         {
+            vc.modalPresentationStyle = .fullScreen
             self.present(vc, animated: true, completion: nil)
         }
     }

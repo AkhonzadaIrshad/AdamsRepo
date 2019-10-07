@@ -365,6 +365,7 @@ class OrderDetailsVC: BaseVC, UICollectionViewDelegate, UICollectionViewDataSour
     
     @IBAction func trackAction(_ sender: Any) {
         let vc = UIStoryboard(name: "Main", bundle: nil).instantiateViewController(withIdentifier: "MapNavigationController") as! UINavigationController
+        vc.modalPresentationStyle = .fullScreen
         self.present(vc, animated: true, completion: nil)
     }
     
@@ -456,6 +457,8 @@ class OrderDetailsVC: BaseVC, UICollectionViewDelegate, UICollectionViewDataSour
         messagesVC.order = order
         messagesVC.user = self.loadUser()
         let nav: UINavigationController = UINavigationController.init(rootViewController: messagesVC)
+            nav.modalPresentationStyle = .fullScreen
+            messagesVC.modalPresentationStyle = .fullScreen
         self.navigationController?.present(nav, animated: true, completion: nil)
         }
     }

@@ -374,7 +374,7 @@ class DeliveryStep3: BaseVC, UINavigationControllerDelegate, ImagePickerDelegate
 //                    self.definesPresentationContext = true
 //                    vc.modalPresentationStyle = UIModalPresentationStyle.overCurrentContext
 //                    vc.view.backgroundColor = UIColor.clear
-                    
+                    vc.modalPresentationStyle = .fullScreen
                     self.present(vc, animated: true, completion: nil)
                 }else {
                     self.showBanner(title: "alert".localized, message: response.errorMessage ?? "", style: UIColor.INFO)
@@ -386,7 +386,7 @@ class DeliveryStep3: BaseVC, UINavigationControllerDelegate, ImagePickerDelegate
 //            self.definesPresentationContext = true
 //            vc.modalPresentationStyle = UIModalPresentationStyle.overCurrentContext
 //            vc.view.backgroundColor = UIColor.clear
-            
+            vc.modalPresentationStyle = .fullScreen
             self.present(vc, animated: true, completion: nil)
         
         }

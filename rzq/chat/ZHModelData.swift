@@ -100,7 +100,7 @@ class ZHModelData: NSObject {
                 model.userId = message.userID ?? ""
                 model.userName = message.userName ?? ""
                 model.userImage = message.userImage ?? ""
-                model.createDate = message.createdDate ?? ""
+                model.createDate = message.createdDateString ?? ""
                 
                 if (model.userImage?.count ?? 0 > 0) {
                 let url = URL(string: "\(Constants.IMAGE_URL)\(model.userImage ?? "")")
@@ -121,7 +121,16 @@ class ZHModelData: NSObject {
                 let messageType = model.type ?? 1
                 switch messageType {
                 case 1://message
-                    let message: ZHCMessage = ZHCMessage.init(senderId: avatarId! as String, displayName: displayName! as String, text: model.content!)
+                    
+//                    let message: ZHCMessage = ZHCMessage.init(senderId: avatarId! as String, displayName: displayName! as String, text: model.content!)
+                    
+                    let dateFormatter = DateFormatter()
+                                     dateFormatter.dateFormat = "dd/MM/yyyy HH:mm"
+                                     dateFormatter.locale = Locale(identifier: "en_US_POSIX") // set locale to reliable US_POSIX
+                                     let messageDate = dateFormatter.date(from:model.createDate!)!
+                    
+                    let message : ZHCMessage = ZHCMessage.init(senderId: avatarId! as String, senderDisplayName: displayName! as String, date: messageDate, text: model.content!)
+                    
                     
                     self.messages.add(message)
                     self.delegate?.reloadChat()

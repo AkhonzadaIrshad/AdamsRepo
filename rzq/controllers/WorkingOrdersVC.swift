@@ -148,6 +148,8 @@ class WorkingOrdersVC: BaseViewController, UITableViewDelegate, UITableViewDataS
                 messagesVC.order = dumOrder
                 messagesVC.user = self.loadUser()
                 let nav: UINavigationController = UINavigationController.init(rootViewController: messagesVC)
+                    nav.modalPresentationStyle = .fullScreen
+                    messagesVC.modalPresentationStyle = .fullScreen
                 self.navigationController?.present(nav, animated: true, completion: nil)
                 }
             }

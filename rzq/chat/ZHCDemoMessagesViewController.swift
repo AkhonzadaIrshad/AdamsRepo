@@ -100,28 +100,32 @@ class ZHCDemoMessagesViewController: ZHCMessagesViewController, BillDelegate, Ch
                 }
             }
         }
-       
-    
+        
+        
         let infoBarButtonItem = UIBarButtonItem(title: "chat_order_details".localized, style: .done, target: self, action: #selector(orderInfoAction))
         self.navigationItem.rightBarButtonItem  = infoBarButtonItem
         
-      //  if (self.isProvider()) {
-            LabasLocationManager.shared.delegate = self
-            LabasLocationManager.shared.startUpdatingLocation()
-       // }
+        //  if (self.isProvider()) {
+        LabasLocationManager.shared.delegate = self
+        LabasLocationManager.shared.startUpdatingLocation()
+        // }
         
     }
     
     
-           func sendWelcomeMessage() -> Bool {
-               let x = UserDefaults.standard.value(forKey: "ordr_\(self.order?.id ?? 0)") as? Int ?? 0
-               if (x > 0) {
-                   return false
-               }else {
-                   UserDefaults.standard.setValue(1, forKey: "ordr_\(self.order?.id ?? 0)")
-                   return true
-               }
-           }
+    func sendWelcomeMessage() -> Bool {
+        if (self.isProvider() && self.user?.data?.userID == self.order?.providerID) {
+            let x = UserDefaults.standard.value(forKey: "ordr_\(self.order?.id ?? 0)") as? Int ?? 0
+            if (x > 0) {
+                return false
+            }else {
+                UserDefaults.standard.setValue(1, forKey: "ordr_\(self.order?.id ?? 0)")
+                return true
+            }
+        }else {
+            return false
+        }
+    }
     
     func labasLocationManager(didUpdateLocation location: CLLocation) {
         
@@ -228,18 +232,18 @@ class ZHCDemoMessagesViewController: ZHCMessagesViewController, BillDelegate, Ch
     
     func sendCurrentLocation() {
         let link = "\("current_location".localized)\n\n\n\("https://www.google.com/maps/dir/?api=1&destination=\(self.latitude ?? 0.0),\(self.longitude ?? 0.0)&directionsmode=driving")"
-  
+        
         self.finishSendingMessage(animated: true)
         ApiService.sendChatMessage(Authorization: self.user?.data?.accessToken ?? "", chatId: self.order?.chatId ?? 0, type: 1, message: link, image: "", voice: "") { (response) in
             if (response.errorCode == 0) {
-                 let message: ZHCMessage = ZHCMessage.init(senderId: self.user?.data?.userID ?? "", senderDisplayName: self.user?.data?.fullName ?? "", date: Date(), text: link)
+                let message: ZHCMessage = ZHCMessage.init(senderId: self.user?.data?.userID ?? "", senderDisplayName: self.user?.data?.fullName ?? "", date: Date(), text: link)
                 self.demoData.messages.add(message)
                 self.finishSendingMessage(animated: true)
             }else {
                 self.closeChat()
             }
         }
-    
+        
     }
     
     func getChatMessages() {
@@ -254,14 +258,14 @@ class ZHCDemoMessagesViewController: ZHCMessagesViewController, BillDelegate, Ch
         
     }
     
-//    func removeCancel() {
-//        self.order?.status = Constants.ORDER_ON_THE_WAY
-//        if (self.isProvider() && self.user?.data?.userID == self.order?.providerID) {
-//            self.setupFloating()
-//        }else if (self.order?.status == Constants.ORDER_ON_THE_WAY) {
-//            self.actionButton?.removeFromSuperview()
-//        }
-//    }
+    //    func removeCancel() {
+    //        self.order?.status = Constants.ORDER_ON_THE_WAY
+    //        if (self.isProvider() && self.user?.data?.userID == self.order?.providerID) {
+    //            self.setupFloating()
+    //        }else if (self.order?.status == Constants.ORDER_ON_THE_WAY) {
+    //            self.actionButton?.removeFromSuperview()
+    //        }
+    //    }
     
     func removeCancel() {
         self.order?.status = Constants.ORDER_ON_THE_WAY
@@ -337,7 +341,7 @@ class ZHCDemoMessagesViewController: ZHCMessagesViewController, BillDelegate, Ch
         
         
         if (self.isProvider() && self.user?.data?.userID == self.order?.providerID) {
-          
+            
         }else {
             if (self.order?.status == Constants.ORDER_ON_THE_WAY) {
                 let item0 = self.driverActionButton?.addItem()
@@ -352,17 +356,17 @@ class ZHCDemoMessagesViewController: ZHCMessagesViewController, BillDelegate, Ch
                 }
             }else if (self.order?.status == Constants.ORDER_PROCESSING) {
                 if (self.order?.time ?? 0 <= 1) {
-               let item0 = self.driverActionButton?.addItem()
-                item0?.titleLabel.text = "track_order".localized
-                item0?.titleLabel.textColor = UIColor.black
-                item0?.titleLabel.font = UIFont(name: self.getBoldFontName(), size: 13)
-                item0?.imageView.image = UIImage(named: "chat_track")
-                item0?.buttonColor = UIColor.appLogoColor
-                item0?.buttonImageColor = .white
-                item0?.action = { item in
-                    self.goToHome()
+                    let item0 = self.driverActionButton?.addItem()
+                    item0?.titleLabel.text = "track_order".localized
+                    item0?.titleLabel.textColor = UIColor.black
+                    item0?.titleLabel.font = UIFont(name: self.getBoldFontName(), size: 13)
+                    item0?.imageView.image = UIImage(named: "chat_track")
+                    item0?.buttonColor = UIColor.appLogoColor
+                    item0?.buttonImageColor = .white
+                    item0?.action = { item in
+                        self.goToHome()
+                    }
                 }
-              }
             }
         }
         
@@ -387,6 +391,7 @@ class ZHCDemoMessagesViewController: ZHCMessagesViewController, BillDelegate, Ch
                 {
                     vc.delegate = self
                     vc.deliveryCost = self.order?.price ?? 0.0
+                    vc.modalPresentationStyle = .fullScreen
                     self.present(vc, animated: true, completion: nil)
                 }
             }else {
@@ -399,7 +404,7 @@ class ZHCDemoMessagesViewController: ZHCMessagesViewController, BillDelegate, Ch
                         self.definesPresentationContext = true
                         vc.modalPresentationStyle = UIModalPresentationStyle.overCurrentContext
                         vc.view.backgroundColor = UIColor.clear
-                        
+                        vc.modalPresentationStyle = .fullScreen
                         self.present(vc, animated: true, completion: nil)
                         
                     }else {
@@ -452,7 +457,7 @@ class ZHCDemoMessagesViewController: ZHCMessagesViewController, BillDelegate, Ch
         // last 4 lines can be replaced with
         // actionButton.display(inViewController: self)
         
-         self.driverActionButton?.open()
+        self.driverActionButton?.open()
         
     }
     
@@ -486,9 +491,11 @@ class ZHCDemoMessagesViewController: ZHCMessagesViewController, BillDelegate, Ch
     func goToOrders() {
         if (self.isProvider()) {
             let vc = UIStoryboard(name: "Main", bundle: nil).instantiateViewController(withIdentifier: "WorkingOrdersNavigationController") as! UINavigationController
+            vc.modalPresentationStyle = .fullScreen
             self.present(vc, animated: true, completion: nil)
         }else {
             let vc = UIStoryboard(name: "Main", bundle: nil).instantiateViewController(withIdentifier: "OrdersNavigationController") as! UINavigationController
+            vc.modalPresentationStyle = .fullScreen
             self.present(vc, animated: true, completion: nil)
         }
     }
@@ -496,7 +503,7 @@ class ZHCDemoMessagesViewController: ZHCMessagesViewController, BillDelegate, Ch
     func goToHome() {
         let mainStoryboardIpad : UIStoryboard = UIStoryboard(name: "Main", bundle: nil)
         let initialViewControlleripad : UIViewController = mainStoryboardIpad.instantiateViewController(withIdentifier: "MapNavigationController") as! UINavigationController
-        
+        initialViewControlleripad.modalPresentationStyle = .fullScreen
         self.present(initialViewControlleripad, animated: true, completion: {})
     }
     
@@ -553,7 +560,7 @@ class ZHCDemoMessagesViewController: ZHCMessagesViewController, BillDelegate, Ch
             
         }
         
-
+        
         let item4 = self.actionButton?.addItem()
         item4?.titleLabel.text = "send_current_location".localized
         item4?.titleLabel.textColor = UIColor.black
@@ -587,7 +594,7 @@ class ZHCDemoMessagesViewController: ZHCMessagesViewController, BillDelegate, Ch
         
         // last 4 lines can be replaced with
         // actionButton.display(inViewController: self)
-          self.actionButton?.open()
+        self.actionButton?.open()
         
     }
     
@@ -660,7 +667,7 @@ class ZHCDemoMessagesViewController: ZHCMessagesViewController, BillDelegate, Ch
         let cancelAction = UIAlertAction(title: "cancel".localized, style: .cancel) { (action) in }
         
         sourceSelector.addAction(googleMapsAction)
-       // sourceSelector.addAction(appleMapsAction)
+        // sourceSelector.addAction(appleMapsAction)
         sourceSelector.addAction(cancelAction)
         
         self.present(sourceSelector, animated: true, completion: nil)
@@ -719,14 +726,14 @@ class ZHCDemoMessagesViewController: ZHCMessagesViewController, BillDelegate, Ch
     
     
     @objc func closePressed() -> Void {
-         if (self.isProvider() && self.user?.data?.userID == self.order?.providerID) {
+        if (self.isProvider() && self.user?.data?.userID == self.order?.providerID) {
             if (self.order?.time ?? 0 <= 1) {
                 self.showBanner(title: "alert".localized, message: "complete_delivery_first".localized, style: UIColor.INFO)
             }else {
-              self.navigationController?.dismiss(animated: true, completion: nil);
+                self.navigationController?.dismiss(animated: true, completion: nil);
             }
-         }else {
-           self.navigationController?.dismiss(animated: true, completion: nil);
+        }else {
+            self.navigationController?.dismiss(animated: true, completion: nil);
         }
     }
     
@@ -1077,11 +1084,11 @@ extension ZHCDemoMessagesViewController: JJFloatingActionButtonDelegate {
         
     }
     func floatingActionButtonWillClose(_ button: JJFloatingActionButton) {
-       // self.driverActionButton?.open()
-      //  self.actionButton?.open()
+        // self.driverActionButton?.open()
+        //  self.actionButton?.open()
     }
     func floatingActionButtonDidClose(_ button: JJFloatingActionButton) {
-      //  self.driverActionButton?.open()
-      //  self.actionButton?.open()
+        //  self.driverActionButton?.open()
+        //  self.actionButton?.open()
     }
 }

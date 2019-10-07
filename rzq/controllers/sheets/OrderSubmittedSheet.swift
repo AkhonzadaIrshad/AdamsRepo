@@ -18,6 +18,7 @@ class OrderSubmittedSheet: BaseVC {
     
     @IBAction func doneAction(_ sender: Any) {
          let vc = UIStoryboard(name: "Main", bundle: nil).instantiateViewController(withIdentifier: "OrdersNavigationController") as! UINavigationController
+        vc.modalPresentationStyle = .fullScreen
         self.present(vc, animated: true, completion: nil)
     }
     

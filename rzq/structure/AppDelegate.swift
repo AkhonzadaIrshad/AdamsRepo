@@ -651,6 +651,11 @@ extension UISearchBar{
 }
 
 extension String {
+    
+    func toDouble() -> Double? {
+        return NumberFormatter().number(from: self)?.doubleValue
+       }
+    
     func trim() -> String
     {
         return self.trimmingCharacters(in: CharacterSet.whitespaces)

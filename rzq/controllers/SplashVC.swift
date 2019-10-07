@@ -14,14 +14,12 @@ class SplashVC: BaseVC {
     override func viewDidLoad() {
         super.viewDidLoad()
         
-        
         ApiService.getAppConfig { (response) in
             App.shared.config = response.data
             self.startSplashLoader()
         }
         
-        let x = Messaging.messaging().fcmToken ?? "not_avaliable"
-        
+     //   let x = Messaging.messaging().fcmToken ?? "not_avaliable"
         
         ApiService.updateRegId(Authorization: self.loadUser().data?.accessToken ?? "", regId: Messaging.messaging().fcmToken ?? "not_avaliable") { (response) in
             
@@ -47,11 +45,13 @@ class SplashVC: BaseVC {
                                 }else {
                                     let mainStoryboardIpad : UIStoryboard = UIStoryboard(name: "Main", bundle: nil)
                                     let initialViewControlleripad : UIViewController = mainStoryboardIpad.instantiateViewController(withIdentifier: self.getHomeView()) as! UINavigationController
+                                    initialViewControlleripad.modalPresentationStyle = .fullScreen
                                     self.present(initialViewControlleripad, animated: true, completion: {})
                                 }
                             }else {
                                 if let vc = UIStoryboard(name: "Main", bundle: nil).instantiateViewController(withIdentifier: "LanguageVC") as? LanguageVC
                                 {
+                                    vc.modalPresentationStyle = .fullScreen
                                     self.present(vc, animated: true, completion: nil)
                                 }
                             }
@@ -60,6 +60,7 @@ class SplashVC: BaseVC {
                         }else {
                             if let vc = UIStoryboard(name: "Main", bundle: nil).instantiateViewController(withIdentifier: "LoginVC") as? LoginVC
                             {
+                                vc.modalPresentationStyle = .fullScreen
                                 self.present(vc, animated: true, completion: nil)
                             }
                         }
@@ -67,12 +68,14 @@ class SplashVC: BaseVC {
                 }else {
                     if let vc = UIStoryboard(name: "Main", bundle: nil).instantiateViewController(withIdentifier: "LoginVC") as? LoginVC
                     {
+                        vc.modalPresentationStyle = .fullScreen
                         self.present(vc, animated: true, completion: nil)
                     }
                 }
             }else {
                 if let vc = UIStoryboard(name: "Main", bundle: nil).instantiateViewController(withIdentifier: "LanguageVC") as? LanguageVC
                 {
+                    vc.modalPresentationStyle = .fullScreen
                     self.present(vc, animated: true, completion: nil)
                 }
             }
@@ -84,10 +87,12 @@ class SplashVC: BaseVC {
             if (response.data?.count ?? 0 > 0) {
                 let mainStoryboardIpad : UIStoryboard = UIStoryboard(name: "Main", bundle: nil)
                 let initialViewControlleripad : UIViewController = mainStoryboardIpad.instantiateViewController(withIdentifier: self.getHomeView()) as! UINavigationController
+                initialViewControlleripad.modalPresentationStyle = .fullScreen
                 self.present(initialViewControlleripad, animated: true, completion: {})
             }else {
                 if let vc = UIStoryboard(name: "Main", bundle: nil).instantiateViewController(withIdentifier: "step1navigation") as? UINavigationController
                 {
+                    vc.modalPresentationStyle = .fullScreen
                     self.present(vc, animated: true, completion: nil)
                 }
             }

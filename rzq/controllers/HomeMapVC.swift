@@ -114,6 +114,8 @@ class HomeMapVC: BaseViewController,LabasLocationManagerDelegate, UICollectionVi
                         messagesVC.order = dumOrder
                         messagesVC.user = self.loadUser()
                         let nav: UINavigationController = UINavigationController.init(rootViewController: messagesVC)
+                        nav.modalPresentationStyle = .fullScreen
+                        messagesVC.modalPresentationStyle = .fullScreen
                         self.navigationController?.present(nav, animated: true, completion: nil)
                     }
                 }
@@ -189,6 +191,8 @@ class HomeMapVC: BaseViewController,LabasLocationManagerDelegate, UICollectionVi
                     messagesVC.order = order
                     messagesVC.user = self.loadUser()
                     let nav: UINavigationController = UINavigationController.init(rootViewController: messagesVC)
+                    nav.modalPresentationStyle = .fullScreen
+                    messagesVC.modalPresentationStyle = .fullScreen
                     self.navigationController?.present(nav, animated: true, completion: nil)
                 }
             }
@@ -424,6 +428,8 @@ class HomeMapVC: BaseViewController,LabasLocationManagerDelegate, UICollectionVi
                 messagesVC.order = item
                 messagesVC.user = self.loadUser()
                 let nav: UINavigationController = UINavigationController.init(rootViewController: messagesVC)
+                nav.modalPresentationStyle = .fullScreen
+                messagesVC.modalPresentationStyle = .fullScreen
                 self.navigationController?.present(nav, animated: true, completion: nil)
             }
         }

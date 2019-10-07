@@ -46,7 +46,7 @@ class Message: Codable {
     let content: String?
     let type: Int?
     let image, voice, userID, userName: String?
-    let userImage, createdDate: String?
+    let userImage, createdDate, createdDateString: String?
     
     enum CodingKeys: String, CodingKey {
         case id = "Id"
@@ -58,9 +58,10 @@ class Message: Codable {
         case userName = "UserName"
         case userImage = "UserImage"
         case createdDate = "CreatedDate"
+        case createdDateString = "CreatedDateString"
     }
     
-    init(id: Int?, content: String?, type: Int?, image: String?, voice: String?, userID: String?, userName: String?, userImage: String?, createdDate: String?) {
+    init(id: Int?, content: String?, type: Int?, image: String?, voice: String?, userID: String?, userName: String?, userImage: String?, createdDate: String?, createdDateString : String?) {
         self.id = id
         self.content = content
         self.type = type
@@ -70,5 +71,6 @@ class Message: Codable {
         self.userName = userName
         self.userImage = userImage
         self.createdDate = createdDate
+        self.createdDateString = createdDateString
     }
 }

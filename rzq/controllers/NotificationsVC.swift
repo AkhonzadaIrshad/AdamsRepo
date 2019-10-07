@@ -95,6 +95,8 @@ class NotificationsVC: BaseViewController, UITableViewDelegate, UITableViewDataS
                     messagesVC.user = self.loadUser()
                    // messagesVC.sendWelcomeMessage = true
                     let nav: UINavigationController = UINavigationController.init(rootViewController: messagesVC)
+                    nav.modalPresentationStyle = .fullScreen
+                    messagesVC.modalPresentationStyle = .fullScreen
                     self.navigationController?.present(nav, animated: true, completion: nil)
                 }
             }
@@ -757,6 +759,7 @@ class NotificationsVC: BaseViewController, UITableViewDelegate, UITableViewDataS
     func onAccept() {
         let mainStoryboardIpad : UIStoryboard = UIStoryboard(name: "Main", bundle: nil)
         let initialViewControlleripad : UIViewController = mainStoryboardIpad.instantiateViewController(withIdentifier: self.getHomeView()) as! UINavigationController
+        initialViewControlleripad.modalPresentationStyle = .fullScreen
         self.present(initialViewControlleripad, animated: true, completion: {})
     }
     

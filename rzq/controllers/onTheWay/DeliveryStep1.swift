@@ -197,6 +197,8 @@ class DeliveryStep1: BaseVC,LabasLocationManagerDelegate, Step2Delegate {
                         messagesVC.order = dumOrder
                         messagesVC.user = self.loadUser()
                         let nav: UINavigationController = UINavigationController.init(rootViewController: messagesVC)
+                        nav.modalPresentationStyle = .fullScreen
+                        messagesVC.modalPresentationStyle = .fullScreen
                         self.navigationController?.present(nav, animated: true, completion: nil)
                     }
                 }
@@ -215,12 +217,13 @@ class DeliveryStep1: BaseVC,LabasLocationManagerDelegate, Step2Delegate {
     
     
     func checkForUpdates() {
-        
         let appVersion = Bundle.main.infoDictionary!["CFBundleShortVersionString"] as? String ?? "0.0"
+        let doubleAppVersion : Double = appVersion.toDouble()!
         let CMSVersion = App.shared.config?.updateStatus?.iosVersion ?? appVersion
+        let doubleCmsVersion : Double = CMSVersion.toDouble()!
         let isMand = App.shared.config?.updateStatus?.iosIsMandatory ?? false
         
-        if (appVersion != CMSVersion){
+        if (doubleAppVersion < doubleCmsVersion){
             if (isMand){
                 //mandatory
                 if (self.isArabic()) {
@@ -254,6 +257,7 @@ class DeliveryStep1: BaseVC,LabasLocationManagerDelegate, Step2Delegate {
         let viewController = UIStoryboard(name: "Main", bundle: nil).instantiateViewController(withIdentifier: "normdialogvc") as! NormUpdateDialog
         viewController.dialogTitleStr = titleStr
         viewController.dialogDescStr = desc
+        viewController.modalPresentationStyle = .fullScreen
         self.present(viewController, animated: true, completion: nil)
     }
     
@@ -261,6 +265,7 @@ class DeliveryStep1: BaseVC,LabasLocationManagerDelegate, Step2Delegate {
         let viewController = UIStoryboard(name: "Main", bundle: nil).instantiateViewController(withIdentifier: "manddialogvc") as! MandIUpdateDialog
         viewController.dialogTitleStr = titleStr
         viewController.dialogDescStr = desc
+        viewController.modalPresentationStyle = .fullScreen
         self.present(viewController, animated: true, completion: nil)
     }
     
@@ -386,7 +391,7 @@ class DeliveryStep1: BaseVC,LabasLocationManagerDelegate, Step2Delegate {
         }else {
             let mainStoryboardIpad : UIStoryboard = UIStoryboard(name: "Main", bundle: nil)
             let initialViewControlleripad : UIViewController = mainStoryboardIpad.instantiateViewController(withIdentifier: self.getHomeView()) as! UINavigationController
-            
+            initialViewControlleripad.modalPresentationStyle = .fullScreen
             self.present(initialViewControlleripad, animated: true, completion: {})
         }
     }

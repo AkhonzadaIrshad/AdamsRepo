@@ -64,10 +64,12 @@ class IntroVC: UIPageViewController, UIPageViewControllerDataSource, UIPageViewC
         if (self.loadUser().data?.userID?.count ?? 0 > 0) {
             let mainStoryboardIpad : UIStoryboard = UIStoryboard(name: "Main", bundle: nil)
             let initialViewControlleripad : UIViewController = mainStoryboardIpad.instantiateViewController(withIdentifier: self.getHomeView()) as! UINavigationController
+            initialViewControlleripad.modalPresentationStyle = .fullScreen
             self.present(initialViewControlleripad, animated: true, completion: {})
         }else {
             let mainStoryboardIpad : UIStoryboard = UIStoryboard(name: "Main", bundle: nil)
             let initialViewControlleripad : UIViewController = mainStoryboardIpad.instantiateViewController(withIdentifier: "LoginNavController") as! UINavigationController
+            initialViewControlleripad.modalPresentationStyle = .fullScreen
             self.present(initialViewControlleripad, animated: true, completion: {})
         }
     }

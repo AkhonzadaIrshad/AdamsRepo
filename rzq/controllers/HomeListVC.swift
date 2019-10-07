@@ -122,6 +122,8 @@ class HomeListVC: BaseViewController, UITableViewDelegate, UITableViewDataSource
                     messagesVC.order = order
                     messagesVC.user = self.loadUser()
                     let nav: UINavigationController = UINavigationController.init(rootViewController: messagesVC)
+                    nav.modalPresentationStyle = .fullScreen
+                    messagesVC.modalPresentationStyle = .fullScreen
                     self.navigationController?.present(nav, animated: true, completion: nil)
                 }
             }
