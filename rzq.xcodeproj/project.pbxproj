@@ -474,9 +474,9 @@
 				8B121BAC2265FB780083069F /* FAQsVC.swift */,
 				8B121BAE2265FD000083069F /* QuestionAnswerVC.swift */,
 				8B121BB02265FEC60083069F /* TermsVC.swift */,
-				8B121BB2226605AA0083069F /* AboutUsVC.swift */,
 				8BD45FA3226736C8000FB47A /* WorkingOrdersVC.swift */,
 				8BC54B0722688C5F00B70A97 /* CustomerBillVC.swift */,
+				8B121BB2226605AA0083069F /* AboutUsVC.swift */,
 				8BF2223C2271FEDF005BE71D /* RegisterAsDriverMenuVC.swift */,
 				8BDAA8B62275905D00F59D5E /* ImageSliderVC.swift */,
 				8BDAA8BE2275A24300F59D5E /* WorkingHoursVC.swift */,
@@ -1292,7 +1292,7 @@
 				CODE_SIGN_ENTITLEMENTS = rzq/rzq.entitlements;
 				CODE_SIGN_IDENTITY = "iPhone Developer";
 				CODE_SIGN_STYLE = Automatic;
-				CURRENT_PROJECT_VERSION = 2;
+				CURRENT_PROJECT_VERSION = 1;
 				DEVELOPMENT_TEAM = 8WB4M28PWN;
 				INFOPLIST_FILE = "$(SRCROOT)/rzq/files/Info.plist";
 				IPHONEOS_DEPLOYMENT_TARGET = 10.0;
@@ -1300,7 +1300,7 @@
 					"$(inherited)",
 					"@executable_path/Frameworks",
 				);
-				MARKETING_VERSION = 2.6;
+				MARKETING_VERSION = 2.7;
 				PRODUCT_BUNDLE_IDENTIFIER = com.technzone.rzq;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				PROVISIONING_PROFILE_SPECIFIER = "";
@@ -1317,7 +1317,7 @@
 				CODE_SIGN_ENTITLEMENTS = rzq/rzq.entitlements;
 				CODE_SIGN_IDENTITY = "iPhone Developer";
 				CODE_SIGN_STYLE = Automatic;
-				CURRENT_PROJECT_VERSION = 2;
+				CURRENT_PROJECT_VERSION = 1;
 				DEVELOPMENT_TEAM = 8WB4M28PWN;
 				INFOPLIST_FILE = "$(SRCROOT)/rzq/files/Info.plist";
 				IPHONEOS_DEPLOYMENT_TARGET = 10.0;
@@ -1325,7 +1325,7 @@
 					"$(inherited)",
 					"@executable_path/Frameworks",
 				);
-				MARKETING_VERSION = 2.6;
+				MARKETING_VERSION = 2.7;
 				PRODUCT_BUNDLE_IDENTIFIER = com.technzone.rzq;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				PROVISIONING_PROFILE_SPECIFIER = "";

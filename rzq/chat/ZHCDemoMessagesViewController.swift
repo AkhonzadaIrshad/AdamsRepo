@@ -110,6 +110,8 @@ class ZHCDemoMessagesViewController: ZHCMessagesViewController, BillDelegate, Ch
         LabasLocationManager.shared.startUpdatingLocation()
         // }
         
+        self.inputMessageBarView.contentView?.leftBarButtonItem?.isHidden = true
+        
     }
     
     
@@ -718,13 +720,8 @@ class ZHCDemoMessagesViewController: ZHCMessagesViewController, BillDelegate, Ch
         }
         
     }
-    
-    override func didReceiveMemoryWarning() {
-        super.didReceiveMemoryWarning()
-        // Dispose of any resources that can be recreated.
-    }
-    
-    
+  
+
     @objc func closePressed() -> Void {
         if (self.isProvider() && self.user?.data?.userID == self.order?.providerID) {
             if (self.order?.time ?? 0 <= 1) {
@@ -862,13 +859,15 @@ class ZHCDemoMessagesViewController: ZHCMessagesViewController, BillDelegate, Ch
         let message: ZHCMessage = self.demoData.messages.object(at: indexPath.row) as! ZHCMessage;
         if (message.isMediaMessage) {
             var images = [String]()
-            // let str = message.media.mediaData?() as? String ?? ""
+            //  let str = message.media.mediaData?() as? String ?? ""
             let str = message.senderDisplayName
             images.append(str)
-            if let vc = UIStoryboard(name: "Main", bundle: nil).instantiateViewController(withIdentifier: "ImageSliderVC") as? ImageSliderVC
-            {
-                vc.orderImages = images
-                self.navigationController?.pushViewController(vc, animated: true)
+            DispatchQueue.main.async {
+                if let vc = UIStoryboard(name: "Main", bundle: nil).instantiateViewController(withIdentifier: "ImageSliderVC") as? ImageSliderVC
+                {
+                    vc.orderImages = images
+                    self.navigationController?.pushViewController(vc, animated: true)
+                }
             }
         }
     }
@@ -907,12 +906,13 @@ class ZHCDemoMessagesViewController: ZHCMessagesViewController, BillDelegate, Ch
     //MARK: Messages view controller
     
     override func didPressSend(_ button: UIButton?, withMessageText text: String, senderId: String, senderDisplayName: String, date: Date) {
+        let message: ZHCMessage = ZHCMessage.init(senderId: senderId, senderDisplayName: senderDisplayName, date: date, text: text)
+        self.demoData.messages.add(message)
         self.finishSendingMessage(animated: true)
+        
         ApiService.sendChatMessage(Authorization: self.user?.data?.accessToken ?? "", chatId: self.order?.chatId ?? 0, type: 1, message: text, image: "", voice: "") { (response) in
             if (response.errorCode == 0) {
-                let message: ZHCMessage = ZHCMessage.init(senderId: senderId, senderDisplayName: senderDisplayName, date: date, text: text)
-                self.demoData.messages.add(message)
-                self.finishSendingMessage(animated: true)
+                
             }else {
                 self.closeChat()
             }

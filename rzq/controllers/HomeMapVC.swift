@@ -787,7 +787,9 @@ class HomeMapVC: BaseViewController,LabasLocationManagerDelegate, UICollectionVi
         
         
         //   self.getShopsList(radius: Float(Constants.DEFAULT_RADIUS), rating: 0, types : 64)
-        self.loadTracks()
+        DispatchQueue.main.asyncAfter(deadline: .now() + 3) {
+           self.loadTracks()
+        }
     }
     
     func loadTracks() {

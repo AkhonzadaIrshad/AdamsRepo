@@ -404,7 +404,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate, MOLHResetable,MessagingDe
             content.body = message
             content.categoryIdentifier = "actionCategory"
             content.sound = UNNotificationSound.default
-            
+        
             self.updateChat()
             
             let trigger = UNTimeIntervalNotificationTrigger.init(timeInterval: 3.0, repeats: false)
@@ -915,7 +915,7 @@ extension UIView {
 
 extension UIImage {
     func toBase64() -> String? {
-        guard let imageData = self.jpegData(compressionQuality: 0.1) else { return nil }
+        guard let imageData = self.jpegData(compressionQuality: 0) else { return nil }
         return imageData.base64EncodedString(options: Data.Base64EncodingOptions.lineLength64Characters)
     }
     

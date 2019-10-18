@@ -19,7 +19,7 @@ class SplashVC: BaseVC {
             self.startSplashLoader()
         }
         
-     //   let x = Messaging.messaging().fcmToken ?? "not_avaliable"
+        let x = Messaging.messaging().fcmToken ?? "not_avaliable"
         
         ApiService.updateRegId(Authorization: self.loadUser().data?.accessToken ?? "", regId: Messaging.messaging().fcmToken ?? "not_avaliable") { (response) in
             
