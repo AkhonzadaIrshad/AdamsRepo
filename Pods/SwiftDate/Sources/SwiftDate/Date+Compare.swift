@@ -23,7 +23,7 @@ public extension Date {
 	///
 	/// - returns: `orderedSame` if the dates are the same down to the given granularity, otherwise
 	///     `orderedAscending` or `orderedDescending`.
-	public func compare(to date: Date, in region: Region? = nil, granularity: Calendar.Component) -> ComparisonResult {
+	 func compare(to date: Date, in region: Region? = nil, granularity: Calendar.Component) -> ComparisonResult {
 		let srcRegion = region ?? DateDefaultRegion
 		return srcRegion.calendar.compare(self, to: date, toGranularity: granularity)
 	}
@@ -39,7 +39,7 @@ public extension Date {
 	///         dates to be considered the same.
 	///
 	/// - returns: `true` if the dates are the same down to the given granularity, otherwise `false`
-	public func isIn(date: Date, in region: Region? = nil, granularity: Calendar.Component) -> Bool {
+	 func isIn(date: Date, in region: Region? = nil, granularity: Calendar.Component) -> Bool {
 		return (self.compare(to: date, granularity: granularity) == .orderedSame)
 	}
 	
@@ -55,7 +55,7 @@ public extension Date {
 	///
 	/// - returns: `true` if the unit of the receiver is less than the unit of `date`, otherwise
 	///            `false`
-	public func isBefore(date: Date, orEqual: Bool = false, in region: Region? = nil, granularity: Calendar.Component) -> Bool {
+	 func isBefore(date: Date, orEqual: Bool = false, in region: Region? = nil, granularity: Calendar.Component) -> Bool {
 		let result = self.compare(to: date, granularity: granularity)
 		return (orEqual ? (result == .orderedSame || result == .orderedAscending) : result == .orderedAscending)
 	}
@@ -71,7 +71,7 @@ public extension Date {
 	///
 	/// - returns: `true` if the unit of the receiver is greater than the unit of `date`, otherwise
 	///            `false`
-	public func isAfter(date: Date, orEqual: Bool = false, in region: Region? = nil, granularity: Calendar.Component) -> Bool {
+	 func isAfter(date: Date, orEqual: Bool = false, in region: Region? = nil, granularity: Calendar.Component) -> Bool {
 		let result = self.compare(to: date, granularity: granularity)
 		return (orEqual ? (result == .orderedSame || result == .orderedDescending) : result == .orderedDescending)
 	}
@@ -88,7 +88,7 @@ public extension Date {
     /// - parameter granularity: The smallest unit that must, along with all larger units, be greater
     ///
     /// - returns: `true` if the unit is in the middle of two dates, otherwise `false`
-    public func isBetween(date: Date, and date2: Date, orEqual: Bool = false, in region: Region? = nil, granularity: Calendar.Component = .nanosecond) -> Bool{
+     func isBetween(date: Date, and date2: Date, orEqual: Bool = false, in region: Region? = nil, granularity: Calendar.Component = .nanosecond) -> Bool{
         return self.isAfter(date: date, orEqual: orEqual, in: region, granularity: granularity) && self.isBefore(date: date2, orEqual: orEqual, in: region, granularity: granularity)
     }
 	

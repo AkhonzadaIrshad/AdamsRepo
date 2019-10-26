@@ -1086,6 +1086,55 @@
 /* Class = "UILabel"; text = "To"; ObjectID = "sHb-78-7AK"; */
 "sHb-78-7AK.text" = "الى";
 
+"bA1-eI-lPh.text" = "متاجري";
+"fTh-uW-jOF.text" = "متاجري";
+
+
+
+
+"0Y7-NU-UDK.text" = "جنس السائق";
+"inv-XX-6Pq.text" = "طريقة الدفع";
+"qnm-yQ-w1I.normalTitle" = "ذكر";
+"ogE-BA-wG8.normalTitle" = "نقداً";
+
+"7MM-Pm-AwV.normalTitle" = "الطلبات";
+"12z-Ed-6ah.normalTitle" = "تعديل المتجر";
+"i2A-gx-RMl.text" = "الطلبات الحالية";
+"ZnJ-LS-obf.text" = "إضافة منيو المطعم";
+"iy7-qm-r87.text" = "إضافة";
+"4In-rh-xOu.text" = "إضافة عناصر";
+"FSg-P5-fXE.placeholder" = "اسم القائمة";
+"trh-R1-UzM.text" = "أضف عنصر";
+"f7B-cc-Xga.text" = "أضف عنوان";
+"Uvj-X7-5R7.text" = "أضف سعر";
+"3qp-BB-zrr.text" = "أضف وصف";
+"HyW-Ii-Ltb.text" = "أضف صورة";
+"yF1-hV-aB2.normalTitle" = "تم";
+"Jhm-ZD-SIO.text" = "قائمة المتجر";
+"NWm-cO-Tzx.text" = "عدد العناصر:";
+"lrE-se-o7H.normalTitle" = "إتمام الطلب";
+"Okx-vs-1eq.text" = "إتمام الطلب";
+"IZ8-8r-GkJ.text" = "العدد";
+"Px2-PE-LNj.text" = "السعر";
+"r2g-A3-wi9.text" = "الإجمالي";
+"Sdm-EC-cDv.text" = "عدد العناصر:";
+"9kJ-XO-vvc.normalTitle" = "إضافة عناصر";
+"YgK-kp-Rk9.normalTitle" = "تم";
+"VkN-dj-vyZ.text" = "قم بإتمام الدفع";
+"4md-OD-oXM.normalTitle" = "إدارة المنيو";
+"uRl-wT-5Lg.normalTitle" = "تصفح القائمة";
+
+"Uaf-QQ-htf.text" = "اسم المكان";
+"any-X9-G6K.text" = "قسم المكان";
+"W2v-uI-LUo.text" = "عنوان المكان";
+"Ntt-th-7h6.normalTitle" = "حدد على الخريطة";
+"AJK-B8-cgj.text" = "ساعات العمل";
+"LaV-f0-kiS.text" = "اضف ساعات العمل";
+"byP-1G-zSr.text" = "مينيو المكان";
+"1OL-Ic-PB1.text" = "يمكنك عرض بضاعتك على شكل بوتيك خاص بك.";
+"Q6g-Qj-Lzj.normalTitle" = "تاكيد";
+
+
 "GoF-rZ-Bo8.normalTitle" = "اقل من ١٠ د.ك";
 "i3L-VB-N8M.normalTitle" = "اقل من ١٠ د.ك";
 "gQE-2w-AvE.normalTitle" = "اقل من ١٠ د.ك";

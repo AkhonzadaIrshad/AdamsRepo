@@ -229,3 +229,20 @@
 
 "more_10" = "اكثر من ١٠";
 "less_10" = "اقل من ١٠";
+
+"enter_category_name" = "أدخل اسم القائمة أولاً!";
+"confirm_delete_menu_item" = "هل انت متاكد من حذف هذا العنصر؟";
+"delete" = "حذف";
+
+"select_driver_gender" = "اختر جنس السائق";
+"male" = "ذكر";
+"female" = "انثى";
+
+"select_payment_method" = "اختر طريقة الدفع";
+"knet" = "كي نت";
+"add_items_first" = "اضف عناصر اولاً!";
+
+"enter_title_first" = "ادخل اسم العنصر!";
+"enter_price_first" = "ادخل سعر العنصر!";
+"enter_desc_first" = "ادخل وصف العنصر!";
+"add_item_image" = "اضف صورة العنصر!";

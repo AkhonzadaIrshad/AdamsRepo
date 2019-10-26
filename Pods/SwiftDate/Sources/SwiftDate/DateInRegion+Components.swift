@@ -32,45 +32,45 @@ extension DateInRegion {
 	
 	
 	/// Extract the `DateComponents` from the `DateInRegion` by respecting the `Region` in which the date is expressed.
-	public var components: DateComponents {
+	var components: DateComponents {
 		return self.region.calendar.dateComponents(DateComponents.allComponentsSet, from: self.absoluteDate)
 	}
 	
 	
 	/// The number of era units for the receiver.
 	/// - note: This value is interpreted in the context of the calendar and timezone with which it is used
-	public var era: Int {
+	var era: Int {
 		return self.value(forComponent: .era)
 	}
 	
 	/// The number of years units for the receiver.
 	/// - note: This value is interpreted in the context of the calendar and timezone with which it is used
-	public var year: Int {
+	var year: Int {
 		return self.value(forComponent: .year)
 	}
 	
 	/// The number of era months for the receiver.
 	/// - note: This value is interpreted in the context of the calendar and timezone with which it is used
-	public var month: Int {
+	var month: Int {
 		return self.value(forComponent: .month)
 	}
 	
 	/// The number of day units for the receiver.
 	/// - note: This value is interpreted in the context of the calendar and timezone with which it is used
-	public var day: Int {
+	var day: Int {
 		return self.value(forComponent: .day)
 	}
 	
 	/// The number of hour units for the receiver.
 	/// - note: This value is interpreted in the context of the calendar and timezone with which it is used
-	public var hour: Int {
+	var hour: Int {
 		return self.value(forComponent: .hour)
 	}
 	
 	
 	/// Nearest rounded hour from the date
 	/// - note: This value is interpreted in the context of the calendar and timezone with which it is used
-	public var nearestHour: Int {
+	var nearestHour: Int {
 		let date: DateInRegion = (self + 30.minutes)
 		return Int(date.hour)
 	}
@@ -78,31 +78,31 @@ extension DateInRegion {
 	
 	/// The number of minute units for the receiver.
 	/// - note: This value is interpreted in the context of the calendar and timezone with which it is used
-	public var minute: Int {
+	var minute: Int {
 		return self.value(forComponent: .minute)
 	}
 	
 	/// The number of second units for the receiver.
 	/// - note: This value is interpreted in the context of the calendar and timezone with which it is used
-	public var second: Int {
+	var second: Int {
 		return self.value(forComponent: .second)
 	}
 	
 	/// The number of nanosecond units for the receiver.
 	/// - note: This value is interpreted in the context of the calendar and timezone with which it is used
-	public var nanosecond: Int {
+	var nanosecond: Int {
 		return self.value(forComponent: .nanosecond)
 	}
 	
 	/// The number of week-numbering units for the receiver.
 	/// - note: This value is interpreted in the context of the calendar and timezone with which it is used
-	public var yearForWeekOfYear: Int {
+	var yearForWeekOfYear: Int {
 		return self.value(forComponent: .yearForWeekOfYear)
 	}
 	
 	/// The week date of the year for the receiver
 	/// - note: This value is interpreted in the context of the calendar and timezone with which it is used
-	public var weekOfYear: Int {
+	var weekOfYear: Int {
 		return self.value(forComponent: .weekOfYear)
 	}
 	
@@ -111,7 +111,7 @@ extension DateInRegion {
 	/// For example, in the Gregorian calendar, n is 7 and Sunday is represented by 1.
 	///
 	/// - note: This value is interpreted in the context of the calendar and timezone with which it is used
-	public var weekday: Int {
+	var weekday: Int {
 		return self.value(forComponent: .weekday)
 	}
 	
@@ -121,25 +121,25 @@ extension DateInRegion {
 	/// For example, 2 is the weekday ordinal unit for the second Friday of the month.
 	///
 	/// - note: This value is interpreted in the context of the calendar and timezone with which it is used
-	public var weekdayOrdinal: Int {
+	var weekdayOrdinal: Int {
 		return self.value(forComponent: .weekdayOrdinal)
 	}
 	
 	/// Week day name of the date
 	/// - note: This value is interpreted in the context of the calendar and timezone with which it is used
-	public var weekdayName: String {
+	var weekdayName: String {
 		return self.formatters.dateFormatter(format: "EEEE").string(from: self.absoluteDate)
 	}
 	
 	/// Weekday short name
 	/// - note: This value is interpreted in the context of the calendar and timezone with which it is used
-	public var weekdayShortName: String {
+	var weekdayShortName: String {
 		return self.formatters.dateFormatter(format: "EE").string(from: self.absoluteDate)
 	}
 	
 	/// Number of days into current's date month expressed in current region calendar and locale
 	/// - note: This value is interpreted in the context of the calendar and timezone with which it is used
-	public var monthDays: Int {
+	var monthDays: Int {
 		let range: Range<Int> = self.region.calendar.range(of: .day, in: .month, for: self.absoluteDate)!
 		return (range.upperBound - range.lowerBound)
 	}
@@ -147,28 +147,28 @@ extension DateInRegion {
 	/// The number of quarter units for the receiver.
 	/// - note: there is known bug for quarter component in Calendar object.
 	/// - note: This value is interpreted in the context of the calendar and timezone with which it is used
-	public var quarter: Int? {
+	var quarter: Int? {
 		return self.value(forComponent: .quarter)
 	}
 	
 	
 	/// The week number in the month for the receiver
 	/// - note: This value is interpreted in the context of the calendar and timezone with which it is used
-	public var weekOfMonth: Int {
+	var weekOfMonth: Int {
 		return self.value(forComponent: .weekOfMonth)
 	}
 	
 	
 	/// Month name of the date
 	/// - note: This value is interpreted in the context of the calendar and timezone with which it is used
-	public var monthName: String {
+	var monthName: String {
 		return self.formatters.dateFormatter().monthSymbols[self.month-1]
 	}
 	
 	
 	/// Short month name of the date
 	/// - note: This value is interpreted in the context of the calendar and timezone with which it is used
-	public var shortMonthName: String {
+	var shortMonthName: String {
 		return self.formatters.dateFormatter().shortMonthSymbols[self.month-1]
 	}
 	
@@ -177,7 +177,7 @@ extension DateInRegion {
 	/// It return `true` if the month is a leap month, `false` otherwise.
 	///
 	/// - note: This value is interpreted in the context of the calendar with which it is used
-	public var leapMonth: Bool {
+	var leapMonth: Bool {
 		let calendar = self.region.calendar
 		// Library function for leap contains a bug for Gregorian calendars, implemented workaround
 		if calendar.identifier == Calendar.Identifier.gregorian && self.year > 1582 {
@@ -195,7 +195,7 @@ extension DateInRegion {
 	/// It return `true` if the month is a leap month, `false` otherwise.
 	///
 	/// - note: This value is interpreted in the context of the calendar with which it is used
-	public var leapYear: Bool {
+	var leapYear: Bool {
 		let calendar = self.region.calendar
 		// Library function for leap contains a bug for Gregorian calendars, implemented workaround
 		if calendar.identifier == Calendar.Identifier.gregorian {
@@ -211,7 +211,7 @@ extension DateInRegion {
 	
 	
 	/// Julian day is the continuous count of days since the beginning of the Julian Period used primarily by astronomers.
-	public var julianDay: Double {
+	var julianDay: Double {
 		let destRegion = Region(tz: TimeZoneName.gmt, cal: CalendarName.gregorian, loc: LocaleName.english)
 		let utc = self.toRegion(destRegion)
 		
@@ -229,17 +229,17 @@ extension DateInRegion {
 	
 	/// The Modified Julian Date (MJD) was introduced by the Smithsonian Astrophysical Observatory
 	/// in 1957 to record the orbit of Sputnik via an IBM 704 (36-bit machine) and using only 18 bits until August 7, 2576.
-	public var modifiedJulianDay: Double {
+	var modifiedJulianDay: Double {
 		return self.julianDay - 2400000.5
 	}
 	
 	/// Get the first day of the week according to the current calendar set
-	public var startWeek: DateInRegion {
+	var startWeek: DateInRegion {
 		return self.startOf(component: .weekOfYear)
 	}
 	
 	/// Get the last day of the week according to the current calendar set
-	public var endWeek: DateInRegion {
+	var endWeek: DateInRegion {
 		return self.endOf(component: .weekOfYear)
 	}
 	
@@ -248,7 +248,7 @@ extension DateInRegion {
 	/// - Returns: a tuple of two `DateInRegion` objects indicating the start and the end of
 	///   the current weekend. If this is unto a weekend, then `nil` is returned.
 	///
-	public var thisWeekend: (startDate: DateInRegion, endDate: DateInRegion)? {
+	var thisWeekend: (startDate: DateInRegion, endDate: DateInRegion)? {
 		guard self.region.calendar.isDateInWeekend(self.absoluteDate) else {
 			return nil
 		}
@@ -265,7 +265,7 @@ extension DateInRegion {
 	/// - Note: The weekend returned when the receiver is in a weekend
 	///   is the next weekend not the current one.
 	///
-	public var nextWeekend: (startDate: DateInRegion, endDate: DateInRegion)? {
+	var nextWeekend: (startDate: DateInRegion, endDate: DateInRegion)? {
 		var wkStart: Date = self.absoluteDate
 		var tInt: TimeInterval = 0
 		let d = self.absoluteDate
@@ -293,7 +293,7 @@ extension DateInRegion {
 	/// - Note: The weekend returned when the receiver is in a weekend is
 	///   the previous weekend not the current one.
 	///
-	public var previousWeekend: (startDate: DateInRegion, endDate: DateInRegion)? {
+	var previousWeekend: (startDate: DateInRegion, endDate: DateInRegion)? {
 		let date: DateInRegion = (self - 9.days)
 		return date.nextWeekend
 	}
@@ -302,45 +302,45 @@ extension DateInRegion {
 	/// Returns whether the given date is in today as boolean.
 	///
 	/// - note: This value is interpreted in the context of the calendar of the receiver
-	public var isToday: Bool {
+	var isToday: Bool {
 		return self.region.calendar.isDateInToday(self.absoluteDate)
 	}
 	
 	/// Returns whether the given date is in yesterday.
 	///
 	/// - note: This value is interpreted in the context of the calendar of the receiver
-	public var isYesterday: Bool {
+	var isYesterday: Bool {
 		return self.region.calendar.isDateInYesterday(self.absoluteDate)
 	}
 	
 	/// Returns whether the given date is in tomorrow.
 	///
 	/// - note: This value is interpreted in the context of the calendar of the receiver
-	public var isTomorrow: Bool {
+	var isTomorrow: Bool {
 		return self.region.calendar.isDateInTomorrow(self.absoluteDate)
 	}
 	
 	/// Returns whether the given date is in the weekend.
 	///
 	/// - note: This value is interpreted in the context of the calendar of the receiver
-	public var isInWeekend: Bool {
+	var isInWeekend: Bool {
 		return self.region.calendar.isDateInWeekend(self.absoluteDate)
 	}
 	
 	/// Return true if given date represent a passed date
-	public var isInPast: Bool {
+	var isInPast: Bool {
 		return self.absoluteDate < Date()
 	}
 	
 	/// Return true if given date represent a future date
-	public var isInFuture: Bool {
+	var isInFuture: Bool {
 		return self.absoluteDate > Date()
 	}
     
     /// Returns whether the given date is in the morning.
     ///
     /// - note: This value is interpreted in the context of the calendar of the receiver
-    public var isMorning: Bool {
+    var isMorning: Bool {
         let hour = self.region.calendar.component(.hour, from: self.absoluteDate)
         return hour >= 5 && hour < 12
     }
@@ -348,7 +348,7 @@ extension DateInRegion {
     /// Returns whether the given date is in the afternoon.
     ///
     /// - note: This value is interpreted in the context of the calendar of the receiver
-    public var isAfternoon: Bool {
+    var isAfternoon: Bool {
         let hour = self.region.calendar.component(.hour, from: self.absoluteDate)
         return hour >= 12 && hour < 17
     }
@@ -356,7 +356,7 @@ extension DateInRegion {
     /// Returns whether the given date is in the evening.
     ///
     /// - note: This value is interpreted in the context of the calendar of the receiver
-    public var isEvening: Bool {
+    var isEvening: Bool {
         let hour = self.region.calendar.component(.hour, from: self.absoluteDate)
         return hour >= 17 && hour < 21
     }
@@ -364,7 +364,7 @@ extension DateInRegion {
     /// Returns whether the given date is in the night.
     ///
     /// - note: This value is interpreted in the context of the calendar of the receiver
-    public var isNight: Bool {
+    var isNight: Bool {
         let hour = self.region.calendar.component(.hour, from: self.absoluteDate)
         return hour >= 21 || hour < 5
     }
@@ -381,13 +381,13 @@ extension DateInRegion {
 	
 	
 	/// Return the instance representing the first moment date of the given date expressed in the context of the calendar of the receiver
-	public var startOfDay: DateInRegion {
+	var startOfDay: DateInRegion {
 		let absoluteDate = self.region.calendar.startOfDay(for: self.absoluteDate)
 		return DateInRegion(absoluteDate: absoluteDate, in: self.region)
 	}
 	
 	/// Return the instance representing the last moment date of the given date expressed in the context of the calendar of the receiver
-	public var endOfDay: DateInRegion {
+	var endOfDay: DateInRegion {
 		let cal = self.region.calendar
 		var dCmps = DateComponents()
 		dCmps.day = 1
@@ -397,7 +397,7 @@ extension DateInRegion {
 	
 	/// Return a new instance of the date plus one month
 	@available(*, deprecated: 4.1.7, message: "Use nextMonth() function instead")
-	public var nextMonth: DateInRegion {
+	var nextMonth: DateInRegion {
 		let refDate = self.startOfDay.absoluteDate
 		let nextMonth = self.region.calendar.date(byAdding: .month, value: 1, to: refDate)
 		return DateInRegion(absoluteDate: nextMonth!, in: self.region)
@@ -405,7 +405,7 @@ extension DateInRegion {
 	
 	/// Return a new instance of the date minus one month
 	@available(*, deprecated: 4.1.7, message: "Use prevMonth() function instead")
-	public var prevMonth: DateInRegion {
+	var prevMonth: DateInRegion {
 		let refDate = self.startOfDay.absoluteDate
 		let prevMonth = self.region.calendar.date(byAdding: .month, value: -1, to: refDate)
 		return DateInRegion(absoluteDate: prevMonth!, in: self.region)
@@ -513,7 +513,7 @@ extension DateInRegion {
 	
 	/// Time interval since the reference date at 1 January 2001
 	/// Return the number of seconds as a `TimeInterval` value.
-	public var timeIntervalSinceReferenceDate: TimeInterval {
+	var timeIntervalSinceReferenceDate: TimeInterval {
 		return self.absoluteDate.timeIntervalSinceReferenceDate
 	}
 	
@@ -635,18 +635,18 @@ extension DateInRegion {
 	}
 	
 	/// Returns a boolean value that indicates whether the represented date uses daylight saving time.
-	public var isDST: Bool {
+	var isDST: Bool {
 		return self.region.timeZone.isDaylightSavingTime(for: self.absoluteDate)
 	}
 	
 	/// The current daylight saving time offset of the represented date.
-	public var DSTOffset: TimeInterval {
+	var DSTOffset: TimeInterval {
 		return self.region.timeZone.daylightSavingTimeOffset(for: self.absoluteDate)
 	}
 	
 	/// The date of the next daylight saving time transition after currently represented date.
 	/// Date is reported in the same timezone of the receiver.
-	public var nextDSTTransitionDate: DateInRegion? {
+	var nextDSTTransitionDate: DateInRegion? {
 		guard let next_transition = self.region.timeZone.nextDaylightSavingTimeTransition(after: self.absoluteDate) else {
 			return nil
 		}
@@ -657,7 +657,7 @@ extension DateInRegion {
 public extension Array where Element: DateInRegion {
 	
 	/// Get the latest date from a list
-	public var recentDate: DateInRegion {
+	var recentDate: DateInRegion {
 		var currentMaximum = DateInRegion.distantPast
 		self.forEach { cDate in
 			if currentMaximum < cDate {
@@ -668,7 +668,7 @@ public extension Array where Element: DateInRegion {
 	}
 	
 	/// Get the earliest date from a list
-	public var oldestDate: DateInRegion {
+	var oldestDate: DateInRegion {
 		var currentMinimum = DateInRegion.distantFuture
 		self.forEach { cDate in
 			if currentMinimum > cDate {

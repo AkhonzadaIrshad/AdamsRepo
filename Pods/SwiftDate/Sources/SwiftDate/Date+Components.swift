@@ -21,14 +21,14 @@ public extension Date {
 	/// and `Locale` (not updating).
 	///
 	/// - parameter region: region to set. If nil is passed default region is set to Region.Local()
-	public static func setDefaultRegion(_ region: Region?) {
+	 static func setDefaultRegion(_ region: Region?) {
 		DateDefaultRegion = region ?? Region.Local()
 	}
 	
 	/// Return the default region set.
 	///
 	/// - returns: region set; if not changed is set to `Region.Local()`
-	public static var defaultRegion: Region {
+	 static var defaultRegion: Region {
 		return DateDefaultRegion
 	}
 	
@@ -40,123 +40,123 @@ public extension Date {
 	}
 	
 	/// The number of era units for the receiver expressed in the context of `defaultRegion`.
-	public var era: Int {
+	var era: Int {
 		return self.inDateDefaultRegion().era
 	}
 
 	/// The number of year units for the receiver expressed in the context of `defaultRegion`.
-	public var year: Int {
+	var year: Int {
 		return self.inDateDefaultRegion().year
 	}
 	
 	/// The number of month units for the receiver expressed in the context of `defaultRegion`.
-	public var month: Int {
+	var month: Int {
 		return self.inDateDefaultRegion().month
 	}
 	
 	/// The number of day units for the receiver expressed in the context of `defaultRegion`.
-	public var day: Int {
+	var day: Int {
 		return self.inDateDefaultRegion().day
 	}
 	
 	/// The number of hour units for the receiver expressed in the context of `defaultRegion`.
-	public var hour: Int {
+	var hour: Int {
 		return self.inDateDefaultRegion().hour
 	}
 	
 	/// Nearest rounded hour from the date expressed in the context of `defaultRegion`.
-	public var nearestHour: Int {
+	var nearestHour: Int {
 		return self.inDateDefaultRegion().nearestHour
 	}
 	
 	/// The number of minute units for the receiver expressed in the context of `defaultRegion`.
-	public var minute: Int {
+	var minute: Int {
 		return self.inDateDefaultRegion().minute
 	}
 	
 	/// The number of second units for the receiver expressed in the context of `defaultRegion`.
-	public var second: Int {
+	var second: Int {
 		return self.inDateDefaultRegion().second
 	}
 	
 	/// The number of nanosecond units for the receiver expressed in the context of `defaultRegion`.
-	public var nanosecond: Int {
+	var nanosecond: Int {
 		return self.inDateDefaultRegion().nanosecond
 	}
 	
 	/// The number of week-numbering units for the receiver expressed in the context of `defaultRegion`.
-	public var yearForWeekOfYear: Int {
+	var yearForWeekOfYear: Int {
 		return self.inDateDefaultRegion().yearForWeekOfYear
 	}
 	
 	/// The week date of the year for the receiver expressed in the context of `defaultRegion`.
-	public var weekOfYear: Int {
+	var weekOfYear: Int {
 		return self.inDateDefaultRegion().weekOfYear
 	}
 	
 	/// The number of weekday units for the receiver expressed in the context of `defaultRegion`.
-	public var weekday: Int {
+	var weekday: Int {
 		return self.inDateDefaultRegion().weekday
 	}
 	
 	/// The ordinal number of weekday units for the receiver expressed in the context of `defaultRegion`.
-	public var weekdayOrdinal: Int {
+	var weekdayOrdinal: Int {
 		return self.inDateDefaultRegion().weekdayOrdinal
 	}
 	
 	/// Week day name of the date expressed in the context of `defaultRegion`.
-	public var weekdayName: String {
+	var weekdayName: String {
 		return self.inDateDefaultRegion().weekdayName
 	}
 	
 	/// Weekday short name
 	/// - note: This value is interpreted in the context of the calendar and timezone with which it is used
-	public var weekdayShortName: String {
+	var weekdayShortName: String {
 		return self.inDateDefaultRegion().weekdayShortName
 	}
 	
 	/// Number of days into current's date month expressed in the context of `defaultRegion`.
-	public var monthDays: Int {
+	var monthDays: Int {
 		return self.inDateDefaultRegion().monthDays
 	}
 	
 	/// he week number in the month expressed in the context of `defaultRegion`.
-	public var weekOfMonth: Int {
+	var weekOfMonth: Int {
 		return self.inDateDefaultRegion().weekOfMonth
 	}
 	
 	/// Month name of the date expressed in the context of `defaultRegion`.
-	public var monthName: String {
+	var monthName: String {
 		return self.inDateDefaultRegion().monthName
 	}
 	
 	/// Short month name of the date expressed in the context of `defaultRegion`.
-	public var shortMonthName: String {
+	var shortMonthName: String {
 		return self.inDateDefaultRegion().shortMonthName
 	}
 	
 	/// Boolean value that indicates whether the month is a leap month.
 	/// Calculation is made in the context of `defaultRegion`.
-	public var leapMonth: Bool {
+	var leapMonth: Bool {
 		return self.inDateDefaultRegion().leapMonth
 	}
 	
 	/// Boolean value that indicates whether the year is a leap year.
 	/// Calculation is made in the context of `defaultRegion`.
-	public var leapYear: Bool {
+	var leapYear: Bool {
 		return self.inDateDefaultRegion().leapYear
 	}
 	
 	/// Julian day is the continuous count of days since the beginning of the Julian Period used primarily by astronomers.
 	/// Calculation is made in the context of `defaultRegion`.
-	public var julianDay: Double {
+	var julianDay: Double {
 		return self.inDateDefaultRegion().julianDay
 	}
 	
 	/// The Modified Julian Date (MJD) was introduced by the Smithsonian Astrophysical Observatory
 	/// in 1957 to record the orbit of Sputnik via an IBM 704 (36-bit machine) and using only 18 bits until August 7, 2576.
 	/// Calculation is made in the context of `defaultRegion`.
-	public var modifiedJulianDay: Double {
+	var modifiedJulianDay: Double {
 		return self.inDateDefaultRegion().modifiedJulianDay
 	}
 	
@@ -165,97 +165,97 @@ public extension Date {
 	///
 	/// - Parameter day: weekday you want to get
 	/// - Returns: the next weekday after sender date
-	public func next(day: WeekDay) -> Date? {
+	func next(day: WeekDay) -> Date? {
 		return self.inDateDefaultRegion().next(day: day)?.absoluteDate
 	}
 	
 	/// Get the first day of the week according to the current calendar set
-	public var startWeek: Date {
+	var startWeek: Date {
 		return self.startOf(component: .weekOfYear)
 	}
 	
 	/// Get the last day of the week according to the current calendar set
-	public var endWeek: Date {
+	var endWeek: Date {
 		return self.endOf(component: .weekOfYear)
 	}
 	
 	/// Returns two `DateInRegion` objects indicating the start and the end of the current weekend.
 	/// Calculation is made in the context of `defaultRegion`.
-	public var thisWeekend: (startDate: DateInRegion, endDate: DateInRegion)? {
+	var thisWeekend: (startDate: DateInRegion, endDate: DateInRegion)? {
 		return self.inDateDefaultRegion().thisWeekend
 	}
 	
 	/// Returns two `DateInRegion` objects indicating the start and the end
 	/// of the next weekend after the date.
 	/// Calculation is made in the context of `defaultRegion`.
-	public var nextWeekend: (startDate: DateInRegion, endDate: DateInRegion)? {
+	var nextWeekend: (startDate: DateInRegion, endDate: DateInRegion)? {
 		return self.inDateDefaultRegion().nextWeekend
 	}
 	
 	/// Returns two `DateInRegion` objects indicating the start and the end of
 	/// the previous weekend before the date.
 	/// Calculation is made in the context of `defaultRegion`.
-	public var previousWeekend: (startDate: DateInRegion, endDate: DateInRegion)? {
+	var previousWeekend: (startDate: DateInRegion, endDate: DateInRegion)? {
 		return self.inDateDefaultRegion().previousWeekend
 	}
 	
 	/// Returns whether the given date is in today as boolean.
 	/// Calculation is made in the context of `defaultRegion`.
-	public var isToday: Bool {
+	var isToday: Bool {
 		return self.inDateDefaultRegion().isToday
 	}
 	
 	/// Returns whether the given date is in yesterday.
 	/// Calculation is made in the context of `defaultRegion`.
-	public var isYesterday: Bool {
+	var isYesterday: Bool {
 		return self.inDateDefaultRegion().isYesterday
 	}
 	
 	/// Returns whether the given date is in tomorrow.
 	/// Calculation is made in the context of `defaultRegion`.
-	public var isTomorrow: Bool {
+	var isTomorrow: Bool {
 		return self.inDateDefaultRegion().isTomorrow
 	}
 	
 	/// Returns whether the given date is in the weekend.
 	/// Calculation is made in the context of `defaultRegion`.
-	public var isInWeekend: Bool {
+	var isInWeekend: Bool {
 		return self.inDateDefaultRegion().isInWeekend
 	}
 	
 	/// Return true if given date represent a passed date
 	/// Calculation is made in the context of `defaultRegion`.
-	public var isInPast: Bool {
+	var isInPast: Bool {
 		return self.inDateDefaultRegion().isInPast
 	}
 	
 	/// Return true if given date represent a future date
 	/// Calculation is made in the context of `defaultRegion`.
-	public var isInFuture: Bool {
+	var isInFuture: Bool {
 		return self.inDateDefaultRegion().isInFuture
     }
     
     /// Returns whether the given date is in the morning.
     /// Calculation is made in the context of `defaultRegion`.
-    public var isMorning: Bool {
+    var isMorning: Bool {
         return self.inDateDefaultRegion().isMorning
     }
     
     /// Returns whether the given date is in the afternoon.
     /// Calculation is made in the context of `defaultRegion`.
-    public var isAfternoon: Bool {
+    var isAfternoon: Bool {
         return self.inDateDefaultRegion().isAfternoon
     }
     
     /// Returns whether the given date is in the evening.
     /// Calculation is made in the context of `defaultRegion`.
-    public var isEvening: Bool {
+    var isEvening: Bool {
         return self.inDateDefaultRegion().isEvening
     }
     
     /// Returns whether the given date is in the night.
     /// Calculation is made in the context of `defaultRegion`.
-    public var isNight: Bool {
+    var isNight: Bool {
         return self.inDateDefaultRegion().isNight
     }
 	
@@ -266,33 +266,33 @@ public extension Date {
 	///
 	/// - returns: a boolean indicating whether the receiver is on the same day as the given date in
 	///				the time zone and calendar of the receiver.
-	public func isInSameDayOf(date: Date) -> Bool {
+	func isInSameDayOf(date: Date) -> Bool {
 		return self.inDateDefaultRegion().isInSameDayOf(date: date.inDateDefaultRegion())
 	}
 	
 	/// Return the instance representing the first moment date of the given date expressed in the context of
 	/// Calculation is made in the context of `defaultRegion`.
-	public var startOfDay: Date {
+	var startOfDay: Date {
 		return self.inDateDefaultRegion().startOfDay.absoluteDate
 	}
 	
 	/// Return the instance representing the last moment date of the given date expressed in the context of
 	/// Calculation is made in the context of `defaultRegion`.
-	public var endOfDay: Date {
+	var endOfDay: Date {
 		return self.inDateDefaultRegion().endOfDay.absoluteDate
 	}
 	
 	/// Return a new instance of the date plus one month
 	/// Calculation is made in the context of `defaultRegion`.
 	@available(*, deprecated: 4.1.7, message: "Use nextMonth() function instead")
-	public var nextMonth: Date {
+	var nextMonth: Date {
 		return self.inDateDefaultRegion().nextMonth.absoluteDate
 	}
 	
 	/// Return a new instance of the date minus one month
 	/// Calculation is made in the context of `defaultRegion`.
 	@available(*, deprecated: 4.1.7, message: "Use prevMonth() function instead")
-	public var prevMonth: Date {
+	var prevMonth: Date {
 		return self.inDateDefaultRegion().prevMonth.absoluteDate
 	}
 	
@@ -303,7 +303,7 @@ public extension Date {
 	///						If you pass `.start` result date is the first day of the next month (at 00:00:00).
 	///						If you pass `.end` result date is the last day of the next month (at 23:59:59).
 	/// - Returns: the new date at the next month
-	public func nextMonth(at time: TimeReference) -> Date {
+	func nextMonth(at time: TimeReference) -> Date {
 		return self.inDefaultRegion().nextMonth(at: time).absoluteDate
 	}
 	
@@ -314,7 +314,7 @@ public extension Date {
 	///						If you pass `.start` result date is the first day of the previous month (at 00:00:00).
 	///						If you pass `.end` result date is the last day of the previous month (at 23:59:59).
 	/// - Returns: the new date at the next month
-	public func prevMonth(at time: TimeReference) -> Date {
+	func prevMonth(at time: TimeReference) -> Date {
 		return self.inDefaultRegion().prevMonth(at: time).absoluteDate
 	}
 	
@@ -325,7 +325,7 @@ public extension Date {
 	///						If you pass `.start` result date is the first day of the previous week (at 00:00:00).
 	///						If you pass `.end` result date is the last day of the previous week (at 23:59:59).
 	/// - Returns: the new date at the previous week
-	public func prevWeek(at time: TimeReference) -> Date {
+	func prevWeek(at time: TimeReference) -> Date {
 		return self.inDefaultRegion().prevWeek(at: time).absoluteDate
 	}
 	
@@ -336,7 +336,7 @@ public extension Date {
 	///						If you pass `.start` result date is the first day of the next week (at 00:00:00).
 	///						If you pass `.end` result date is the last day of the next week (at 23:59:59).
 	/// - Returns: the new date at the next week
-	public func nextWeek(at time: TimeReference) -> Date {
+	func nextWeek(at time: TimeReference) -> Date {
 		return self.inDefaultRegion().nextWeek(at: time).absoluteDate
 	}
 	
@@ -346,7 +346,7 @@ public extension Date {
 	/// - parameter component: target component
 	///
 	/// - returns: the `Date` representing that start of that unit
-	public func startOf(component: Calendar.Component) -> Date {
+	func startOf(component: Calendar.Component) -> Date {
 		return self.inDateDefaultRegion().startOf(component: component).absoluteDate
 	}
 	
@@ -356,7 +356,7 @@ public extension Date {
 	/// - parameter component: target component
 	///
 	/// - returns: the `Date` representing that end of that unit
-	public func endOf(component: Calendar.Component) -> Date {
+	func endOf(component: Calendar.Component) -> Date {
 		return self.inDateDefaultRegion().endOf(component: component).absoluteDate
 	}
 	
@@ -367,7 +367,7 @@ public extension Date {
 	/// - parameter second: the second value
 	///
 	/// - returns: a new `Date` object calculated at given time
-	public func atTime(hour: Int, minute: Int, second: Int) -> Date? {
+	func atTime(hour: Int, minute: Int, second: Int) -> Date? {
 		return self.inDateDefaultRegion().atTime(hour: hour, minute: minute, second: second)?.absoluteDate
 	}
 	
@@ -378,7 +378,7 @@ public extension Date {
 	/// - parameter value: The value to set for the given calendar unit.
 	///
 	/// - returns: a new `Date` object calculated at given unit value
-	public func at(unit: Calendar.Component, value: Int) -> Date? {
+	func at(unit: Calendar.Component, value: Int) -> Date? {
 		return self.inDateDefaultRegion().at(unit: unit, value: value)?.absoluteDate
 	}
 	
@@ -391,7 +391,7 @@ public extension Date {
 	///
 	/// - returns: a new `Date` object calculated at given units values
 	@available(*, deprecated: 4.1.0, message: "This method has know issues. Use at(values:keep:) instead")
-	public func at(unitsWithValues dict: [Calendar.Component : Int]) throws -> Date {
+	func at(unitsWithValues dict: [Calendar.Component : Int]) throws -> Date {
 		return try self.inDateDefaultRegion().at(unitsWithValues: dict).absoluteDate
 	}
 	
@@ -401,7 +401,7 @@ public extension Date {
 	///   - values: values to alter in new instance
 	///   - keep: values to keep from self instance
 	/// - Returns: a new instance of `DateInRegion` with passed altered values
-	public func at(values: [Calendar.Component : Int], keep: Set<Calendar.Component>) -> Date? {
+	func at(values: [Calendar.Component : Int], keep: Set<Calendar.Component>) -> Date? {
 		return self.inDateDefaultRegion().at(values: values, keep: keep)?.absoluteDate
 	}
 	
@@ -414,7 +414,7 @@ public extension Date {
 	///
 	/// - returns: a `DateInRegion` object representing a date that is the earliest from a given
 	///            range of dates.
-	public static func oldestDate(_ list: [Date]) -> Date {
+	 static func oldestDate(_ list: [Date]) -> Date {
 		var currentMinimum = Date.distantFuture
 		list.forEach { cDate in
 			if currentMinimum > cDate {
@@ -433,7 +433,7 @@ public extension Date {
 	///
 	/// - returns: a `DateInRegion` object representing a date that is the latest from a given
 	///     range of dates.
-	public static func recentDate(_ list: [Date]) -> Date {
+	 static func recentDate(_ list: [Date]) -> Date {
 		var currentMaximum = Date.distantPast
 		list.forEach { cDate in
 			if currentMaximum < cDate {

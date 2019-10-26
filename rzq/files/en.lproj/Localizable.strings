@@ -228,3 +228,20 @@
 
 "more_10" = "More than 10";
 "less_10" = "Less than 10";
+
+"enter_category_name" = "Enter category name first!";
+"confirm_delete_menu_item" = "Are you sure you want to delete this item?";
+"delete" = "Delete";
+
+"select_driver_gender" = "Select Driver Gender";
+"male" = "Male";
+"female" = "Female";
+
+"select_payment_method" = "Select Payment Method";
+"knet" = "Knet";
+"add_items_first" = "Add items first!";
+
+"enter_title_first" = "Enter item title first!";
+"enter_price_first" = "Enter item price first!";
+"enter_desc_first" = "Enter item description first!";
+"add_item_image" = "Add item image first!";

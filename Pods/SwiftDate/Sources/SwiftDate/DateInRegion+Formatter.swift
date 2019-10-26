@@ -20,7 +20,7 @@ public extension DateInRegion {
 	/// - parameter formatString: format string
 	///
 	/// - returns: a string representing given date in format string you have specified
-	public func string(custom formatString: String) -> String {
+	func string(custom formatString: String) -> String {
 		return self.string(format: .custom(formatString))
 	}
 	
@@ -29,7 +29,7 @@ public extension DateInRegion {
 	/// - parameter opts: optional options for ISO8601 formatter specs (see `ISO8601Parser.Options`). If nil `.withInternetDateTime` will be used instead)
 	///
 	/// - returns: a string representing the date in ISO8601 format according to passed options
-	public func iso8601(opts: ISO8601DateTimeFormatter.Options? = nil) -> String {
+	func iso8601(opts: ISO8601DateTimeFormatter.Options? = nil) -> String {
 		return self.string(format: .iso8601(options: opts ?? [.withInternetDateTime]))
 	}
 	
@@ -39,7 +39,7 @@ public extension DateInRegion {
 	/// - parameter format: format of the string as defined by `DateFormat`
 	///
 	/// - returns: a new string or nil if DateInRegion does not contains any valid date
-	public func string(format: DateFormat) -> String {
+	func string(format: DateFormat) -> String {
 		switch format {
 		case .custom(let format):
 			return self.formatters.dateFormatter(format: format).string(from: self.absoluteDate)
@@ -70,7 +70,7 @@ public extension DateInRegion {
 	/// - parameter timeStyle: style to format the time
 	///
 	/// - returns: a new string which represent the interval from given dates
-	public func intervalString(toDate date: DateInRegion, dateStyle: DateIntervalFormatter.Style = .medium, timeStyle: DateIntervalFormatter.Style = .medium) -> String {
+	func intervalString(toDate date: DateInRegion, dateStyle: DateIntervalFormatter.Style = .medium, timeStyle: DateIntervalFormatter.Style = .medium) -> String {
 		let formatter = self.formatters.intervalFormatter()
 		formatter.dateStyle = dateStyle
 		formatter.timeStyle = timeStyle
@@ -84,7 +84,7 @@ public extension DateInRegion {
 	/// - parameter timeStyle: style of the time (if not specified `.medium`)
 	///
 	/// - returns: a new string which represent the date expressed into the current region
-	public func string(dateStyle: DateFormatter.Style = .medium, timeStyle: DateFormatter.Style = .medium) -> String {
+	func string(dateStyle: DateFormatter.Style = .medium, timeStyle: DateFormatter.Style = .medium) -> String {
 		let formatter = self.formatters.dateFormatter()
 		formatter.dateStyle = dateStyle
 		formatter.timeStyle = timeStyle
@@ -98,7 +98,7 @@ public extension DateInRegion {
 	/// - returns: colloquial string representation
 	/// - throws: throw an exception is colloquial string cannot be evaluated
 	@available(*, deprecated: 4.5.0, message: "Deprecated. Use colloquialSinceNow(options:) instead")
-	public func colloquialSinceNow(style: DateComponentsFormatter.UnitsStyle? = nil) throws -> (colloquial: String, time: String?) {
+	func colloquialSinceNow(style: DateComponentsFormatter.UnitsStyle? = nil) throws -> (colloquial: String, time: String?) {
 		let now = DateInRegion(absoluteDate: Date(), in: self.region)
 		return try self.colloquial(toDate: now, style: style)
 	}
@@ -108,7 +108,7 @@ public extension DateInRegion {
 	///
 	/// - Parameter options: formatting options, `nil` to use default options
 	/// - Returns: String, `nil` if formatting fails
-	public func colloquialSinceNow(options: ColloquialDateFormatter.Options? = nil) -> String? {
+	func colloquialSinceNow(options: ColloquialDateFormatter.Options? = nil) -> String? {
 		let now = DateInRegion(absoluteDate: Date(), in: self.region)
 		return self.colloquial(toDate: now, options: options)
 	}
@@ -122,7 +122,7 @@ public extension DateInRegion {
 	/// - returns: colloquial string representation
 	/// - throws: throw an exception is colloquial string cannot be evaluated
 	@available(*, deprecated: 4.5.0, message: "Deprecated. Use colloquial(toDate:options:) instead")
-	public func colloquial(toDate date: DateInRegion, style: DateComponentsFormatter.UnitsStyle? = nil) throws -> (colloquial: String, time: String?) {
+	func colloquial(toDate date: DateInRegion, style: DateComponentsFormatter.UnitsStyle? = nil) throws -> (colloquial: String, time: String?) {
 		let formatter = DateInRegionFormatter()
 		formatter.localization = Localization(locale: self.region.locale)
 		formatter.unitStyle = style ?? .full
@@ -139,7 +139,7 @@ public extension DateInRegion {
 	///   - date: reference date
 	///   - options: formatting options, `nil` to use default options
 	/// - Returns: String, `nil` if formatting fails
-	public func colloquial(toDate date: DateInRegion, options: ColloquialDateFormatter.Options? = nil) -> String? {
+	func colloquial(toDate date: DateInRegion, options: ColloquialDateFormatter.Options? = nil) -> String? {
 		return ColloquialDateFormatter.colloquial(from: self, to: date, options: options)
 	}
 	
@@ -152,7 +152,7 @@ public extension DateInRegion {
 	/// - throws: throw an exception if time components cannot be evaluated
 	///
 	/// - returns: string with each time component
-	public func timeComponents(toDate date: DateInRegion, options: ComponentsFormatterOptions? = nil) throws -> String {
+	func timeComponents(toDate date: DateInRegion, options: ComponentsFormatterOptions? = nil) throws -> String {
 		let interval = self.absoluteDate.timeIntervalSince(date.absoluteDate)
 		var optionsStruct = (options == nil ? ComponentsFormatterOptions() : options!)
 		optionsStruct.locale = self.region.locale
@@ -168,7 +168,7 @@ public extension DateInRegion {
 	/// - throws: throw an exception if time components cannot be evaluated
 	///
 	/// - returns: string with each time component
-	public func timeComponentsSinceNow(options: ComponentsFormatterOptions? = nil) throws -> String {
+	func timeComponentsSinceNow(options: ComponentsFormatterOptions? = nil) throws -> String {
 		let interval = abs(self.absoluteDate.timeIntervalSinceNow)
 		var optionsStruct = (options == nil ? ComponentsFormatterOptions() : options!)
 		optionsStruct.locale = self.region.locale

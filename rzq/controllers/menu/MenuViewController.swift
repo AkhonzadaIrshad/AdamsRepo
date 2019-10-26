@@ -50,12 +50,14 @@ class MenuViewController: BaseVC {
     @IBOutlet weak var ivSelect3: UIImageView!
     @IBOutlet weak var ivSelect4: UIImageView!
     @IBOutlet weak var ivSelect5: UIImageView!
-//    @IBOutlet weak var ivSelect6: UIImageView!
-//    @IBOutlet weak var ivSelect7: UIImageView!
-//    @IBOutlet weak var lvSelect8: UIImageView!
+    //    @IBOutlet weak var ivSelect6: UIImageView!
+    //    @IBOutlet weak var ivSelect7: UIImageView!
+    //    @IBOutlet weak var lvSelect8: UIImageView!
     @IBOutlet weak var ivSelect9: UIImageView!
     @IBOutlet weak var ivSelect10: UIImageView!
     @IBOutlet weak var ivSelect11: UIImageView!
+    
+    @IBOutlet weak var ivSelected12: UIImageView!
     
     @IBOutlet weak var registeredShopsHeight: NSLayoutConstraint!
     
@@ -86,7 +88,7 @@ class MenuViewController: BaseVC {
         self.lblEarnings.font = UIFont(name: Constants.ARABIC_FONT_SEMIBOLD, size: 12)
         
         self.lblBalance.text = "\("account_balance".localized) \(user.data?.balance ?? 0.0) \("currency".localized)"
-      
+        
         
         if (self.isProvider()) {
             self.lblDue.isHidden = false
@@ -102,7 +104,7 @@ class MenuViewController: BaseVC {
             self.lblDue.isHidden = true
             self.lblEarnings.isHidden = true
         }
-      
+        
         let urlStr = user.data?.profilePicture ?? ""
         if (urlStr.count > 0) {
             let url = URL(string: "\(Constants.IMAGE_URL)\(user.data?.profilePicture ?? "")")
@@ -113,9 +115,9 @@ class MenuViewController: BaseVC {
             self.viewMood.isHidden = false
             self.topViewHeight.constant = 175.0
             if (self.loadUser().data?.isOnline ?? false) {
-              self.moodSwitch.isOn = true
+                self.moodSwitch.isOn = true
             }else {
-              self.moodSwitch.isOn = false
+                self.moodSwitch.isOn = false
             }
             lblWorkingOrders.text = "working_orders".localized
             lblWorkingOrders.textColor = UIColor.black
@@ -151,13 +153,13 @@ class MenuViewController: BaseVC {
         }
         
     }
-
+    
     
     func handleNotificationCounter() {
         let count = UserDefaults.standard.value(forKey: Constants.NOTIFICATION_COUNT) as? Int ?? 0
         if (count > 0){
             self.btnCounter.isHidden = false
-           // self.btnCounter.setTitle("\(count)", for: .normal)
+            // self.btnCounter.setTitle("\(count)", for: .normal)
         }else {
             self.btnCounter.isHidden = true
         }
@@ -177,12 +179,13 @@ class MenuViewController: BaseVC {
         self.ivSelect3.isHidden = true
         self.ivSelect4.isHidden = true
         self.ivSelect5.isHidden = true
-//        self.ivSelect6.isHidden = true
-//        self.ivSelect7.isHidden = true
-//        self.lvSelect8.isHidden = true
+        //        self.ivSelect6.isHidden = true
+        //        self.ivSelect7.isHidden = true
+        //        self.lvSelect8.isHidden = true
         self.ivSelect9.isHidden = true
         self.ivSelect10.isHidden = true
         self.ivSelect11.isHidden = true
+        self.ivSelected12.isHidden = true
         switch tag {
         case 1:
             self.ivSelect1.isHidden = false
@@ -199,15 +202,15 @@ class MenuViewController: BaseVC {
         case 5:
             self.ivSelect5.isHidden = false
             break
-//        case 6:
-//            self.ivSelect6.isHidden = false
-//            break
-//        case 7:
-//            self.ivSelect7.isHidden = false
-//            break
-//        case 8:
-//            self.lvSelect8.isHidden = false
-//            break
+            //        case 6:
+            //            self.ivSelect6.isHidden = false
+            //            break
+            //        case 7:
+            //            self.ivSelect7.isHidden = false
+            //            break
+            //        case 8:
+            //            self.lvSelect8.isHidden = false
+        //            break
         case 9:
             self.ivSelect9.isHidden = false
             break
@@ -220,12 +223,15 @@ class MenuViewController: BaseVC {
         case 99:
             self.ivSelectNew.isHidden = false
             break
+        case 101:
+            self.ivSelected12.isHidden = false
+            break
         default:
             self.ivSelect1.isHidden = false
             break
         }
     }
-   
+    
     @IBAction func switchAction(_ sender: UISwitch) {
         self.showLoading()
         if (sender.isOn) {
@@ -237,7 +243,7 @@ class MenuViewController: BaseVC {
         }else {
             ApiService.goOffline(Authorization: self.loadUser().data?.accessToken ?? "") { (response) in
                 self.hideLoading()
-                    self.updateUser(self.getRealmUser(userProfile: VerifyResponse(data: DataClass(accessToken: self.loadUser().data?.accessToken ?? "", phoneNumber: self.loadUser().data?.phoneNumber ?? "", username: self.loadUser().data?.username ?? "", fullName: self.loadUser().data?.fullName ?? "", userID: self.loadUser().data?.userID ?? "", dateOfBirth: self.loadUser().data?.dateOfBirth ?? "", profilePicture: self.loadUser().data?.profilePicture ?? "", email: self.loadUser().data?.email ?? "", gender: self.loadUser().data?.gender ?? 1, rate: self.loadUser().data?.rate ?? 0, roles: self.loadUser().data?.roles ?? "", isOnline: false,exceededDueAmount: self.loadUser().data?.exceededDueAmount ?? false,dueAmount: self.loadUser().data?.dueAmount ?? 0.0, earnings: self.loadUser().data?.earnings ?? 0.0,balance: self.loadUser().data?.balance ?? 0.0), errorCode: 0, errorMessage: "")))
+                self.updateUser(self.getRealmUser(userProfile: VerifyResponse(data: DataClass(accessToken: self.loadUser().data?.accessToken ?? "", phoneNumber: self.loadUser().data?.phoneNumber ?? "", username: self.loadUser().data?.username ?? "", fullName: self.loadUser().data?.fullName ?? "", userID: self.loadUser().data?.userID ?? "", dateOfBirth: self.loadUser().data?.dateOfBirth ?? "", profilePicture: self.loadUser().data?.profilePicture ?? "", email: self.loadUser().data?.email ?? "", gender: self.loadUser().data?.gender ?? 1, rate: self.loadUser().data?.rate ?? 0, roles: self.loadUser().data?.roles ?? "", isOnline: false,exceededDueAmount: self.loadUser().data?.exceededDueAmount ?? false,dueAmount: self.loadUser().data?.dueAmount ?? 0.0, earnings: self.loadUser().data?.earnings ?? 0.0,balance: self.loadUser().data?.balance ?? 0.0), errorCode: 0, errorMessage: "")))
                 self.moodSwitch.isOn = false
             }
         }
@@ -264,26 +270,26 @@ class MenuViewController: BaseVC {
             delegate?.slideMenuItemSelectedAtIndex(index)
         }
         
-//        UIView.animate(withDuration: 0.3, animations: { () -> Void in
-//            self.view.frame = CGRect(x: -UIScreen.main.bounds.size.width, y: 0, width: UIScreen.main.bounds.size.width,height: UIScreen.main.bounds.size.height)
-//            self.view.layoutIfNeeded()
-//            self.view.backgroundColor = UIColor.clear
-//        }, completion: { (finished) -> Void in
-//            self.view.removeFromSuperview()
-//            self.removeFromParent()
-//        })
+        //        UIView.animate(withDuration: 0.3, animations: { () -> Void in
+        //            self.view.frame = CGRect(x: -UIScreen.main.bounds.size.width, y: 0, width: UIScreen.main.bounds.size.width,height: UIScreen.main.bounds.size.height)
+        //            self.view.layoutIfNeeded()
+        //            self.view.backgroundColor = UIColor.clear
+        //        }, completion: { (finished) -> Void in
+        //            self.view.removeFromSuperview()
+        //            self.removeFromParent()
+        //        })
         self.closeMenu()
     }
     
     func closeMenu() {
-//        UIView.animate(withDuration: 0.3, animations: { () -> Void in
-//            self.view.frame = CGRect(x: -UIScreen.main.bounds.size.width, y: 0, width: UIScreen.main.bounds.size.width,height: UIScreen.main.bounds.size.height)
-//            self.view.layoutIfNeeded()
-//            self.view.backgroundColor = UIColor.clear
-//        }, completion: { (finished) -> Void in
-//            self.view.removeFromSuperview()
-//            self.removeFromParent()
-//        })
+        //        UIView.animate(withDuration: 0.3, animations: { () -> Void in
+        //            self.view.frame = CGRect(x: -UIScreen.main.bounds.size.width, y: 0, width: UIScreen.main.bounds.size.width,height: UIScreen.main.bounds.size.height)
+        //            self.view.layoutIfNeeded()
+        //            self.view.backgroundColor = UIColor.clear
+        //        }, completion: { (finished) -> Void in
+        //            self.view.removeFromSuperview()
+        //            self.removeFromParent()
+        //        })
         if (self.isArabic()) {
             UIView.animate(withDuration: 0.3, animations: { () -> Void in
                 self.view.frame = CGRect(x: UIScreen.main.bounds.size.width, y: 0, width: UIScreen.main.bounds.size.width,height: UIScreen.main.bounds.size.height)
@@ -294,14 +300,14 @@ class MenuViewController: BaseVC {
                 self.removeFromParent()
             })
         }else {
-                    UIView.animate(withDuration: 0.3, animations: { () -> Void in
-                        self.view.frame = CGRect(x: -UIScreen.main.bounds.size.width, y: 0, width: UIScreen.main.bounds.size.width,height: UIScreen.main.bounds.size.height)
-                        self.view.layoutIfNeeded()
-                        self.view.backgroundColor = UIColor.clear
-                    }, completion: { (finished) -> Void in
-                        self.view.removeFromSuperview()
-                        self.removeFromParent()
-                    })
+            UIView.animate(withDuration: 0.3, animations: { () -> Void in
+                self.view.frame = CGRect(x: -UIScreen.main.bounds.size.width, y: 0, width: UIScreen.main.bounds.size.width,height: UIScreen.main.bounds.size.height)
+                self.view.layoutIfNeeded()
+                self.view.backgroundColor = UIColor.clear
+            }, completion: { (finished) -> Void in
+                self.view.removeFromSuperview()
+                self.removeFromParent()
+            })
         }
     }
     
@@ -315,17 +321,17 @@ class MenuViewController: BaseVC {
     @IBAction func workingOrdersAction(_ sender: Any) {
         if (!self.isLoggedIn()) {
             return
-          }
-         if (self.isProvider()) {
+        }
+        if (self.isProvider()) {
             self.selectedTag = 99
             self.validateSelectedTag(tag: self.selectedTag)
             delegate?.slideMenuItemSelectedAtIndex(99)
-         }else {
+        }else {
             self.selectedTag = 99
             self.validateSelectedTag(tag: self.selectedTag)
             delegate?.slideMenuItemSelectedAtIndex(105)
         }
-       
+        
     }
     
     @IBAction func ordersAction(_ sender: Any) {
@@ -358,13 +364,13 @@ class MenuViewController: BaseVC {
     
     
     @IBAction func settingsAction(_ sender: Any) {
-       // self.selectedTag = 4
-       // self.validateSelectedTag(tag: self.selectedTag)
+        // self.selectedTag = 4
+        // self.validateSelectedTag(tag: self.selectedTag)
         delegate?.slideMenuItemSelectedAtIndex(-1)
-                if let vc = UIStoryboard(name: "Main", bundle: nil).instantiateViewController(withIdentifier: "SettingsVC") as? SettingsVC
-                {
-                    self.navigationController?.pushViewController(vc, animated: true)
-                }
+        if let vc = UIStoryboard(name: "Main", bundle: nil).instantiateViewController(withIdentifier: "SettingsVC") as? SettingsVC
+        {
+            self.navigationController?.pushViewController(vc, animated: true)
+        }
     }
     
     @IBAction func registeredShopsAction(_ sender: Any) {
@@ -429,5 +435,13 @@ class MenuViewController: BaseVC {
             self.present(vc, animated: true, completion: nil)
         }
     }
+    
+    @IBAction func myShopsAction(_ sender: Any) {
+        self.selectedTag = 101
+        self.validateSelectedTag(tag: self.selectedTag)
+        delegate?.slideMenuItemSelectedAtIndex(101)
+    }
+    
+    
     
 }

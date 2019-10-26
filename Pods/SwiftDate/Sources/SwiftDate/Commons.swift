@@ -18,7 +18,7 @@ internal extension Calendar.Component {
 	///
 	/// - returns: return the plural or singular form of the time unit used to compose a valid identifier for search a localized
 	///   string in resource bundle
-	internal func localizedKey(forValue value: Int) -> String {
+	 func localizedKey(forValue value: Int) -> String {
 		let locKey = self.localizedKey
 		let absValue = abs(value)
 		switch absValue {
@@ -32,7 +32,7 @@ internal extension Calendar.Component {
 	}
 	
 	
-	internal var localizedKey: String {
+	 var localizedKey: String {
 		switch self {
 		case .year:			return "y"
 		case .month:		return "m"

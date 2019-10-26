@@ -160,12 +160,13 @@ class OrderDetailsVC: BaseVC, UICollectionViewDelegate, UICollectionViewDataSour
             self.audioViewHeight.constant = 0
             self.recordLine.isHidden = true
         }
+        
         if (self.order?.images?.count ?? 0 == 0) {
             self.imagesViewHeight.constant = 0
         }
         
         
-        if (self.isProvider()) {
+        if (self.isProvider()  && self.loadUser().data?.userID == self.order?.driverId) {
                 self.viewCancel.isHidden = true
         }else {
             if (self.order?.status == Constants.ORDER_PENDING) {

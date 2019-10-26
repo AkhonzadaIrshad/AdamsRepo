@@ -36,7 +36,7 @@ public prefix func - (dateComponents: DateComponents) -> DateComponents {
 /// - parameter rhs: second date component
 ///
 /// - returns: a new `DateComponents`
-public func + (lhs: DateComponents, rhs: DateComponents) -> DateComponents {
+func + (lhs: DateComponents, rhs: DateComponents) -> DateComponents {
 	return lhs.add(components: rhs)
 }
 
@@ -47,7 +47,7 @@ public func + (lhs: DateComponents, rhs: DateComponents) -> DateComponents {
 /// - parameter rhs: second date component
 ///
 /// - returns: a new `DateComponents`
-public func - (lhs: DateComponents, rhs: DateComponents) -> DateComponents {
+func - (lhs: DateComponents, rhs: DateComponents) -> DateComponents {
 	return lhs.add(components: rhs, multipler: -1)
 }
 
@@ -59,7 +59,7 @@ public func - (lhs: DateComponents, rhs: DateComponents) -> DateComponents {
 ///   - rhs: right date component
 /// - Returns: the sum of valid components of two instances
 
-public func && (lhs: DateComponents, rhs: DateComponents) -> DateComponents {
+func && (lhs: DateComponents, rhs: DateComponents) -> DateComponents {
 	var mergedComponents = DateComponents()
 	let flagSet = DateComponents.allComponents
 	
@@ -86,7 +86,7 @@ public extension DateComponents {
 	/// A shortcut to produce a `DateInRegion` instance from an instance of `DateComponents`.
 	/// It's the same of `DateInRegion(components:)` init func but it may return nil (instead of throwing an exception)
 	/// if a valid date cannot be produced.
-	public var dateInRegion: DateInRegion? {
+	 var dateInRegion: DateInRegion? {
 		return DateInRegion(components: self)
 	}
 	
@@ -149,7 +149,7 @@ public extension DateComponents {
 	/// - parameter region: optional region to define the timezone and calendar. If not specified, Region.GMT() will be used instead.
 	///
 	/// - returns: a new `Date`
-	public func from(date: Date, in region: Region? = nil) -> Date? {
+	func from(date: Date, in region: Region? = nil) -> Date? {
 		let srcRegion = region ?? Region.GMT()
 		return srcRegion.calendar.date(byAdding: self, to: date)
 	}
@@ -160,7 +160,7 @@ public extension DateComponents {
 	/// - parameter dateInRegion: reference `DateInRegion`
 	///
 	/// - returns: a new `DateInRegion`
-	public func from(dateInRegion: DateInRegion) -> DateInRegion? {
+	func from(dateInRegion: DateInRegion) -> DateInRegion? {
 		guard let absDate = dateInRegion.region.calendar.date(byAdding: self, to: dateInRegion.absoluteDate) else {
 			return nil
 		}
@@ -174,7 +174,7 @@ public extension DateComponents {
 	/// - parameter region: optional region to define the timezone and calendar. If not specific, Region.GTM() will be used instead
 	///
 	/// - returns: a new `Date`
-	public func ago(from date: Date, in region: Region? = nil) -> Date? {
+	func ago(from date: Date, in region: Region? = nil) -> Date? {
 		let srcRegion = region ?? Region.GMT()
 		return srcRegion.calendar.date(byAdding: -self, to: date)
 	}
@@ -185,7 +185,7 @@ public extension DateComponents {
 	/// - parameter dateInRegion: reference `DateInRegion`
 	///
 	/// - returns: a new `DateInRegion`
-	public func ago(fromDateInRegion date: DateInRegion) -> DateInRegion? {
+	func ago(fromDateInRegion date: DateInRegion) -> DateInRegion? {
 		guard let absDate = date.region.calendar.date(byAdding: -self, to: date.absoluteDate) else {
 			return nil
 		}
@@ -198,7 +198,7 @@ public extension DateComponents {
 	/// - parameter region: optional region to define the timezone and calendar. If not specified, Region.GMT() will be used instead.
 	///
 	/// - returns: a new `Date`
-	public func fromNow(in region: Region? = nil) -> Date? {
+	func fromNow(in region: Region? = nil) -> Date? {
 		return self.from(date: Date(), in: region)
 	}
 	
@@ -208,7 +208,7 @@ public extension DateComponents {
 	/// - parameter dateInRegion: reference `DateInRegion`
 	///
 	/// - returns: a new `DateInRegion`
-	public func ago(in region: Region? = nil) -> Date? {
+	func ago(in region: Region? = nil) -> Date? {
 		return self.ago(from: Date(), in: region)
 	}
 	
@@ -218,7 +218,7 @@ public extension DateComponents {
 	/// - parameter calendar:  context calendar to use
 	///
 	/// - returns: the value of interval expressed in selected `Calendar.Component`
-	public func `in`(_ component: Calendar.Component, of calendar: CalendarName? = nil) -> Int? {
+	func `in`(_ component: Calendar.Component, of calendar: CalendarName? = nil) -> Int? {
 		let cal = calendar ?? CalendarName.current
 		let dateFrom = Date()
 		let dateTo: Date = dateFrom.add(components: self)

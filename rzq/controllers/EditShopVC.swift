@@ -252,6 +252,13 @@ class EditShopVC: BaseVC, SelectLocationDelegate,UINavigationControllerDelegate,
     }
     
     
+    @IBAction func editMenuAction(_ sender: Any) {
+        let storyboard = UIStoryboard(name: "Main", bundle: nil)
+        let vc : AddMenuVC = storyboard.instantiateViewController(withIdentifier: "AddMenuVC") as! AddMenuVC
+        vc.shopId = self.shop?.id ?? 0
+        self.navigationController?.pushViewController(vc, animated: true)
+    }
+    
     
     func handleUploadingMedia(id : Int) {
         if (self.selectedImages.count > 0) {

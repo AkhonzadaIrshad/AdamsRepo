@@ -62,6 +62,9 @@ class BaseViewController: UIViewController, SlideMenuDelegate {
         case "ContactUsVC":
             selectedTag = 9
             break
+        case "MyShopsVC":
+            selectedTag = 101
+            break
         default:
             selectedTag = 1
             break
@@ -112,6 +115,9 @@ class BaseViewController: UIViewController, SlideMenuDelegate {
         case 9:
             self.openViewControllerBasedOnIdentifier("ContactUsVC")
             break
+        case 101:
+            self.openViewControllerBasedOnIdentifier("MyShopsVC")
+            break
         case 10:
             //rate action
             self.openAppStore()
@@ -121,7 +127,7 @@ class BaseViewController: UIViewController, SlideMenuDelegate {
             if (self.isArabic()) {
                 self.shareAction(content: "\(App.shared.config?.configString?.arabicTellAFriend ?? "")\n\n\(App.shared.config?.updateStatus?.iosAppURL ?? "")")
             }else {
-               self.shareAction(content: "\(App.shared.config?.configString?.englishTellAFriend ?? "")\n\n\(App.shared.config?.updateStatus?.iosAppURL ?? "")")
+                self.shareAction(content: "\(App.shared.config?.configString?.englishTellAFriend ?? "")\n\n\(App.shared.config?.updateStatus?.iosAppURL ?? "")")
             }
             break
         case 12:
@@ -250,7 +256,7 @@ class BaseViewController: UIViewController, SlideMenuDelegate {
     
     @objc func  onAboutPressed(_ sender : UIButton) {
         //selectedTag = 8
-       // self.openViewControllerBasedOnIdentifier("AboutUsVC")
+        // self.openViewControllerBasedOnIdentifier("AboutUsVC")
     }
     
     @objc func onSlideMenuButtonPressed(_ sender : UIButton) {
@@ -273,7 +279,7 @@ class BaseViewController: UIViewController, SlideMenuDelegate {
                 viewMenuBack.removeFromSuperview()
             })
             
-
+            
             return
         }
         
@@ -290,9 +296,9 @@ class BaseViewController: UIViewController, SlideMenuDelegate {
         if (self.isArabic()) {
             menuVC.view.frame=CGRect(x: UIScreen.main.bounds.size.width, y: 0, width: UIScreen.main.bounds.size.width, height: UIScreen.main.bounds.size.height);
         }else {
-             menuVC.view.frame=CGRect(x: 0 - UIScreen.main.bounds.size.width, y: 0, width: UIScreen.main.bounds.size.width, height: UIScreen.main.bounds.size.height);
+            menuVC.view.frame=CGRect(x: 0 - UIScreen.main.bounds.size.width, y: 0, width: UIScreen.main.bounds.size.width, height: UIScreen.main.bounds.size.height);
         }
-       
+        
         
         UIView.animate(withDuration: 0.3, animations: { () -> Void in
             menuVC.view.frame=CGRect(x: 0, y: 0, width: UIScreen.main.bounds.size.width, height: UIScreen.main.bounds.size.height);
@@ -417,9 +423,9 @@ class BaseViewController: UIViewController, SlideMenuDelegate {
     
     
     func showAlertOK(title: String,
-                   message: String,
-                   actionTitle: String,
-                   cancelHandler:(()->Void)? = nil) {
+                     message: String,
+                     actionTitle: String,
+                     cancelHandler:(()->Void)? = nil) {
         
         let alert = UIAlertController(title: title, message: message, preferredStyle: .alert)
         

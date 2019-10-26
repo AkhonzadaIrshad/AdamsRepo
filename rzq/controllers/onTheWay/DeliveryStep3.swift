@@ -19,8 +19,8 @@ import SVProgressHUD
 protocol Step3Delegate {
     func updateModel(model : OTWOrder)
 }
-class DeliveryStep3: BaseVC, UINavigationControllerDelegate, ImagePickerDelegate {
-
+class DeliveryStep3: BaseVC, UINavigationControllerDelegate, ImagePickerDelegate, ShopMenuDelegate {
+    
     @IBOutlet weak var lblPickupLocation: MyUILabel!
     
     @IBOutlet weak var lblDropoffLocation: MyUILabel!
@@ -59,12 +59,19 @@ class DeliveryStep3: BaseVC, UINavigationControllerDelegate, ImagePickerDelegate
     var orderModel : OTWOrder?
     
     var delegate : Step3Delegate?
-
+    
     @IBOutlet weak var btnRecord: UIButton!
     
     @IBOutlet weak var btnPlay: UIButton!
     
     var selectedTime : Int?
+    
+    
+    @IBOutlet weak var btnGender: MyUIButton!
+    
+    @IBOutlet weak var btnPaymentMethod: MyUIButton!
+    
+    @IBOutlet weak var btnCheckMenu: MyUIButton!
     
     
     
@@ -75,6 +82,8 @@ class DeliveryStep3: BaseVC, UINavigationControllerDelegate, ImagePickerDelegate
     var imagePicker: UIImagePickerController!
     
     var isAboveTen : Bool?
+    var isFemale : Bool?
+    var isCash : Bool?
     
     enum ImageSource {
         case photoLibrary
@@ -110,7 +119,7 @@ class DeliveryStep3: BaseVC, UINavigationControllerDelegate, ImagePickerDelegate
         self.drawLocationLine()
         
         self.edtOrderDetails.text = self.orderModel?.orderDetails ?? ""
-      //  self.edtCost.text = self.orderModel?.orderCost ?? ""
+        //  self.edtCost.text = self.orderModel?.orderCost ?? ""
         
     }
     
@@ -192,10 +201,10 @@ class DeliveryStep3: BaseVC, UINavigationControllerDelegate, ImagePickerDelegate
     
     func handleImagesView() {
         if (self.selectedImages.count > 0) {
-           // self.viewImages.isHidden = false
+            // self.viewImages.isHidden = false
             self.lblImages.text = "\(self.selectedImages.count) \("images".localized)"
         }else {
-           // self.viewImages.isHidden = true
+            // self.viewImages.isHidden = true
             self.lblImages.text = ""
         }
     }
@@ -206,7 +215,7 @@ class DeliveryStep3: BaseVC, UINavigationControllerDelegate, ImagePickerDelegate
     
     func saveBackModel() {
         self.orderModel?.orderDetails = self.edtOrderDetails.text ?? ""
-      //  self.orderModel?.orderCost = self.edtCost.text ?? ""
+        //  self.orderModel?.orderCost = self.edtCost.text ?? ""
         self.delegate?.updateModel(model: self.orderModel!)
         self.navigationController?.popViewController(animated: true)
     }
@@ -240,19 +249,19 @@ class DeliveryStep3: BaseVC, UINavigationControllerDelegate, ImagePickerDelegate
     }
     
     @IBAction func backAction(_ sender: Any) {
-     self.saveBackModel()
+        self.saveBackModel()
     }
     
     @IBAction func step1Action(_ sender: Any) {
-       //  self.popBack(3)
+        //  self.popBack(3)
     }
     
     @IBAction func step2Action(_ sender: Any) {
-       // self.navigationController?.popViewController(animated: true)
+        // self.navigationController?.popViewController(animated: true)
     }
     
     @IBAction func step3Action(_ sender: Any) {
-       
+        
     }
     
     @IBAction func photoAction(_ sender: Any) {
@@ -294,21 +303,21 @@ class DeliveryStep3: BaseVC, UINavigationControllerDelegate, ImagePickerDelegate
         }
     }
     @IBAction func recordAction(_ sender: Any) {
-//        if (recorder.isRecording) {
-//            //stop
-//            self.btnRecord.setImage(UIImage(named: "ic_microphone"), for: .normal)
-//            recorder.stop()
-//            if (recorder.time > 2) {
-//                self.viewRecording.isHidden = false
-//            }else {
-//                self.viewRecording.isHidden = true
-//            }
-//        }else {
-//            //record
-//            self.btnRecord.setImage(UIImage(named: "ic_recording"), for: .normal)
-//            recorder.recordName = "order_file"
-//            recorder.record()
-//        }
+        //        if (recorder.isRecording) {
+        //            //stop
+        //            self.btnRecord.setImage(UIImage(named: "ic_microphone"), for: .normal)
+        //            recorder.stop()
+        //            if (recorder.time > 2) {
+        //                self.viewRecording.isHidden = false
+        //            }else {
+        //                self.viewRecording.isHidden = true
+        //            }
+        //        }else {
+        //            //record
+        //            self.btnRecord.setImage(UIImage(named: "ic_recording"), for: .normal)
+        //            recorder.recordName = "order_file"
+        //            recorder.record()
+        //        }
         //stop
         self.bgRecord.isHidden = true
         self.btnRecord.setImage(UIImage(named: "ic_microphone"), for: .normal)
@@ -338,7 +347,7 @@ class DeliveryStep3: BaseVC, UINavigationControllerDelegate, ImagePickerDelegate
     @IBAction func placeOrderAction(_ sender: Any) {
         if (self.validate()) {
             self.showLoading()
-            ApiService.createDelivery(Authorization: self.loadUser().data?.accessToken ?? "", desc: self.edtOrderDetails.text ?? "", fromLongitude: self.orderModel?.pickUpLongitude ?? 0.0, fromLatitude: self.orderModel?.pickUpLatitude ?? 0.0, toLongitude: self.orderModel?.dropOffLongitude ?? 0.0, toLatitude: self.orderModel?.dropOffLatitude ?? 0.0, time: self.selectedTime ?? 0, estimatedPrice: "\(self.getCost())", fromAddress: self.orderModel?.pickUpAddress ?? "", toAddress: self.orderModel?.dropOffAddress ?? "", shopId: self.orderModel?.shop?.id ?? 0, pickUpDetails : self.orderModel?.pickUpDetails ?? "", dropOffDetails : self.orderModel?.dropOffDetails ?? "") { (response) in
+            ApiService.createDelivery(Authorization: self.loadUser().data?.accessToken ?? "", desc: self.edtOrderDetails.text ?? "", fromLongitude: self.orderModel?.pickUpLongitude ?? 0.0, fromLatitude: self.orderModel?.pickUpLatitude ?? 0.0, toLongitude: self.orderModel?.dropOffLongitude ?? 0.0, toLatitude: self.orderModel?.dropOffLatitude ?? 0.0, time: self.selectedTime ?? 0, estimatedPrice: "\(self.getCost())", fromAddress: self.orderModel?.pickUpAddress ?? "", toAddress: self.orderModel?.dropOffAddress ?? "", shopId: self.orderModel?.shop?.id ?? 0, pickUpDetails : self.orderModel?.pickUpDetails ?? "", dropOffDetails : self.orderModel?.dropOffDetails ?? "",paymentMethod : 1) { (response) in
                 if (response.data ?? 0 > 0) {
                     self.handleUploadingMedia(id : response.data ?? 0)
                 }else {
@@ -371,9 +380,9 @@ class DeliveryStep3: BaseVC, UINavigationControllerDelegate, ImagePickerDelegate
                 self.hideLoading()
                 if (response.errorCode == 0) {
                     let vc = UIStoryboard(name: "Main", bundle: nil).instantiateViewController(withIdentifier: "SendingOrderVC") as! SendingOrderVC
-//                    self.definesPresentationContext = true
-//                    vc.modalPresentationStyle = UIModalPresentationStyle.overCurrentContext
-//                    vc.view.backgroundColor = UIColor.clear
+                    //                    self.definesPresentationContext = true
+                    //                    vc.modalPresentationStyle = UIModalPresentationStyle.overCurrentContext
+                    //                    vc.view.backgroundColor = UIColor.clear
                     vc.modalPresentationStyle = .fullScreen
                     self.present(vc, animated: true, completion: nil)
                 }else {
@@ -383,12 +392,12 @@ class DeliveryStep3: BaseVC, UINavigationControllerDelegate, ImagePickerDelegate
             }
         }else {
             let vc = UIStoryboard(name: "Main", bundle: nil).instantiateViewController(withIdentifier: "SendingOrderVC") as! SendingOrderVC
-//            self.definesPresentationContext = true
-//            vc.modalPresentationStyle = UIModalPresentationStyle.overCurrentContext
-//            vc.view.backgroundColor = UIColor.clear
+            //            self.definesPresentationContext = true
+            //            vc.modalPresentationStyle = UIModalPresentationStyle.overCurrentContext
+            //            vc.view.backgroundColor = UIColor.clear
             vc.modalPresentationStyle = .fullScreen
             self.present(vc, animated: true, completion: nil)
-        
+            
         }
     }
     
@@ -511,16 +520,102 @@ class DeliveryStep3: BaseVC, UINavigationControllerDelegate, ImagePickerDelegate
     }
     
     
+    
+    func createGenderSheet() -> ActionSheet {
+        let title = ActionSheetTitle(title: "select_driver_gender".localized)
+        
+        let appearance = ActionSheetAppearance()
+        
+        appearance.title.font = UIFont(name: Constants.ARABIC_FONT_REGULAR, size: 16)
+        appearance.sectionTitle.font = UIFont(name: Constants.ARABIC_FONT_REGULAR, size: 14)
+        appearance.sectionTitle.subtitleFont = UIFont(name: Constants.ARABIC_FONT_REGULAR, size: 14)
+        appearance.item.subtitleFont = UIFont(name: Constants.ARABIC_FONT_REGULAR, size: 14)
+        appearance.item.font = UIFont(name: Constants.ARABIC_FONT_REGULAR, size: 14)
+        
+        let item0 = ActionSheetItem(title: "male".localized, value: 0, image: nil)
+        let item1 = ActionSheetItem(title: "female".localized, value: 1, image: nil)
+        
+        let actionSheet = ActionSheet(items: [title,item0,item1]) { sheet, item in
+            if let value = item.value as? Int {
+                switch (value) {
+                case 0:
+                    //below
+                    self.btnGender.setTitle("male".localized, for: .normal)
+                    self.isFemale = false
+                    break
+                case 1:
+                    //above
+                    self.btnGender.setTitle("female".localized, for: .normal)
+                    self.isFemale = true
+                    break
+                default:
+                    print("1")
+                    break
+                }
+            }
+            if item is ActionSheetOkButton {
+                print("OK buttons has the value `true`")
+            }
+        }
+        actionSheet.appearance = appearance
+        actionSheet.title = "select_an_option".localized
+        
+        return actionSheet
+    }
+    
+    func createPaymentSheet() -> ActionSheet {
+        let title = ActionSheetTitle(title: "select_payment_method".localized)
+        
+        let appearance = ActionSheetAppearance()
+        
+        appearance.title.font = UIFont(name: Constants.ARABIC_FONT_REGULAR, size: 16)
+        appearance.sectionTitle.font = UIFont(name: Constants.ARABIC_FONT_REGULAR, size: 14)
+        appearance.sectionTitle.subtitleFont = UIFont(name: Constants.ARABIC_FONT_REGULAR, size: 14)
+        appearance.item.subtitleFont = UIFont(name: Constants.ARABIC_FONT_REGULAR, size: 14)
+        appearance.item.font = UIFont(name: Constants.ARABIC_FONT_REGULAR, size: 14)
+        
+        let item0 = ActionSheetItem(title: "cash".localized, value: 0, image: nil)
+        let item1 = ActionSheetItem(title: "knet".localized, value: 1, image: nil)
+        
+        let actionSheet = ActionSheet(items: [title,item0,item1]) { sheet, item in
+            if let value = item.value as? Int {
+                switch (value) {
+                case 0:
+                    //below
+                    self.btnPaymentMethod.setTitle("cash".localized, for: .normal)
+                    self.isCash = true
+                    break
+                case 1:
+                    //above
+                    self.btnPaymentMethod.setTitle("knet".localized, for: .normal)
+                    self.isCash = false
+                    break
+                default:
+                    print("1")
+                    break
+                }
+            }
+            if item is ActionSheetOkButton {
+                print("OK buttons has the value `true`")
+            }
+        }
+        actionSheet.appearance = appearance
+        actionSheet.title = "select_an_option".localized
+        
+        return actionSheet
+    }
+    
+    
     func validate() -> Bool {
         if (self.edtOrderDetails.text?.count ?? 0 == 0) {
             self.showBanner(title: "alert".localized, message: "enter_order_details".localized, style: UIColor.INFO)
             return false
         }
         
-//        if (self.edtCost.text?.count ?? 0 == 0) {
-//            self.showBanner(title: "alert".localized, message: "enter_order_cost".localized, style: UIColor.INFO)
-//            return false
-//        }
+        //        if (self.edtCost.text?.count ?? 0 == 0) {
+        //            self.showBanner(title: "alert".localized, message: "enter_order_cost".localized, style: UIColor.INFO)
+        //            return false
+        //        }
         
         return true
     }
@@ -577,7 +672,7 @@ class DeliveryStep3: BaseVC, UINavigationControllerDelegate, ImagePickerDelegate
     }
     
     @IBAction func backBtnAction(_ sender: Any) {
-      self.saveBackModel()
+        self.saveBackModel()
     }
     
     @IBAction func costAction(_ sender: Any) {
@@ -588,6 +683,38 @@ class DeliveryStep3: BaseVC, UINavigationControllerDelegate, ImagePickerDelegate
     
     @IBAction func clearFieldAction(_ sender: Any) {
         self.edtOrderDetails.text = ""
+    }
+    
+    
+    @IBAction func GenderAction(_ sender: Any) {
+        let actionSheet = createGenderSheet()
+        actionSheet.appearance.title.textColor = UIColor.colorPrimary
+        actionSheet.present(in: self, from: self.view)
+    }
+    
+    @IBAction func paymentMethodAction(_ sender: Any) {
+        let actionSheet = createPaymentSheet()
+        actionSheet.appearance.title.textColor = UIColor.colorPrimary
+        actionSheet.present(in: self, from: self.view)
+    }
+    
+    @IBAction func checkMenuAction(_ sender: Any) {
+        let storyboard = UIStoryboard(name: "Main", bundle: nil)
+        let vc : ShopMenuVC = storyboard.instantiateViewController(withIdentifier: "ShopMenuVC") as! ShopMenuVC
+        vc.shopId = self.orderModel?.shop?.id ?? 0
+        vc.delegate = self
+        self.navigationController?.pushViewController(vc, animated: true)
+    }
+    
+    func onDone(items: [ShopMenuItem]) {
+        var text = ""
+        for item in items {
+            let doubleQuantity = Double(item.quantity ?? 0)
+            let doublePrice = item.price ?? 0.0
+            let total = doubleQuantity * doublePrice
+            text = "\(text)\(item.name ?? "") x \(item.quantity ?? 0) -> \(total) \("currency".localized).\n"
+        }
+        self.edtOrderDetails.text = text
     }
     
     

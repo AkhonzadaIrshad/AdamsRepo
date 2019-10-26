@@ -19,7 +19,7 @@ public extension String {
 	/// - parameter region: region in which you want to describe the date
 	///
 	/// - returns: a new DateInRegion representing passed string in given region
-	public func date(format: DateFormat, fromRegion region: Region? = nil) -> DateInRegion? {
+	 func date(format: DateFormat, fromRegion region: Region? = nil) -> DateInRegion? {
 		return DateInRegion(string: self, format: format, fromRegion: region)
 	}
 	
@@ -32,7 +32,7 @@ public extension String {
 	///   - formats: formats to use
 	/// - parameter region: region in which you want to describe the date
 	/// - returns: a new DateInRegion representing passed string in given region
-	public func date(formats: [DateFormat], fromRegion region: Region? = nil) -> DateInRegion? {
+	 func date(formats: [DateFormat], fromRegion region: Region? = nil) -> DateInRegion? {
 		return DateInRegion.date(string: self, formats: formats, fromRegion: region)
 	}
 	
@@ -47,7 +47,7 @@ internal extension String {
 	/// - parameter nsRange: range
 	///
 	/// - returns: substring with given range
-	internal func range(from nsRange: NSRange) -> Range<String.Index>? {
+	 func range(from nsRange: NSRange) -> Range<String.Index>? {
 		guard
 			let from16 = utf16.index(utf16.startIndex, offsetBy: nsRange.location, limitedBy: utf16.endIndex),
 			let to16 = utf16.index(from16, offsetBy: nsRange.length, limitedBy: utf16.endIndex),
@@ -77,42 +77,42 @@ public extension Int {
 	}
 
 	/// Create a `DateComponents` with `self` value set as nanoseconds
-	public var nanoseconds: DateComponents {
+	var nanoseconds: DateComponents {
 		return self.toDateComponents(type: .nanosecond)
 	}
 	
 	/// Create a `DateComponents` with `self` value set as seconds
-	public var seconds: DateComponents {
+	var seconds: DateComponents {
 		return self.toDateComponents(type: .second)
 	}
 	
 	/// Create a `DateComponents` with `self` value set as minutes
-	public var minutes: DateComponents {
+	var minutes: DateComponents {
 		return self.toDateComponents(type: .minute)
 	}
 	
 	/// Create a `DateComponents` with `self` value set as hours
-	public var hours: DateComponents {
+	var hours: DateComponents {
 		return self.toDateComponents(type: .hour)
 	}
 	
 	/// Create a `DateComponents` with `self` value set as days
-	public var days: DateComponents {
+	var days: DateComponents {
 		return self.toDateComponents(type: .day)
 	}
 	
 	/// Create a `DateComponents` with `self` value set as weeks
-	public var weeks: DateComponents {
+	var weeks: DateComponents {
 		return self.toDateComponents(type: .weekOfYear)
 	}
 	
 	/// Create a `DateComponents` with `self` value set as months
-	public var months: DateComponents {
+	var months: DateComponents {
 		return self.toDateComponents(type: .month)
 	}
 	
 	/// Create a `DateComponents` with `self` value set as years
-	public var years: DateComponents {
+	var years: DateComponents {
 		return self.toDateComponents(type: .year)
 	}
 }
@@ -122,13 +122,13 @@ public extension Int {
 /// - note these properties behave exactly as their plural-named equivalents
 
 public extension Int {
-    public var nanosecond: DateComponents { return nanoseconds }
-    public var second: DateComponents { return seconds }
-    public var minute: DateComponents { return minutes }
-    public var hour: DateComponents { return hours }
-    public var day: DateComponents { return days }
-    public var week: DateComponents { return weeks }
-    public var month: DateComponents { return months }
-    public var year: DateComponents { return years }
+    var nanosecond: DateComponents { return nanoseconds }
+    var second: DateComponents { return seconds }
+    var minute: DateComponents { return minutes }
+    var hour: DateComponents { return hours }
+    var day: DateComponents { return days }
+    var week: DateComponents { return weeks }
+    var month: DateComponents { return months }
+    var year: DateComponents { return years }
 }
 

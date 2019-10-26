@@ -17,21 +17,21 @@ public extension Date {
 	///
 	/// - returns: a new `DateInRegion` instance object which express passed absolute date in the context of the local device's region
 	@available(*, deprecated: 4.1.2, message: "This method is deprecated. use inDefaultRegion instead")
-	public func inLocalRegion() -> DateInRegion {
+	func inLocalRegion() -> DateInRegion {
 		return DateInRegion(absoluteDate: self)
 	}
 	
 	/// Return the current absolute datetime in default's device region (timezone+calendar+locale)
 	///
 	/// - returns: a new `DateInRegion` instance object which express passed absolute date in the context of the current default region
-	public func inDefaultRegion() -> DateInRegion {
+	func inDefaultRegion() -> DateInRegion {
 		return DateInRegion(absoluteDate: self)
 	}
 	
 	/// Return the current absolute datetime in UTC/GMT timezone. `Calendar` and `Locale` are set automatically to the device's current settings.
 	///
 	/// - returns: a new `DateInRegion` instance object which express passed absolute date in UTC timezone
-	public func inGMTRegion() -> DateInRegion {
+	func inGMTRegion() -> DateInRegion {
 		return DateInRegion(absoluteDate: self, in: Region.GMT())
 	}
 	
@@ -40,7 +40,7 @@ public extension Date {
 	/// - parameter region: region you want to use to express `self` date.
 	///
 	/// - returns: a new `DateInRegion` which represent `self` in the context of passed `Region`
-	public func inRegion(region: Region? = nil) -> DateInRegion {
+	func inRegion(region: Region? = nil) -> DateInRegion {
 		return DateInRegion(absoluteDate: self, in: region)
 	}
 	
@@ -49,7 +49,7 @@ public extension Date {
 	/// - parameter components: components to set
 	///
 	/// - returns: a new `Date`
-	public func add(components: DateComponents) -> Date {
+	func add(components: DateComponents) -> Date {
 		let date: DateInRegion = self.inDateDefaultRegion() + components
 		return date.absoluteDate
 	}
@@ -59,7 +59,7 @@ public extension Date {
 	/// - parameter components: components to set
 	///
 	/// - returns: a new `Date`
-	public func add(components: [Calendar.Component: Int]) -> Date {
+	func add(components: [Calendar.Component: Int]) -> Date {
 		let date: DateInRegion = self.inDateDefaultRegion() + components
 		return date.absoluteDate
 	}
@@ -74,7 +74,7 @@ public extension Date {
 	///   - endDate: ending date
 	///   - components: components to add
 	/// - Returns: an array of DateInRegion objects
-	public static func dates(between startDate: Date, and endDate: Date, increment components: DateComponents) -> [Date] {
+	 static func dates(between startDate: Date, and endDate: Date, increment components: DateComponents) -> [Date] {
 		
 		var dates: [Date] = []
 		var currentDate = startDate
@@ -93,7 +93,7 @@ public extension Date {
 	/// - Parameters:
 	///   - value: value to round
 	///   - type: type of rounding
-	public func roundedAt(_ value: IntervalType, type: IntervalRoundingType = .ceil) -> Date {
+	func roundedAt(_ value: IntervalType, type: IntervalRoundingType = .ceil) -> Date {
 		var roundedInterval: TimeInterval = 0
 		let seconds = value.seconds
 		switch type  {
@@ -112,7 +112,7 @@ public extension Date {
 	///
 	/// - Parameter tzName: destination timezone
 	/// - Returns: `true` if date uses DST when represented in given timezone, `false` otherwise
-	public func isDST(in tzName: TimeZoneName) -> Bool {
+	func isDST(in tzName: TimeZoneName) -> Bool {
 		return tzName.timeZone.isDaylightSavingTime(for: self)
 	}
 	
@@ -120,7 +120,7 @@ public extension Date {
 	///
 	/// - Parameter tzName: destination timezone
 	/// - Returns: interval of DST expressed in seconds
-	public func DSTOffset(in tzName: TimeZoneName) -> TimeInterval {
+	func DSTOffset(in tzName: TimeZoneName) -> TimeInterval {
 		return tzName.timeZone.daylightSavingTimeOffset(for: self)
 	}
 	
@@ -129,7 +129,7 @@ public extension Date {
 	///
 	/// - Parameter tzName: destination timezone
 	/// - Returns: next transition date
-	public func nextDSTTransitionDate(in tzName: TimeZoneName) -> Date? {
+	func nextDSTTransitionDate(in tzName: TimeZoneName) -> Date? {
 		guard let next_date = tzName.timeZone.nextDaylightSavingTimeTransition(after: self) else {
 			return nil
 		}
@@ -143,7 +143,7 @@ public extension Date {
 	///   - refDate: reference date
 	///   - calendar: calendar to use, `nil` to user `Date.defaultRegion.calendar`
 	/// - Returns: components dictionary
-	public func components(_ components: [Calendar.Component], to refDate: Date, calendar: Calendar? = nil) -> [Calendar.Component : Int] {
+	func components(_ components: [Calendar.Component], to refDate: Date, calendar: Calendar? = nil) -> [Calendar.Component : Int] {
 		let cal = calendar ?? Date.defaultRegion.calendar
 		let cmps = cal.dateComponents(componentsToSet(components), from: self, to: refDate)
 		return cmps.toComponentsDict()
@@ -159,37 +159,37 @@ public extension Date {
 	///   - refDate: reference date
 	///   - calendar: calendar to use, `nil` to user `Date.defaultRegion.calendar`
 	/// - Returns: difference expressed in given component
-	public func component(_ component: Calendar.Component, to refDate: Date, calendar: Calendar? = nil) -> Int? {
+	func component(_ component: Calendar.Component, to refDate: Date, calendar: Calendar? = nil) -> Int? {
 		return self.components([component], to: refDate)[component]
 	}
 }
 
 // MARK: - Sum of Dates and Date & Components
 
-public func - (lhs: Date, rhs: DateComponents) -> Date {
+func - (lhs: Date, rhs: DateComponents) -> Date {
 	return lhs + (-rhs)
 }
 
-public func + (lhs: Date, rhs: DateComponents) -> Date {
+func + (lhs: Date, rhs: DateComponents) -> Date {
 	return lhs.add(components: rhs)
 }
 
-public func + (lhs: Date, rhs: TimeInterval) -> Date {
+func + (lhs: Date, rhs: TimeInterval) -> Date {
 	return lhs.addingTimeInterval(rhs)
 }
 
-public func - (lhs: Date, rhs: TimeInterval) -> Date {
+func - (lhs: Date, rhs: TimeInterval) -> Date {
 	return lhs.addingTimeInterval(-rhs)
 }
 
-public func + (lhs: Date, rhs: [Calendar.Component : Int]) -> Date {
+func + (lhs: Date, rhs: [Calendar.Component : Int]) -> Date {
 	return lhs.add(components: DateInRegion.componentsFrom(values: rhs))
 }
 
-public func - (lhs: Date, rhs: [Calendar.Component : Int]) -> Date {
+func - (lhs: Date, rhs: [Calendar.Component : Int]) -> Date {
 	return lhs.add(components: DateInRegion.componentsFrom(values: rhs, multipler: -1))
 }
 
-public func - (lhs: Date, rhs: Date) -> TimeInterval {
+func - (lhs: Date, rhs: Date) -> TimeInterval {
 	return DateTimeInterval(start: rhs, end: lhs).duration
 }

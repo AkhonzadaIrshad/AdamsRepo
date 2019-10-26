@@ -48,5 +48,5 @@ target 'rzq' do
    pod 'RealmSwift'
    pod 'Firebase/Core'
    pod 'Firebase/Messaging'
-   
+   pod 'ValueStepper'
 end

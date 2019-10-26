@@ -1042,6 +1042,55 @@
 /* Class = "UIButton"; normalTitle = "Next"; ObjectID = "p57-NF-Ps7"; */
 "p57-NF-Ps7.normalTitle" = "Next";
 
+
+
+"0Y7-NU-UDK.text" = "Driver Gender";
+"inv-XX-6Pq.text" = "Payment Method";
+"qnm-yQ-w1I.normalTitle" = "Male";
+"ogE-BA-wG8.normalTitle" = "Cash";
+
+"7MM-Pm-AwV.normalTitle" = "Show Orders";
+"12z-Ed-6ah.normalTitle" = "Edit Shop";
+"i2A-gx-RMl.text" = "Incoming Orders";
+"ZnJ-LS-obf.text" = "Add Shop Menu";
+"iy7-qm-r87.text" = "Add";
+"4In-rh-xOu.text" = "Add Items";
+"FSg-P5-fXE.placeholder" = "Menu category name";
+"trh-R1-UzM.text" = "Add Item";
+"f7B-cc-Xga.text" = "Add Title";
+"Uvj-X7-5R7.text" = "Add Price";
+"3qp-BB-zrr.text" = "Add Description";
+"HyW-Ii-Ltb.text" = "Add Image";
+"yF1-hV-aB2.normalTitle" = "Done";
+"Jhm-ZD-SIO.text" = "Shop Menu";
+"NWm-cO-Tzx.text" = "Total Items:";
+"lrE-se-o7H.normalTitle" = "Check Out";
+"Okx-vs-1eq.text" = "Check Out";
+"IZ8-8r-GkJ.text" = "Quantity";
+"Px2-PE-LNj.text" = "Item Price";
+"r2g-A3-wi9.text" = "Total";
+"Sdm-EC-cDv.text" = "Total Items:";
+"9kJ-XO-vvc.normalTitle" = "Add More";
+"YgK-kp-Rk9.normalTitle" = "Done";
+"VkN-dj-vyZ.text" = "Complete Payment";
+"4md-OD-oXM.normalTitle" = "Edit Menu";
+"uRl-wT-5Lg.normalTitle" = "Check Menu";
+
+
+
+"Uaf-QQ-htf.text" = "Place Name";
+"any-X9-G6K.text" = "Place Category";
+"W2v-uI-LUo.text" = "Place Address";
+"Ntt-th-7h6.normalTitle" = "Point on map";
+"AJK-B8-cgj.text" = "Working Hours";
+"LaV-f0-kiS.text" = "Add working hours";
+"byP-1G-zSr.text" = "Place Images";
+"1OL-Ic-PB1.text" = "You can add product images with your touch.";
+"Q6g-Qj-Lzj.normalTitle" = "Submit";
+
+
+
+
 /* Class = "UILabel"; text = "Distance"; ObjectID = "pLb-Gi-XDZ"; */
 "pLb-Gi-XDZ.text" = "Distance";
 
@@ -1056,6 +1105,9 @@
 
 /* Class = "UILabel"; text = "Label"; ObjectID = "puc-3j-GwM"; */
 "puc-3j-GwM.text" = "Label";
+
+"bA1-eI-lPh.text" = "My Shops";
+"fTh-uW-jOF.text" = "My Shops";
 
 /* Class = "UILabel"; text = "From"; ObjectID = "q3C-tl-7cl"; */
 "q3C-tl-7cl.text" = "From";

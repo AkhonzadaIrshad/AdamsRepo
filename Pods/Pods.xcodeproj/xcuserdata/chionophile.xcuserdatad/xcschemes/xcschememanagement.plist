@@ -347,19 +347,26 @@
 			<key>orderHint</key>
 			<integer>49</integer>
 		</dict>
-		<key>ZHChat.xcscheme</key>
+		<key>ValueStepper.xcscheme</key>
 		<dict>
 			<key>isShown</key>
 			<false/>
 			<key>orderHint</key>
 			<integer>50</integer>
 		</dict>
-		<key>ZoomImageView.xcscheme</key>
+		<key>ZHChat.xcscheme</key>
 		<dict>
 			<key>isShown</key>
 			<false/>
 			<key>orderHint</key>
 			<integer>51</integer>
+		</dict>
+		<key>ZoomImageView.xcscheme</key>
+		<dict>
+			<key>isShown</key>
+			<false/>
+			<key>orderHint</key>
+			<integer>52</integer>
 		</dict>
 		<key>nanopb.xcscheme</key>
 		<dict>
