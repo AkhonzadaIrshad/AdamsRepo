@@ -10,7 +10,7 @@ import UIKit
 import ValueStepper
 
 class ShopCheckoutCell: UITableViewCell {
-
+    
     @IBOutlet weak var lblTitle: MyUILabel!
     @IBOutlet weak var viewStepper: ValueStepper!
     
@@ -22,15 +22,21 @@ class ShopCheckoutCell: UITableViewCell {
     var selectedValue : Int?
     
     @IBAction func stepperValueChanged(_ sender: ValueStepper) {
-        if let valueChanged = self.valueChanged {
-                  self.selectedValue = Int(self.viewStepper.value)
-                         valueChanged()
+        if (self.viewStepper.value > 0) {
+            if let valueChanged = self.valueChanged {
+                self.selectedValue = Int(self.viewStepper.value)
+                valueChanged()
+            }
+        }else {
+            if let onDelete = self.onDelete {
+                onDelete()
+            }
         }
     }
     
     @IBAction func deleteAction(_ sender: Any) {
         if let onDelete = self.onDelete {
-                   onDelete()
+            onDelete()
         }
     }
     

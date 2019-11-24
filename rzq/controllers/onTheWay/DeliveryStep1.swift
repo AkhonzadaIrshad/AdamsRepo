@@ -34,7 +34,7 @@ class DeliveryStep1: BaseVC,LabasLocationManagerDelegate, Step2Delegate {
     
     @IBOutlet weak var viewSuggest: UIView!
     @IBOutlet weak var viewPin: UIView!
-
+    
     @IBOutlet weak var shopNameHeight: NSLayoutConstraint!
     
     @IBOutlet weak var lblShopName: MarqueeLabel!
@@ -79,7 +79,7 @@ class DeliveryStep1: BaseVC,LabasLocationManagerDelegate, Step2Delegate {
     override func viewDidLoad() {
         super.viewDidLoad()
         if (self.isArabic()) {
-          //  self.ivHandle.image = UIImage(named: "ic_back_arabic")
+            //  self.ivHandle.image = UIImage(named: "ic_back_arabic")
             self.ivIndicator.image = UIImage(named: "ic_arrow_login_white_arabic")
         }
         if (self.orderModel == nil) {
@@ -107,7 +107,7 @@ class DeliveryStep1: BaseVC,LabasLocationManagerDelegate, Step2Delegate {
             self.pinMarker = GMSMarker()
             self.pinMarker?.position = CLLocationCoordinate2D(latitude: self.orderModel?.pickUpLatitude ?? 0.0, longitude: self.orderModel?.pickUpLongitude ?? 0.0)
             self.pinMarker?.title =  "\(self.orderModel?.shop?.id ?? 0)"
-          self.singleMarker?.icon = UIImage(named: "ic_shop_empty")
+            self.singleMarker?.icon = UIImage(named: "ic_shop_empty")
             // snuff1
             let url = URL(string: "\(Constants.IMAGE_URL)\(self.orderModel?.shop?.type?.icon ?? "")")
             self.applyMarkerImage(from: url!, to: self.pinMarker!)
@@ -143,21 +143,21 @@ class DeliveryStep1: BaseVC,LabasLocationManagerDelegate, Step2Delegate {
             
         }
         
-//        let popTip = PopTip()
-//        popTip.bubbleColor = UIColor.processing
-//        popTip.textColor = UIColor.white
-//        if (self.isArabic()) {
-//            popTip.show(text: "current_location_desc".localized, direction: .left, maxWidth: 200, in: self.view, from: self.btnCurrentLocation.frame)
-//        }else {
-//            popTip.show(text: "current_location_desc".localized, direction: .left, maxWidth: 200, in: self.view, from: self.btnCurrentLocation.frame)
-//        }
-//
-//        DispatchQueue.main.asyncAfter(deadline: .now() + 3) {
-//            popTip.hide()
-//        }
+        //        let popTip = PopTip()
+        //        popTip.bubbleColor = UIColor.processing
+        //        popTip.textColor = UIColor.white
+        //        if (self.isArabic()) {
+        //            popTip.show(text: "current_location_desc".localized, direction: .left, maxWidth: 200, in: self.view, from: self.btnCurrentLocation.frame)
+        //        }else {
+        //            popTip.show(text: "current_location_desc".localized, direction: .left, maxWidth: 200, in: self.view, from: self.btnCurrentLocation.frame)
+        //        }
+        //
+        //        DispatchQueue.main.asyncAfter(deadline: .now() + 3) {
+        //            popTip.hide()
+        //        }
         
         if (App.shared.config?.configSettings?.flag ?? false) {
-          self.checkForUpdates()
+            self.checkForUpdates()
         }
         
         
@@ -168,17 +168,34 @@ class DeliveryStep1: BaseVC,LabasLocationManagerDelegate, Step2Delegate {
         
         self.showSearchFieldToolTip()
         
+        
+        self.checkWelcomeDriver()
+        
     }
+    
+    func checkWelcomeDriver() {
+        if (isProvider()) {
+            let flag = UserDefaults.standard.value(forKey: Constants.SEE_DRIVER_TERMS) as? Bool ?? true
+            if (flag) {
+                UserDefaults.standard.setValue(false, forKey: Constants.SEE_DRIVER_TERMS)
+                let storyboard = UIStoryboard(name: "Main", bundle: nil)
+                let vc : WelcomeDriverVC = storyboard.instantiateViewController(withIdentifier: "WelcomeDriverVC") as! WelcomeDriverVC
+                vc.modalPresentationStyle = .fullScreen
+                self.present(vc, animated: true, completion: nil)
+            }
+        }
+    }
+    
     
     func showSearchFieldToolTip() {
         let popTip = PopTip()
         popTip.bubbleColor = UIColor.processing
         popTip.textColor = UIColor.white
-         popTip.show(text: "searchfield_tooltip".localized, direction: .down, maxWidth: 900, in: self.view, from: self.viewParentSearch.frame)
+        popTip.show(text: "searchfield_tooltip".localized, direction: .down, maxWidth: 900, in: self.view, from: self.viewParentSearch.frame)
         
-//        DispatchQueue.main.asyncAfter(deadline: .now() + 3) {
-//            popTip.hide()
-//        }
+        //        DispatchQueue.main.asyncAfter(deadline: .now() + 3) {
+        //            popTip.hide()
+        //        }
         
     }
     
@@ -187,19 +204,23 @@ class DeliveryStep1: BaseVC,LabasLocationManagerDelegate, Step2Delegate {
         ApiService.getDriverOnGoingDeliveries(Authorization: self.loadUser().data?.accessToken ?? "") { (response) in
             self.hideLoading()
             for item in response.data ?? [DatumDriverDel]() {
-                if (item.time ?? 0 <= 1) {
-                    DispatchQueue.main.async {
-                        let messagesVC: ZHCDemoMessagesViewController = ZHCDemoMessagesViewController.init()
-                        messagesVC.presentBool = true
+                if (item.time ?? 0 == 0) {
+                    ApiService.getDelivery(id: item.id ?? 0) { (response) in
+                        let items = response.data?.items ?? [ShopMenuItem]()
+                        DispatchQueue.main.async {
+                            let messagesVC: ZHCDemoMessagesViewController = ZHCDemoMessagesViewController.init()
+                            messagesVC.presentBool = true
+                            
+                            let dumOrder = DatumDel(id: item.id ?? 0, title: item.title ?? "", status: item.status ?? 0, statusString: item.statusString ?? "", image: item.image ?? "", createdDate: item.createdDate ?? "", chatId: item.chatId ?? 0, fromAddress: item.fromAddress ?? "", fromLatitude: item.fromLatitude ?? 0.0, fromLongitude: item.fromLongitude ?? 0.0, toAddress: item.toAddress ?? "", toLatitude: item.toLatitude ?? 0.0, toLongitude: item.toLongitude ?? 0.0, providerID: item.providerID ?? "", providerName: item.providerName ?? "", providerImage: item.providerImage ?? "", providerRate: item.providerRate ?? 0.0, time: item.time ?? 0, price: item.price ?? 0.0, serviceName: item.serviceName ?? "", paymentMethod: item.paymentMethod ?? 0, items: items, isPaid: item.isPaid ?? false, invoiceId: item.invoiceId ?? "", toFemaleOnly: item.toFemaleOnly ?? false, shopId: item.shopId ?? 0, OrderPrice: item.OrderPrice ?? 0.0, KnetCommission : item.KnetCommission ?? 0.0)
+                            
+                            messagesVC.order = dumOrder
+                            messagesVC.user = self.loadUser()
+                            let nav: UINavigationController = UINavigationController.init(rootViewController: messagesVC)
+                            nav.modalPresentationStyle = .fullScreen
+                            messagesVC.modalPresentationStyle = .fullScreen
+                            self.navigationController?.present(nav, animated: true, completion: nil)
+                        }
                         
-                        let dumOrder = DatumDel(id: item.id ?? 0, title: item.title ?? "", status: item.status ?? 0, statusString: item.statusString ?? "", image: item.image ?? "", createdDate: item.createdDate ?? "", chatId: item.chatId ?? 0, fromAddress: item.fromAddress ?? "", fromLatitude: item.fromLatitude ?? 0.0, fromLongitude: item.fromLongitude ?? 0.0, toAddress: item.toAddress ?? "", toLatitude: item.toLatitude ?? 0.0, toLongitude: item.toLongitude ?? 0.0, providerID: item.providerID ?? "", providerName: item.providerName ?? "", providerImage: item.providerImage ?? "", providerRate: item.providerRate ?? 0.0, time: item.time ?? 0, price: item.price ?? 0.0, serviceName: item.serviceName ?? "")
-                        
-                        messagesVC.order = dumOrder
-                        messagesVC.user = self.loadUser()
-                        let nav: UINavigationController = UINavigationController.init(rootViewController: messagesVC)
-                        nav.modalPresentationStyle = .fullScreen
-                        messagesVC.modalPresentationStyle = .fullScreen
-                        self.navigationController?.present(nav, animated: true, completion: nil)
                     }
                 }
             }
@@ -311,15 +332,15 @@ class DeliveryStep1: BaseVC,LabasLocationManagerDelegate, Step2Delegate {
             self.latitude = location.coordinate.latitude
             self.longitude = location.coordinate.longitude
             
-//                        self.latitude = 29.363534
-//                        self.longitude = 47.989769
+            //                        self.latitude = 29.363534
+            //                        self.longitude = 47.989769
             
             
             UserDefaults.standard.setValue(self.latitude, forKey: Constants.LAST_LATITUDE)
             UserDefaults.standard.setValue(self.longitude, forKey: Constants.LAST_LONGITUDE)
             
-
-
+            
+            
             self.setUpGoogleMap()
         }
     }
@@ -521,9 +542,9 @@ class DeliveryStep1: BaseVC,LabasLocationManagerDelegate, Step2Delegate {
                 filterItems.append(item1)
             }
             
-//            self.searchField.theme.font = UIFont.systemFont(ofSize: 13)
-//            self.searchField.startVisibleWithoutInteraction = true
-//            self.searchField.startSuggestingInmediately = true
+            //            self.searchField.theme.font = UIFont.systemFont(ofSize: 13)
+            //            self.searchField.startVisibleWithoutInteraction = true
+            //            self.searchField.startSuggestingInmediately = true
             self.searchField.theme.font = UIFont.systemFont(ofSize: 13)
             self.searchField.forceNoFiltering = true
             self.searchField.filterItems(filterItems)
@@ -545,12 +566,12 @@ class DeliveryStep1: BaseVC,LabasLocationManagerDelegate, Step2Delegate {
                 self.view.endEditing(true)
                 
                 for marker in self.shopMarkers {
-//                    marker.icon = UIImage(named: "ic_map_shop")
-//                    if (marker.title == "\(shop.id ?? 0)") {
-//                        marker.icon = UIImage(named: "ic_map_shop_selected")
-//                    }else {
-//                        marker.map = nil
-//                    }
+                    //                    marker.icon = UIImage(named: "ic_map_shop")
+                    //                    if (marker.title == "\(shop.id ?? 0)") {
+                    //                        marker.icon = UIImage(named: "ic_map_shop_selected")
+                    //                    }else {
+                    //                        marker.map = nil
+                    //                    }
                     marker.map = nil
                 }
                 
@@ -577,7 +598,7 @@ class DeliveryStep1: BaseVC,LabasLocationManagerDelegate, Step2Delegate {
                 }else {
                     self.ivShop.image = UIImage(named: "ic_place_store")
                 }
-               
+                
                 
                 self.edtMoreDetails.text = "\(shop.name ?? "")\n\(shop.address ?? "")"
                 
@@ -605,8 +626,8 @@ class DeliveryStep1: BaseVC,LabasLocationManagerDelegate, Step2Delegate {
             self.filterShops.removeAll()
             for prediction in response.results ?? [Result]() {
                 let dataShop = DataShop(id: 0, name: prediction.name ?? "", address: prediction.vicinity ?? "", latitude: prediction.geometry?.location?.lat ?? 0.0, longitude: prediction.geometry?.location?.lng ?? 0.0, phoneNumber: "", workingHours: "", images: [String](), rate: prediction.rating ?? 0.0, type: TypeClass(id: 0, name: prediction.types?[0] ?? "", image: "", selectedIcon: "", icon: ""), ownerId: "", googlePlaceId: prediction.placeID ?? "", openNow: prediction.openingHours?.openNow ?? false)
-               dataShop.placeId = prediction.id ?? ""
-                  self.filterShops.append(dataShop)
+                dataShop.placeId = prediction.id ?? ""
+                self.filterShops.append(dataShop)
             }
             
             for shop in self.filterShops {
@@ -629,7 +650,7 @@ class DeliveryStep1: BaseVC,LabasLocationManagerDelegate, Step2Delegate {
                 self.lblShopName.text = shop.name ?? ""
                 self.lblPickupLocation.textColor = UIColor.appDarkBlue
                 
-                 self.moreDetailsView.isHidden = false
+                self.moreDetailsView.isHidden = false
                 self.lblSearch.isHidden = true
                 
                 self.view.endEditing(true)
@@ -643,8 +664,8 @@ class DeliveryStep1: BaseVC,LabasLocationManagerDelegate, Step2Delegate {
                 self.singleMarker?.position = CLLocationCoordinate2D(latitude: shop.latitude ?? 0.0, longitude: shop.longitude ?? 0.0)
                 self.singleMarker?.title =  "\(shop.id ?? 0)"
                 self.singleMarker?.snippet = "\(shop.phoneNumber ?? "")"
-               self.singleMarker?.icon = UIImage(named: "ic_shop_empty_selected")
-               // snuff1
+                self.singleMarker?.icon = UIImage(named: "ic_shop_empty_selected")
+                // snuff1
                 let url = URL(string: "\(Constants.IMAGE_URL)\(shop.type?.selectedIcon ?? "")")
                 self.applyMarkerImage(from: url!, to: self.singleMarker!)
                 self.singleMarker?.map = self.gMap
@@ -715,7 +736,7 @@ class DeliveryStep1: BaseVC,LabasLocationManagerDelegate, Step2Delegate {
             marker.position = CLLocationCoordinate2D(latitude: center.latitude ?? 0.0, longitude: center.longitude ?? 0.0)
             marker.title =  "\(center.id ?? 0)"
             marker.snippet = "\(center.phoneNumber ?? "")"
-          self.singleMarker?.icon = UIImage(named: "ic_shop_empty")
+            self.singleMarker?.icon = UIImage(named: "ic_shop_empty")
             // snuff1
             let url = URL(string: "\(Constants.IMAGE_URL)\(center.type?.icon ?? "")")
             self.applyMarkerImage(from: url!, to: marker)
@@ -733,13 +754,13 @@ class DeliveryStep1: BaseVC,LabasLocationManagerDelegate, Step2Delegate {
     func applyMarkerImage(from url: URL, to marker: GMSMarker) {
         DispatchQueue.global(qos: .background).async {
             guard let data = try? Data(contentsOf: url),
-               // let image = UIImage(data: data)?.cropped()
+                // let image = UIImage(data: data)?.cropped()
                 let image = UIImage(data: data)
                 else { return }
             
             DispatchQueue.main.async {
                 marker.icon = self.imageWithImage(image: image, scaledToSize: CGSize(width: 48.0, height: 48.0))
-              //  marker.icon = image
+                //  marker.icon = image
             }
         }
     }
@@ -793,8 +814,8 @@ extension DeliveryStep1 : GMSMapViewDelegate {
             return true
         }
         if (id == "0" || id == "") {
-         return true
-       }
+            return true
+        }
         if (Int(id) ?? 0 > 0) {
             self.showLoading()
             self.viewPin.isHidden = false
@@ -812,7 +833,7 @@ extension DeliveryStep1 : GMSMapViewDelegate {
                 
                 self.lblShopName.text = response.shopData?.name ?? ""
                 self.shopNameHeight.constant = 20
-            
+                
                 self.moreDetailsView.isHidden = false
                 self.lblSearch.isHidden = true
                 self.viewShopDetails.isHidden = false
@@ -838,11 +859,13 @@ extension DeliveryStep1 : GMSMapViewDelegate {
                 self.singleMarker?.position = CLLocationCoordinate2D(latitude: marker.position.latitude, longitude: marker.position.longitude)
                 self.singleMarker?.title =  id
                 self.singleMarker?.snippet = ""
-               self.singleMarker?.icon = UIImage(named: "ic_shop_empty_selected")
+                self.singleMarker?.icon = UIImage(named: "ic_shop_empty_selected")
                 // snuff1
                 let url = URL(string: "\(Constants.IMAGE_URL)\(response.shopData?.type?.selectedIcon ?? "")")
                 self.applyMarkerImage(from: url!, to: self.singleMarker!)
                 self.singleMarker?.map = self.gMap
+                
+                self.handleOpenNow(shop: response.shopData)
                 
                 let camera = GMSCameraPosition.camera(withLatitude: self.orderModel?.pickUpLatitude ?? 0.0, longitude: self.orderModel?.pickUpLongitude ?? 0.0, zoom: 15.0)
                 self.gMap?.animate(to: camera)
@@ -851,6 +874,81 @@ extension DeliveryStep1 : GMSMapViewDelegate {
         }else {
             return true
         }
+    }
+    
+    
+    func handleOpenNow(shop : ShopData?) {
+        if (shop?.googlePlaceId?.count ?? 0 > 0) {
+            let isOpen = shop?.openNow ?? false
+            if (isOpen == false) {
+                self.showBanner(title: "alert".localized, message: "this_shop_is_closed".localized, style: UIColor.INFO)
+            }
+        }else {
+            let hours = shop?.workingHours?.split(separator: ",")
+            let dayWeek = self.getWeekDay(shop : shop)
+            if (hours?.count ?? 0 > dayWeek) {
+                
+                let hoursWithoutSpace = hours?[dayWeek].replacingOccurrences(of: " ", with: "")
+                let hoursSplit = hoursWithoutSpace?.split(separator: "-")
+                
+                if (hoursSplit?.count ?? 0 > 0) {
+                    let fromHour = hoursSplit?[0]
+                    let toHour = hoursSplit?[1]
+                    
+                    let currentHour = self.getCurrentHour()
+                    
+                    
+                    let fromHourOnly = String(fromHour?.prefix(2) ?? "00")
+                    let fromHourInt = Int(fromHourOnly) ?? 0
+                    
+                    
+                    let toHourOnly = String(toHour?.prefix(2) ?? "00")
+                    let toHourInt = Int(toHourOnly) ?? 0
+                    
+                    if (currentHour <= toHourInt && currentHour >= fromHourInt) {
+                        
+                    }else {
+                        self.showBanner(title: "alert".localized, message: "this_shop_is_closed".localized, style: UIColor.INFO)
+                        
+                    }
+                }else {
+                    
+                }
+                
+            }else if (hours?.count ?? 0 > 0) {
+                
+            }
+        }
+    }
+    
+    
+    func getWeekDay(shop : ShopData?) -> Int {
+        var calendar = Calendar.current
+        calendar.locale = Locale(identifier: "KW")
+        var dayOfWeek = 0
+        if (self.isArabic()) {
+            if (shop?.googlePlaceId?.count ?? 0 > 0) {
+                dayOfWeek = calendar.component(.weekday, from: Date()) + 2 - calendar.firstWeekday
+            }else {
+                dayOfWeek = calendar.component(.weekday, from: Date())  - calendar.firstWeekday
+            }
+            
+        }else {
+            dayOfWeek = calendar.component(.weekday, from: Date()) - calendar.firstWeekday
+        }
+        if dayOfWeek <= 0 {
+            dayOfWeek += 7
+        }
+        return dayOfWeek
+    }
+    
+    func getCurrentHour() -> Int {
+        let date = Date()// Aug 25, 2017, 11:55 AM
+        let calendar = Calendar.current
+        
+        let hour = calendar.component(.hour, from: date)
+        
+        return hour
     }
     
     
@@ -905,7 +1003,7 @@ extension DeliveryStep1 : GMSMapViewDelegate {
         self.orderModel?.pickUpLongitude = coordinate.longitude
         self.getAddressForMapCenter()
         
-  //      self.lblShopName.text = ""
+        //      self.lblShopName.text = ""
         self.shopNameHeight.constant = 0
         self.viewPin.isHidden = true
         self.viewSuggest.isHidden = false

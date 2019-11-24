@@ -26,6 +26,7 @@ class MenuViewController: BaseVC {
     
     @IBOutlet weak var lblMobile: MyUILabel!
     
+    @IBOutlet weak var lblNotifications: MyUILabel!
     
     @IBOutlet weak var moodSwitch: UISwitch!
     
@@ -39,6 +40,7 @@ class MenuViewController: BaseVC {
     
     @IBOutlet weak var lblEarnings: UILabel!
     
+    @IBOutlet weak var viewMyShops: UIView!
     
     var selectedTag = 1
     
@@ -100,9 +102,12 @@ class MenuViewController: BaseVC {
             self.lblDue.text = "\("due".localized) \(user.data?.dueAmount ?? 0.0) \("currency".localized)"
             
             self.lblEarnings.text = "\("earnings".localized) \(user.data?.earnings ?? 0.0) \("currency".localized)"
+            
+            self.lblNotifications.text = "new_notifications_driver".localized
         }else {
             self.lblDue.isHidden = true
             self.lblEarnings.isHidden = true
+            self.lblNotifications.text = "new_notifications_user".localized
         }
         
         let urlStr = user.data?.profilePicture ?? ""
@@ -151,7 +156,11 @@ class MenuViewController: BaseVC {
             lblDue.isHidden = true
             loginView.isHidden  = false
         }
-        
+        if ((self.loadUser().data?.roles?.contains(find: "ShopOwner"))!) {
+            self.viewMyShops.isHidden = false
+        }else {
+            self.viewMyShops.isHidden = true
+        }
     }
     
     

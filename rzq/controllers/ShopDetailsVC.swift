@@ -64,7 +64,6 @@ class ShopDetailsVC: BaseVC, UITableViewDelegate, UITableViewDataSource, UIColle
     var items = [ShopDelDatum]()
     
     
-    
     override func viewDidLoad() {
         super.viewDidLoad()
         if (self.isArabic()) {
@@ -144,7 +143,12 @@ class ShopDetailsVC: BaseVC, UITableViewDelegate, UITableViewDataSource, UIColle
             self.viewRegister.isHidden = true
             
         } else {
-            self.viewRegister.isHidden = false
+            if ((self.loadUser().data?.roles?.contains(find: "Driver"))!) {
+                self.viewRegister.isHidden = false
+            }else {
+                self.viewRegister.isHidden = true
+            }
+            
         }
         
         if (self.shop?.googlePlaceId?.count ?? 0 > 0) {
@@ -153,7 +157,7 @@ class ShopDetailsVC: BaseVC, UITableViewDelegate, UITableViewDataSource, UIColle
             let hours = self.shop?.workingHours?.split(separator: ",")
             let dayWeek = self.getWeekDay()
             if (hours?.count ?? 0 > dayWeek) {
-                self.lblWorkingHours.text = String(hours?[dayWeek] ?? "")
+                self.lblWorkingHours.text = self.getTimeIn12HourFormat(item: String(hours?[dayWeek] ?? ""))
                 
                 let hoursWithoutSpace = hours?[dayWeek].replacingOccurrences(of: " ", with: "")
                 let hoursSplit = hoursWithoutSpace?.split(separator: "-")
@@ -198,7 +202,8 @@ class ShopDetailsVC: BaseVC, UITableViewDelegate, UITableViewDataSource, UIColle
             let dayWeek = self.getWeekDay()
             let arr = response.detailsResult?.openingHours?.weekdayText
             if (arr?.count ?? 0 > dayWeek) {
-                self.lblWorkingHours.text = response.detailsResult?.openingHours?.weekdayText?[dayWeek]
+                let item = response.detailsResult?.openingHours?.weekdayText?[dayWeek]
+                self.lblWorkingHours.text = self.getTimeIn12HourFormat(item: item ?? "")
             }else {
                 self.lblWorkingHours.text = "---"
                 self.handleOpenNowViews(isOpen: false, show: false)
@@ -257,7 +262,48 @@ class ShopDetailsVC: BaseVC, UITableViewDelegate, UITableViewDataSource, UIColle
         
     }
     
-    
+    func getTimeIn12HourFormat(item : String) -> String{
+        if (item.count > 5) {
+            var fromTime12Format = ""
+            var toTime12Format = ""
+            
+            let times = item.split(separator: "-")
+            let fromTime = String(times[0]).trim()
+            let toTime = String(times[1]).trim()
+            
+            let fromSplit = fromTime.split(separator: ":")
+            let fromHour = String(fromSplit[0])
+            let fromMin = String(fromSplit[1])
+            
+            let integerFromHour = Int(fromHour) ?? 0
+            if (integerFromHour < 12) {
+                fromTime12Format = "\(integerFromHour):\(fromMin) \("am".localized)"
+            }else if (integerFromHour > 12){
+                fromTime12Format = "\(integerFromHour - 12):\(fromMin) \("pm".localized)"
+            }else {
+                fromTime12Format = "12:\(fromMin) \("pm".localized)"
+            }
+            
+            
+            
+            let toSplit = toTime.split(separator: ":")
+            let toHour = String(toSplit[0])
+            let toMin = String(toSplit[1])
+            
+            let integerToHour = Int(toHour) ?? 0
+            if (integerToHour < 12) {
+                toTime12Format = "\(integerToHour):\(toMin) \("am".localized)"
+            }else if (integerToHour > 12){
+                toTime12Format = "\(integerToHour - 12):\(toMin) \("pm".localized)"
+            }else {
+                toTime12Format = "12:\(toMin) \("pm".localized)"
+            }
+            
+            return "\(fromTime12Format) - \(toTime12Format)"
+        }else {
+            return item
+        }
+    }
     
     
     

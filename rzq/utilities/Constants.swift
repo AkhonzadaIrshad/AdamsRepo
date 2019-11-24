@@ -27,9 +27,20 @@ class Constants {
     static var IMAGE_URL = "http://rzq.rzqapp.com/api/file/get?name="
     
     
+    static var PAYMENT_SUCCESS_URL = "success.html"
+    static var PAYMENT_FAIL_URL = "failed.html"
+    
     static var MENU_ITEM_UNLOCKED = 1
     static var MENU_ITEM_LOCKED = 2
     
+    
+    static let PAYMENT_METHOD_CASH = 1
+    static let PAYMENT_METHOD_BALANCE = 2
+    static let PAYMENT_METHOD_KNET = 3
+    
+    
+    static var PAYMENT_URL = "https://api.myfatoorah.com/v2/"
+    static var PAYMENT_TESTS_URL = "https://apitest.myfatoorah.com/v2/"
     
     
     static var TEST_PAYMENT_TOKEN = "7Fs7eBv21F5xAocdPvvJ-sCqEyNHq4cygJrQUFvFiWEexBUPs4AkeLQxH4pzsUrY3Rays7GVA6SojFCz2DMLXSJVqk8NG-plK-cZJetwWjgwLPub_9tQQohWLgJ0q2invJ5C5Imt2ket_-JAlBYLLcnqp_WmOfZkBEWuURsBVirpNQecvpedgeCx4VaFae4qWDI_uKRV1829KCBEH84u6LYUxh8W_BYqkzXJYt99OlHTXHegd91PLT-tawBwuIly46nwbAs5Nt7HFOozxkyPp8BW9URlQW1fE4R_40BXzEuVkzK3WAOdpR92IkV94K_rDZCPltGSvWXtqJbnCpUB6iUIn1V-Ki15FAwh_nsfSmt_NQZ3rQuvyQ9B3yLCQ1ZO_MGSYDYVO26dyXbElspKxQwuNRot9hi3FIbXylV3iN40-nCPH4YQzKjo5p_fuaKhvRh7H8oFjRXtPtLQQUIDxk-jMbOp7gXIsdz02DrCfQIihT4evZuWA6YShl6g8fnAqCy8qRBf_eLDnA9w-nBh4Bq53b1kdhnExz0CMyUjQ43UO3uhMkBomJTXbmfAAHP8dZZao6W8a34OktNQmPTbOHXrtxf6DS-oKOu3l79uX_ihbL8ELT40VjIW3MJeZ_-auCPOjpE3Ax4dzUkSDLCljitmzMagH2X8jN8-AYLl46KcfkBV"
@@ -64,8 +75,9 @@ class Constants {
     static let TWITTER_URL = "twitter://user?screen_name=rzqapp"
     static let TWITTER_URL_ALT = "https://twitter.com/rzqapp"
     
-    static let GOOGLE_API_KEY = "AIzaSyDtBOSpJ-Afpa7yvzkyuVEGfVxuxpam4JE"
+    static let GOOGLE_API_KEY = "AIzaSyBjqkPh3pDYyeOLw9D21NuxMuP9httdick"
     
+    static let SEE_DRIVER_TERMS = "SEE_DRIVER_TERMS"
     
     static var DELIVERY_CREATED = 1
     static var DELIVERY_CANCELLED = 2

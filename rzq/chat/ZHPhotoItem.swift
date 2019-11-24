@@ -9,12 +9,10 @@
 import Foundation
 import ZHChat
 
-class ZHPhotoItem: ZHCMediaItem{
+class ZHPhotoItem: ZHCMediaItem {
     var status:ZHLoadStatus?;
     var image:UIImage?;
     var imgUrl:String? = "";
     var imgWidth:Float?;
     var imgHeight:Float?;
-    
-    
 }

@@ -210,7 +210,6 @@ class ApiService : NSObject {
     }
     
     //delivery
-    
     static func getDelivery(id : Int, completion:@escaping(_ response : DeliveryResponse)-> Void) {
         
         let headers = [Constants.LANG_HEADER : self.getLang()]
@@ -229,7 +228,7 @@ class ApiService : NSObject {
         }
     }
     
-    static func createDelivery(Authorization : String, desc: String ,fromLongitude : Double, fromLatitude : Double, toLongitude : Double, toLatitude : Double, time : Int, estimatedPrice : String, fromAddress : String,toAddress : String, shopId : Int,pickUpDetails : String, dropOffDetails : String,paymentMethod : Int, completion:@escaping(_ response : DeliveryCreatedResponse)-> Void) {
+    static func createDelivery(Authorization : String, desc: String ,fromLongitude : Double, fromLatitude : Double, toLongitude : Double, toLatitude : Double, time : Int, estimatedPrice : String, fromAddress : String,toAddress : String, shopId : Int,pickUpDetails : String, dropOffDetails : String,paymentMethod : Int,isFemale : Bool, invoiceId : String, completion:@escaping(_ response : DeliveryCreatedResponse)-> Void) {
         
         let headers = [Constants.AUTH_HEADER: "bearer \(Authorization)",
             Constants.LANG_HEADER : self.getLang()]
@@ -246,10 +245,101 @@ class ApiService : NSObject {
                                     "ShopId" : shopId,
                                     "PickUpDetails" : pickUpDetails,
                                     "DropOffDetails" : dropOffDetails,
-                                    "PaymentMethod" : paymentMethod]
+                                    "PaymentMethod" : paymentMethod,
+                                    "ToFemaleOnly" : isFemale,
+                                    "InvoiceId" : invoiceId]
         // "ShopId" : shopId]
         
         AFManager.request("\(Constants.BASE_URL)Delivery/Create", method: .post, parameters: all ,encoding: JSONEncoding.default, headers: headers)
+            .responseJSON { response in
+                if let json = response.data {
+                    do {
+                        let decoder = JSONDecoder()
+                        let baseResponse = try decoder.decode(DeliveryCreatedResponse.self, from: json)
+                        completion(baseResponse)
+                    }catch let err{
+                        print(err)
+                    }
+                }
+        }
+    }
+    
+    
+    
+    
+    static func createPaymentRecord(Authorization : String, orderId : Int, payment : PaymentStatusResponse, completion:@escaping(_ response : BaseResponse)-> Void) {
+        
+        let headers = [Constants.AUTH_HEADER: "bearer \(Authorization)",
+            Constants.LANG_HEADER : self.getLang()]
+        
+        let all : [String : Any] = ["OrderId" : orderId,
+                                    "TransactionDate" : payment.paymentStatusData?.createdDate ?? "",
+                                    "PaymentGateway" : "KNET",
+                                    "ReferenceId" : payment.paymentStatusData?.invoiceReference ?? "",
+                                    "TrackId" : payment.paymentStatusData?.invoiceTransactions?[0].trackID ?? "",
+                                    "TransactionId" : payment.paymentStatusData?.invoiceTransactions?[0].transactionID ?? "",
+                                    "PaymentId" : payment.paymentStatusData?.invoiceTransactions?[0].paymentID ?? "",
+                                    "AuthorizationId" : payment.paymentStatusData?.invoiceTransactions?[0].authorizationID ?? "",
+                                    "TransactionStatus" : payment.paymentStatusData?.invoiceTransactions?[0].transactionStatus ?? "",
+                                    "TransationValue" : payment.paymentStatusData?.invoiceTransactions?[0].transationValue ?? "",
+                                    "CustomerServiceCharge" : payment.paymentStatusData?.invoiceTransactions?[0].customerServiceCharge ?? "",
+                                    "DueValue" : payment.paymentStatusData?.invoiceTransactions?[0].dueValue ?? "",
+                                    "PaidCurrency" : payment.paymentStatusData?.invoiceTransactions?[0].paidCurrency ?? "",
+                                    "PaidCurrencyValue" : payment.paymentStatusData?.invoiceTransactions?[0].paidCurrencyValue ?? "",
+                                    "Currency" : payment.paymentStatusData?.invoiceTransactions?[0].currency ?? "",
+                                    "Error" : payment.paymentStatusData?.invoiceTransactions?[0].error ?? ""]
+        
+        
+        AFManager.request("\(Constants.BASE_URL)Order/Pay", method: .post, parameters: all ,encoding: JSONEncoding.default, headers: headers)
+            .responseJSON { response in
+                if let json = response.data {
+                    do {
+                        let decoder = JSONDecoder()
+                        let baseResponse = try decoder.decode(BaseResponse.self, from: json)
+                        completion(baseResponse)
+                    }catch let err{
+                        print(err)
+                    }
+                }
+        }
+    }
+    
+    
+    
+    static func createDeliveryWithMenu(Authorization : String, desc: String ,fromLongitude : Double, fromLatitude : Double, toLongitude : Double, toLatitude : Double, time : Int, estimatedPrice : String, fromAddress : String,toAddress : String, shopId : Int,pickUpDetails : String, dropOffDetails : String,paymentMethod : Int, isFemale : Bool, menuItems : [ShopMenuItem],invoiceId : String, completion:@escaping(_ response : DeliveryCreatedResponse)-> Void) {
+        
+        let headers = [Constants.AUTH_HEADER: "bearer \(Authorization)",
+            Constants.LANG_HEADER : self.getLang()]
+        
+        var items : [[String:Any]] = [[String:Any]]()
+        
+        for item in menuItems {
+            let itemDict : [String : Any] = ["ItemId" : item.id ?? 0,
+                                             "Count" : item.quantity ?? 0,
+                                             "Comment" : ""]
+            
+            items.append(itemDict)
+        }
+        
+        let all : [String : Any] = ["Description" : desc,
+                                    "FromLongitude" : fromLongitude,
+                                    "FromLatitude" : fromLatitude,
+                                    "ToLongitude" : toLongitude,
+                                    "ToLatitude" : toLatitude,
+                                    "FromAddress" : fromAddress,
+                                    "ToAddress" : toAddress,
+                                    "EstimatedTime" : time,
+                                    "EstimatedPrice" : estimatedPrice,
+                                    "ShopId" : shopId,
+                                    "PickUpDetails" : pickUpDetails,
+                                    "DropOffDetails" : dropOffDetails,
+                                    "PaymentMethod" : paymentMethod,
+                                    "ToFemaleOnly" : isFemale,
+                                    "Items" : items,
+                                    "InvoiceId" : invoiceId]
+        // "ShopId" : shopId]
+        
+        AFManager.request("\(Constants.BASE_URL)Delivery/CreateForShop", method: .post, parameters: all ,encoding: JSONEncoding.default, headers: headers)
             .responseJSON { response in
                 if let json = response.data {
                     do {
@@ -1333,6 +1423,31 @@ class ApiService : NSObject {
     
     
     
+    static func getUserRatings(Authorization : String, userId: String, completion:@escaping(_ response : ProviderRatingRespones)-> Void) {
+        
+        let headers = [Constants.AUTH_HEADER: "bearer \(Authorization)",
+            Constants.LANG_HEADER : self.getLang()]
+        
+        let all : [String : Any] = ["Filter" : userId,
+                                    "PageSize" : 10,
+                                    "PageNumber" : 1]
+        
+        AFManager.request("\(Constants.BASE_URL)User/ListUserReviews", method: .post, parameters: all ,encoding: JSONEncoding.default, headers: headers)
+            .responseJSON { response in
+                if let json = response.data {
+                    do {
+                        let decoder = JSONDecoder()
+                        let baseResponse = try decoder.decode(ProviderRatingRespones.self, from: json)
+                        completion(baseResponse)
+                    }catch let err{
+                        print(err)
+                    }
+                }
+        }
+    }
+    
+    
+    
     
     
     static func placePayment(user : VerifyResponse, total: Double, items : [ShopMenuItem],  completion:@escaping(_ response : PaymentResponse)-> Void) {
@@ -1350,37 +1465,45 @@ class ApiService : NSObject {
         
         
         for item in items {
+            var itemQuantity = item.quantity ?? 0
+            if (itemQuantity == 0) {
+                itemQuantity = item.count ?? 0
+            }
             let invoiceItem : [String : Any] = ["ItemName" : item.name ?? "",
-                                                "Quantity" : item.quantity ?? 0,
-                                                "UnitPrice" : item.price ?? 0.0]
+                                                "Quantity" : itemQuantity,
+                                                "UnitPrice" : String(format: "%.2f", item.price ?? 0.0)]
             
             invoiceItems.append(invoiceItem)
         }
         
+        var mail = user.data?.email ?? ""
+        if (mail.count == 0) {
+            mail = "rzq@app.com"
+        }
         
         let all : [String : Any] = ["PaymentMethodId" : 1,
                                     "CustomerName"  : user.data?.fullName ?? "",
                                     "DisplayCurrencyIso" : "KWD",
                                     "MobileCountryCode" : "965",
                                     "CustomerMobile" : (user.data?.phoneNumber ?? "").replacingOccurrences(of: "965", with: ""),
-                                    "CustomerEmail" : user.data?.email ?? "",
-                                    "InvoiceValue" : total,
-                                    "CallBackUrl" : "http://www.rzqapp.com/",
-                                    "ErrorUrl" : "http://www.rzqapp.com/",
-                                    "Language" : self.getLang(),
+                                    "CustomerEmail" : mail,
+                                    "InvoiceValue" : String(format: "%.2f", total),
+                                    "CallBackUrl" : "http://www.rzqapp.com/success.html",
+                                    "ErrorUrl" : "http://www.rzqapp.com/failed.html",
+                                    "Language" : "EN",
                                     "CustomerReference" : "Rzq_01",
                                     "CustomerCivilId" : "Rzq_02",
-                                    "UserDefinedField" : "String",
+                                    "UserDefinedField" : "Rzq_03",
                                     "CustomerAddress" : customerAddress,
-                                    "ExpiryDate" : "2020-01-01T09:28:01.271Z",
+                                    "ExpiryDate" : "2021-01-01T09:28:01.271Z",
                                     "SupplierCode" : 0,
                                     "InvoiceItems" : invoiceItems]
         
         
-        let jsonAll = JSON(all)
+        //   let jsonAll = JSON(all)
         
         
-        AFManager.request("https://apitest.myfatoorah.com/v2/ExecutePayment", method: .post, parameters: all ,encoding: JSONEncoding.default, headers: headers)
+        AFManager.request("\(Constants.PAYMENT_TESTS_URL)ExecutePayment", method: .post, parameters: all ,encoding: JSONEncoding.default, headers: headers)
             .responseJSON { response in
                 let all = JSON(response.data)
                 if let json = response.data {
@@ -1390,12 +1513,36 @@ class ApiService : NSObject {
                         completion(baseResponse)
                     }catch let err{
                         print(err)
+                        completion(PaymentResponse(isSuccess: false, message: err.localizedDescription, paymentData: PaymentData(invoiceID: 0, isDirectPayment: true, paymentURL: "", customerReference: "", userDefinedField: "")))
                     }
                 }
         }
     }
     
     
+    static func getPaymentStatus(invoiceId : String,  completion:@escaping(_ response : PaymentStatusResponse)-> Void) {
+        
+        let headers = [Constants.AUTH_HEADER: "bearer \(Constants.TEST_PAYMENT_TOKEN)"]
+        
+        let all : [String : Any] = ["Key" : invoiceId,
+                                    "KeyType" : "InvoiceId"]
+        
+        
+        AFManager.request("\(Constants.PAYMENT_TESTS_URL)GetPaymentStatus", method: .post, parameters: all ,encoding: JSONEncoding.default, headers: headers)
+            .responseJSON { response in
+                //   let all = JSON(response.data)
+                if let json = response.data {
+                    do {
+                        let decoder = JSONDecoder()
+                        let baseResponse = try decoder.decode(PaymentStatusResponse.self, from: json)
+                        completion(baseResponse)
+                    }catch let err{
+                        print(err)
+                        completion(PaymentStatusResponse(isSuccess: false, message: err.localizedDescription, paymentStatusData: PaymentStatusData(invoiceID: 0, invoiceStatus: "", invoiceReference: "", customerReference: "", createdDate: "", expiryDate: "", invoiceValue: 0, comments: "", customerName: "", customerMobile: "", customerEmail: "", userDefinedField: "", invoiceDisplayValue: "", invoiceItems: [InvoiceItem](), invoiceTransactions: [InvoiceTransaction]())))
+                    }
+                }
+        }
+    }
     
     static func getMenuDetails(Authorization : String, id: Int, completion:@escaping(_ response : MenuDetailsResponse)-> Void) {
         
@@ -1431,6 +1578,31 @@ class ApiService : NSObject {
                         completion(baseResponse)
                     }catch let err{
                         print(err)
+                    }
+                }
+        }
+    }
+    
+    
+    
+    static func changePaymentMethod(Authorization : String, orderId: Int, paymentMethod: Int, completion:@escaping(_ response : BaseResponse)-> Void) {
+        
+        let headers = [Constants.AUTH_HEADER: "bearer \(Authorization)",
+            Constants.LANG_HEADER : self.getLang()]
+        
+        let all = ["OrderId" : orderId,
+                   "PaymentMethod" : paymentMethod]
+        
+        AFManager.request("\(Constants.BASE_URL)Order/ChangePaymentMethod", method: .post, parameters: all ,encoding: JSONEncoding.default, headers: headers)
+            .responseJSON { response in
+                if let json = response.data {
+                    do {
+                        let decoder = JSONDecoder()
+                        let baseResponse = try decoder.decode(BaseResponse.self, from: json)
+                        completion(baseResponse)
+                    }catch let err{
+                        print(err)
+                        completion(BaseResponse(errorCode: 0, errorMessage: "", message: ""))
                     }
                 }
         }
@@ -1566,24 +1738,24 @@ class ApiService : NSObject {
     
     
     
-      static func deleteMenuItem(Authorization : String, id : Int, completion:@escaping(_ response : BaseResponse)-> Void) {
-          
-          let headers = [Constants.AUTH_HEADER: "bearer \(Authorization)",
-              Constants.LANG_HEADER : self.getLang()]
-          
-          AFManager.request("\(Constants.BASE_URL)ShopCategory/DeleteItem?id=\(id)", method: .delete, parameters: nil ,encoding: JSONEncoding.default, headers: headers)
-              .responseJSON { response in
-                  if let json = response.data {
-                      do {
-                          let decoder = JSONDecoder()
-                          let baseResponse = try decoder.decode(BaseResponse.self, from: json)
-                          completion(baseResponse)
-                      }catch let err{
-                          print(err)
-                      }
-                  }
-          }
-      }
+    static func deleteMenuItem(Authorization : String, id : Int, completion:@escaping(_ response : BaseResponse)-> Void) {
+        
+        let headers = [Constants.AUTH_HEADER: "bearer \(Authorization)",
+            Constants.LANG_HEADER : self.getLang()]
+        
+        AFManager.request("\(Constants.BASE_URL)ShopCategory/DeleteItem?id=\(id)", method: .delete, parameters: nil ,encoding: JSONEncoding.default, headers: headers)
+            .responseJSON { response in
+                if let json = response.data {
+                    do {
+                        let decoder = JSONDecoder()
+                        let baseResponse = try decoder.decode(BaseResponse.self, from: json)
+                        completion(baseResponse)
+                    }catch let err{
+                        print(err)
+                    }
+                }
+        }
+    }
     
     
     
@@ -1591,174 +1763,222 @@ class ApiService : NSObject {
     
     
     static func owner_getShopList(Authorization : String, completion:@escaping(_ response : OwnerShopListResponse)-> Void) {
-             
-             let headers = [Constants.AUTH_HEADER: "bearer \(Authorization)",
-                 Constants.LANG_HEADER : self.getLang()]
-             
-             AFManager.request("\(Constants.BASE_URL)Shop/GetForOwner", method: .get, parameters: nil ,encoding: JSONEncoding.default, headers: headers)
-                 .responseJSON { response in
-                     if let json = response.data {
-                         do {
-                             let decoder = JSONDecoder()
-                             let baseResponse = try decoder.decode(OwnerShopListResponse.self, from: json)
-                             completion(baseResponse)
-                         }catch let err{
-                             print(err)
-                         }
-                     }
-             }
-         }
+        
+        let headers = [Constants.AUTH_HEADER: "bearer \(Authorization)",
+            Constants.LANG_HEADER : self.getLang()]
+        
+        AFManager.request("\(Constants.BASE_URL)Shop/GetForOwner", method: .get, parameters: nil ,encoding: JSONEncoding.default, headers: headers)
+            .responseJSON { response in
+                if let json = response.data {
+                    do {
+                        let decoder = JSONDecoder()
+                        let baseResponse = try decoder.decode(OwnerShopListResponse.self, from: json)
+                        completion(baseResponse)
+                    }catch let err{
+                        print(err)
+                        completion(OwnerShopListResponse(shopOwnerListData: [ShopOwnerListDatum](), errorCode: 100, errorMessage: ""))
+                    }
+                }
+        }
+    }
     
     
     
     static func owner_getShopMenu(Authorization : String, shopId: Int, completion:@escaping(_ response : ShopOwnerMenuResponse)-> Void) {
-          
-          let headers = [Constants.AUTH_HEADER: "bearer \(Authorization)",
-              Constants.LANG_HEADER : self.getLang()]
-          
-          AFManager.request("\(Constants.BASE_URL)ShopCategoryOwner/GetByShopId?id=\(shopId)", method: .get, parameters: nil ,encoding: JSONEncoding.default, headers: headers)
-              .responseJSON { response in
-                  if let json = response.data {
-                      do {
-                          let decoder = JSONDecoder()
-                          let baseResponse = try decoder.decode(ShopOwnerMenuResponse.self, from: json)
-                          completion(baseResponse)
-                      }catch let err{
-                          print(err)
-                      }
-                  }
-          }
-      }
+        
+        let headers = [Constants.AUTH_HEADER: "bearer \(Authorization)",
+            Constants.LANG_HEADER : self.getLang()]
+        
+        AFManager.request("\(Constants.BASE_URL)ShopCategoryOwner/GetByShopId?id=\(shopId)", method: .get, parameters: nil ,encoding: JSONEncoding.default, headers: headers)
+            .responseJSON { response in
+                if let json = response.data {
+                    do {
+                        let decoder = JSONDecoder()
+                        let baseResponse = try decoder.decode(ShopOwnerMenuResponse.self, from: json)
+                        completion(baseResponse)
+                    }catch let err{
+                        print(err)
+                    }
+                }
+        }
+    }
     
     
     static func owner_createMenuCategory(Authorization : String, shopId: Int, englishName : String, arabicName : String, image : String, completion:@escaping(_ response : BaseResponse)-> Void) {
-             
-             let headers = [Constants.AUTH_HEADER: "bearer \(Authorization)",
-                 Constants.LANG_HEADER : self.getLang()]
+        
+        let headers = [Constants.AUTH_HEADER: "bearer \(Authorization)",
+            Constants.LANG_HEADER : self.getLang()]
         
         let all : [String : Any] = ["ShopId" : shopId,
                                     "EnglishName" : englishName,
                                     "ArabicName" : arabicName,
                                     "Image" : image]
-             
+        
         AFManager.request("\(Constants.BASE_URL)ShopCategoryOwner/Create", method: .post, parameters: all ,encoding: JSONEncoding.default, headers: headers)
-                 .responseJSON { response in
-                     if let json = response.data {
-                         do {
-                             let decoder = JSONDecoder()
-                             let baseResponse = try decoder.decode(BaseResponse.self, from: json)
-                             completion(baseResponse)
-                         }catch let err{
-                             print(err)
-                         }
-                     }
-             }
-         }
+            .responseJSON { response in
+                if let json = response.data {
+                    do {
+                        let decoder = JSONDecoder()
+                        let baseResponse = try decoder.decode(BaseResponse.self, from: json)
+                        completion(baseResponse)
+                    }catch let err{
+                        print(err)
+                    }
+                }
+        }
+    }
     
     
     static func owner_updateMenuCategory(Authorization : String, menuId: Int, englishName : String, arabicName : String, image : String, completion:@escaping(_ response : BaseResponse)-> Void) {
-                
-                let headers = [Constants.AUTH_HEADER: "bearer \(Authorization)",
-                    Constants.LANG_HEADER : self.getLang()]
-           
-           let all : [String : Any] = ["Id" : menuId,
-                                       "EnglishName" : englishName,
-                                       "ArabicName" : arabicName,
-                                       "Image" : image]
-                
-           AFManager.request("\(Constants.BASE_URL)ShopCategoryOwner/Update", method: .post, parameters: all ,encoding: JSONEncoding.default, headers: headers)
-                    .responseJSON { response in
-                        if let json = response.data {
-                            do {
-                                let decoder = JSONDecoder()
-                                let baseResponse = try decoder.decode(BaseResponse.self, from: json)
-                                completion(baseResponse)
-                            }catch let err{
-                                print(err)
-                            }
-                        }
+        
+        let headers = [Constants.AUTH_HEADER: "bearer \(Authorization)",
+            Constants.LANG_HEADER : self.getLang()]
+        
+        let all : [String : Any] = ["Id" : menuId,
+                                    "EnglishName" : englishName,
+                                    "ArabicName" : arabicName,
+                                    "Image" : image]
+        
+        AFManager.request("\(Constants.BASE_URL)ShopCategoryOwner/Update", method: .post, parameters: all ,encoding: JSONEncoding.default, headers: headers)
+            .responseJSON { response in
+                if let json = response.data {
+                    do {
+                        let decoder = JSONDecoder()
+                        let baseResponse = try decoder.decode(BaseResponse.self, from: json)
+                        completion(baseResponse)
+                    }catch let err{
+                        print(err)
+                    }
                 }
-            }
+        }
+    }
     
     
     
     static func owner_createMenuItem(Authorization : String, menuId: Int, englishName : String, arabicName : String, image : String, price: String,englishDesc: String, arabicDesc: String,completion:@escaping(_ response : BaseResponse)-> Void) {
-                 
-                 let headers = [Constants.AUTH_HEADER: "bearer \(Authorization)",
-                     Constants.LANG_HEADER : self.getLang()]
-            
-            let all : [String : Any] = ["CategoryId" : menuId,
-                                        "EnglishName" : englishName,
-                                        "ArabicName" : arabicName,
-                                        "Image" : image,
-                                        "Price" : price,
-                                        "EnglishDescription" : englishDesc,
-                                        "ArabicDescription" : arabicDesc]
-                 
-            AFManager.request("\(Constants.BASE_URL)ShopCategoryOwner/CreateItem", method: .post, parameters: all ,encoding: JSONEncoding.default, headers: headers)
-                     .responseJSON { response in
-                         if let json = response.data {
-                             do {
-                                 let decoder = JSONDecoder()
-                                 let baseResponse = try decoder.decode(BaseResponse.self, from: json)
-                                 completion(baseResponse)
-                             }catch let err{
-                                 print(err)
-                             }
-                         }
-                 }
-             }
+        
+        let headers = [Constants.AUTH_HEADER: "bearer \(Authorization)",
+            Constants.LANG_HEADER : self.getLang()]
+        
+        let all : [String : Any] = ["CategoryId" : menuId,
+                                    "EnglishName" : englishName,
+                                    "ArabicName" : arabicName,
+                                    "Image" : image,
+                                    "Price" : price,
+                                    "EnglishDescription" : englishDesc,
+                                    "ArabicDescription" : arabicDesc]
+        
+        AFManager.request("\(Constants.BASE_URL)ShopCategoryOwner/CreateItem", method: .post, parameters: all ,encoding: JSONEncoding.default, headers: headers)
+            .responseJSON { response in
+                if let json = response.data {
+                    do {
+                        let decoder = JSONDecoder()
+                        let baseResponse = try decoder.decode(BaseResponse.self, from: json)
+                        completion(baseResponse)
+                    }catch let err{
+                        print(err)
+                    }
+                }
+        }
+    }
     
     
     static func owner_deleteMenuItem(Authorization : String, itemId: Int, completion:@escaping(_ response : BaseResponse)-> Void) {
-                  
-                  let headers = [Constants.AUTH_HEADER: "bearer \(Authorization)",
-                      Constants.LANG_HEADER : self.getLang()]
-             
-                  
-             AFManager.request("\(Constants.BASE_URL)ShopCategoryOwner/DeleteItem?id=\(itemId)", method: .delete, parameters: nil ,encoding: JSONEncoding.default, headers: headers)
-                      .responseJSON { response in
-                          if let json = response.data {
-                              do {
-                                  let decoder = JSONDecoder()
-                                  let baseResponse = try decoder.decode(BaseResponse.self, from: json)
-                                  completion(baseResponse)
-                              }catch let err{
-                                  print(err)
-                              }
-                          }
-                  }
-              }
+        
+        let headers = [Constants.AUTH_HEADER: "bearer \(Authorization)",
+            Constants.LANG_HEADER : self.getLang()]
+        
+        
+        AFManager.request("\(Constants.BASE_URL)ShopCategoryOwner/DeleteItem?id=\(itemId)", method: .delete, parameters: nil ,encoding: JSONEncoding.default, headers: headers)
+            .responseJSON { response in
+                if let json = response.data {
+                    do {
+                        let decoder = JSONDecoder()
+                        let baseResponse = try decoder.decode(BaseResponse.self, from: json)
+                        completion(baseResponse)
+                    }catch let err{
+                        print(err)
+                    }
+                }
+        }
+    }
     
     
     static func owner_updateMenuItem(Authorization : String, itemId: Int, englishName : String, arabicName : String, image : String, price: String,englishDesc: String, arabicDesc: String,completion:@escaping(_ response : BaseResponse)-> Void) {
-                   
-                   let headers = [Constants.AUTH_HEADER: "bearer \(Authorization)",
-                       Constants.LANG_HEADER : self.getLang()]
-              
-              let all : [String : Any] = ["Id" : itemId,
-                                          "EnglishName" : englishName,
-                                          "ArabicName" : arabicName,
-                                          "Image" : image,
-                                          "Price" : price,
-                                          "EnglishDescription" : englishDesc,
-                                          "ArabicDescription" : arabicDesc]
-                   
-              AFManager.request("\(Constants.BASE_URL)ShopCategoryOwner/UpdateItem", method: .post, parameters: all ,encoding: JSONEncoding.default, headers: headers)
-                       .responseJSON { response in
-                           if let json = response.data {
-                               do {
-                                   let decoder = JSONDecoder()
-                                   let baseResponse = try decoder.decode(BaseResponse.self, from: json)
-                                   completion(baseResponse)
-                               }catch let err{
-                                   print(err)
-                               }
-                           }
-                   }
-               }
+        
+        let headers = [Constants.AUTH_HEADER: "bearer \(Authorization)",
+            Constants.LANG_HEADER : self.getLang()]
+        
+        let all : [String : Any] = ["Id" : itemId,
+                                    "EnglishName" : englishName,
+                                    "ArabicName" : arabicName,
+                                    "Image" : image,
+                                    "Price" : price,
+                                    "EnglishDescription" : englishDesc,
+                                    "ArabicDescription" : arabicDesc]
+        
+        AFManager.request("\(Constants.BASE_URL)ShopCategoryOwner/UpdateItem", method: .post, parameters: all ,encoding: JSONEncoding.default, headers: headers)
+            .responseJSON { response in
+                if let json = response.data {
+                    do {
+                        let decoder = JSONDecoder()
+                        let baseResponse = try decoder.decode(BaseResponse.self, from: json)
+                        completion(baseResponse)
+                    }catch let err{
+                        print(err)
+                    }
+                }
+        }
+    }
     
     
+    static func getShopOrders(Authorization : String, shopId : Int, completion:@escaping(_ response : ShopOrdersResponse)-> Void) {
+        
+        let headers = [Constants.AUTH_HEADER: "bearer \(Authorization)",
+            Constants.LANG_HEADER : self.getLang()]
+        
+        AFManager.request("\(Constants.BASE_URL)Delivery/GetOnGoingForOwner?filter=\(shopId)&pageSize=100&pageNumber=1", method: .get, parameters: nil ,encoding: JSONEncoding.default, headers: headers)
+            .responseJSON { response in
+                if let json = response.data {
+                    do {
+                        let decoder = JSONDecoder()
+                        let baseResponse = try decoder.decode(ShopOrdersResponse.self, from: json)
+                        completion(baseResponse)
+                    }catch let err{
+                        print(err)
+                    }
+                }
+        }
+    }
+    
+    
+    
+    
+    static func sendUserNotification(Authorization : String, arabicTitle : String, englishTitle : String, arabicBody : String, englishbody : String, userId : String, type : Int, completion:@escaping(_ response : BaseResponse)-> Void) {
+        
+        let headers = [Constants.AUTH_HEADER: "bearer \(Authorization)",
+            Constants.LANG_HEADER : self.getLang()]
+        
+        let all : [String : Any] = ["ArabicTitle" : arabicTitle,
+                   "EnglishTitle" :  englishTitle,
+                   "ArabicBody" : arabicBody,
+                   "EnglishBody" : englishbody,
+                   "UserId" : userId,
+                   "Type" : type]
+        
+        AFManager.request("\(Constants.BASE_URL)UserNotification/SendFromMobile", method: .post, parameters: all ,encoding: JSONEncoding.default, headers: headers)
+            .responseJSON { response in
+                if let json = response.data {
+                    do {
+                        let decoder = JSONDecoder()
+                        let baseResponse = try decoder.decode(BaseResponse.self, from: json)
+                        completion(baseResponse)
+                    }catch let err{
+                        print(err)
+                    }
+                }
+        }
+    }
     
     
 }

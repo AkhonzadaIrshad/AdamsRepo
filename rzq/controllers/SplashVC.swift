@@ -14,6 +14,8 @@ class SplashVC: BaseVC {
     override func viewDidLoad() {
         super.viewDidLoad()
         
+        UIApplication.shared.applicationIconBadgeNumber = 0
+        
         ApiService.getAppConfig { (response) in
             App.shared.config = response.data
             self.startSplashLoader()

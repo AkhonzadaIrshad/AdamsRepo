@@ -15,6 +15,10 @@ class MenuItemsVC: BaseVC, UITableViewDelegate, UITableViewDataSource, UINavigat
     
     @IBOutlet weak var tableView: UITableView!
     
+    @IBOutlet weak var lblTitle: MyUILabel!
+    
+    var categoryName: String?
+    
     var items = [ShowOwnerItem]()
     var categoryId : Int?
     
@@ -46,16 +50,23 @@ class MenuItemsVC: BaseVC, UITableViewDelegate, UITableViewDataSource, UINavigat
         
         self.tableView.reloadData()
         
+        if (self.items.count == 0) {
+            self.tableView.setEmptyView(title: "no_menu_items".localized, message: "no_menu_items_desc".localized, image: "bg_no_data")
+        }else {
+            self.tableView.restore()
+        }
+        
         if (self.isArabic()) {
             self.ivHandle.image = UIImage(named: "ic_back_arabic")
         }
         
+        self.lblTitle.text = self.categoryName ?? ""
         // Do any additional setup after loading the view.
     }
     
     //tableview delegate
     func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {
-        return 334.0
+        return 480.0
     }
     
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
@@ -67,13 +78,11 @@ class MenuItemsVC: BaseVC, UITableViewDelegate, UITableViewDataSource, UINavigat
         
         let item = self.items[indexPath.row]
         
-        if (self.isArabic()) {
-            cell.fieldTitle.text = item.arabicName ?? ""
-            cell.fieldDescription.text = item.arabicDescription ?? ""
-        }else {
-            cell.fieldTitle.text = item.englishName ?? ""
-            cell.fieldDescription.text = item.englishDescription ?? ""
-        }
+        cell.fieldEnglishTitle.text = item.englishName ?? ""
+        cell.fieldArabicTitle.text = item.arabicName ?? ""
+        cell.fieldEnglishDescription.text = item.englishDescription ?? ""
+        cell.fieldArabicDescription.text = item.arabicDescription ?? ""
+        
         
         cell.fieldPrice.text = "\(item.price ?? 0.0)"
         
@@ -82,7 +91,7 @@ class MenuItemsVC: BaseVC, UITableViewDelegate, UITableViewDataSource, UINavigat
             // cell.btnLogo.imageView?.kf.setImage(with: url)
             cell.btnLogo.kf.setImage(with: url, for: .normal)
             
-        }else {
+        } else {
             cell.btnLogo.setImage(UIImage(named: "bg_add_image"), for: .normal)
         }
         
@@ -96,7 +105,7 @@ class MenuItemsVC: BaseVC, UITableViewDelegate, UITableViewDataSource, UINavigat
         }
         
         cell.onSave = {
-            if (cell.fieldTitle.text?.count ?? 0 == 0) {
+            if (cell.fieldEnglishTitle.text?.count ?? 0 == 0 || cell.fieldArabicTitle.text?.count ?? 0 == 0) {
                 self.showBanner(title: "alert".localized, message: "enter_title_first".localized, style: UIColor.INFO)
                 return
             }
@@ -104,7 +113,7 @@ class MenuItemsVC: BaseVC, UITableViewDelegate, UITableViewDataSource, UINavigat
                 self.showBanner(title: "alert".localized, message: "enter_price_first".localized, style: UIColor.INFO)
                 return
             }
-            if (cell.fieldDescription.text?.count ?? 0 == 0) {
+            if (cell.fieldEnglishDescription.text?.count ?? 0 == 0 || cell.fieldArabicDescription.text?.count ?? 0 == 0) {
                 self.showBanner(title: "alert".localized, message: "enter_desc_first".localized, style: UIColor.INFO)
                 return
             }
@@ -114,9 +123,9 @@ class MenuItemsVC: BaseVC, UITableViewDelegate, UITableViewDataSource, UINavigat
             }
             
             if (item.id ?? 0 > 0) {
-                self.updateMenuItem(itemId: item.id ?? 0 ,englishName: cell.fieldTitle.text ?? "", arabicName: cell.fieldTitle.text ?? "", englishDesc: cell.fieldDescription.text ?? "", arabicDesc: cell.fieldDescription.text ?? "", price: cell.fieldPrice.text ?? "0.0", image: ((cell.btnLogo.image(for: .normal)?.toBase64())!))
+                self.updateMenuItem(itemId: item.id ?? 0 ,englishName: cell.fieldEnglishTitle.text ?? "", arabicName: cell.fieldArabicTitle.text ?? "", englishDesc: cell.fieldEnglishDescription.text ?? "", arabicDesc: cell.fieldArabicDescription.text ?? "", price: (cell.fieldPrice.text ?? "0.0").replacedArabicDigitsWithEnglish, image: ((cell.btnLogo.image(for: .normal)?.toBase64())!))
             }else {
-                self.createMenuItem(englishName: cell.fieldTitle.text ?? "", arabicName: cell.fieldTitle.text ?? "", englishDesc: cell.fieldDescription.text ?? "", arabicDesc: cell.fieldDescription.text ?? "", price: cell.fieldPrice.text ?? "0.0", image: ((cell.btnLogo.image(for: .normal)?.toBase64())!))
+                self.createMenuItem(englishName: cell.fieldEnglishTitle.text ?? "", arabicName: cell.fieldArabicTitle.text ?? "", englishDesc: cell.fieldEnglishDescription.text ?? "", arabicDesc: cell.fieldArabicDescription.text ?? "", price: (cell.fieldPrice.text ?? "0.0").replacedArabicDigitsWithEnglish, image: ((cell.btnLogo.image(for: .normal)?.toBase64())!))
             }
             
             item.status = Constants.MENU_ITEM_LOCKED
@@ -129,18 +138,22 @@ class MenuItemsVC: BaseVC, UITableViewDelegate, UITableViewDataSource, UINavigat
         }
         
         if (item.status == Constants.MENU_ITEM_UNLOCKED) {
-            cell.fieldTitle.isEnabled = true
+            cell.fieldEnglishTitle.isEnabled = true
+            cell.fieldArabicTitle.isEnabled = true
             cell.fieldPrice.isEnabled = true
-            cell.fieldPrice.isEnabled = true
+            cell.fieldEnglishDescription.isEditable = true
+            cell.fieldArabicDescription.isEditable = true
             cell.btnLogo.isUserInteractionEnabled = true
             
             cell.btnDelete.isHidden = false
             cell.btnSave.isHidden = false
             cell.btnEdit.isHidden = true
         }else {
-            cell.fieldTitle.isEnabled = false
+            cell.fieldEnglishTitle.isEnabled = false
+            cell.fieldArabicTitle.isEnabled = false
             cell.fieldPrice.isEnabled = false
-            cell.fieldPrice.isEnabled = false
+            cell.fieldEnglishDescription.isEditable = false
+            cell.fieldArabicDescription.isEditable = false
             cell.btnLogo.isUserInteractionEnabled = false
             
             cell.btnDelete.isHidden = true
@@ -154,8 +167,8 @@ class MenuItemsVC: BaseVC, UITableViewDelegate, UITableViewDataSource, UINavigat
     
     func createMenuItem(englishName: String, arabicName: String, englishDesc: String, arabicDesc: String, price: String, image: String) {
         self.showLoading()
-        ApiService.owner_createMenuItem(Authorization: self.loadUser().data?.accessToken ?? "", menuId: self.categoryId ?? 0, englishName: englishName, arabicName: arabicName, image: image, price: price, englishDesc: englishDesc, arabicDesc: arabicDesc) { (response) in
-            
+        ApiService.owner_createMenuItem(Authorization: self.loadUser().data?.accessToken ?? "", menuId: self.categoryId ?? 0, englishName: englishName, arabicName: arabicName, image: image, price: price.replacedArabicDigitsWithEnglish, englishDesc: englishDesc, arabicDesc: arabicDesc) { (response) in
+             
             self.hideLoading()
             
         }
@@ -163,7 +176,7 @@ class MenuItemsVC: BaseVC, UITableViewDelegate, UITableViewDataSource, UINavigat
     
     func updateMenuItem(itemId: Int,englishName: String, arabicName: String, englishDesc: String, arabicDesc: String, price: String, image: String) {
         self.showLoading()
-        ApiService.owner_updateMenuItem(Authorization: self.loadUser().data?.accessToken ?? "", itemId: itemId, englishName: englishName, arabicName: arabicName, image: image, price: price, englishDesc: englishDesc, arabicDesc: arabicDesc) { (response) in
+        ApiService.owner_updateMenuItem(Authorization: self.loadUser().data?.accessToken ?? "", itemId: itemId, englishName: englishName, arabicName: arabicName, image: image, price: price.replacedArabicDigitsWithEnglish, englishDesc: englishDesc, arabicDesc: arabicDesc) { (response) in
             self.hideLoading()
         }
     }
@@ -175,6 +188,11 @@ class MenuItemsVC: BaseVC, UITableViewDelegate, UITableViewDataSource, UINavigat
             ApiService.owner_deleteMenuItem(Authorization: self.loadUser().data?.accessToken ?? "", itemId: itemId) { (response) in
                 self.hideLoading()
                 self.items.remove(at: index)
+                if (self.items.count == 0) {
+                    self.tableView.setEmptyView(title: "no_menu_items".localized, message: "no_menu_items_desc".localized, image: "bg_no_data")
+                }else {
+                    self.tableView.restore()
+                }
                 self.tableView.reloadData()
             }
             
@@ -193,9 +211,27 @@ class MenuItemsVC: BaseVC, UITableViewDelegate, UITableViewDataSource, UINavigat
     @IBAction func addItemAction(_ sender: Any) {
         let emptyMenuItem = ShowOwnerItem(id: 0, arabicName: "", englishName: "", imageName: "", price: 0.0, arabicDescription: "", englishDescription: "")
         emptyMenuItem.status = Constants.MENU_ITEM_UNLOCKED
-        self.items.append(emptyMenuItem)
+        self.items.insert(emptyMenuItem, at: 0)
+        if (self.items.count == 0) {
+            self.tableView.setEmptyView(title: "no_menu_items".localized, message: "no_menu_items_desc".localized, image: "bg_no_data")
+        }else {
+            self.tableView.restore()
+        }
         self.tableView.reloadData()
     }
+    
+    @IBAction func addItmAction(_ sender: Any) {
+        let emptyMenuItem = ShowOwnerItem(id: 0, arabicName: "", englishName: "", imageName: "", price: 0.0, arabicDescription: "", englishDescription: "")
+        emptyMenuItem.status = Constants.MENU_ITEM_UNLOCKED
+        self.items.insert(emptyMenuItem, at: 0)
+        if (self.items.count == 0) {
+            self.tableView.setEmptyView(title: "no_menu_items".localized, message: "no_menu_items_desc".localized, image: "bg_no_data")
+        }else {
+            self.tableView.restore()
+        }
+        self.tableView.reloadData()
+    }
+    
     
     @IBAction func doneAction(_ sender: Any) {
         self.navigationController?.popViewController(animated: true)
@@ -217,7 +253,6 @@ class MenuItemsVC: BaseVC, UITableViewDelegate, UITableViewDataSource, UINavigat
             self.present(self.imagePicker, animated: true, completion: nil)
         }
     }
-    
     
 }
 extension MenuItemsVC: UIImagePickerControllerDelegate {

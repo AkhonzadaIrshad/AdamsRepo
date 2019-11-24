@@ -49,4 +49,5 @@ target 'rzq' do
    pod 'Firebase/Core'
    pod 'Firebase/Messaging'
    pod 'ValueStepper'
+   pod 'BMPlayer'
 end

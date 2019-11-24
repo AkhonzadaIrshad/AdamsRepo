@@ -71,7 +71,7 @@
 "minutes" = "Min";
 
 "order_cost" = "Order Cost";
-"delivery_cost" = "Order Cost";
+"delivery_cost" = "Delivery Cost";
 "total_cost" = "Total Cost";
 "delivery_started" = "Order has been started successfully.";
 "registered_to_shop" = "You have registered to shop successfully.";
@@ -245,3 +245,50 @@
 "enter_price_first" = "Enter item price first!";
 "enter_desc_first" = "Enter item description first!";
 "add_item_image" = "Add item image first!";
+"payment_method_changed" = "Payment method has been changed successfully";
+"this_order_done" = "This order is no longer active";
+
+//here
+"no_shops" = "No Shops";
+"no_shops_desc" = "Your shops will appear here";
+"no_shop_orders" = "No Shop Orders";
+"no_shop_orders_desc" = "Shop orders will appear here";
+"no_menu_categories" = "No Menu Categories";
+"no_menu_categories_desc" = "Menu categories will appear here";
+"no_menu_items" = "No Category Items";
+"no_menu_items_desc" = "Category items will appear here";
+"no_ratings" = "No Reviews";
+"no_ratings_desc" = "Ratings & reviews will appear here";
+"payment_method" = "Payment Method";
+"paid_successfully" = "Payment paid successfully.";
+
+
+"paid_cash" = "The user successfully paid in cash.";
+"didnt_pay" = "Didn't Pay";
+"confirm" = "Confirm";
+"payment_knet_paid" = "The user successfully paid with Knet.";
+"payment_knet_fail" = "The user failed to transfer money with knet, please take money in cash.";
+"cash_collected" = "Cash Collection";
+"send_knet_link" = "Notify User";
+"notify_user_cash" = "Please pay the driver in cash";
+"notify_user_knet" = "Please complete your order payment using Knet from order details above.";
+
+"payment_failed" = "Payment failed";
+"paid_title" = "(Paid)";
+"not_paid_title" = "(Not Paid)";
+"no_menu" = "No menu for this shop";
+
+"am" = "AM";
+"pm" = "PM";
+"order_items" = "Items";
+
+"knet_order_success" = "I have successfully paid my order using Knet.";
+"knet_order_fail" = "I did'nt pay my order using Knet, is it possible that we use cash?";
+
+"female_only" = "Female Only";
+"both_genders" = "Both";
+
+"bill_not_issued" = "The driver didn't issue bill yet.";
+
+"new_notifications_driver" = "Notifications";
+"new_notifications_user" = "Notifications";

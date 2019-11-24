@@ -9,7 +9,7 @@
 import UIKit
 
 protocol ShopMenuDelegate {
-    func onDone(items: [ShopMenuItem])
+    func onDone(items: [ShopMenuItem],total : Double)
 }
 class ShopMenuVC: BaseVC, UICollectionViewDelegate, UICollectionViewDataSource, UICollectionViewDelegateFlowLayout,
 UITableViewDelegate, UITableViewDataSource, CheckOutDoneDelegate {
@@ -28,6 +28,7 @@ UITableViewDelegate, UITableViewDataSource, CheckOutDoneDelegate {
     @IBOutlet weak var ivCheckOut: UIImageView!
     
     var items = [ShopMenuItem]()
+    var selectedItems = [ShopMenuItem]()
     var categories = [ShopMenuDatum]()
     
     var selectedCategory : ShopMenuDatum?
@@ -72,13 +73,39 @@ UITableViewDelegate, UITableViewDataSource, CheckOutDoneDelegate {
             self.hideLoading()
             self.categories.removeAll()
             self.categories.append(contentsOf: response.shopMenuData ?? [ShopMenuDatum]())
+            self.loadSelectedItems()
             self.collectionView.reloadData()
             
-            self.categories[0].isChecked = true
-            self.items.removeAll()
-            self.items.append(contentsOf: response.shopMenuData?[0].shopMenuItems ?? [ShopMenuItem]())
-            self.tableView.reloadData()
+            if (self.categories.count == 0) {
+                self.showBanner(title: "alert".localized, message: "no_menu".localized, style: UIColor.INFO)
+                DispatchQueue.main.asyncAfter(deadline: .now() + 1) {
+                    self.navigationController?.popViewController(animated: true)
+                }
+            }else {
+              self.categories[0].isChecked = true
+              self.items.removeAll()
+              self.items.append(contentsOf: response.shopMenuData?[0].shopMenuItems ?? [ShopMenuItem]())
+              self.tableView.reloadData()
+            }
         }
+    }
+    
+    func loadSelectedItems() {
+        for category in self.categories {
+            for catItem in category.shopMenuItems ?? [ShopMenuItem]() {
+                for item in self.selectedItems {
+                    if ((item.price == catItem.price) && (item.name == catItem.name)) {
+                        if (item.quantity ?? 0 > 0) {
+                           catItem.quantity = item.quantity
+                        }else {
+                            catItem.quantity = item.count
+                        }
+                        
+                    }
+                }
+            }
+        }
+        self.calculateTotal()
     }
     
     
@@ -91,7 +118,7 @@ UITableViewDelegate, UITableViewDataSource, CheckOutDoneDelegate {
         let label = UILabel(frame: CGRect.zero)
         label.text = self.categories[indexPath.row].name ?? ""
         label.sizeToFit()
-        return CGSize(width: label.bounds.width + 8, height: self.collectionView.bounds.height)
+        return CGSize(width: label.bounds.width + 20, height: 45.0)
     }
     
     func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, insetForSectionAt section: Int) -> UIEdgeInsets {
@@ -121,6 +148,12 @@ UITableViewDelegate, UITableViewDataSource, CheckOutDoneDelegate {
         self.items.removeAll()
         self.items.append(contentsOf: self.categories[indexPath.row].shopMenuItems ?? [ShopMenuItem]())
         self.tableView.reloadData()
+        
+        if (self.items.count == 0) {
+            self.tableView.setEmptyView(title: "no_menu_items".localized, message: "no_menu_items_desc".localized, image: "bg_no_data")
+        }else {
+            self.tableView.restore()
+        }
     }
     
     func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
@@ -172,6 +205,7 @@ UITableViewDelegate, UITableViewDataSource, CheckOutDoneDelegate {
         return cell
     }
     
+    
     func calculateTotal() {
         var totalItems = 0
         var totalPrice = 0.0
@@ -201,6 +235,26 @@ UITableViewDelegate, UITableViewDataSource, CheckOutDoneDelegate {
             }, completion: nil)
     }
     
+    
+    func getTotal() -> Double {
+        var totalItems = 0
+        var totalPrice = 0.0
+        
+        for category in self.categories {
+            for item in category.shopMenuItems ?? [ShopMenuItem]() {
+                var itemQuantity = item.quantity ?? 0
+                if (itemQuantity == 0) {
+                    itemQuantity = item.count ?? 0
+                }
+                totalItems = totalItems + (itemQuantity)
+                let doubleQuantity = Double(itemQuantity)
+                let itemPrice = doubleQuantity * (item.price ?? 0.0)
+                totalPrice = totalPrice + itemPrice
+            }
+        }
+        return totalPrice
+    }
+    
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
         //go to delivery step 1
         
@@ -223,7 +277,7 @@ UITableViewDelegate, UITableViewDataSource, CheckOutDoneDelegate {
     }
     
     func onDone(selectedItems: [ShopMenuItem]) {
-        self.delegate?.onDone(items: selectedItems)
+        self.delegate?.onDone(items: selectedItems, total: self.getTotal())
         self.navigationController?.popViewController(animated: true)
     }
     

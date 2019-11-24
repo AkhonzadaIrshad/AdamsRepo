@@ -12,8 +12,14 @@ import GooglePlaces
 import MapKit
 import CoreLocation
 import AVFoundation
+import FittedSheets
 
-class OrderDetailsVC: BaseVC, UICollectionViewDelegate, UICollectionViewDataSource, UICollectionViewDelegateFlowLayout, AVAudioPlayerDelegate {
+
+protocol OrderChatDelegate {
+    func onOrderPaymentSuccess()
+    func onOrderPaymentFail()
+}
+class OrderDetailsVC: BaseVC, UICollectionViewDelegate, UICollectionViewDataSource, UICollectionViewDelegateFlowLayout, AVAudioPlayerDelegate, PaymentSheetDelegate, PaymentDelegate {
     
     @IBOutlet weak var mapView: UIView!
     
@@ -59,6 +65,12 @@ class OrderDetailsVC: BaseVC, UICollectionViewDelegate, UICollectionViewDataSour
     
     @IBOutlet weak var lblPaymentMethod: MyUILabel!
     
+    var sheetController : SheetViewController?
+    
+    @IBOutlet weak var btnChangeMethod: MyUIButton!
+    
+    @IBOutlet weak var viewChangeMethod: CardView!
+    
     var player : AVPlayer?
     
     var markerLocation: GMSMarker?
@@ -68,12 +80,21 @@ class OrderDetailsVC: BaseVC, UICollectionViewDelegate, UICollectionViewDataSour
     var latitude : Double?
     var longitude : Double?
     
+    var isPay : Bool?
+    
+    var delegate : OrderChatDelegate?
+    
     
     var order : DataClassDelObj?
     
     var selectedRoute: NSDictionary!
     
     var items = [String]()
+    
+    @IBOutlet weak var btnViewItems: MyUIButton!
+    
+    @IBOutlet weak var viewViewItems: CardView!
+    
     
     @IBOutlet weak var descriptionHright: NSLayoutConstraint!
     @IBOutlet weak var descriptionView: UIView!
@@ -83,6 +104,15 @@ class OrderDetailsVC: BaseVC, UICollectionViewDelegate, UICollectionViewDataSour
     @IBOutlet weak var viewNavigateHeight: NSLayoutConstraint!
     
     var audioPlayer: AVAudioPlayer?
+    
+    @IBOutlet weak var viewReorder: UIView!
+    
+    
+    @IBOutlet weak var btnPay: MyUIButton!
+    
+    @IBOutlet weak var viewPay: UIView!
+    
+    
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -99,30 +129,29 @@ class OrderDetailsVC: BaseVC, UICollectionViewDelegate, UICollectionViewDataSour
             self.lblPickup.text = self.order?.fromAddress ?? ""
         }
         if (self.order?.dropOffDetails?.count ?? 0 > 0) {
-             self.lblDropoff.text = "\(self.order?.toAddress ?? "") ,\(self.order?.dropOffDetails ?? "")"
+            self.lblDropoff.text = "\(self.order?.toAddress ?? "") ,\(self.order?.dropOffDetails ?? "")"
         }else {
             self.lblDropoff.text = self.order?.toAddress ?? ""
         }
-       
+        
         if (self.order?.type == 2 || self.order?.type == 3) {
-           self.pickupHeight.constant = 0
+            self.pickupHeight.constant = 0
             self.pickUpLine.isHidden = true
         }else {
-           self.pickupHeight.constant = 51
+            self.pickupHeight.constant = 51
             self.pickUpLine.isHidden = false
         }
         
-        self.lblDropoff.text = self.order?.toAddress ?? ""
         let price = self.order?.cost ?? 0.0
         if (price > 10) {
-           self.lblCost.text = "> 10 \("currency".localized)"
+            self.lblCost.text = "> 10 \("currency".localized)"
         }else {
-           self.lblCost.text = "< 10 \("currency".localized)"
+            self.lblCost.text = "< 10 \("currency".localized)"
         }
-//        self.lblCost.text = "\(self.order?.cost ?? 0.0) \("currency".localized)"
+        //        self.lblCost.text = "\(self.order?.cost ?? 0.0) \("currency".localized)"
         
         if (self.order?.time ?? 0 > 0) {
-           self.lblTime.text = "\(self.order?.time ?? 0) \("hours".localized)"
+            self.lblTime.text = "\(self.order?.time ?? 0) \("hours".localized)"
         }else {
             self.lblTime.text = "asap".localized
         }
@@ -167,7 +196,7 @@ class OrderDetailsVC: BaseVC, UICollectionViewDelegate, UICollectionViewDataSour
         
         
         if (self.isProvider()  && self.loadUser().data?.userID == self.order?.driverId) {
-                self.viewCancel.isHidden = true
+            self.viewCancel.isHidden = true
         }else {
             if (self.order?.status == Constants.ORDER_PENDING) {
                 self.viewCancel.isHidden = false
@@ -176,7 +205,7 @@ class OrderDetailsVC: BaseVC, UICollectionViewDelegate, UICollectionViewDataSour
             }
         }
         
-         if (self.order?.status == Constants.ORDER_PROCESSING) {
+        if (self.order?.status == Constants.ORDER_PROCESSING) {
             if (self.isProvider() && self.loadUser().data?.userID == self.order?.driverId ?? "") {
                 viewNavigate.isHidden = false
                 viewNavigateHeight.constant = 40
@@ -184,17 +213,70 @@ class OrderDetailsVC: BaseVC, UICollectionViewDelegate, UICollectionViewDataSour
                 viewNavigate.isHidden = true
                 viewNavigateHeight.constant = 0
             }
-         }else {
+        }else {
             viewNavigate.isHidden = true
             viewNavigateHeight.constant = 0
         }
         
         
-        if (self.order?.paymentMethod ?? 1 == 1) {
-           self.lblPaymentMethod.text = "cash_on_delivery".localized
+        self.selectPaymentMethod(method: self.order?.paymentMethod ?? Constants.PAYMENT_METHOD_CASH)
+        
+        
+        
+        if (self.order?.status == Constants.ORDER_PROCESSING || self.order?.status == Constants.ORDER_PENDING || self.order?.status == Constants.ORDER_ON_THE_WAY) {
+            if (self.isProvider() && self.loadUser().data?.userID == self.order?.driverId ?? "") {
+                self.btnChangeMethod.isHidden = true
+                self.viewChangeMethod.isHidden = true
+            }else {
+                self.btnChangeMethod.isHidden = false
+                self.viewChangeMethod.isHidden = false
+            }
         }else {
-            self.lblPaymentMethod.text = "by_coupon".localized
+            self.btnChangeMethod.isHidden = true
+            self.viewChangeMethod.isHidden = true
         }
+        
+        if (self.order?.items?.count ?? 0 == 0) {
+            self.btnViewItems.isHidden = true
+            self.viewViewItems.isHidden = true
+        }
+        
+        if (self.order?.status == Constants.ORDER_COMPLETED || self.order?.status == Constants.ORDER_CANCELLED || self.order?.status == Constants.ORDER_EXPIRED) {
+            if (self.isProvider() && self.loadUser().data?.userID == self.order?.driverId ?? "") {
+                self.viewReorder.isHidden = true
+            }else {
+                self.viewReorder.isHidden = false
+            }
+        }else {
+            self.viewReorder.isHidden = true
+        }
+        
+        
+        if (self.isProvider() && self.loadUser().data?.userID == self.order?.driverId ?? "") {
+            self.btnPay.isHidden = true
+            self.viewPay.isHidden = true
+        }else {
+           // if (self.isPay ?? false) {
+                if (self.order?.paymentMethod == Constants.PAYMENT_METHOD_KNET && (self.order?.isPaid ?? false) == false) {
+                    if (self.order?.status == Constants.ORDER_PENDING || self.order?.status == Constants.ORDER_PROCESSING || self.order?.status == Constants.ORDER_ON_THE_WAY) {
+                        self.btnPay.isHidden = false
+                        self.viewPay.isHidden = false
+                    }else {
+                        self.btnPay.isHidden = true
+                        self.viewPay.isHidden = true
+                    }
+                }else {
+                    self.btnPay.isHidden = true
+                    self.viewPay.isHidden = true
+                }
+                
+//            }else {
+//                self.btnPay.isHidden = true
+//                self.viewPay.isHidden = true
+//            }
+            
+        }
+        
         
         
     }
@@ -362,7 +444,7 @@ class OrderDetailsVC: BaseVC, UICollectionViewDelegate, UICollectionViewDataSour
     @IBAction func backAction(_ sender: Any) {
         self.navigationController?.popViewController(animated: true)
     }
-
+    
     
     @IBAction func trackAction(_ sender: Any) {
         let vc = UIStoryboard(name: "Main", bundle: nil).instantiateViewController(withIdentifier: "MapNavigationController") as! UINavigationController
@@ -371,36 +453,36 @@ class OrderDetailsVC: BaseVC, UICollectionViewDelegate, UICollectionViewDataSour
     }
     
     @IBAction func playRecordAction(_ sender: Any) {
-    // playSound(soundUrl: ("\(Constants.IMAGE_URL)\(self.order?.voiceFile ?? "")"))
+        // playSound(soundUrl: ("\(Constants.IMAGE_URL)\(self.order?.voiceFile ?? "")"))
         let url = URL(string: ("\(Constants.IMAGE_URL)\(self.order?.voiceFile ?? "")"))
         self.downloadFileFromURL(url: url!)
     }
     
     func playRecord(path : URL) {
-//        let playerItem:AVPlayerItem = AVPlayerItem(url: path)
-//        let audioPlayer = AVPlayer(playerItem: playerItem)
-//        audioPlayer.volume = 1.0
-//        audioPlayer.isMuted = false
-//        audioPlayer.play()
+        //        let playerItem:AVPlayerItem = AVPlayerItem(url: path)
+        //        let audioPlayer = AVPlayer(playerItem: playerItem)
+        //        audioPlayer.volume = 1.0
+        //        audioPlayer.isMuted = false
+        //        audioPlayer.play()
         
         do {
-                  self.audioPlayer?.pause()
-                  self.audioPlayer = try AVAudioPlayer(contentsOf: path)
-                  self.audioPlayer?.delegate = self as AVAudioPlayerDelegate
-                  self.audioPlayer?.rate = 1.0
-                  self.audioPlayer?.volume = 1.0
-                  self.audioPlayer?.play()
-                  
-              } catch {
-                  print("play(with name:), ",error.localizedDescription)
-              }
+            self.audioPlayer?.pause()
+            self.audioPlayer = try AVAudioPlayer(contentsOf: path)
+            self.audioPlayer?.delegate = self as AVAudioPlayerDelegate
+            self.audioPlayer?.rate = 1.0
+            self.audioPlayer?.volume = 1.0
+            self.audioPlayer?.play()
+            
+        } catch {
+            print("play(with name:), ",error.localizedDescription)
+        }
     }
     
     func downloadFileFromURL(url:URL){
         
         var downloadTask:URLSessionDownloadTask
         downloadTask = URLSession.shared.downloadTask(with: url, completionHandler: { (url, response, error) in
-           // self.play(url: url!)
+            // self.play(url: url!)
             self.playRecord(path: url!)
         })
         
@@ -435,32 +517,32 @@ class OrderDetailsVC: BaseVC, UICollectionViewDelegate, UICollectionViewDataSour
     }
     
     
-//    func playSound(soundUrl: String) {
-//        let sound = URL(string: soundUrl)!
-//        do {
-//            let audioPlayer = try AVAudioPlayer(contentsOf: sound)
-//            audioPlayer.prepareToPlay()
-//            audioPlayer.play()
-//        }catch let error {
-//            print("Error: \(error.localizedDescription)")
-//        }
-//    }
+    //    func playSound(soundUrl: String) {
+    //        let sound = URL(string: soundUrl)!
+    //        do {
+    //            let audioPlayer = try AVAudioPlayer(contentsOf: sound)
+    //            audioPlayer.prepareToPlay()
+    //            audioPlayer.play()
+    //        }catch let error {
+    //            print("Error: \(error.localizedDescription)")
+    //        }
+    //    }
     
     @IBAction func chatAction(_ sender: Any) {
-         DispatchQueue.main.async {
-        let messagesVC: ZHCDemoMessagesViewController = ZHCDemoMessagesViewController.init()
-        messagesVC.presentBool = true
+        DispatchQueue.main.async {
+            let messagesVC: ZHCDemoMessagesViewController = ZHCDemoMessagesViewController.init()
+            messagesVC.presentBool = true
             
-//            let order = DatumDel(driverID: self.order?.driverId ?? "", canReport: false, canTrack: false, id: self.order?.id ?? 0, chatId: self.order?.chatId ?? 0, fromAddress: self.order?.fromAddress ?? "", toAddress: self.order?.toAddress ?? "", title: self.order?.title ?? "", status: self.order?.status ?? 0, price: self.order?.cost ?? 0.0, time: self.order?.time ?? 0, statusString: self.order?.statusString ?? "", image: "", createdDate: self.order?.createdDate ?? "", toLatitude: self.order?.toLatitude ?? 0.0, toLongitude: self.order?.toLongitude ?? 0.0, fromLatitude: self.order?.fromLatitude ?? 0.0, fromLongitude: self.order?.fromLongitude ?? 0.0, driverName: "", driverImage: "", driverRate: 0, canRate: false, canCancel: false, canChat: false)
+            //            let order = DatumDel(driverID: self.order?.driverId ?? "", canReport: false, canTrack: false, id: self.order?.id ?? 0, chatId: self.order?.chatId ?? 0, fromAddress: self.order?.fromAddress ?? "", toAddress: self.order?.toAddress ?? "", title: self.order?.title ?? "", status: self.order?.status ?? 0, price: self.order?.cost ?? 0.0, time: self.order?.time ?? 0, statusString: self.order?.statusString ?? "", image: "", createdDate: self.order?.createdDate ?? "", toLatitude: self.order?.toLatitude ?? 0.0, toLongitude: self.order?.toLongitude ?? 0.0, fromLatitude: self.order?.fromLatitude ?? 0.0, fromLongitude: self.order?.fromLongitude ?? 0.0, driverName: "", driverImage: "", driverRate: 0, canRate: false, canCancel: false, canChat: false)
             
-             let order = DatumDel(id: self.order?.id ?? 0, title: self.order?.title ?? "", status: self.order?.status ?? 0, statusString: self.order?.statusString ?? "", image: "", createdDate: self.order?.createdDate ?? "", chatId: self.order?.chatId ?? 0, fromAddress: self.order?.fromAddress ?? "", fromLatitude: self.order?.fromLatitude ?? 0.0, fromLongitude: self.order?.fromLongitude ?? 0.0, toAddress: self.order?.toAddress ?? "", toLatitude: self.order?.toLatitude ?? 0.0, toLongitude: self.order?.toLongitude ?? 0.0, providerID: self.order?.driverId, providerName: "", providerImage: "", providerRate: 0, time: self.order?.time ?? 0, price: self.order?.cost ?? 0.0, serviceName: "")
+            let order = DatumDel(id: self.order?.id ?? 0, title: self.order?.title ?? "", status: self.order?.status ?? 0, statusString: self.order?.statusString ?? "", image: "", createdDate: self.order?.createdDate ?? "", chatId: self.order?.chatId ?? 0, fromAddress: self.order?.fromAddress ?? "", fromLatitude: self.order?.fromLatitude ?? 0.0, fromLongitude: self.order?.fromLongitude ?? 0.0, toAddress: self.order?.toAddress ?? "", toLatitude: self.order?.toLatitude ?? 0.0, toLongitude: self.order?.toLongitude ?? 0.0, providerID: self.order?.driverId, providerName: "", providerImage: "", providerRate: 0, time: self.order?.time ?? 0, price: self.order?.cost ?? 0.0, serviceName: "", paymentMethod: self.order?.paymentMethod ?? 0, items: self.order?.items ?? [ShopMenuItem](), isPaid: self.order?.isPaid ?? false, invoiceId: self.order?.invoiceId ?? "", toFemaleOnly: self.order?.toFemaleOnly ?? false, shopId: self.order?.shopId ?? 0, OrderPrice: self.order?.orderPrice ?? 0.0, KnetCommission: self.order?.KnetCommission ?? 0.0)
             
-        messagesVC.order = order
-        messagesVC.user = self.loadUser()
-        let nav: UINavigationController = UINavigationController.init(rootViewController: messagesVC)
+            messagesVC.order = order
+            messagesVC.user = self.loadUser()
+            let nav: UINavigationController = UINavigationController.init(rootViewController: messagesVC)
             nav.modalPresentationStyle = .fullScreen
             messagesVC.modalPresentationStyle = .fullScreen
-        self.navigationController?.present(nav, animated: true, completion: nil)
+            self.navigationController?.present(nav, animated: true, completion: nil)
         }
     }
     
@@ -543,14 +625,198 @@ class OrderDetailsVC: BaseVC, UICollectionViewDelegate, UICollectionViewDataSour
         let cancelAction = UIAlertAction(title: "cancel".localized, style: .cancel) { (action) in }
         
         sourceSelector.addAction(googleMapsAction)
-      //  sourceSelector.addAction(appleMapsAction)
+        //  sourceSelector.addAction(appleMapsAction)
         sourceSelector.addAction(cancelAction)
         
         self.present(sourceSelector, animated: true, completion: nil)
     }
     
+    @IBAction func changeMethodAction(_ sender: Any) {
+        self.showPaymentMethodsSheet()
+    }
     
+    
+    func showPaymentMethodsSheet() {
+        let storyboard = UIStoryboard.init(name: "Main", bundle: nil)
+        let controller = storyboard.instantiateViewController(withIdentifier: "PaymentMethodSheet") as! PaymentMethodSheet
+        sheetController = SheetViewController(controller: controller, sizes: [.fixed(290)])
+        sheetController?.handleColor = UIColor.app_green
+        controller.selectedMethod = self.order?.paymentMethod ?? Constants.PAYMENT_METHOD_CASH
+        controller.delegate = self
+        
+        self.present(sheetController!, animated: false, completion: nil)
+    }
+    
+    func onSubmit(method: Int) {
+        self.showLoading()
+        ApiService.changePaymentMethod(Authorization: self.loadUser().data?.accessToken ?? "", orderId: self.order?.id ?? 0, paymentMethod: method) { (response) in
+            self.hideLoading()
+            if (response.errorCode == 0) {
+                self.showBanner(title: "alert".localized, message: "payment_method_changed".localized, style: UIColor.SUCCESS)
+                self.order?.paymentMethod = method
+                self.selectPaymentMethod(method: method)
+                self.notifyDriver(method : method)
+            }else {
+                self.showBanner(title: "alert".localized, message: response.errorMessage ?? "", style: UIColor.INFO)
+            }
+        }
+        self.sheetController?.closeSheet()
+    }
+    
+    func notifyDriver(method : Int) {
+        var type = 901
+        if (method == Constants.PAYMENT_METHOD_KNET) {
+            type = 902
+        }
+      self.showLoading()
+        ApiService.sendUserNotification(Authorization: self.loadUser().data?.accessToken ?? "", arabicTitle: "الطلب \(Constants.ORDER_NUMBER_PREFIX)\(self.order?.id ?? 0)", englishTitle: "Order \(Constants.ORDER_NUMBER_PREFIX)\(self.order?.id ?? 0)", arabicBody: "قام الزبون بتغيير طريقة الدفع", englishbody: "Client changed payment method for this order", userId: self.order?.driverId ?? "", type: type) { (response) in
+            self.hideLoading()
+        }
+    }
+    
+    func selectPaymentMethod(method: Int) {
+        var isPaid = "not_paid_title".localized
+        if (self.order?.isPaid ?? false) {
+            isPaid = "paid_title".localized
+        }
+        if (method == Constants.PAYMENT_METHOD_CASH) {
+            self.lblPaymentMethod.text = "cash_on_delivery".localized
+        }else if (method == Constants.PAYMENT_METHOD_BALANCE) {
+            self.lblPaymentMethod.text = "by_coupon".localized
+        }else {
+            self.lblPaymentMethod.text = "\("knet".localized) \(isPaid)"
+        }
+    }
+    
+    @IBAction func viewItemsAction(_ sender: Any) {
+        let storyboard = UIStoryboard(name: "Main", bundle: nil)
+        let vc : ViewMenuVC = storyboard.instantiateViewController(withIdentifier: "ViewMenuVC") as! ViewMenuVC
+        vc.items = self.order?.items ?? [ShopMenuItem]()
+        self.navigationController?.pushViewController(vc, animated: true)
+    }
+    
+    
+    @IBAction func reorderAction(_ sender: Any) {
+        self.showLoading()
+        ApiService.getShopDetails(Authorization: self.loadUser().data?.accessToken ?? "", id: self.order?.shopId ?? 0) { (response) in
+            self.hideLoading()
+            let storyboard = UIStoryboard(name: "Main", bundle: nil)
+            let vc1 : DeliveryStep1 = storyboard.instantiateViewController(withIdentifier: "DeliveryStep1") as! DeliveryStep1
+            let vc2 : DeliveryStep2 = storyboard.instantiateViewController(withIdentifier: "DeliveryStep2") as! DeliveryStep2
+            let vc3 : DeliveryStep3 = storyboard.instantiateViewController(withIdentifier: "DeliveryStep3") as! DeliveryStep3
+            let model = OTWOrder()
+            model.pickUpDetails = self.order?.pickUpDetails ?? ""
+            model.pickUpAddress = self.order?.fromAddress ?? ""
+            model.pickUpLatitude = self.order?.fromLatitude ?? 0.0
+            model.pickUpLongitude = self.order?.fromLongitude ?? 0.0
+            
+            model.dropOffDetails = self.order?.dropOffDetails ?? ""
+            model.dropOffAddress = self.order?.toAddress ?? ""
+            model.dropOffLatitude = self.order?.toLatitude ?? 0.0
+            model.dropOffLongitude = self.order?.toLongitude ?? 0.0
+            
+            model.orderCost = String(self.order?.cost ?? 0.0)
+            model.orderDetails = self.order?.desc ?? ""
+            model.time = self.order?.time ?? 0
+            model.fromReorder = true
+            model.selectedItems = self.order?.items ?? [ShopMenuItem]()
+            model.paymentMethod = self.order?.paymentMethod ?? Constants.PAYMENT_METHOD_CASH
+            model.isFemale = self.order?.toFemaleOnly ?? false
+            
+            let shop = DataShop(id: response.shopData?.id ?? 0, name: response.shopData?.name ?? "", address: response.shopData?.address ?? "", latitude: response.shopData?.latitude ?? 0.0, longitude: response.shopData?.longitude ?? 0.0, phoneNumber: response.shopData?.phoneNumber ?? "", workingHours: response.shopData?.workingHours ?? "", images: response.shopData?.images ?? [String](), rate: response.shopData?.rate ?? 0.0, type: response.shopData?.type!, ownerId: response.shopData?.ownerId ?? "", googlePlaceId: response.shopData?.googlePlaceId ?? "", openNow: response.shopData?.openNow ?? true)
+            
+            model.shop = shop
+            
+            vc1.orderModel = OTWOrder()
+            vc2.orderModel = OTWOrder()
+            vc3.orderModel = OTWOrder()
+            
+            vc1.orderModel = model
+            vc2.orderModel = model
+            vc3.orderModel = model
+            
+            vc1.latitude = self.latitude ?? 0.0
+            vc1.longitude = self.longitude ?? 0.0
+            
+            vc2.latitude = self.order?.fromLatitude ?? 0.0
+            vc2.longitude = self.order?.fromLongitude ?? 0.0
+            
+            //  self.navigationController?.pushViewController(vc, animated: true)
+            
+            var controllers = self.navigationController?.viewControllers
+            controllers?.append(vc1)
+            controllers?.append(vc2)
+            controllers?.append(vc3)
+            self.navigationController?.setViewControllers(controllers!, animated: true)
+        }
+    }
+    
+    
+    @IBAction func payAction(_ sender: Any) {
+        let storyboard = UIStoryboard(name: "Main", bundle: nil)
+        let vc : PaymentVC = storyboard.instantiateViewController(withIdentifier: "PaymentVC") as! PaymentVC
+        
+        let orderCost = self.order?.orderPrice ?? 0.0
+        let deliveryCost = self.order?.cost ?? 0.0
+        let  x = self.order?.KnetCommission ?? 0.0
+        let commission = (x * 100).rounded() / 100
+        
+        let totalCost = orderCost + commission + deliveryCost
+       // let totalCost = orderCost + commission
+        
+        if (self.order?.items?.count ?? 0 > 0) {
+            vc.items = self.order?.items ?? [ShopMenuItem]()
+           // vc.total =  self.getTotal(items: self.order?.items ?? [ShopMenuItem]())
+            vc.total = totalCost
+            vc.delegate = self
+            self.present(vc, animated: true, completion: nil)
+        }else {
+            if (self.order?.orderPrice ?? 0 > 0) {
+                let item = ShopMenuItem(id: 0, name: "delivery_cost", imageName: "", price: deliveryCost, shopMenuItemDescription: "", count: 1)
+                let item2 = ShopMenuItem(id: 0, name: "order_cost", imageName: "", price: orderCost, shopMenuItemDescription: "", count: 1)
+                let item3 = ShopMenuItem(id: 0, name: "knet_commission", imageName: "", price: commission, shopMenuItemDescription: "", count: 1)
+                vc.items.append(item)
+                vc.items.append(item2)
+                vc.items.append(item3)
+              //  vc.total =  self.order?.orderPrice ?? 0
+                vc.total = totalCost
+                vc.delegate = self
+                self.present(vc, animated: true, completion: nil)
+            }else {
+                self.showBanner(title: "alert".localized, message: "bill_not_issued".localized, style: UIColor.INFO)
+            }
+        }
+    }
+    
+    func onPaymentSuccess(payment: PaymentStatusResponse) {
+        self.showLoading()
+        ApiService.createPaymentRecord(Authorization: self.loadUser().data?.accessToken ?? "", orderId: self.order?.id ?? 0, payment: payment) { (response) in
+            self.hideLoading()
+            self.delegate?.onOrderPaymentSuccess()
+            self.navigationController?.popViewController(animated: true)
+        }
+        
+    }
+    
+    func onPaymentFail() {
+        self.delegate?.onOrderPaymentFail()
+    }
+    
+    func getTotal(items : [ShopMenuItem]) -> Double {
+        var total = 0.0
+        for item in items {
+            var itemQuantity = item.quantity ?? 0
+            if (itemQuantity == 0) {
+                itemQuantity = item.count ?? 0
+            }
+            let doubleQuantity = Double(itemQuantity)
+            let doublePrice = item.price ?? 0.0
+            total = total + (doubleQuantity * doublePrice)
+        }
+        return total
+    }
 }
+
 extension OrderDetailsVC : GMSMapViewDelegate {
     func mapView(_ mapView: GMSMapView, didChange position: GMSCameraPosition) {
         

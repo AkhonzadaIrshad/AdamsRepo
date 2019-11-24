@@ -154,7 +154,6 @@ class KAudioRecorder: NSObject {
                 self.audioPlayer = try AVAudioPlayer(contentsOf: bundle)
                 self.audioPlayer?.delegate = self as AVAudioPlayerDelegate
                 self.audioPlayer?.play()
-                
             } catch {
                 print("play(with name:), ",error.localizedDescription)
             }

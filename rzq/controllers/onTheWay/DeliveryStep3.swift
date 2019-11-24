@@ -38,7 +38,7 @@ class DeliveryStep3: BaseVC, UINavigationControllerDelegate, ImagePickerDelegate
     
     @IBOutlet weak var bgRecord: UIImageView!
     
-    @IBOutlet weak var ivHandle: UIImageView!
+  //  @IBOutlet weak var ivHandle: UIImageView!
     
     @IBOutlet weak var edtOrderDetails: MultilineTextField!
     
@@ -73,6 +73,7 @@ class DeliveryStep3: BaseVC, UINavigationControllerDelegate, ImagePickerDelegate
     
     @IBOutlet weak var btnCheckMenu: MyUIButton!
     
+    @IBOutlet weak var viewCheckMenu: CardView!
     
     
     var selectedRoute: NSDictionary!
@@ -83,7 +84,10 @@ class DeliveryStep3: BaseVC, UINavigationControllerDelegate, ImagePickerDelegate
     
     var isAboveTen : Bool?
     var isFemale : Bool?
-    var isCash : Bool?
+    var isCash : Bool = true
+    
+    var selectedItems = [ShopMenuItem]()
+    var selectedTotal: Double?
     
     enum ImageSource {
         case photoLibrary
@@ -92,14 +96,24 @@ class DeliveryStep3: BaseVC, UINavigationControllerDelegate, ImagePickerDelegate
     
     var recorder = KAudioRecorder.shared
     
+    //hide/show
+    @IBOutlet weak var viewGender: UIView!
+    @IBOutlet weak var lblGender: MyUILabel!
+    
+    
     override func viewDidLoad() {
         super.viewDidLoad()
         
+        self.isCash = true
+        
+        self.isFemale = false
+        self.btnGender.setTitle("both_genders".localized, for: .normal)
+        
         SVProgressHUD.setDefaultMaskType(.clear)
         
-        if (self.isArabic()) {
-            self.ivHandle.image = UIImage(named: "ic_back_arabic")
-        }
+//        if (self.isArabic()) {
+//            self.ivHandle.image = UIImage(named: "ic_back_arabic")
+//        }
         self.btnTime.setTitle("asap".localized, for: .normal)
         // below are properties that can be optionally customized
         edtOrderDetails.placeholder = "order_details".localized
@@ -120,6 +134,39 @@ class DeliveryStep3: BaseVC, UINavigationControllerDelegate, ImagePickerDelegate
         
         self.edtOrderDetails.text = self.orderModel?.orderDetails ?? ""
         //  self.edtCost.text = self.orderModel?.orderCost ?? ""
+        
+        if (self.orderModel?.shop?.id ?? 0 > 0) {
+            self.btnCheckMenu.isHidden = false
+            self.viewCheckMenu.isHidden = false
+        }else {
+            self.btnCheckMenu.isHidden = true
+            self.viewCheckMenu.isHidden = true
+        }
+        
+        if (self.orderModel?.fromReorder ?? false) {
+            if (self.orderModel?.isFemale ?? false) {
+                self.isFemale = true
+                self.btnGender.setTitle("female_only".localized, for: .normal)
+            }else {
+                self.isFemale = false
+                self.btnGender.setTitle("both_genders".localized, for: .normal)
+            }
+            if (self.orderModel?.paymentMethod == Constants.PAYMENT_METHOD_CASH) {
+                self.isCash = true
+                self.btnPaymentMethod.setTitle("cash".localized, for: .normal)
+            }else {
+                self.isCash = false
+                self.btnPaymentMethod.setTitle("knet".localized, for: .normal)
+            }
+            if (self.orderModel?.selectedItems?.count ?? 0 > 0) {
+                self.selectedItems.append(contentsOf: self.orderModel?.selectedItems ?? [ShopMenuItem]())
+            }
+        }
+        
+        if (self.loadUser().data?.gender == 1) {
+            self.viewGender.isHidden = true
+            self.lblGender.isHidden = true
+        }
         
     }
     
@@ -248,9 +295,9 @@ class DeliveryStep3: BaseVC, UINavigationControllerDelegate, ImagePickerDelegate
         self.view.layoutSubviews()
     }
     
-    @IBAction func backAction(_ sender: Any) {
-        self.saveBackModel()
-    }
+//    @IBAction func backAction(_ sender: Any) {
+//        self.saveBackModel()
+//    }
     
     @IBAction func step1Action(_ sender: Any) {
         //  self.popBack(3)
@@ -346,17 +393,62 @@ class DeliveryStep3: BaseVC, UINavigationControllerDelegate, ImagePickerDelegate
     
     @IBAction func placeOrderAction(_ sender: Any) {
         if (self.validate()) {
-            self.showLoading()
-            ApiService.createDelivery(Authorization: self.loadUser().data?.accessToken ?? "", desc: self.edtOrderDetails.text ?? "", fromLongitude: self.orderModel?.pickUpLongitude ?? 0.0, fromLatitude: self.orderModel?.pickUpLatitude ?? 0.0, toLongitude: self.orderModel?.dropOffLongitude ?? 0.0, toLatitude: self.orderModel?.dropOffLatitude ?? 0.0, time: self.selectedTime ?? 0, estimatedPrice: "\(self.getCost())", fromAddress: self.orderModel?.pickUpAddress ?? "", toAddress: self.orderModel?.dropOffAddress ?? "", shopId: self.orderModel?.shop?.id ?? 0, pickUpDetails : self.orderModel?.pickUpDetails ?? "", dropOffDetails : self.orderModel?.dropOffDetails ?? "",paymentMethod : 1) { (response) in
-                if (response.data ?? 0 > 0) {
-                    self.handleUploadingMedia(id : response.data ?? 0)
+            
+            if (self.isCash ?? false) {
+                if (self.selectedItems.count > 0) {
+                    self.createDeliveryWithMenu(invoiceId : "")
                 }else {
-                    self.hideLoading()
-                    self.showBanner(title: "alert".localized, message: response.errorMessage ?? "", style: UIColor.INFO)
+                    self.createDeliveryWithoutMenu(invoiceId : "")
                 }
+            }else {
+                self.generatePaymentUrl()
             }
+            
         }
         
+    }
+    
+    func generatePaymentUrl() {
+        self.showLoading()
+        ApiService.placePayment(user: self.loadUser(), total: self.selectedTotal ?? 0.0, items: self.selectedItems) { (response) in
+            self.hideLoading()
+            if (self.selectedItems.count > 0) {
+                self.createDeliveryWithMenu(invoiceId : response.paymentData?.paymentURL ?? "")
+            }else {
+                self.createDeliveryWithoutMenu(invoiceId : response.paymentData?.paymentURL ?? "")
+            }
+        }
+    }
+    
+    func createDeliveryWithoutMenu(invoiceId: String) {
+        self.showLoading()
+        var paymentMethod = Constants.PAYMENT_METHOD_KNET
+        if (self.isCash ?? false) {
+            paymentMethod = Constants.PAYMENT_METHOD_CASH
+        }
+        ApiService.createDelivery(Authorization: self.loadUser().data?.accessToken ?? "", desc: self.edtOrderDetails.text ?? "", fromLongitude: self.orderModel?.pickUpLongitude ?? 0.0, fromLatitude: self.orderModel?.pickUpLatitude ?? 0.0, toLongitude: self.orderModel?.dropOffLongitude ?? 0.0, toLatitude: self.orderModel?.dropOffLatitude ?? 0.0, time: self.selectedTime ?? 0, estimatedPrice: "\(self.getCost())", fromAddress: self.orderModel?.pickUpAddress ?? "", toAddress: self.orderModel?.dropOffAddress ?? "", shopId: self.orderModel?.shop?.id ?? 0, pickUpDetails : self.orderModel?.pickUpDetails ?? "", dropOffDetails : self.orderModel?.dropOffDetails ?? "",paymentMethod : paymentMethod, isFemale : self.isFemale ?? false, invoiceId: invoiceId) { (response) in
+            if (response.data ?? 0 > 0) {
+                self.handleUploadingMedia(id : response.data ?? 0)
+            }else {
+                self.hideLoading()
+                self.showBanner(title: "alert".localized, message: response.errorMessage ?? "", style: UIColor.INFO)
+            }
+        }
+    }
+    func createDeliveryWithMenu(invoiceId: String) {
+        self.showLoading()
+        var paymentMethod = Constants.PAYMENT_METHOD_KNET
+        if (self.isCash ?? false) {
+            paymentMethod = Constants.PAYMENT_METHOD_CASH
+        }
+        ApiService.createDeliveryWithMenu(Authorization: self.loadUser().data?.accessToken ?? "", desc: self.edtOrderDetails.text ?? "", fromLongitude: self.orderModel?.pickUpLongitude ?? 0.0, fromLatitude: self.orderModel?.pickUpLatitude ?? 0.0, toLongitude: self.orderModel?.dropOffLongitude ?? 0.0, toLatitude: self.orderModel?.dropOffLatitude ?? 0.0, time: self.selectedTime ?? 0, estimatedPrice: "\(self.getCost())", fromAddress: self.orderModel?.pickUpAddress ?? "", toAddress: self.orderModel?.dropOffAddress ?? "", shopId: self.orderModel?.shop?.id ?? 0, pickUpDetails : self.orderModel?.pickUpDetails ?? "", dropOffDetails : self.orderModel?.dropOffDetails ?? "",paymentMethod : paymentMethod, isFemale : self.isFemale ?? false, menuItems : self.selectedItems, invoiceId : invoiceId) { (response) in
+            if (response.data ?? 0 > 0) {
+                self.handleUploadingMedia(id : response.data ?? 0)
+            }else {
+                self.hideLoading()
+                self.showBanner(title: "alert".localized, message: response.errorMessage ?? "", style: UIColor.INFO)
+            }
+        }
     }
     
     func handleUploadingMedia(id : Int) {
@@ -520,7 +612,6 @@ class DeliveryStep3: BaseVC, UINavigationControllerDelegate, ImagePickerDelegate
     }
     
     
-    
     func createGenderSheet() -> ActionSheet {
         let title = ActionSheetTitle(title: "select_driver_gender".localized)
         
@@ -532,20 +623,20 @@ class DeliveryStep3: BaseVC, UINavigationControllerDelegate, ImagePickerDelegate
         appearance.item.subtitleFont = UIFont(name: Constants.ARABIC_FONT_REGULAR, size: 14)
         appearance.item.font = UIFont(name: Constants.ARABIC_FONT_REGULAR, size: 14)
         
-        let item0 = ActionSheetItem(title: "male".localized, value: 0, image: nil)
-        let item1 = ActionSheetItem(title: "female".localized, value: 1, image: nil)
+        let item0 = ActionSheetItem(title: "both_genders".localized, value: 0, image: nil)
+        let item1 = ActionSheetItem(title: "female_only".localized, value: 1, image: nil)
         
         let actionSheet = ActionSheet(items: [title,item0,item1]) { sheet, item in
             if let value = item.value as? Int {
                 switch (value) {
                 case 0:
                     //below
-                    self.btnGender.setTitle("male".localized, for: .normal)
+                    self.btnGender.setTitle("both_genders".localized, for: .normal)
                     self.isFemale = false
                     break
                 case 1:
                     //above
-                    self.btnGender.setTitle("female".localized, for: .normal)
+                    self.btnGender.setTitle("female_only".localized, for: .normal)
                     self.isFemale = true
                     break
                 default:
@@ -668,7 +759,6 @@ class DeliveryStep3: BaseVC, UINavigationControllerDelegate, ImagePickerDelegate
         self.btnRecord.setImage(UIImage(named: "ic_microphone"), for: .normal)
         self.gif.isHidden = true
         self.viewRecording.isHidden = true
-        
     }
     
     @IBAction func backBtnAction(_ sender: Any) {
@@ -684,7 +774,6 @@ class DeliveryStep3: BaseVC, UINavigationControllerDelegate, ImagePickerDelegate
     @IBAction func clearFieldAction(_ sender: Any) {
         self.edtOrderDetails.text = ""
     }
-    
     
     @IBAction func GenderAction(_ sender: Any) {
         let actionSheet = createGenderSheet()
@@ -702,21 +791,28 @@ class DeliveryStep3: BaseVC, UINavigationControllerDelegate, ImagePickerDelegate
         let storyboard = UIStoryboard(name: "Main", bundle: nil)
         let vc : ShopMenuVC = storyboard.instantiateViewController(withIdentifier: "ShopMenuVC") as! ShopMenuVC
         vc.shopId = self.orderModel?.shop?.id ?? 0
+        vc.selectedItems = self.selectedItems
         vc.delegate = self
         self.navigationController?.pushViewController(vc, animated: true)
     }
     
-    func onDone(items: [ShopMenuItem]) {
+    func onDone(items: [ShopMenuItem], total: Double) {
         var text = ""
         for item in items {
-            let doubleQuantity = Double(item.quantity ?? 0)
+            var itemQuantity = item.quantity ?? 0
+            if (itemQuantity == 0) {
+                itemQuantity = item.count ?? 0
+            }
+            let doubleQuantity = Double(itemQuantity)
             let doublePrice = item.price ?? 0.0
             let total = doubleQuantity * doublePrice
-            text = "\(text)\(item.name ?? "") x \(item.quantity ?? 0) -> \(total) \("currency".localized).\n"
+            text = "\(text)\(item.name ?? "") x \(itemQuantity) -> \(total) \("currency".localized).\n"
         }
+        self.selectedTotal = total
         self.edtOrderDetails.text = text
+        self.selectedItems.removeAll()
+        self.selectedItems.append(contentsOf: items)
     }
-    
     
 }
 extension DeliveryStep3 : GMSMapViewDelegate {

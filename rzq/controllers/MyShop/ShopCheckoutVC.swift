@@ -86,6 +86,16 @@ class ShopCheckoutVC: BaseVC, UITableViewDelegate, UITableViewDataSource {
             self.items.remove(at: index)
             self.tableView.reloadData()
             self.calculateTotal()
+            if (self.items.count == 0) {
+                self.navigationController?.popViewController(animated: true)
+            }
+        }, cancelHandler: {
+            if let cell = self.tableView.cellForRow(at: IndexPath(row: index, section: 0)) as? ShopCheckoutCell {
+                cell.viewStepper.value = 1.0
+                self.items[index].quantity = 1
+                self.tableView.reloadData()
+                // self.tableView.reloadData()
+            }
         })
     }
     
@@ -134,11 +144,11 @@ class ShopCheckoutVC: BaseVC, UITableViewDelegate, UITableViewDataSource {
         
         
         //test payment screen
-//        let storyboard = UIStoryboard(name: "Main", bundle: nil)
-//        let vc : PaymentVC = storyboard.instantiateViewController(withIdentifier: "PaymentVC") as! PaymentVC
-//        vc.items = self.items
-//        vc.total =  self.getTotal()
-//        self.present(vc, animated: true, completion: nil)
+        //        let storyboard = UIStoryboard(name: "Main", bundle: nil)
+        //        let vc : PaymentVC = storyboard.instantiateViewController(withIdentifier: "PaymentVC") as! PaymentVC
+        //        vc.items = self.items
+        //        vc.total =  self.getTotal()
+        //        self.present(vc, animated: true, completion: nil)
     }
     
     func getTotal() -> Double {

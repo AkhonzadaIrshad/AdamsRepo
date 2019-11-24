@@ -7,15 +7,19 @@
 //
 
 import UIKit
+import FittedSheets
 
-class AddMenuVC: BaseVC, UITableViewDelegate, UITableViewDataSource{
+class AddMenuVC: BaseVC, UITableViewDelegate, UITableViewDataSource, CategoryNameSheetDelegate {
     
     
-    @IBOutlet weak var fieldCategory: MyUITextField!
+    @IBOutlet weak var fieldEnglishCategory: MyUITextField!
+    @IBOutlet weak var fieldArabicCategory: MyUITextField!
     
     @IBOutlet weak var ivHandle: UIImageView!
     
     @IBOutlet weak var tableView: UITableView!
+    
+    var sheetController : SheetViewController?
     
     var shopId : Int?
     
@@ -45,6 +49,12 @@ class AddMenuVC: BaseVC, UITableViewDelegate, UITableViewDataSource{
             self.items.removeAll()
             self.items.append(contentsOf: response.shopOwnerData ?? [ShopOwnerDatum]())
             self.tableView.reloadData()
+            
+            if (self.items.count == 0) {
+                self.tableView.setEmptyView(title: "no_menu_categories".localized, message: "no_menu_categories_desc".localized, image: "bg_no_data")
+            }else {
+                self.tableView.restore()
+            }
         }
     }
     
@@ -72,10 +82,19 @@ class AddMenuVC: BaseVC, UITableViewDelegate, UITableViewDataSource{
             let storyboard = UIStoryboard(name: "Main", bundle: nil)
             let vc : MenuItemsVC = storyboard.instantiateViewController(withIdentifier: "MenuItemsVC") as! MenuItemsVC
             vc.items.append(contentsOf: item.showOwnerItems ?? [ShowOwnerItem]())
+            vc.items.reverse()
             vc.categoryId = item.id ?? 0
+            if (self.isArabic()) {
+                vc.categoryName = item.arabicName ?? ""
+            }else {
+                vc.categoryName = item.englishName ?? ""
+            }
             self.navigationController?.pushViewController(vc, animated: true)
         }
         
+        cell.onEditName = {
+            self.showCategoryNameSheet(cat: item)
+        }
         
         return cell
     }
@@ -84,15 +103,53 @@ class AddMenuVC: BaseVC, UITableViewDelegate, UITableViewDataSource{
         
     }
     
+//    func tableView(_ tableView: UITableView, canEditRowAt indexPath: IndexPath) -> Bool {
+//           return true
+//       }
+//
+//       func tableView(_ tableView: UITableView, commit editingStyle: UITableViewCell.EditingStyle, forRowAt indexPath: IndexPath) {
+//           if (editingStyle == .delete) {
+//               self.deleteMenu(index: indexPath.row)
+//           }
+//       }
+//
+//
+//       func deleteMenu(index: Int) {
+//           self.showAlert(title: "alert".localized, message: "confirm_delete_menu_category".localized, actionTitle: "delete".localized, cancelTitle: "cancel".localized, actionHandler: {
+//            self.showLoading()
+//            ApiService.owner_dele
+//                     self.items.remove(at: index)
+//                     self.tableView.reloadData()
+//                 })
+//       }
+    
+    func showCategoryNameSheet(cat: ShopOwnerDatum) {
+        let storyboard = UIStoryboard.init(name: "Main", bundle: nil)
+        let controller = storyboard.instantiateViewController(withIdentifier: "UpdateCategoryNameSheet") as! UpdateCategoryNameSheet
+        sheetController = SheetViewController(controller: controller, sizes: [.fixed(250)])
+        sheetController?.handleColor = UIColor.colorPrimary
+        controller.delegate = self
+        controller.cat = cat
+        self.present(sheetController!, animated: false, completion: nil)
+    }
+    
+    func onSubmit(cat: ShopOwnerDatum, englishName: String, arabicName: String) {
+        self.showLoading()
+        ApiService.owner_updateMenuCategory(Authorization: self.loadUser().data?.accessToken ?? "", menuId: cat.id ?? 0, englishName: englishName, arabicName: arabicName, image: cat.imageName ?? "") { (response) in
+            self.hideLoading()
+            self.sheetController?.closeSheet()
+            self.loadCategories()
+        }
+    }
     
     @IBAction func backAction(_ sender: Any) {
         self.navigationController?.popViewController(animated: true)
     }
     
     @IBAction func addCategoryAction(_ sender: Any) {
-        if (self.fieldCategory.text?.count ?? 0 > 0) {
+        if (self.fieldEnglishCategory.text?.count ?? 0 > 0 && self.fieldArabicCategory.text?.count ?? 0 > 0) {
             self.showLoading()
-            ApiService.owner_createMenuCategory(Authorization: self.loadUser().data?.accessToken ?? "", shopId: self.shopId ?? 0, englishName: self.fieldCategory.text ?? "", arabicName: self.fieldCategory.text ?? "", image: "") { (response) in
+            ApiService.owner_createMenuCategory(Authorization: self.loadUser().data?.accessToken ?? "", shopId: self.shopId ?? 0, englishName: self.fieldEnglishCategory.text ?? "", arabicName: self.fieldArabicCategory.text ?? "", image: "") { (response) in
                 self.hideLoading()
                 self.loadCategories()
             }
@@ -100,5 +157,18 @@ class AddMenuVC: BaseVC, UITableViewDelegate, UITableViewDataSource{
             self.showBanner(title: "alert".localized, message: "enter_category_name".localized, style: UIColor.INFO)
         }
     }
+    
+    @IBAction func addCatAction(_ sender: Any) {
+        if (self.fieldEnglishCategory.text?.count ?? 0 > 0 && self.fieldArabicCategory.text?.count ?? 0 > 0) {
+            self.showLoading()
+            ApiService.owner_createMenuCategory(Authorization: self.loadUser().data?.accessToken ?? "", shopId: self.shopId ?? 0, englishName: self.fieldEnglishCategory.text ?? "", arabicName: self.fieldArabicCategory.text ?? "", image: "") { (response) in
+                self.hideLoading()
+                self.loadCategories()
+            }
+        }else {
+            self.showBanner(title: "alert".localized, message: "enter_category_name".localized, style: UIColor.INFO)
+        }
+    }
+    
     
 }

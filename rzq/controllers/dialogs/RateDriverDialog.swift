@@ -14,14 +14,17 @@ protocol RateDriverDelegate {
     func reloadFromRateDriver()
 }
 class RateDriverDialog: BaseVC {
-
-   
+    
+    
     @IBOutlet weak var ratingView: CosmosView!
     @IBOutlet weak var edtComments: MultilineTextField!
     
     var deliveryId : Int?
     var delegate : RateDriverDelegate?
     var notificationId : Int?
+    var hideCancel: Bool?
+    
+    @IBOutlet weak var btnCancel: UIButton!
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -29,6 +32,15 @@ class RateDriverDialog: BaseVC {
         edtComments.placeholder = "feedback_comments".localized
         edtComments.placeholderColor = UIColor.lightGray
         edtComments.isPlaceholderScrollEnabled = true
+        
+    }
+    
+    override func viewWillAppear(_ animated: Bool) {
+        super.viewWillAppear(animated)
+        
+        if (self.hideCancel ?? false) {
+            self.btnCancel.isHidden = true
+        }
         
     }
     

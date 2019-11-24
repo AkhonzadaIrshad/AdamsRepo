@@ -13,5 +13,4 @@ class ServiceCell: UICollectionViewCell {
     @IBOutlet weak var ivLogo: UIImageView!
     @IBOutlet weak var lblName: MyUILabel!
     
-    
 }

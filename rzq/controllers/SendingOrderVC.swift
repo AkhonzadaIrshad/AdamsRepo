@@ -23,8 +23,13 @@ class SendingOrderVC: BaseVC {
     override func viewDidLoad() {
         super.viewDidLoad()
 
-        let gif = UIImage(gifName: "pending.gif")
-        self.gif.setGifImage(gif)
+        if (self.isArabic()) {
+            let gif = UIImage(gifName: "pending_ar.gif")
+            self.gif.setGifImage(gif)
+        }else {
+            let gif = UIImage(gifName: "pending_en.gif")
+            self.gif.setGifImage(gif)
+        }
         
          if (type == 2){
             self.lblTitle.text = "waiting_provider_bids".localized

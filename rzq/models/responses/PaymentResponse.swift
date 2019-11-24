@@ -11,20 +11,18 @@ import Foundation
 // MARK: - PaymentResponse
 class PaymentResponse: Codable {
     let isSuccess: Bool?
-    let message, validationErrors: String?
+    let message: String?
     let paymentData: PaymentData?
 
     enum CodingKeys: String, CodingKey {
         case isSuccess = "IsSuccess"
         case message = "Message"
-        case validationErrors = "ValidationErrors"
         case paymentData = "Data"
     }
 
-    init(isSuccess: Bool?, message: String?, validationErrors: String?, paymentData: PaymentData?) {
+    init(isSuccess: Bool?, message: String?, paymentData: PaymentData?) {
         self.isSuccess = isSuccess
         self.message = message
-        self.validationErrors = validationErrors
         self.paymentData = paymentData
     }
 }

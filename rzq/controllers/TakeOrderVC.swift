@@ -35,6 +35,8 @@ class TakeOrderVC: BaseVC, AVAudioPlayerDelegate {
     
     @IBOutlet weak var ivHandle: UIImageView!
     
+    @IBOutlet weak var lblPaymentMethod: MyUILabel!
+    
     @IBOutlet weak var btnPlay: UIButton!
     @IBOutlet weak var btnImages: UIButton!
     
@@ -134,6 +136,10 @@ class TakeOrderVC: BaseVC, AVAudioPlayerDelegate {
             }else {
                 self.btnPlay.isHidden = true
             }
+            
+            self.lblPaymentMethod.text = self.getPaymentMethod(method: response.data?.paymentMethod ?? Constants.PAYMENT_METHOD_CASH)
+            
+            
         }
         
         do {
@@ -144,6 +150,19 @@ class TakeOrderVC: BaseVC, AVAudioPlayerDelegate {
         }
         
         
+    }
+    
+    func getPaymentMethod(method: Int) -> String {
+        switch method {
+        case Constants.PAYMENT_METHOD_CASH:
+            return "cash".localized
+        case Constants.PAYMENT_METHOD_KNET:
+            return "knet".localized
+        case Constants.PAYMENT_METHOD_BALANCE:
+            return "coupon".localized
+        default:
+            return "cash".localized
+        }
     }
     
     func setUpGoogleMap() {

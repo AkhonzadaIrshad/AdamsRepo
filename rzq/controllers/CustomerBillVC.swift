@@ -25,6 +25,9 @@ class CustomerBillVC: BaseVC,UINavigationControllerDelegate, UICollectionViewDel
     
     var deliveryCost : Double?
     var totalCost : Double?
+    var paymentMethod: String?
+    var paymentMethodInt : Int?
+    var commission : Double?
     
     var selectedImages = [UIImage]()
     var imagePicker: UIImagePickerController!
@@ -133,7 +136,12 @@ class CustomerBillVC: BaseVC,UINavigationControllerDelegate, UICollectionViewDel
     
     @IBAction func sendAction(_ sender: Any) {
         if (self.validate()) {
-            let totalStr = "\("order_cost".localized): \(self.edtOrderCost.text ?? "") \n\n \("delivery_cost".localized): \(self.deliveryCost ?? 0.0) \n\n \("total_cost".localized): \(self.lblTotalCost.text ?? "")"
+            var totalStr = "\("order_cost".localized): \(self.edtOrderCost.text ?? "") \n\n \("delivery_cost".localized): \(self.deliveryCost ?? 0.0) \n\n \("total_cost".localized): \(self.lblTotalCost.text ?? "") \n\n \("payment_method".localized): \(self.paymentMethod ?? "")"
+            
+            if (self.paymentMethodInt == Constants.PAYMENT_METHOD_KNET) {
+                totalStr = "\n\n\(totalStr)\n\n\("notify_user_knet".localized)\n\n\("knet_commission".localized): \(self.commission ?? 0.0)"
+            }
+            
             self.delegate?.onDone(images: self.selectedImages,orderCost: self.totalCost ?? 0.0, costDetails: totalStr)
             self.dismiss(animated: true, completion: nil)
         }
@@ -152,15 +160,16 @@ extension CustomerBillVC: UIImagePickerControllerDelegate {
         self.collectionView.reloadData()
     }
 }
+
 extension CustomerBillVC: UITextFieldDelegate {
     
     func textField(_ textField: UITextField, shouldChangeCharactersIn range: NSRange, replacementString string: String) -> Bool {
         
         if let text = textField.text as NSString? {
             let txtAfterUpdate = text.replacingCharacters(in: range, with: string)
-            if txtAfterUpdate.convertToEnglishNumber() != "0" {
+          //  if txtAfterUpdate.convertToEnglishNumber() != "0" {
                 textField.text = txtAfterUpdate.replacedArabicDigitsWithEnglish
-            }
+          //  }
         }
         if textField == self.edtOrderCost {
             let text = textField.text ?? ""

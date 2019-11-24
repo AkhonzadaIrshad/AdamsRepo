@@ -12,7 +12,7 @@ import SimpleCheckbox
 import DatePickerDialog
 
 class EditProfileVC: BaseVC,UINavigationControllerDelegate {
-
+    
     @IBOutlet weak var ivProfile: CircleImage!
     
     @IBOutlet weak var edtEmail: SkyFloatingLabelTextField!
@@ -60,7 +60,7 @@ class EditProfileVC: BaseVC,UINavigationControllerDelegate {
         self.edtMobileNumber.title = "mobile_number".localized
         self.edtMobileNumber.placeholder = "mobile_number".localized
         self.edtMobileNumber.selectedTitle = "mobile_number".localized
-         self.edtMobileNumber.font = UIFont(name: self.getFontName(), size: 14)
+        self.edtMobileNumber.font = UIFont(name: self.getFontName(), size: 14)
         
         if (self.isArabic()) {
             self.edtUserName.textAlignment = NSTextAlignment.right
@@ -143,16 +143,21 @@ class EditProfileVC: BaseVC,UINavigationControllerDelegate {
                 self.hideLoading()
                 if (response.errorCode == 0) {
                     self.showBanner(title: "alert".localized, message: "profile_updated_successfully".localized, style: UIColor.SUCCESS)
-                    DispatchQueue.main.asyncAfter(deadline: .now() + 2, execute: {
-                        self.navigationController?.popViewController(animated: true)
-                    })
+                    ApiService.getProfile(Authorization: self.loadUser().data?.accessToken ?? "") { (rsp) in
+                        let userData = self.loadUser().data
+                        let profile = VerifyResponse(data: DataClass(accessToken: userData?.accessToken ?? "", phoneNumber: rsp.dataProfileObj?.phoneNumber ?? "", username: userData?.username ?? "", fullName: rsp.dataProfileObj?.fullName ?? "", userID: userData?.userID ?? "", dateOfBirth: rsp.dataProfileObj?.dateOfBirth ?? "", profilePicture: rsp.dataProfileObj?.image ?? "", email: rsp.dataProfileObj?.email ?? "", gender: rsp.dataProfileObj?.gender ?? 1, rate: userData?.rate ?? 0.0, roles: userData?.roles ?? "", isOnline: userData?.isOnline ?? true, exceededDueAmount: userData?.exceededDueAmount ?? false, dueAmount: userData?.dueAmount ?? 0.0, earnings: userData?.earnings ?? 0.0, balance: userData?.balance ?? 0.0), errorCode: 0, errorMessage: "")
+                        self.updateUser(self.getRealmUser(userProfile: profile))
+                        DispatchQueue.main.asyncAfter(deadline: .now() + 2, execute: {
+                            self.navigationController?.popViewController(animated: true)
+                        })
+                    }
                 }else {
                     self.showBanner(title: "alert".localized, message: response.errorMessage ?? "", style: UIColor.INFO)
                 }
                 
             }
         }
-       
+        
     }
     
     func validate() -> Bool {

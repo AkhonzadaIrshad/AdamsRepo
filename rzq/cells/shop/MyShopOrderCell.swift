@@ -22,4 +22,14 @@ class MyShopOrderCell: UITableViewCell {
     
     @IBOutlet weak var lblOrderDetails: MyUILabel!
     
+    @IBOutlet weak var btnItems: MyUIButton!
+    
+    var onViewItems : (() -> Void)? = nil
+    
+    @IBAction func itemsAction(_ sender: Any) {
+        if let onViewItems = self.onViewItems {
+            onViewItems()
+        }
+    }
+    
 }

@@ -20,4 +20,8 @@ class OTWOrder : NSObject {
     var orderCost : String?
     var time : Int?
     var shop : DataShop?
+    var fromReorder: Bool?
+    var selectedItems : [ShopMenuItem]?
+    var paymentMethod : Int?
+    var isFemale : Bool?
 }

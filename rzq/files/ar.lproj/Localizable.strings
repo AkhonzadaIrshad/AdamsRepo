@@ -225,7 +225,7 @@
 "open_now" = "يعمل الان";
 "closed_now" = "مغلق الان";
 
-"searchfield_tooltip" = "ابحث عن المكان او المتجر المراد الطلب منه.";
+"searchfield_tooltip" = "ابحث عن المكان الذي تريد ان تطلب او ترسل منه";
 
 "more_10" = "اكثر من ١٠";
 "less_10" = "اقل من ١٠";
@@ -246,3 +246,51 @@
 "enter_price_first" = "ادخل سعر العنصر!";
 "enter_desc_first" = "ادخل وصف العنصر!";
 "add_item_image" = "اضف صورة العنصر!";
+"payment_method_changed" = "تم تغيير طريقة الدفع";
+"this_order_done" = "هذا الطلب لم يعد فعال";
+
+
+//here
+"no_shops" = "لا يوجد اماكن";
+"no_shops_desc" = "الاماكن الخاصة بك ستظهر هنا";
+"no_shop_orders" = "لا يوجد طلبات";
+"no_shop_orders_desc" = "الطلبات الخاصة بالمتجر ستظهر هنا";
+"no_menu_categories" = "لا يوجد اصناف";
+"no_menu_categories_desc" = "اصناف القائمة ستظهر هنا";
+"no_menu_items" = "لا يوجد عناصر";
+"no_menu_items_desc" = "عناصر الصنف ستظهر هنا";
+"no_ratings" = "لا يوجد تقييمات";
+"no_ratings_desc" = "التقييمات ستظهر هنا";
+"payment_method" = "طريقة الدفع";
+"paid_successfully" = "تم الدفع بنجاح";
+
+"paid_cash" = "قام الزبون بالدفع كاش";
+"didnt_pay" = "لم يقم بالدفع";
+"confirm" = "تاكيد";
+"payment_knet_paid" = "قام الزبون بالدفع بكي نت";
+"payment_knet_fail" = "لم يقم الزبون بالدفع بكي نت، الرجاء اخد المبلغ كاش";
+"cash_collected" = "تم التحصيل كاش";
+"send_knet_link" = "تنبيه الزبون";
+"notify_user_cash" = "الرجاء دفع قيمة الطلب كاش للسائق";
+"notify_user_knet" = "الرجاء اتمام علمية الدفع باستخدام كي نت بالضغظ على تفاصيل الطلب بالاعلى من ثم دفع الطلب";
+
+"payment_failed" = "فشلت عملية الدفع";
+"paid_title" = "(تم الدفع)";
+"not_paid_title" = "(لم يتم الدفع)";
+"no_menu" = "لا يوجد منيو لهذا المتجر";
+
+"am" = "AM";
+"pm" = "PM";
+"order_items" = "العناصر";
+
+"knet_order_success" = "لقد قمت بدفع الطلب باستخدام كي نت بنجاح.";
+"knet_order_fail" = "لم اتمكن من الدفع باستخدام كي نت، هل من الممكن الدفع كاش؟";
+
+
+"female_only" = "اناث فقط";
+"both_genders" = "كلاهما";
+
+"bill_not_issued" = "لم يقم السائق بإصدار الفاتورة بعد.";
+
+"new_notifications_driver" = "اشعارات الطلبات القريبة";
+"new_notifications_user" = "اشعارات عروض الاسعار";

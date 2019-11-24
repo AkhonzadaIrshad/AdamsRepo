@@ -35,6 +35,7 @@ class ConfigData: Codable {
     let configSettings: ConfigSettings?
     let id: Int?
     
+    
     enum CodingKeys: String, CodingKey {
         case updateStatus = "UpdateStatus"
         case developer = "Developer"
@@ -93,6 +94,7 @@ class ConfigSettings: Codable {
     let isMapView: Bool?
     let radius, driversLimit, orderTimeConstraint, minimumOneKMValue: Double?
     let minimumFiveKMValue, maximumValue, incrementValue, shopLimit: Double?
+    let KnetCommission: Double?
     
     enum CodingKeys: String, CodingKey {
         case flag = "Flag"
@@ -108,9 +110,10 @@ class ConfigSettings: Codable {
         case maximumValue = "MaximumValue"
         case incrementValue = "IncrementValue"
         case shopLimit = "ShopLimit"
+        case KnetCommission = "KnetCommission"
     }
     
-    init(flag: Bool?, percentage: Double?, dueAmountLimit: Double?, showNotificationPeriod: Double?, isMapView: Bool?, radius: Double?, driversLimit: Double?, orderTimeConstraint: Double?, minimumOneKMValue: Double?, minimumFiveKMValue: Double?, maximumValue: Double?, incrementValue: Double?, shopLimit: Double?) {
+    init(flag: Bool?, percentage: Double?, dueAmountLimit: Double?, showNotificationPeriod: Double?, isMapView: Bool?, radius: Double?, driversLimit: Double?, orderTimeConstraint: Double?, minimumOneKMValue: Double?, minimumFiveKMValue: Double?, maximumValue: Double?, incrementValue: Double?, shopLimit: Double?, KnetCommission: Double?) {
         self.flag = flag
         self.percentage = percentage
         self.dueAmountLimit = dueAmountLimit
@@ -124,6 +127,7 @@ class ConfigSettings: Codable {
         self.maximumValue = maximumValue
         self.incrementValue = incrementValue
         self.shopLimit = shopLimit
+        self.KnetCommission = KnetCommission
     }
 }
 

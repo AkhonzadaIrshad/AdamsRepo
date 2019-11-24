@@ -11,7 +11,7 @@ import SkyFloatingLabelTextField
 import CountryPickerView
 
 class LoginVC: BaseVC, CountryPickerViewDataSource, CountryPickerViewDelegate, PhoneVerificationDelegate {
-
+    
     @IBOutlet weak var edtUserName: SkyFloatingLabelTextField!
     
     @IBOutlet weak var edtMobileNumber: SkyFloatingLabelTextField!
@@ -23,6 +23,8 @@ class LoginVC: BaseVC, CountryPickerViewDataSource, CountryPickerViewDelegate, P
     @IBOutlet weak var countryPicker: CountryPickerView!
     
     var attributedString = NSMutableAttributedString(string:"")
+    
+    @IBOutlet weak var genderSegment: UISegmentedControl!
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -70,17 +72,20 @@ class LoginVC: BaseVC, CountryPickerViewDataSource, CountryPickerViewDelegate, P
         if (App.shared.config?.configSettings?.flag ?? false) {
             self.checkForUpdates()
         }
+        
+        self.genderSegment.setTitle("female".localized, forSegmentAt: 0)
+        self.genderSegment.setTitle("male".localized, forSegmentAt: 1)
     }
     
     
     func checkForUpdates() {
-         let appVersion = Bundle.main.infoDictionary!["CFBundleShortVersionString"] as? String ?? "0.0"
-            let doubleAppVersion : Double = appVersion.toDouble()!
-            let CMSVersion = App.shared.config?.updateStatus?.iosVersion ?? appVersion
-            let doubleCmsVersion : Double = CMSVersion.toDouble()!
-            let isMand = App.shared.config?.updateStatus?.iosIsMandatory ?? false
-            
-            if (doubleAppVersion < doubleCmsVersion){
+        let appVersion = Bundle.main.infoDictionary!["CFBundleShortVersionString"] as? String ?? "0.0"
+        let doubleAppVersion : Double = appVersion.toDouble()!
+        let CMSVersion = App.shared.config?.updateStatus?.iosVersion ?? appVersion
+        let doubleCmsVersion : Double = CMSVersion.toDouble()!
+        let isMand = App.shared.config?.updateStatus?.iosIsMandatory ?? false
+        
+        if (doubleAppVersion < doubleCmsVersion){
             if (isMand){
                 //mandatory
                 if (self.isArabic()) {
@@ -155,7 +160,11 @@ class LoginVC: BaseVC, CountryPickerViewDataSource, CountryPickerViewDelegate, P
             if (mobile.starts(with: "0")) {
                 mobile = String(mobile.dropFirst())
             }
-            ApiService.registerUser(phoneNumber: "\(code)\(mobile)", fullName: self.edtUserName.text ?? "", email: "", birthDate: "", gender: 1, isResend: false) { (response) in
+            var gender = 2
+            if (self.genderSegment.selectedSegmentIndex == 1) {
+                gender = 1
+            }
+            ApiService.registerUser(phoneNumber: "\(code)\(mobile)", fullName: self.edtUserName.text ?? "", email: "", birthDate: "", gender: gender, isResend: false) { (response) in
                 self.hideLoading()
                 if (response.errorCode == 0) {
                     let vc = UIStoryboard(name: "Main", bundle: nil).instantiateViewController(withIdentifier: "PhoneVerificationDialog") as! PhoneVerificationDialog
@@ -181,7 +190,7 @@ class LoginVC: BaseVC, CountryPickerViewDataSource, CountryPickerViewDelegate, P
             mobile = String(mobile.dropFirst())
         }
         ApiService.registerUser(phoneNumber: "\(code)\(mobile)", fullName: self.edtUserName.text ?? "", email: "", birthDate: "", gender: 1, isResend: true) { (response) in
-           
+            
         }
     }
     
@@ -194,7 +203,7 @@ class LoginVC: BaseVC, CountryPickerViewDataSource, CountryPickerViewDelegate, P
         initialViewControlleripad.modalPresentationStyle = .fullScreen
         self.present(initialViewControlleripad, animated: true, completion: {})
         
-    
+        
     }
     
     func validateFields() -> Bool {

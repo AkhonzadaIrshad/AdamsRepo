@@ -172,7 +172,7 @@ public class YRipple {
         DispatchQueue.main.async {
             [weak rippleLayer] in
             if let target = rippleLayer {
-                let layer = CALayer()
+                let layer = CALayer() 
                 layer.contents = img?.cgImage
                 layer.frame = CGRect(x:point.x - option.radius, y:point.y - option.radius, width:option.radius * 2, height:option.radius * 2)
                 target.addSublayer(layer)

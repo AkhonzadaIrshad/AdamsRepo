@@ -14,7 +14,7 @@ import BRYXBanner
 import SVProgressHUD
 import SwiftyGif
 
-class ZHCDemoMessagesViewController: ZHCMessagesViewController, BillDelegate, ChatDelegate,UINavigationControllerDelegate, LabasLocationManagerDelegate {
+class ZHCDemoMessagesViewController: ZHCMessagesViewController, BillDelegate, ChatDelegate,UINavigationControllerDelegate, LabasLocationManagerDelegate, PaymentStatusDelegate, OrderChatDelegate, RateDriverDelegate {
     
     var demoData: ZHModelData = ZHModelData.init()
     var presentBool: Bool = false
@@ -114,6 +114,24 @@ class ZHCDemoMessagesViewController: ZHCMessagesViewController, BillDelegate, Ch
         
     }
     
+    func changeOrderPaymentMethod(method : Int) {
+        self.order?.paymentMethod = method
+    }
+    
+    
+    func getPaymentMethod(method: Int) -> String {
+        switch method {
+        case Constants.PAYMENT_METHOD_CASH:
+            return "cash".localized
+        case Constants.PAYMENT_METHOD_KNET:
+            return "knet".localized
+        case Constants.PAYMENT_METHOD_BALANCE:
+            return "coupon".localized
+        default:
+            return "cash".localized
+        }
+    }
+    
     
     func sendWelcomeMessage() -> Bool {
         if (self.isProvider() && self.user?.data?.userID == self.order?.providerID) {
@@ -148,21 +166,45 @@ class ZHCDemoMessagesViewController: ZHCMessagesViewController, BillDelegate, Ch
         
     }
     
-    
-    
     @objc func orderInfoAction() {
         if let vc = UIStoryboard(name: "Main", bundle: nil).instantiateViewController(withIdentifier: "OrderDetailsVC") as? OrderDetailsVC
         {
             ApiService.getDelivery(id: self.order?.id ?? 0) { (response) in
                 vc.order = response.data
+                if (self.order?.isPaid ?? false) {
+                    vc.isPay = false
+                }else {
+                    vc.isPay = true
+                }
+                vc.delegate = self
                 self.navigationController?.pushViewController(vc, animated: true)
             }
         }
     }
     
+    func onOrderPaymentSuccess() {
+        self.sendTextMessage(text: "I have successfully paid my order using Knet.\n\n\nلقد قمت بدفع الطلب باستخدام كي نت بنجاح.")
+        SVProgressHUD.show()
+        ApiService.sendUserNotification(Authorization: self.user?.data?.accessToken ?? "", arabicTitle: "الطلب \(Constants.ORDER_NUMBER_PREFIX)\(self.order?.id ?? 0)", englishTitle: "Order \(Constants.ORDER_NUMBER_PREFIX)\(self.order?.id ?? 0)", arabicBody: "قام الزبون بدفع الطلب باستخدام كي نت", englishbody: "Client paid using Knet", userId: self.order?.providerID ?? "", type: 989) { (response) in
+            SVProgressHUD.dismiss()
+        }
+    }
+    func onOrderPaymentFail() {
+        self.sendTextMessage(text: "I did'nt pay my order using Knet, is it possible that we use cash?\n\n\nلم اتمكن من الدفع باستخدام كي نت، هل من الممكن الدفع كاش؟")
+    }
+    
+    
     override func viewDidAppear(_ animated: Bool) {
         super.viewDidAppear(animated)
         UserDefaults.standard.setValue(0, forKey: Constants.NOTIFICATION_CHAT_COUNT)
+        
+        if (self.order?.status == Constants.ORDER_CANCELLED || self.order?.status == Constants.ORDER_COMPLETED || self.order?.status == Constants.ORDER_EXPIRED) {
+            self.showBanner(title: "alert".localized, message: "this_order_done".localized, style: UIColor.INFO)
+            DispatchQueue.main.asyncAfter(deadline: .now() + 2, execute: {
+                self.navigationController?.dismiss(animated: true, completion: nil)
+            })
+        }
+        
     }
     
     func setUpRecordButton() {
@@ -253,11 +295,10 @@ class ZHCDemoMessagesViewController: ZHCMessagesViewController, BillDelegate, Ch
     }
     
     func closeChat() {
-        self.showBanner(title: "alert".localized, message: "delivery_completed_user", style: UIColor.SUCCESS)
+        self.showBanner(title: "alert".localized, message: "delivery_completed_user".localized, style: UIColor.SUCCESS)
         DispatchQueue.main.asyncAfter(deadline: .now() + 2) {
             self.dismiss(animated: true, completion: nil)
         }
-        
     }
     
     //    func removeCancel() {
@@ -376,7 +417,11 @@ class ZHCDemoMessagesViewController: ZHCMessagesViewController, BillDelegate, Ch
         
         let item2 = self.driverActionButton?.addItem()
         if (self.order?.status == Constants.ORDER_PROCESSING) {
-            item2?.titleLabel.text = "release_receipt".localized
+            if (self.order?.items?.count ?? 0 > 0 && self.order?.paymentMethod == Constants.PAYMENT_METHOD_KNET) {
+                item2?.titleLabel.text = "on_my_way".localized
+            }else {
+                item2?.titleLabel.text = "release_receipt".localized
+            }
         }else {
             item2?.titleLabel.text = "complete_delivery".localized
         }
@@ -389,30 +434,22 @@ class ZHCDemoMessagesViewController: ZHCMessagesViewController, BillDelegate, Ch
         item2?.action = { item in
             if (self.order?.status == Constants.ORDER_PROCESSING) {
                 //on my way
-                if let vc = UIStoryboard(name: "Main", bundle: nil).instantiateViewController(withIdentifier: "CustomerBillVC") as? CustomerBillVC
-                {
-                    vc.delegate = self
-                    vc.deliveryCost = self.order?.price ?? 0.0
-                    vc.modalPresentationStyle = .fullScreen
-                    self.present(vc, animated: true, completion: nil)
-                }
-            }else {
-                ApiService.completeDelivery(Authorization: self.user?.data?.accessToken ?? "", deliveryId: self.order?.id ?? 0, completion: { (response) in
-                    if (response.errorCode == 0) {
-                        self.showBanner(title: "alert".localized, message: "delivery_completed", style: UIColor.SUCCESS)
-                        
-                        let vc = UIStoryboard(name: "Main", bundle: nil).instantiateViewController(withIdentifier: "RateUserDialog") as! RateUserDialog
-                        vc.deliveryId = self.order?.id ?? 0
-                        self.definesPresentationContext = true
-                        vc.modalPresentationStyle = UIModalPresentationStyle.overCurrentContext
-                        vc.view.backgroundColor = UIColor.clear
+                if (self.order?.items?.count ?? 0 > 0 && self.order?.paymentMethod == Constants.PAYMENT_METHOD_KNET) {
+                    self.startDelivery(cost: self.order?.price ?? 0.0)
+                }else {
+                    if let vc = UIStoryboard(name: "Main", bundle: nil).instantiateViewController(withIdentifier: "CustomerBillVC") as? CustomerBillVC
+                    {
+                        vc.delegate = self
+                        vc.deliveryCost = self.order?.price ?? 0.0
+                        vc.paymentMethod = self.getPaymentMethod(method: self.order?.paymentMethod ?? 0)
+                        vc.paymentMethodInt = self.order?.paymentMethod ?? 0
+                        vc.commission = self.order?.KnetCommission ?? 0.0
                         vc.modalPresentationStyle = .fullScreen
                         self.present(vc, animated: true, completion: nil)
-                        
-                    }else {
-                        self.showBanner(title: "alert".localized, message: response.errorMessage ?? "", style: UIColor.INFO)
                     }
-                })
+                }
+            }else {
+                self.showPaymentStatusDialog()
             }
         }
         
@@ -463,6 +500,92 @@ class ZHCDemoMessagesViewController: ZHCMessagesViewController, BillDelegate, Ch
         
     }
     
+    func completeDelivery() {
+        ApiService.completeDelivery(Authorization: self.user?.data?.accessToken ?? "", deliveryId: self.order?.id ?? 0, completion: { (response) in
+            if (response.errorCode == 0) {
+                self.showBanner(title: "alert".localized, message: "delivery_completed", style: UIColor.SUCCESS)
+                
+                let vc = UIStoryboard(name: "Main", bundle: nil).instantiateViewController(withIdentifier: "RateUserDialog") as! RateUserDialog
+                vc.deliveryId = self.order?.id ?? 0
+                self.definesPresentationContext = true
+                vc.modalPresentationStyle = UIModalPresentationStyle.overCurrentContext
+                vc.view.backgroundColor = UIColor.clear
+                self.present(vc, animated: true, completion: nil)
+                
+            }else {
+                self.showBanner(title: "alert".localized, message: response.errorMessage ?? "", style: UIColor.INFO)
+            }
+        })
+    }
+    
+    
+    func deliveryIsReceived() {
+        let vc = UIStoryboard(name: "Main", bundle: nil).instantiateViewController(withIdentifier: "RateDriverDialog") as! RateDriverDialog
+        vc.deliveryId = self.order?.id ?? 0
+        self.definesPresentationContext = true
+        vc.modalPresentationStyle = UIModalPresentationStyle.overCurrentContext
+        vc.view.backgroundColor = UIColor.clear
+        vc.hideCancel = true
+        vc.delegate = self
+        self.present(vc, animated: true, completion: nil)
+    }
+    
+    func reloadFromRateDriver() {
+        self.closeChat()
+    }
+    
+    func showPaymentStatusDialog() {
+        let vc = UIStoryboard(name: "Main", bundle: nil).instantiateViewController(withIdentifier: "PaymentStatusDialog") as! PaymentStatusDialog
+        self.definesPresentationContext = true
+        vc.modalPresentationStyle = UIModalPresentationStyle.overCurrentContext
+        vc.view.backgroundColor = UIColor.clear
+        vc.delegate = self
+        vc.order = self.order
+        vc.isPaid = self.order?.isPaid ?? false
+        self.present(vc, animated: true, completion: nil)
+    }
+    
+    func onCashPaid() {
+        SVProgressHUD.show()
+        ApiService.changePaymentMethod(Authorization: self.user?.data?.accessToken ?? "", orderId: self.order?.id ?? 0, paymentMethod: 1) { (response) in
+            SVProgressHUD.dismiss()
+            self.completeDelivery()
+        }
+    }
+    
+    func onCashFail() {
+        self.sendTextMessage(text: "Please pay the driver in cash\n\n\nالرجاء دفع قيمة الطلب كاش للسائق")
+    }
+    
+    func onKnetPaid() {
+        if (self.order?.isPaid ?? false) {
+            self.completeDelivery()
+        }else {
+            SVProgressHUD.show()
+            ApiService.changePaymentMethod(Authorization: self.user?.data?.accessToken ?? "", orderId: self.order?.id ?? 0, paymentMethod: 1) { (response) in
+                SVProgressHUD.dismiss()
+                self.completeDelivery()
+            }
+        }
+    }
+    
+    func onKnetFail() {
+        //self.sendTextMessage(text: self.order?.invoiceId ?? "")
+        self.sendTextMessage(text: "Please complete your order payment using Knet from order details above.\n\n\nالرجاء اتمام علمية الدفع باستخدام كي نت بالضغظ على تفاصيل الطلب بالاعلى من ثم دفع الطلب")
+    }
+    
+    func sendTextMessage(text : String) {
+        ApiService.sendChatMessage(Authorization: self.user?.data?.accessToken ?? "", chatId: self.order?.chatId ?? 0, type: 1, message: text, image: "", voice: "") { (response) in
+            if (response.errorCode == 0) {
+                SVProgressHUD.dismiss()
+                let message: ZHCMessage = ZHCMessage.init(senderId: self.user?.data?.userID ?? "", senderDisplayName: self.user?.data?.fullName ?? "", date: Date(), text: text)
+                self.demoData.messages.add(message)
+                self.finishSendingMessage(animated: true)
+            }else {
+                self.closeChat()
+            }
+        }
+    }
     
     func cancelDeliveryByUser() {
         ApiService.cancelDelivery(Authorization: self.user?.data?.accessToken ?? "", deliveryId: self.order?.id ?? 0, completion: { (response) in
@@ -472,7 +595,12 @@ class ZHCDemoMessagesViewController: ZHCMessagesViewController, BillDelegate, Ch
                     self.goToOrders()
                 })
             }else {
-                self.showBanner(title: "alert".localized, message: response.errorMessage ?? "", style: UIColor.INFO)
+                if (self.order?.status == Constants.ORDER_CANCELLED || self.order?.status == Constants.ORDER_COMPLETED || self.order?.status == Constants.ORDER_EXPIRED) {
+                    self.goToOrders()
+                }else {
+                    self.showBanner(title: "alert".localized, message: response.errorMessage ?? "", style: UIColor.INFO)
+                }
+                //  self.dismiss(animated: true, completion: nil)
             }
         })
     }
@@ -485,7 +613,12 @@ class ZHCDemoMessagesViewController: ZHCMessagesViewController, BillDelegate, Ch
                     self.goToOrders()
                 })
             }else {
-                self.showBanner(title: "alert".localized, message: response.errorMessage ?? "", style: UIColor.INFO)
+                if (self.order?.status == Constants.ORDER_CANCELLED || self.order?.status == Constants.ORDER_COMPLETED || self.order?.status == Constants.ORDER_EXPIRED) {
+                    self.goToOrders()
+                }else {
+                    self.showBanner(title: "alert".localized, message: response.errorMessage ?? "", style: UIColor.INFO)
+                }
+                //  self.dismiss(animated: true, completion: nil)
             }
         })
     }
@@ -627,7 +760,7 @@ class ZHCDemoMessagesViewController: ZHCMessagesViewController, BillDelegate, Ch
                 self.showBanner(title: "alert".localized, message: "delivery_started".localized, style: UIColor.SUCCESS)
                 self.startNavigation(longitude: self.order?.toLongitude ?? 0.0, latitude: self.order?.toLatitude ?? 0.0)
                 
-                self.order = DatumDel(id: self.order?.id ?? 0, title: self.order?.title ?? "", status: Constants.ORDER_ON_THE_WAY, statusString: self.order?.statusString ?? "", image: self.order?.image ?? "", createdDate: self.order?.createdDate ?? "", chatId: self.order?.chatId ?? 0, fromAddress: self.order?.fromAddress ?? "", fromLatitude: self.order?.fromLatitude ?? 0.0, fromLongitude: self.order?.fromLongitude ?? 0.0, toAddress: self.order?.toAddress ?? "", toLatitude: self.order?.toLatitude ?? 0.0, toLongitude: self.order?.toLongitude ?? 0.0, providerID: self.order?.providerID, providerName: self.order?.providerName ?? "", providerImage: self.order?.providerImage ?? "", providerRate: self.order?.providerRate ?? 0.0, time: self.order?.time ?? 0, price: self.order?.price ?? 0.0, serviceName: self.order?.serviceName ?? "")
+                self.order = DatumDel(id: self.order?.id ?? 0, title: self.order?.title ?? "", status: Constants.ORDER_ON_THE_WAY, statusString: self.order?.statusString ?? "", image: self.order?.image ?? "", createdDate: self.order?.createdDate ?? "", chatId: self.order?.chatId ?? 0, fromAddress: self.order?.fromAddress ?? "", fromLatitude: self.order?.fromLatitude ?? 0.0, fromLongitude: self.order?.fromLongitude ?? 0.0, toAddress: self.order?.toAddress ?? "", toLatitude: self.order?.toLatitude ?? 0.0, toLongitude: self.order?.toLongitude ?? 0.0, providerID: self.order?.providerID, providerName: self.order?.providerName ?? "", providerImage: self.order?.providerImage ?? "", providerRate: self.order?.providerRate ?? 0.0, time: self.order?.time ?? 0, price: self.order?.price ?? 0.0, serviceName: self.order?.serviceName ?? "", paymentMethod: self.order?.paymentMethod ?? 0, items: self.order?.items ?? [ShopMenuItem](), isPaid: self.order?.isPaid ?? false, invoiceId: self.order?.invoiceId ?? "", toFemaleOnly: self.order?.toFemaleOnly ?? false, shopId: self.order?.shopId ?? 0, OrderPrice: self.order?.OrderPrice ?? 0.0, KnetCommission: self.order?.KnetCommission ?? 0.0)
                 
                 self.setupFloating()
             }else {
@@ -658,7 +791,7 @@ class ZHCDemoMessagesViewController: ZHCMessagesViewController, BillDelegate, Ch
             }
         }
         
-        let appleMapsAction = UIAlertAction(title: "appleMaps".localized, style: .default) { (action) in
+    let appleMapsAction = UIAlertAction(title: "appleMaps".localized, style: .default) { (action) in
             
             let coordinate = CLLocationCoordinate2DMake(latitude ,longitude)
             let mapItem = MKMapItem(placemark: MKPlacemark(coordinate: coordinate, addressDictionary:nil))
@@ -720,12 +853,15 @@ class ZHCDemoMessagesViewController: ZHCMessagesViewController, BillDelegate, Ch
         }
         
     }
-  
-
+    
     @objc func closePressed() -> Void {
         if (self.isProvider() && self.user?.data?.userID == self.order?.providerID) {
             if (self.order?.time ?? 0 <= 1) {
-                self.showBanner(title: "alert".localized, message: "complete_delivery_first".localized, style: UIColor.INFO)
+                if (self.order?.status == Constants.ORDER_CANCELLED || self.order?.status == Constants.ORDER_COMPLETED || self.order?.status == Constants.ORDER_EXPIRED) {
+                    self.navigationController?.dismiss(animated: true, completion: nil);
+                }else {
+                    self.showBanner(title: "alert".localized, message: "complete_delivery_first".localized, style: UIColor.INFO)
+                }
             }else {
                 self.navigationController?.dismiss(animated: true, completion: nil);
             }
@@ -897,7 +1033,10 @@ class ZHCDemoMessagesViewController: ZHCMessagesViewController, BillDelegate, Ch
         if !message.isMediaMessage {
             if (message.senderId == self.senderId()) {
                 cell.textView?.textColor = UIColor.white;
-            }else{
+            }else {
+                if (message.text.contains(find: "I have successfully paid my order using Knet.") || message.text.contains(find: "لقد قمت بدفع الطلب باستخدام كي نت بنجاح.")) {
+                    self.order?.isPaid = true
+                }
                 cell.textView?.textColor = UIColor.black;
             }
         }

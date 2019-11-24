@@ -73,7 +73,7 @@ class HomeMapVC: BaseViewController,LabasLocationManagerDelegate, UICollectionVi
         self.btnAbout.addTarget(self, action: #selector(BaseViewController.onAboutPressed(_:)), for: UIControl.Event.touchUpInside)
         
         self.edtSearch.delegate = self
-       // self.showLoading()
+        // self.showLoading()
         
         self.lblLocation.isHidden = true
         self.btnLocation.isHidden = true
@@ -97,26 +97,47 @@ class HomeMapVC: BaseViewController,LabasLocationManagerDelegate, UICollectionVi
             self.getDriverOnGoingDeliveries()
         }
         
+        
+        self.checkWelcomeDriver()
+        
     }
     
-    func getDriverOnGoingDeliveries() {
+    
+    func checkWelcomeDriver() {
+        if (isProvider()) {
+            let flag = UserDefaults.standard.value(forKey: Constants.SEE_DRIVER_TERMS) as? Bool ?? true
+            if (flag) {
+                UserDefaults.standard.setValue(false, forKey: Constants.SEE_DRIVER_TERMS)
+                let storyboard = UIStoryboard(name: "Main", bundle: nil)
+                let vc : WelcomeDriverVC = storyboard.instantiateViewController(withIdentifier: "WelcomeDriverVC") as! WelcomeDriverVC
+                vc.modalPresentationStyle = .fullScreen
+                self.present(vc, animated: true, completion: nil)
+            }
+        }
+    }
+    
+   func getDriverOnGoingDeliveries() {
         self.showLoading()
         ApiService.getDriverOnGoingDeliveries(Authorization: self.loadUser().data?.accessToken ?? "") { (response) in
             self.hideLoading()
             for item in response.data ?? [DatumDriverDel]() {
-                if (item.time ?? 0 <= 1) {
-                    DispatchQueue.main.async {
-                        let messagesVC: ZHCDemoMessagesViewController = ZHCDemoMessagesViewController.init()
-                        messagesVC.presentBool = true
+                if (item.time ?? 0 == 0) {
+                    ApiService.getDelivery(id: item.id ?? 0) { (response) in
+                        let items = response.data?.items ?? [ShopMenuItem]()
+                        DispatchQueue.main.async {
+                            let messagesVC: ZHCDemoMessagesViewController = ZHCDemoMessagesViewController.init()
+                            messagesVC.presentBool = true
+                            
+                            let dumOrder = DatumDel(id: item.id ?? 0, title: item.title ?? "", status: item.status ?? 0, statusString: item.statusString ?? "", image: item.image ?? "", createdDate: item.createdDate ?? "", chatId: item.chatId ?? 0, fromAddress: item.fromAddress ?? "", fromLatitude: item.fromLatitude ?? 0.0, fromLongitude: item.fromLongitude ?? 0.0, toAddress: item.toAddress ?? "", toLatitude: item.toLatitude ?? 0.0, toLongitude: item.toLongitude ?? 0.0, providerID: item.providerID ?? "", providerName: item.providerName ?? "", providerImage: item.providerImage ?? "", providerRate: item.providerRate ?? 0.0, time: item.time ?? 0, price: item.price ?? 0.0, serviceName: item.serviceName ?? "", paymentMethod: item.paymentMethod ?? 0, items: items, isPaid: item.isPaid ?? false, invoiceId: item.invoiceId ?? "", toFemaleOnly: item.toFemaleOnly ?? false, shopId: item.shopId ?? 0, OrderPrice: item.OrderPrice ?? 0.0, KnetCommission : item.KnetCommission ?? 0.0)
+                            
+                            messagesVC.order = dumOrder
+                            messagesVC.user = self.loadUser()
+                            let nav: UINavigationController = UINavigationController.init(rootViewController: messagesVC)
+                            nav.modalPresentationStyle = .fullScreen
+                            messagesVC.modalPresentationStyle = .fullScreen
+                            self.navigationController?.present(nav, animated: true, completion: nil)
+                        }
                         
-                        let dumOrder = DatumDel(id: item.id ?? 0, title: item.title ?? "", status: item.status ?? 0, statusString: item.statusString ?? "", image: item.image ?? "", createdDate: item.createdDate ?? "", chatId: item.chatId ?? 0, fromAddress: item.fromAddress ?? "", fromLatitude: item.fromLatitude ?? 0.0, fromLongitude: item.fromLongitude ?? 0.0, toAddress: item.toAddress ?? "", toLatitude: item.toLatitude ?? 0.0, toLongitude: item.toLongitude ?? 0.0, providerID: item.providerID ?? "", providerName: item.providerName ?? "", providerImage: item.providerImage ?? "", providerRate: item.providerRate ?? 0.0, time: item.time ?? 0, price: item.price ?? 0.0, serviceName: item.serviceName ?? "")
-                        
-                        messagesVC.order = dumOrder
-                        messagesVC.user = self.loadUser()
-                        let nav: UINavigationController = UINavigationController.init(rootViewController: messagesVC)
-                        nav.modalPresentationStyle = .fullScreen
-                        messagesVC.modalPresentationStyle = .fullScreen
-                        self.navigationController?.present(nav, animated: true, completion: nil)
                     }
                 }
             }
@@ -135,10 +156,10 @@ class HomeMapVC: BaseViewController,LabasLocationManagerDelegate, UICollectionVi
             self.onSlideMenuButtonPressed(self.btnMenu)
         }
         
-//        let notificationsCount = UserDefaults.standard.value(forKey: Constants.NOTIFICATION_COUNT) as? Int ?? 0
-//        if (notificationsCount > 0) {
-//            self.openViewControllerBasedOnIdentifier("NotificationsVC")
-//        }
+        //        let notificationsCount = UserDefaults.standard.value(forKey: Constants.NOTIFICATION_COUNT) as? Int ?? 0
+        //        if (notificationsCount > 0) {
+        //            self.openViewControllerBasedOnIdentifier("NotificationsVC")
+        //        }
         
     }
     
@@ -185,7 +206,7 @@ class HomeMapVC: BaseViewController,LabasLocationManagerDelegate, UICollectionVi
                     let messagesVC: ZHCDemoMessagesViewController = ZHCDemoMessagesViewController.init()
                     messagesVC.presentBool = true
                     
-                      let order = DatumDel(id: response.data?.id ?? 0, title: response.data?.title ?? "", status: response.data?.status ?? 0, statusString: response.data?.statusString ?? "", image: "", createdDate: response.data?.createdDate ?? "", chatId: response.data?.chatId ?? 0, fromAddress: response.data?.fromAddress ?? "", fromLatitude: response.data?.fromLatitude ?? 0.0, fromLongitude: response.data?.fromLongitude ?? 0.0, toAddress: response.data?.toAddress ?? "", toLatitude: response.data?.toLatitude ?? 0.0, toLongitude: response.data?.toLongitude ?? 0.0, providerID: response.data?.driverId, providerName: "", providerImage: "", providerRate: 0, time: response.data?.time ?? 0, price: response.data?.cost ?? 0.0, serviceName: "")
+                    let order = DatumDel(id: response.data?.id ?? 0, title: response.data?.title ?? "", status: response.data?.status ?? 0, statusString: response.data?.statusString ?? "", image: "", createdDate: response.data?.createdDate ?? "", chatId: response.data?.chatId ?? 0, fromAddress: response.data?.fromAddress ?? "", fromLatitude: response.data?.fromLatitude ?? 0.0, fromLongitude: response.data?.fromLongitude ?? 0.0, toAddress: response.data?.toAddress ?? "", toLatitude: response.data?.toLatitude ?? 0.0, toLongitude: response.data?.toLongitude ?? 0.0, providerID: response.data?.driverId, providerName: "", providerImage: "", providerRate: 0, time: response.data?.time ?? 0, price: response.data?.cost ?? 0.0, serviceName: "",paymentMethod: response.data?.paymentMethod ?? 0, items: response.data?.items ?? [ShopMenuItem](),isPaid: response.data?.isPaid ?? false, invoiceId : response.data?.invoiceId ?? "", toFemaleOnly: response.data?.toFemaleOnly ?? false, shopId: response.data?.shopId ?? 0, OrderPrice: response.data?.orderPrice ?? 0.0, KnetCommission: response.data?.KnetCommission ?? 0.0)
                     
                     
                     messagesVC.order = order
@@ -249,7 +270,7 @@ class HomeMapVC: BaseViewController,LabasLocationManagerDelegate, UICollectionVi
             self.openViewControllerBasedOnIdentifier("WorkingOrdersVC")
             break
             
-            //services
+        //services
         case "13":
             App.shared.notificationValue = "0"
             App.shared.notificationType = "0"
@@ -353,7 +374,7 @@ class HomeMapVC: BaseViewController,LabasLocationManagerDelegate, UICollectionVi
         if (count > 0) {
             cell.ivDot.isHidden = false
         }else {
-           cell.ivDot.isHidden = true
+            cell.ivDot.isHidden = true
         }
         
         let item = self.items[(visibleIndexPath?.row)!]
@@ -415,7 +436,7 @@ class HomeMapVC: BaseViewController,LabasLocationManagerDelegate, UICollectionVi
         let url = URL(string: "\(Constants.IMAGE_URL)\(item.providerImage ?? "")")
         cell.ivLogo.kf.setImage(with: url)
         
-        cell.lblDriverName.text = item.providerName ?? ""
+        cell.lblDriverName.text = self.encryptDriverName(name: item.providerName ?? "")
         cell.ratingView.rating = item.providerRate ?? 0.0
         
         cell.lblPrice.text = "\(item.price ?? 0.0) \("currency".localized)"
@@ -466,7 +487,7 @@ class HomeMapVC: BaseViewController,LabasLocationManagerDelegate, UICollectionVi
         } else {
             // Fallback on earlier versions
             timerDispatchSourceTimer = DispatchSource.makeTimerSource(flags: [], queue: DispatchQueue.main)
-            timerDispatchSourceTimer?.scheduleRepeating(deadline: .now(), interval: .seconds(5))
+            timerDispatchSourceTimer?.scheduleRepeating(deadline: .now(), interval: .seconds(120))
             timerDispatchSourceTimer?.setEventHandler{
                 // do something here
                 self.getDriverLocationAPI(item: item)
@@ -687,8 +708,8 @@ class HomeMapVC: BaseViewController,LabasLocationManagerDelegate, UICollectionVi
         self.latitude = location.coordinate.latitude
         self.longitude = location.coordinate.longitude
         
-//        self.latitude = 29.363534
-//        self.longitude = 47.989769
+        //        self.latitude = 29.363534
+        //        self.longitude = 47.989769
         
         UserDefaults.standard.setValue(self.latitude, forKey: Constants.LAST_LATITUDE)
         UserDefaults.standard.setValue(self.longitude, forKey: Constants.LAST_LONGITUDE)
@@ -703,7 +724,7 @@ class HomeMapVC: BaseViewController,LabasLocationManagerDelegate, UICollectionVi
             UserDefaults.standard.setValue(self.longitude, forKey: Constants.LAST_LONGITUDE)
             
             
-
+            
             
             self.hideLoading()
             self.setUpGoogleMap()
@@ -720,7 +741,7 @@ class HomeMapVC: BaseViewController,LabasLocationManagerDelegate, UICollectionVi
         self.lblLocation.isHidden = false
         self.btnLocation.isHidden = false
         self.GetAnnotationUsingCoordinated(cllLocation)
-      //  self.loadTracks()
+        //  self.loadTracks()
     }
     
     override func viewWillAppear(_ animated: Bool) {
@@ -781,16 +802,29 @@ class HomeMapVC: BaseViewController,LabasLocationManagerDelegate, UICollectionVi
         self.view.layoutSubviews()
         
         
-//        ApiService.getPlacesAPI(input: "mac", types: "geocode", latitude: self.latitude ?? 0.0, longitude: self.longitude ?? 0.0) { (response) in
-//            let x = response.status ?? ""
-//        }
+        //        ApiService.getPlacesAPI(input: "mac", types: "geocode", latitude: self.latitude ?? 0.0, longitude: self.longitude ?? 0.0) { (response) in
+        //            let x = response.status ?? ""
+        //        }
         
         
         //   self.getShopsList(radius: Float(Constants.DEFAULT_RADIUS), rating: 0, types : 64)
         DispatchQueue.main.asyncAfter(deadline: .now() + 3) {
-           self.loadTracks()
+            self.loadTracks()
         }
     }
+    
+    func encryptDriverName(name: String) -> String {
+        var stars = ""
+        let count = name.count - 2
+        for _ in 1...count {
+            stars = "\(stars)*"
+        }
+        let firstChar = name.first!
+        let lastChar = name.last!
+        let final = "\(String(firstChar))\(stars)\(String(lastChar))"
+        return final
+    }
+    
     
     func loadTracks() {
         ApiService.getOnGoingDeliveries(Authorization: self.loadUser().data?.accessToken ?? "") { (response) in
@@ -811,7 +845,7 @@ class HomeMapVC: BaseViewController,LabasLocationManagerDelegate, UICollectionVi
                 self.viewServices.isHidden = true
                 self.viewTenders.isHidden = true
             }else {
-               self.stopTimer()
+                self.stopTimer()
                 // self.searchView.isHidden = false
                 self.collectionView.isHidden = true
                 self.polyline?.map = nil
@@ -905,7 +939,7 @@ class HomeMapVC: BaseViewController,LabasLocationManagerDelegate, UICollectionVi
             }
         }
     }
-
+    
     @IBAction func tendersAction(_ sender: Any) {
         if (self.isLoggedIn()) {
             if let vc = UIStoryboard(name: "Main", bundle: nil).instantiateViewController(withIdentifier: "TenderStep1") as? TenderStep1
@@ -1034,6 +1068,7 @@ extension HomeMapVC : GMSMapViewDelegate {
     }
     
 }
+
 extension HomeMapVC: UITextFieldDelegate {
     
     func textField(_ textField: UITextField, shouldChangeCharactersIn range: NSRange, replacementString string: String) -> Bool {

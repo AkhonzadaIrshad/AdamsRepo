@@ -54,6 +54,10 @@ class Datum: Codable {
     let providerID, providerName, providerImage: String?
     let providerRate, price: Double?
     let serviceName: String?
+    let isPaid : Bool?
+    let invoiceId : String?
+    let toFemaleOnly : Bool?
+    let shopId : Int?
     
     enum CodingKeys: String, CodingKey {
         case id = "Id"
@@ -76,9 +80,13 @@ class Datum: Codable {
         case time = "Time"
         case price = "Price"
         case serviceName = "ServiceName"
+        case isPaid = "IsPaid"
+        case invoiceId = "InvoiceId"
+        case toFemaleOnly = "ToFemaleOnly"
+        case shopId = "ShopId"
     }
     
-    init(id: Int?, title: String?, status: Int?, statusString: String?, image: String?, createdDate: String?, chatId: Int?, fromAddress: String?, fromLatitude: Double?, fromLongitude: Double?, toAddress: String?, toLatitude: Double?, toLongitude: Double?, providerID: String?, providerName: String?, providerImage: String?, providerRate: Double?, time: Int?, price: Double?, serviceName: String?) {
+    init(id: Int?, title: String?, status: Int?, statusString: String?, image: String?, createdDate: String?, chatId: Int?, fromAddress: String?, fromLatitude: Double?, fromLongitude: Double?, toAddress: String?, toLatitude: Double?, toLongitude: Double?, providerID: String?, providerName: String?, providerImage: String?, providerRate: Double?, time: Int?, price: Double?, serviceName: String?, isPaid : Bool?, invoiceId: String?, toFemaleOnly: Bool?, shopId : Int?) {
         self.id = id
         self.title = title
         self.status = status
@@ -99,5 +107,9 @@ class Datum: Codable {
         self.time = time
         self.price = price
         self.serviceName = serviceName
+        self.isPaid = isPaid
+        self.invoiceId = invoiceId
+        self.toFemaleOnly = toFemaleOnly
+        self.shopId = shopId
     }
 }

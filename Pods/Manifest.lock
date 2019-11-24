@@ -3,6 +3,13 @@ PODS:
   - AlamofireImage (3.5.0):
     - Alamofire (~> 4.8)
   - AMPopTip (4.0.1)
+  - BMPlayer (1.0.1):
+    - BMPlayer/Full (= 1.0.1)
+  - BMPlayer/Core (1.0.1)
+  - BMPlayer/Full (1.0.1):
+    - BMPlayer/Core
+    - NVActivityIndicatorView (~> 4.0.0)
+    - SnapKit (~> 4.0.0)
   - Branch (0.26.0):
     - Branch/Core (= 0.26.0)
   - Branch/Core (0.26.0)
@@ -117,6 +124,9 @@ PODS:
     - nanopb/encode (= 0.3.901)
   - nanopb/decode (0.3.901)
   - nanopb/encode (0.3.901)
+  - NVActivityIndicatorView (4.0.1):
+    - NVActivityIndicatorView/Presenter (= 4.0.1)
+  - NVActivityIndicatorView/Presenter (4.0.1)
   - Protobuf (3.8.0)
   - RangeSeekSlider (1.7.0)
   - ReadMoreTextView (3.0.1)
@@ -141,6 +151,7 @@ DEPENDENCIES:
   - Alamofire
   - AlamofireImage (~> 3.5)
   - AMPopTip
+  - BMPlayer
   - Branch
   - BRYXBanner
   - CBPinEntryView
@@ -185,6 +196,7 @@ SPEC REPOS:
     - Alamofire
     - AlamofireImage
     - AMPopTip
+    - BMPlayer
     - Branch
     - BRYXBanner
     - CBPinEntryView
@@ -217,6 +229,7 @@ SPEC REPOS:
     - MOLH
     - MultilineTextField
     - nanopb
+    - NVActivityIndicatorView
     - Protobuf
     - RangeSeekSlider
     - ReadMoreTextView
@@ -238,6 +251,7 @@ SPEC CHECKSUMS:
   Alamofire: 16ce2c353fb72865124ddae8a57c5942388f4f11
   AlamofireImage: 1aea346f4dda2f6c67622fa5a89fcbb80d79cc16
   AMPopTip: 41742f15d743203496cfdcd576f41b596b0efae3
+  BMPlayer: 44eebf06eb01450dd14ea74b27d07c5222f0eed1
   Branch: 5bf1e0d3f57bfce0b7029c960118641695b294ee
   BRYXBanner: 8cf1b119792e1cee8d7ba107297ef89f7409bc53
   CBPinEntryView: 9837797ee263a05dbe501e8ccbf3e992e758410b
@@ -270,6 +284,7 @@ SPEC CHECKSUMS:
   MOLH: b9766efe89be975ce82a8d5642f681da23c876fc
   MultilineTextField: 10965d9c3e05a182181bd7971eb009c7607001ae
   nanopb: 2901f78ea1b7b4015c860c2fdd1ea2fee1a18d48
+  NVActivityIndicatorView: 77ed6d7b571643e24899e7858bf9ae2ee4c21f31
   Protobuf: 3f617b9a6e73605565086864c9bc26b2bf2dd5a3
   RangeSeekSlider: 0386c5a9aa5ebcb2fa5238e8a627280cf46c7c0a
   ReadMoreTextView: 19147adf93abce6d7271e14031a00303fe28720d
@@ -287,6 +302,6 @@ SPEC CHECKSUMS:
   ZHChat: d554719971be77fb8346a51e3fd8043ff18e1292
   ZoomImageView: 2a88d0c10ad30b9a06c8f5660d51623fb32beed5
 
-PODFILE CHECKSUM: e2056b05611d202148349037d2c3720d5a1bbab7
+PODFILE CHECKSUM: cc593f26a1a9e5c4cdb3730ee634b46a373f8c05
 
 COCOAPODS: 1.7.2

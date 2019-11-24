@@ -408,13 +408,13 @@
 "NIE-hV-su3.text" = "Order";
 
 /* Class = "UILabel"; text = "Orders"; ObjectID = "NNA-jz-piX"; */
-"NNA-jz-piX.text" = "Orders";
+"NNA-jz-piX.text" = "My Orders";
 
 /* Class = "UILabel"; text = "To"; ObjectID = "NTj-Fw-QyM"; */
 "NTj-Fw-QyM.text" = "To";
 
 /* Class = "UILabel"; text = "From"; ObjectID = "NU9-gr-UDw"; */
-"NU9-gr-UDw.text" = "Order From";
+"NU9-gr-UDw.text" = "From";
 
 /* Class = "UILabel"; text = "We sent your delivery order to all nearby drivers, waiting for their bids."; ObjectID = "NXH-XR-aMb"; */
 "NXH-XR-aMb.text" = "We sent your delivery order to all nearby drivers, waiting for their bids.";
@@ -506,13 +506,13 @@
 "TQj-QB-GWS.text" = "Registered Shops";
 
 /* Class = "UILabel"; text = "To"; ObjectID = "TQp-MF-OZC"; */
-"TQp-MF-OZC.text" = "Deliver To";
+"TQp-MF-OZC.text" = "To";
 
 /* Class = "UILabel"; text = "From"; ObjectID = "Tao-wo-bxH"; */
-"Tao-wo-bxH.text" = "Order From";
+"Tao-wo-bxH.text" = "From";
 
 /* Class = "UILabel"; text = "To"; ObjectID = "Tda-f0-cfv"; */
-"Tda-f0-cfv.text" = "Deliver To";
+"Tda-f0-cfv.text" = "To";
 
 /* Class = "UILabel"; text = "All Clear!"; ObjectID = "Tpf-Fk-kw3"; */
 "Tpf-Fk-kw3.text" = "All Clear!";
@@ -557,7 +557,7 @@
 "UuG-bi-lCk.text" = "Service";
 
 /* Class = "UILabel"; text = "From"; ObjectID = "UuV-t1-atN"; */
-"UuV-t1-atN.text" = "Order From";
+"UuV-t1-atN.text" = "From";
 
 /* Class = "UISegmentedControl"; Uwv-JB-sZi.segmentTitles[0] = "Pending"; ObjectID = "Uwv-JB-sZi"; */
 "Uwv-JB-sZi.segmentTitles[0]" = "Pending";
@@ -1054,12 +1054,19 @@
 "i2A-gx-RMl.text" = "Incoming Orders";
 "ZnJ-LS-obf.text" = "Add Shop Menu";
 "iy7-qm-r87.text" = "Add";
-"4In-rh-xOu.text" = "Add Items";
-"FSg-P5-fXE.placeholder" = "Menu category name";
+"4In-rh-xOu.text" = "Manage Items";
+"FSg-P5-fXE.placeholder" = "Menu category english name";
+"UVy-uK-hRU.placeholder" = "Menu category arabic name";
 "trh-R1-UzM.text" = "Add Item";
-"f7B-cc-Xga.text" = "Add Title";
+"f7B-cc-Xga.text" = "Add English Title";
+"EjX-S3-uH4.text" = "Add Arabic Title";
+"F26-Lk-haC.placeholder" = "Enter item english title here";
+"B37-gz-ltM.placeholder" = "Enter item arabic title here";
 "Uvj-X7-5R7.text" = "Add Price";
-"3qp-BB-zrr.text" = "Add Description";
+"3qp-BB-zrr.text" = "Add English Description";
+"rft-9e-imI.text" = "Add Arabic Description";
+"zYD-YL-b4X.placeholder" = "Enter item english description here";
+"Fh2-jT-JQJ.placeholder" = "Enter item arabic description here";
 "HyW-Ii-Ltb.text" = "Add Image";
 "yF1-hV-aB2.normalTitle" = "Done";
 "Jhm-ZD-SIO.text" = "Shop Menu";
@@ -1088,7 +1095,10 @@
 "1OL-Ic-PB1.text" = "You can add product images with your touch.";
 "Q6g-Qj-Lzj.normalTitle" = "Submit";
 
-
+"w0d-uf-yZp.normalTitle" = "Submit";
+"94W-WI-N25.text" = "Enter menu category name";
+"qxs-o8-qU0.placeholder" = "Menu category english name";
+"ltg-rQ-VHq.placeholder" = "Menu category arabic name";
 
 
 /* Class = "UILabel"; text = "Distance"; ObjectID = "pLb-Gi-XDZ"; */
@@ -1098,7 +1108,7 @@
 "pRp-CD-04d.text" = "Label";
 
 /* Class = "UILabel"; text = "To"; ObjectID = "pcG-mP-HG8"; */
-"pcG-mP-HG8.text" = "Deliver To";
+"pcG-mP-HG8.text" = "To";
 
 /* Class = "UILabel"; text = "Take This Order"; ObjectID = "pjh-44-Suv"; */
 "pjh-44-Suv.text" = "Take This Order";
@@ -1307,3 +1317,27 @@
 
 /* Class = "UITextField"; placeholder = "Apartment No, Floor"; ObjectID = "zIA-Ft-Xgn"; */
 "zIA-Ft-Xgn.placeholder" = "Apartment No, Floor";
+
+
+"jfu-58-oiz.text" = "Select Payment Method";
+"rIR-vx-jlX.text" = "Knet";
+"nCk-wb-3z0.text" = "Cash On Delivery";
+"LmK-bf-Zae.normalTitle" = "Submit";
+"6rK-j7-Zl1.normalTitle" = "Change Method";
+"hZk-Vv-NEs.normalTitle" = "View Menu";
+
+"48w-Mz-WsO.text" = "Order Items";
+"JLy-HE-tVl.text" = "Quantity";
+"ZkX-4r-ukD.text" = "Item Price";
+"CSZ-dD-3ro.text" = "Total";
+"94m-dB-5oM.text" = "Total Items:";
+
+"0N3-m6-Tsb.text" = "Ratings & Reviews";
+"tfK-yx-7rg.normalTitle" = "View Reviews";
+"mRA-V5-Rt6.normalTitle" = "Items";
+"ZoM-YN-lBZ.normalTitle" = "Reorder";
+"ZZ6-IA-gDD.text" = "Select Your Gender";
+
+"XtL-iy-11W.normalTitle" = "Pay";
+
+"i1A-Ny-jFX.text" = "Payment Method";

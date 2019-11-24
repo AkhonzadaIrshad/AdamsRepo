@@ -11,11 +11,13 @@ import MultilineTextField
 
 class MenuItemCell: UITableViewCell {
     
-    @IBOutlet weak var fieldTitle: MyUITextField!
+    @IBOutlet weak var fieldEnglishTitle: MyUITextField!
+    @IBOutlet weak var fieldArabicTitle: MyUITextField!
     
     @IBOutlet weak var fieldPrice: MyUITextField!
     
-    @IBOutlet weak var fieldDescription: MultilineTextField!
+    @IBOutlet weak var fieldEnglishDescription: MultilineTextField!
+    @IBOutlet weak var fieldArabicDescription: MultilineTextField!
     
     @IBOutlet weak var btnLogo: UIButton!
     
@@ -57,14 +59,16 @@ class MenuItemCell: UITableViewCell {
     
     @IBAction func addImageAction(_ sender: Any) {
         if let onAddImage = self.onAddImage {
-                  onAddImage()
-              }
+            onAddImage()
+        }
     }
     
     func lockCell() {
-        self.fieldTitle.isEnabled = false
+        self.fieldEnglishTitle.isEnabled = false
+        self.fieldArabicTitle.isEnabled = false
         self.fieldPrice.isEnabled = false
-        self.fieldPrice.isEnabled = false
+        self.fieldEnglishDescription.isEditable = false
+        self.fieldArabicDescription.isEditable = false
         self.btnLogo.isUserInteractionEnabled = false
         
         self.btnDelete.isHidden = true
@@ -72,9 +76,11 @@ class MenuItemCell: UITableViewCell {
         self.btnEdit.isHidden = false
     }
     func unlockCell() {
-        self.fieldTitle.isEnabled = true
+        self.fieldEnglishTitle.isEnabled = true
+        self.fieldArabicTitle.isEnabled = true
         self.fieldPrice.isEnabled = true
-        self.fieldPrice.isEnabled = true
+        self.fieldEnglishDescription.isEditable = true
+        self.fieldArabicDescription.isEditable = true
         self.btnLogo.isUserInteractionEnabled = true
         
         self.btnDelete.isHidden = false

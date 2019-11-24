@@ -39,6 +39,14 @@ class DatumDriverDel: Codable {
     let providerID, providerName, providerImage: String?
     let providerRate, price: Double?
     let serviceName: String?
+    var paymentMethod : Int?
+    let items : [ShopMenuItem]?
+    let isPaid : Bool?
+    let invoiceId : String?
+    let toFemaleOnly : Bool?
+    let shopId : Int?
+    let OrderPrice : Double?
+    let KnetCommission: Double?
     
     enum CodingKeys: String, CodingKey {
         case id = "Id"
@@ -61,9 +69,17 @@ class DatumDriverDel: Codable {
         case time = "Time"
         case price = "Price"
         case serviceName = "ServiceName"
+        case paymentMethod = "PaymentMethod"
+        case items = "Items"
+        case isPaid = "IsPaid"
+        case invoiceId = "InvoiceId"
+        case toFemaleOnly = "ToFemaleOnly"
+        case shopId = "ShopId"
+        case OrderPrice = "OrderPrice"
+        case KnetCommission = "KnetCommission"
     }
     
-    init(id: Int?, title: String?, status: Int?, statusString: String?, image: String?, createdDate: String?, chatId: Int?, fromAddress: String?, fromLatitude: Double?, fromLongitude: Double?, toAddress: String?, toLatitude: Double?, toLongitude: Double?, providerID: String?, providerName: String?, providerImage: String?, providerRate: Double?, time: Int?, price: Double?, serviceName: String?) {
+    init(id: Int?, title: String?, status: Int?, statusString: String?, image: String?, createdDate: String?, chatId: Int?, fromAddress: String?, fromLatitude: Double?, fromLongitude: Double?, toAddress: String?, toLatitude: Double?, toLongitude: Double?, providerID: String?, providerName: String?, providerImage: String?, providerRate: Double?, time: Int?, price: Double?, serviceName: String?, paymentMethod: Int?, items: [ShopMenuItem]?, isPaid : Bool?, invoiceId: String?, toFemaleOnly: Bool?, shopId : Int?,OrderPrice: Double?, KnetCommission: Double?) {
         self.id = id
         self.title = title
         self.status = status
@@ -84,5 +100,13 @@ class DatumDriverDel: Codable {
         self.time = time
         self.price = price
         self.serviceName = serviceName
+        self.paymentMethod = paymentMethod
+        self.items = items
+        self.isPaid = isPaid
+        self.invoiceId = invoiceId
+        self.toFemaleOnly = toFemaleOnly
+        self.shopId = shopId
+        self.OrderPrice = OrderPrice
+        self.KnetCommission = KnetCommission
     }
 }

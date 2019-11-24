@@ -9,6 +9,7 @@
 import UIKit
 import CoreLocation
 import Sheeeeeeeeet
+import SVProgressHUD
 
 class NotificationsVC: BaseViewController, UITableViewDelegate, UITableViewDataSource,LabasLocationManagerDelegate, AcceptBidDelegate, RateDriverDelegate {
     
@@ -39,6 +40,8 @@ class NotificationsVC: BaseViewController, UITableViewDelegate, UITableViewDataS
     
     override func viewDidLoad() {
         super.viewDidLoad()
+        
+        SVProgressHUD.setDefaultMaskType(.clear)
         
         self.latitude = UserDefaults.standard.value(forKey: Constants.LAST_LATITUDE) as? Double ?? 0.0
         self.longitude = UserDefaults.standard.value(forKey: Constants.LAST_LONGITUDE) as? Double ?? 0.0
@@ -88,7 +91,7 @@ class NotificationsVC: BaseViewController, UITableViewDelegate, UITableViewDataS
                     let messagesVC: ZHCDemoMessagesViewController = ZHCDemoMessagesViewController.init()
                     messagesVC.presentBool = true
                     
-                    let order = DatumDel(id: response.data?.id ?? 0, title: response.data?.title ?? "", status: response.data?.status ?? 0, statusString: response.data?.statusString ?? "", image: "", createdDate: response.data?.createdDate ?? "", chatId: response.data?.chatId ?? 0, fromAddress: response.data?.fromAddress ?? "", fromLatitude: response.data?.fromLatitude ?? 0.0, fromLongitude: response.data?.fromLongitude ?? 0.0, toAddress: response.data?.toAddress ?? "", toLatitude: response.data?.toLatitude ?? 0.0, toLongitude: response.data?.toLongitude ?? 0.0, providerID: response.data?.driverId, providerName: "", providerImage: "", providerRate: 0, time: response.data?.time ?? 0, price: response.data?.cost ?? 0.0, serviceName: "")
+                    let order = DatumDel(id: response.data?.id ?? 0, title: response.data?.title ?? "", status: response.data?.status ?? 0, statusString: response.data?.statusString ?? "", image: "", createdDate: response.data?.createdDate ?? "", chatId: response.data?.chatId ?? 0, fromAddress: response.data?.fromAddress ?? "", fromLatitude: response.data?.fromLatitude ?? 0.0, fromLongitude: response.data?.fromLongitude ?? 0.0, toAddress: response.data?.toAddress ?? "", toLatitude: response.data?.toLatitude ?? 0.0, toLongitude: response.data?.toLongitude ?? 0.0, providerID: response.data?.driverId, providerName: "", providerImage: "", providerRate: 0, time: response.data?.time ?? 0, price: response.data?.cost ?? 0.0, serviceName: "",paymentMethod: response.data?.paymentMethod ?? 0, items: response.data?.items ?? [ShopMenuItem](), isPaid: response.data?.isPaid ?? false, invoiceId: response.data?.invoiceId ?? "", toFemaleOnly: response.data?.toFemaleOnly ?? false, shopId: response.data?.shopId ?? 0, OrderPrice: response.data?.orderPrice ?? 0.0, KnetCommission: response.data?.KnetCommission ?? 0.0)
                     
                     
                     messagesVC.order = order
@@ -106,11 +109,11 @@ class NotificationsVC: BaseViewController, UITableViewDelegate, UITableViewDataS
     }
     
     func updateNotifications() {
-        self.alerts.removeAll()
-        self.actions.removeAll()
+        self.showLoading()
         ApiService.getAllNotifications(Authorization: self.loadUser().data?.accessToken ?? "", sortBy: self.sortBy ?? 1) { (response) in
             self.alerts.removeAll()
             self.actions.removeAll()
+            self.hideLoading()
             for not in response.data ?? [DatumNot]() {
                 if (not.type == Constants.DELIVERY_CREATED || not.type == Constants.SERVICE_CREATED || not.type == Constants.BID_CREATED || not.type == Constants.SERVICE_BID_CREATED) {
                     self.actions.append(not)
@@ -755,6 +758,7 @@ class NotificationsVC: BaseViewController, UITableViewDelegate, UITableViewDataS
         }
     }
     
+   
     
     func onAccept() {
         let mainStoryboardIpad : UIStoryboard = UIStoryboard(name: "Main", bundle: nil)

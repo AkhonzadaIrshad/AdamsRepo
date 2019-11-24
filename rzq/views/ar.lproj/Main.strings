@@ -12,7 +12,7 @@
 "0mE-E5-yMM.normalTitle" = "شاهد هذا العرض";
 
 /* Class = "UILabel"; text = "Number Of Orders"; ObjectID = "0pj-IF-bgg"; */
-"0pj-IF-bgg.text" = "عدد الطلبات";
+"0pj-IF-bgg.text" = "عدد الطلبات التي تم توصيلها";
 
 /* Class = "UILabel"; text = "Label"; ObjectID = "12G-AH-mVh"; */
 "12G-AH-mVh.text" = "Label";
@@ -24,7 +24,7 @@
 "1TR-hb-f0r.text" = "اطلب";
 
 /* Class = "UILabel"; text = "Place Images"; ObjectID = "1cQ-t2-rCZ"; */
-"1cQ-t2-rCZ.text" = "مينيو المكان";
+"1cQ-t2-rCZ.text" = "صور المكان";
 
 /* Class = "UILabel"; text = "Terms & Conditions"; ObjectID = "1jO-zA-yE4"; */
 "1jO-zA-yE4.text" = "الشروط والاحكام";
@@ -171,8 +171,8 @@
 /* Class = "UIButton"; normalTitle = "Back"; ObjectID = "A9r-Fe-iM8"; */
 "A9r-Fe-iM8.normalTitle" = "رجوع";
 
-"nfZ-bd-Wtl.text" = "ابحث عن المكان الذي تريد ان ترسل اليه من الاعلى";
-"hqX-pI-KDM.text" = "ابحث عن المكان او المتجر المراد الطلب منه";
+"nfZ-bd-Wtl.text" = "حدد المكان الذي تريد ان يصل اليه الطلب";
+"hqX-pI-KDM.text" = "ابحث عن المكان الذي تريد ان تطلب او ترسل منه";
 
 /* Class = "UILabel"; text = "Rate App"; ObjectID = "AIN-UD-k78"; */
 "AIN-UD-k78.text" = "قيم التطبيق";
@@ -347,7 +347,7 @@
 "J74-cR-1v3.text" = "الى";
 
 /* Class = "UITextField"; placeholder = "Apartment No, Floor"; ObjectID = "JAh-6b-cLm"; */
-"JAh-6b-cLm.placeholder" = "اختياري: رقم البيت، شارع، بجانب";
+"JAh-6b-cLm.placeholder" = "اختياري:  المنطقة، القطعة، بجانب - مقابل";
 
 /* Class = "UIButton"; normalTitle = "Track Your Order"; ObjectID = "JXA-Ta-3iP"; */
 "JXA-Ta-3iP.normalTitle" = "تتبع طلبك";
@@ -374,7 +374,7 @@
 "LQl-pq-7Wl.normalTitle" = "التسجيل";
 
 /* Class = "UITextField"; placeholder = "Apartment No, Floor"; ObjectID = "LhN-4i-yUZ"; */
-"LhN-4i-yUZ.placeholder" = "اختياري: رقم البيت، شارع، بجانب";
+"LhN-4i-yUZ.placeholder" = "اختياري:  المنطقة، القطعة، بجانب - مقابل";
 
 /* Class = "UILabel"; text = "Delivery Cost"; ObjectID = "Lld-IY-BvX"; */
 "Lld-IY-BvX.text" = "تكلفة التوصيل";
@@ -416,13 +416,13 @@
 "NIE-hV-su3.text" = "اكتب طلبك";
 
 /* Class = "UILabel"; text = "Orders"; ObjectID = "NNA-jz-piX"; */
-"NNA-jz-piX.text" = "الطلبات";
+"NNA-jz-piX.text" = "طلباتي";
 
 /* Class = "UILabel"; text = "To"; ObjectID = "NTj-Fw-QyM"; */
 "NTj-Fw-QyM.text" = "الى";
 
 /* Class = "UILabel"; text = "From"; ObjectID = "NU9-gr-UDw"; */
-"NU9-gr-UDw.text" = "اطلب من";
+"NU9-gr-UDw.text" = "من";
 
 /* Class = "UILabel"; text = "We sent your delivery order to all nearby drivers, waiting for their bids."; ObjectID = "NXH-XR-aMb"; */
 "NXH-XR-aMb.text" = "تم ارسال الطلب لاقرب السائقين، ستصلك عروض الاسعار";
@@ -488,7 +488,7 @@
 "RY8-5X-MCg.text" = "اكتب طلبك";
 
 /* Class = "UITextField"; placeholder = "Apartment No, Floor"; ObjectID = "Rou-bW-pEK"; */
-"Rou-bW-pEK.placeholder" = "اختياري: رقم البيت، شارع، بجانب";
+"Rou-bW-pEK.placeholder" = "اختياري:  المنطقة، القطعة، بجانب - مقابل";
 
 /* Class = "UILabel"; text = "Driver Name"; ObjectID = "RqO-Mb-RMo"; */
 "RqO-Mb-RMo.text" = "اسم السائق";
@@ -514,13 +514,13 @@
 "TQj-QB-GWS.text" = "الاماكن المسجلة";
 
 /* Class = "UILabel"; text = "To"; ObjectID = "TQp-MF-OZC"; */
-"TQp-MF-OZC.text" = "حدد مكانك";
+"TQp-MF-OZC.text" = "الى";
 
 /* Class = "UILabel"; text = "From"; ObjectID = "Tao-wo-bxH"; */
-"Tao-wo-bxH.text" = "اطلب من";
+"Tao-wo-bxH.text" = "من";
 
 /* Class = "UILabel"; text = "To"; ObjectID = "Tda-f0-cfv"; */
-"Tda-f0-cfv.text" = "حدد مكانك";
+"Tda-f0-cfv.text" = "الى";
 
 /* Class = "UILabel"; text = "All Clear!"; ObjectID = "Tpf-Fk-kw3"; */
 "Tpf-Fk-kw3.text" = "مستعد للبدء!";
@@ -565,7 +565,7 @@
 "UuG-bi-lCk.text" = "الخدمة";
 
 /* Class = "UILabel"; text = "From"; ObjectID = "UuV-t1-atN"; */
-"UuV-t1-atN.text" = "اطلب من";
+"UuV-t1-atN.text" = "من";
 
 /* Class = "UISegmentedControl"; Uwv-JB-sZi.segmentTitles[0] = "Pending"; ObjectID = "Uwv-JB-sZi"; */
 "Uwv-JB-sZi.segmentTitles[0]" = "قيد التنفيذ";
@@ -772,7 +772,7 @@
 "e2k-YZ-iP4.normalTitle" = "رجوع";
 
 /* Class = "UILabel"; text = "Place Images"; ObjectID = "e3B-g0-1kP"; */
-"e3B-g0-1kP.text" = "مينيو المكان";
+"e3B-g0-1kP.text" = "صور المكان";
 
 /* Class = "UIButton"; normalTitle = "Done"; ObjectID = "eOD-Qr-sN3"; */
 "eOD-Qr-sN3.normalTitle" = "تم";
@@ -856,7 +856,7 @@
 "hGv-Lk-Qql.text" = "Label";
 
 /* Class = "UILabel"; text = "Suggest a Place"; ObjectID = "hId-r6-OBe"; */
-"hId-r6-OBe.text" = "اقترح متجرك او بوتيكك الخاص";
+"hId-r6-OBe.text" = "اضف متجرك او بوتيكك الخاص";
 
 /* Class = "UIButton"; normalTitle = "Register"; ObjectID = "heQ-V4-lVv"; */
 "heQ-V4-lVv.normalTitle" = "تسجيل";
@@ -889,7 +889,7 @@
 "ixy-DN-Ofc.text" = "Label";
 
 /* Class = "UILabel"; text = "Suggest a Shop"; ObjectID = "j4t-8B-U2U"; */
-"j4t-8B-U2U.text" = "اقترح متجرك او بوتيكك الخاص";
+"j4t-8B-U2U.text" = "اضف متجرك او بوتيكك الخاص";
 
 /* Class = "UILabel"; text = "Profile Picture"; ObjectID = "jQw-J5-5FV"; */
 "jQw-J5-5FV.text" = "صورة سيلفي";
@@ -1045,7 +1045,7 @@
 "pRp-CD-04d.text" = "Label";
 
 /* Class = "UILabel"; text = "To"; ObjectID = "pcG-mP-HG8"; */
-"pcG-mP-HG8.text" = "حدد مكانك";
+"pcG-mP-HG8.text" = "الى";
 
 /* Class = "UILabel"; text = "Take This Order"; ObjectID = "pjh-44-Suv"; */
 "pjh-44-Suv.text" = "اخذ الطلب";
@@ -1100,14 +1100,21 @@
 "7MM-Pm-AwV.normalTitle" = "الطلبات";
 "12z-Ed-6ah.normalTitle" = "تعديل المتجر";
 "i2A-gx-RMl.text" = "الطلبات الحالية";
-"ZnJ-LS-obf.text" = "إضافة منيو المطعم";
+"ZnJ-LS-obf.text" = "إضافة منيو المتجر";
 "iy7-qm-r87.text" = "إضافة";
-"4In-rh-xOu.text" = "إضافة عناصر";
-"FSg-P5-fXE.placeholder" = "اسم القائمة";
+"4In-rh-xOu.text" = "ادارة عناصر";
+"FSg-P5-fXE.placeholder" = "اسم القائمة بالإنجليزية";
+"UVy-uK-hRU.placeholder" = "اسم القائمة بالعربية";
 "trh-R1-UzM.text" = "أضف عنصر";
-"f7B-cc-Xga.text" = "أضف عنوان";
+"f7B-cc-Xga.text" = "أضف عنوان بالإنجليزية";
+"EjX-S3-uH4.text" = "أضف عنوان بالعربية";
+"F26-Lk-haC.placeholder" = "ادخل العنوان هنا بالإنجليزية";
+"B37-gz-ltM.placeholder" = "ادخل العنوان هنا بالعربية";
 "Uvj-X7-5R7.text" = "أضف سعر";
-"3qp-BB-zrr.text" = "أضف وصف";
+"3qp-BB-zrr.text" = "أضف وصف بالإنجليزية";
+"rft-9e-imI.text" = "أضف وصف بالعربية";
+"zYD-YL-b4X.placeholder" = "أضف وصف هنا بالإنجليزية";
+"Fh2-jT-JQJ.placeholder" = "أضف وصف هنا بالعربية";
 "HyW-Ii-Ltb.text" = "أضف صورة";
 "yF1-hV-aB2.normalTitle" = "تم";
 "Jhm-ZD-SIO.text" = "قائمة المتجر";
@@ -1122,7 +1129,7 @@
 "YgK-kp-Rk9.normalTitle" = "تم";
 "VkN-dj-vyZ.text" = "قم بإتمام الدفع";
 "4md-OD-oXM.normalTitle" = "إدارة المنيو";
-"uRl-wT-5Lg.normalTitle" = "تصفح القائمة";
+"uRl-wT-5Lg.normalTitle" = "اختر من المنيو";
 
 "Uaf-QQ-htf.text" = "اسم المكان";
 "any-X9-G6K.text" = "قسم المكان";
@@ -1130,9 +1137,15 @@
 "Ntt-th-7h6.normalTitle" = "حدد على الخريطة";
 "AJK-B8-cgj.text" = "ساعات العمل";
 "LaV-f0-kiS.text" = "اضف ساعات العمل";
-"byP-1G-zSr.text" = "مينيو المكان";
+"byP-1G-zSr.text" = "صور المكان";
 "1OL-Ic-PB1.text" = "يمكنك عرض بضاعتك على شكل بوتيك خاص بك.";
 "Q6g-Qj-Lzj.normalTitle" = "تاكيد";
+
+"w0d-uf-yZp.normalTitle" = "تاكيد";
+"94W-WI-N25.text" = "أدخل اسم القائمة";
+"ltg-rQ-VHq.placeholder" = "اسم القائمة بالعربية";
+"qxs-o8-qU0.placeholder" = "اسم القائمة بالإنجليزية";
+
 
 
 "GoF-rZ-Bo8.normalTitle" = "اقل من ١٠ د.ك";
@@ -1298,4 +1311,29 @@
 "z0E-KX-qZO.normalTitle" = "الغاء التسجيل";
 
 /* Class = "UITextField"; placeholder = "Apartment No, Floor"; ObjectID = "zIA-Ft-Xgn"; */
-"zIA-Ft-Xgn.placeholder" = "اختياري: رقم البيت، شارع، بجانب";
+"zIA-Ft-Xgn.placeholder" = "اختياري:  المنطقة، القطعة، بجانب - مقابل";
+
+
+
+"jfu-58-oiz.text" = "اختر طريقة الدفع";
+"rIR-vx-jlX.text" = "كي نت";
+"nCk-wb-3z0.text" = "الدفع عند الاستلام";
+"LmK-bf-Zae.normalTitle" = "تاكيد";
+"6rK-j7-Zl1.normalTitle" = "تغيير الطريقة";
+"hZk-Vv-NEs.normalTitle" = "مشاهدة العناصر";
+
+"48w-Mz-WsO.text" = "عناصر الطلب";
+"JLy-HE-tVl.text" = "العدد";
+"ZkX-4r-ukD.text" = "السعر";
+"CSZ-dD-3ro.text" = "الإجمالي";
+"94m-dB-5oM.text" = "عدد العناصر:";
+
+"0N3-m6-Tsb.text" = "التقييمات";
+"tfK-yx-7rg.normalTitle" = "مشاهدة التقييمات";
+"mRA-V5-Rt6.normalTitle" = "العناصر";
+"ZoM-YN-lBZ.normalTitle" = "اعادة الطلب";
+"ZZ6-IA-gDD.text" = "اختر جنسك";
+
+"XtL-iy-11W.normalTitle" = "دفع الطلب";
+
+"i1A-Ny-jFX.text" = "طريقة الدفع";

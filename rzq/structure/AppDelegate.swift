@@ -116,11 +116,11 @@ class AppDelegate: UIResponder, UIApplicationDelegate, MOLHResetable,MessagingDe
         
         Realm.Configuration.defaultConfiguration = realmConfig
         
-         Fabric.with([Crashlytics.self])
+        Fabric.with([Crashlytics.self])
         
         return true
     }
-   
+    
     
     func updateNotificationChatCount() {
         let defaults = UserDefaults.standard
@@ -271,6 +271,8 @@ class AppDelegate: UIResponder, UIApplicationDelegate, MOLHResetable,MessagingDe
         App.shared.notificationValue = ItemId
         App.shared.notificationDeliveryId = deliveryId
         
+        
+        
         scheduleNotifications(title: title , message: body, type : type, itemId: ItemId)
         if let messageID = userInfo[gcmMessageIDKey] {
             print("Message ID: \(messageID)")
@@ -304,10 +306,12 @@ class AppDelegate: UIResponder, UIApplicationDelegate, MOLHResetable,MessagingDe
         let data : [AnyHashable: Any] = whole["alert"] as! [AnyHashable : Any]
         
         let notificationType = userInfo["Type"] as? String ?? ""
-        if (notificationType == "5" || notificationType == "2") {
-            //close chat
+        if (notificationType == "5") {
+            self.rateDriver()
+        }else if (notificationType == "2") {
             self.closeChat()
-        }else if (notificationType == "4") {
+        }
+        else if (notificationType == "4") {
             self.removeCancelFromChat()
         }
         
@@ -344,11 +348,15 @@ class AppDelegate: UIResponder, UIApplicationDelegate, MOLHResetable,MessagingDe
             if (notificationType == "5" || notificationType == "19" || notificationType == "17") {
                 self.loadTracks()
             }
+            if (notificationType == "5") {
+                self.rateDriver()
+            }
             if (notificationType == "6" || notificationType == "15") {
                 let orderIdStr = userInfo["OrderId"] as? String ?? "0"
                 UserDefaults.standard.setValue(Int(orderIdStr), forKey: Constants.BID_ACCEPTED_ORDER)
                 self.openWorkingOrders()
             }
+            
             self.showBanner(title: title, message: body, style: UIColor.colorPrimary)
             
             
@@ -356,9 +364,15 @@ class AppDelegate: UIResponder, UIApplicationDelegate, MOLHResetable,MessagingDe
                 self.updateNotificationChatCount()
                 self.loadTracks()
             }else {
-             self.updateNotificationCount()
+                self.updateNotificationCount()
             }
             
+            if (notificationType == "901") {
+                self.reloadOrderPaymentMethod(method: 1)
+            }
+            if (notificationType == "902") {
+                self.reloadOrderPaymentMethod(method: 3)
+            }
             
         }
         
@@ -388,6 +402,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate, MOLHResetable,MessagingDe
     
     func scheduleNotifications(title : String, message : String, type : String, itemId : String) {
         
+        
         if (type == "11") {
             self.updateNotificationChatCount()
         }else {
@@ -395,41 +410,41 @@ class AppDelegate: UIResponder, UIApplicationDelegate, MOLHResetable,MessagingDe
         }
         
         let requestIdentifier = "Notification"
-     //   if #available(iOS 10.0, *) {
-            let content = UNMutableNotificationContent()
-            
-            content.badge = 1
-            content.title = title
-            content.subtitle = "appname".localized
-            content.body = message
-            content.categoryIdentifier = "actionCategory"
-            content.sound = UNNotificationSound.default
+        //   if #available(iOS 10.0, *) {
+        let content = UNMutableNotificationContent()
         
-            self.updateChat()
-            
-            let trigger = UNTimeIntervalNotificationTrigger.init(timeInterval: 3.0, repeats: false)
-            let request = UNNotificationRequest(identifier: requestIdentifier, content: content, trigger: trigger)
-            
-            let notificationFlag = UserDefaults.standard.value(forKey: Constants.IS_NOTIFICATION_ACTIVE) as? Bool ?? true
-            if (notificationFlag) {
-                UNUserNotificationCenter.current().add(request) { (error:Error?) in
-                    
-                    if error != nil {
-                        print(error?.localizedDescription ?? "not localized")
-                    }
-                    print("Notification Register Success")
+        content.badge = 1
+        content.title = title
+        content.subtitle = "appname".localized
+        content.body = message
+        content.categoryIdentifier = "actionCategory"
+        content.sound = UNNotificationSound.default
+        
+        self.updateChat()
+        
+        let trigger = UNTimeIntervalNotificationTrigger.init(timeInterval: 3.0, repeats: false)
+        let request = UNNotificationRequest(identifier: requestIdentifier, content: content, trigger: trigger)
+        
+        let notificationFlag = UserDefaults.standard.value(forKey: Constants.IS_NOTIFICATION_ACTIVE) as? Bool ?? true
+        if (notificationFlag) {
+            UNUserNotificationCenter.current().add(request) { (error:Error?) in
+                
+                if error != nil {
+                    print(error?.localizedDescription ?? "not localized")
                 }
+                print("Notification Register Success")
             }
-            
-      //  } else {
-            // Fallback on earlier versions
-//            let content = UILocalNotification()
-//
-//            content.alertTitle = title
-//            content.alertBody = message
-//            content.category = ""
-            
-     //   }
+        }
+        
+        //  } else {
+        // Fallback on earlier versions
+        //            let content = UILocalNotification()
+        //
+        //            content.alertTitle = title
+        //            content.alertBody = message
+        //            content.category = ""
+        
+        //   }
         
     }
     
@@ -456,6 +471,19 @@ class AppDelegate: UIResponder, UIApplicationDelegate, MOLHResetable,MessagingDe
         }
     }
     
+    
+    func reloadOrderPaymentMethod(method : Int) {
+        App.shared.notificationValue = "0"
+        App.shared.notificationType = "0"
+        App.shared.notificationDeliveryId = "0"
+        if let rootViewController = UIApplication.topViewController() {
+            if rootViewController is ZHCDemoMessagesViewController {
+                let vc = rootViewController as! ZHCDemoMessagesViewController
+                vc.changeOrderPaymentMethod(method: method)
+            }
+        }
+    }
+    
     func closeChat() {
         App.shared.notificationValue = "0"
         App.shared.notificationType = "0"
@@ -464,6 +492,19 @@ class AppDelegate: UIResponder, UIApplicationDelegate, MOLHResetable,MessagingDe
             if rootViewController is ZHCDemoMessagesViewController {
                 let vc = rootViewController as! ZHCDemoMessagesViewController
                 vc.closeChat()
+            }
+        }
+    }
+    
+    
+    func rateDriver() {
+        App.shared.notificationValue = "0"
+        App.shared.notificationType = "0"
+        App.shared.notificationDeliveryId = "0"
+        if let rootViewController = UIApplication.topViewController() {
+            if rootViewController is ZHCDemoMessagesViewController {
+                let vc = rootViewController as! ZHCDemoMessagesViewController
+                vc.deliveryIsReceived()
             }
         }
     }
@@ -563,7 +604,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate, MOLHResetable,MessagingDe
     
     func applicationDidBecomeActive(_ application: UIApplication) {
         // Restart any tasks that were paused (or not yet started) while the application was inactive. If the application was previously in the background, optionally refresh the user interface.
-      
+        
     }
     
     func applicationWillTerminate(_ application: UIApplication) {
@@ -654,7 +695,7 @@ extension String {
     
     func toDouble() -> Double? {
         return NumberFormatter().number(from: self)?.doubleValue
-       }
+    }
     
     func trim() -> String
     {
@@ -711,7 +752,10 @@ extension String {
                    "٦": "6",
                    "٧": "7",
                    "٨": "8",
-                   "٩": "9"]
+                   "٩": "9",
+                   "،" : ".",
+                   "," : ".",
+                   "٫" : "."]
         map.forEach { str = str.replacingOccurrences(of: $0, with: $1) }
         return str
     }
@@ -941,5 +985,118 @@ extension UIApplication {
             return topViewController(base: presented)
         }
         return base
+    }
+}
+
+extension UITableView {
+    func setEmptyView(title: String, message: String, image : String) {
+        let emptyView = UIView(frame: CGRect(x: self.center.x, y: self.center.y, width: self.bounds.size.width, height: self.bounds.size.height))
+        let img = UIImage(named: image)
+        let imageView = UIImageView(image: img!)
+        
+        let titleLabel = UILabel()
+        let messageLabel = UILabel()
+        imageView.translatesAutoresizingMaskIntoConstraints = false
+        titleLabel.translatesAutoresizingMaskIntoConstraints = false
+        messageLabel.translatesAutoresizingMaskIntoConstraints = false
+        titleLabel.textColor = UIColor.black
+        messageLabel.textColor = UIColor.lightGray
+        
+        if (MOLHLanguage.currentAppleLanguage() == "ar") {
+            titleLabel.font = UIFont(name: Constants.ARABIC_FONT_BOLD, size: 17)
+            messageLabel.font = UIFont(name: Constants.ARABIC_FONT_REGULAR, size: 15)
+        }else {
+            titleLabel.font = UIFont(name: Constants.ENGLISH_FONT_BOLD, size: 17)
+            messageLabel.font = UIFont(name: Constants.ENGLISH_FONT_REGULAR, size: 15)
+        }
+        
+        imageView.contentMode = .scaleAspectFit
+        emptyView.addSubview(imageView)
+        emptyView.addSubview(titleLabel)
+        emptyView.addSubview(messageLabel)
+        
+        imageView.widthAnchor.constraint(equalToConstant: 200.0).isActive = true
+        imageView.heightAnchor.constraint(equalToConstant: 200.0).isActive = true
+        
+        imageView.centerYAnchor.constraint(equalTo: emptyView.centerYAnchor).isActive = true
+        imageView.centerXAnchor.constraint(equalTo: emptyView.centerXAnchor).isActive = true
+        
+        titleLabel.topAnchor.constraint(equalTo: imageView.bottomAnchor, constant: 20).isActive = true
+        titleLabel.leftAnchor.constraint(equalTo: emptyView.leftAnchor, constant: 20).isActive = true
+        titleLabel.rightAnchor.constraint(equalTo: emptyView.rightAnchor, constant: -20).isActive = true
+        
+        messageLabel.topAnchor.constraint(equalTo: titleLabel.bottomAnchor, constant: 20).isActive = true
+        messageLabel.leftAnchor.constraint(equalTo: emptyView.leftAnchor, constant: 20).isActive = true
+        messageLabel.rightAnchor.constraint(equalTo: emptyView.rightAnchor, constant: -20).isActive = true
+        
+        titleLabel.text = title
+        messageLabel.text = message
+        messageLabel.numberOfLines = 0
+        messageLabel.textAlignment = .center
+        titleLabel.textAlignment = .center
+        // The only tricky part is here:
+        self.backgroundView = emptyView
+        self.separatorStyle = .none
+    }
+    func restore() {
+        self.backgroundView = nil
+        self.separatorStyle = .none
+    }
+}
+
+
+extension UICollectionView {
+    func setEmptyView(title: String, message: String, image : String) {
+        let emptyView = UIView(frame: CGRect(x: self.center.x, y: self.center.y, width: self.bounds.size.width, height: self.bounds.size.height))
+        let img = UIImage(named: image)
+        let imageView = UIImageView(image: img!)
+        
+        let titleLabel = UILabel()
+        let messageLabel = UILabel()
+        imageView.translatesAutoresizingMaskIntoConstraints = false
+        titleLabel.translatesAutoresizingMaskIntoConstraints = false
+        messageLabel.translatesAutoresizingMaskIntoConstraints = false
+        titleLabel.textColor = UIColor.black
+        messageLabel.textColor = UIColor.lightGray
+        
+        if (MOLHLanguage.currentAppleLanguage() == "ar") {
+            titleLabel.font = UIFont(name: Constants.ARABIC_FONT_BOLD, size: 17)
+            messageLabel.font = UIFont(name: Constants.ARABIC_FONT_REGULAR, size: 15)
+        }else {
+            titleLabel.font = UIFont(name: Constants.ENGLISH_FONT_BOLD, size: 17)
+            messageLabel.font = UIFont(name: Constants.ENGLISH_FONT_REGULAR, size: 15)
+        }
+        
+        imageView.contentMode = .scaleAspectFit
+        emptyView.addSubview(imageView)
+        emptyView.addSubview(titleLabel)
+        emptyView.addSubview(messageLabel)
+        
+        imageView.widthAnchor.constraint(equalToConstant: 200.0).isActive = true
+        imageView.heightAnchor.constraint(equalToConstant: 200.0).isActive = true
+        
+        imageView.centerYAnchor.constraint(equalTo: emptyView.centerYAnchor).isActive = true
+        imageView.centerXAnchor.constraint(equalTo: emptyView.centerXAnchor).isActive = true
+        
+        titleLabel.topAnchor.constraint(equalTo: imageView.bottomAnchor, constant: 20).isActive = true
+        titleLabel.leftAnchor.constraint(equalTo: emptyView.leftAnchor, constant: 20).isActive = true
+        titleLabel.rightAnchor.constraint(equalTo: emptyView.rightAnchor, constant: -20).isActive = true
+        
+        messageLabel.topAnchor.constraint(equalTo: titleLabel.bottomAnchor, constant: 20).isActive = true
+        messageLabel.leftAnchor.constraint(equalTo: emptyView.leftAnchor, constant: 20).isActive = true
+        messageLabel.rightAnchor.constraint(equalTo: emptyView.rightAnchor, constant: -20).isActive = true
+        
+        titleLabel.text = title
+        messageLabel.text = message
+        messageLabel.numberOfLines = 0
+        messageLabel.textAlignment = .center
+        titleLabel.textAlignment = .center
+        // The only tricky part is here:
+        self.backgroundView = emptyView
+        // self.separatorStyle = .none
+    }
+    func restore() {
+        self.backgroundView = nil
+        // self.separatorStyle = .none
     }
 }

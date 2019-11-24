@@ -9,7 +9,7 @@
 import UIKit
 
 class WorkingHoursVC: BaseVC, UITableViewDelegate, UITableViewDataSource {
-
+    
     @IBOutlet weak var tableView: UITableView!
     
     
@@ -46,7 +46,49 @@ class WorkingHoursVC: BaseVC, UITableViewDelegate, UITableViewDataSource {
         let item = self.items[indexPath.row]
         
         cell.lblDay.text = self.getDayText(index : indexPath.row)
-        cell.lblTime.text = item
+        if (item.count > 5) {
+            var fromTime12Format = ""
+            var toTime12Format = ""
+            
+            let times = item.split(separator: "-")
+            let fromTime = String(times[0]).trim()
+            let toTime = String(times[1]).trim()
+            
+            let fromSplit = fromTime.split(separator: ":")
+            let fromHour = String(fromSplit[0])
+            let fromMin = String(fromSplit[1])
+            
+            let integerFromHour = Int(fromHour) ?? 0
+            if (integerFromHour < 12) {
+                fromTime12Format = "\(integerFromHour):\(fromMin) \("am".localized)"
+            }else if (integerFromHour > 12){
+                fromTime12Format = "\(integerFromHour - 12):\(fromMin) \("pm".localized)"
+            }else {
+                fromTime12Format = "12:\(fromMin) \("pm".localized)"
+            }
+            
+            
+            
+            let toSplit = toTime.split(separator: ":")
+            let toHour = String(toSplit[0])
+            let toMin = String(toSplit[1])
+            
+            let integerToHour = Int(toHour) ?? 0
+            if (integerToHour < 12) {
+                toTime12Format = "\(integerToHour):\(toMin) \("am".localized)"
+            }else if (integerToHour > 12){
+                toTime12Format = "\(integerToHour - 12):\(toMin) \("pm".localized)"
+            }else {
+                toTime12Format = "12:\(toMin) \("pm".localized)"
+            }
+            
+            cell.lblTime.text = "\(fromTime12Format) - \(toTime12Format)"
+        }else {
+            cell.lblTime.text = item
+        }
+        
+        
+        
         return cell
     }
     
@@ -91,7 +133,7 @@ class WorkingHoursVC: BaseVC, UITableViewDelegate, UITableViewDataSource {
                     return "monday".localized
                 }
             }
-           
+            
         }else {
             switch index {
             case 0:
@@ -112,7 +154,7 @@ class WorkingHoursVC: BaseVC, UITableViewDelegate, UITableViewDataSource {
                 return "monday".localized
             }
         }
-       
+        
     }
     
     @IBAction func backAction(_ sender: Any) {

@@ -35,7 +35,7 @@ class DataClassDelObj: Codable {
     let fromLatitude, fromLongitude: Double?
     let toAddress: String?
     let time : Int?
-    let toLatitude, toLongitude, cost: Double?
+    let toLatitude, toLongitude, cost, orderPrice: Double?
     let status: Int?
     let canCancel, canChat: Bool?
     let statusString: String?
@@ -45,7 +45,13 @@ class DataClassDelObj: Codable {
     let pickUpDetails : String?
     let dropOffDetails : String?
     let desc : String?
-    let paymentMethod: Int?
+    var paymentMethod: Int?
+    let items: [ShopMenuItem]?
+    let isPaid : Bool?
+    let invoiceId : String?
+    let toFemaleOnly : Bool?
+    let shopId : Int?
+    let KnetCommission : Double?
     
     enum CodingKeys: String, CodingKey {
         case type = "Type"
@@ -62,6 +68,7 @@ class DataClassDelObj: Codable {
         case toLongitude = "ToLongitude"
         case time = "Time"
         case cost = "Cost"
+        case orderPrice = "OrderPrice"
         case canCancel = "CanCancel"
         case canChat = "CanChat"
         case status = "Status"
@@ -72,9 +79,15 @@ class DataClassDelObj: Codable {
         case voiceFile = "VoiceFile"
         case desc = "Description"
         case paymentMethod = "PaymentMethod"
+        case items = "Items"
+        case isPaid = "IsPaid"
+        case invoiceId = "InvoiceId"
+        case toFemaleOnly = "ToFemaleOnly"
+        case shopId = "ShopId"
+        case KnetCommission = "KnetCommission"
     }
     
-    init(type :Int?, id: Int?,driverId : String?, chatId : Int?, title: String?, fromAddress: String?, fromLatitude: Double?, fromLongitude: Double?, toAddress: String?, toLatitude: Double?, toLongitude: Double?, time: Int?, cost: Double?, status: Int?, canCancel: Bool?, canChat: Bool?, statusString: String?, images: [String]?,voiceFile : String?, createdDate: String?, pickUpDetails: String?,dropOffDetails: String?,desc: String?, paymentMethod: Int?) {
+    init(type :Int?, id: Int?,driverId : String?, chatId : Int?, title: String?, fromAddress: String?, fromLatitude: Double?, fromLongitude: Double?, toAddress: String?, toLatitude: Double?, toLongitude: Double?, time: Int?, cost: Double?, status: Int?, canCancel: Bool?, canChat: Bool?, statusString: String?, images: [String]?,voiceFile : String?, createdDate: String?, pickUpDetails: String?,dropOffDetails: String?,desc: String?, paymentMethod: Int?, items: [ShopMenuItem]?, isPaid : Bool?, invoiceId: String?, toFemaleOnly : Bool?, shopId : Int?, orderPrice: Double?, KnetCommission: Double?) {
         self.type = type
         self.id = id
         self.driverId = driverId
@@ -99,5 +112,13 @@ class DataClassDelObj: Codable {
         self.dropOffDetails = dropOffDetails
         self.desc = desc
         self.paymentMethod = paymentMethod
+        self.items = items
+        self.isPaid = isPaid
+        self.invoiceId = invoiceId
+        self.toFemaleOnly = toFemaleOnly
+        self.shopId = shopId
+        self.orderPrice = orderPrice
+        self.KnetCommission = KnetCommission
     }
+    
 }

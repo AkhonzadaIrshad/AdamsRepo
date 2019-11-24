@@ -10,13 +10,11 @@ import UIKit
 
 class MyShopsVC: BaseVC, UITableViewDelegate, UITableViewDataSource {
     
-    
     @IBOutlet weak var ivHandle: UIImageView!
     
     @IBOutlet weak var tableView: UITableView!
     
     var items = [ShopOwnerListDatum]()
-    
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -32,6 +30,13 @@ class MyShopsVC: BaseVC, UITableViewDelegate, UITableViewDataSource {
             self.hideLoading()
             self.items.append(contentsOf: response.shopOwnerListData ?? [ShopOwnerListDatum]())
             self.tableView.reloadData()
+            
+            if (self.items.count == 0) {
+                self.tableView.setEmptyView(title: "no_shops".localized, message: "no_shops_desc".localized, image: "bg_no_data")
+            }else {
+                self.tableView.restore()
+            }
+            
         }
         
         if (self.isArabic()) {
@@ -41,7 +46,6 @@ class MyShopsVC: BaseVC, UITableViewDelegate, UITableViewDataSource {
     }
     
     //tableview delegate
-    
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
         return self.items.count
     }
@@ -51,8 +55,13 @@ class MyShopsVC: BaseVC, UITableViewDelegate, UITableViewDataSource {
         
         let item = self.items[indexPath.row]
         
-        let url = URL(string: "\(Constants.IMAGE_URL)\(item.images?[0] ?? "")")
-        cell.ivLogo.kf.setImage(with: url)
+        if (item.images?.count ?? 0 > 0) {
+            let url = URL(string: "\(Constants.IMAGE_URL)\(item.images?[0] ?? "")")
+            cell.ivLogo.kf.setImage(with: url)
+        }else {
+            cell.ivLogo.image = UIImage(named: "ic_place_shopping_mall")
+        }
+        
         
         let name = item.englishName ?? ""
         if (self.isArabic()) {
