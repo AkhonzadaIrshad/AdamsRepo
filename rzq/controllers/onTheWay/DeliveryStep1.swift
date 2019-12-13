@@ -169,21 +169,7 @@ class DeliveryStep1: BaseVC,LabasLocationManagerDelegate, Step2Delegate {
         self.showSearchFieldToolTip()
         
         
-        self.checkWelcomeDriver()
         
-    }
-    
-    func checkWelcomeDriver() {
-        if (isProvider()) {
-            let flag = UserDefaults.standard.value(forKey: Constants.SEE_DRIVER_TERMS) as? Bool ?? true
-            if (flag) {
-                UserDefaults.standard.setValue(false, forKey: Constants.SEE_DRIVER_TERMS)
-                let storyboard = UIStoryboard(name: "Main", bundle: nil)
-                let vc : WelcomeDriverVC = storyboard.instantiateViewController(withIdentifier: "WelcomeDriverVC") as! WelcomeDriverVC
-                vc.modalPresentationStyle = .fullScreen
-                self.present(vc, animated: true, completion: nil)
-            }
-        }
     }
     
     

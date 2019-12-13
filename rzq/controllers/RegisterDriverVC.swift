@@ -75,8 +75,18 @@ class RegisterDriverVC: BaseVC, UINavigationControllerDelegate {
         self.edtEmail.text = self.loadUser().data?.email ?? ""
         
         // Do any additional setup after loading the view.
+        self.openWelcomeDriver()
     }
     
+    
+    
+    func openWelcomeDriver() {
+       UserDefaults.standard.setValue(false, forKey: Constants.SEE_DRIVER_TERMS)
+        let storyboard = UIStoryboard(name: "Main", bundle: nil)
+        let vc : WelcomeDriverVC = storyboard.instantiateViewController(withIdentifier: "WelcomeDriverVC") as! WelcomeDriverVC
+        vc.modalPresentationStyle = .fullScreen
+        self.present(vc, animated: true, completion: nil)
+    }
     
     @IBAction func profileImageAction(_ sender: Any) {
         self.imageDest = 1

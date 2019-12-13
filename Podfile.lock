@@ -119,6 +119,7 @@ PODS:
     - MaterialComponents/ShadowLayer
   - MOLH (0.8)
   - MultilineTextField (0.2.3)
+  - MyFatoorah (2.0.24)
   - nanopb (0.3.901):
     - nanopb/decode (= 0.3.901)
     - nanopb/encode (= 0.3.901)
@@ -141,6 +142,7 @@ PODS:
   - SnapKit (4.0.1)
   - SVProgressHUD (2.2.5)
   - SwiftDate (4.5.1)
+  - SwiftWebVC (0.4.2)
   - SwiftyGif (4.2.0)
   - SwiftyJSON (4.2.0)
   - ValueStepper (1.6)
@@ -176,6 +178,7 @@ DEPENDENCIES:
   - MaterialComponents/BottomSheet
   - MOLH
   - MultilineTextField
+  - MyFatoorah
   - RangeSeekSlider
   - ReadMoreTextView
   - RealmSwift
@@ -185,6 +188,7 @@ DEPENDENCIES:
   - SnapKit (~> 4.0.0)
   - SVProgressHUD
   - SwiftDate (~> 4.0)
+  - SwiftWebVC
   - SwiftyGif
   - SwiftyJSON (~> 4.0)
   - ValueStepper
@@ -228,6 +232,7 @@ SPEC REPOS:
     - MaterialComponents
     - MOLH
     - MultilineTextField
+    - MyFatoorah
     - nanopb
     - NVActivityIndicatorView
     - Protobuf
@@ -241,6 +246,7 @@ SPEC REPOS:
     - SnapKit
     - SVProgressHUD
     - SwiftDate
+    - SwiftWebVC
     - SwiftyGif
     - SwiftyJSON
     - ValueStepper
@@ -283,6 +289,7 @@ SPEC CHECKSUMS:
   MaterialComponents: 1aef341d47fbaed37ddb5163a01af94cb6da8506
   MOLH: b9766efe89be975ce82a8d5642f681da23c876fc
   MultilineTextField: 10965d9c3e05a182181bd7971eb009c7607001ae
+  MyFatoorah: adf6ba555ca14742611fb87ae308143cf9416c07
   nanopb: 2901f78ea1b7b4015c860c2fdd1ea2fee1a18d48
   NVActivityIndicatorView: 77ed6d7b571643e24899e7858bf9ae2ee4c21f31
   Protobuf: 3f617b9a6e73605565086864c9bc26b2bf2dd5a3
@@ -296,12 +303,13 @@ SPEC CHECKSUMS:
   SnapKit: 0de968a9fec17499afa29683b05d0c775b6d1c29
   SVProgressHUD: 1428aafac632c1f86f62aa4243ec12008d7a51d6
   SwiftDate: 7b56d42a221f582047287deb256b23fc5ed49a60
+  SwiftWebVC: ecc4feaabe5a3f75e059a0a345d3386bb0d16c44
   SwiftyGif: a149bf84df23370592f3f075561ae02c8632a314
   SwiftyJSON: c4bcba26dd9ec7a027fc8eade48e2c911f229e96
   ValueStepper: 8b120c72c8d1391cd874a427485e2e57fda1a0b9
   ZHChat: d554719971be77fb8346a51e3fd8043ff18e1292
   ZoomImageView: 2a88d0c10ad30b9a06c8f5660d51623fb32beed5
 
-PODFILE CHECKSUM: cc593f26a1a9e5c4cdb3730ee634b46a373f8c05
+PODFILE CHECKSUM: 4c8dbaf4172e4bf95523d83968d2931eff32859f
 
 COCOAPODS: 1.7.2

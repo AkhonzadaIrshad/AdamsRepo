@@ -8,15 +8,19 @@
 
 import UIKit
 import WebKit
+import MOLH
+import MFSDK
+//import SwiftWebVC
 
 protocol PaymentDelegate {
     func onPaymentSuccess(payment : PaymentStatusResponse)
     func onPaymentFail()
 }
+
 class PaymentVC: BaseVC, WKNavigationDelegate, WKUIDelegate {
     
     @IBOutlet weak var webView: WKWebView!
-    
+   // var webView: WKWebView!
     var total : Double?
     var items = [ShopMenuItem]()
     var invoiceId : String?
@@ -26,11 +30,25 @@ class PaymentVC: BaseVC, WKNavigationDelegate, WKUIDelegate {
     override func viewDidLoad() {
         super.viewDidLoad()
         
-       // self.webView.scrollView.delegate = self
+//        let autocorrectJavaScript = "var inputTextElement = document.getElementById('debitNumber');"
+//              + "   if (inputTextElement != null) {"
+//              + "     var autocorrectAttribute = document.createAttribute('autocorrect');"
+//              + "     autocorrectAttribute.value = 'off';"
+//              + "     inputTextElement.setAttributeNode(autocorrectAttribute);"
+//              + "   }"
+//              let userScript = WKUserScript(source: autocorrectJavaScript, injectionTime: .atDocumentEnd, forMainFrameOnly: false)
+//              let webConfiguration = WKWebViewConfiguration()
+//              webConfiguration.userContentController.addUserScript(userScript)
+//
+//        let frame = self.view.frame
+//        self.webView = WKWebView(frame: frame, configuration: webConfiguration)
+//        self.view.addSubview(self.webView)
+        
+        // self.webView.scrollView.delegate = self
         self.webView.addObserver(self, forKeyPath: "URL", options: .new, context: nil)
         self.webView.addObserver(self, forKeyPath: "estimatedProgress", options: .new, context: nil)
         
-        
+      
         self.showLoading()
         ApiService.placePayment(user: self.loadUser(), total: total ?? 0.0, items: self.items) { (response) in
             self.hideLoading()
@@ -39,6 +57,12 @@ class PaymentVC: BaseVC, WKNavigationDelegate, WKUIDelegate {
                 let link = URL(string:response.paymentData?.paymentURL ?? "")!
                 let request = URLRequest(url: link)
                 self.webView.load(request)
+                
+                //test this
+//                let webVC = SwiftModalWebVC(urlString: response.paymentData?.paymentURL ?? "")
+//                self.present(webVC, animated: true, completion: nil)
+                //
+                
             }else {
                 self.showBanner(title: "alert".localized, message: response.message ?? "", style: UIColor.ERROR)
                 DispatchQueue.main.asyncAfter(deadline: .now() + 1) {
@@ -56,8 +80,45 @@ class PaymentVC: BaseVC, WKNavigationDelegate, WKUIDelegate {
         view.addSubview(activityIndicator)
         
         // Do any additional setup after loading the view.
+        
     }
-  
+    
+//    override func viewWillAppear(_ animated: Bool) {
+//        super.viewWillAppear(animated)
+//        MOLH.setLanguageTo("en")
+//        MOLH.reset()
+//    }
+    
+//    override func viewWillDisappear(_ animated: Bool) {
+//        super.viewWillDisappear(animated)
+//        MOLH.setLanguageTo("ar")
+//        MOLH.reset()
+//    }
+    
+    //    func sdk_placePayment() {
+    //        let card = MFCardInfo(cardNumber: "8888880000000001", cardExpiryMonth: "09", cardExpiryYear: "21", cardSecurityCode: "1234", saveToken: true) //MFCardInfo(cardToken: "token")
+    //         let invoiceValue = 5.0
+    //
+    //         let request = MFExecutePaymentRequest(invoiceValue: invoiceValue, paymentMethod: 1)
+    //         MFPaymentRequest.shared.executeDirectPayment(request: request, cardInfo: card, apiLanguage: .english) { [weak self] response, invoiceId in
+    //             switch response {
+    //             case .success(let directPaymentResponse):
+    //                 if let cardInfoResponse = directPaymentResponse.cardInfoResponse, let card = cardInfoResponse.cardInfo {
+    //                     print("Status: with card number \(card.number)")
+    //                 }
+    //                 if let invoiceId = invoiceId {
+    //                     print("Success with invoiceId \(invoiceId)")
+    //                 }
+    //             case .failure(let failError):
+    //                 print("Error: \(failError.errorDescription)")
+    //                 if let invoiceId = invoiceId {
+    //                     print("Fail: \(failError.statusCode) with invoiceId \(invoiceId)")
+    //                 }
+    //             }
+    //         }
+    //    }
+    
+    
     
     override func observeValue(forKeyPath keyPath: String?, of object: Any?, change: [NSKeyValueChangeKey : Any]?, context: UnsafeMutableRawPointer?) {
         if keyPath == #keyPath(WKWebView.url) {

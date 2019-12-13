@@ -116,6 +116,7 @@ class OrderDetailsVC: BaseVC, UICollectionViewDelegate, UICollectionViewDataSour
     
     override func viewDidLoad() {
         super.viewDidLoad()
+        
         if (self.isArabic()) {
             self.ivHandle.image = UIImage(named: "ic_back_arabic")
         }
@@ -218,10 +219,7 @@ class OrderDetailsVC: BaseVC, UICollectionViewDelegate, UICollectionViewDataSour
             viewNavigateHeight.constant = 0
         }
         
-        
         self.selectPaymentMethod(method: self.order?.paymentMethod ?? Constants.PAYMENT_METHOD_CASH)
-        
-        
         
         if (self.order?.status == Constants.ORDER_PROCESSING || self.order?.status == Constants.ORDER_PENDING || self.order?.status == Constants.ORDER_ON_THE_WAY) {
             if (self.isProvider() && self.loadUser().data?.userID == self.order?.driverId ?? "") {
@@ -769,6 +767,7 @@ class OrderDetailsVC: BaseVC, UICollectionViewDelegate, UICollectionViewDataSour
            // vc.total =  self.getTotal(items: self.order?.items ?? [ShopMenuItem]())
             vc.total = totalCost
             vc.delegate = self
+            vc.modalPresentationStyle = .fullScreen
             self.present(vc, animated: true, completion: nil)
         }else {
             if (self.order?.orderPrice ?? 0 > 0) {
@@ -781,6 +780,7 @@ class OrderDetailsVC: BaseVC, UICollectionViewDelegate, UICollectionViewDataSour
               //  vc.total =  self.order?.orderPrice ?? 0
                 vc.total = totalCost
                 vc.delegate = self
+                vc.modalPresentationStyle = .fullScreen
                 self.present(vc, animated: true, completion: nil)
             }else {
                 self.showBanner(title: "alert".localized, message: "bill_not_issued".localized, style: UIColor.INFO)

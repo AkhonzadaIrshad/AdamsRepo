@@ -50,4 +50,6 @@ target 'rzq' do
    pod 'Firebase/Messaging'
    pod 'ValueStepper'
    pod 'BMPlayer'
+   pod 'MyFatoorah'
+   pod 'SwiftWebVC'
 end

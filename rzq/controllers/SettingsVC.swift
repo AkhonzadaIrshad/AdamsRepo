@@ -74,7 +74,7 @@ class SettingsVC: BaseVC {
                 let defaults = UserDefaults.standard
                 defaults.set(true, forKey: "DID_SELECT_LANG")
                 MOLH.setLanguageTo("en")
-                MOLHLanguage.setAppleLAnguageTo("en")
+              //  MOLHLanguage.setAppleLAnguageTo("en")
                 self.updateFCM()
             })
             
@@ -94,7 +94,7 @@ class SettingsVC: BaseVC {
             let defaults = UserDefaults.standard
             defaults.set(true, forKey: "DID_SELECT_LANG")
             MOLH.setLanguageTo("ar")
-            MOLHLanguage.setAppleLAnguageTo("ar")
+           // MOLHLanguage.setAppleLAnguageTo("ar")
             self.updateFCM()
         })
         

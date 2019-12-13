@@ -16,7 +16,7 @@ class BaseVC: UIViewController,UIGestureRecognizerDelegate {
     
     override func viewDidLoad() {
         super.viewDidLoad()
-        self.swipeToPop()
+       // self.swipeToPop()
         // Do any additional setup after loading the view.
     }
     func swipeToPop() {
@@ -232,6 +232,15 @@ class BaseVC: UIViewController,UIGestureRecognizerDelegate {
             return true
         }
         return false
+    }
+    
+    func convertDate(isoDate: String) -> String{
+        let dateFormatter = DateFormatter()
+        dateFormatter.dateFormat = "yyyy-MM-dd'T'HH:mm:ss.SSSSSS"
+        let date = dateFormatter.date(from:isoDate)!
+        dateFormatter.dateFormat = "dd/MM/yyyy hh:mm a"
+        let displayDate = dateFormatter.string(from: date)
+        return displayDate
     }
     
     

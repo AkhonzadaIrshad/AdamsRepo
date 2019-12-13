@@ -63,7 +63,7 @@ class MyShopPendingOrdersVC: BaseVC, UITableViewDelegate, UITableViewDataSource 
         let item = self.items[indexPath.row]
         
         cell.lblOrderNo.text = "\(Constants.ORDER_NUMBER_PREFIX)\(item.id ?? 0)"
-        cell.lblDate.text = item.createdDate ?? ""
+        cell.lblDate.text = self.convertDate(isoDate: item.createdDate ?? "")
         cell.lblTime.text = item.createdTime ?? ""
         cell.lblStatus.text = item.statusString ?? ""
         cell.lblOrderDetails.text = item.shopOrdersDatumDescription ?? ""

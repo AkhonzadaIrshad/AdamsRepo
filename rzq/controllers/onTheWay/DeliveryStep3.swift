@@ -648,6 +648,7 @@ class DeliveryStep3: BaseVC, UINavigationControllerDelegate, ImagePickerDelegate
                 print("OK buttons has the value `true`")
             }
         }
+        
         actionSheet.appearance = appearance
         actionSheet.title = "select_an_option".localized
         
@@ -668,7 +669,7 @@ class DeliveryStep3: BaseVC, UINavigationControllerDelegate, ImagePickerDelegate
         let item0 = ActionSheetItem(title: "cash".localized, value: 0, image: nil)
         let item1 = ActionSheetItem(title: "knet".localized, value: 1, image: nil)
         
-        let actionSheet = ActionSheet(items: [title,item0,item1]) { sheet, item in
+        let actionSheet = ActionSheet(items: [title,item0, item1]) { sheet, item in
             if let value = item.value as? Int {
                 switch (value) {
                 case 0:

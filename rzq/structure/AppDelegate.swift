@@ -21,6 +21,7 @@ import Branch
 import RealmSwift
 import Fabric
 import Crashlytics
+import MFSDK
 
 var AFManager = SessionManager()
 @UIApplicationMain
@@ -31,6 +32,11 @@ class AppDelegate: UIResponder, UIApplicationDelegate, MOLHResetable,MessagingDe
     func application(_ application: UIApplication, didFinishLaunchingWithOptions launchOptions: [UIApplication.LaunchOptionsKey: Any]?) -> Bool {
         // Override point for customization after application launch.
         
+        
+        MFSettings.shared.configure(token: Constants.TEST_PAYMENT_TOKEN, baseURL: Constants.PAYMENT_TESTS_URL)
+        
+        let them = MFTheme(navigationTintColor: .white, navigationBarTintColor: .lightGray, navigationTitle: "Payment", cancelButtonTitle: "Cancel")
+        MFSettings.shared.setTheme(theme: them)
         
         
         //maps
@@ -573,11 +579,20 @@ class AppDelegate: UIResponder, UIApplicationDelegate, MOLHResetable,MessagingDe
     func reset() {
         let check = UserDefaults.standard.value(forKey: Constants.DID_SEE_INTRO) as? Bool ?? false
         if (check) {
-            let mainStoryboardIpad : UIStoryboard = UIStoryboard(name: "Main", bundle: nil)
-            let initialViewControlleripad : UIViewController = mainStoryboardIpad.instantiateViewController(withIdentifier: self.getHomeView()) as! UINavigationController
-            self.window = UIWindow(frame: UIScreen.main.bounds)
-            self.window?.rootViewController = initialViewControlleripad
-            self.window?.makeKeyAndVisible()
+            if let rootViewController = UIApplication.topViewController() {
+                let mainStoryboardIpad : UIStoryboard = UIStoryboard(name: "Main", bundle: nil)
+                let initialViewControlleripad : UIViewController = mainStoryboardIpad.instantiateViewController(withIdentifier: self.getHomeView()) as! UINavigationController
+                self.window = UIWindow(frame: UIScreen.main.bounds)
+                self.window?.rootViewController = initialViewControlleripad
+                self.window?.makeKeyAndVisible()
+            }else {
+                let mainStoryboardIpad : UIStoryboard = UIStoryboard(name: "Main", bundle: nil)
+                let initialViewControlleripad : UIViewController = mainStoryboardIpad.instantiateViewController(withIdentifier: self.getHomeView()) as! UINavigationController
+                self.window = UIWindow(frame: UIScreen.main.bounds)
+                self.window?.rootViewController = initialViewControlleripad
+                self.window?.makeKeyAndVisible()
+            }
+            
         }else {
             let mainStoryboardIpad : UIStoryboard = UIStoryboard(name: "Main", bundle: nil)
             let initialViewControlleripad : UIViewController = mainStoryboardIpad.instantiateViewController(withIdentifier: "IntroNavigationController") as! UINavigationController
@@ -761,17 +776,17 @@ extension String {
     }
 }
 extension UIViewController {
-    open override func awakeFromNib() {
-        super.awakeFromNib()
-        if (MOLHLanguage.currentAppleLanguage() == "ar") {
-            navigationController?.view.semanticContentAttribute = .forceRightToLeft
-            navigationController?.navigationBar.semanticContentAttribute = .forceRightToLeft
-        }else {
-            navigationController?.view.semanticContentAttribute = .forceLeftToRight
-            navigationController?.navigationBar.semanticContentAttribute = .forceLeftToRight
-        }
-        
-    }
+//    open override func awakeFromNib() {
+//        super.awakeFromNib()
+//        if (MOLHLanguage.currentAppleLanguage() == "ar") {
+//            navigationController?.view.semanticContentAttribute = .forceRightToLeft
+//            navigationController?.navigationBar.semanticContentAttribute = .forceRightToLeft
+//        }else {
+//            navigationController?.view.semanticContentAttribute = .forceLeftToRight
+//            navigationController?.navigationBar.semanticContentAttribute = .forceLeftToRight
+//        }
+//
+//    }
     
     func popBack(_ nb: Int) {
         if let viewControllers: [UIViewController] = self.navigationController?.viewControllers {

@@ -88,19 +88,22 @@ class NotificationsVC: BaseViewController, UITableViewDelegate, UITableViewDataS
             
             ApiService.getDelivery(id: itemId) { (response) in
                 DispatchQueue.main.async {
-                    let messagesVC: ZHCDemoMessagesViewController = ZHCDemoMessagesViewController.init()
-                    messagesVC.presentBool = true
+                    if (response.data?.time ?? 0 == 0) {
+                        let messagesVC: ZHCDemoMessagesViewController = ZHCDemoMessagesViewController.init()
+                        messagesVC.presentBool = true
+                        
+                        let order = DatumDel(id: response.data?.id ?? 0, title: response.data?.title ?? "", status: response.data?.status ?? 0, statusString: response.data?.statusString ?? "", image: "", createdDate: response.data?.createdDate ?? "", chatId: response.data?.chatId ?? 0, fromAddress: response.data?.fromAddress ?? "", fromLatitude: response.data?.fromLatitude ?? 0.0, fromLongitude: response.data?.fromLongitude ?? 0.0, toAddress: response.data?.toAddress ?? "", toLatitude: response.data?.toLatitude ?? 0.0, toLongitude: response.data?.toLongitude ?? 0.0, providerID: response.data?.driverId, providerName: "", providerImage: "", providerRate: 0, time: response.data?.time ?? 0, price: response.data?.cost ?? 0.0, serviceName: "",paymentMethod: response.data?.paymentMethod ?? 0, items: response.data?.items ?? [ShopMenuItem](), isPaid: response.data?.isPaid ?? false, invoiceId: response.data?.invoiceId ?? "", toFemaleOnly: response.data?.toFemaleOnly ?? false, shopId: response.data?.shopId ?? 0, OrderPrice: response.data?.orderPrice ?? 0.0, KnetCommission: response.data?.KnetCommission ?? 0.0)
+                        
+                        
+                        messagesVC.order = order
+                        messagesVC.user = self.loadUser()
+                        // messagesVC.sendWelcomeMessage = true
+                        let nav: UINavigationController = UINavigationController.init(rootViewController: messagesVC)
+                        nav.modalPresentationStyle = .fullScreen
+                        messagesVC.modalPresentationStyle = .fullScreen
+                        self.navigationController?.present(nav, animated: true, completion: nil)
+                    }
                     
-                    let order = DatumDel(id: response.data?.id ?? 0, title: response.data?.title ?? "", status: response.data?.status ?? 0, statusString: response.data?.statusString ?? "", image: "", createdDate: response.data?.createdDate ?? "", chatId: response.data?.chatId ?? 0, fromAddress: response.data?.fromAddress ?? "", fromLatitude: response.data?.fromLatitude ?? 0.0, fromLongitude: response.data?.fromLongitude ?? 0.0, toAddress: response.data?.toAddress ?? "", toLatitude: response.data?.toLatitude ?? 0.0, toLongitude: response.data?.toLongitude ?? 0.0, providerID: response.data?.driverId, providerName: "", providerImage: "", providerRate: 0, time: response.data?.time ?? 0, price: response.data?.cost ?? 0.0, serviceName: "",paymentMethod: response.data?.paymentMethod ?? 0, items: response.data?.items ?? [ShopMenuItem](), isPaid: response.data?.isPaid ?? false, invoiceId: response.data?.invoiceId ?? "", toFemaleOnly: response.data?.toFemaleOnly ?? false, shopId: response.data?.shopId ?? 0, OrderPrice: response.data?.orderPrice ?? 0.0, KnetCommission: response.data?.KnetCommission ?? 0.0)
-                    
-                    
-                    messagesVC.order = order
-                    messagesVC.user = self.loadUser()
-                   // messagesVC.sendWelcomeMessage = true
-                    let nav: UINavigationController = UINavigationController.init(rootViewController: messagesVC)
-                    nav.modalPresentationStyle = .fullScreen
-                    messagesVC.modalPresentationStyle = .fullScreen
-                    self.navigationController?.present(nav, animated: true, completion: nil)
                 }
             }
             
@@ -319,7 +322,7 @@ class NotificationsVC: BaseViewController, UITableViewDelegate, UITableViewDataS
             let pickupLatLng = CLLocation(latitude: fromLatitude, longitude: fromLongitude)
             let dropOffLatLng = CLLocation(latitude: toLatitude, longitude: toLongitude)
             
-          
+            
             let fromDistanceInMeters = pickupLatLng.distance(from: driverLatLng)
             let fromDistanceInKM = fromDistanceInMeters / 1000.0
             
@@ -328,8 +331,8 @@ class NotificationsVC: BaseViewController, UITableViewDelegate, UITableViewDataS
             
             
             let totalDistanceStr = String(format: "%.2f", (fromDistanceInKM + toDistanceInKM))
-                      
-                      
+            
+            
             cell.lblDistance.text = "\(totalDistanceStr) \("km".localized)"
             
             cell.onTake = {
@@ -352,7 +355,7 @@ class NotificationsVC: BaseViewController, UITableViewDelegate, UITableViewDataS
             }
             
             
-            cell.lblNotificationDate.text = item.createdDate ?? ""
+            cell.lblNotificationDate.text = self.convertDate(isoDate: item.createdDate ?? "")
             if (item.createdTime?.count ?? 0 > 0) {
                 cell.timeView.isHidden = false
                 cell.lblNotificationTime.text = item.createdTime ?? ""
@@ -428,7 +431,7 @@ class NotificationsVC: BaseViewController, UITableViewDelegate, UITableViewDataS
                 self.present(vc, animated: true, completion: nil)
             }
             
-            cell.lblNotificationDate.text = item.createdDate ?? ""
+            cell.lblNotificationDate.text = self.convertDate(isoDate: item.createdDate ?? "")
             if (item.createdTime?.count ?? 0 > 0) {
                 cell.timeView.isHidden = false
                 cell.lblNotificationTime.text = item.createdTime ?? ""
@@ -580,7 +583,7 @@ class NotificationsVC: BaseViewController, UITableViewDelegate, UITableViewDataS
                 }
             }
             
-            cell.lblNotificationDate.text = item.createdDate ?? ""
+            cell.lblNotificationDate.text = self.convertDate(isoDate: item.createdDate ?? "")
             if (item.createdTime?.count ?? 0 > 0) {
                 cell.timeView.isHidden = false
                 cell.lblNotificationTime.text = item.createdTime ?? ""
@@ -645,7 +648,7 @@ class NotificationsVC: BaseViewController, UITableViewDelegate, UITableViewDataS
                 self.present(vc, animated: true, completion: nil)
             }
             
-            cell.lblNotificationDate.text = item.createdDate ?? ""
+            cell.lblNotificationDate.text = self.convertDate(isoDate: item.createdDate ?? "")
             if (item.createdTime?.count ?? 0 > 0) {
                 cell.timeView.isHidden = false
                 cell.lblNotificationTime.text = item.createdTime ?? ""
@@ -758,7 +761,7 @@ class NotificationsVC: BaseViewController, UITableViewDelegate, UITableViewDataS
         }
     }
     
-   
+    
     
     func onAccept() {
         let mainStoryboardIpad : UIStoryboard = UIStoryboard(name: "Main", bundle: nil)

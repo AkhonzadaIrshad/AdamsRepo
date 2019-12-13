@@ -97,23 +97,6 @@ class HomeMapVC: BaseViewController,LabasLocationManagerDelegate, UICollectionVi
             self.getDriverOnGoingDeliveries()
         }
         
-        
-        self.checkWelcomeDriver()
-        
-    }
-    
-    
-    func checkWelcomeDriver() {
-        if (isProvider()) {
-            let flag = UserDefaults.standard.value(forKey: Constants.SEE_DRIVER_TERMS) as? Bool ?? true
-            if (flag) {
-                UserDefaults.standard.setValue(false, forKey: Constants.SEE_DRIVER_TERMS)
-                let storyboard = UIStoryboard(name: "Main", bundle: nil)
-                let vc : WelcomeDriverVC = storyboard.instantiateViewController(withIdentifier: "WelcomeDriverVC") as! WelcomeDriverVC
-                vc.modalPresentationStyle = .fullScreen
-                self.present(vc, animated: true, completion: nil)
-            }
-        }
     }
     
    func getDriverOnGoingDeliveries() {
@@ -479,7 +462,7 @@ class HomeMapVC: BaseViewController,LabasLocationManagerDelegate, UICollectionVi
         stopTimer()
         self.getDriverLocationAPI(item: item)
         if #available(iOS 10.0, *) {
-            timer = Timer.scheduledTimer(withTimeInterval: 5, repeats: true) { [weak self] _ in
+            timer = Timer.scheduledTimer(withTimeInterval: 120, repeats: true) { [weak self] _ in
                 // do something here
                 self?.getDriverLocationAPI(item: item)
             }

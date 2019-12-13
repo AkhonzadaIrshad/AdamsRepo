@@ -31,7 +31,7 @@ class LabasLocationManager: NSObject {
         super.init()
         
         self.locationManager = CLLocationManager()
-        self.locationManager?.allowsBackgroundLocationUpdates = true
+        self.locationManager?.allowsBackgroundLocationUpdates = false
         guard let locationManager = self.locationManager else {
             return
         }

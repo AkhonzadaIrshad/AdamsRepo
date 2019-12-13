@@ -25,14 +25,14 @@ class LanguageVC: BaseVC {
     @IBAction func arabicAction(_ sender: Any) {
         UserDefaults.standard.setValue(true, forKey: Constants.DID_CHOOSE_LANGUAGE)
         MOLH.setLanguageTo("ar")
-        MOLHLanguage.setAppleLAnguageTo("ar")
+       // MOLHLanguage.setAppleLAnguageTo("ar")
         MOLH.reset()
     }
     
     @IBAction func englishAction(_ sender: Any) {
         UserDefaults.standard.setValue(true, forKey: Constants.DID_CHOOSE_LANGUAGE)
         MOLH.setLanguageTo("en")
-        MOLHLanguage.setAppleLAnguageTo("en")
+      //  MOLHLanguage.setAppleLAnguageTo("en")
         MOLH.reset()
     }
     

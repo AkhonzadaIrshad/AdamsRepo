@@ -118,7 +118,7 @@ class OrdersVC: BaseViewController, UITableViewDelegate, UITableViewDataSource {
            
             cell.lblTitle.text = item.title ?? ""
             cell.lblOrderNumber.text = "\("order_number".localized) \(Constants.ORDER_NUMBER_PREFIX)\(item.id ?? 0)"
-            cell.lblDeliveryDate.text = "\("delivery_date".localized) \(item.createdDate ?? "")"
+            cell.lblDeliveryDate.text = "\("delivery_date".localized) \(self.convertDate(isoDate: item.createdDate ?? ""))"
             cell.lblFrom.text = "\("from".localized) \(item.fromAddress ?? "")"
             cell.lblTo.text = "\("to".localized) \(item.toAddress ?? "")"
             cell.lblOrderStatus.text = item.statusString ?? ""
@@ -167,7 +167,7 @@ class OrdersVC: BaseViewController, UITableViewDelegate, UITableViewDataSource {
             
             cell.lblTitle.text = item.title ?? ""
             cell.lblOrderNumber.text = "\("order_number".localized) \(Constants.ORDER_NUMBER_PREFIX)\(item.id ?? 0)"
-            cell.lblDeliveryDate.text = "\("delivery_date".localized) \(item.createdDate ?? "")"
+            cell.lblDeliveryDate.text = "\("delivery_date".localized) \(self.convertDate(isoDate: item.createdDate ?? ""))"
             cell.lblFrom.text = "\("from".localized) \(item.fromAddress ?? "")"
             cell.lblTo.text = "\("to".localized) \(item.toAddress ?? "")"
             cell.lblOrderStatus.text = item.statusString ?? ""

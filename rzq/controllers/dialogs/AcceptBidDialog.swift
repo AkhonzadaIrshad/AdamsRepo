@@ -208,6 +208,7 @@ class AcceptBidDialog: BaseVC, PaymentDelegate {
             
             vc.total = orderCost + deliveryCost + knetCommission
             vc.delegate = self
+            vc.modalPresentationStyle = .fullScreen
             self.present(vc, animated: true, completion: nil)
         }
     }

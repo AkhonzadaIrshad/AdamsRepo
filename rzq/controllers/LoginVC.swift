@@ -75,6 +75,13 @@ class LoginVC: BaseVC, CountryPickerViewDataSource, CountryPickerViewDelegate, P
         
         self.genderSegment.setTitle("female".localized, forSegmentAt: 0)
         self.genderSegment.setTitle("male".localized, forSegmentAt: 1)
+        
+        
+        let titleTextAttributes = [NSAttributedString.Key.foregroundColor: UIColor.white]
+        let titleTextAttributes2 = [NSAttributedString.Key.foregroundColor: UIColor.black]
+        
+        self.genderSegment.setTitleTextAttributes(titleTextAttributes2, for: .normal)
+        self.genderSegment.setTitleTextAttributes(titleTextAttributes, for: .selected)
     }
     
     

@@ -414,10 +414,9 @@ class ZHCDemoMessagesViewController: ZHCMessagesViewController, BillDelegate, Ch
         }
         
         
-        
         let item2 = self.driverActionButton?.addItem()
         if (self.order?.status == Constants.ORDER_PROCESSING) {
-            if (self.order?.items?.count ?? 0 > 0 && self.order?.paymentMethod == Constants.PAYMENT_METHOD_KNET) {
+            if ((self.order?.isPaid ?? false) && (self.order?.paymentMethod == Constants.PAYMENT_METHOD_KNET)) {
                 item2?.titleLabel.text = "on_my_way".localized
             }else {
                 item2?.titleLabel.text = "release_receipt".localized
@@ -434,7 +433,7 @@ class ZHCDemoMessagesViewController: ZHCMessagesViewController, BillDelegate, Ch
         item2?.action = { item in
             if (self.order?.status == Constants.ORDER_PROCESSING) {
                 //on my way
-                if (self.order?.items?.count ?? 0 > 0 && self.order?.paymentMethod == Constants.PAYMENT_METHOD_KNET) {
+               if ((self.order?.isPaid ?? false) && (self.order?.paymentMethod == Constants.PAYMENT_METHOD_KNET)) {
                     self.startDelivery(cost: self.order?.price ?? 0.0)
                 }else {
                     if let vc = UIStoryboard(name: "Main", bundle: nil).instantiateViewController(withIdentifier: "CustomerBillVC") as? CustomerBillVC
@@ -448,7 +447,7 @@ class ZHCDemoMessagesViewController: ZHCMessagesViewController, BillDelegate, Ch
                         self.present(vc, animated: true, completion: nil)
                     }
                 }
-            }else {
+            } else {
                 self.showPaymentStatusDialog()
             }
         }
@@ -856,7 +855,7 @@ class ZHCDemoMessagesViewController: ZHCMessagesViewController, BillDelegate, Ch
     
     @objc func closePressed() -> Void {
         if (self.isProvider() && self.user?.data?.userID == self.order?.providerID) {
-            if (self.order?.time ?? 0 <= 1) {
+            if (self.order?.time ?? 0 == 0) {
                 if (self.order?.status == Constants.ORDER_CANCELLED || self.order?.status == Constants.ORDER_COMPLETED || self.order?.status == Constants.ORDER_EXPIRED) {
                     self.navigationController?.dismiss(animated: true, completion: nil);
                 }else {
