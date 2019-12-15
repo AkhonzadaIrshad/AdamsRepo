@@ -30,8 +30,12 @@ class OrderCell: UITableViewCell {
     
     @IBOutlet weak var statusColorView: UIView!
     
+    @IBOutlet weak var btnReorder: MyUIButton!
+    
+    
     var onTrack : (() -> Void)? = nil
     var onChat : (() -> Void)? = nil
+    var onReorder : (() -> Void)? = nil
     
     @IBAction func trackAction(_ sender: Any) {
         if let onTrack = self.onTrack {
@@ -44,5 +48,12 @@ class OrderCell: UITableViewCell {
             onChat()
         }
     }
+    
+    @IBAction func reorderAction(_ sender: Any) {
+        if let onReorder = self.onReorder {
+            onReorder()
+        }
+    }
+    
     
 }

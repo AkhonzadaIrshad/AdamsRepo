@@ -28,7 +28,7 @@ class OrdersVC: BaseViewController, UITableViewDelegate, UITableViewDataSource {
         
         self.btnMenu.addTarget(self, action: #selector(BaseViewController.onSlideMenuButtonPressed(_:)), for: UIControl.Event.touchUpInside)
         
-         self.btnAbout.addTarget(self, action: #selector(BaseViewController.onAboutPressed(_:)), for: UIControl.Event.touchUpInside)
+        self.btnAbout.addTarget(self, action: #selector(BaseViewController.onAboutPressed(_:)), for: UIControl.Event.touchUpInside)
         
         self.tableView.rowHeight = UITableView.automaticDimension
         self.tableView.estimatedRowHeight = 200.0
@@ -115,7 +115,7 @@ class OrdersVC: BaseViewController, UITableViewDelegate, UITableViewDataSource {
                 let url = URL(string: "\(Constants.IMAGE_URL)\(item.image ?? "")")
                 cell.ivLogo.kf.setImage(with: url)
             }
-           
+            
             cell.lblTitle.text = item.title ?? ""
             cell.lblOrderNumber.text = "\("order_number".localized) \(Constants.ORDER_NUMBER_PREFIX)\(item.id ?? 0)"
             cell.lblDeliveryDate.text = "\("delivery_date".localized) \(self.convertDate(isoDate: item.createdDate ?? ""))"
@@ -126,11 +126,13 @@ class OrdersVC: BaseViewController, UITableViewDelegate, UITableViewDataSource {
             cell.lblOrderStatus.textColor = self.getStatusColor(status: item.status ?? Constants.ORDER_PENDING)
             cell.statusColorView.backgroundColor = self.getStatusColor(status: item.status ?? Constants.ORDER_PENDING)
             
-             if (item.status == Constants.ORDER_PROCESSING || item.status == Constants.ORDER_ON_THE_WAY) {
+            if (item.status == Constants.ORDER_PROCESSING || item.status == Constants.ORDER_ON_THE_WAY) {
                 cell.viewChat.isHidden = false
-             }else {
+            }else {
                 cell.viewChat.isHidden = true
             }
+            
+            cell.btnReorder.isHidden = true
             
             if (item.status == Constants.ORDER_ON_THE_WAY) {
                 cell.viewTrack.isHidden = false
@@ -143,15 +145,15 @@ class OrdersVC: BaseViewController, UITableViewDelegate, UITableViewDataSource {
             }
             
             cell.onChat = {
-                 DispatchQueue.main.async {
-                let messagesVC: ZHCDemoMessagesViewController = ZHCDemoMessagesViewController.init()
-                messagesVC.presentBool = true
-                messagesVC.order = item
-                messagesVC.user = self.loadUser()
-                let nav: UINavigationController = UINavigationController.init(rootViewController: messagesVC)
+                DispatchQueue.main.async {
+                    let messagesVC: ZHCDemoMessagesViewController = ZHCDemoMessagesViewController.init()
+                    messagesVC.presentBool = true
+                    messagesVC.order = item
+                    messagesVC.user = self.loadUser()
+                    let nav: UINavigationController = UINavigationController.init(rootViewController: messagesVC)
                     nav.modalPresentationStyle = .fullScreen
                     messagesVC.modalPresentationStyle = .fullScreen
-                self.navigationController?.present(nav, animated: true, completion: nil)
+                    self.navigationController?.present(nav, animated: true, completion: nil)
                 }
             }
             
@@ -174,6 +176,11 @@ class OrdersVC: BaseViewController, UITableViewDelegate, UITableViewDataSource {
             
             cell.viewTrack.isHidden = true
             cell.viewChat.isHidden = true
+            
+            cell.btnReorder.isHidden = false
+            cell.onReorder = {
+                self.reorderAction(orderId: item.id ?? 0)
+            }
             
             cell.lblOrderStatus.textColor = self.getStatusColor(status: item.status ?? Constants.ORDER_PENDING)
             cell.statusColorView.backgroundColor = self.getStatusColor(status: item.status ?? Constants.ORDER_PENDING)
@@ -204,6 +211,73 @@ class OrdersVC: BaseViewController, UITableViewDelegate, UITableViewDataSource {
     @IBAction func segmentAction(_ sender: Any) {
         self.tableView.reloadData()
         self.validateEmptyView()
+    }
+    
+    
+    func reorderAction(orderId : Int) {
+        self.showLoading()
+        ApiService.getShopDetails(Authorization: self.loadUser().data?.accessToken ?? "", id: orderId) { (response) in
+            
+            ApiService.getDelivery(id: orderId) { (order) in
+                self.hideLoading()
+                
+                let storyboard = UIStoryboard(name: "Main", bundle: nil)
+                let vc1 : DeliveryStep1 = storyboard.instantiateViewController(withIdentifier: "DeliveryStep1") as! DeliveryStep1
+                let vc2 : DeliveryStep2 = storyboard.instantiateViewController(withIdentifier: "DeliveryStep2") as! DeliveryStep2
+                let vc3 : DeliveryStep3 = storyboard.instantiateViewController(withIdentifier: "DeliveryStep3") as! DeliveryStep3
+                let model = OTWOrder()
+                model.pickUpDetails = order.data?.pickUpDetails ?? ""
+                model.pickUpAddress = order.data?.fromAddress ?? ""
+                model.pickUpLatitude = order.data?.fromLatitude ?? 0.0
+                model.pickUpLongitude = order.data?.fromLongitude ?? 0.0
+                
+                model.dropOffDetails = order.data?.dropOffDetails ?? ""
+                model.dropOffAddress = order.data?.toAddress ?? ""
+                model.dropOffLatitude = order.data?.toLatitude ?? 0.0
+                model.dropOffLongitude = order.data?.toLongitude ?? 0.0
+                
+                model.images = order.data?.images ?? [String]()
+                model.voiceRecord = order.data?.voiceFile ?? ""
+                
+                model.orderCost = String(order.data?.cost ?? 0.0)
+                model.orderDetails = order.data?.desc ?? ""
+                model.time = order.data?.time ?? 0
+                model.fromReorder = true
+                model.selectedItems = order.data?.items ?? [ShopMenuItem]()
+                model.paymentMethod = order.data?.paymentMethod ?? Constants.PAYMENT_METHOD_CASH
+                model.isFemale = order.data?.toFemaleOnly ?? false
+                
+                let shop = DataShop(id: response.shopData?.id ?? 0, name: response.shopData?.name ?? "", address: response.shopData?.address ?? "", latitude: response.shopData?.latitude ?? 0.0, longitude: response.shopData?.longitude ?? 0.0, phoneNumber: response.shopData?.phoneNumber ?? "", workingHours: response.shopData?.workingHours ?? "", images: response.shopData?.images ?? [String](), rate: response.shopData?.rate ?? 0.0, type: response.shopData?.type!, ownerId: response.shopData?.ownerId ?? "", googlePlaceId: response.shopData?.googlePlaceId ?? "", openNow: response.shopData?.openNow ?? true)
+                
+                model.shop = shop
+                
+                vc1.orderModel = OTWOrder()
+                vc2.orderModel = OTWOrder()
+                vc3.orderModel = OTWOrder()
+                
+                vc1.orderModel = model
+                vc2.orderModel = model
+                vc3.orderModel = model
+                
+                let defaults = UserDefaults.standard
+                vc1.latitude = defaults.value(forKey: Constants.LAST_LATITUDE) as? Double ?? 0.0
+                vc1.longitude = defaults.value(forKey: Constants.LAST_LONGITUDE) as? Double ?? 0.0
+                
+                vc2.latitude = order.data?.fromLatitude ?? 0.0
+                vc2.longitude = order.data?.fromLongitude ?? 0.0
+                
+                //  self.navigationController?.pushViewController(vc, animated: true)
+                
+                var controllers = self.navigationController?.viewControllers
+                controllers?.append(vc1)
+                controllers?.append(vc2)
+                controllers?.append(vc3)
+                self.navigationController?.setViewControllers(controllers!, animated: true)
+                
+                
+                
+            }
+        }
     }
     
 }

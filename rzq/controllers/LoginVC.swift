@@ -9,6 +9,7 @@
 import UIKit
 import SkyFloatingLabelTextField
 import CountryPickerView
+import SVProgressHUD
 
 class LoginVC: BaseVC, CountryPickerViewDataSource, CountryPickerViewDelegate, PhoneVerificationDelegate {
     
@@ -28,6 +29,8 @@ class LoginVC: BaseVC, CountryPickerViewDataSource, CountryPickerViewDelegate, P
     
     override func viewDidLoad() {
         super.viewDidLoad()
+        
+         SVProgressHUD.setDefaultMaskType(.clear)
         
         self.edtUserName.title = "name".localized
         self.edtUserName.placeholder = "name".localized

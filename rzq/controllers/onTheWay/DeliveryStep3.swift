@@ -15,11 +15,12 @@ import Sheeeeeeeeet
 import SwiftyGif
 import MultilineTextField
 import SVProgressHUD
+import AVFoundation
 
 protocol Step3Delegate {
     func updateModel(model : OTWOrder)
 }
-class DeliveryStep3: BaseVC, UINavigationControllerDelegate, ImagePickerDelegate, ShopMenuDelegate {
+class DeliveryStep3: BaseVC, UINavigationControllerDelegate, ImagePickerDelegate, ShopMenuDelegate, AVAudioPlayerDelegate {
     
     @IBOutlet weak var lblPickupLocation: MyUILabel!
     
@@ -27,6 +28,7 @@ class DeliveryStep3: BaseVC, UINavigationControllerDelegate, ImagePickerDelegate
     
     @IBOutlet weak var mapView: UIView!
     
+    var audioPlayer: AVAudioPlayer?
     
     @IBOutlet weak var lblImages: MyUILabel!
     
@@ -38,7 +40,7 @@ class DeliveryStep3: BaseVC, UINavigationControllerDelegate, ImagePickerDelegate
     
     @IBOutlet weak var bgRecord: UIImageView!
     
-  //  @IBOutlet weak var ivHandle: UIImageView!
+    //  @IBOutlet weak var ivHandle: UIImageView!
     
     @IBOutlet weak var edtOrderDetails: MultilineTextField!
     
@@ -111,9 +113,9 @@ class DeliveryStep3: BaseVC, UINavigationControllerDelegate, ImagePickerDelegate
         
         SVProgressHUD.setDefaultMaskType(.clear)
         
-//        if (self.isArabic()) {
-//            self.ivHandle.image = UIImage(named: "ic_back_arabic")
-//        }
+        //        if (self.isArabic()) {
+        //            self.ivHandle.image = UIImage(named: "ic_back_arabic")
+        //        }
         self.btnTime.setTitle("asap".localized, for: .normal)
         // below are properties that can be optionally customized
         edtOrderDetails.placeholder = "order_details".localized
@@ -161,6 +163,15 @@ class DeliveryStep3: BaseVC, UINavigationControllerDelegate, ImagePickerDelegate
             if (self.orderModel?.selectedItems?.count ?? 0 > 0) {
                 self.selectedItems.append(contentsOf: self.orderModel?.selectedItems ?? [ShopMenuItem]())
             }
+            
+            if (self.orderModel?.images?.count ?? 0 > 0) {
+                
+            }
+            
+            if (self.orderModel?.voiceRecord?.count ?? 0 > 0) {
+                self.viewRecording.isHidden = false
+            }
+            
         }
         
         if (self.loadUser().data?.gender == 1) {
@@ -295,16 +306,16 @@ class DeliveryStep3: BaseVC, UINavigationControllerDelegate, ImagePickerDelegate
         self.view.layoutSubviews()
     }
     
-//    @IBAction func backAction(_ sender: Any) {
-//        self.saveBackModel()
-//    }
+    //    @IBAction func backAction(_ sender: Any) {
+    //        self.saveBackModel()
+    //    }
     
     @IBAction func step1Action(_ sender: Any) {
-        //  self.popBack(3)
+        self.popBack(3)
     }
     
     @IBAction func step2Action(_ sender: Any) {
-        // self.navigationController?.popViewController(animated: true)
+        self.navigationController?.popViewController(animated: true)
     }
     
     @IBAction func step3Action(_ sender: Any) {
@@ -746,12 +757,43 @@ class DeliveryStep3: BaseVC, UINavigationControllerDelegate, ImagePickerDelegate
     }
     
     @IBAction func playRecordAction(_ sender: Any) {
-        if (recorder.isPlaying) {
-            self.btnPlay.setImage(UIImage(named: "ic_play_record"), for: .normal)
-            recorder.stopPlaying()
+        if (self.orderModel?.voiceRecord?.count ?? 0 > 0) {
+            let url = URL(string: ("\(Constants.IMAGE_URL)\(self.orderModel?.voiceRecord ?? "")"))
+            self.downloadFileFromURL(url: url!)
         }else {
-            self.btnPlay.setImage(UIImage(named: "ic_pause"), for: .normal)
-            recorder.play(name:"order_file")
+            if (recorder.isPlaying) {
+                self.btnPlay.setImage(UIImage(named: "ic_play_record"), for: .normal)
+                recorder.stopPlaying()
+            }else {
+                self.btnPlay.setImage(UIImage(named: "ic_pause"), for: .normal)
+                recorder.play(name:"order_file")
+            }
+        }
+    }
+    
+    func downloadFileFromURL(url:URL){
+        
+        var downloadTask:URLSessionDownloadTask
+        downloadTask = URLSession.shared.downloadTask(with: url, completionHandler: { (url, response, error) in
+            // self.play(url: url!)
+            self.playRecord(path: url!)
+        })
+        
+        downloadTask.resume()
+        
+    }
+    
+    func playRecord(path : URL) {
+        do {
+            self.audioPlayer?.pause()
+            self.audioPlayer = try AVAudioPlayer(contentsOf: path)
+            self.audioPlayer?.delegate = self as AVAudioPlayerDelegate
+            self.audioPlayer?.rate = 1.0
+            self.audioPlayer?.volume = 1.0
+            self.audioPlayer?.play()
+            
+        } catch {
+            print("play(with name:), ",error.localizedDescription)
         }
     }
     
@@ -761,6 +803,12 @@ class DeliveryStep3: BaseVC, UINavigationControllerDelegate, ImagePickerDelegate
         self.gif.isHidden = true
         self.viewRecording.isHidden = true
     }
+    
+    func audioPlayerDidFinishPlaying(_ player: AVAudioPlayer, successfully flag: Bool) {
+          DispatchQueue.main.async {
+              self.btnPlay.setImage(UIImage(named: "ic_order_play"), for: .normal)
+          }
+      }
     
     @IBAction func backBtnAction(_ sender: Any) {
         self.saveBackModel()

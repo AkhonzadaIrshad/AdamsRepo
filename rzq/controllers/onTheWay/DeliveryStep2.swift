@@ -182,7 +182,7 @@ class DeliveryStep2: BaseVC, Step3Delegate {
     }
     
     @IBAction func step1Action(_ sender: Any) {
-       // self.navigationController?.popViewController(animated: true)
+        self.navigationController?.popViewController(animated: true)
     }
     
     @IBAction func step2Action(_ sender: Any) {
@@ -190,17 +190,17 @@ class DeliveryStep2: BaseVC, Step3Delegate {
     }
     
     @IBAction func step3Action(_ sender: Any) {
-//        if (self.validate()) {
-//            if let vc = UIStoryboard(name: "Main", bundle: nil).instantiateViewController(withIdentifier: "DeliveryStep3") as? DeliveryStep3
-//            {
-//                self.orderModel?.dropOffDetails = self.edtMoreDetails.text ?? ""
-//                vc.latitude = self.latitude
-//                vc.longitude = self.longitude
-//                vc.orderModel = self.orderModel
-//                vc.delegate = self
-//                self.navigationController?.pushViewController(vc, animated: true)
-//            }
-//        }
+        if (self.validate()) {
+            if let vc = UIStoryboard(name: "Main", bundle: nil).instantiateViewController(withIdentifier: "DeliveryStep3") as? DeliveryStep3
+            {
+                self.orderModel?.dropOffDetails = self.edtMoreDetails.text ?? ""
+                vc.latitude = self.latitude
+                vc.longitude = self.longitude
+                vc.orderModel = self.orderModel
+                vc.delegate = self
+                self.navigationController?.pushViewController(vc, animated: true)
+            }
+        }
     }
     
 //    @IBAction func backAction(_ sender: Any) {

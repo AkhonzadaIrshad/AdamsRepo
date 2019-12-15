@@ -24,4 +24,7 @@ class OTWOrder : NSObject {
     var selectedItems : [ShopMenuItem]?
     var paymentMethod : Int?
     var isFemale : Bool?
+    
+    var images : [String]?
+    var voiceRecord: String?
 }

@@ -713,6 +713,9 @@ class OrderDetailsVC: BaseVC, UICollectionViewDelegate, UICollectionViewDataSour
             model.dropOffLatitude = self.order?.toLatitude ?? 0.0
             model.dropOffLongitude = self.order?.toLongitude ?? 0.0
             
+            model.images = self.order?.images ?? [String]()
+            model.voiceRecord = self.order?.voiceFile ?? ""
+            
             model.orderCost = String(self.order?.cost ?? 0.0)
             model.orderDetails = self.order?.desc ?? ""
             model.time = self.order?.time ?? 0

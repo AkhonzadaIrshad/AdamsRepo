@@ -336,8 +336,7 @@ class DeliveryStep1: BaseVC,LabasLocationManagerDelegate, Step2Delegate {
     }
     
     func setUpGoogleMap() {
-        
-        let camera = GMSCameraPosition.camera(withLatitude: self.latitude ?? 0.0, longitude: self.longitude ?? 0.0, zoom: 15.0)
+        let camera = GMSCameraPosition.camera(withLatitude: self.latitude ?? 0.0, longitude: self.longitude ?? 0.0, zoom: 11.0)
         gMap = GMSMapView.map(withFrame: CGRect(x: 0, y: 0, width: self.mapView.frame.width, height: self.mapView.frame.height), camera: camera)
         gMap?.delegate = self
         let marker = GMSMarker()
@@ -351,7 +350,6 @@ class DeliveryStep1: BaseVC,LabasLocationManagerDelegate, Step2Delegate {
         self.view.layoutSubviews()
         
         self.getShopsList(radius: Float(Constants.DEFAULT_RADIUS), rating: 0)
-        
     }
     
     @IBAction func step1Action(_ sender: Any) {
@@ -359,18 +357,17 @@ class DeliveryStep1: BaseVC,LabasLocationManagerDelegate, Step2Delegate {
     }
     
     @IBAction func step2Action(_ sender: Any) {
-        //        if (self.validate()) {
-        //            if let vc = UIStoryboard(name: "Main", bundle: nil).instantiateViewController(withIdentifier: "DeliveryStep2") as? DeliveryStep2
-        //            {
-        //                self.orderModel?.pickUpDetails = self.edtMoreDetails.text ?? ""
-        //                vc.latitude = self.latitude
-        //                vc.longitude = self.longitude
-        //                vc.orderModel = self.orderModel
-        //                vc.delegate = self
-        //                self.navigationController?.pushViewController(vc, animated: true)
-        //            }
-        //        }
-        
+        if (self.validate()) {
+            if let vc = UIStoryboard(name: "Main", bundle: nil).instantiateViewController(withIdentifier: "DeliveryStep2") as? DeliveryStep2
+            {
+                self.orderModel?.pickUpDetails = self.edtMoreDetails.text ?? ""
+                vc.latitude = self.latitude
+                vc.longitude = self.longitude
+                vc.orderModel = self.orderModel
+                vc.delegate = self
+                self.navigationController?.pushViewController(vc, animated: true)
+            }
+        }
     }
     
     @IBAction func step3Action(_ sender: Any) {
