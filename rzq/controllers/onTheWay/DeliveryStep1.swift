@@ -169,6 +169,8 @@ class DeliveryStep1: BaseVC,LabasLocationManagerDelegate, Step2Delegate {
         self.showSearchFieldToolTip()
         
         
+        viewSuggest.isHidden = true
+        
         
     }
     
@@ -989,7 +991,7 @@ extension DeliveryStep1 : GMSMapViewDelegate {
         //      self.lblShopName.text = ""
         self.shopNameHeight.constant = 0
         self.viewPin.isHidden = true
-        self.viewSuggest.isHidden = false
+        self.viewSuggest.isHidden = true
         
         self.ivShop.image = nil
         self.edtMoreDetails.text = ""

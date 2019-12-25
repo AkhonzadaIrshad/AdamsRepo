@@ -26,6 +26,12 @@ class OrdersVC: BaseViewController, UITableViewDelegate, UITableViewDataSource {
     override func viewDidLoad() {
         super.viewDidLoad()
         
+        let titleTextAttributes = [NSAttributedString.Key.foregroundColor: UIColor.white]
+        let titleTextAttributes2 = [NSAttributedString.Key.foregroundColor: UIColor.black]
+        
+        self.segmentControl.setTitleTextAttributes(titleTextAttributes2, for: .normal)
+        self.segmentControl.setTitleTextAttributes(titleTextAttributes, for: .selected)
+        
         self.btnMenu.addTarget(self, action: #selector(BaseViewController.onSlideMenuButtonPressed(_:)), for: UIControl.Event.touchUpInside)
         
         self.btnAbout.addTarget(self, action: #selector(BaseViewController.onAboutPressed(_:)), for: UIControl.Event.touchUpInside)

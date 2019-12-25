@@ -38,10 +38,20 @@ class NotificationsVC: BaseViewController, UITableViewDelegate, UITableViewDataS
     
     var sortBy : Int?
     
+    var refreshControl = UIRefreshControl()
+    
+    
     override func viewDidLoad() {
         super.viewDidLoad()
         
         SVProgressHUD.setDefaultMaskType(.clear)
+        
+        let titleTextAttributes = [NSAttributedString.Key.foregroundColor: UIColor.white]
+        let titleTextAttributes2 = [NSAttributedString.Key.foregroundColor: UIColor.black]
+        
+        self.segmentControl.setTitleTextAttributes(titleTextAttributes2, for: .normal)
+        self.segmentControl.setTitleTextAttributes(titleTextAttributes, for: .selected)
+        
         
         self.latitude = UserDefaults.standard.value(forKey: Constants.LAST_LATITUDE) as? Double ?? 0.0
         self.longitude = UserDefaults.standard.value(forKey: Constants.LAST_LONGITUDE) as? Double ?? 0.0
@@ -72,12 +82,29 @@ class NotificationsVC: BaseViewController, UITableViewDelegate, UITableViewDataS
                                                    for: .normal)
         
         if (App.shared.notificationSegmentIndex ?? 0 == 0) {
-            self.segmentControl.selectedSegmentIndex = 0
+            // self.segmentControl.selectedSegmentIndex = 0
+            //snuff
+            self.segmentControl.selectedSegmentIndex = 1
         }else {
             self.segmentControl.selectedSegmentIndex = 1
         }
         App.shared.notificationSegmentIndex = 0
         
+        refreshControl = UIRefreshControl()
+        refreshControl.attributedTitle = NSAttributedString(string: "pull_to_refresh".localized)
+        refreshControl.addTarget(self, action: #selector(refresh), for: .valueChanged)
+        self.tableView.addSubview(refreshControl)
+        
+    }
+    @objc func refresh(_ sender: Any) {
+        if self.segmentControl.selectedSegmentIndex == 0 {
+            self.sortView.isHidden = true
+            self.sortViewHeight.constant = 0
+        }else {
+            self.sortView.isHidden = false
+            self.sortViewHeight.constant = 36
+        }
+        self.updateNotifications()
     }
     
     func goToWorkingOrders() {
@@ -114,6 +141,7 @@ class NotificationsVC: BaseViewController, UITableViewDelegate, UITableViewDataS
     func updateNotifications() {
         self.showLoading()
         ApiService.getAllNotifications(Authorization: self.loadUser().data?.accessToken ?? "", sortBy: self.sortBy ?? 1) { (response) in
+            self.refreshControl.endRefreshing()
             self.alerts.removeAll()
             self.actions.removeAll()
             self.hideLoading()

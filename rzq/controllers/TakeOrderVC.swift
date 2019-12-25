@@ -459,9 +459,9 @@ class TakeOrderVC: BaseVC, AVAudioPlayerDelegate {
             if let value = item.value as? Int {
                 switch (value) {
                 case 0:
-                    //1 hour
+                    //asap
                     self.btnTime.setTitle("asap".localized, for: .normal)
-                    self.selectedTime = 1
+                    self.selectedTime = 0
                     break
                 case 1:
                     //1 hour

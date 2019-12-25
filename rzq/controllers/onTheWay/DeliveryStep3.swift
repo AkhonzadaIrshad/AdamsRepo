@@ -678,9 +678,10 @@ class DeliveryStep3: BaseVC, UINavigationControllerDelegate, ImagePickerDelegate
         appearance.item.font = UIFont(name: Constants.ARABIC_FONT_REGULAR, size: 14)
         
         let item0 = ActionSheetItem(title: "cash".localized, value: 0, image: nil)
-        let item1 = ActionSheetItem(title: "knet".localized, value: 1, image: nil)
+      //  let item1 = ActionSheetItem(title: "knet".localized, value: 1, image: nil)
         
-        let actionSheet = ActionSheet(items: [title,item0, item1]) { sheet, item in
+        //let actionSheet = ActionSheet(items: [title,item0, item1]) { sheet, item in
+            let actionSheet = ActionSheet(items: [title,item0]) { sheet, item in
             if let value = item.value as? Int {
                 switch (value) {
                 case 0:
@@ -688,11 +689,11 @@ class DeliveryStep3: BaseVC, UINavigationControllerDelegate, ImagePickerDelegate
                     self.btnPaymentMethod.setTitle("cash".localized, for: .normal)
                     self.isCash = true
                     break
-                case 1:
-                    //above
-                    self.btnPaymentMethod.setTitle("knet".localized, for: .normal)
-                    self.isCash = false
-                    break
+//                case 1:
+//                    //above
+//                    self.btnPaymentMethod.setTitle("knet".localized, for: .normal)
+//                    self.isCash = false
+//                    break
                 default:
                     print("1")
                     break
@@ -855,7 +856,7 @@ class DeliveryStep3: BaseVC, UINavigationControllerDelegate, ImagePickerDelegate
             let doubleQuantity = Double(itemQuantity)
             let doublePrice = item.price ?? 0.0
             let total = doubleQuantity * doublePrice
-            text = "\(text)\(item.name ?? "") x \(itemQuantity) -> \(total) \("currency".localized).\n"
+            text = "\(text)\(itemQuantity) x (\(item.name ?? "")) -> (\(total)) \("currency".localized).\n"
         }
         self.selectedTotal = total
         self.edtOrderDetails.text = text

@@ -33,11 +33,10 @@ class AppDelegate: UIResponder, UIApplicationDelegate, MOLHResetable,MessagingDe
         // Override point for customization after application launch.
         
         
-        MFSettings.shared.configure(token: Constants.TEST_PAYMENT_TOKEN, baseURL: Constants.PAYMENT_TESTS_URL)
-        
-        let them = MFTheme(navigationTintColor: .white, navigationBarTintColor: .lightGray, navigationTitle: "Payment", cancelButtonTitle: "Cancel")
-        MFSettings.shared.setTheme(theme: them)
-        
+//        MFSettings.shared.configure(token: Constants.PAYMENT_TOKEN, baseURL: Constants.PAYMENT_URL)
+//
+//        let them = MFTheme(navigationTintColor: .white, navigationBarTintColor: .lightGray, navigationTitle: "Payment", cancelButtonTitle: "Cancel")
+//        MFSettings.shared.setTheme(theme: them)
         
         //maps
         GMSServices.provideAPIKey("\(Constants.GOOGLE_API_KEY)")

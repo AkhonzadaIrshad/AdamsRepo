@@ -827,6 +827,38 @@ class HomeMapVC: BaseViewController,LabasLocationManagerDelegate, UICollectionVi
                 self.viewOnTheWay.isHidden = true
                 self.viewServices.isHidden = true
                 self.viewTenders.isHidden = true
+                
+               
+                
+                //snuff33
+                let itm = self.items[0]
+                DispatchQueue.main.asyncAfter(deadline: .now() + 2) {
+                    self.getDriverLocationAPI(item: itm)
+                }
+//                ApiService.getOrderLocation(Authorization: self.loadUser().data?.accessToken ?? "", deliveryId: itm.id ?? 0) { (response) in
+//
+//                          if (response.locationData != nil) {
+//                              if (itm.status == Constants.ORDER_ON_THE_WAY) {
+//                                  self.drawLocationLine(driverLocation: response.locationData!, order: itm)
+//                              }else if (itm.status == Constants.ORDER_PROCESSING) {
+//                                  if (itm.time ?? 0 <= 1) {
+//                                      self.drawLocationLine(driverLocation: response.locationData!, order: itm)
+//                                  }else {
+//                                      self.polyline?.map = nil
+//                                      self.pickMarker?.map = nil
+//                                      self.dropMarker?.map = nil
+//                                  }
+//                              }else {
+//                                  self.polyline?.map = nil
+//                                  self.pickMarker?.map = nil
+//                                  self.dropMarker?.map = nil
+//                              }
+//                          }
+//                      }
+                
+                
+                
+                
             }else {
                 self.stopTimer()
                 // self.searchView.isHidden = false

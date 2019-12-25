@@ -1259,7 +1259,7 @@
 "w7S-L0-aEc.text" = "Label";
 
 /* Class = "UIButton"; normalTitle = "Go to My Orders"; ObjectID = "w9z-2t-qEz"; */
-"w9z-2t-qEz.normalTitle" = "Go to My Orders";
+"w9z-2t-qEz.normalTitle" = "Go to bids";
 
 /* Class = "UILabel"; text = "From"; ObjectID = "wQQ-hU-aQW"; */
 "wQQ-hU-aQW.text" = "Tenders";

@@ -84,7 +84,7 @@ class ProfileVC: BaseVC {
             self.ratingView.rating = Double(response.dataProfileObj?.rate ?? 0)
             self.ratingView.isUserInteractionEnabled = false
             
-            if ((response.dataProfileObj?.roles?.contains("Driver"))!) {
+            if ((response.dataProfileObj?.roles?.contains("Driver") ?? false)) {
                 self.ivDriverBadge.isHidden = false
                 self.viewRegisterDriver.isHidden = true
             }else {
@@ -92,7 +92,7 @@ class ProfileVC: BaseVC {
                 self.viewRegisterDriver.isHidden = false
             }
             
-            if ((response.dataProfileObj?.roles?.contains("ServiceProvider"))!) {
+            if ((response.dataProfileObj?.roles?.contains("ServiceProvider")) ?? false) {
                 self.ivProviderBadge.isHidden = false
                 self.viewRegisterPRovider.isHidden = true
             }else {
@@ -106,8 +106,8 @@ class ProfileVC: BaseVC {
             //                self.ivProviderBadge.isHidden = true
             //            }
             
-            if ((response.dataProfileObj?.roles?.contains("Driver"))! || (response.dataProfileObj?.roles?.contains("ServiceProvider"))! ||
-                (response.dataProfileObj?.roles?.contains("TenderProvider"))!) {
+            if ((response.dataProfileObj?.roles?.contains("Driver")) ?? false || (response.dataProfileObj?.roles?.contains("ServiceProvider")) ?? false ||
+                (response.dataProfileObj?.roles?.contains("TenderProvider")) ?? false) {
                 
                 self.lineDueAmount.isHidden = false
                 self.dueTitleHeight.constant = 20

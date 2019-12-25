@@ -226,8 +226,11 @@ class OrderDetailsVC: BaseVC, UICollectionViewDelegate, UICollectionViewDataSour
                 self.btnChangeMethod.isHidden = true
                 self.viewChangeMethod.isHidden = true
             }else {
-                self.btnChangeMethod.isHidden = false
-                self.viewChangeMethod.isHidden = false
+                //                self.btnChangeMethod.isHidden = false
+                //                self.viewChangeMethod.isHidden = false
+                //testing
+                self.btnChangeMethod.isHidden = true
+                self.viewChangeMethod.isHidden = true
             }
         }else {
             self.btnChangeMethod.isHidden = true
@@ -254,24 +257,24 @@ class OrderDetailsVC: BaseVC, UICollectionViewDelegate, UICollectionViewDataSour
             self.btnPay.isHidden = true
             self.viewPay.isHidden = true
         }else {
-           // if (self.isPay ?? false) {
-                if (self.order?.paymentMethod == Constants.PAYMENT_METHOD_KNET && (self.order?.isPaid ?? false) == false) {
-                    if (self.order?.status == Constants.ORDER_PENDING || self.order?.status == Constants.ORDER_PROCESSING || self.order?.status == Constants.ORDER_ON_THE_WAY) {
-                        self.btnPay.isHidden = false
-                        self.viewPay.isHidden = false
-                    }else {
-                        self.btnPay.isHidden = true
-                        self.viewPay.isHidden = true
-                    }
+            // if (self.isPay ?? false) {
+            if (self.order?.paymentMethod == Constants.PAYMENT_METHOD_KNET && (self.order?.isPaid ?? false) == false) {
+                if (self.order?.status == Constants.ORDER_PENDING || self.order?.status == Constants.ORDER_PROCESSING || self.order?.status == Constants.ORDER_ON_THE_WAY) {
+                    self.btnPay.isHidden = false
+                    self.viewPay.isHidden = false
                 }else {
                     self.btnPay.isHidden = true
                     self.viewPay.isHidden = true
                 }
-                
-//            }else {
-//                self.btnPay.isHidden = true
-//                self.viewPay.isHidden = true
-//            }
+            }else {
+                self.btnPay.isHidden = true
+                self.viewPay.isHidden = true
+            }
+            
+            //            }else {
+            //                self.btnPay.isHidden = true
+            //                self.viewPay.isHidden = true
+            //            }
             
         }
         
@@ -666,7 +669,7 @@ class OrderDetailsVC: BaseVC, UICollectionViewDelegate, UICollectionViewDataSour
         if (method == Constants.PAYMENT_METHOD_KNET) {
             type = 902
         }
-      self.showLoading()
+        self.showLoading()
         ApiService.sendUserNotification(Authorization: self.loadUser().data?.accessToken ?? "", arabicTitle: "الطلب \(Constants.ORDER_NUMBER_PREFIX)\(self.order?.id ?? 0)", englishTitle: "Order \(Constants.ORDER_NUMBER_PREFIX)\(self.order?.id ?? 0)", arabicBody: "قام الزبون بتغيير طريقة الدفع", englishbody: "Client changed payment method for this order", userId: self.order?.driverId ?? "", type: type) { (response) in
             self.hideLoading()
         }
@@ -763,11 +766,11 @@ class OrderDetailsVC: BaseVC, UICollectionViewDelegate, UICollectionViewDataSour
         let commission = (x * 100).rounded() / 100
         
         let totalCost = orderCost + commission + deliveryCost
-       // let totalCost = orderCost + commission
+        // let totalCost = orderCost + commission
         
         if (self.order?.items?.count ?? 0 > 0) {
             vc.items = self.order?.items ?? [ShopMenuItem]()
-           // vc.total =  self.getTotal(items: self.order?.items ?? [ShopMenuItem]())
+            // vc.total =  self.getTotal(items: self.order?.items ?? [ShopMenuItem]())
             vc.total = totalCost
             vc.delegate = self
             vc.modalPresentationStyle = .fullScreen
@@ -780,7 +783,7 @@ class OrderDetailsVC: BaseVC, UICollectionViewDelegate, UICollectionViewDataSour
                 vc.items.append(item)
                 vc.items.append(item2)
                 vc.items.append(item3)
-              //  vc.total =  self.order?.orderPrice ?? 0
+                //  vc.total =  self.order?.orderPrice ?? 0
                 vc.total = totalCost
                 vc.delegate = self
                 vc.modalPresentationStyle = .fullScreen

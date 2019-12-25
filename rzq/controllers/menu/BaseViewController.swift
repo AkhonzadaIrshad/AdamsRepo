@@ -467,9 +467,9 @@ class BaseViewController: UIViewController, SlideMenuDelegate {
     func convertDate(isoDate: String) -> String{
            let dateFormatter = DateFormatter()
            dateFormatter.dateFormat = "yyyy-MM-dd'T'HH:mm:ss.SSSSSS"
-           let date = dateFormatter.date(from:isoDate)!
+           let date = dateFormatter.date(from:isoDate)
            dateFormatter.dateFormat = "dd/MM/yyyy hh:mm a"
-           let displayDate = dateFormatter.string(from: date)
+        let displayDate = dateFormatter.string(from: date ?? Date())
            return displayDate
        }
     

@@ -1452,7 +1452,7 @@ class ApiService : NSObject {
     
     static func placePayment(user : VerifyResponse, total: Double, items : [ShopMenuItem],  completion:@escaping(_ response : PaymentResponse)-> Void) {
         
-        let headers = [Constants.AUTH_HEADER: "bearer \(Constants.TEST_PAYMENT_TOKEN)"]
+        let headers = [Constants.AUTH_HEADER: "bearer \(Constants.PAYMENT_TOKEN)"]
         
         
         let customerAddress : [String : Any] = ["Block" : "String",
@@ -1503,7 +1503,7 @@ class ApiService : NSObject {
         //   let jsonAll = JSON(all)
         
         
-        AFManager.request("\(Constants.PAYMENT_TESTS_URL)ExecutePayment", method: .post, parameters: all ,encoding: JSONEncoding.default, headers: headers)
+        AFManager.request("\(Constants.PAYMENT_URL)ExecutePayment", method: .post, parameters: all ,encoding: JSONEncoding.default, headers: headers)
             .responseJSON { response in
                 let all = JSON(response.data)
                 if let json = response.data {
@@ -1522,13 +1522,13 @@ class ApiService : NSObject {
     
     static func getPaymentStatus(invoiceId : String,  completion:@escaping(_ response : PaymentStatusResponse)-> Void) {
         
-        let headers = [Constants.AUTH_HEADER: "bearer \(Constants.TEST_PAYMENT_TOKEN)"]
+        let headers = [Constants.AUTH_HEADER: "bearer \(Constants.PAYMENT_TOKEN)"]
         
         let all : [String : Any] = ["Key" : invoiceId,
                                     "KeyType" : "InvoiceId"]
         
         
-        AFManager.request("\(Constants.PAYMENT_TESTS_URL)GetPaymentStatus", method: .post, parameters: all ,encoding: JSONEncoding.default, headers: headers)
+        AFManager.request("\(Constants.PAYMENT_URL)GetPaymentStatus", method: .post, parameters: all ,encoding: JSONEncoding.default, headers: headers)
             .responseJSON { response in
                 //   let all = JSON(response.data)
                 if let json = response.data {

@@ -52,9 +52,10 @@ class SendingOrderVC: BaseVC {
     }
     
     @IBAction func openOrdersAction(_ sender: Any) {
-        let vc = UIStoryboard(name: "Main", bundle: nil).instantiateViewController(withIdentifier: "OrdersNavigationController") as! UINavigationController
-        vc.modalPresentationStyle = .fullScreen
-        self.present(vc, animated: true, completion: nil)
+//        let vc = UIStoryboard(name: "Main", bundle: nil).instantiateViewController(withIdentifier: "OrdersNavigationController") as! UINavigationController
+//        vc.modalPresentationStyle = .fullScreen
+//        self.present(vc, animated: true, completion: nil)
+        self.goToNotifications()
     }
     
 }

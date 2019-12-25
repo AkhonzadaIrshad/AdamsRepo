@@ -294,3 +294,5 @@
 
 "new_notifications_driver" = "اشعارات الطلبات القريبة";
 "new_notifications_user" = "اشعارات عروض الاسعار";
+
+"pull_to_refresh" = "تحديث";

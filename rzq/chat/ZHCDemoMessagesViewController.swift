@@ -352,6 +352,7 @@ class ZHCDemoMessagesViewController: ZHCMessagesViewController, BillDelegate, Ch
         
         let item = self.driverActionButton?.addItem()
         item?.titleLabel.text = "cancel_order".localized
+        item?.titleLabel.backgroundColor = UIColor.white
         item?.titleLabel.textColor = UIColor.black
         item?.titleLabel.font = UIFont(name: self.getBoldFontName(), size: 13)
         item?.imageView.image = UIImage(named: "chat_cancelorder")
@@ -373,6 +374,7 @@ class ZHCDemoMessagesViewController: ZHCMessagesViewController, BillDelegate, Ch
         
         let item4 = self.driverActionButton?.addItem()
         item4?.titleLabel.text = "send_current_location".localized
+        item4?.titleLabel.backgroundColor = UIColor.white
         item4?.titleLabel.textColor = UIColor.black
         item4?.titleLabel.font = UIFont(name: self.getBoldFontName(), size: 13)
         item4?.imageView.image = UIImage(named: "chat_send_location")
@@ -389,6 +391,7 @@ class ZHCDemoMessagesViewController: ZHCMessagesViewController, BillDelegate, Ch
             if (self.order?.status == Constants.ORDER_ON_THE_WAY) {
                 let item0 = self.driverActionButton?.addItem()
                 item0?.titleLabel.text = "track_order".localized
+                item0?.titleLabel.backgroundColor = UIColor.white
                 item0?.titleLabel.textColor = UIColor.black
                 item0?.titleLabel.font = UIFont(name: self.getBoldFontName(), size: 13)
                 item0?.imageView.image = UIImage(named: "chat_track")
@@ -401,6 +404,7 @@ class ZHCDemoMessagesViewController: ZHCMessagesViewController, BillDelegate, Ch
                 if (self.order?.time ?? 0 <= 1) {
                     let item0 = self.driverActionButton?.addItem()
                     item0?.titleLabel.text = "track_order".localized
+                    item0?.titleLabel.backgroundColor = UIColor.white
                     item0?.titleLabel.textColor = UIColor.black
                     item0?.titleLabel.font = UIFont(name: self.getBoldFontName(), size: 13)
                     item0?.imageView.image = UIImage(named: "chat_track")
@@ -427,6 +431,7 @@ class ZHCDemoMessagesViewController: ZHCMessagesViewController, BillDelegate, Ch
         
         item2?.titleLabel.font = UIFont(name: self.getBoldFontName(), size: 13)
         item2?.imageView.image = UIImage(named: "chat_onmyway")
+        item2?.titleLabel.backgroundColor = UIColor.white
         item2?.titleLabel.textColor = UIColor.black
         item2?.buttonColor = UIColor.appLogoColor
         item2?.buttonImageColor = .white
@@ -451,7 +456,7 @@ class ZHCDemoMessagesViewController: ZHCMessagesViewController, BillDelegate, Ch
                 self.showPaymentStatusDialog()
             }
         }
-        
+           
         //navigate new button in chat
         if (self.order?.status == Constants.ORDER_PROCESSING || self.order?.status == Constants.ORDER_ON_THE_WAY) {
             let item3 = self.driverActionButton?.addItem()
@@ -463,6 +468,7 @@ class ZHCDemoMessagesViewController: ZHCMessagesViewController, BillDelegate, Ch
             
             item3?.titleLabel.font = UIFont(name: self.getBoldFontName(), size: 13)
             item3?.imageView.image = UIImage(named: "chat_navigate")
+            item3?.titleLabel.backgroundColor = UIColor.white
             item3?.titleLabel.textColor = UIColor.black
             item3?.buttonColor = UIColor.appLogoColor
             item3?.buttonImageColor = .white
@@ -655,6 +661,7 @@ class ZHCDemoMessagesViewController: ZHCMessagesViewController, BillDelegate, Ch
         if (self.order?.status != Constants.ORDER_ON_THE_WAY) {
             let item = actionButton?.addItem()
             item?.titleLabel.text = "cancel_order".localized
+            item?.titleLabel.backgroundColor = UIColor.white
             item?.titleLabel.textColor = UIColor.black
             item?.titleLabel.font = UIFont(name: self.getBoldFontName(), size: 13)
             item?.imageView.image = UIImage(named: "chat_cancelorder")
@@ -682,6 +689,7 @@ class ZHCDemoMessagesViewController: ZHCMessagesViewController, BillDelegate, Ch
             if (self.order?.status == Constants.ORDER_ON_THE_WAY) {
                 let item0 = self.actionButton?.addItem()
                 item0?.titleLabel.text = "track_order".localized
+                item0?.titleLabel.backgroundColor = UIColor.white
                 item0?.titleLabel.textColor = UIColor.black
                 item0?.titleLabel.font = UIFont(name: self.getBoldFontName(), size: 13)
                 item0?.imageView.image = UIImage(named: "chat_track")
@@ -697,6 +705,7 @@ class ZHCDemoMessagesViewController: ZHCMessagesViewController, BillDelegate, Ch
         
         let item4 = self.actionButton?.addItem()
         item4?.titleLabel.text = "send_current_location".localized
+        item4?.titleLabel.backgroundColor = UIColor.white
         item4?.titleLabel.textColor = UIColor.black
         item4?.titleLabel.font = UIFont(name: self.getBoldFontName(), size: 13)
         item4?.imageView.image = UIImage(named: "chat_send_location")

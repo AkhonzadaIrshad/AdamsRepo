@@ -292,3 +292,5 @@
 
 "new_notifications_driver" = "Notifications";
 "new_notifications_user" = "Notifications";
+
+"pull_to_refresh" = "Refresh";

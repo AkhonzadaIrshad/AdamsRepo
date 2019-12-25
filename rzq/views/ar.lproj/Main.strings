@@ -212,7 +212,7 @@
 "Cmt-UA-vaJ.text" = "00.00";
 
 /* Class = "UILabel"; text = "Civil ID / Passport"; ObjectID = "CyI-H6-jNZ"; */
-"CyI-H6-jNZ.text" = "الرقم المدني / جواز السفر";
+"CyI-H6-jNZ.text" = "صورة للرقم المدني أو الجواز";
 
 /* Class = "UIButton"; normalTitle = "Redeem Coupon"; ObjectID = "D09-YZ-UNF"; */
 "D09-YZ-UNF.normalTitle" = "استبدال الكوبون";
@@ -589,7 +589,7 @@
 "VcV-Iv-TdB.text" = "التسجيل كسائق";
 
 /* Class = "UIButton"; normalTitle = "Shop Details"; ObjectID = "Vkh-VU-rgm"; */
-"Vkh-VU-rgm.normalTitle" = "التفاصيل والمينيو";
+"Vkh-VU-rgm.normalTitle" = "التفاصيل";
 
 /* Class = "UILabel"; text = "Drop Off Location"; ObjectID = "Vp8-kG-yag"; */
 "Vp8-kG-yag.text" = "الى";
@@ -688,7 +688,7 @@
 "aAT-qP-wHC.text" = "التندرز";
 
 /* Class = "UILabel"; text = "Civil ID / Passport"; ObjectID = "aHn-hh-vTm"; */
-"aHn-hh-vTm.text" = "الرقم المدني / جواز السفر";
+"aHn-hh-vTm.text" = "صورة للرقم المدني أو الجواز";
 
 /* Class = "UILabel"; text = "العربية"; ObjectID = "aW2-h1-oL0"; */
 "aW2-h1-oL0.text" = "العربية";
@@ -892,7 +892,7 @@
 "j4t-8B-U2U.text" = "اضف متجرك او بوتيكك الخاص";
 
 /* Class = "UILabel"; text = "Profile Picture"; ObjectID = "jQw-J5-5FV"; */
-"jQw-J5-5FV.text" = "صورة سيلفي";
+"jQw-J5-5FV.text" = "صوره البروفايل";
 
 /* Class = "UILabel"; text = "From"; ObjectID = "jch-Wk-USi"; */
 "jch-Wk-USi.text" = "من";
@@ -934,7 +934,7 @@
 "lIr-Bg-3hH.text" = "الى";
 
 /* Class = "UILabel"; text = "Profile Picture"; ObjectID = "lTb-pK-iSq"; */
-"lTb-pK-iSq.text" = "صورة سيلفي";
+"lTb-pK-iSq.text" = "صوره البروفايل";
 
 /* Class = "UILabel"; text = "From"; ObjectID = "lVq-25-6ZE"; */
 "lVq-25-6ZE.text" = "الخدمات";
@@ -988,7 +988,7 @@
 "nTb-2d-iWW.text" = "يعمل ٢٤ ساعة";
 
 /* Class = "UILabel"; text = "Profile Picture"; ObjectID = "nUU-Y9-HpB"; */
-"nUU-Y9-HpB.text" = "صورة سيلفي";
+"nUU-Y9-HpB.text" = "صوره البروفايل";
 
 /* Class = "UILabel"; text = "Account Balance"; ObjectID = "neB-q2-PUZ"; */
 "neB-q2-PUZ.text" = "رصيد الحساب";
@@ -1003,7 +1003,7 @@
 "o5A-5P-VQQ.text" = "الاعدادات";
 
 /* Class = "UILabel"; text = "Civil ID / Passport"; ObjectID = "o5E-Gx-ep3"; */
-"o5E-Gx-ep3.text" = "الرقم المدني / جواز السفر";
+"o5E-Gx-ep3.text" = "صورة للرقم المدني أو الجواز";
 
 /* Class = "UILabel"; text = "Welcome to RZQ"; ObjectID = "oHT-KU-WO6"; */
 "oHT-KU-WO6.text" = "اهلاً بك في رزق";
@@ -1254,7 +1254,7 @@
 "w7S-L0-aEc.text" = "Label";
 
 /* Class = "UIButton"; normalTitle = "Go to My Orders"; ObjectID = "w9z-2t-qEz"; */
-"w9z-2t-qEz.normalTitle" = "اذهب الى طلباتي";
+"w9z-2t-qEz.normalTitle" = "اذهب الى عروض الأسعار";
 
 /* Class = "UILabel"; text = "From"; ObjectID = "wQQ-hU-aQW"; */
 "wQQ-hU-aQW.text" = "التندرز";
