@@ -99,7 +99,7 @@ class HomeMapVC: BaseViewController,LabasLocationManagerDelegate, UICollectionVi
         
     }
     
-   func getDriverOnGoingDeliveries() {
+    func getDriverOnGoingDeliveries() {
         self.showLoading()
         ApiService.getDriverOnGoingDeliveries(Authorization: self.loadUser().data?.accessToken ?? "") { (response) in
             self.hideLoading()
@@ -462,7 +462,7 @@ class HomeMapVC: BaseViewController,LabasLocationManagerDelegate, UICollectionVi
         stopTimer()
         self.getDriverLocationAPI(item: item)
         if #available(iOS 10.0, *) {
-            timer = Timer.scheduledTimer(withTimeInterval: 120, repeats: true) { [weak self] _ in
+            timer = Timer.scheduledTimer(withTimeInterval: Constants.TRACK_TIMER_DOUBLE, repeats: true) { [weak self] _ in
                 // do something here
                 self?.getDriverLocationAPI(item: item)
             }
@@ -470,7 +470,7 @@ class HomeMapVC: BaseViewController,LabasLocationManagerDelegate, UICollectionVi
         } else {
             // Fallback on earlier versions
             timerDispatchSourceTimer = DispatchSource.makeTimerSource(flags: [], queue: DispatchQueue.main)
-            timerDispatchSourceTimer?.scheduleRepeating(deadline: .now(), interval: .seconds(120))
+            timerDispatchSourceTimer?.scheduleRepeating(deadline: .now(), interval: .seconds(Constants.TRACK_TIMER))
             timerDispatchSourceTimer?.setEventHandler{
                 // do something here
                 self.getDriverLocationAPI(item: item)
@@ -541,70 +541,92 @@ class HomeMapVC: BaseViewController,LabasLocationManagerDelegate, UICollectionVi
         toLatitude = order.toLatitude ?? 0.0
         toLongitude = order.toLongitude ?? 0.0
         
-        let origin = "\(fromLatitude ?? 0),\(fromLongitude ?? 0)"
-        let destination = "\(toLatitude ?? 0),\(toLongitude ?? 0)"
+        self.gMap?.clear()
         
-        let urlString = "https://maps.googleapis.com/maps/api/directions/json?origin=\(origin)&destination=\(destination)&mode=driving&key=\(Constants.GOOGLE_API_KEY)"
+        let pickUpPosition = CLLocationCoordinate2D(latitude: fromLatitude ?? 0.0, longitude: fromLongitude ?? 0.0)
+        self.pickMarker = GMSMarker(position: pickUpPosition)
+        self.pickMarker?.title = "track"
+        self.pickMarker?.icon = UIImage(named: "ic_map_driver")
+        self.pickMarker?.map = self.gMap
         
-        let url = URL(string: urlString)
-        URLSession.shared.dataTask(with: url!, completionHandler: {
-            (data, response, error) in
-            if(error != nil) {
-                print("error")
-            } else {
-                do {
-                    let json = try JSONSerialization.jsonObject(with: data!, options:.allowFragments) as! [String : AnyObject]
-                    if let routes = json["routes"] as? NSArray {
-                        if (routes.count > 0) {
-                            self.gMap?.clear()
-                            
-                            self.selectedRoute = (json["routes"] as! Array<NSDictionary>)[0]
-                            //  self.loadDistanceAndDuration()
-                            
-                            OperationQueue.main.addOperation({
-                                for route in routes
-                                {
-                                    let routeOverviewPolyline:NSDictionary = (route as! NSDictionary).value(forKey: "overview_polyline") as! NSDictionary
-                                    let points = routeOverviewPolyline.object(forKey: "points")
-                                    let path = GMSPath.init(fromEncodedPath: points! as! String)
-                                    self.polyline = GMSPolyline.init(path: path)
-                                    self.polyline?.strokeWidth = 2
-                                    self.polyline?.strokeColor = UIColor.appDarkBlue
-                                    
-                                    let bounds = GMSCoordinateBounds(path: path!)
-                                    self.gMap?.animate(with: GMSCameraUpdate.fit(bounds, withPadding: 30.0))
-                                    
-                                    self.polyline?.map = self.gMap
-                                    
-                                    
-                                    let pickUpPosition = CLLocationCoordinate2D(latitude: fromLatitude ?? 0.0, longitude: fromLongitude ?? 0.0)
-                                    self.pickMarker = GMSMarker(position: pickUpPosition)
-                                    self.pickMarker?.title = "track"
-                                    self.pickMarker?.icon = UIImage(named: "ic_map_driver")
-                                    self.pickMarker?.map = self.gMap
-                                    
-                                    
-                                    let dropOffPosition = CLLocationCoordinate2D(latitude: toLatitude ?? 0.0, longitude: toLongitude ?? 0.0)
-                                    self.dropMarker = GMSMarker(position: dropOffPosition)
-                                    self.dropMarker?.title = "track"
-                                    self.dropMarker?.icon = UIImage(named: "ic_location")
-                                    self.dropMarker?.map = self.gMap
-                                    
-                                }
-                            })
-                        }else {
-                            //no routes
-                        }
-                        
-                    } else {
-                        //no routes
-                    }
-                    
-                } catch let error as NSError{
-                    print("error:\(error)")
-                }
-            }
-        }).resume()
+        
+        let dropOffPosition = CLLocationCoordinate2D(latitude: toLatitude ?? 0.0, longitude: toLongitude ?? 0.0)
+        self.dropMarker = GMSMarker(position: dropOffPosition)
+        self.dropMarker?.title = "track"
+        self.dropMarker?.icon = UIImage(named: "ic_location")
+        self.dropMarker?.map = self.gMap
+        
+        var bounds = GMSCoordinateBounds()
+        bounds = bounds.includingCoordinate(self.pickMarker?.position ?? CLLocationCoordinate2D(latitude: self.latitude ?? 0.0, longitude: self.longitude ?? 0.0))
+        bounds = bounds.includingCoordinate(self.dropMarker?.position ?? CLLocationCoordinate2D(latitude: self.latitude ?? 0.0, longitude: self.longitude ?? 0.0))
+        self.gMap?.animate(with: GMSCameraUpdate.fit(bounds, withPadding: 155.0))
+        
+        
+        
+        //        let origin = "\(fromLatitude ?? 0),\(fromLongitude ?? 0)"
+        //        let destination = "\(toLatitude ?? 0),\(toLongitude ?? 0)"
+        //
+        //        let urlString = "https://maps.googleapis.com/maps/api/directions/json?origin=\(origin)&destination=\(destination)&mode=driving&key=\(Constants.GOOGLE_API_KEY)"
+        //
+        //        let url = URL(string: urlString)
+        //        URLSession.shared.dataTask(with: url!, completionHandler: {
+        //            (data, response, error) in
+        //            if(error != nil) {
+        //                print("error")
+        //            } else {
+        //                do {
+        //                    let json = try JSONSerialization.jsonObject(with: data!, options:.allowFragments) as! [String : AnyObject]
+        //                    if let routes = json["routes"] as? NSArray {
+        //                        if (routes.count > 0) {
+        //                            self.gMap?.clear()
+        //
+        //                            self.selectedRoute = (json["routes"] as! Array<NSDictionary>)[0]
+        //                            //  self.loadDistanceAndDuration()
+        //
+        //                            OperationQueue.main.addOperation({
+        //                                for route in routes
+        //                                {
+        //                                    let routeOverviewPolyline:NSDictionary = (route as! NSDictionary).value(forKey: "overview_polyline") as! NSDictionary
+        //                                    let points = routeOverviewPolyline.object(forKey: "points")
+        //                                    let path = GMSPath.init(fromEncodedPath: points! as! String)
+        //                                    self.polyline = GMSPolyline.init(path: path)
+        //                                    self.polyline?.strokeWidth = 2
+        //                                    self.polyline?.strokeColor = UIColor.appDarkBlue
+        //
+        //                                    let bounds = GMSCoordinateBounds(path: path!)
+        //                                    self.gMap?.animate(with: GMSCameraUpdate.fit(bounds, withPadding: 30.0))
+        //
+        //                                    self.polyline?.map = self.gMap
+        //
+        //
+        //                                    let pickUpPosition = CLLocationCoordinate2D(latitude: fromLatitude ?? 0.0, longitude: fromLongitude ?? 0.0)
+        //                                    self.pickMarker = GMSMarker(position: pickUpPosition)
+        //                                    self.pickMarker?.title = "track"
+        //                                    self.pickMarker?.icon = UIImage(named: "ic_map_driver")
+        //                                    self.pickMarker?.map = self.gMap
+        //
+        //
+        //                                    let dropOffPosition = CLLocationCoordinate2D(latitude: toLatitude ?? 0.0, longitude: toLongitude ?? 0.0)
+        //                                    self.dropMarker = GMSMarker(position: dropOffPosition)
+        //                                    self.dropMarker?.title = "track"
+        //                                    self.dropMarker?.icon = UIImage(named: "ic_location")
+        //                                    self.dropMarker?.map = self.gMap
+        //
+        //                                }
+        //                            })
+        //                        }else {
+        //                            //no routes
+        //                        }
+        //
+        //                    } else {
+        //                        //no routes
+        //                    }
+        //
+        //                } catch let error as NSError{
+        //                    print("error:\(error)")
+        //                }
+        //            }
+        //        }).resume()
     }
     
     
@@ -828,33 +850,33 @@ class HomeMapVC: BaseViewController,LabasLocationManagerDelegate, UICollectionVi
                 self.viewServices.isHidden = true
                 self.viewTenders.isHidden = true
                 
-               
+                
                 
                 //snuff33
                 let itm = self.items[0]
                 DispatchQueue.main.asyncAfter(deadline: .now() + 2) {
                     self.getDriverLocationAPI(item: itm)
                 }
-//                ApiService.getOrderLocation(Authorization: self.loadUser().data?.accessToken ?? "", deliveryId: itm.id ?? 0) { (response) in
-//
-//                          if (response.locationData != nil) {
-//                              if (itm.status == Constants.ORDER_ON_THE_WAY) {
-//                                  self.drawLocationLine(driverLocation: response.locationData!, order: itm)
-//                              }else if (itm.status == Constants.ORDER_PROCESSING) {
-//                                  if (itm.time ?? 0 <= 1) {
-//                                      self.drawLocationLine(driverLocation: response.locationData!, order: itm)
-//                                  }else {
-//                                      self.polyline?.map = nil
-//                                      self.pickMarker?.map = nil
-//                                      self.dropMarker?.map = nil
-//                                  }
-//                              }else {
-//                                  self.polyline?.map = nil
-//                                  self.pickMarker?.map = nil
-//                                  self.dropMarker?.map = nil
-//                              }
-//                          }
-//                      }
+                //                ApiService.getOrderLocation(Authorization: self.loadUser().data?.accessToken ?? "", deliveryId: itm.id ?? 0) { (response) in
+                //
+                //                          if (response.locationData != nil) {
+                //                              if (itm.status == Constants.ORDER_ON_THE_WAY) {
+                //                                  self.drawLocationLine(driverLocation: response.locationData!, order: itm)
+                //                              }else if (itm.status == Constants.ORDER_PROCESSING) {
+                //                                  if (itm.time ?? 0 <= 1) {
+                //                                      self.drawLocationLine(driverLocation: response.locationData!, order: itm)
+                //                                  }else {
+                //                                      self.polyline?.map = nil
+                //                                      self.pickMarker?.map = nil
+                //                                      self.dropMarker?.map = nil
+                //                                  }
+                //                              }else {
+                //                                  self.polyline?.map = nil
+                //                                  self.pickMarker?.map = nil
+                //                                  self.dropMarker?.map = nil
+                //                              }
+                //                          }
+                //                      }
                 
                 
                 

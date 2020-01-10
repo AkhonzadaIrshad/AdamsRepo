@@ -375,70 +375,90 @@ class OrderDetailsVC: BaseVC, UICollectionViewDelegate, UICollectionViewDataSour
         toLatitude = self.order?.toLatitude ?? 0.0
         toLongitude = self.order?.toLongitude ?? 0.0
         
-        let origin = "\(fromLatitude ?? 0),\(fromLongitude ?? 0)"
-        let destination = "\(toLatitude ?? 0),\(toLongitude ?? 0)"
         
-        let urlString = "https://maps.googleapis.com/maps/api/directions/json?origin=\(origin)&destination=\(destination)&mode=driving&key=\(Constants.GOOGLE_API_KEY)"
+        let pickUpPosition = CLLocationCoordinate2D(latitude: fromLatitude ?? 0.0, longitude: fromLongitude ?? 0.0)
+        let pickMarker = GMSMarker(position: pickUpPosition)
+        pickMarker.title = ""
+        pickMarker.icon = UIImage(named: "ic_map_shop")
+        pickMarker.map = self.gMap
         
-        let url = URL(string: urlString)
-        URLSession.shared.dataTask(with: url!, completionHandler: {
-            (data, response, error) in
-            if(error != nil){
-                print("error")
-            } else {
-                do{
-                    let json = try JSONSerialization.jsonObject(with: data!, options:.allowFragments) as! [String : AnyObject]
-                    if let routes = json["routes"] as? NSArray {
-                        if (routes.count > 0) {
-                            self.gMap?.clear()
-                            
-                            self.selectedRoute = (json["routes"] as! Array<NSDictionary>)[0]
-                            //  self.loadDistanceAndDuration()
-                            
-                            OperationQueue.main.addOperation({
-                                for route in routes
-                                {
-                                    let routeOverviewPolyline:NSDictionary = (route as! NSDictionary).value(forKey: "overview_polyline") as! NSDictionary
-                                    let points = routeOverviewPolyline.object(forKey: "points")
-                                    let path = GMSPath.init(fromEncodedPath: points! as! String)
-                                    let polyline = GMSPolyline.init(path: path)
-                                    polyline.strokeWidth = 2
-                                    polyline.strokeColor = UIColor.appDarkBlue
-                                    
-                                    let bounds = GMSCoordinateBounds(path: path!)
-                                    self.gMap?.animate(with: GMSCameraUpdate.fit(bounds, withPadding: 30.0))
-                                    
-                                    polyline.map = self.gMap
-                                    
-                                    
-                                    let pickUpPosition = CLLocationCoordinate2D(latitude: fromLatitude ?? 0.0, longitude: fromLongitude ?? 0.0)
-                                    let pickMarker = GMSMarker(position: pickUpPosition)
-                                    pickMarker.title = ""
-                                    pickMarker.icon = UIImage(named: "ic_map_shop")
-                                    pickMarker.map = self.gMap
-                                    
-                                    
-                                    let dropOffPosition = CLLocationCoordinate2D(latitude: toLatitude ?? 0.0, longitude: toLongitude ?? 0.0)
-                                    let dropMarker = GMSMarker(position: dropOffPosition)
-                                    dropMarker.title = ""
-                                    dropMarker.icon = UIImage(named: "ic_location")
-                                    dropMarker.map = self.gMap
-                                    
-                                }
-                            })
-                        }else {
-                            //no routes
-                        }
-                        
-                    }else {
-                        //no routes
-                    }
-                    
-                }catch let error as NSError{
-                    print("error:\(error)")
-                }
-            }
-        }).resume()
+        
+        let dropOffPosition = CLLocationCoordinate2D(latitude: toLatitude ?? 0.0, longitude: toLongitude ?? 0.0)
+        let dropMarker = GMSMarker(position: dropOffPosition)
+        dropMarker.title = ""
+        dropMarker.icon = UIImage(named: "ic_location")
+        dropMarker.map = self.gMap
+        
+        var bounds = GMSCoordinateBounds()
+        bounds = bounds.includingCoordinate(pickMarker.position)
+        bounds = bounds.includingCoordinate(dropMarker.position)
+        self.gMap?.animate(with: GMSCameraUpdate.fit(bounds, withPadding: 155.0))
+        
+        
+        //        let origin = "\(fromLatitude ?? 0),\(fromLongitude ?? 0)"
+        //        let destination = "\(toLatitude ?? 0),\(toLongitude ?? 0)"
+        //
+        //        let urlString = "https://maps.googleapis.com/maps/api/directions/json?origin=\(origin)&destination=\(destination)&mode=driving&key=\(Constants.GOOGLE_API_KEY)"
+        //
+        //        let url = URL(string: urlString)
+        //        URLSession.shared.dataTask(with: url!, completionHandler: {
+        //            (data, response, error) in
+        //            if(error != nil){
+        //                print("error")
+        //            } else {
+        //                do{
+        //                    let json = try JSONSerialization.jsonObject(with: data!, options:.allowFragments) as! [String : AnyObject]
+        //                    if let routes = json["routes"] as? NSArray {
+        //                        if (routes.count > 0) {
+        //                            self.gMap?.clear()
+        //
+        //                            self.selectedRoute = (json["routes"] as! Array<NSDictionary>)[0]
+        //                            //  self.loadDistanceAndDuration()
+        //
+        //                            OperationQueue.main.addOperation({
+        //                                for route in routes
+        //                                {
+        //                                    let routeOverviewPolyline:NSDictionary = (route as! NSDictionary).value(forKey: "overview_polyline") as! NSDictionary
+        //                                    let points = routeOverviewPolyline.object(forKey: "points")
+        //                                    let path = GMSPath.init(fromEncodedPath: points! as! String)
+        //                                    let polyline = GMSPolyline.init(path: path)
+        //                                    polyline.strokeWidth = 2
+        //                                    polyline.strokeColor = UIColor.appDarkBlue
+        //
+        //                                    let bounds = GMSCoordinateBounds(path: path!)
+        //                                    self.gMap?.animate(with: GMSCameraUpdate.fit(bounds, withPadding: 30.0))
+        //
+        //                                    polyline.map = self.gMap
+        //
+        //
+        //                                    let pickUpPosition = CLLocationCoordinate2D(latitude: fromLatitude ?? 0.0, longitude: fromLongitude ?? 0.0)
+        //                                    let pickMarker = GMSMarker(position: pickUpPosition)
+        //                                    pickMarker.title = ""
+        //                                    pickMarker.icon = UIImage(named: "ic_map_shop")
+        //                                    pickMarker.map = self.gMap
+        //
+        //
+        //                                    let dropOffPosition = CLLocationCoordinate2D(latitude: toLatitude ?? 0.0, longitude: toLongitude ?? 0.0)
+        //                                    let dropMarker = GMSMarker(position: dropOffPosition)
+        //                                    dropMarker.title = ""
+        //                                    dropMarker.icon = UIImage(named: "ic_location")
+        //                                    dropMarker.map = self.gMap
+        //
+        //                                }
+        //                            })
+        //                        }else {
+        //                            //no routes
+        //                        }
+        //
+        //                    }else {
+        //                        //no routes
+        //                    }
+        //
+        //                }catch let error as NSError{
+        //                    print("error:\(error)")
+        //                }
+        //            }
+        //        }).resume()
     }
     
     

@@ -156,7 +156,8 @@ class DeliveryStep1: BaseVC,LabasLocationManagerDelegate, Step2Delegate {
         //            popTip.hide()
         //        }
         
-        if (App.shared.config?.configSettings?.flag ?? false) {
+        let flag = App.shared.config?.configSettings?.flag ?? false
+        if (flag == false) {
             self.checkForUpdates()
         }
         
@@ -224,12 +225,11 @@ class DeliveryStep1: BaseVC,LabasLocationManagerDelegate, Step2Delegate {
         }
     }
     
-    
     func checkForUpdates() {
-        let appVersion = Bundle.main.infoDictionary!["CFBundleShortVersionString"] as? String ?? "0.0"
-        let doubleAppVersion : Double = appVersion.toDouble()!
+        let appVersion = Bundle.main.infoDictionary?["CFBundleShortVersionString"] as? String ?? "0.0".replacedArabicDigitsWithEnglish
+        let doubleAppVersion : Double = appVersion.toDouble() ?? 0.0
         let CMSVersion = App.shared.config?.updateStatus?.iosVersion ?? appVersion
-        let doubleCmsVersion : Double = CMSVersion.toDouble()!
+        let doubleCmsVersion : Double = CMSVersion.toDouble() ?? 0.0
         let isMand = App.shared.config?.updateStatus?.iosIsMandatory ?? false
         
         if (doubleAppVersion < doubleCmsVersion){
@@ -1004,26 +1004,40 @@ extension DeliveryStep1 : GMSMapViewDelegate {
 
 extension DeliveryStep1: UITextFieldDelegate {
     
-    func textField(_ textField: UITextField, shouldChangeCharactersIn range: NSRange, replacementString string: String) -> Bool {
-        
-        if textField == self.searchField {
-            let maxLength = 100
-            let currentString: NSString = textField.text as NSString? ?? ""
-            let newString: NSString =
-                currentString.replacingCharacters(in: range, with: string) as NSString
-            if (newString.length >= 3) {
-                self.getShopsByName(name: newString as String, latitude: self.latitude ?? 0.0, longitude: self.longitude ?? 0.0, radius: Float(Constants.DEFAULT_RADIUS))
-                
-                // self.getShopByPlaces(name: newString as String, latitude: self.latitude ?? 0.0, longitude: self.longitude ?? 0.0)
-            }
-            if (newString.length == 0) {
+//    func textField(_ textField: UITextField, shouldChangeCharactersIn range: NSRange, replacementString string: String) -> Bool {
+//
+//        //        if textField == self.searchField {
+//        //            let maxLength = 100
+//        //            let currentString: NSString = textField.text as NSString? ?? ""
+//        //            let newString: NSString =
+//        //                currentString.replacingCharacters(in: range, with: string) as NSString
+//        //            if (newString.length >= 3) {
+//        //                self.getShopsByName(name: newString as String, latitude: self.latitude ?? 0.0, longitude: self.longitude ?? 0.0, radius: Float(Constants.DEFAULT_RADIUS))
+//        //
+//        //                // self.getShopByPlaces(name: newString as String, latitude: self.latitude ?? 0.0, longitude: self.longitude ?? 0.0)
+//        //            }
+//        //            if (newString.length == 0) {
+//        //                self.gMap?.clear()
+//        //                self.getShopsList(radius: Float(Constants.DEFAULT_RADIUS), rating: 0)
+//        //            }
+//        //            return newString.length <= maxLength
+//        //        }
+//
+//        return false
+//    }
+    
+    func textFieldShouldReturn(_ textField: UITextField) -> Bool {
+        if (textField == self.searchField) {
+            let query = self.searchField.text ?? ""
+            if (query.count > 0) {
+                self.getShopsByName(name: query, latitude: self.latitude ?? 0.0, longitude: self.longitude ?? 0.0, radius: Float(Constants.DEFAULT_RADIUS))
+            }else {
                 self.gMap?.clear()
                 self.getShopsList(radius: Float(Constants.DEFAULT_RADIUS), rating: 0)
             }
-            return newString.length <= maxLength
+            textField.resignFirstResponder()
+            return true
         }
-        
         return false
     }
-    
 }

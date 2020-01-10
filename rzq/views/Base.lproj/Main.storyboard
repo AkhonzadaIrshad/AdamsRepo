@@ -3600,6 +3600,7 @@
                         <outlet property="edtUserName" destination="90c-lM-y4l" id="avi-CO-j1M"/>
                         <outlet property="genderSegment" destination="lXz-tx-Wfy" id="k4u-wE-H12"/>
                         <outlet property="ivHandle" destination="PV8-MS-fj6" id="gVK-iv-80F"/>
+                        <outlet property="lblGender" destination="ZZ6-IA-gDD" id="Dcg-Zt-Ivr"/>
                         <outlet property="lblTerms" destination="xVz-fL-Pjg" id="5w2-JY-GdX"/>
                     </connections>
                 </viewController>
@@ -11841,7 +11842,7 @@
                                                         <rect key="frame" x="12" y="5" width="262" height="27"/>
                                                         <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                                         <fontDescription key="fontDescription" type="system" pointSize="13"/>
-                                                        <textInputTraits key="textInputTraits"/>
+                                                        <textInputTraits key="textInputTraits" returnKeyType="search"/>
                                                         <userDefinedRuntimeAttributes>
                                                             <userDefinedRuntimeAttribute type="string" keyPath="font_type" value="13,3"/>
                                                             <userDefinedRuntimeAttribute type="color" keyPath="placeHolderColor">

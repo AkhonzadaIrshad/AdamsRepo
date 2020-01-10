@@ -39,6 +39,10 @@ class Constants {
     static let PAYMENT_METHOD_KNET = 3
     
     
+    static let TRACK_TIMER = 180
+    static let TRACK_TIMER_DOUBLE = 180.0
+    
+    
     static var PAYMENT_URL = "https://api.myfatoorah.com/v2/"
    // static var PAYMENT_TESTS_URL = "https://apitest.myfatoorah.com/v2/"
     
@@ -77,7 +81,8 @@ class Constants {
     static let TWITTER_URL = "twitter://user?screen_name=rzqapp"
     static let TWITTER_URL_ALT = "https://twitter.com/rzqapp"
     
-    static let GOOGLE_API_KEY = "AIzaSyBjqkPh3pDYyeOLw9D21NuxMuP9httdick"
+    static let GOOGLE_API_KEY = "AIzaSyDY0pMaR18bji55KFsKX_PTm0AkuvaXpdE"
+    
     
     static let SEE_DRIVER_TERMS = "SEE_DRIVER_TERMS"
     

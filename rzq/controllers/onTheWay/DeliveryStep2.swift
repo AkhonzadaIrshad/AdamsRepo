@@ -17,7 +17,7 @@ protocol Step2Delegate {
     func updateModel(model : OTWOrder)
 }
 class DeliveryStep2: BaseVC, Step3Delegate {
-
+    
     @IBOutlet weak var lblPickupLocation: MyUILabel!
     
     @IBOutlet weak var lblDropLocation: MyUILabel!
@@ -63,9 +63,9 @@ class DeliveryStep2: BaseVC, Step3Delegate {
     
     override func viewDidLoad() {
         super.viewDidLoad()
-//        if (self.isArabic()) {
-//            self.ivHandle.image = UIImage(named: "ic_back_arabic")
-//        }
+        //        if (self.isArabic()) {
+        //            self.ivHandle.image = UIImage(named: "ic_back_arabic")
+        //        }
         gMap = GMSMapView()
         self.searchField.delegate = self
         self.lblPickupLocation.text = self.orderModel?.pickUpAddress ?? ""
@@ -78,7 +78,7 @@ class DeliveryStep2: BaseVC, Step3Delegate {
         popTip.bubbleColor = UIColor.processing
         popTip.textColor = UIColor.white
         
-       popTip.show(text: "to_location_desc".localized, direction: .down, maxWidth: 260, in: self.view, from: self.viewFromTo.frame)
+        popTip.show(text: "to_location_desc".localized, direction: .down, maxWidth: 260, in: self.view, from: self.viewFromTo.frame)
         
         DispatchQueue.main.asyncAfter(deadline: .now() + 4) {
             popTip.hide()
@@ -133,29 +133,29 @@ class DeliveryStep2: BaseVC, Step3Delegate {
             self.showBanner(title: "alert".localized, message: "choose_drop_location".localized, style: UIColor.INFO)
             return false
         }
-//        if (self.edtMoreDetails.text?.count ?? 0 == 0) {
-//            self.showBanner(title: "alert".localized, message: "enter_dropoff_details".localized, style: UIColor.INFO)
-//            return false
-//        }
+        //        if (self.edtMoreDetails.text?.count ?? 0 == 0) {
+        //            self.showBanner(title: "alert".localized, message: "enter_dropoff_details".localized, style: UIColor.INFO)
+        //            return false
+        //        }
         return true
     }
     
-//    @IBAction func searchPlacesAction(_ sender: Any) {
-//        let autocompleteController = GMSAutocompleteViewController()
-//        autocompleteController.delegate = self
-//
-//        let filter = GMSAutocompleteFilter()
-//        filter.country = "KW"
-//        autocompleteController.primaryTextColor = UIColor.black
-//        autocompleteController.secondaryTextColor = UIColor.black
-//        autocompleteController.tintColor = UIColor.black
-//        autocompleteController.autocompleteFilter = filter
-//
-////        UITextField.appearance(whenContainedInInstancesOf: [UISearchBar.self]).defaultTextAttributes = [NSAttributedString.Key.foregroundColor: UIColor.white]
-//
-//
-//        present(autocompleteController, animated: true, completion: nil)
-//    }
+    //    @IBAction func searchPlacesAction(_ sender: Any) {
+    //        let autocompleteController = GMSAutocompleteViewController()
+    //        autocompleteController.delegate = self
+    //
+    //        let filter = GMSAutocompleteFilter()
+    //        filter.country = "KW"
+    //        autocompleteController.primaryTextColor = UIColor.black
+    //        autocompleteController.secondaryTextColor = UIColor.black
+    //        autocompleteController.tintColor = UIColor.black
+    //        autocompleteController.autocompleteFilter = filter
+    //
+    ////        UITextField.appearance(whenContainedInInstancesOf: [UISearchBar.self]).defaultTextAttributes = [NSAttributedString.Key.foregroundColor: UIColor.white]
+    //
+    //
+    //        present(autocompleteController, animated: true, completion: nil)
+    //    }
     
     @IBAction func searchAction(_ sender: Any) {
         let autocompleteController = GMSAutocompleteViewController()
@@ -203,9 +203,9 @@ class DeliveryStep2: BaseVC, Step3Delegate {
         }
     }
     
-//    @IBAction func backAction(_ sender: Any) {
-//        self.saveBackModel()
-//    }
+    //    @IBAction func backAction(_ sender: Any) {
+    //        self.saveBackModel()
+    //    }
     
     func saveBackModel() {
         self.orderModel?.dropOffDetails = self.edtMoreDetails.text ?? ""
@@ -217,78 +217,103 @@ class DeliveryStep2: BaseVC, Step3Delegate {
         
         self.getFromToDistance()
         
-        let origin = "\(self.orderModel?.pickUpLatitude ?? 0),\(self.orderModel?.pickUpLongitude ?? 0)"
-        let destination = "\(self.orderModel?.dropOffLatitude ?? 0),\(self.orderModel?.dropOffLongitude ?? 0)"
         
-        let urlString = "https://maps.googleapis.com/maps/api/directions/json?origin=\(origin)&destination=\(destination)&mode=driving&key=\(Constants.GOOGLE_API_KEY)"
+        let pickUpPosition = CLLocationCoordinate2D(latitude: self.orderModel?.pickUpLatitude ?? 0, longitude: self.orderModel?.pickUpLongitude ?? 0)
+        let pickMarker = GMSMarker(position: pickUpPosition)
+        pickMarker.title = "\(self.orderModel?.shop?.id ?? 0)"
+        if (self.orderModel?.shop?.id ?? 0 > 0) {
+            pickMarker.icon = UIImage(named: "ic_map_shop")
+            let url = URL(string: "\(Constants.IMAGE_URL)\(self.orderModel?.shop?.type?.selectedIcon ?? "")")
+            self.applyMarkerImage(from: url!, to: pickMarker)
+        }else {
+            pickMarker.icon = UIImage(named: "ic_location_pin")
+        }
+        pickMarker.map = self.gMap
         
-        let url = URL(string: urlString)
-        URLSession.shared.dataTask(with: url!, completionHandler: {
-            (data, response, error) in
-            if(error != nil){
-                print("error")
-            } else {
-                do{
-                    let json = try JSONSerialization.jsonObject(with: data!, options:.allowFragments) as! [String : AnyObject]
-                    if let routes = json["routes"] as? NSArray {
-                        if (routes.count > 0) {
-                            self.gMap?.clear()
-                            
-                            self.selectedRoute = (json["routes"] as! Array<NSDictionary>)[0]
-                          //  self.loadDistanceAndDuration()
-                            
-                            OperationQueue.main.addOperation({
-                                for route in routes
-                                {
-                                    let routeOverviewPolyline:NSDictionary = (route as! NSDictionary).value(forKey: "overview_polyline") as! NSDictionary
-                                    let points = routeOverviewPolyline.object(forKey: "points")
-                                    let path = GMSPath.init(fromEncodedPath: points! as! String)
-                                    let polyline = GMSPolyline.init(path: path)
-                                    polyline.strokeWidth = 2
-                                    polyline.strokeColor = UIColor.appDarkBlue
-                                    
-                                    let bounds = GMSCoordinateBounds(path: path!)
-                                    self.gMap?.animate(with: GMSCameraUpdate.fit(bounds, withPadding: 170.0))
-                                    
-                                    polyline.map = self.gMap
-                                    
-                        
-                                    let pickUpPosition = CLLocationCoordinate2D(latitude: self.orderModel?.pickUpLatitude ?? 0, longitude: self.orderModel?.pickUpLongitude ?? 0)
-                                    let pickMarker = GMSMarker(position: pickUpPosition)
-                                    pickMarker.title = "\(self.orderModel?.shop?.id ?? 0)"
-                                    if (self.orderModel?.shop?.id ?? 0 > 0) {
-                                        pickMarker.icon = UIImage(named: "ic_map_shop")
-                                        let url = URL(string: "\(Constants.IMAGE_URL)\(self.orderModel?.shop?.type?.selectedIcon ?? "")")
-                                        self.applyMarkerImage(from: url!, to: pickMarker)
-                                    }else {
-                                        pickMarker.icon = UIImage(named: "ic_location_pin")
-                                    }
-                                    pickMarker.map = self.gMap
-                                    
-                                    
-                                    let dropOffPosition = CLLocationCoordinate2D(latitude: self.orderModel?.dropOffLatitude ?? 0, longitude: self.orderModel?.dropOffLongitude ?? 0)
-                                    let dropMarker = GMSMarker(position: dropOffPosition)
-                                    dropMarker.title = "0"
-                                    dropMarker.icon = UIImage(named: "ic_location")
-                                    dropMarker.map = self.gMap
-                                    
-                                }
-                            })
-                            
-                        }else {
-                            //no routes
-                        }
-                        
-                    }else {
-                       //no routes
-                    }
-                    
-                    
-                }catch let error as NSError{
-                    print("error:\(error)")
-                }
-            }
-        }).resume()
+        
+        let dropOffPosition = CLLocationCoordinate2D(latitude: self.orderModel?.dropOffLatitude ?? 0, longitude: self.orderModel?.dropOffLongitude ?? 0)
+        let dropMarker = GMSMarker(position: dropOffPosition)
+        dropMarker.title = "0"
+        dropMarker.icon = UIImage(named: "ic_location")
+        dropMarker.map = self.gMap
+        
+        var bounds = GMSCoordinateBounds()
+        bounds = bounds.includingCoordinate(pickMarker.position)
+        bounds = bounds.includingCoordinate(dropMarker.position)
+        self.gMap?.animate(with: GMSCameraUpdate.fit(bounds, withPadding: 155.0))
+        
+        //        let origin = "\(self.orderModel?.pickUpLatitude ?? 0),\(self.orderModel?.pickUpLongitude ?? 0)"
+        //        let destination = "\(self.orderModel?.dropOffLatitude ?? 0),\(self.orderModel?.dropOffLongitude ?? 0)"
+        //
+        //        let urlString = "https://maps.googleapis.com/maps/api/directions/json?origin=\(origin)&destination=\(destination)&mode=driving&key=\(Constants.GOOGLE_API_KEY)"
+        //
+        //        let url = URL(string: urlString)
+        //        URLSession.shared.dataTask(with: url!, completionHandler: {
+        //            (data, response, error) in
+        //            if(error != nil){
+        //                print("error")
+        //            } else {
+        //                do{
+        //                    let json = try JSONSerialization.jsonObject(with: data!, options:.allowFragments) as! [String : AnyObject]
+        //                    if let routes = json["routes"] as? NSArray {
+        //                        if (routes.count > 0) {
+        //                            self.gMap?.clear()
+        //
+        //                            self.selectedRoute = (json["routes"] as! Array<NSDictionary>)[0]
+        //                          //  self.loadDistanceAndDuration()
+        //
+        //                            OperationQueue.main.addOperation({
+        //                                for route in routes
+        //                                {
+        //                                    let routeOverviewPolyline:NSDictionary = (route as! NSDictionary).value(forKey: "overview_polyline") as! NSDictionary
+        //                                    let points = routeOverviewPolyline.object(forKey: "points")
+        //                                    let path = GMSPath.init(fromEncodedPath: points! as! String)
+        //                                    let polyline = GMSPolyline.init(path: path)
+        //                                    polyline.strokeWidth = 2
+        //                                    polyline.strokeColor = UIColor.appDarkBlue
+        //
+        //                                    let bounds = GMSCoordinateBounds(path: path!)
+        //                                    self.gMap?.animate(with: GMSCameraUpdate.fit(bounds, withPadding: 170.0))
+        //
+        //                                    polyline.map = self.gMap
+        //
+        //
+        //                                    let pickUpPosition = CLLocationCoordinate2D(latitude: self.orderModel?.pickUpLatitude ?? 0, longitude: self.orderModel?.pickUpLongitude ?? 0)
+        //                                    let pickMarker = GMSMarker(position: pickUpPosition)
+        //                                    pickMarker.title = "\(self.orderModel?.shop?.id ?? 0)"
+        //                                    if (self.orderModel?.shop?.id ?? 0 > 0) {
+        //                                        pickMarker.icon = UIImage(named: "ic_map_shop")
+        //                                        let url = URL(string: "\(Constants.IMAGE_URL)\(self.orderModel?.shop?.type?.selectedIcon ?? "")")
+        //                                        self.applyMarkerImage(from: url!, to: pickMarker)
+        //                                    }else {
+        //                                        pickMarker.icon = UIImage(named: "ic_location_pin")
+        //                                    }
+        //                                    pickMarker.map = self.gMap
+        //
+        //
+        //                                    let dropOffPosition = CLLocationCoordinate2D(latitude: self.orderModel?.dropOffLatitude ?? 0, longitude: self.orderModel?.dropOffLongitude ?? 0)
+        //                                    let dropMarker = GMSMarker(position: dropOffPosition)
+        //                                    dropMarker.title = "0"
+        //                                    dropMarker.icon = UIImage(named: "ic_location")
+        //                                    dropMarker.map = self.gMap
+        //
+        //                                }
+        //                            })
+        //
+        //                        }else {
+        //                            //no routes
+        //                        }
+        //
+        //                    }else {
+        //                       //no routes
+        //                    }
+        //
+        //
+        //                }catch let error as NSError{
+        //                    print("error:\(error)")
+        //                }
+        //            }
+        //        }).resume()
     }
     
     @IBAction func clearDropLocation(_ sender: Any) {
@@ -413,7 +438,7 @@ class DeliveryStep2: BaseVC, Step3Delegate {
     
     
     @IBAction func backBtnAction(_ sender: Any) {
-         self.saveBackModel()
+        self.saveBackModel()
     }
     
     
@@ -454,7 +479,7 @@ class DeliveryStep2: BaseVC, Step3Delegate {
                 self.lblDropLocation.text = shop.name ?? ""
                 self.lblDropLocation.textColor = UIColor.appDarkBlue
                 
-               self.view.endEditing(true)
+                self.view.endEditing(true)
                 
                 self.pinMarker?.map = nil
                 self.pinMarker = GMSMarker()
@@ -501,7 +526,7 @@ class DeliveryStep2: BaseVC, Step3Delegate {
 extension DeliveryStep2 : GMSMapViewDelegate {
     
     func mapView(_ mapView: GMSMapView, didChange position: GMSCameraPosition) {
-         toolTipView?.removeFromSuperview()
+        toolTipView?.removeFromSuperview()
     }
     
     func mapView(_ mapView: GMSMapView, idleAt position: GMSCameraPosition) {
@@ -568,13 +593,13 @@ extension DeliveryStep2 : GMSMapViewDelegate {
 
 extension DeliveryStep2: GMSAutocompleteViewControllerDelegate {
     func viewController(_ viewController: GMSAutocompleteViewController, didAutocompleteWith place: GMSPlace) {
-//        let camera = GMSCameraPosition.camera(withLatitude:place.coordinate.latitude, longitude:place.coordinate.longitude, zoom: 17.0)
+        //        let camera = GMSCameraPosition.camera(withLatitude:place.coordinate.latitude, longitude:place.coordinate.longitude, zoom: 17.0)
         dismiss(animated: true, completion: {
             self.orderModel?.dropOffLatitude = place.coordinate.latitude
             self.orderModel?.dropOffLongitude = place.coordinate.longitude
             self.lblDropLocation.text = place.name ?? ""
             self.drawLocationLine()
-           // self.gMap?.animate(to: camera)
+            // self.gMap?.animate(to: camera)
         })
     }
     
