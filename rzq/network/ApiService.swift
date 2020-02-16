@@ -238,16 +238,16 @@ class ApiService : NSObject {
                                     "FromLatitude" : fromLatitude,
                                     "ToLongitude" : toLongitude,
                                     "ToLatitude" : toLatitude,
-                                    "FromAddress" : fromAddress,
-                                    "ToAddress" : toAddress,
-                                    "EstimatedTime" : time,
-                                    "EstimatedPrice" : estimatedPrice,
-                                    "ShopId" : shopId,
-                                    "PickUpDetails" : pickUpDetails,
-                                    "DropOffDetails" : dropOffDetails,
-                                    "PaymentMethod" : paymentMethod,
-                                    "ToFemaleOnly" : isFemale,
-                                    "InvoiceId" : invoiceId]
+                                    "FromAddress" : "\(fromAddress), \(pickUpDetails)",
+            "ToAddress" : "\(toAddress), \(dropOffDetails)",
+            "EstimatedTime" : time,
+            "EstimatedPrice" : estimatedPrice,
+            "ShopId" : shopId,
+            "PickUpDetails" : pickUpDetails,
+            "DropOffDetails" : dropOffDetails,
+            "PaymentMethod" : paymentMethod,
+            "ToFemaleOnly" : isFemale,
+            "InvoiceId" : invoiceId]
         // "ShopId" : shopId]
         
         AFManager.request("\(Constants.BASE_URL)Delivery/Create", method: .post, parameters: all ,encoding: JSONEncoding.default, headers: headers)
@@ -444,12 +444,16 @@ class ApiService : NSObject {
     }
     
     
-    static func cancelDelivery(Authorization : String, deliveryId: Int, completion:@escaping(_ response : BaseResponse)-> Void) {
+    static func cancelDelivery(Authorization : String, deliveryId: Int,reason : String, completion:@escaping(_ response : BaseResponse)-> Void) {
         
         let headers = [Constants.AUTH_HEADER: "bearer \(Authorization)",
             Constants.LANG_HEADER : self.getLang()]
         
-        AFManager.request("\(Constants.BASE_URL)Order/Cancel?id=\(deliveryId)", method: .post, parameters: nil ,encoding: JSONEncoding.default, headers: headers)
+        let url = "\(Constants.BASE_URL)Order/Cancel?id=\(deliveryId)&CancelReason=\(reason)"
+        let encodedUrl = url.addingPercentEncoding(withAllowedCharacters: .urlQueryAllowed) ?? url
+        
+        
+        AFManager.request(encodedUrl, method: .post, parameters: nil ,encoding: JSONEncoding.default, headers: headers)
             .responseJSON { response in
                 if let json = response.data {
                     do {
@@ -464,12 +468,15 @@ class ApiService : NSObject {
     }
     
     
-    static func cancelDeliveryByDriver(Authorization : String, deliveryId: Int, completion:@escaping(_ response : BaseResponse)-> Void) {
+    static func cancelDeliveryByDriver(Authorization : String, deliveryId: Int,reason : String, completion:@escaping(_ response : BaseResponse)-> Void) {
         
         let headers = [Constants.AUTH_HEADER: "bearer \(Authorization)",
             Constants.LANG_HEADER : self.getLang()]
         
-        AFManager.request("\(Constants.BASE_URL)Order/CancelByProvider?id=\(deliveryId)", method: .post, parameters: nil ,encoding: JSONEncoding.default, headers: headers)
+        let url = "\(Constants.BASE_URL)Order/CancelByProvider?id=\(deliveryId)&CancelReason=\(reason)"
+        let encodedUrl = url.addingPercentEncoding(withAllowedCharacters: .urlQueryAllowed) ?? url
+        
+        AFManager.request(encodedUrl, method: .post, parameters: nil ,encoding: JSONEncoding.default, headers: headers)
             .responseJSON { response in
                 if let json = response.data {
                     do {
@@ -926,6 +933,24 @@ class ApiService : NSObject {
                 }
         }
     }
+    
+    static func getShopsPriority(latitude : Double, longitude : Double, radius : Float,rating : Double,types : Int, completion:@escaping(_ response : ShopListResponse)-> Void) {
+          
+          let headers = [Constants.LANG_HEADER : self.getLang()]
+          
+          AFManager.request("\(Constants.BASE_URL)Shop/ListByPriority?latitude=\(latitude)&longitude=\(longitude)&radius=\(radius)&type=\(types)&rate=\(Int(rating))", method: .get, parameters: nil ,encoding: JSONEncoding.default, headers: headers)
+              .responseJSON { response in
+                  if let json = response.data {
+                      do {
+                          let decoder = JSONDecoder()
+                          let baseResponse = try decoder.decode(ShopListResponse.self, from: json)
+                          completion(baseResponse)
+                      }catch let err{
+                          print(err)
+                      }
+                  }
+          }
+      }
     
     static func getShopsByName(name : String,latitude : Double, longitude : Double, radius : Float, completion:@escaping(_ response : ShopListResponse)-> Void) {
         
@@ -1960,11 +1985,11 @@ class ApiService : NSObject {
             Constants.LANG_HEADER : self.getLang()]
         
         let all : [String : Any] = ["ArabicTitle" : arabicTitle,
-                   "EnglishTitle" :  englishTitle,
-                   "ArabicBody" : arabicBody,
-                   "EnglishBody" : englishbody,
-                   "UserId" : userId,
-                   "Type" : type]
+                                    "EnglishTitle" :  englishTitle,
+                                    "ArabicBody" : arabicBody,
+                                    "EnglishBody" : englishbody,
+                                    "UserId" : userId,
+                                    "Type" : type]
         
         AFManager.request("\(Constants.BASE_URL)UserNotification/SendFromMobile", method: .post, parameters: all ,encoding: JSONEncoding.default, headers: headers)
             .responseJSON { response in

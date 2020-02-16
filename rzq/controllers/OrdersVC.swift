@@ -253,7 +253,7 @@ class OrdersVC: BaseViewController, UITableViewDelegate, UITableViewDataSource {
                 model.paymentMethod = order.data?.paymentMethod ?? Constants.PAYMENT_METHOD_CASH
                 model.isFemale = order.data?.toFemaleOnly ?? false
                 
-                let shop = DataShop(id: response.shopData?.id ?? 0, name: response.shopData?.name ?? "", address: response.shopData?.address ?? "", latitude: response.shopData?.latitude ?? 0.0, longitude: response.shopData?.longitude ?? 0.0, phoneNumber: response.shopData?.phoneNumber ?? "", workingHours: response.shopData?.workingHours ?? "", images: response.shopData?.images ?? [String](), rate: response.shopData?.rate ?? 0.0, type: response.shopData?.type!, ownerId: response.shopData?.ownerId ?? "", googlePlaceId: response.shopData?.googlePlaceId ?? "", openNow: response.shopData?.openNow ?? true)
+                let shop = DataShop(id: response.shopData?.id ?? 0, name: response.shopData?.name ?? "", address: response.shopData?.address ?? "", latitude: response.shopData?.latitude ?? 0.0, longitude: response.shopData?.longitude ?? 0.0, phoneNumber: response.shopData?.phoneNumber ?? "", workingHours: response.shopData?.workingHours ?? "", images: response.shopData?.images ?? [String](), rate: response.shopData?.rate ?? 0.0, type: response.shopData?.type!, ownerId: response.shopData?.ownerId ?? "", googlePlaceId: response.shopData?.googlePlaceId ?? "", openNow: response.shopData?.openNow ?? true, NearbyDriversCount : response.shopData?.nearbyDriversCount ?? 0)
                 
                 model.shop = shop
                 

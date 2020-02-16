@@ -183,7 +183,7 @@
 "zGP-ze-o5o.normalTitle" = "التوجه الى المتجر";
 "5D1-Yu-Sjf.normalTitle" = "التوجه الى الزبون";
 
-"pIv-uu-KK5.text" = "التسجيل كسائق";
+"pIv-uu-KK5.text" = "تصفية";
 /* Class = "UILabel"; text = "Nearby Shops"; ObjectID = "AWR-iL-fTg"; */
 "AWR-iL-fTg.text" = "الاماكن القريبة";
 
@@ -1339,3 +1339,11 @@
 "i1A-Ny-jFX.text" = "طريقة الدفع";
 
 "3bd-cy-Fcb.normalTitle" = "اعادة الطلب";
+
+"Rcr-kW-1jU.text" = "ابحث عن اماكن جوجل من هنا";
+
+"fhJ-cB-gle.text" = "لم تستلم رمز التحقق؟";
+
+"fps-a9-T9x.normalTitle" = "راسلنا على واتس اب";
+
+"gR5-C3-wRp.normalTitle" = "تراجع";

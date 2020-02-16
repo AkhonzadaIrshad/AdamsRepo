@@ -52,6 +52,8 @@ class DataClassDelObj: Codable {
     let toFemaleOnly : Bool?
     let shopId : Int?
     let KnetCommission : Double?
+    let ClientPhone : String?
+    let ProviderPhone : String?
     
     enum CodingKeys: String, CodingKey {
         case type = "Type"
@@ -85,9 +87,11 @@ class DataClassDelObj: Codable {
         case toFemaleOnly = "ToFemaleOnly"
         case shopId = "ShopId"
         case KnetCommission = "KnetCommission"
+        case ClientPhone = "ClientPhone"
+        case ProviderPhone = "ProviderPhone"
     }
     
-    init(type :Int?, id: Int?,driverId : String?, chatId : Int?, title: String?, fromAddress: String?, fromLatitude: Double?, fromLongitude: Double?, toAddress: String?, toLatitude: Double?, toLongitude: Double?, time: Int?, cost: Double?, status: Int?, canCancel: Bool?, canChat: Bool?, statusString: String?, images: [String]?,voiceFile : String?, createdDate: String?, pickUpDetails: String?,dropOffDetails: String?,desc: String?, paymentMethod: Int?, items: [ShopMenuItem]?, isPaid : Bool?, invoiceId: String?, toFemaleOnly : Bool?, shopId : Int?, orderPrice: Double?, KnetCommission: Double?) {
+    init(type :Int?, id: Int?,driverId : String?, chatId : Int?, title: String?, fromAddress: String?, fromLatitude: Double?, fromLongitude: Double?, toAddress: String?, toLatitude: Double?, toLongitude: Double?, time: Int?, cost: Double?, status: Int?, canCancel: Bool?, canChat: Bool?, statusString: String?, images: [String]?,voiceFile : String?, createdDate: String?, pickUpDetails: String?,dropOffDetails: String?,desc: String?, paymentMethod: Int?, items: [ShopMenuItem]?, isPaid : Bool?, invoiceId: String?, toFemaleOnly : Bool?, shopId : Int?, orderPrice: Double?, KnetCommission: Double?, ClientPhone : String?, ProviderPhone: String?) {
         self.type = type
         self.id = id
         self.driverId = driverId
@@ -119,6 +123,8 @@ class DataClassDelObj: Codable {
         self.shopId = shopId
         self.orderPrice = orderPrice
         self.KnetCommission = KnetCommission
+        self.ClientPhone = ClientPhone
+        self.ProviderPhone = ProviderPhone
     }
     
 }

@@ -350,27 +350,38 @@ class ZHCDemoMessagesViewController: ZHCMessagesViewController, BillDelegate, Ch
         self.driverActionButton?.layer.shadowRadius = CGFloat(2)
         
         
-        let item = self.driverActionButton?.addItem()
-        item?.titleLabel.text = "cancel_order".localized
-        item?.titleLabel.backgroundColor = UIColor.white
-        item?.titleLabel.textColor = UIColor.black
-        item?.titleLabel.font = UIFont(name: self.getBoldFontName(), size: 13)
-        item?.imageView.image = UIImage(named: "chat_cancelorder")
-        item?.buttonColor = UIColor.appLogoColor
-        item?.buttonImageColor = .white
-        item?.action = { item in
-            
-            //cancel order
-            self.showAlert(title: "alert".localized, message: "confirm_cancel_delivery".localized, actionTitle: "yes".localized, cancelTitle: "no".localized, actionHandler: {
-                if (self.isProvider() && self.user?.data?.userID == self.order?.providerID) {
-                    self.cancelDeliveryByDriver()
-                }else {
-                    self.cancelDeliveryByUser()
+        if (self.order?.status != Constants.ORDER_ON_THE_WAY) {
+            let item = self.driverActionButton?.addItem()
+            item?.titleLabel.text = "cancel_order".localized
+            item?.titleLabel.backgroundColor = UIColor.white
+            item?.titleLabel.textColor = UIColor.black
+            item?.titleLabel.font = UIFont(name: self.getBoldFontName(), size: 13)
+            item?.imageView.image = UIImage(named: "chat_cancelorder")
+            item?.buttonColor = UIColor.appLogoColor
+            item?.buttonImageColor = .white
+            item?.action = { item in
+                
+                //cancel order
+                //                self.showAlert(title: "alert".localized, message: "confirm_cancel_delivery".localized, actionTitle: "yes".localized, cancelTitle: "no".localized, actionHandler: {
+                //                    if (self.isProvider() && self.user?.data?.userID == self.order?.providerID) {
+                //                        self.cancelDeliveryByDriver()
+                //                    }else {
+                //                        self.cancelDeliveryByUser()
+                //                    }
+                //                })
+                
+                self.showAlertField(title: "alert".localized, message: "confirm_cancel_delivery".localized, actionTitle: "yes".localized, cancelTitle: "no".localized) { (reason) in
+                    if (self.isProvider() && self.user?.data?.userID == self.order?.providerID) {
+                        self.cancelDeliveryByDriver(reason : reason)
+                    }else {
+                        self.cancelDeliveryByUser(reason : reason)
+                    }
                 }
-            })
-            
+                
+                
+                
+            }
         }
-        
         
         let item4 = self.driverActionButton?.addItem()
         item4?.titleLabel.text = "send_current_location".localized
@@ -438,7 +449,7 @@ class ZHCDemoMessagesViewController: ZHCMessagesViewController, BillDelegate, Ch
         item2?.action = { item in
             if (self.order?.status == Constants.ORDER_PROCESSING) {
                 //on my way
-               if ((self.order?.isPaid ?? false) && (self.order?.paymentMethod == Constants.PAYMENT_METHOD_KNET)) {
+                if ((self.order?.isPaid ?? false) && (self.order?.paymentMethod == Constants.PAYMENT_METHOD_KNET)) {
                     self.startDelivery(cost: self.order?.price ?? 0.0)
                 }else {
                     if let vc = UIStoryboard(name: "Main", bundle: nil).instantiateViewController(withIdentifier: "CustomerBillVC") as? CustomerBillVC
@@ -456,7 +467,7 @@ class ZHCDemoMessagesViewController: ZHCMessagesViewController, BillDelegate, Ch
                 self.showPaymentStatusDialog()
             }
         }
-           
+        
         //navigate new button in chat
         if (self.order?.status == Constants.ORDER_PROCESSING || self.order?.status == Constants.ORDER_ON_THE_WAY) {
             let item3 = self.driverActionButton?.addItem()
@@ -592,8 +603,8 @@ class ZHCDemoMessagesViewController: ZHCMessagesViewController, BillDelegate, Ch
         }
     }
     
-    func cancelDeliveryByUser() {
-        ApiService.cancelDelivery(Authorization: self.user?.data?.accessToken ?? "", deliveryId: self.order?.id ?? 0, completion: { (response) in
+    func cancelDeliveryByUser(reason : String) {
+        ApiService.cancelDelivery(Authorization: self.user?.data?.accessToken ?? "", deliveryId: self.order?.id ?? 0, reason : reason, completion: { (response) in
             if (response.errorCode == 0) {
                 self.showBanner(title: "alert".localized, message: "delivery_cancelled".localized, style: UIColor.SUCCESS)
                 DispatchQueue.main.asyncAfter(deadline: .now() + 2, execute: {
@@ -610,8 +621,8 @@ class ZHCDemoMessagesViewController: ZHCMessagesViewController, BillDelegate, Ch
         })
     }
     
-    func cancelDeliveryByDriver() {
-        ApiService.cancelDeliveryByDriver(Authorization: self.user?.data?.accessToken ?? "", deliveryId: self.order?.id ?? 0, completion: { (response) in
+    func cancelDeliveryByDriver(reason : String) {
+        ApiService.cancelDeliveryByDriver(Authorization: self.user?.data?.accessToken ?? "", deliveryId: self.order?.id ?? 0, reason : reason, completion: { (response) in
             if (response.errorCode == 0) {
                 self.showBanner(title: "alert".localized, message: "delivery_cancelled".localized, style: UIColor.SUCCESS)
                 DispatchQueue.main.asyncAfter(deadline: .now() + 2, execute: {
@@ -658,6 +669,20 @@ class ZHCDemoMessagesViewController: ZHCMessagesViewController, BillDelegate, Ch
         self.actionButton?.layer.shadowOpacity = Float(0.4)
         self.actionButton?.layer.shadowRadius = CGFloat(2)
         
+        if (self.order?.status == Constants.ORDER_ON_THE_WAY || self.order?.status == Constants.ORDER_PROCESSING) {
+            let item90 = actionButton?.addItem()
+                      item90?.titleLabel.text = "chat_calldriver".localized
+                      item90?.titleLabel.backgroundColor = UIColor.white
+                      item90?.titleLabel.textColor = UIColor.black
+                      item90?.titleLabel.font = UIFont(name: self.getBoldFontName(), size: 13)
+                      item90?.imageView.image = UIImage(named: "chat_call")
+                      item90?.buttonColor = UIColor.appLogoColor
+                      item90?.buttonImageColor = .white
+                      item90?.action = { item in
+                        self.callNumber(phone: self.order?.ProviderPhone ?? "")
+                      }
+        }
+        
         if (self.order?.status != Constants.ORDER_ON_THE_WAY) {
             let item = actionButton?.addItem()
             item?.titleLabel.text = "cancel_order".localized
@@ -670,13 +695,21 @@ class ZHCDemoMessagesViewController: ZHCMessagesViewController, BillDelegate, Ch
             item?.action = { item in
                 
                 //cancel order
-                self.showAlert(title: "alert".localized, message: "confirm_cancel_delivery".localized, actionTitle: "yes".localized, cancelTitle: "no".localized, actionHandler: {
+                //                self.showAlert(title: "alert".localized, message: "confirm_cancel_delivery".localized, actionTitle: "yes".localized, cancelTitle: "no".localized, actionHandler: {
+                //                    if (self.isProvider() && self.user?.data?.userID == self.order?.providerID) {
+                //                        self.cancelDeliveryByDriver()
+                //                    }else {
+                //                        self.cancelDeliveryByUser()
+                //                    }
+                //                })
+                
+                self.showAlertField(title: "alert".localized, message: "confirm_cancel_delivery".localized, actionTitle: "yes".localized, cancelTitle: "no".localized) { (reason) in
                     if (self.isProvider() && self.user?.data?.userID == self.order?.providerID) {
-                        self.cancelDeliveryByDriver()
+                        self.cancelDeliveryByDriver(reason : reason)
                     }else {
-                        self.cancelDeliveryByUser()
+                        self.cancelDeliveryByUser(reason : reason)
                     }
-                })
+                }
                 
             }
         }
@@ -768,7 +801,7 @@ class ZHCDemoMessagesViewController: ZHCMessagesViewController, BillDelegate, Ch
                 self.showBanner(title: "alert".localized, message: "delivery_started".localized, style: UIColor.SUCCESS)
                 self.startNavigation(longitude: self.order?.toLongitude ?? 0.0, latitude: self.order?.toLatitude ?? 0.0)
                 
-                self.order = DatumDel(id: self.order?.id ?? 0, title: self.order?.title ?? "", status: Constants.ORDER_ON_THE_WAY, statusString: self.order?.statusString ?? "", image: self.order?.image ?? "", createdDate: self.order?.createdDate ?? "", chatId: self.order?.chatId ?? 0, fromAddress: self.order?.fromAddress ?? "", fromLatitude: self.order?.fromLatitude ?? 0.0, fromLongitude: self.order?.fromLongitude ?? 0.0, toAddress: self.order?.toAddress ?? "", toLatitude: self.order?.toLatitude ?? 0.0, toLongitude: self.order?.toLongitude ?? 0.0, providerID: self.order?.providerID, providerName: self.order?.providerName ?? "", providerImage: self.order?.providerImage ?? "", providerRate: self.order?.providerRate ?? 0.0, time: self.order?.time ?? 0, price: self.order?.price ?? 0.0, serviceName: self.order?.serviceName ?? "", paymentMethod: self.order?.paymentMethod ?? 0, items: self.order?.items ?? [ShopMenuItem](), isPaid: self.order?.isPaid ?? false, invoiceId: self.order?.invoiceId ?? "", toFemaleOnly: self.order?.toFemaleOnly ?? false, shopId: self.order?.shopId ?? 0, OrderPrice: self.order?.OrderPrice ?? 0.0, KnetCommission: self.order?.KnetCommission ?? 0.0)
+                self.order = DatumDel(id: self.order?.id ?? 0, title: self.order?.title ?? "", status: Constants.ORDER_ON_THE_WAY, statusString: self.order?.statusString ?? "", image: self.order?.image ?? "", createdDate: self.order?.createdDate ?? "", chatId: self.order?.chatId ?? 0, fromAddress: self.order?.fromAddress ?? "", fromLatitude: self.order?.fromLatitude ?? 0.0, fromLongitude: self.order?.fromLongitude ?? 0.0, toAddress: self.order?.toAddress ?? "", toLatitude: self.order?.toLatitude ?? 0.0, toLongitude: self.order?.toLongitude ?? 0.0, providerID: self.order?.providerID, providerName: self.order?.providerName ?? "", providerImage: self.order?.providerImage ?? "", providerRate: self.order?.providerRate ?? 0.0, time: self.order?.time ?? 0, price: self.order?.price ?? 0.0, serviceName: self.order?.serviceName ?? "", paymentMethod: self.order?.paymentMethod ?? 0, items: self.order?.items ?? [ShopMenuItem](), isPaid: self.order?.isPaid ?? false, invoiceId: self.order?.invoiceId ?? "", toFemaleOnly: self.order?.toFemaleOnly ?? false, shopId: self.order?.shopId ?? 0, OrderPrice: self.order?.OrderPrice ?? 0.0, KnetCommission: self.order?.KnetCommission ?? 0.0, ClientPhone: self.order?.ClientPhone ?? "", ProviderPhone : self.order?.ProviderPhone ?? "")
                 
                 self.setupFloating()
             }else {
@@ -799,7 +832,7 @@ class ZHCDemoMessagesViewController: ZHCMessagesViewController, BillDelegate, Ch
             }
         }
         
-    let appleMapsAction = UIAlertAction(title: "appleMaps".localized, style: .default) { (action) in
+        let appleMapsAction = UIAlertAction(title: "appleMaps".localized, style: .default) { (action) in
             
             let coordinate = CLLocationCoordinate2DMake(latitude ,longitude)
             let mapItem = MKMapItem(placemark: MKPlacemark(coordinate: coordinate, addressDictionary:nil))
@@ -863,19 +896,20 @@ class ZHCDemoMessagesViewController: ZHCMessagesViewController, BillDelegate, Ch
     }
     
     @objc func closePressed() -> Void {
-        if (self.isProvider() && self.user?.data?.userID == self.order?.providerID) {
-            if (self.order?.time ?? 0 == 0) {
-                if (self.order?.status == Constants.ORDER_CANCELLED || self.order?.status == Constants.ORDER_COMPLETED || self.order?.status == Constants.ORDER_EXPIRED) {
-                    self.navigationController?.dismiss(animated: true, completion: nil);
-                }else {
-                    self.showBanner(title: "alert".localized, message: "complete_delivery_first".localized, style: UIColor.INFO)
-                }
-            }else {
-                self.navigationController?.dismiss(animated: true, completion: nil);
-            }
-        }else {
-            self.navigationController?.dismiss(animated: true, completion: nil);
-        }
+//        if (self.isProvider() && self.user?.data?.userID == self.order?.providerID) {
+//            if (self.order?.time ?? 0 == 0) {
+//                if (self.order?.status == Constants.ORDER_CANCELLED || self.order?.status == Constants.ORDER_COMPLETED || self.order?.status == Constants.ORDER_EXPIRED) {
+//                    self.navigationController?.dismiss(animated: true, completion: nil);
+//                }else {
+//                    self.showBanner(title: "alert".localized, message: "complete_delivery_first".localized, style: UIColor.INFO)
+//                }
+//            }else {
+//                self.navigationController?.dismiss(animated: true, completion: nil);
+//            }
+//        }else {
+//            self.navigationController?.dismiss(animated: true, completion: nil);
+//        }
+        self.navigationController?.dismiss(animated: true, completion: nil);
     }
     
     // MARK: ZHCMessagesTableViewDataSource
@@ -1200,7 +1234,46 @@ class ZHCDemoMessagesViewController: ZHCMessagesViewController, BillDelegate, Ch
         return false
     }
     
+    func showAlertField(title: String,
+                        message: String,
+                        actionTitle: String,
+                        cancelTitle: String,
+                        completion:@escaping(_ reason : String)-> Void) {
+        
+        let alert = UIAlertController(title: title, message: message, preferredStyle: .alert)
+        
+        var inputTextField: UITextField?
+        inputTextField?.placeholder = "reason_here".localized
+        inputTextField?.textColor = UIColor.black
+        inputTextField?.font = UIFont(name: self.getFontName(), size: 14.0)
+        
+        alert.addTextField { textField -> Void in
+            // you can use this text field
+            inputTextField = textField
+            inputTextField?.placeholder = "reason_here".localized
+            inputTextField?.textColor = UIColor.black
+            inputTextField?.font = UIFont(name: self.getFontName(), size: 14.0)
+        }
+        
+        let okAction = UIAlertAction(title: actionTitle, style: .default) { (action) in
+            completion(inputTextField?.text ?? "")
+        }
+        
+        let cancelAction = UIAlertAction(title: cancelTitle, style: .cancel) { (action) in
+            //nth
+        }
+        
+        alert.addAction(okAction)
+        alert.addAction(cancelAction)
+        
+        self.present(alert, animated: true, completion: nil)
+    }
     
+    func callNumber(phone : String) {
+           if let url = URL(string: "tel://\(phone)") {
+               UIApplication.shared.openURL(url)
+           }
+       }
 }
 
 extension ZHCDemoMessagesViewController: UIImagePickerControllerDelegate {

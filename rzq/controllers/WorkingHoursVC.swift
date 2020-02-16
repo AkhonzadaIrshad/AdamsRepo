@@ -62,6 +62,8 @@ class WorkingHoursVC: BaseVC, UITableViewDelegate, UITableViewDataSource {
                 let integerFromHour = Int(fromHour) ?? 0
                 if (integerFromHour < 12) {
                     fromTime12Format = "\(integerFromHour):\(fromMin) \("am".localized)"
+                }else if (integerFromHour == 24){
+                    fromTime12Format = "\(integerFromHour - 12):\(fromMin) \("am".localized)"
                 }else if (integerFromHour > 12){
                     fromTime12Format = "\(integerFromHour - 12):\(fromMin) \("pm".localized)"
                 }else {
@@ -76,12 +78,19 @@ class WorkingHoursVC: BaseVC, UITableViewDelegate, UITableViewDataSource {
                 let integerToHour = Int(toHour) ?? 0
                 if (integerToHour < 12) {
                     toTime12Format = "\(integerToHour):\(toMin) \("am".localized)"
+                }else if (integerToHour == 24){
+                    toTime12Format = "\(integerToHour - 12):\(toMin) \("am".localized)"
                 }else if (integerToHour > 12){
                     toTime12Format = "\(integerToHour - 12):\(toMin) \("pm".localized)"
                 }else {
                     toTime12Format = "12:\(toMin) \("pm".localized)"
                 }
-                cell.lblTime.text = "\(fromTime12Format) - \(toTime12Format)"
+                
+                if (integerFromHour == 12 && integerToHour == 24) {
+                    cell.lblTime.text = "open_24hours".localized
+                }else {
+                    cell.lblTime.text = "\(fromTime12Format) - \(toTime12Format)"
+                }
             }else {
                 cell.lblTime.text = item
             }

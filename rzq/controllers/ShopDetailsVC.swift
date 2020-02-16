@@ -110,7 +110,8 @@ class ShopDetailsVC: BaseVC, UITableViewDelegate, UITableViewDataSource, UIColle
         self.lblDistance.text = self.getShopDistance()
         
         
-        self.lblNearbyDrivers.text = "\((self.shop?.nearbyDriversCount ?? 0 + 10)) \("drivers".localized)"
+        let count = (self.shop?.nearbyDriversCount ?? 0) + 10
+        self.lblNearbyDrivers.text = "\(count) \("drivers".localized)"
         // Do any additional setup after loading the view.
         
         let singleTap = UITapGestureRecognizer(target: self, action: #selector(enlargeImage))
@@ -274,39 +275,48 @@ class ShopDetailsVC: BaseVC, UITableViewDelegate, UITableViewDataSource, UIColle
                 let toTime = String(times[1]).trim()
                 
                 let fromSplit = fromTime.split(separator: ":")
-                           let fromHour = String(fromSplit[0])
-                           let fromMin = String(fromSplit[1])
-                           
-                           let integerFromHour = Int(fromHour) ?? 0
-                           if (integerFromHour < 12) {
-                               fromTime12Format = "\(integerFromHour):\(fromMin) \("am".localized)"
-                           }else if (integerFromHour > 12){
-                               fromTime12Format = "\(integerFromHour - 12):\(fromMin) \("pm".localized)"
-                           }else {
-                               fromTime12Format = "12:\(fromMin) \("pm".localized)"
-                           }
-                           
-                           
-                           
-                           let toSplit = toTime.split(separator: ":")
-                           let toHour = String(toSplit[0])
-                           let toMin = String(toSplit[1])
-                           
-                           let integerToHour = Int(toHour) ?? 0
-                           if (integerToHour < 12) {
-                               toTime12Format = "\(integerToHour):\(toMin) \("am".localized)"
-                           }else if (integerToHour > 12){
-                               toTime12Format = "\(integerToHour - 12):\(toMin) \("pm".localized)"
-                           }else {
-                               toTime12Format = "12:\(toMin) \("pm".localized)"
-                           }
+                let fromHour = String(fromSplit[0])
+                let fromMin = String(fromSplit[1])
+                
+                let integerFromHour = Int(fromHour) ?? 0
+                if (integerFromHour < 12) {
+                    fromTime12Format = "\(integerFromHour):\(fromMin) \("am".localized)"
+                }
+                else if (integerFromHour == 24){
+                    fromTime12Format = "\(integerFromHour - 12):\(fromMin) \("am".localized)"
+                }else if (integerFromHour > 12){
+                    fromTime12Format = "\(integerFromHour - 12):\(fromMin) \("pm".localized)"
+                }else {
+                    fromTime12Format = "12:\(fromMin) \("pm".localized)"
+                }
+                
+                
+                
+                let toSplit = toTime.split(separator: ":")
+                let toHour = String(toSplit[0])
+                let toMin = String(toSplit[1])
+                
+                let integerToHour = Int(toHour) ?? 0
+                if (integerToHour < 12) {
+                    toTime12Format = "\(integerToHour):\(toMin) \("am".localized)"
+                }else if (integerToHour == 24){
+                    toTime12Format = "\(integerToHour - 12):\(toMin) \("am".localized)"
+                }else if (integerToHour > 12){
+                    toTime12Format = "\(integerToHour - 12):\(toMin) \("pm".localized)"
+                }else {
+                    toTime12Format = "12:\(toMin) \("pm".localized)"
+                }
+                
+                if (integerFromHour == 12 && integerToHour == 24) {
+                    return "open_24hours".localized
+                }else {
+                    return "\(fromTime12Format) - \(toTime12Format)"
+                }
+                
             }else {
-               return item
+                return item
             }
             
-           
-            
-            return "\(fromTime12Format) - \(toTime12Format)"
         }else {
             return item
         }
@@ -365,7 +375,9 @@ class ShopDetailsVC: BaseVC, UITableViewDelegate, UITableViewDataSource, UIColle
         let buo = BranchUniversalObject.init(canonicalIdentifier: "rzqapp/\(self.shop?.id ?? 0)")
         buo.title = "\(self.shop?.name ?? "")"
         buo.contentDescription = shareText
-        buo.imageUrl = "\(Constants.IMAGE_URL)\(self.shop?.images?[0] ?? "")"
+        if (self.shop?.images?.count ?? 0 > 0) {
+          buo.imageUrl = "\(Constants.IMAGE_URL)\(self.shop?.images?[0] ?? "")"
+        }
         buo.publiclyIndex = true
         buo.locallyIndex = true
         buo.contentMetadata.customMetadata["ShopId"] = self.shop?.id ?? 0

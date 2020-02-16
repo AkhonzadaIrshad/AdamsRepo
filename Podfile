@@ -52,4 +52,5 @@ target 'rzq' do
    pod 'BMPlayer'
    pod 'MyFatoorah'
    pod 'SwiftWebVC'
+   
 end

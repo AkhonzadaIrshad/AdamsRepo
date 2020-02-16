@@ -77,6 +77,9 @@ class MenuViewController: BaseVC {
     
     @IBOutlet weak var btnCounter: UIButton!
     
+    @IBOutlet weak var btnWorkingOrdersCounter: UIButton!
+    @IBOutlet weak var btnOrdersCounter: UIButton!
+    
     override func viewDidLoad() {
         super.viewDidLoad()
         let user = self.loadUser()
@@ -99,7 +102,14 @@ class MenuViewController: BaseVC {
             let perc = App.shared.config?.configSettings?.percentage ?? 0.0
             let total = balance * perc
             let finalTotal = total / 10.0
-            self.lblDue.text = "\("due".localized) \(user.data?.dueAmount ?? 0.0) \("currency".localized)"
+            
+            let dueAmount = user.data?.dueAmount ?? 0.0
+            if (dueAmount >= 0) {
+                self.lblDue.textColor = UIColor.app_green
+            }else {
+                self.lblDue.textColor = UIColor.app_red
+            }
+            self.lblDue.text = "\("due".localized) \(dueAmount) \("currency".localized)"
             
             self.lblEarnings.text = "\("earnings".localized) \(user.data?.earnings ?? 0.0) \("currency".localized)"
             
@@ -172,6 +182,31 @@ class MenuViewController: BaseVC {
         }else {
             self.btnCounter.isHidden = true
         }
+    }
+    
+    func handleOrdersCounter() {
+        let count = UserDefaults.standard.value(forKey: Constants.ORDERS_COUNT) as? Int ?? 0
+        if (count > 0){
+            self.btnOrdersCounter.isHidden = false
+            // self.btnCounter.setTitle("\(count)", for: .normal)
+        }else {
+            self.btnOrdersCounter.isHidden = true
+        }
+    }
+    
+    func handleWorkingOrdersCounter() {
+        if (self.isProvider()) {
+            let count = UserDefaults.standard.value(forKey: Constants.WORKING_ORDERS_COUNT) as? Int ?? 0
+            if (count > 0){
+                self.btnWorkingOrdersCounter.isHidden = false
+                // self.btnCounter.setTitle("\(count)", for: .normal)
+            }else {
+                self.btnWorkingOrdersCounter.isHidden = true
+            }
+        }else {
+            self.btnWorkingOrdersCounter.isHidden = true
+        }
+        
     }
     
     
@@ -266,6 +301,8 @@ class MenuViewController: BaseVC {
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
         self.handleNotificationCounter()
+        self.handleOrdersCounter()
+        self.handleWorkingOrdersCounter()
     }
     
     @IBAction func onCloseMenuClick(_ button:UIButton!) {

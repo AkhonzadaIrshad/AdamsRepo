@@ -23,12 +23,20 @@ class ShopMenuItemCell: UITableViewCell {
     
     var valueChanged : (() -> Void)? = nil
     var onDelete : (() -> Void)? = nil
+    var onEnlarge : (() -> Void)? = nil
     var selectedValue : Int?
     
     @IBAction func stepperValueChanged(_ sender: ValueStepper) {
         if let valueChanged = self.valueChanged {
             self.selectedValue = Int(self.viewStepper.value)
             valueChanged()
+        }
+    }
+    
+    
+    @IBAction func imageAction(_ sender: Any) {
+        if let onEnlarge = self.onEnlarge {
+            onEnlarge()
         }
     }
     

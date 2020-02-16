@@ -102,8 +102,8 @@ class AddHoursVC: BaseVC, UITableViewDelegate, UITableViewDataSource, HourCellDe
         cell.onAllDay = {
             item.from  = "01:00"
             item.to = "23:00"
-            cell.btnFrom.setTitle("01:00", for: .normal)
-            cell.btnTo.setTitle("23:00", for: .normal)
+            cell.btnFrom.setTitle("12:00", for: .normal)
+            cell.btnTo.setTitle("24:00", for: .normal)
         }
 
         return cell

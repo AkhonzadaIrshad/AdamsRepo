@@ -294,3 +294,10 @@
 "new_notifications_user" = "Notifications";
 
 "pull_to_refresh" = "Refresh";
+
+"search_from_google" = "Search from google places here";
+"reason_here" = "Write cancel reason here";
+"chat_calldriver" = "Call Driver";
+
+"open_24hours" = "Works 24 hours";
+"all_shops" = "All Shops";

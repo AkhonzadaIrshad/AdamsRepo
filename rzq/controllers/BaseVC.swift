@@ -16,8 +16,9 @@ class BaseVC: UIViewController,UIGestureRecognizerDelegate {
     
     override func viewDidLoad() {
         super.viewDidLoad()
-       // self.swipeToPop()
+        // self.swipeToPop()
         // Do any additional setup after loading the view.
+        SVProgressHUD.setDefaultMaskType(.clear)
     }
     func swipeToPop() {
         self.navigationController?.interactivePopGestureRecognizer?.isEnabled = true
@@ -43,10 +44,10 @@ class BaseVC: UIViewController,UIGestureRecognizerDelegate {
     
     func getHomeView() -> String {
         if (App.shared.config?.configSettings?.isMapView ?? true) {
-           // return "HomeMapVC"
+            // return "HomeMapVC"
             return "MapNavigationController"
         }else {
-          //  return "HomeListVC"
+            //  return "HomeListVC"
             return "MapNavigationController"
         }
     }
@@ -121,12 +122,47 @@ class BaseVC: UIViewController,UIGestureRecognizerDelegate {
         self.present(alert, animated: true, completion: nil)
     }
     
+    func showAlertField(title: String,
+                        message: String,
+                        actionTitle: String,
+                        cancelTitle: String,
+                        completion:@escaping(_ reason : String)-> Void) {
+        
+        let alert = UIAlertController(title: title, message: message, preferredStyle: .alert)
+        
+        var inputTextField: UITextField?
+        inputTextField?.placeholder = "reason_here".localized
+        inputTextField?.textColor = UIColor.black
+        inputTextField?.font = UIFont(name: self.getFontName(), size: 14.0)
+        
+        alert.addTextField { textField -> Void in
+            // you can use this text field
+            inputTextField = textField
+            inputTextField?.placeholder = "reason_here".localized
+            inputTextField?.textColor = UIColor.black
+            inputTextField?.font = UIFont(name: self.getFontName(), size: 14.0)
+        }
+        
+        let okAction = UIAlertAction(title: actionTitle, style: .default) { (action) in
+            completion(inputTextField?.text ?? "")
+        }
+        
+        let cancelAction = UIAlertAction(title: cancelTitle, style: .cancel) { (action) in
+            //nth
+        }
+        
+        alert.addAction(okAction)
+        alert.addAction(cancelAction)
+        
+        self.present(alert, animated: true, completion: nil)
+    }
+    
     func showAlertWithCancel(title: String,
-                   message: String,
-                   actionTitle: String,
-                   cancelTitle: String,
-                   actionHandler:(()->Void)?,
-                   cancelHandler:(()->Void)? = nil) {
+                             message: String,
+                             actionTitle: String,
+                             cancelTitle: String,
+                             actionHandler:(()->Void)?,
+                             cancelHandler:(()->Void)? = nil) {
         
         let alert = UIAlertController(title: title, message: message, preferredStyle: .alert)
         
@@ -183,7 +219,7 @@ class BaseVC: UIViewController,UIGestureRecognizerDelegate {
     }
     
     func getUser (realmUser  : RealmUser) -> VerifyResponse {
-         let userData = DataClass(accessToken: realmUser.access_token, phoneNumber: realmUser.phone_number, username: realmUser.user_name, fullName: realmUser.full_name, userID: realmUser.userId, dateOfBirth: realmUser.date_of_birth, profilePicture: realmUser.profile_picture, email: realmUser.email, gender: realmUser.gender, rate: realmUser.rate, roles: realmUser.roles, isOnline: realmUser.isOnline,exceededDueAmount: realmUser.exceeded_amount, dueAmount: realmUser.dueAmount, earnings: realmUser.earnings, balance: realmUser.balance)
+        let userData = DataClass(accessToken: realmUser.access_token, phoneNumber: realmUser.phone_number, username: realmUser.user_name, fullName: realmUser.full_name, userID: realmUser.userId, dateOfBirth: realmUser.date_of_birth, profilePicture: realmUser.profile_picture, email: realmUser.email, gender: realmUser.gender, rate: realmUser.rate, roles: realmUser.roles, isOnline: realmUser.isOnline,exceededDueAmount: realmUser.exceeded_amount, dueAmount: realmUser.dueAmount, earnings: realmUser.earnings, balance: realmUser.balance)
         let verifyResponse = VerifyResponse(data: userData, errorCode: 0, errorMessage: "")
         
         return verifyResponse

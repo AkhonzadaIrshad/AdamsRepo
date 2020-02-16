@@ -205,6 +205,9 @@ class BaseViewController: UIViewController, SlideMenuDelegate {
         
         if (topViewController.restorationIdentifier! == destViewController.restorationIdentifier!){
             print("Same VC")
+//            let btn = UIButton()
+//            btn.tag = 10
+//            self.onSlideMenuButtonPressed(btn)
         } else {
             self.navigationController!.pushViewController(destViewController, animated: true)
         }

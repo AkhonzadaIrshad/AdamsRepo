@@ -103,27 +103,28 @@ class HomeMapVC: BaseViewController,LabasLocationManagerDelegate, UICollectionVi
         self.showLoading()
         ApiService.getDriverOnGoingDeliveries(Authorization: self.loadUser().data?.accessToken ?? "") { (response) in
             self.hideLoading()
-            for item in response.data ?? [DatumDriverDel]() {
-                if (item.time ?? 0 == 0) {
-                    ApiService.getDelivery(id: item.id ?? 0) { (response) in
-                        let items = response.data?.items ?? [ShopMenuItem]()
-                        DispatchQueue.main.async {
-                            let messagesVC: ZHCDemoMessagesViewController = ZHCDemoMessagesViewController.init()
-                            messagesVC.presentBool = true
-                            
-                            let dumOrder = DatumDel(id: item.id ?? 0, title: item.title ?? "", status: item.status ?? 0, statusString: item.statusString ?? "", image: item.image ?? "", createdDate: item.createdDate ?? "", chatId: item.chatId ?? 0, fromAddress: item.fromAddress ?? "", fromLatitude: item.fromLatitude ?? 0.0, fromLongitude: item.fromLongitude ?? 0.0, toAddress: item.toAddress ?? "", toLatitude: item.toLatitude ?? 0.0, toLongitude: item.toLongitude ?? 0.0, providerID: item.providerID ?? "", providerName: item.providerName ?? "", providerImage: item.providerImage ?? "", providerRate: item.providerRate ?? 0.0, time: item.time ?? 0, price: item.price ?? 0.0, serviceName: item.serviceName ?? "", paymentMethod: item.paymentMethod ?? 0, items: items, isPaid: item.isPaid ?? false, invoiceId: item.invoiceId ?? "", toFemaleOnly: item.toFemaleOnly ?? false, shopId: item.shopId ?? 0, OrderPrice: item.OrderPrice ?? 0.0, KnetCommission : item.KnetCommission ?? 0.0)
-                            
-                            messagesVC.order = dumOrder
-                            messagesVC.user = self.loadUser()
-                            let nav: UINavigationController = UINavigationController.init(rootViewController: messagesVC)
-                            nav.modalPresentationStyle = .fullScreen
-                            messagesVC.modalPresentationStyle = .fullScreen
-                            self.navigationController?.present(nav, animated: true, completion: nil)
-                        }
-                        
-                    }
-                }
-            }
+            UserDefaults.standard.setValue(response.data?.count ?? 0, forKey: Constants.WORKING_ORDERS_COUNT)
+//            for item in response.data ?? [DatumDriverDel]() {
+//                if (item.time ?? 0 == 0) {
+//                    ApiService.getDelivery(id: item.id ?? 0) { (response) in
+//                        let items = response.data?.items ?? [ShopMenuItem]()
+//                        DispatchQueue.main.async {
+//                            let messagesVC: ZHCDemoMessagesViewController = ZHCDemoMessagesViewController.init()
+//                            messagesVC.presentBool = true
+//
+//                            let dumOrder = DatumDel(id: item.id ?? 0, title: item.title ?? "", status: item.status ?? 0, statusString: item.statusString ?? "", image: item.image ?? "", createdDate: item.createdDate ?? "", chatId: item.chatId ?? 0, fromAddress: item.fromAddress ?? "", fromLatitude: item.fromLatitude ?? 0.0, fromLongitude: item.fromLongitude ?? 0.0, toAddress: item.toAddress ?? "", toLatitude: item.toLatitude ?? 0.0, toLongitude: item.toLongitude ?? 0.0, providerID: item.providerID ?? "", providerName: item.providerName ?? "", providerImage: item.providerImage ?? "", providerRate: item.providerRate ?? 0.0, time: item.time ?? 0, price: item.price ?? 0.0, serviceName: item.serviceName ?? "", paymentMethod: item.paymentMethod ?? 0, items: items, isPaid: item.isPaid ?? false, invoiceId: item.invoiceId ?? "", toFemaleOnly: item.toFemaleOnly ?? false, shopId: item.shopId ?? 0, OrderPrice: item.OrderPrice ?? 0.0, KnetCommission : item.KnetCommission ?? 0.0, ClientPhone: "", ProviderPhone : "")
+//
+//                            messagesVC.order = dumOrder
+//                            messagesVC.user = self.loadUser()
+//                            let nav: UINavigationController = UINavigationController.init(rootViewController: messagesVC)
+//                            nav.modalPresentationStyle = .fullScreen
+//                            messagesVC.modalPresentationStyle = .fullScreen
+//                            self.navigationController?.present(nav, animated: true, completion: nil)
+//                        }
+//
+//                    }
+//                }
+//            }
         }
     }
     
@@ -189,7 +190,7 @@ class HomeMapVC: BaseViewController,LabasLocationManagerDelegate, UICollectionVi
                     let messagesVC: ZHCDemoMessagesViewController = ZHCDemoMessagesViewController.init()
                     messagesVC.presentBool = true
                     
-                    let order = DatumDel(id: response.data?.id ?? 0, title: response.data?.title ?? "", status: response.data?.status ?? 0, statusString: response.data?.statusString ?? "", image: "", createdDate: response.data?.createdDate ?? "", chatId: response.data?.chatId ?? 0, fromAddress: response.data?.fromAddress ?? "", fromLatitude: response.data?.fromLatitude ?? 0.0, fromLongitude: response.data?.fromLongitude ?? 0.0, toAddress: response.data?.toAddress ?? "", toLatitude: response.data?.toLatitude ?? 0.0, toLongitude: response.data?.toLongitude ?? 0.0, providerID: response.data?.driverId, providerName: "", providerImage: "", providerRate: 0, time: response.data?.time ?? 0, price: response.data?.cost ?? 0.0, serviceName: "",paymentMethod: response.data?.paymentMethod ?? 0, items: response.data?.items ?? [ShopMenuItem](),isPaid: response.data?.isPaid ?? false, invoiceId : response.data?.invoiceId ?? "", toFemaleOnly: response.data?.toFemaleOnly ?? false, shopId: response.data?.shopId ?? 0, OrderPrice: response.data?.orderPrice ?? 0.0, KnetCommission: response.data?.KnetCommission ?? 0.0)
+                    let order = DatumDel(id: response.data?.id ?? 0, title: response.data?.title ?? "", status: response.data?.status ?? 0, statusString: response.data?.statusString ?? "", image: "", createdDate: response.data?.createdDate ?? "", chatId: response.data?.chatId ?? 0, fromAddress: response.data?.fromAddress ?? "", fromLatitude: response.data?.fromLatitude ?? 0.0, fromLongitude: response.data?.fromLongitude ?? 0.0, toAddress: response.data?.toAddress ?? "", toLatitude: response.data?.toLatitude ?? 0.0, toLongitude: response.data?.toLongitude ?? 0.0, providerID: response.data?.driverId, providerName: "", providerImage: "", providerRate: 0, time: response.data?.time ?? 0, price: response.data?.cost ?? 0.0, serviceName: "",paymentMethod: response.data?.paymentMethod ?? 0, items: response.data?.items ?? [ShopMenuItem](),isPaid: response.data?.isPaid ?? false, invoiceId : response.data?.invoiceId ?? "", toFemaleOnly: response.data?.toFemaleOnly ?? false, shopId: response.data?.shopId ?? 0, OrderPrice: response.data?.orderPrice ?? 0.0, KnetCommission: response.data?.KnetCommission ?? 0.0, ClientPhone: response.data?.ClientPhone ?? "", ProviderPhone : response.data?.ProviderPhone ?? "")
                     
                     
                     messagesVC.order = order
@@ -322,7 +323,7 @@ class HomeMapVC: BaseViewController,LabasLocationManagerDelegate, UICollectionVi
     
     override func viewDidLayoutSubviews() {
         super.viewDidLayoutSubviews()
-        collectionViewFlowLayout = collectionView.collectionViewLayout as? UICollectionViewFlowLayout
+        collectionViewFlowLayout = collectionView?.collectionViewLayout as? UICollectionViewFlowLayout
     }
     
     func scrollToNearestVisibleCollectionViewCell() {
@@ -489,7 +490,9 @@ class HomeMapVC: BaseViewController,LabasLocationManagerDelegate, UICollectionVi
         if (self.collectionView.visibleCells.count == 0) {
             return
         }
-        let cell = self.collectionView.cellForItem(at: visibleIndexPath!) as! PendingOrderCell
+        guard let cell = self.collectionView.cellForItem(at: visibleIndexPath!) as? PendingOrderCell else {
+            return
+        }
         
         let count = UserDefaults.standard.value(forKey: Constants.NOTIFICATION_CHAT_COUNT) as? Int ?? 0
         if (count > 0) {
@@ -527,7 +530,6 @@ class HomeMapVC: BaseViewController,LabasLocationManagerDelegate, UICollectionVi
             }
         }
     }
-    
     
     
     func drawLocationLine(driverLocation : LocationData, order : DatumDel) {
@@ -834,6 +836,7 @@ class HomeMapVC: BaseViewController,LabasLocationManagerDelegate, UICollectionVi
     func loadTracks() {
         ApiService.getOnGoingDeliveries(Authorization: self.loadUser().data?.accessToken ?? "") { (response) in
             self.items.removeAll()
+            UserDefaults.standard.setValue(response.data?.count ?? 0, forKey: Constants.ORDERS_COUNT)
             for item in response.data ?? [DatumDel]() {
                 if (item.status! == Constants.ORDER_ON_THE_WAY || item.status! == Constants.ORDER_PROCESSING) {
                     // if (item.status! == Constants.ORDER_ON_THE_WAY) {
@@ -846,7 +849,8 @@ class HomeMapVC: BaseViewController,LabasLocationManagerDelegate, UICollectionVi
                 self.collectionView.delegate = self
                 self.collectionView.dataSource = self
                 self.collectionView.reloadData()
-                self.viewOnTheWay.isHidden = true
+               // self.viewOnTheWay.isHidden = true
+                self.viewOnTheWay.isHidden = false
                 self.viewServices.isHidden = true
                 self.viewTenders.isHidden = true
                 

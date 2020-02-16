@@ -99,6 +99,9 @@
 		8BBEA5A02260C45100FBEBFC /* DriverOnGoingOrdersResponse.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8BBEA59F2260C45100FBEBFC /* DriverOnGoingOrdersResponse.swift */; };
 		8BBEA5A22260C4AB00FBEBFC /* DriverPreviousOrdersResponse.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8BBEA5A12260C4AB00FBEBFC /* DriverPreviousOrdersResponse.swift */; };
 		8BBEA5A42260C77D00FBEBFC /* AllNotificationsResponse.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8BBEA5A32260C77D00FBEBFC /* AllNotificationsResponse.swift */; };
+		8BC13D2D23F3F5F500A78F88 /* AllShopsVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8BC13D2C23F3F5F500A78F88 /* AllShopsVC.swift */; };
+		8BC13D2F23F3F62200A78F88 /* AllTypeCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8BC13D2E23F3F62200A78F88 /* AllTypeCell.swift */; };
+		8BC13D3123F3F62E00A78F88 /* AllShopCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8BC13D3023F3F62E00A78F88 /* AllShopCell.swift */; };
 		8BC23284228AD70A00CD086F /* YRipple.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8BC23283228AD70A00CD086F /* YRipple.swift */; };
 		8BC23286228AF14200CD086F /* SelectLocationViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8BC23285228AF14200CD086F /* SelectLocationViewController.swift */; };
 		8BC23288228AF1BB00CD086F /* SuggestShopVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8BC23287228AF1BB00CD086F /* SuggestShopVC.swift */; };
@@ -174,6 +177,7 @@
 		8BDB970B225B3A2D0036E801 /* Intro1.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8BDB970A225B3A2D0036E801 /* Intro1.swift */; };
 		8BDB970D225B3A360036E801 /* Intro2.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8BDB970C225B3A360036E801 /* Intro2.swift */; };
 		8BDB970F225B3A3E0036E801 /* Intro3.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8BDB970E225B3A3E0036E801 /* Intro3.swift */; };
+		8BDF141323F965D3009056A9 /* Step1CatCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8BDF141223F965D3009056A9 /* Step1CatCell.swift */; };
 		8BE176DB229A9F9D0057CAF1 /* TakeServiceOrderVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8BE176DA229A9F9D0057CAF1 /* TakeServiceOrderVC.swift */; };
 		8BE1FA88228C316000B98E5E /* ShopTypesFilterVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8BE1FA87228C316000B98E5E /* ShopTypesFilterVC.swift */; };
 		8BE1FA8A228C321E00B98E5E /* ShopTypeCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8BE1FA89228C321E00B98E5E /* ShopTypeCell.swift */; };
@@ -314,6 +318,9 @@
 		8BBEA59F2260C45100FBEBFC /* DriverOnGoingOrdersResponse.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DriverOnGoingOrdersResponse.swift; sourceTree = "<group>"; };
 		8BBEA5A12260C4AB00FBEBFC /* DriverPreviousOrdersResponse.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DriverPreviousOrdersResponse.swift; sourceTree = "<group>"; };
 		8BBEA5A32260C77D00FBEBFC /* AllNotificationsResponse.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AllNotificationsResponse.swift; sourceTree = "<group>"; };
+		8BC13D2C23F3F5F500A78F88 /* AllShopsVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AllShopsVC.swift; sourceTree = "<group>"; };
+		8BC13D2E23F3F62200A78F88 /* AllTypeCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AllTypeCell.swift; sourceTree = "<group>"; };
+		8BC13D3023F3F62E00A78F88 /* AllShopCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AllShopCell.swift; sourceTree = "<group>"; };
 		8BC23283228AD70A00CD086F /* YRipple.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = YRipple.swift; sourceTree = "<group>"; };
 		8BC23285228AF14200CD086F /* SelectLocationViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SelectLocationViewController.swift; sourceTree = "<group>"; };
 		8BC23287228AF1BB00CD086F /* SuggestShopVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SuggestShopVC.swift; sourceTree = "<group>"; };
@@ -391,6 +398,7 @@
 		8BDB970A225B3A2D0036E801 /* Intro1.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Intro1.swift; sourceTree = "<group>"; };
 		8BDB970C225B3A360036E801 /* Intro2.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Intro2.swift; sourceTree = "<group>"; };
 		8BDB970E225B3A3E0036E801 /* Intro3.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Intro3.swift; sourceTree = "<group>"; };
+		8BDF141223F965D3009056A9 /* Step1CatCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Step1CatCell.swift; sourceTree = "<group>"; };
 		8BDF147F229E843C001B6D4C /* en */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = en; path = en.lproj/Main.strings; sourceTree = "<group>"; };
 		8BDF1481229E8446001B6D4C /* ar */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = ar; path = ar.lproj/Main.strings; sourceTree = "<group>"; };
 		8BE176DA229A9F9D0057CAF1 /* TakeServiceOrderVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TakeServiceOrderVC.swift; sourceTree = "<group>"; };
@@ -518,6 +526,7 @@
 		8B2BCC93224FCED500CBC7D3 /* controllers */ = {
 			isa = PBXGroup;
 			children = (
+				8BC13D2B23F3F5E700A78F88 /* ShopList */,
 				8BA88851235B5F8300EEB63B /* MyShop */,
 				8BF42425229B131B0014596F /* Tenders */,
 				8BCD8DDD2296B11400400D7B /* Services */,
@@ -777,6 +786,17 @@
 				8BE5687E236C620C00793484 /* ViewMenuVC.swift */,
 			);
 			path = MyShop;
+			sourceTree = "<group>";
+		};
+		8BC13D2B23F3F5E700A78F88 /* ShopList */ = {
+			isa = PBXGroup;
+			children = (
+				8BC13D2C23F3F5F500A78F88 /* AllShopsVC.swift */,
+				8BC13D2E23F3F62200A78F88 /* AllTypeCell.swift */,
+				8BC13D3023F3F62E00A78F88 /* AllShopCell.swift */,
+				8BDF141223F965D3009056A9 /* Step1CatCell.swift */,
+			);
+			path = ShopList;
 			sourceTree = "<group>";
 		};
 		8BC54AF42268751400B70A97 /* chat */ = {
@@ -1116,6 +1136,7 @@
 				8BBEA59A2260BC7A00FBEBFC /* CreateBidResponse.swift in Sources */,
 				8B121BAD2265FB780083069F /* FAQsVC.swift in Sources */,
 				8B9CA85B2250E00D00DE0DC4 /* LoginVC.swift in Sources */,
+				8BC13D3123F3F62E00A78F88 /* AllShopCell.swift in Sources */,
 				8BF42429229B13740014596F /* TenderStep2.swift in Sources */,
 				8B1F91C4225604C800B639F1 /* KAudioRecorder.swift in Sources */,
 				8BC23288228AF1BB00CD086F /* SuggestShopVC.swift in Sources */,
@@ -1136,6 +1157,7 @@
 				8BEF649022537F5E003AE522 /* ImagePickerDialog.swift in Sources */,
 				8B9BA6CC235C8D8E0058BAF8 /* MenuItemCell.swift in Sources */,
 				8B9CA8492250CD4B00DE0DC4 /* Constants.swift in Sources */,
+				8BC13D2D23F3F5F500A78F88 /* AllShopsVC.swift in Sources */,
 				8BCB780F2254EF2400E52ED0 /* OrderDetailsVC.swift in Sources */,
 				8BC3B50022C68C6E008A9767 /* NormUpdateDialog.swift in Sources */,
 				8BD45FA022672BBC000FB47A /* OrderImageCell.swift in Sources */,
@@ -1228,6 +1250,7 @@
 				8B2BCC9C224FCF2300CBC7D3 /* BaseVC.swift in Sources */,
 				8B112078235DA11E005F2122 /* ShopMenuVC.swift in Sources */,
 				8BA81598225222D6004EE1A8 /* FilterRegionCell.swift in Sources */,
+				8BC13D2F23F3F62200A78F88 /* AllTypeCell.swift in Sources */,
 				8B5EB8B42250F27000DC657C /* HomeMapVC.swift in Sources */,
 				8BBEA59C2260BD6100FBEBFC /* OnGoingDeliveriesResponse.swift in Sources */,
 				8BA815932251F54C004EE1A8 /* FilterSheet.swift in Sources */,
@@ -1239,6 +1262,7 @@
 				8BCB77FC2254BA6C00E52ED0 /* ShopDetailsVC.swift in Sources */,
 				8BC54AFC2268752100B70A97 /* ZHPhotoItem.swift in Sources */,
 				8BEF648D22536849003AE522 /* DeliveryStep3.swift in Sources */,
+				8BDF141323F965D3009056A9 /* Step1CatCell.swift in Sources */,
 				8BA8159F22524537004EE1A8 /* DeliveryStep1.swift in Sources */,
 				8B3DC29A236042150089B35A /* MenuDetailsResponse.swift in Sources */,
 				8B112074235DA0F2005F2122 /* ShopMenuTabCell.swift in Sources */,
@@ -1448,7 +1472,7 @@
 				CODE_SIGN_ENTITLEMENTS = rzq/rzq.entitlements;
 				CODE_SIGN_IDENTITY = "iPhone Developer";
 				CODE_SIGN_STYLE = Automatic;
-				CURRENT_PROJECT_VERSION = 2;
+				CURRENT_PROJECT_VERSION = 4;
 				DEVELOPMENT_TEAM = 8WB4M28PWN;
 				INFOPLIST_FILE = "$(SRCROOT)/rzq/files/Info.plist";
 				IPHONEOS_DEPLOYMENT_TARGET = 11.0;
@@ -1456,7 +1480,7 @@
 					"$(inherited)",
 					"@executable_path/Frameworks",
 				);
-				MARKETING_VERSION = 3.1;
+				MARKETING_VERSION = 3.3;
 				PRODUCT_BUNDLE_IDENTIFIER = com.technzone.rzq;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				PROVISIONING_PROFILE_SPECIFIER = "";
@@ -1473,7 +1497,7 @@
 				CODE_SIGN_ENTITLEMENTS = rzq/rzq.entitlements;
 				CODE_SIGN_IDENTITY = "iPhone Developer";
 				CODE_SIGN_STYLE = Automatic;
-				CURRENT_PROJECT_VERSION = 2;
+				CURRENT_PROJECT_VERSION = 4;
 				DEVELOPMENT_TEAM = 8WB4M28PWN;
 				INFOPLIST_FILE = "$(SRCROOT)/rzq/files/Info.plist";
 				IPHONEOS_DEPLOYMENT_TARGET = 11.0;
@@ -1481,7 +1505,7 @@
 					"$(inherited)",
 					"@executable_path/Frameworks",
 				);
-				MARKETING_VERSION = 3.1;
+				MARKETING_VERSION = 3.3;
 				PRODUCT_BUNDLE_IDENTIFIER = com.technzone.rzq;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				PROVISIONING_PROFILE_SPECIFIER = "";

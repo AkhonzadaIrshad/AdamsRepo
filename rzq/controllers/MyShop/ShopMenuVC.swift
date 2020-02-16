@@ -82,10 +82,10 @@ UITableViewDelegate, UITableViewDataSource, CheckOutDoneDelegate {
                     self.navigationController?.popViewController(animated: true)
                 }
             }else {
-              self.categories[0].isChecked = true
-              self.items.removeAll()
-              self.items.append(contentsOf: response.shopMenuData?[0].shopMenuItems ?? [ShopMenuItem]())
-              self.tableView.reloadData()
+                self.categories[0].isChecked = true
+                self.items.removeAll()
+                self.items.append(contentsOf: response.shopMenuData?[0].shopMenuItems ?? [ShopMenuItem]())
+                self.tableView.reloadData()
             }
         }
     }
@@ -96,7 +96,7 @@ UITableViewDelegate, UITableViewDataSource, CheckOutDoneDelegate {
                 for item in self.selectedItems {
                     if ((item.price == catItem.price) && (item.name == catItem.name)) {
                         if (item.quantity ?? 0 > 0) {
-                           catItem.quantity = item.quantity
+                            catItem.quantity = item.quantity
                         }else {
                             catItem.quantity = item.count
                         }
@@ -198,6 +198,20 @@ UITableViewDelegate, UITableViewDataSource, CheckOutDoneDelegate {
         cell.valueChanged = {
             item.quantity = cell.selectedValue ?? 0
             self.calculateTotal()
+        }
+        
+        cell.onEnlarge = {
+            var images = [String]()
+            //  let str = message.media.mediaData?() as? String ?? ""
+            let str = item.imageName ?? ""
+            images.append(str)
+            DispatchQueue.main.async {
+                if let vc = UIStoryboard(name: "Main", bundle: nil).instantiateViewController(withIdentifier: "ImageSliderVC") as? ImageSliderVC
+                {
+                    vc.orderImages = images
+                    self.navigationController?.pushViewController(vc, animated: true)
+                }
+            }
         }
         
         cell.viewStepper.value = Double(item.quantity ?? 0)

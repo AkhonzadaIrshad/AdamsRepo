@@ -13,7 +13,7 @@ protocol PhoneVerificationDelegate {
     func resend()
 }
 class PhoneVerificationDialog: BaseVC, CBPinEntryViewDelegate {
-
+    
     @IBOutlet weak var pinView: CBPinEntryView!
     
     @IBOutlet weak var lblCounter: MyUILabel!
@@ -28,6 +28,10 @@ class PhoneVerificationDialog: BaseVC, CBPinEntryViewDelegate {
     
     var delegate : PhoneVerificationDelegate?
     
+    @IBOutlet weak var lblCallChat: MyUILabel!
+    @IBOutlet weak var stackCallChat: UIStackView!
+    
+    
     override func viewDidLoad() {
         super.viewDidLoad()
         // Do any additional setup after loading the view.
@@ -39,6 +43,10 @@ class PhoneVerificationDialog: BaseVC, CBPinEntryViewDelegate {
         self.startTimer()
         
         self.pinView.delegate = self
+        
+        self.lblCallChat.isHidden = true
+        self.stackCallChat.isHidden = true
+        
     }
     
     override func viewDidDisappear(_ animated: Bool) {
@@ -57,10 +65,14 @@ class PhoneVerificationDialog: BaseVC, CBPinEntryViewDelegate {
         if(countDown > 0) {
             countDown = countDown - 1
             lblCounter.text = String(countDown)
+            self.lblCallChat.isHidden = true
+            self.stackCallChat.isHidden = true
         }else{
             // self.sendRequest()
             self.resendView.backgroundColor = UIColor.processing
             self.btnResend.isEnabled = true
+            self.lblCallChat.isHidden = false
+            self.stackCallChat.isHidden = false
         }
     }
     
@@ -79,7 +91,7 @@ class PhoneVerificationDialog: BaseVC, CBPinEntryViewDelegate {
         
     }
     
-
+    
     @IBAction func resendAction(_ sender: Any) {
         self.resendView.backgroundColor = UIColor.appLightGray
         self.btnResend.isEnabled = false
@@ -88,7 +100,7 @@ class PhoneVerificationDialog: BaseVC, CBPinEntryViewDelegate {
     }
     
     @IBAction func confirmAction(_ sender: Any) {
-       self.confirm()
+        self.confirm()
     }
     
     func confirm() {
@@ -148,5 +160,15 @@ class PhoneVerificationDialog: BaseVC, CBPinEntryViewDelegate {
         self.dismiss(animated: true, completion: nil)
     }
     
+    
+    @IBAction func chatAction(_ sender: Any) {
+        if let url = URL(string: "https://api.whatsapp.com/send?phone=\(App.shared.config?.company?.phone ?? "")"), UIApplication.shared.canOpenURL(url) {
+                  if #available(iOS 10, *) {
+                      UIApplication.shared.open(url)
+                  } else {
+                      UIApplication.shared.openURL(url)
+                  }
+              }
+    }
     
 }

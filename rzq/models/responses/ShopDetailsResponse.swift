@@ -79,6 +79,7 @@ class TypeClass: Codable {
     let id: Int?
     let name, image: String?
     let selectedIcon, icon: String?
+    var isChecked : Bool?
     
     enum CodingKeys: String, CodingKey {
         case id = "Id"

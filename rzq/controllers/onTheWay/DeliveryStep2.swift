@@ -37,7 +37,6 @@ class DeliveryStep2: BaseVC, Step3Delegate {
     
     @IBOutlet weak var viewFromTo: CardView!
     
-    var markerLocation: GMSMarker?
     var currentZoom: Float = 0.0
     var gMap : GMSMapView?
     
@@ -49,6 +48,7 @@ class DeliveryStep2: BaseVC, Step3Delegate {
     var dropLocation : CLLocation?
     
     var pinMarker : GMSMarker?
+    var dropMarker :GMSMarker?
     
     var delegate : Step2Delegate?
     
@@ -84,6 +84,23 @@ class DeliveryStep2: BaseVC, Step3Delegate {
             popTip.hide()
         }
         
+    }
+    
+    func googleSearchAction() {
+        let autocompleteController = GMSAutocompleteViewController()
+        autocompleteController.delegate = self
+        
+        let filter = GMSAutocompleteFilter()
+        filter.country = "KW"
+        autocompleteController.primaryTextColor = UIColor.black
+        autocompleteController.secondaryTextColor = UIColor.black
+        autocompleteController.tintColor = UIColor.black
+        autocompleteController.autocompleteFilter = filter
+        
+        //        UITextField.appearance(whenContainedInInstancesOf: [UISearchBar.self]).defaultTextAttributes = [NSAttributedString.Key.foregroundColor: UIColor.white]
+        
+        
+        present(autocompleteController, animated: true, completion: nil)
     }
     
     func applyMarkerImage(from url: URL, to marker: GMSMarker) {
@@ -217,29 +234,34 @@ class DeliveryStep2: BaseVC, Step3Delegate {
         
         self.getFromToDistance()
         
+        self.gMap?.clear()
         
+        self.pinMarker?.map = nil
         let pickUpPosition = CLLocationCoordinate2D(latitude: self.orderModel?.pickUpLatitude ?? 0, longitude: self.orderModel?.pickUpLongitude ?? 0)
-        let pickMarker = GMSMarker(position: pickUpPosition)
-        pickMarker.title = "\(self.orderModel?.shop?.id ?? 0)"
+        self.pinMarker = GMSMarker(position: pickUpPosition)
+        self.pinMarker?.title = "\(self.orderModel?.shop?.id ?? 0)"
         if (self.orderModel?.shop?.id ?? 0 > 0) {
-            pickMarker.icon = UIImage(named: "ic_map_shop")
+            self.pinMarker?.icon = UIImage(named: "ic_map_shop")
             let url = URL(string: "\(Constants.IMAGE_URL)\(self.orderModel?.shop?.type?.selectedIcon ?? "")")
-            self.applyMarkerImage(from: url!, to: pickMarker)
+            self.applyMarkerImage(from: url!, to: self.pinMarker!)
         }else {
-            pickMarker.icon = UIImage(named: "ic_location_pin")
+            self.pinMarker?.icon = UIImage(named: "ic_location_pin")
         }
-        pickMarker.map = self.gMap
+        self.pinMarker?.map = self.gMap
         
         
+        self.dropMarker?.map = nil
         let dropOffPosition = CLLocationCoordinate2D(latitude: self.orderModel?.dropOffLatitude ?? 0, longitude: self.orderModel?.dropOffLongitude ?? 0)
-        let dropMarker = GMSMarker(position: dropOffPosition)
-        dropMarker.title = "0"
-        dropMarker.icon = UIImage(named: "ic_location")
-        dropMarker.map = self.gMap
+        self.dropMarker = GMSMarker(position: dropOffPosition)
+        self.dropMarker?.title = "0"
+        self.dropMarker?.icon = UIImage(named: "ic_location")
+        self.dropMarker?.map = self.gMap
+        
+        self.getAddressForMapCenter()
         
         var bounds = GMSCoordinateBounds()
-        bounds = bounds.includingCoordinate(pickMarker.position)
-        bounds = bounds.includingCoordinate(dropMarker.position)
+        bounds = bounds.includingCoordinate(self.pinMarker!.position)
+        bounds = bounds.includingCoordinate(self.dropMarker!.position)
         self.gMap?.animate(with: GMSCameraUpdate.fit(bounds, withPadding: 155.0))
         
         //        let origin = "\(self.orderModel?.pickUpLatitude ?? 0),\(self.orderModel?.pickUpLongitude ?? 0)"
@@ -347,7 +369,7 @@ class DeliveryStep2: BaseVC, Step3Delegate {
     
     fileprivate func getAddressForMapCenter() {
         let point : CGPoint = mapView.center
-        let coordinate : CLLocationCoordinate2D = (self.pinMarker?.position)!
+        let coordinate : CLLocationCoordinate2D = (self.dropMarker?.position)!
         let location =  CLLocation.init(latitude: coordinate.latitude, longitude: coordinate.longitude)
         self.dropLocation = location
         self.GetAnnotationUsingCoordinated(location)
@@ -451,7 +473,7 @@ class DeliveryStep2: BaseVC, Step3Delegate {
             var filterItems = [SearchTextFieldItem]()
             self.filterShops.removeAll()
             for prediction in response.results ?? [Result]() {
-                let dataShop = DataShop(id: 0, name: prediction.name ?? "", address: prediction.vicinity ?? "", latitude: prediction.geometry?.location?.lat ?? 0.0, longitude: prediction.geometry?.location?.lng ?? 0.0, phoneNumber: "", workingHours: "", images: [String](), rate: prediction.rating ?? 0.0, type: TypeClass(id: 0, name: prediction.types?[0] ?? "", image: "", selectedIcon: "", icon: ""), ownerId: "", googlePlaceId:  prediction.placeID ?? "", openNow: prediction.openingHours?.openNow ?? false)
+                let dataShop = DataShop(id: 0, name: prediction.name ?? "", address: prediction.vicinity ?? "", latitude: prediction.geometry?.location?.lat ?? 0.0, longitude: prediction.geometry?.location?.lng ?? 0.0, phoneNumber: "", workingHours: "", images: [String](), rate: prediction.rating ?? 0.0, type: TypeClass(id: 0, name: prediction.types?[0] ?? "", image: "", selectedIcon: "", icon: ""), ownerId: "", googlePlaceId:  prediction.placeID ?? "", openNow: prediction.openingHours?.openNow ?? false, NearbyDriversCount :  0)
                 dataShop.placeId = prediction.id ?? ""
                 
                 self.filterShops.append(dataShop)
@@ -520,6 +542,9 @@ class DeliveryStep2: BaseVC, Step3Delegate {
         self.edtMoreDetails.text = ""
     }
     
+    @IBAction func searchGoogleAction(_ sender: Any) {
+        self.googleSearchAction()
+    }
     
 }
 
@@ -543,27 +568,31 @@ extension DeliveryStep2 : GMSMapViewDelegate {
             return true
         }
         if (Int(id) ?? 0 > 0) {
-            toolTipView?.removeFromSuperview()
-            toolTipView = UIView.fromNib()
-            if (self.orderModel?.shop?.id ?? 0 > 0) {
-                toolTipView?.lblTitle.text = self.orderModel?.shop?.name ?? ""
-                toolTipView?.lblDescription.text = self.orderModel?.shop?.address ?? ""
-                let url = URL(string: "\(Constants.IMAGE_URL)\(self.orderModel?.shop?.images?[0] ?? "")")
-                toolTipView?.ivLogo.kf.setImage(with: url)
-            }else {
-                toolTipView?.lblTitle.text = self.orderModel?.pickUpAddress ?? ""
-                toolTipView?.lblDescription.text = ""
-                toolTipView?.ivLogo.image = UIImage(named: "ic_location_pin")
-            }
-            
-            if (self.orderModel?.shop?.id ?? 0 > 0) {
-                marker.icon = UIImage(named: "ic_map_shop_selected")
-            }else {
-                marker.icon = UIImage(named: "ic_location_pin")
-            }
-            
-            toolTipView?.center = mapView.projection.point(for: marker.position)
-            mapView.addSubview(toolTipView!)
+//            toolTipView?.removeFromSuperview()
+//            toolTipView = UIView.fromNib()
+//            if (self.orderModel?.shop?.id ?? 0 > 0) {
+//                toolTipView?.lblTitle.text = self.orderModel?.shop?.name ?? ""
+//                toolTipView?.lblDescription.text = self.orderModel?.shop?.address ?? ""
+//                if (self.orderModel?.shop?.images?.count ?? 0 > 0) {
+//                    let url = URL(string: "\(Constants.IMAGE_URL)\(self.orderModel?.shop?.images?[0] ?? "")")
+//                    toolTipView?.ivLogo.kf.setImage(with: url)
+//                }else {
+//                   toolTipView?.ivLogo.image = UIImage(named: "ic_map_shop_selected")
+//                }
+//            }else {
+//                toolTipView?.lblTitle.text = self.orderModel?.pickUpAddress ?? ""
+//                toolTipView?.lblDescription.text = ""
+//                toolTipView?.ivLogo.image = UIImage(named: "ic_location_pin")
+//            }
+//
+//            if (self.orderModel?.shop?.id ?? 0 > 0) {
+//                marker.icon = UIImage(named: "ic_map_shop_selected")
+//            }else {
+//                marker.icon = UIImage(named: "ic_location_pin")
+//            }
+//
+//            toolTipView?.center = mapView.projection.point(for: marker.position)
+//            mapView.addSubview(toolTipView!)
             return true
         }else {
             return true
@@ -571,21 +600,13 @@ extension DeliveryStep2 : GMSMapViewDelegate {
     }
     
     func mapView(_ mapView: GMSMapView, didLongPressAt coordinate: CLLocationCoordinate2D) {
-        self.pinMarker?.map = nil
-        self.moreDetailsView.isHidden = false
-        self.lblSearch.isHidden = true
-        self.pinMarker = GMSMarker()
-        self.pinMarker?.position = CLLocationCoordinate2D(latitude: coordinate.latitude, longitude: coordinate.longitude)
-        self.pinMarker?.title =  ""
-        self.pinMarker?.icon = UIImage(named: "ic_location")
-        self.pinMarker?.snippet = ""
-        self.pinMarker?.map = gMap
         self.lblDropLocation.text = "Loading".localized
         self.lblDropLocation.textColor = UIColor.appDarkBlue
         self.orderModel?.dropOffLatitude = coordinate.latitude
         self.orderModel?.dropOffLongitude = coordinate.longitude
         self.orderModel?.dropOffAddress = ""
-        self.getAddressForMapCenter()
+        self.moreDetailsView.isHidden = false
+        self.lblSearch.isHidden = true
         self.drawLocationLine()
     }
     

@@ -556,7 +556,7 @@ class OrderDetailsVC: BaseVC, UICollectionViewDelegate, UICollectionViewDataSour
             
             //            let order = DatumDel(driverID: self.order?.driverId ?? "", canReport: false, canTrack: false, id: self.order?.id ?? 0, chatId: self.order?.chatId ?? 0, fromAddress: self.order?.fromAddress ?? "", toAddress: self.order?.toAddress ?? "", title: self.order?.title ?? "", status: self.order?.status ?? 0, price: self.order?.cost ?? 0.0, time: self.order?.time ?? 0, statusString: self.order?.statusString ?? "", image: "", createdDate: self.order?.createdDate ?? "", toLatitude: self.order?.toLatitude ?? 0.0, toLongitude: self.order?.toLongitude ?? 0.0, fromLatitude: self.order?.fromLatitude ?? 0.0, fromLongitude: self.order?.fromLongitude ?? 0.0, driverName: "", driverImage: "", driverRate: 0, canRate: false, canCancel: false, canChat: false)
             
-            let order = DatumDel(id: self.order?.id ?? 0, title: self.order?.title ?? "", status: self.order?.status ?? 0, statusString: self.order?.statusString ?? "", image: "", createdDate: self.order?.createdDate ?? "", chatId: self.order?.chatId ?? 0, fromAddress: self.order?.fromAddress ?? "", fromLatitude: self.order?.fromLatitude ?? 0.0, fromLongitude: self.order?.fromLongitude ?? 0.0, toAddress: self.order?.toAddress ?? "", toLatitude: self.order?.toLatitude ?? 0.0, toLongitude: self.order?.toLongitude ?? 0.0, providerID: self.order?.driverId, providerName: "", providerImage: "", providerRate: 0, time: self.order?.time ?? 0, price: self.order?.cost ?? 0.0, serviceName: "", paymentMethod: self.order?.paymentMethod ?? 0, items: self.order?.items ?? [ShopMenuItem](), isPaid: self.order?.isPaid ?? false, invoiceId: self.order?.invoiceId ?? "", toFemaleOnly: self.order?.toFemaleOnly ?? false, shopId: self.order?.shopId ?? 0, OrderPrice: self.order?.orderPrice ?? 0.0, KnetCommission: self.order?.KnetCommission ?? 0.0)
+            let order = DatumDel(id: self.order?.id ?? 0, title: self.order?.title ?? "", status: self.order?.status ?? 0, statusString: self.order?.statusString ?? "", image: "", createdDate: self.order?.createdDate ?? "", chatId: self.order?.chatId ?? 0, fromAddress: self.order?.fromAddress ?? "", fromLatitude: self.order?.fromLatitude ?? 0.0, fromLongitude: self.order?.fromLongitude ?? 0.0, toAddress: self.order?.toAddress ?? "", toLatitude: self.order?.toLatitude ?? 0.0, toLongitude: self.order?.toLongitude ?? 0.0, providerID: self.order?.driverId, providerName: "", providerImage: "", providerRate: 0, time: self.order?.time ?? 0, price: self.order?.cost ?? 0.0, serviceName: "", paymentMethod: self.order?.paymentMethod ?? 0, items: self.order?.items ?? [ShopMenuItem](), isPaid: self.order?.isPaid ?? false, invoiceId: self.order?.invoiceId ?? "", toFemaleOnly: self.order?.toFemaleOnly ?? false, shopId: self.order?.shopId ?? 0, OrderPrice: self.order?.orderPrice ?? 0.0, KnetCommission: self.order?.KnetCommission ?? 0.0, ClientPhone: self.order?.ClientPhone ?? "", ProviderPhone : self.order?.ProviderPhone ?? "")
             
             messagesVC.order = order
             messagesVC.user = self.loadUser()
@@ -567,8 +567,8 @@ class OrderDetailsVC: BaseVC, UICollectionViewDelegate, UICollectionViewDataSour
         }
     }
     
-    func cancelDeliveryByUser() {
-        ApiService.cancelDelivery(Authorization: self.loadUser().data?.accessToken ?? "", deliveryId: self.order?.id ?? 0, completion: { (response) in
+    func cancelDeliveryByUser(reason : String) {
+        ApiService.cancelDelivery(Authorization: self.loadUser().data?.accessToken ?? "", deliveryId: self.order?.id ?? 0, reason : reason, completion: { (response) in
             if (response.errorCode == 0) {
                 self.showBanner(title: "alert".localized, message: "delivery_cancelled".localized, style: UIColor.SUCCESS)
                 DispatchQueue.main.asyncAfter(deadline: .now() + 2, execute: {
@@ -580,8 +580,8 @@ class OrderDetailsVC: BaseVC, UICollectionViewDelegate, UICollectionViewDataSour
         })
     }
     
-    func cancelDeliveryByDriver() {
-        ApiService.cancelDeliveryByDriver(Authorization: self.loadUser().data?.accessToken ?? "", deliveryId: self.order?.id ?? 0, completion: { (response) in
+    func cancelDeliveryByDriver(reason : String) {
+        ApiService.cancelDeliveryByDriver(Authorization: self.loadUser().data?.accessToken ?? "", deliveryId: self.order?.id ?? 0, reason : reason, completion: { (response) in
             if (response.errorCode == 0) {
                 self.showBanner(title: "alert".localized, message: "delivery_cancelled".localized, style: UIColor.SUCCESS)
                 DispatchQueue.main.asyncAfter(deadline: .now() + 2, execute: {
@@ -594,13 +594,21 @@ class OrderDetailsVC: BaseVC, UICollectionViewDelegate, UICollectionViewDataSour
     }
     
     @IBAction func cancelOrderAction(_ sender: Any) {
-        self.showAlert(title: "alert".localized, message: "confirm_cancel_delivery".localized, actionTitle: "yes".localized, cancelTitle: "no".localized, actionHandler: {
+//        self.showAlert(title: "alert".localized, message: "confirm_cancel_delivery".localized, actionTitle: "yes".localized, cancelTitle: "no".localized, actionHandler: {
+//            if (self.isProvider() && self.loadUser().data?.userID == self.order?.driverId ?? "") {
+//                self.cancelDeliveryByDriver()
+//            }else {
+//                self.cancelDeliveryByUser()
+//            }
+//        })
+        
+        self.showAlertField(title: "alert".localized, message: "confirm_cancel_delivery".localized, actionTitle: "yes".localized, cancelTitle: "no".localized) { (reason) in
             if (self.isProvider() && self.loadUser().data?.userID == self.order?.driverId ?? "") {
-                self.cancelDeliveryByDriver()
-            }else {
-                self.cancelDeliveryByUser()
-            }
-        })
+                self.cancelDeliveryByDriver(reason : reason)
+                       }else {
+                           self.cancelDeliveryByUser(reason : reason)
+                       }
+        }
     }
     
     
@@ -747,7 +755,7 @@ class OrderDetailsVC: BaseVC, UICollectionViewDelegate, UICollectionViewDataSour
             model.paymentMethod = self.order?.paymentMethod ?? Constants.PAYMENT_METHOD_CASH
             model.isFemale = self.order?.toFemaleOnly ?? false
             
-            let shop = DataShop(id: response.shopData?.id ?? 0, name: response.shopData?.name ?? "", address: response.shopData?.address ?? "", latitude: response.shopData?.latitude ?? 0.0, longitude: response.shopData?.longitude ?? 0.0, phoneNumber: response.shopData?.phoneNumber ?? "", workingHours: response.shopData?.workingHours ?? "", images: response.shopData?.images ?? [String](), rate: response.shopData?.rate ?? 0.0, type: response.shopData?.type!, ownerId: response.shopData?.ownerId ?? "", googlePlaceId: response.shopData?.googlePlaceId ?? "", openNow: response.shopData?.openNow ?? true)
+            let shop = DataShop(id: response.shopData?.id ?? 0, name: response.shopData?.name ?? "", address: response.shopData?.address ?? "", latitude: response.shopData?.latitude ?? 0.0, longitude: response.shopData?.longitude ?? 0.0, phoneNumber: response.shopData?.phoneNumber ?? "", workingHours: response.shopData?.workingHours ?? "", images: response.shopData?.images ?? [String](), rate: response.shopData?.rate ?? 0.0, type: response.shopData?.type!, ownerId: response.shopData?.ownerId ?? "", googlePlaceId: response.shopData?.googlePlaceId ?? "", openNow: response.shopData?.openNow ?? true, NearbyDriversCount : response.shopData?.nearbyDriversCount ?? 0)
             
             model.shop = shop
             
@@ -841,6 +849,7 @@ class OrderDetailsVC: BaseVC, UICollectionViewDelegate, UICollectionViewDataSour
         }
         return total
     }
+    
 }
 
 extension OrderDetailsVC : GMSMapViewDelegate {
