@@ -12,11 +12,11 @@
         <array key="arabic_font.ttf">
             <string>Cairo-Regular</string>
         </array>
+        <array key="arabic_medium.ttf">
+            <string>Tajawal-Medium</string>
+        </array>
         <array key="arabic_regular.ttf">
             <string>Tajawal-Regular</string>
-        </array>
-        <array key="arabic_semibold.ttf">
-            <string>Tajawal-Medium</string>
         </array>
         <array key="english_regular.otf">
             <string>SFProDisplay-Regular</string>
@@ -12628,10 +12628,10 @@
                                 </connections>
                             </view>
                             <collectionView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" showsHorizontalScrollIndicator="NO" showsVerticalScrollIndicator="NO" dataMode="prototypes" translatesAutoresizingMaskIntoConstraints="NO" id="vjA-N1-zx5">
-                                <rect key="frame" x="0.0" y="99" width="375" height="65"/>
-                                <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                                <rect key="frame" x="0.0" y="87" width="375" height="73"/>
+                                <color key="backgroundColor" white="0.0" alpha="0.12352846746575342" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                 <constraints>
-                                    <constraint firstAttribute="height" constant="65" id="Fpe-hv-bIy"/>
+                                    <constraint firstAttribute="height" constant="73" id="Fpe-hv-bIy"/>
                                 </constraints>
                                 <collectionViewFlowLayout key="collectionViewLayout" scrollDirection="horizontal" minimumLineSpacing="10" minimumInteritemSpacing="10" id="Lxp-RD-2RA">
                                     <size key="itemSize" width="92" height="79"/>
@@ -12641,7 +12641,7 @@
                                 </collectionViewFlowLayout>
                                 <cells>
                                     <collectionViewCell opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" reuseIdentifier="Step1CatCell" id="eHw-pW-i5K" customClass="Step1CatCell" customModule="rzq" customModuleProvider="target">
-                                        <rect key="frame" x="0.0" y="0.0" width="92" height="65"/>
+                                        <rect key="frame" x="0.0" y="4" width="92" height="65"/>
                                         <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                         <view key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" insetsLayoutMarginsFromSafeArea="NO">
                                             <rect key="frame" x="0.0" y="0.0" width="92" height="65"/>
@@ -12682,7 +12682,7 @@
                                 </cells>
                             </collectionView>
                             <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="I8Q-pe-Ept">
-                                <rect key="frame" x="0.0" y="169" width="375" height="1"/>
+                                <rect key="frame" x="0.0" y="160" width="375" height="1"/>
                                 <color key="backgroundColor" red="0.12549019610000001" green="0.0" blue="0.45098039220000002" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                                 <constraints>
                                     <constraint firstAttribute="height" constant="1" id="Ww6-qi-U1V"/>
@@ -12769,8 +12769,8 @@
                             <constraint firstItem="A9H-cE-hxA" firstAttribute="leading" secondItem="d5N-D6-syc" secondAttribute="leading" id="Whu-6m-l2r"/>
                             <constraint firstItem="8GC-6D-Gpq" firstAttribute="top" secondItem="A9H-cE-hxA" secondAttribute="bottom" constant="50" id="ZFj-A7-cZV"/>
                             <constraint firstItem="I8Q-pe-Ept" firstAttribute="leading" secondItem="d5N-D6-syc" secondAttribute="leading" id="ZYr-k4-dT2"/>
-                            <constraint firstItem="vjA-N1-zx5" firstAttribute="top" secondItem="A9H-cE-hxA" secondAttribute="bottom" constant="12" id="ZkU-Xj-XBn"/>
-                            <constraint firstItem="I8Q-pe-Ept" firstAttribute="top" secondItem="vjA-N1-zx5" secondAttribute="bottom" constant="5" id="acq-ld-0iv"/>
+                            <constraint firstItem="vjA-N1-zx5" firstAttribute="top" secondItem="A9H-cE-hxA" secondAttribute="bottom" id="ZkU-Xj-XBn"/>
+                            <constraint firstItem="I8Q-pe-Ept" firstAttribute="top" secondItem="vjA-N1-zx5" secondAttribute="bottom" id="acq-ld-0iv"/>
                             <constraint firstItem="d5N-D6-syc" firstAttribute="trailing" secondItem="kbU-q0-1TA" secondAttribute="trailing" id="bGc-fM-9TY"/>
                             <constraint firstItem="d5N-D6-syc" firstAttribute="trailing" secondItem="w3z-Z6-4LH" secondAttribute="trailing" constant="30" id="cAL-eh-DtX"/>
                             <constraint firstItem="3sh-5Y-vjj" firstAttribute="top" secondItem="kbU-q0-1TA" secondAttribute="bottom" constant="-50" id="csb-qb-INM"/>

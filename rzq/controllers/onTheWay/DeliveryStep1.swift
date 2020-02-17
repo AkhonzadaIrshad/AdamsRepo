@@ -87,6 +87,9 @@ class DeliveryStep1: BaseVC,LabasLocationManagerDelegate, Step2Delegate, AllShop
         if (self.isArabic()) {
             //  self.ivHandle.image = UIImage(named: "ic_back_arabic")
             self.ivIndicator.image = UIImage(named: "ic_arrow_login_white_arabic")
+            self.collectionCategories.semanticContentAttribute = UISemanticContentAttribute.forceRightToLeft
+            
+            self.collectionCategories.transform = CGAffineTransform(scaleX: -1.0, y: 1.0)
         }
         if (self.orderModel == nil) {
             self.orderModel = OTWOrder()
@@ -191,6 +194,8 @@ class DeliveryStep1: BaseVC,LabasLocationManagerDelegate, Step2Delegate, AllShop
             self.viewPop.isHidden = true
         }
         
+        
+        
         self.collectionCategories.delegate = self
         self.collectionCategories.dataSource = self
         
@@ -215,7 +220,7 @@ class DeliveryStep1: BaseVC,LabasLocationManagerDelegate, Step2Delegate, AllShop
         let label = UILabel(frame: CGRect.zero)
         label.text = self.categories[indexPath.row].name ?? ""
         label.sizeToFit()
-        return CGSize(width: label.bounds.width + 8, height: self.collectionCategories.bounds.height)
+        return CGSize(width: label.bounds.width + 8, height: self.collectionCategories.bounds.height - 8)
     }
     
     func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, insetForSectionAt section: Int) -> UIEdgeInsets {
@@ -350,27 +355,27 @@ class DeliveryStep1: BaseVC,LabasLocationManagerDelegate, Step2Delegate, AllShop
         self.showLoading()
         ApiService.getDriverOnGoingDeliveries(Authorization: self.loadUser().data?.accessToken ?? "") { (response) in
             self.hideLoading()
-//            for item in response.data ?? [DatumDriverDel]() {
-//                if (item.time ?? 0 == 0) {
-//                    ApiService.getDelivery(id: item.id ?? 0) { (response) in
-//                        let items = response.data?.items ?? [ShopMenuItem]()
-//                        DispatchQueue.main.async {
-//                            let messagesVC: ZHCDemoMessagesViewController = ZHCDemoMessagesViewController.init()
-//                            messagesVC.presentBool = true
-//
-//                            let dumOrder = DatumDel(id: item.id ?? 0, title: item.title ?? "", status: item.status ?? 0, statusString: item.statusString ?? "", image: item.image ?? "", createdDate: item.createdDate ?? "", chatId: item.chatId ?? 0, fromAddress: item.fromAddress ?? "", fromLatitude: item.fromLatitude ?? 0.0, fromLongitude: item.fromLongitude ?? 0.0, toAddress: item.toAddress ?? "", toLatitude: item.toLatitude ?? 0.0, toLongitude: item.toLongitude ?? 0.0, providerID: item.providerID ?? "", providerName: item.providerName ?? "", providerImage: item.providerImage ?? "", providerRate: item.providerRate ?? 0.0, time: item.time ?? 0, price: item.price ?? 0.0, serviceName: item.serviceName ?? "", paymentMethod: item.paymentMethod ?? 0, items: items, isPaid: item.isPaid ?? false, invoiceId: item.invoiceId ?? "", toFemaleOnly: item.toFemaleOnly ?? false, shopId: item.shopId ?? 0, OrderPrice: item.OrderPrice ?? 0.0, KnetCommission : item.KnetCommission ?? 0.0, ClientPhone: "", ProviderPhone : "")
-//
-//                            messagesVC.order = dumOrder
-//                            messagesVC.user = self.loadUser()
-//                            let nav: UINavigationController = UINavigationController.init(rootViewController: messagesVC)
-//                            nav.modalPresentationStyle = .fullScreen
-//                            messagesVC.modalPresentationStyle = .fullScreen
-//                            self.navigationController?.present(nav, animated: true, completion: nil)
-//                        }
-//
-//                    }
-//                }
-//            }
+            //            for item in response.data ?? [DatumDriverDel]() {
+            //                if (item.time ?? 0 == 0) {
+            //                    ApiService.getDelivery(id: item.id ?? 0) { (response) in
+            //                        let items = response.data?.items ?? [ShopMenuItem]()
+            //                        DispatchQueue.main.async {
+            //                            let messagesVC: ZHCDemoMessagesViewController = ZHCDemoMessagesViewController.init()
+            //                            messagesVC.presentBool = true
+            //
+            //                            let dumOrder = DatumDel(id: item.id ?? 0, title: item.title ?? "", status: item.status ?? 0, statusString: item.statusString ?? "", image: item.image ?? "", createdDate: item.createdDate ?? "", chatId: item.chatId ?? 0, fromAddress: item.fromAddress ?? "", fromLatitude: item.fromLatitude ?? 0.0, fromLongitude: item.fromLongitude ?? 0.0, toAddress: item.toAddress ?? "", toLatitude: item.toLatitude ?? 0.0, toLongitude: item.toLongitude ?? 0.0, providerID: item.providerID ?? "", providerName: item.providerName ?? "", providerImage: item.providerImage ?? "", providerRate: item.providerRate ?? 0.0, time: item.time ?? 0, price: item.price ?? 0.0, serviceName: item.serviceName ?? "", paymentMethod: item.paymentMethod ?? 0, items: items, isPaid: item.isPaid ?? false, invoiceId: item.invoiceId ?? "", toFemaleOnly: item.toFemaleOnly ?? false, shopId: item.shopId ?? 0, OrderPrice: item.OrderPrice ?? 0.0, KnetCommission : item.KnetCommission ?? 0.0, ClientPhone: "", ProviderPhone : "")
+            //
+            //                            messagesVC.order = dumOrder
+            //                            messagesVC.user = self.loadUser()
+            //                            let nav: UINavigationController = UINavigationController.init(rootViewController: messagesVC)
+            //                            nav.modalPresentationStyle = .fullScreen
+            //                            messagesVC.modalPresentationStyle = .fullScreen
+            //                            self.navigationController?.present(nav, animated: true, completion: nil)
+            //                        }
+            //
+            //                    }
+            //                }
+            //            }
         }
     }
     

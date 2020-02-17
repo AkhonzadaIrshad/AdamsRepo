@@ -74,8 +74,18 @@ class RegisterAsDriverMenuVC: BaseViewController ,UINavigationControllerDelegate
             self.edtMobile.textAlignment = NSTextAlignment.right
             self.edtEmail.textAlignment = NSTextAlignment.right
         }
+        self.openWelcomeDriver()
         // Do any additional setup after loading the view.
     }
+    
+    func openWelcomeDriver() {
+       UserDefaults.standard.setValue(false, forKey: Constants.SEE_DRIVER_TERMS)
+        let storyboard = UIStoryboard(name: "Main", bundle: nil)
+        let vc : WelcomeDriverVC = storyboard.instantiateViewController(withIdentifier: "WelcomeDriverVC") as! WelcomeDriverVC
+        vc.modalPresentationStyle = .fullScreen
+        self.present(vc, animated: true, completion: nil)
+    }
+    
     
     
     @IBAction func profileImageAction(_ sender: Any) {

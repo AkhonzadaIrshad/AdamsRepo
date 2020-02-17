@@ -149,6 +149,8 @@ class TakeOrderVC: BaseVC, AVAudioPlayerDelegate {
             print("Setting category to AVAudioSessionCategoryPlayback failed.")
         }
         
+        self.btnTime.setTitle("asap".localized, for: .normal)
+        self.selectedTime = 0
         
     }
     
