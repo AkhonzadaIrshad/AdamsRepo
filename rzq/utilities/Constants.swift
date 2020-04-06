@@ -23,13 +23,13 @@ class Constants {
     static var AUTH_HEADER = "Authorization"
     static var LANG_HEADER = "Accept-Language"
     
-
+    
         static var BASE_URL = "http://rzq.rzqapp.com/api/"
         static var IMAGE_URL = "http://rzq.rzqapp.com/api/file/get?name="
     
     
-//    static var BASE_URL = "https://259ca173.ngrok.io/api/"
-//    static var IMAGE_URL = "https://259ca173.ngrok.io/api/file/get?name="
+//    static var BASE_URL = "https://c93fdc01.ngrok.io/api/"
+//    static var IMAGE_URL = "https://c93fdc01.ngrok.io/api/file/get?name="
     
     
     static var PAYMENT_SUCCESS_URL = "success.html"
@@ -48,15 +48,15 @@ class Constants {
     static let TRACK_TIMER_DOUBLE = 180.0
     
     
-    //    static var PAYMENT_URL = "https://api.myfatoorah.com"
-    //    static var PAYMENT_TESTS_URL = "https://apitest.myfatoorah.com"
+    //live
+    //    static var PAYMENT_URL = "https://api.myfatoorah.com/v2/"
+    //    static var PAYMENT_TOKEN = "HFFwES7ic9EISSbu13KwBCc4CELuqnzHUHarY7PlYz0gmc19mNzw9OWpeHVCsikzrY67gtlYWiUvXGQXCIB4GDUhq8C-FPNq9oS_7MqwL_od_bcBQqPiZa-PTKKRLqqFoSWK0cl5Xid4f1ZB3rTyyeN7yRz1VUX0a21sNeogH6ic-AR0ZBIwtpaqpyOcC8r1NJ2qdDSJTI4lxEWySWSyqSPbiv8KXPDbvnIqFv3Dmo56PFaUzs74IE02uH17WdFIeCNKSWKZ85xD0Li3zal43bIvQqAjfY-k6l4CTmtbnYVPfz9H7cB-25jUPtPcHyr7O7vQLTxc_RshFPQciWKit6SEtHf7302mgk7a9Linf8v7JlySlH6yw3kioT0PgycFYoLyl3eWpDxl732nlgmKk_Se2ExYCr8889AedKZ5LYHQKR8Tsd_DVzwdAoL7Z8_ECOwvbADPx2-V03N4tTAzZbeP5O5KcRfiWvpSB8Ye5QIpX9AeKuUfBuZHEDm7EAu7dGP0j3Ud6puo6JZkgJHo_rqce28QaSiW717ZyxJnpm8aZ9lIr3S4wheQKRp46ZzwWYyZWAyPY0E2KN48tj-Ax2I1Kikq_p6WoRSq-kouEMSp0G5oUEtKuhpy9ipukSMov064ZsJUkMZgNF--3deQnOtJ2MGPw3XG372IF8yr-gPz64DZ"
+    //
     
-    //    static var TEST_PAYMENT_TOKEN = "7Fs7eBv21F5xAocdPvvJ-sCqEyNHq4cygJrQUFvFiWEexBUPs4AkeLQxH4pzsUrY3Rays7GVA6SojFCz2DMLXSJVqk8NG-plK-cZJetwWjgwLPub_9tQQohWLgJ0q2invJ5C5Imt2ket_-JAlBYLLcnqp_WmOfZkBEWuURsBVirpNQecvpedgeCx4VaFae4qWDI_uKRV1829KCBEH84u6LYUxh8W_BYqkzXJYt99OlHTXHegd91PLT-tawBwuIly46nwbAs5Nt7HFOozxkyPp8BW9URlQW1fE4R_40BXzEuVkzK3WAOdpR92IkV94K_rDZCPltGSvWXtqJbnCpUB6iUIn1V-Ki15FAwh_nsfSmt_NQZ3rQuvyQ9B3yLCQ1ZO_MGSYDYVO26dyXbElspKxQwuNRot9hi3FIbXylV3iN40-nCPH4YQzKjo5p_fuaKhvRh7H8oFjRXtPtLQQUIDxk-jMbOp7gXIsdz02DrCfQIihT4evZuWA6YShl6g8fnAqCy8qRBf_eLDnA9w-nBh4Bq53b1kdhnExz0CMyUjQ43UO3uhMkBomJTXbmfAAHP8dZZao6W8a34OktNQmPTbOHXrtxf6DS-oKOu3l79uX_ihbL8ELT40VjIW3MJeZ_-auCPOjpE3Ax4dzUkSDLCljitmzMagH2X8jN8-AYLl46KcfkBV"
+    //test
+    static var PAYMENT_URL = "https://apitest.myfatoorah.com/v2/"
+    static var PAYMENT_TOKEN = "7Fs7eBv21F5xAocdPvvJ-sCqEyNHq4cygJrQUFvFiWEexBUPs4AkeLQxH4pzsUrY3Rays7GVA6SojFCz2DMLXSJVqk8NG-plK-cZJetwWjgwLPub_9tQQohWLgJ0q2invJ5C5Imt2ket_-JAlBYLLcnqp_WmOfZkBEWuURsBVirpNQecvpedgeCx4VaFae4qWDI_uKRV1829KCBEH84u6LYUxh8W_BYqkzXJYt99OlHTXHegd91PLT-tawBwuIly46nwbAs5Nt7HFOozxkyPp8BW9URlQW1fE4R_40BXzEuVkzK3WAOdpR92IkV94K_rDZCPltGSvWXtqJbnCpUB6iUIn1V-Ki15FAwh_nsfSmt_NQZ3rQuvyQ9B3yLCQ1ZO_MGSYDYVO26dyXbElspKxQwuNRot9hi3FIbXylV3iN40-nCPH4YQzKjo5p_fuaKhvRh7H8oFjRXtPtLQQUIDxk-jMbOp7gXIsdz02DrCfQIihT4evZuWA6YShl6g8fnAqCy8qRBf_eLDnA9w-nBh4Bq53b1kdhnExz0CMyUjQ43UO3uhMkBomJTXbmfAAHP8dZZao6W8a34OktNQmPTbOHXrtxf6DS-oKOu3l79uX_ihbL8ELT40VjIW3MJeZ_-auCPOjpE3Ax4dzUkSDLCljitmzMagH2X8jN8-AYLl46KcfkBV"
     
-    static var PAYMENT_URL = "https://api.myfatoorah.com/v2/"
-    // static var PAYMENT_TESTS_URL = "https://apitest.myfatoorah.com/v2/"
-    
-    static var PAYMENT_TOKEN = "HFFwES7ic9EISSbu13KwBCc4CELuqnzHUHarY7PlYz0gmc19mNzw9OWpeHVCsikzrY67gtlYWiUvXGQXCIB4GDUhq8C-FPNq9oS_7MqwL_od_bcBQqPiZa-PTKKRLqqFoSWK0cl5Xid4f1ZB3rTyyeN7yRz1VUX0a21sNeogH6ic-AR0ZBIwtpaqpyOcC8r1NJ2qdDSJTI4lxEWySWSyqSPbiv8KXPDbvnIqFv3Dmo56PFaUzs74IE02uH17WdFIeCNKSWKZ85xD0Li3zal43bIvQqAjfY-k6l4CTmtbnYVPfz9H7cB-25jUPtPcHyr7O7vQLTxc_RshFPQciWKit6SEtHf7302mgk7a9Linf8v7JlySlH6yw3kioT0PgycFYoLyl3eWpDxl732nlgmKk_Se2ExYCr8889AedKZ5LYHQKR8Tsd_DVzwdAoL7Z8_ECOwvbADPx2-V03N4tTAzZbeP5O5KcRfiWvpSB8Ye5QIpX9AeKuUfBuZHEDm7EAu7dGP0j3Ud6puo6JZkgJHo_rqce28QaSiW717ZyxJnpm8aZ9lIr3S4wheQKRp46ZzwWYyZWAyPY0E2KN48tj-Ax2I1Kikq_p6WoRSq-kouEMSp0G5oUEtKuhpy9ipukSMov064ZsJUkMZgNF--3deQnOtJ2MGPw3XG372IF8yr-gPz64DZ"
     
     
     static var DEFAULT_RADIUS = 20000.0

@@ -27,6 +27,8 @@ UITableViewDelegate, UITableViewDataSource {
     
     var selectedIndex = 0
     
+    @IBOutlet weak var fieldSearch: MyUITextField!
+    
     var shops = [DataShop]() {
         didSet {
             if (shops.count > 0) {
@@ -45,9 +47,13 @@ UITableViewDelegate, UITableViewDataSource {
     override func viewDidLoad() {
         super.viewDidLoad()
         
+        
+        self.fieldSearch.delegate = self
+        
         if (self.isArabic()) {
             self.ivBack.setImage(UIImage(named: "ic_back_arabic"), for: .normal)
             self.collectionCategories.semanticContentAttribute = UISemanticContentAttribute.forceRightToLeft
+            self.fieldSearch.textAlignment = .right
             
             self.collectionCategories.transform = CGAffineTransform(scaleX: -1.0, y: 1.0)
             
@@ -55,6 +61,9 @@ UITableViewDelegate, UITableViewDataSource {
         
         self.latitude = UserDefaults.standard.value(forKey: Constants.LAST_LATITUDE) as? Double ?? 0.0
         self.longitude = UserDefaults.standard.value(forKey: Constants.LAST_LONGITUDE) as? Double ?? 0.0
+        
+//        self.latitude = 29.306856
+//        self.longitude = 47.698692
         
         
         self.collectionCategories.delegate = self
@@ -71,12 +80,12 @@ UITableViewDelegate, UITableViewDataSource {
             self.categories.append(category)
             
             let datum = response.data ?? [TypeClass]()
-//            for cat in datum {
-//                if (cat.id == self.selectedCategory) {
-//                    cat.isChecked = true
-//                }
-//                self.categories.append(cat)
-//            }
+            //            for cat in datum {
+            //                if (cat.id == self.selectedCategory) {
+            //                    cat.isChecked = true
+            //                }
+            //                self.categories.append(cat)
+            //            }
             
             for var i in (0..<datum.count) {
                 if (datum[i].id == self.selectedCategory) {
@@ -90,11 +99,16 @@ UITableViewDelegate, UITableViewDataSource {
             self.collectionCategories.reloadData()
             let index = IndexPath(row: self.selectedIndex, section: 0)
             self.collectionCategories.scrollToItem(at: index, at: .left, animated: false)
-            self.loadShops(type: self.selectedCategory ?? 0)
+            self.loadShops(type: self.selectedCategory ?? 0, keyword: "")
         }
         // Do any additional setup after loading the view.
         
         // Do any additional setup after loading the view.
+    }
+    
+    
+    @IBAction func searchAction(_ sender: Any) {
+        
     }
     
     
@@ -133,7 +147,8 @@ UITableViewDelegate, UITableViewDataSource {
         self.categories[indexPath.row].isChecked = true
         self.selectedCategory = self.categories[indexPath.row].id ?? 0
         self.collectionCategories.reloadData()
-        self.loadShops(type: self.selectedCategory ?? 0)
+        self.fieldSearch.text = ""
+        self.loadShops(type: self.selectedCategory ?? 0, keyword: "")
     }
     
     func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
@@ -213,16 +228,16 @@ UITableViewDelegate, UITableViewDataSource {
     }
     
     
-    func loadShops(type : Int) {
-        ApiService.getShopsPriority(latitude: self.latitude ?? 0.0, longitude: self.longitude ?? 0.0, radius: Float(Constants.DEFAULT_RADIUS), rating: 0, types: type) { (response) in
+    func loadShops(type : Int, keyword : String) {
+        ApiService.getShopsPrioritySearch(keyword : keyword,latitude: self.latitude ?? 0.0, longitude: self.longitude ?? 0.0, radius: Float(Constants.DEFAULT_RADIUS), rating: 0, types: type) { (response) in
             self.shops.removeAll()
             self.shops.append(contentsOf: response.dataShops ?? [DataShop]())
             self.tableShops.reloadData()
         }
     }
     
-    func getShopsByName(name : String) {
-        ApiService.getShopsByName(name: name, latitude: self.latitude ?? 0.0, longitude: self.longitude ?? 0.0, radius: Float(Constants.DEFAULT_RADIUS)) { (response) in
+    func getShopsByName(type : Int, keyword : String) {
+        ApiService.getShopsByName(name: keyword, latitude: self.latitude ?? 0.0, longitude: self.longitude ?? 0.0, radius: Float(Constants.DEFAULT_RADIUS)) { (response) in
             self.shops.removeAll()
             self.shops.append(contentsOf: response.dataShops ?? [DataShop]())
             self.tableShops.reloadData()
@@ -235,4 +250,44 @@ UITableViewDelegate, UITableViewDataSource {
         self.navigationController?.popViewController(animated: true)
     }
     
+}
+extension AllShopsVC: UITextFieldDelegate {
+    
+    func textFieldShouldReturn(_ textField: UITextField) -> Bool {
+        if (textField == self.fieldSearch) {
+            let query = self.fieldSearch.text ?? ""
+            if (query.count > 2) {
+                //filter
+                self.loadShops(type: self.selectedCategory ?? 0, keyword: query)
+            }else {
+                self.loadShops(type: self.selectedCategory ?? 0, keyword: "")
+            }
+            textField.resignFirstResponder()
+            return true
+        }
+        return false
+    }
+    
+    
+    func textField(_ textField: UITextField, shouldChangeCharactersIn range: NSRange, replacementString string: String) -> Bool {
+        if (textField == self.fieldSearch) {
+            
+            if let text = textField.text,
+                let textRange = Range(range, in: text) {
+                let query = text.replacingCharacters(in: textRange,
+                                                     with: string)
+                
+                if (query.count > 2) {
+                    //filter
+                    self.loadShops(type: self.selectedCategory ?? 0, keyword: query)
+                }else {
+                    self.loadShops(type: self.selectedCategory ?? 0, keyword: "")
+                }
+            }else {
+                self.loadShops(type: self.selectedCategory ?? 0, keyword: "")
+            }
+            return true
+        }
+        return false
+    }
 }

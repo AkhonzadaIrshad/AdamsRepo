@@ -31,7 +31,7 @@ class SplashVC: BaseVC {
     
     
     func startSplashLoader() {
-        DispatchQueue.main.asyncAfter(deadline: .now() + 1) {
+        DispatchQueue.main.asyncAfter(deadline: .now()) {
             let check = UserDefaults.standard.value(forKey: Constants.DID_CHOOSE_LANGUAGE) as? Bool ?? false
             if (check) {
                 let user = self.loadUser()

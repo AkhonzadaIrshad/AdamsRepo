@@ -303,6 +303,15 @@ class MenuViewController: BaseVC {
         self.handleNotificationCounter()
         self.handleOrdersCounter()
         self.handleWorkingOrdersCounter()
+        
+        let user = self.loadUser()
+        let dueAmount = user.data?.dueAmount ?? 0.0
+        if (dueAmount >= 0) {
+            self.lblDue.textColor = UIColor.app_green
+        }else {
+            self.lblDue.textColor = UIColor.app_red
+        }
+        self.lblDue.text = "\("due".localized) \(dueAmount) \("currency".localized)"
     }
     
     @IBAction func onCloseMenuClick(_ button:UIButton!) {

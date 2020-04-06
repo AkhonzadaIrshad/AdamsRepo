@@ -16,5 +16,4 @@ class AllTypeCell: UICollectionViewCell {
     
     @IBOutlet weak var ivLogo: CircleImage!
     
-    
 }

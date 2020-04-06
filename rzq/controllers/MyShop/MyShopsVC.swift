@@ -62,7 +62,7 @@ class MyShopsVC: BaseVC, UITableViewDelegate, UITableViewDataSource {
             cell.ivLogo.image = UIImage(named: "ic_place_shopping_mall")
         }
         
-        
+
         let name = item.englishName ?? ""
         if (self.isArabic()) {
             cell.lblName.text = item.arabicName ?? ""

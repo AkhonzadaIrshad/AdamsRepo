@@ -715,8 +715,8 @@ class HomeMapVC: BaseViewController,LabasLocationManagerDelegate, UICollectionVi
         self.latitude = location.coordinate.latitude
         self.longitude = location.coordinate.longitude
         
-        //        self.latitude = 29.363534
-        //        self.longitude = 47.989769
+//                self.latitude = 28.537264
+//                self.longitude = 47.726557
         
         UserDefaults.standard.setValue(self.latitude, forKey: Constants.LAST_LATITUDE)
         UserDefaults.standard.setValue(self.longitude, forKey: Constants.LAST_LONGITUDE)

@@ -34,6 +34,7 @@ class DeliveryStep1: BaseVC,LabasLocationManagerDelegate, Step2Delegate, AllShop
     @IBOutlet weak var viewClearField: CardView!
     
     @IBOutlet weak var viewSuggest: UIView!
+    
     @IBOutlet weak var viewPin: UIView!
     
     @IBOutlet weak var shopNameHeight: NSLayoutConstraint!
@@ -188,11 +189,11 @@ class DeliveryStep1: BaseVC,LabasLocationManagerDelegate, Step2Delegate, AllShop
         //
         //        popTip.show(text: "search_from_google".localized, direction: .left, maxWidth: 260, in: self.view, from: self.ivGoogle.frame)
         //
-        self.viewPop.isHidden = false
+        self.viewPop.isHidden = true
         
-        DispatchQueue.main.asyncAfter(deadline: .now() + 11) {
-            self.viewPop.isHidden = true
-        }
+        //        DispatchQueue.main.asyncAfter(deadline: .now() + 11) {
+        //            self.viewPop.isHidden = true
+        //        }
         
         
         
@@ -475,8 +476,8 @@ class DeliveryStep1: BaseVC,LabasLocationManagerDelegate, Step2Delegate, AllShop
             self.latitude = location.coordinate.latitude
             self.longitude = location.coordinate.longitude
             
-            //                        self.latitude = 29.363534
-            //                        self.longitude = 47.989769
+//            self.latitude = 28.537264
+//            self.longitude = 47.726557
             
             
             UserDefaults.standard.setValue(self.latitude, forKey: Constants.LAST_LATITUDE)

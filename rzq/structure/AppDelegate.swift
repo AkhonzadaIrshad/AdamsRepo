@@ -313,8 +313,10 @@ class AppDelegate: UIResponder, UIApplicationDelegate, MOLHResetable,MessagingDe
         let notificationType = userInfo["Type"] as? String ?? ""
         if (notificationType == "5") {
             self.rateDriver()
+            self.closeOrderDetails()
         }else if (notificationType == "2") {
             self.closeChat()
+            self.closeOrderDetails()
         }
         else if (notificationType == "4") {
             self.removeCancelFromChat()
@@ -500,6 +502,18 @@ class AppDelegate: UIResponder, UIApplicationDelegate, MOLHResetable,MessagingDe
             }
         }
     }
+    
+    func closeOrderDetails() {
+          App.shared.notificationValue = "0"
+          App.shared.notificationType = "0"
+          App.shared.notificationDeliveryId = "0"
+          if let rootViewController = UIApplication.topViewController() {
+              if rootViewController is OrderDetailsVC {
+                  let vc = rootViewController as! OrderDetailsVC
+                  vc.closeFromNotification()
+              }
+          }
+      }
     
     
     func rateDriver() {

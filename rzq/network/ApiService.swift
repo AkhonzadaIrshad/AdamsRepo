@@ -952,6 +952,27 @@ class ApiService : NSObject {
           }
       }
     
+    static func getShopsPrioritySearch(keyword : String, latitude : Double, longitude : Double, radius : Float,rating : Double,types : Int, completion:@escaping(_ response : ShopListResponse)-> Void) {
+             
+             let headers = [Constants.LANG_HEADER : self.getLang()]
+             
+            let url = "\(Constants.BASE_URL)Shop/ListByPriority?keyword=\(keyword)&latitude=\(latitude)&longitude=\(longitude)&radius=\(radius)&type=\(types)&rate=\(Int(rating))"
+       
+        let encodedUrl = url.addingPercentEncoding(withAllowedCharacters: .urlQueryAllowed) ?? url
+        AFManager.request(encodedUrl, method: .get, parameters: nil ,encoding: JSONEncoding.default, headers: headers)
+                 .responseJSON { response in
+                     if let json = response.data {
+                         do {
+                             let decoder = JSONDecoder()
+                             let baseResponse = try decoder.decode(ShopListResponse.self, from: json)
+                             completion(baseResponse)
+                         }catch let err{
+                             print(err)
+                         }
+                     }
+             }
+         }
+    
     static func getShopsByName(name : String,latitude : Double, longitude : Double, radius : Float, completion:@escaping(_ response : ShopListResponse)-> Void) {
         
         let headers = ["Content-Type": "application/json",

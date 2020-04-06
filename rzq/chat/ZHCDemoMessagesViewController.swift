@@ -193,6 +193,9 @@ class ZHCDemoMessagesViewController: ZHCMessagesViewController, BillDelegate, Ch
         self.sendTextMessage(text: "I did'nt pay my order using Knet, is it possible that we use cash?\n\n\nلم اتمكن من الدفع باستخدام كي نت، هل من الممكن الدفع كاش؟")
     }
     
+    func onCloseFromNotification() {
+        self.dismiss(animated: true, completion: nil)
+    }
     
     override func viewDidAppear(_ animated: Bool) {
         super.viewDidAppear(animated)
@@ -200,7 +203,7 @@ class ZHCDemoMessagesViewController: ZHCMessagesViewController, BillDelegate, Ch
         
         if (self.order?.status == Constants.ORDER_CANCELLED || self.order?.status == Constants.ORDER_COMPLETED || self.order?.status == Constants.ORDER_EXPIRED) {
             self.showBanner(title: "alert".localized, message: "this_order_done".localized, style: UIColor.INFO)
-            DispatchQueue.main.asyncAfter(deadline: .now() + 2, execute: {
+            DispatchQueue.main.asyncAfter(deadline: .now() + 1, execute: {
                 self.navigationController?.dismiss(animated: true, completion: nil)
             })
         }
@@ -296,7 +299,7 @@ class ZHCDemoMessagesViewController: ZHCMessagesViewController, BillDelegate, Ch
     
     func closeChat() {
         self.showBanner(title: "alert".localized, message: "delivery_completed_user".localized, style: UIColor.SUCCESS)
-        DispatchQueue.main.asyncAfter(deadline: .now() + 2) {
+        DispatchQueue.main.asyncAfter(deadline: .now() + 1) {
             self.dismiss(animated: true, completion: nil)
         }
     }
@@ -607,7 +610,7 @@ class ZHCDemoMessagesViewController: ZHCMessagesViewController, BillDelegate, Ch
         ApiService.cancelDelivery(Authorization: self.user?.data?.accessToken ?? "", deliveryId: self.order?.id ?? 0, reason : reason, completion: { (response) in
             if (response.errorCode == 0) {
                 self.showBanner(title: "alert".localized, message: "delivery_cancelled".localized, style: UIColor.SUCCESS)
-                DispatchQueue.main.asyncAfter(deadline: .now() + 2, execute: {
+                DispatchQueue.main.asyncAfter(deadline: .now() + 1, execute: {
                     self.goToOrders()
                 })
             }else {
@@ -625,7 +628,7 @@ class ZHCDemoMessagesViewController: ZHCMessagesViewController, BillDelegate, Ch
         ApiService.cancelDeliveryByDriver(Authorization: self.user?.data?.accessToken ?? "", deliveryId: self.order?.id ?? 0, reason : reason, completion: { (response) in
             if (response.errorCode == 0) {
                 self.showBanner(title: "alert".localized, message: "delivery_cancelled".localized, style: UIColor.SUCCESS)
-                DispatchQueue.main.asyncAfter(deadline: .now() + 2, execute: {
+                DispatchQueue.main.asyncAfter(deadline: .now() + 1, execute: {
                     self.goToOrders()
                 })
             }else {
@@ -891,6 +894,13 @@ class ZHCDemoMessagesViewController: ZHCMessagesViewController, BillDelegate, Ch
         super.viewWillAppear(animated)
         if self.presentBool {
             self.navigationItem.leftBarButtonItem = UIBarButtonItem.init(barButtonSystemItem: UIBarButtonItem.SystemItem.stop, target: self, action:#selector(closePressed))
+        }
+        
+        if (self.order?.status == Constants.ORDER_COMPLETED || self.order?.status == Constants.ORDER_EXPIRED || self.order?.status == Constants.ORDER_CANCELLED) {
+            self.showBanner(title: "alert".localized, message: "delivery_completed_user".localized, style: UIColor.INFO)
+            DispatchQueue.main.asyncAfter(deadline: .now () + 1) {
+                self.dismiss(animated: true, completion: nil)
+            }
         }
         
     }

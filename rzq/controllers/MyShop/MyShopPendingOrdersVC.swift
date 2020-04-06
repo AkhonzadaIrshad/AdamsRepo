@@ -13,10 +13,9 @@ class MyShopPendingOrdersVC: BaseVC, UITableViewDelegate, UITableViewDataSource 
     
     @IBOutlet weak var tableView: UITableView!
     
-    var shopId : Int?
-    
     @IBOutlet weak var ivHandle: UIImageView!
     
+    var shopId : Int?
     var items = [ShopOrdersDatum]()
     
     override func viewDidLoad() {

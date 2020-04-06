@@ -18,6 +18,7 @@ import FittedSheets
 protocol OrderChatDelegate {
     func onOrderPaymentSuccess()
     func onOrderPaymentFail()
+    func onCloseFromNotification()
 }
 class OrderDetailsVC: BaseVC, UICollectionViewDelegate, UICollectionViewDataSource, UICollectionViewDelegateFlowLayout, AVAudioPlayerDelegate, PaymentSheetDelegate, PaymentDelegate {
     
@@ -226,11 +227,11 @@ class OrderDetailsVC: BaseVC, UICollectionViewDelegate, UICollectionViewDataSour
                 self.btnChangeMethod.isHidden = true
                 self.viewChangeMethod.isHidden = true
             }else {
-                //                self.btnChangeMethod.isHidden = false
-                //                self.viewChangeMethod.isHidden = false
+                self.btnChangeMethod.isHidden = false
+                self.viewChangeMethod.isHidden = false
                 //testing
-                self.btnChangeMethod.isHidden = true
-                self.viewChangeMethod.isHidden = true
+                //self.btnChangeMethod.isHidden = true
+                //self.viewChangeMethod.isHidden = true
             }
         }else {
             self.btnChangeMethod.isHidden = true
@@ -260,6 +261,7 @@ class OrderDetailsVC: BaseVC, UICollectionViewDelegate, UICollectionViewDataSour
             // if (self.isPay ?? false) {
             if (self.order?.paymentMethod == Constants.PAYMENT_METHOD_KNET && (self.order?.isPaid ?? false) == false) {
                 if (self.order?.status == Constants.ORDER_PENDING || self.order?.status == Constants.ORDER_PROCESSING || self.order?.status == Constants.ORDER_ON_THE_WAY) {
+                    //for testing
                     self.btnPay.isHidden = false
                     self.viewPay.isHidden = false
                 }else {
@@ -594,20 +596,20 @@ class OrderDetailsVC: BaseVC, UICollectionViewDelegate, UICollectionViewDataSour
     }
     
     @IBAction func cancelOrderAction(_ sender: Any) {
-//        self.showAlert(title: "alert".localized, message: "confirm_cancel_delivery".localized, actionTitle: "yes".localized, cancelTitle: "no".localized, actionHandler: {
-//            if (self.isProvider() && self.loadUser().data?.userID == self.order?.driverId ?? "") {
-//                self.cancelDeliveryByDriver()
-//            }else {
-//                self.cancelDeliveryByUser()
-//            }
-//        })
+        //        self.showAlert(title: "alert".localized, message: "confirm_cancel_delivery".localized, actionTitle: "yes".localized, cancelTitle: "no".localized, actionHandler: {
+        //            if (self.isProvider() && self.loadUser().data?.userID == self.order?.driverId ?? "") {
+        //                self.cancelDeliveryByDriver()
+        //            }else {
+        //                self.cancelDeliveryByUser()
+        //            }
+        //        })
         
         self.showAlertField(title: "alert".localized, message: "confirm_cancel_delivery".localized, actionTitle: "yes".localized, cancelTitle: "no".localized) { (reason) in
             if (self.isProvider() && self.loadUser().data?.userID == self.order?.driverId ?? "") {
                 self.cancelDeliveryByDriver(reason : reason)
-                       }else {
-                           self.cancelDeliveryByUser(reason : reason)
-                       }
+            }else {
+                self.cancelDeliveryByUser(reason : reason)
+            }
         }
     }
     
@@ -850,6 +852,10 @@ class OrderDetailsVC: BaseVC, UICollectionViewDelegate, UICollectionViewDataSour
         return total
     }
     
+    func closeFromNotification() {
+        self.delegate?.onCloseFromNotification()
+        self.navigationController?.popViewController(animated: true)
+    }
 }
 
 extension OrderDetailsVC : GMSMapViewDelegate {
