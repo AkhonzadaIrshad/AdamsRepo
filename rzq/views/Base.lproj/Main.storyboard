@@ -8959,12 +8959,20 @@
                                                                         </userDefinedRuntimeAttribute>
                                                                     </userDefinedRuntimeAttributes>
                                                                 </view>
+                                                                <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="5Ab-0F-qDI">
+                                                                    <rect key="frame" x="20" y="137" width="0.0" height="0.0"/>
+                                                                    <fontDescription key="fontDescription" type="system" pointSize="17"/>
+                                                                    <nil key="textColor"/>
+                                                                    <nil key="highlightedColor"/>
+                                                                </label>
                                                             </subviews>
                                                             <color key="backgroundColor" red="0.90588235289999997" green="0.92549019610000005" blue="0.93333333330000001" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                                                             <constraints>
                                                                 <constraint firstAttribute="bottom" secondItem="kLy-qG-cz7" secondAttribute="bottom" constant="1" id="UNZ-RG-PJ9"/>
+                                                                <constraint firstAttribute="bottom" secondItem="5Ab-0F-qDI" secondAttribute="bottom" constant="20" id="fkf-4R-69g"/>
                                                                 <constraint firstItem="kLy-qG-cz7" firstAttribute="leading" secondItem="HX6-Gx-5Sx" secondAttribute="leading" constant="1" id="hlf-qP-gkQ"/>
                                                                 <constraint firstAttribute="trailing" secondItem="kLy-qG-cz7" secondAttribute="trailing" constant="1" id="uTE-Bz-2Ul"/>
+                                                                <constraint firstItem="5Ab-0F-qDI" firstAttribute="leading" secondItem="HX6-Gx-5Sx" secondAttribute="leading" constant="20" id="yTN-3T-SWM"/>
                                                                 <constraint firstItem="kLy-qG-cz7" firstAttribute="top" secondItem="HX6-Gx-5Sx" secondAttribute="top" constant="1" id="zbs-Ga-EYg"/>
                                                             </constraints>
                                                             <userDefinedRuntimeAttributes>
@@ -8991,6 +8999,8 @@
                                                     </constraints>
                                                 </tableViewCellContentView>
                                                 <connections>
+                                                    <outlet property="btnCheckBid" destination="0mE-E5-yMM" id="iSq-hj-KJS"/>
+                                                    <outlet property="counterLbl" destination="5Ab-0F-qDI" id="2bX-hL-Iva"/>
                                                     <outlet property="ivLogo" destination="slF-Qi-XQR" id="xQe-NB-3Zm"/>
                                                     <outlet property="lblDistance" destination="K6I-cY-Ac7" id="SVX-5u-YMY"/>
                                                     <outlet property="lblMoney" destination="vNJ-fR-wCx" id="EQT-77-InW"/>
@@ -12079,7 +12089,7 @@
                                 </userDefinedRuntimeAttributes>
                             </view>
                             <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="bsg-f9-Djh" customClass="RoundedView" customModule="rzq" customModuleProvider="target">
-                                <rect key="frame" x="230" y="458" width="125" height="50"/>
+                                <rect key="frame" x="10" y="171" width="125" height="50"/>
                                 <subviews>
                                     <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="F3g-Xj-p8l">
                                         <rect key="frame" x="0.0" y="0.0" width="125" height="50"/>
@@ -12790,8 +12800,6 @@
                             <constraint firstItem="d5N-D6-syc" firstAttribute="trailing" secondItem="I8Q-pe-Ept" secondAttribute="trailing" id="4fM-A7-8Xk"/>
                             <constraint firstItem="3sh-5Y-vjj" firstAttribute="leading" secondItem="d5N-D6-syc" secondAttribute="leading" id="8Lo-Al-HpF"/>
                             <constraint firstItem="kbU-q0-1TA" firstAttribute="top" secondItem="A9H-cE-hxA" secondAttribute="bottom" id="AEK-1o-7vA"/>
-                            <constraint firstItem="3sh-5Y-vjj" firstAttribute="top" secondItem="bsg-f9-Djh" secondAttribute="bottom" constant="10" id="By0-S9-fT0"/>
-                            <constraint firstItem="d5N-D6-syc" firstAttribute="trailing" secondItem="bsg-f9-Djh" secondAttribute="trailing" constant="20" id="FCV-cu-uhS"/>
                             <constraint firstItem="4cr-kg-M27" firstAttribute="leading" secondItem="d5N-D6-syc" secondAttribute="leading" constant="15" id="Gf9-si-Xf7"/>
                             <constraint firstItem="kbU-q0-1TA" firstAttribute="leading" secondItem="d5N-D6-syc" secondAttribute="leading" id="J7L-zs-LgO"/>
                             <constraint firstItem="LBa-dk-CdG" firstAttribute="top" secondItem="A9H-cE-hxA" secondAttribute="bottom" constant="8" id="Kq4-c3-eSX"/>
@@ -12804,6 +12812,8 @@
                             <constraint firstItem="d5N-D6-syc" firstAttribute="trailing" secondItem="kbU-q0-1TA" secondAttribute="trailing" id="bGc-fM-9TY"/>
                             <constraint firstItem="d5N-D6-syc" firstAttribute="trailing" secondItem="w3z-Z6-4LH" secondAttribute="trailing" constant="30" id="cAL-eh-DtX"/>
                             <constraint firstItem="3sh-5Y-vjj" firstAttribute="top" secondItem="kbU-q0-1TA" secondAttribute="bottom" constant="-50" id="csb-qb-INM"/>
+                            <constraint firstItem="bsg-f9-Djh" firstAttribute="leading" secondItem="d5N-D6-syc" secondAttribute="leading" constant="10" id="eP9-xl-3Iz"/>
+                            <constraint firstItem="bsg-f9-Djh" firstAttribute="top" secondItem="I8Q-pe-Ept" secondAttribute="bottom" constant="10" id="eWI-4Q-6sA"/>
                             <constraint firstItem="d5N-D6-syc" firstAttribute="bottom" secondItem="3sh-5Y-vjj" secondAttribute="bottom" id="gva-zI-7MH"/>
                             <constraint firstItem="d5N-D6-syc" firstAttribute="trailing" secondItem="4cr-kg-M27" secondAttribute="trailing" constant="100" id="kXZ-ni-Btz"/>
                             <constraint firstItem="w3z-Z6-4LH" firstAttribute="leading" secondItem="d5N-D6-syc" secondAttribute="leading" constant="30" id="mpa-tG-vMu"/>

@@ -416,7 +416,6 @@ class NotificationsVC: BaseViewController, UITableViewDelegate, UITableViewDataS
             let cell : DriverBidCell = tableView.dequeueReusableCell(withIdentifier: "driverbidcell", for: indexPath) as! DriverBidCell
             
             let dict = item.data?.convertToDictionary()
-            
             let shopImage = dict?["ShopImage"] as? String ?? ""
             
             if (shopImage.count > 0) {
@@ -466,7 +465,7 @@ class NotificationsVC: BaseViewController, UITableViewDelegate, UITableViewDataS
             }else {
                 cell.timeView.isHidden = true
             }
-            
+            cell.startCountDown(startedFrom: item.createdDate)
             return cell
         case Constants.ON_THE_WAY:
             let cell : RegularAlertCell = tableView.dequeueReusableCell(withIdentifier: "regularalertcell", for: indexPath) as! RegularAlertCell
@@ -626,7 +625,7 @@ class NotificationsVC: BaseViewController, UITableViewDelegate, UITableViewDataS
             let cell : DriverBidCell = tableView.dequeueReusableCell(withIdentifier: "driverbidcell", for: indexPath) as! DriverBidCell
             
             let dict = item.data?.convertToDictionary()
-            
+            cell.startCountDown(startedFrom: dict?["Time"] as? String)
             let shopImage = dict?["ServiceImage"] as? String ?? ""
             
             if (shopImage.count > 0) {
