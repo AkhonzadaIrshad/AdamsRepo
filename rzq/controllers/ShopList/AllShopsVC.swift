@@ -33,7 +33,7 @@ UITableViewDelegate, UITableViewDataSource {
         didSet {
             if (shops.count > 0) {
                 self.tableShops.restore()
-            }else {
+            } else {
                 self.tableShops.setEmptyView(title: "no_shops".localized, message: "no_shops_desc".localized, image: "bg_no_data")
             }
         }

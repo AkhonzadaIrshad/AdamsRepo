@@ -78,6 +78,8 @@ class DeliveryStep1: BaseVC,LabasLocationManagerDelegate, Step2Delegate, AllShop
     var filterShops = [DataShop]()
     var shopMarkers = [GMSMarker]()
     
+    var selectdCategory: TypeClass?
+    
     @IBOutlet weak var viewPop: UIView!
     
     @IBOutlet weak var collectionCategories: UICollectionView!
@@ -242,12 +244,16 @@ class DeliveryStep1: BaseVC,LabasLocationManagerDelegate, Step2Delegate, AllShop
     
     func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
         let selectedCat = self.categories[indexPath.row]
-        if let vc = UIStoryboard(name: "Main", bundle: nil).instantiateViewController(withIdentifier: "AllShopsVC") as? AllShopsVC
-        {
-            vc.delegate = self
-            vc.selectedCategory = selectedCat.id ?? 0
-            self.navigationController?.pushViewController(vc, animated: true)
+        self.selectdCategory = selectedCat
+        if selectedCat.id == 0 {
+            self.addShopsMarkers()
+        } else {
+            self.filterShopsMarkers(selectedShopTypeId: selectedCat.id ?? 0)
         }
+    }
+    
+    @IBAction func showShopsList(_ sender: Any) {
+        self.showShopsList()
     }
     
     func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
@@ -896,6 +902,38 @@ class DeliveryStep1: BaseVC,LabasLocationManagerDelegate, Step2Delegate, AllShop
         marker.title =  "my_location"
         marker.snippet = ""
         marker.map = gMap
+    }
+    
+    func filterShopsMarkers(selectedShopTypeId: Int) {
+        self.gMap?.clear()
+        let selectedShops = self.shops.filter({$0.type?.id == selectedShopTypeId})
+        for center in selectedShops{
+            let marker = GMSMarker()
+            marker.position = CLLocationCoordinate2D(latitude: center.latitude ?? 0.0, longitude: center.longitude ?? 0.0)
+            marker.title =  "\(center.id ?? 0)"
+            marker.snippet = "\(center.phoneNumber ?? "")"
+            self.singleMarker?.icon = UIImage(named: "ic_shop_empty")
+            // snuff1
+            let url = URL(string: "\(Constants.IMAGE_URL)\(center.type?.icon ?? "")")
+            self.applyMarkerImage(from: url!, to: marker)
+            self.singleMarker?.map = self.gMap
+            marker.map = gMap
+            self.shopMarkers.append(marker)
+        }
+        let marker = GMSMarker()
+        marker.position = CLLocationCoordinate2D(latitude: self.latitude ?? 0.0, longitude: self.longitude ?? 0.0)
+        marker.title =  "my_location"
+        marker.snippet = ""
+        marker.map = gMap
+    }
+    
+    func showShopsList() {
+        if let vc = UIStoryboard(name: "Main", bundle: nil).instantiateViewController(withIdentifier: "AllShopsVC") as? AllShopsVC
+        {
+            vc.delegate = self
+            vc.selectedCategory = self.selectdCategory?.id
+            self.navigationController?.pushViewController(vc, animated: true)
+        }
     }
     
     func applyMarkerImage(from url: URL, to marker: GMSMarker) {

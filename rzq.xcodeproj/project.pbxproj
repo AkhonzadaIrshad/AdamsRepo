@@ -8,6 +8,7 @@
 
 /* Begin PBXBuildFile section */
 		5AEDABFCF15B3B611B1F883C /* Pods_rzq.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 6C9F2970658F91B48096D878 /* Pods_rzq.framework */; };
+		675FFA202455EAA500C8AD17 /* RoundedView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 675FFA1F2455EAA500C8AD17 /* RoundedView.swift */; };
 		8B05CDC42361BD8700E0FF9B /* ShopOwnerMenuResponse.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8B05CDC32361BD8700E0FF9B /* ShopOwnerMenuResponse.swift */; };
 		8B05CDC62361C00F00E0FF9B /* OwnerShopListResponse.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8B05CDC52361C00F00E0FF9B /* OwnerShopListResponse.swift */; };
 		8B112074235DA0F2005F2122 /* ShopMenuTabCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8B112073235DA0F2005F2122 /* ShopMenuTabCell.swift */; };
@@ -224,6 +225,7 @@
 
 /* Begin PBXFileReference section */
 		172B3F9BB35A5D499A0D11A2 /* Pods-rzq.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-rzq.debug.xcconfig"; path = "Pods/Target Support Files/Pods-rzq/Pods-rzq.debug.xcconfig"; sourceTree = "<group>"; };
+		675FFA1F2455EAA500C8AD17 /* RoundedView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RoundedView.swift; sourceTree = "<group>"; };
 		6C9F2970658F91B48096D878 /* Pods_rzq.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_rzq.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		8B05CDC32361BD8700E0FF9B /* ShopOwnerMenuResponse.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ShopOwnerMenuResponse.swift; sourceTree = "<group>"; };
 		8B05CDC52361C00F00E0FF9B /* OwnerShopListResponse.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = OwnerShopListResponse.swift; sourceTree = "<group>"; };
@@ -719,6 +721,7 @@
 				8BF2223A2271DBDC005BE71D /* EmptyView.swift */,
 				8BCD198E228445F500AFB878 /* SearchTextField.swift */,
 				8BC23289228AFD3E00CD086F /* FormTextField.swift */,
+				675FFA1F2455EAA500C8AD17 /* RoundedView.swift */,
 			);
 			path = CustomUI;
 			sourceTree = "<group>";
@@ -1184,6 +1187,7 @@
 				8BDAA8BD2275A1E100F59D5E /* WorkingHourCell.swift in Sources */,
 				8BDAA8C52275DBAE00F59D5E /* ShopFilterCell.swift in Sources */,
 				8BC23286228AF14200CD086F /* SelectLocationViewController.swift in Sources */,
+				675FFA202455EAA500C8AD17 /* RoundedView.swift in Sources */,
 				8B9BA6C4235C51F20058BAF8 /* MyShopOrderCell.swift in Sources */,
 				8B121BB12265FEC60083069F /* TermsVC.swift in Sources */,
 				8B121B9B2265D0610083069F /* ShopRegisterCell.swift in Sources */,
