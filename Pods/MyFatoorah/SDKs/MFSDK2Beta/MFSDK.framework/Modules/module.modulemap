@@ -1,0 +1,11 @@
+framework module MFSDK {
+  umbrella header "MFSDK.h"
+
+  export *
+  module * { export * }
+}
+
+module MFSDK.Swift {
+    header "MFSDK-Swift.h"
+    requires objc
+}

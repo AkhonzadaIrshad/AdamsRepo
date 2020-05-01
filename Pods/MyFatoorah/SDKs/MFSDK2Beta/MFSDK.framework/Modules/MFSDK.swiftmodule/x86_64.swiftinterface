@@ -1,0 +1,506 @@
+// swift-interface-format-version: 1.0
+// swift-compiler-version: Apple Swift version 5.1 (swiftlang-1100.0.270.13 clang-1100.0.33.7)
+// swift-module-flags: -target x86_64-apple-ios8.0-simulator -enable-objc-interop -enable-library-evolution -swift-version 5 -enforce-exclusivity=checked -Onone -module-name MFSDK
+import Foundation
+@_exported import MFSDK
+import Swift
+import UIKit
+import WebKit
+extension MFPaymentRequest {
+  @objc @available(swift, obsoleted: 1.0)
+  dynamic public func executePayment(request: MFSDK.MFExecutePaymentRequest, apiLanguage: MFSDK.MFAPILanguage, completion: @escaping (MFSDK.MFPaymentStatusResponse?, MFSDK.MFFailResponse?, Swift.String?) -> Swift.Void)
+  public func executePayment(request: MFSDK.MFExecutePaymentRequest, apiLanguage: MFSDK.MFAPILanguage, completion: @escaping (Swift.Result<MFSDK.MFPaymentStatusResponse, MFSDK.MFFailResponse>, Swift.String?) -> Swift.Void)
+}
+@objcMembers @objc public class MFSendPaymentResponse : ObjectiveC.NSObject, Swift.Codable {
+  public var invoiceId: Swift.Int?
+  @objc public var invoiceURL: Swift.String?
+  @objc public var customerReference: Swift.String?
+  @objc public var userDefinedField: Swift.String?
+  @objc override dynamic public init()
+  @objc deinit
+  required public init(from decoder: Swift.Decoder) throws
+  public func encode(to encoder: Swift.Encoder) throws
+}
+@objcMembers @objc public class MFInitiatePaymentResponse : ObjectiveC.NSObject, Swift.Codable {
+  @objc public var paymentMethods: [MFSDK.MFPaymentMethod]?
+  @objc override dynamic public init()
+  @objc deinit
+  required public init(from decoder: Swift.Decoder) throws
+  public func encode(to encoder: Swift.Encoder) throws
+}
+@objcMembers @objc public class MFCardInfo : ObjectiveC.NSObject {
+  @objc public var bypass: Swift.Bool
+  @objc public init(cardNumber: Swift.String, cardExpiryMonth: Swift.String, cardExpiryYear: Swift.String, cardSecurityCode: Swift.String, saveToken: Swift.Bool)
+  @objc public init(cardNumber: Swift.String, cardExpiryMonth: Swift.String, cardExpiryYear: Swift.String, cardSecurityCode: Swift.String)
+  @objc public init(cardToken: Swift.String)
+  @objc override dynamic public init()
+  @objc deinit
+}
+extension MFPaymentRequest {
+  @objc @available(swift, obsoleted: 1.0)
+  dynamic public func sendPayment(request: MFSDK.MFSendPaymentRequest, apiLanguage: MFSDK.MFAPILanguage, completion: @escaping (MFSDK.MFSendPaymentResponse?, MFSDK.MFFailResponse?) -> Swift.Void)
+  public func sendPayment(request: MFSDK.MFSendPaymentRequest, apiLanguage: MFSDK.MFAPILanguage, completion: @escaping (Swift.Result<MFSDK.MFSendPaymentResponse, MFSDK.MFFailResponse>) -> ())
+}
+@objc public enum MFCountry : Swift.Int {
+  case kuwait = 1
+  case saudiArabia = 2
+  case bahrain = 3
+  case uAE = 4
+  case qatar = 5
+  case oman = 6
+  case jordan = 7
+  public typealias RawValue = Swift.Int
+  public init?(rawValue: Swift.Int)
+  public var rawValue: Swift.Int {
+    get
+  }
+}
+@objc public enum MFPaymentype : Swift.Int, Swift.RawRepresentable {
+  public typealias RawValue = Swift.String
+  case card
+  case token
+  public var rawValue: MFSDK.MFPaymentype.RawValue {
+    get
+  }
+  public init?(rawValue: MFSDK.MFPaymentype.RawValue)
+}
+@objc public enum MFKeyType : Swift.Int, Swift.RawRepresentable {
+  public typealias RawValue = Swift.String
+  case invoiceId
+  case paymentId
+  public var rawValue: MFSDK.MFKeyType.RawValue {
+    get
+  }
+  public init?(rawValue: MFSDK.MFKeyType.RawValue)
+}
+@objc @available(swift, obsoleted: 1.0)
+@objcMembers public class MFEnumRawValue : ObjectiveC.NSObject {
+  @objc public class func rawValue(enumValue: MFSDK.MFMobileCountryCodeISO) -> Swift.String
+  @objc override dynamic public init()
+  @objc deinit
+}
+@objc public enum MFMobileCountryCodeISO : Swift.Int, Swift.RawRepresentable {
+  public typealias RawValue = Swift.String
+  case kuwait
+  case saudiArabia
+  case bahrain
+  case uAE
+  case qatar
+  case oman
+  case jordan
+  public var rawValue: MFSDK.MFMobileCountryCodeISO.RawValue {
+    get
+  }
+  public init?(rawValue: MFSDK.MFMobileCountryCodeISO.RawValue)
+}
+@objc public enum MFCurrencyISO : Swift.Int, Swift.RawRepresentable {
+  public typealias RawValue = Swift.String
+  case kuwait_KWD
+  case saudiArabia_SAR
+  case bahrain_BHD
+  case uAE_AED
+  case qatar_QAR
+  case oman_MOR
+  case jordan_JOD
+  case unitedStates_USD
+  case euro_EUR
+  case Cuban_Convertible_Peso_CUC
+  case Falkland_Islands_Pound_FKP
+  case Indonesian_Rupiah_IDR
+  case Brazilian_Real_BRL
+  case Costa_Rican_Colón_CRC
+  case Maldivian_Rufiyaa_MVR
+  case Brunei_Dollar_BND
+  case Romanian_Leu_RON
+  case Yemeni_Rial_YER
+  case Lesotho_Loti_LSL
+  case Mongolian_Tugrik_MNT
+  case Papua_New_Guinean_Kina_PGK
+  case Liberian_Dollar_LRD
+  case Venezuelan_Bolívar_Soberano_VES
+  case Cape_Verdean_Escudo_CVE
+  case Palladium_Ounce_XPD
+  case Haitian_Gourde_HTG
+  case Saint_Helena_Pound_SHP
+  case Kenyan_Shilling_KES
+  case Moldovan_Leu_MDL
+  case Kyrgystani_Som_KGS
+  case New_Zealand_Dollar_NZD
+  case Jersey_Pound_JEP
+  case Macanese_Pataca_MOP
+  case Moroccan_Dirham_MAD
+  case Ethiopian_Birr_ETB
+  case Turkish_Lira_TRY
+  case Zambian_Kwacha_ZMW
+  case East_Caribbean_Dollar_XCD
+  case Libyan_Dinar_LYD
+  case Sudanese_Pound_SDG
+  case Tanzanian_Shilling_TZS
+  case Vanuatu_Vatu_VUV
+  case Platinum_Ounce_XPT
+  case Fijian_Dollar_FJD
+  case SaoTomAndPrincipeDobraSTD
+  case Polish_Zloty_PLN
+  case Canadian_Dollar_CAD
+  case Guernsey_Pound_GGP
+  case Chilean_Unit_of_Account_UF_CLF
+  case Eritrean_Nakfa_ERN
+  case Somali_Shilling_SOS
+  case Botswanan_Pula_BWP
+  case Belize_Dollar_BZD
+  case Salvadoran_Colón_SVC
+  case São_Tomé_and_Príncipe_Dobra_STN
+  case Azerbaijani_Manat_AZN
+  case Barbadian_Dollar_BBD
+  case Mauritian_Rupee_MUR
+  case Special_Drawing_Rights_XDR
+  case Laotian_Kip_LAK
+  case Swazi_Lilangeni_SZL
+  case Czech_Republic_Koruna_CZK
+  case Mexican_Peso_MXN
+  case CFP_Franc_XPF
+  case Jamaican_Dollar_JMD
+  case Burundian_Franc_BIF
+  case Gibraltar_Pound_GIP
+  case Namibian_Dollar_NAD
+  case Syrian_Pound_SYP
+  case Surinamese_Dollar_SRD
+  case CFA_Franc_BEAC_XAF
+  case North_Korean_Won_KPW
+  case Norwegian_Krone_NOK
+  case Singapore_Dollar_SGD
+  case Bhutanese_Ngultrum_BTN
+  case Chinese_Yuan_CNY
+  case Malaysian_Ringgit_MYR
+  case Afghan_Afghani_AFN
+  case BosniaHerzegovinaConvertibleMarkBAM
+  case Danish_Krone_DKK
+  case South_Korean_Won_KRW
+  case Chilean_Peso_CLP
+  case Guatemalan_Quetzal_GTQ
+  case Serbian_Dinar_RSD
+  case Turkmenistani_Manat_TMT
+  case Armenian_Dram_AMD
+  case MauritanianOuguiyaMRO
+  case Solomon_Islands_Dollar_SBD
+  case Belarusian_Ruble_BYN
+  case Bangladeshi_Taka_BDT
+  case Malawian_Kwacha_MWK
+  case Pakistani_Rupee_PKR
+  case South_African_Rand_ZAR
+  case Zimbabwean_Dollar_ZWL
+  case Bolivian_Boliviano_BOB
+  case Gold_Ounce_XAU
+  case Trinidad_and_Tobago_Dollar_TTD
+  case Peruvian_Nuevo_Sol_PEN
+  case Australian_Dollar_AUD
+  case Sri_Lankan_Rupee_LKR
+  case Sierra_Leonean_Leone_SLL
+  case Israeli_New_Sheqel_ILS
+  case Bitcoin_BTC
+  case Lebanese_Pound_LBP
+  case Rwandan_Franc_RWF
+  case Croatian_Kuna_HRK
+  case Honduran_Lempira_HNL
+  case Bermudan_Dollar_BMD
+  case Venezuelan_Bolívar_Fuerte_Old_VEF
+  case Congolese_Franc_CDF
+  case Guinean_Franc_GNF
+  case Indian_Rupee_INR
+  case British_Pound_Sterling_GBP
+  case Samoan_Tala_WST
+  case Netherlands_Antillean_Guilder_ANG
+  case Manx_pound_IMP
+  case Nicaraguan_Córdoba_NIO
+  case Algerian_Dinar_DZD
+  case South_Sudanese_Pound_SSP
+  case Swiss_Franc_CHF
+  case Bulgarian_Lev_BGN
+  case Egyptian_Pound_EGP
+  case Cayman_Islands_Dollar_KYD
+  case Mauritanian_Ouguiya_MRU
+  case Japanese_Yen_JPY
+  case Philippine_Peso_PHP
+  case Paraguayan_Guarani_PYG
+  case Swedish_Krona_SEK
+  case Cuban_Peso_CUP
+  case Hong_Kong_Dollar_HKD
+  case Iraqi_Dinar_IQD
+  case Dominican_Peso_DOP
+  case Kazakhstani_Tenge_KZT
+  case Hungarian_Forint_HUF
+  case Nigerian_Naira_NGN
+  case New_Taiwan_Dollar_TWD
+  case Nepalese_Rupee_NPR
+  case Ugandan_Shilling_UGX
+  case Silver_Ounce_XAG
+  case Angolan_Kwanza_AOA
+  case Comorian_Franc_KMF
+  case Myanma_Kyat_MMK
+  case CFA_Franc_BCEAO_XOF
+  case Georgian_Lari_GEL
+  case Gambian_Dalasi_GMD
+  case Seychellois_Rupee_SCR
+  case Tunisian_Dinar_TND
+  case Cambodian_Riel_KHR
+  case Chinese_Yuan_Offshore_CNH
+  case Argentine_Peso_ARS
+  case Tajikistani_Somoni_TJS
+  case Russian_Ruble_RUB
+  case Ghanaian_Cedi_GHS
+  case Guyanaese_Dollar_GYD
+  case Djiboutian_Franc_DJF
+  case Mozambican_Metical_MZN
+  case Ukrainian_Hryvnia_UAH
+  case Bahamian_Dollar_BSD
+  case Aruban_Florin_AWG
+  case Vietnamese_Dong_VND
+  case Icelandic_Króna_ISK
+  case Uzbekistan_Som_UZS
+  case Thai_Baht_THB
+  case Uruguayan_Peso_UYU
+  case Macedonian_Denar_MKD
+  case Malagasy_Ariary_MGA
+  case Colombian_Peso_COP
+  case Panamanian_Balboa_PAB
+  case Iranian_Rial_IRR
+  case TonganPangaTOP
+  case Albanian_Lek_ALL
+  public var rawValue: MFSDK.MFCurrencyISO.RawValue {
+    get
+  }
+  public init?(rawValue: MFSDK.MFCurrencyISO.RawValue)
+}
+@objc public enum MFNotificationOption : Swift.Int, Swift.RawRepresentable, Swift.CaseIterable {
+  public typealias RawValue = Swift.String
+  case all
+  case email
+  case sms
+  case link
+  public var rawValue: MFSDK.MFNotificationOption.RawValue {
+    get
+  }
+  public init?(rawValue: MFSDK.MFNotificationOption.RawValue)
+  public typealias AllCases = [MFSDK.MFNotificationOption]
+  public static var allCases: [MFSDK.MFNotificationOption] {
+    get
+  }
+}
+@objc public enum MFInvoiceOption : Swift.Int {
+  case sms = 1
+  case email = 2
+  case smsAndEmail = 3
+  case Link = 4
+  public typealias RawValue = Swift.Int
+  public init?(rawValue: Swift.Int)
+  public var rawValue: Swift.Int {
+    get
+  }
+}
+@objc public enum MFLanguage : Swift.Int {
+  case arabic = 1
+  case english = 2
+  public typealias RawValue = Swift.Int
+  public init?(rawValue: Swift.Int)
+  public var rawValue: Swift.Int {
+    get
+  }
+}
+@objc public enum MFAPILanguage : Swift.Int, Swift.RawRepresentable {
+  public typealias RawValue = Swift.String
+  case arabic
+  case english
+  public var rawValue: MFSDK.MFAPILanguage.RawValue {
+    get
+  }
+  public init?(rawValue: MFSDK.MFAPILanguage.RawValue)
+}
+@objcMembers @objc public class MFPaymentStatusRequest : ObjectiveC.NSObject {
+  @objc public init(invoiceID: Swift.String)
+  @objc public init(paymentId: Swift.String)
+  @objc override dynamic public init()
+  @objc deinit
+}
+@objcMembers @objc public class MFCustomerAddress : ObjectiveC.NSObject {
+  @objc public var block: Swift.String
+  @objc public var street: Swift.String
+  @objc public var houseBuildingNo: Swift.String
+  @objc public var address: Swift.String
+  @objc public var addressInstructions: Swift.String
+  @objc public init(block: Swift.String, street: Swift.String, houseBuildingNo: Swift.String, address: Swift.String, addressInstructions: Swift.String)
+  @objc override dynamic public init()
+  @objc deinit
+}
+@objcMembers @objc public class MFInitiatePaymentRequest : ObjectiveC.NSObject {
+  @objc public init(invoiceAmount: Swift.Double, currencyIso: MFSDK.MFCurrencyISO)
+  @objc override dynamic public init()
+  @objc deinit
+}
+@objcMembers @objc public class MFSendPaymentRequest : ObjectiveC.NSObject {
+  @objc public var mobileCountryIsoCode: Swift.String
+  @objc public var displayCurrencyIso: MFSDK.MFCurrencyISO
+  @objc public var customerCivilId: Swift.String
+  @objc public var customerReference: Swift.String
+  @objc public var customerEmail: Swift.String
+  @objc public var customerMobile: Swift.String
+  @objc public var invoiceItems: [MFSDK.MFProduct]
+  @objc public var language: MFSDK.MFLanguage
+  @objc public var expiryDate: Foundation.Date?
+  @objc public var errorUrl: Swift.String
+  @objc public var customerAddress: MFSDK.MFCustomerAddress?
+  @objc public var callBackUrl: Swift.String
+  @objc public var userDefinedField: Swift.String
+  @objc public var supplierCode: Swift.Int
+  @objc public init(invoiceValue: Swift.Double, notificationOption: MFSDK.MFNotificationOption, customerName: Swift.String)
+  @objc override dynamic public init()
+  @objc deinit
+}
+@objcMembers @objc public class MFPaymentRequest : ObjectiveC.NSObject {
+  @objc public static var shared: MFSDK.MFPaymentRequest
+  @objc override dynamic public init()
+  @objc deinit
+}
+@objcMembers @objc public class MFTheme : ObjectiveC.NSObject {
+  @objc public var navigationTintColor: UIKit.UIColor
+  @objc public var navigationBarTintColor: UIKit.UIColor
+  @objc public var navigationTitle: Swift.String
+  @objc public var cancelButtonTitle: Swift.String
+  @objc public init(navigationTintColor: UIKit.UIColor, navigationBarTintColor: UIKit.UIColor, navigationTitle: Swift.String, cancelButtonTitle: Swift.String)
+  @objc override dynamic public init()
+  @objc deinit
+}
+@objc public class MFInvoiceTransaction : ObjectiveC.NSObject, Swift.Codable {
+  final public let transactionDate: Swift.String?, paymentGateway: Swift.String?, referenceID: Swift.String?, trackID: Swift.String?
+  final public let transactionID: Swift.String?, paymentID: Swift.String?, authorizationID: Swift.String?, transactionStatus: Swift.String?
+  final public let transationValue: Swift.String?, customerServiceCharge: Swift.String?, dueValue: Swift.String?, paidCurrency: Swift.String?
+  final public let paidCurrencyValue: Swift.String?, currency: Swift.String?, error: Swift.String?
+  @objc deinit
+  required public init(from decoder: Swift.Decoder) throws
+  public func encode(to encoder: Swift.Encoder) throws
+}
+@objcMembers @objc public class MFFailResponse : ObjectiveC.NSObject, Swift.Error {
+  @objc final public let statusCode: Swift.Int
+  @objc final public let errorDescription: Swift.String
+  @objc override dynamic public init()
+  @objc deinit
+}
+extension MFPaymentRequest {
+  @objc @available(swift, obsoleted: 1.0)
+  dynamic public func executeRecurringPayment(request: MFSDK.MFExecutePaymentRequest, cardInfo: MFSDK.MFCardInfo, recurringIntervalDays: Swift.Int, apiLanguage: MFSDK.MFAPILanguage, completion: @escaping (MFSDK.MFDirectPaymentResponse?, MFSDK.MFFailResponse?, Swift.String?) -> Swift.Void)
+  public func executeRecurringPayment(request: MFSDK.MFExecutePaymentRequest, cardInfo: MFSDK.MFCardInfo, recurringIntervalDays: Swift.Int, apiLanguage: MFSDK.MFAPILanguage, completion: @escaping (Swift.Result<MFSDK.MFDirectPaymentResponse, MFSDK.MFFailResponse>, Swift.String?) -> Swift.Void)
+}
+extension MFPaymentRequest {
+  @objc @available(swift, obsoleted: 1.0)
+  dynamic public func cancelRecurringPayment(recurringId: Swift.String, apiLanguage: MFSDK.MFAPILanguage, completion: @escaping (Swift.Bool, MFSDK.MFFailResponse?) -> Swift.Void)
+  public func cancelRecurringPayment(recurringId: Swift.String, apiLanguage: MFSDK.MFAPILanguage, completion: @escaping (Swift.Result<Swift.Bool, MFSDK.MFFailResponse>) -> Swift.Void)
+}
+@objcMembers @objc public class MFExecutePaymentRequest : ObjectiveC.NSObject {
+  @objc public var customerName: Swift.String
+  @objc public var customerCivilId: Swift.String
+  @objc public var customerReference: Swift.String
+  @objc public var customerEmail: Swift.String
+  @objc public var customerMobile: Swift.String
+  @objc public var invoiceItems: [MFSDK.MFProduct]
+  @objc public var language: MFSDK.MFLanguage
+  @objc public var expiryDate: Foundation.Date?
+  @objc public var customerAddress: MFSDK.MFCustomerAddress?
+  @objc public var userDefinedField: Swift.String
+  @objc public var displayCurrencyIso: MFSDK.MFCurrencyISO
+  @objc public var mobileCountryCode: Swift.String
+  @objc public var supplierCode: Swift.Int
+  @objc public init(invoiceValue: Swift.Double, paymentMethod: Swift.Int, callBackUrl: Swift.String, errorUrl: Swift.String)
+  @objc public init(invoiceValue: Swift.Double, paymentMethod: Swift.Int)
+  @objc override dynamic public init()
+  @objc deinit
+}
+@objcMembers @objc public class MFInvoiceItem : ObjectiveC.NSObject, Swift.Codable {
+  @objc final public let itemName: Swift.String
+  @objc final public let quantity: Swift.Int
+  @objc final public let unitPrice: Swift.Double
+  @objc deinit
+  required public init(from decoder: Swift.Decoder) throws
+  public func encode(to encoder: Swift.Encoder) throws
+}
+@objcMembers @objc public class MFPaymentMethod : ObjectiveC.NSObject, Swift.Codable {
+  @objc public var paymentMethodId: Swift.Int
+  @objc public var paymentMethodAr: Swift.String?
+  @objc public var paymentMethodEn: Swift.String?
+  @objc public var isDirectPayment: Swift.Bool
+  @objc public var serviceCharge: Swift.Double
+  @objc public var totalAmount: Swift.Double
+  @objc public var currencyIso: Swift.String?
+  @objc public var imageUrl: Swift.String?
+  @objc deinit
+  required public init(from decoder: Swift.Decoder) throws
+  public func encode(to encoder: Swift.Encoder) throws
+}
+@objcMembers @objc public class MFDirectPaymentResponse : ObjectiveC.NSObject {
+  @objc final public let getPaymentStatusResponse: MFSDK.MFPaymentStatusResponse?
+  @objc final public let cardInfoResponse: MFSDK.MFCardInfoResponse?
+  @objc public init(getPaymentStatusResponse: MFSDK.MFPaymentStatusResponse, cardInfoResponse: MFSDK.MFCardInfoResponse)
+  @objc override dynamic public init()
+  @objc deinit
+}
+@objcMembers @objc public class MFCardInfoResponse : ObjectiveC.NSObject, Swift.Codable {
+  @objc final public let recurringId: Swift.String?
+  @objc final public let token: Swift.String?
+  @objc final public let cardInfo: MFSDK.Card?
+  @objc deinit
+  required public init(from decoder: Swift.Decoder) throws
+  public func encode(to encoder: Swift.Encoder) throws
+}
+@objcMembers @objc public class Card : ObjectiveC.NSObject, Swift.Codable {
+  @objc final public let number: Swift.String, expiryMonth: Swift.String, expiryYear: Swift.String, brand: Swift.String
+  @objc final public let issuer: Swift.String
+  @objc deinit
+  required public init(from decoder: Swift.Decoder) throws
+  public func encode(to encoder: Swift.Encoder) throws
+}
+extension MFPaymentRequest {
+  @objc @available(swift, obsoleted: 1.0)
+  dynamic public func initiatePayment(request: MFSDK.MFInitiatePaymentRequest, apiLanguage: MFSDK.MFAPILanguage, completion: @escaping (MFSDK.MFInitiatePaymentResponse?, MFSDK.MFFailResponse?) -> Swift.Void)
+  public func initiatePayment(request: MFSDK.MFInitiatePaymentRequest, apiLanguage: MFSDK.MFAPILanguage, completion: @escaping (Swift.Result<MFSDK.MFInitiatePaymentResponse, MFSDK.MFFailResponse>) -> Swift.Void)
+}
+@objc @objcMembers public class MFProduct : ObjectiveC.NSObject {
+  @objc public var name: Swift.String
+  @objc public var unitPrice: Swift.Double
+  @objc public var quantity: Swift.Int
+  @objc public init(name: Swift.String, unitPrice: Swift.Double, quantity: Swift.Int)
+  @objc override dynamic public init()
+  @objc deinit
+}
+@objcMembers @objc public class MFPaymentStatusResponse : ObjectiveC.NSObject, Swift.Codable {
+  final public let invoiceID: Swift.Int?
+  @objc final public let invoiceStatus: Swift.String?, invoiceReference: Swift.String?, customerReference: Swift.String?, createdDate: Swift.String?
+  @objc final public let expiryDate: Swift.String?
+  final public let invoiceValue: Swift.Double?
+  @objc final public let comments: Swift.String?, customerName: Swift.String?, customerMobile: Swift.String?, customerEmail: Swift.String?
+  @objc final public let userDefinedField: Swift.String?, invoiceDisplayValue: Swift.String?
+  @objc final public let invoiceItems: [MFSDK.MFInvoiceItem]?
+  @objc final public let invoiceTransactions: [MFSDK.MFInvoiceTransaction]?
+  @objc deinit
+  required public init(from decoder: Swift.Decoder) throws
+  public func encode(to encoder: Swift.Encoder) throws
+}
+extension MFPaymentRequest {
+  @objc @available(swift, obsoleted: 1.0)
+  dynamic public func executeDirectPayment(request: MFSDK.MFExecutePaymentRequest, cardInfo: MFSDK.MFCardInfo, apiLanguage: MFSDK.MFAPILanguage, completion: @escaping (MFSDK.MFDirectPaymentResponse?, MFSDK.MFFailResponse?, Swift.String?) -> Swift.Void)
+  public func executeDirectPayment(request: MFSDK.MFExecutePaymentRequest, cardInfo: MFSDK.MFCardInfo, apiLanguage: MFSDK.MFAPILanguage, completion: @escaping (Swift.Result<MFSDK.MFDirectPaymentResponse, MFSDK.MFFailResponse>, Swift.String?) -> Swift.Void)
+}
+extension MFPaymentRequest {
+  @objc @available(swift, obsoleted: 1.0)
+  dynamic public func cancelToken(token: Swift.String, apiLanguage: MFSDK.MFAPILanguage, completion: @escaping (Swift.Bool, MFSDK.MFFailResponse?) -> Swift.Void)
+  public func cancelToken(token: Swift.String, apiLanguage: MFSDK.MFAPILanguage, completion: @escaping (Swift.Result<Swift.Bool, MFSDK.MFFailResponse>) -> Swift.Void)
+}
+extension MFPaymentRequest {
+  @objc @available(swift, obsoleted: 1.0)
+  dynamic public func getPaymentStatus(paymentStatus: MFSDK.MFPaymentStatusRequest, apiLanguage: MFSDK.MFAPILanguage, completion: @escaping (MFSDK.MFPaymentStatusResponse?, MFSDK.MFFailResponse?) -> ())
+  public func getPaymentStatus(paymentStatus: MFSDK.MFPaymentStatusRequest, apiLanguage: MFSDK.MFAPILanguage, completion: @escaping (Swift.Result<MFSDK.MFPaymentStatusResponse, MFSDK.MFFailResponse>) -> ())
+}
+@objcMembers @objc public class MFSettings : ObjectiveC.NSObject {
+  @objc public static var shared: MFSDK.MFSettings
+  @objc public func configure(token: Swift.String, baseURL: Swift.String)
+  @objc public func setTheme(theme: MFSDK.MFTheme)
+  @objc override dynamic public init()
+  @objc deinit
+}
