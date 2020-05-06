@@ -457,6 +457,23 @@ class NotificationsVC: BaseViewController, UITableViewDelegate, UITableViewDataS
                 
                 self.present(vc, animated: true, completion: nil)
             }
+            cell.onDecline = {
+                let dict = item.data?.convertToDictionary()
+                let bidId = dict?["Id"] as? Int ?? 0
+                self.showLoading()
+                ApiService.declineBid(Authorization: self.loadUser().data?.accessToken ?? "", bidId: bidId) { (response) in
+                    self.hideLoading()
+                    if (response.errorCode == 0) {
+                        self.showBanner(title: "alert".localized, message: "bid_declined_successfully".localized, style: UIColor.SUCCESS)
+                        self.refreshNotifications()
+                        DispatchQueue.main.asyncAfter(deadline: .now() + 2, execute: {
+                            self.dismiss(animated: true, completion: nil)
+                        })
+                    }else {
+                        self.showBanner(title: "alert".localized, message: response.errorMessage ?? "", style: UIColor.INFO)
+                    }
+                }
+            }
             
             cell.lblNotificationDate.text = self.convertDate(isoDate: item.createdDate ?? "")
             if (item.createdTime?.count ?? 0 > 0) {

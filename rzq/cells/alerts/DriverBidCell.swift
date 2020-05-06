@@ -36,6 +36,8 @@ class DriverBidCell: UITableViewCell {
     @IBOutlet weak var btnDeclineBid: UIButton!
     
     var onCheck : (() -> Void)? = nil
+    var onDecline: (() -> Void)? = nil
+    var onAccept: (() -> Void)? = nil
     var count = 120
     
     @IBAction func checkOfferAction(_ sender: Any) {
@@ -44,11 +46,11 @@ class DriverBidCell: UITableViewCell {
         }
     }
     @IBAction func btnDeclineClicked(_ sender: Any) {
-        print("Decline")
+        self.onDecline?()
     }
     
     @IBAction func btnAcceptClicked(_ sender: Any) {
-        print("Accept")
+        self.onAccept?()
     }
     
     func startCountDown(startedFrom: String?) {
