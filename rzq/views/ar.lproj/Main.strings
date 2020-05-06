@@ -9,7 +9,7 @@
 "0Uq-fT-4kx.text" = "المسافة";
 
 /* Class = "UIButton"; normalTitle = "Check This Offer"; ObjectID = "0mE-E5-yMM"; */
-"0mE-E5-yMM.normalTitle" = "شاهد هذا العرض";
+"0mE-E5-yMM.normalTitle" = "المزيد";
 
 /* Class = "UILabel"; text = "Number Of Orders"; ObjectID = "0pj-IF-bgg"; */
 "0pj-IF-bgg.text" = "عدد الطلبات التي تم توصيلها";

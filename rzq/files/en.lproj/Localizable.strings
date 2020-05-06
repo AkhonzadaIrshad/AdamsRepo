@@ -6,6 +6,8 @@
   Copyright © 2019 technzone. All rights reserved.
 */
 
+"bidCell.Accept" = "Accept";
+"bidCell.Decline" = "Decline";
 "km" = "Km";
 "Loading" = "Loading";
 

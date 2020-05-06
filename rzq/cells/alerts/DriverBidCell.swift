@@ -28,6 +28,12 @@ class DriverBidCell: UITableViewCell {
     @IBOutlet weak var counterLbl: UILabel!
     
     @IBOutlet weak var btnCheckBid: MyUIButton!
+    @IBOutlet weak var vwDeclineBid: RoundedView!
+    @IBOutlet weak var vwAcceptBid: RoundedView!
+    
+    @IBOutlet weak var vwCountDown: RoundedView!
+    @IBOutlet weak var btnAcceptBid: UIButton!
+    @IBOutlet weak var btnDeclineBid: UIButton!
     
     var onCheck : (() -> Void)? = nil
     var count = 120
@@ -36,6 +42,13 @@ class DriverBidCell: UITableViewCell {
         if let onCheck = self.onCheck {
             onCheck()
         }
+    }
+    @IBAction func btnDeclineClicked(_ sender: Any) {
+        print("Decline")
+    }
+    
+    @IBAction func btnAcceptClicked(_ sender: Any) {
+        print("Accept")
     }
     
     func startCountDown(startedFrom: String?) {
@@ -52,11 +65,13 @@ class DriverBidCell: UITableViewCell {
         let (minutes, seconds) = secondsToHoursMinutesSeconds(seconds: self.count)
         if(count > 0) {
             count = count - 1
-            counterLbl.text = String(minutes) + " mins " + String(seconds) + " sec"
+            counterLbl.text = String(minutes) + ":" + String(seconds)
         } else {
-            counterLbl.text = ""
-            self.btnCheckBid.isUserInteractionEnabled = false
-            self.btnCheckBid.backgroundColor = .lightGray
+            self.vwCountDown.isHidden = true
+            self.vwAcceptBid.isUserInteractionEnabled = false
+            self.vwAcceptBid.backgroundColor = .lightGray
+            self.vwDeclineBid.isUserInteractionEnabled = false
+            self.vwDeclineBid.backgroundColor = .lightGray
         }
     }
     
@@ -65,7 +80,8 @@ class DriverBidCell: UITableViewCell {
     }
     
     func initCounter(startedFrom: String) {
-        
+        self.btnAcceptBid.setTitle("bidCell.Accept".localized, for: .normal)
+        self.btnDeclineBid.setTitle("bidCell.Decline".localized, for: .normal)
         let inFormatter = DateFormatter()
         inFormatter.locale = .current
         inFormatter.dateFormat = "yyyy-MM-dd'T'HH:mm:ss.SSSSSS"

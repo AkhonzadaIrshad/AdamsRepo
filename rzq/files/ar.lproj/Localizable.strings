@@ -5,6 +5,10 @@
   Created by Zaid najjar on 4/1/19.
   Copyright © 2019 technzone. All rights reserved.
 */
+
+"bidCell.Accept" = "قبول";
+"bidCell.Decline" = "رفض";
+
 "km" = "كم";
 "Loading" = "جاري التحميل";
 
