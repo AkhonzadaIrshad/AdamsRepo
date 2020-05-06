@@ -37,15 +37,11 @@ class AcceptBidDialog: BaseVC, PaymentDelegate {
     
     override func viewDidLoad() {
         super.viewDidLoad()
-        
-        self.rateView.isUserInteractionEnabled = false
-        
+        self.rateView.isUserInteractionEnabled = false        
     }
     
-    override func viewWillAppear(_ animated: Bool) {
-        super.viewWillAppear(animated)
+    func initData() {
         let dict = self.item?.data?.convertToDictionary()
-        
         if (item?.type == Constants.BID_CREATED) {
             let driver = dict?["Driver"] as? String ?? ""
             let driverImage = dict?["DriverImage"] as? String ?? ""
@@ -106,7 +102,16 @@ class AcceptBidDialog: BaseVC, PaymentDelegate {
             self.lblDistance.text = "\(distanceStr) \("km".localized)"
             self.lblOrdersCount.text = "\(orderCount) \("orders".localized)"
         }
-        
+    }
+
+    required init?(coder: NSCoder) {
+        super.init(coder: coder)
+        initData()
+    }
+    
+    override func viewWillAppear(_ animated: Bool) {
+        super.viewWillAppear(animated)
+        initData()
     }
     
     func encryptDriverName(name: String) -> String {
@@ -121,7 +126,7 @@ class AcceptBidDialog: BaseVC, PaymentDelegate {
         return final
     }
     
-    @IBAction func declineAction(_ sender: Any) {
+    func applyDeclineAction() {
         self.showLoading()
         ApiService.declineBid(Authorization: self.loadUser().data?.accessToken ?? "", bidId: self.bidId ?? 0) { (response) in
             self.hideLoading()
@@ -137,6 +142,10 @@ class AcceptBidDialog: BaseVC, PaymentDelegate {
         }
     }
     
+    @IBAction func declineAction(_ sender: Any) {
+        applyDeclineAction()
+    }
+    
     //    func deleteNotification() {
     //        ApiService.deleteNotification(Authorization: self.loadUser().data?.accessToken ?? "", id: self.notificationId ?? 0) { (response) in
     //            self.showBanner(title: "alert".localized, message: "bid_declined_successfully".localized, style: UIColor.SUCCESS)
@@ -147,6 +156,10 @@ class AcceptBidDialog: BaseVC, PaymentDelegate {
     //    }
     
     @IBAction func acceptAction(_ sender: Any) {
+        self.applyAcceptBidAcion()
+    }
+    
+    func applyAcceptBidAcion() {
         self.showLoading()
         ApiService.getDelivery(id: self.deliveryId ?? 0) { (response) in
             self.hideLoading()
@@ -163,7 +176,6 @@ class AcceptBidDialog: BaseVC, PaymentDelegate {
             }
         }
     }
-    
     func acceptBid() {
         self.showLoading()
         ApiService.acceptBid(Authorization: self.loadUser().data?.accessToken ?? "", deliveryId: self.deliveryId ?? 0, bidId: self.bidId ?? 0) { (response) in

@@ -7,16 +7,144 @@
       <BreakpointProxy
          BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
          <BreakpointContent
-            uuid = "52F1E056-EA2D-4553-BE31-8CC1AA72408A"
+            uuid = "A77E1EED-A800-42EA-BB32-FFE63BCD0C0E"
             shouldBeEnabled = "Yes"
             ignoreCount = "0"
             continueAfterRunningActions = "No"
-            filePath = "rzq/controllers/NotificationsVC.swift"
+            filePath = "rzq/controllers/dialogs/AcceptBidDialog.swift"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "291"
-            endingLineNumber = "291"
-            landmarkName = "tableView(_:didSelectRowAt:)"
+            startingLineNumber = "164"
+            endingLineNumber = "164"
+            landmarkName = "applyAcceptBidAcion()"
+            landmarkType = "7">
+            <Locations>
+               <Location
+                  uuid = "A77E1EED-A800-42EA-BB32-FFE63BCD0C0E - 1d1dd818191ff42c"
+                  shouldBeEnabled = "Yes"
+                  ignoreCount = "0"
+                  continueAfterRunningActions = "No"
+                  symbolName = "rzq.AcceptBidDialog.applyAcceptBidAcion() -&gt; ()"
+                  moduleName = "rzq"
+                  usesParentBreakpointCondition = "Yes"
+                  urlString = "file:///Users/amine/Documents/moroccode/rzq/rzq/controllers/dialogs/AcceptBidDialog.swift"
+                  startingColumnNumber = "9223372036854775807"
+                  endingColumnNumber = "9223372036854775807"
+                  startingLineNumber = "166"
+                  endingLineNumber = "166"
+                  offsetFromSymbolStart = "79">
+               </Location>
+               <Location
+                  uuid = "A77E1EED-A800-42EA-BB32-FFE63BCD0C0E - 7f5d7d74958fe0ee"
+                  shouldBeEnabled = "Yes"
+                  ignoreCount = "0"
+                  continueAfterRunningActions = "No"
+                  symbolName = "closure #1 (rzq.DeliveryResponse) -&gt; () in rzq.AcceptBidDialog.applyAcceptBidAcion() -&gt; ()"
+                  moduleName = "rzq"
+                  usesParentBreakpointCondition = "Yes"
+                  urlString = "file:///Users/amine/Documents/moroccode/rzq/rzq/controllers/dialogs/AcceptBidDialog.swift"
+                  startingColumnNumber = "9223372036854775807"
+                  endingColumnNumber = "9223372036854775807"
+                  startingLineNumber = "167"
+                  endingLineNumber = "167"
+                  offsetFromSymbolStart = "154">
+               </Location>
+            </Locations>
+         </BreakpointContent>
+      </BreakpointProxy>
+      <BreakpointProxy
+         BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
+         <BreakpointContent
+            uuid = "E7E169EB-EAF2-42B1-B3C8-3C7572E78FED"
+            shouldBeEnabled = "Yes"
+            ignoreCount = "0"
+            continueAfterRunningActions = "No"
+            filePath = "rzq/controllers/dialogs/AcceptBidDialog.swift"
+            startingColumnNumber = "9223372036854775807"
+            endingColumnNumber = "9223372036854775807"
+            startingLineNumber = "109"
+            endingLineNumber = "109"
+            landmarkName = "init(coder:)"
+            landmarkType = "7">
+         </BreakpointContent>
+      </BreakpointProxy>
+      <BreakpointProxy
+         BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
+         <BreakpointContent
+            uuid = "171708C0-9DF5-4B3B-9019-B547F10CC931"
+            shouldBeEnabled = "Yes"
+            ignoreCount = "0"
+            continueAfterRunningActions = "No"
+            filePath = "rzq/controllers/dialogs/AcceptBidDialog.swift"
+            startingColumnNumber = "9223372036854775807"
+            endingColumnNumber = "9223372036854775807"
+            startingLineNumber = "130"
+            endingLineNumber = "130"
+            landmarkName = "applyDeclineAction()"
+            landmarkType = "7">
+         </BreakpointContent>
+      </BreakpointProxy>
+      <BreakpointProxy
+         BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
+         <BreakpointContent
+            uuid = "5BD37F7E-ADC9-486F-9DB3-B1F24EA51037"
+            shouldBeEnabled = "Yes"
+            ignoreCount = "0"
+            continueAfterRunningActions = "No"
+            filePath = "rzq/controllers/dialogs/AcceptBidDialog.swift"
+            startingColumnNumber = "9223372036854775807"
+            endingColumnNumber = "9223372036854775807"
+            startingLineNumber = "132"
+            endingLineNumber = "132"
+            landmarkName = "applyDeclineAction()"
+            landmarkType = "7">
+         </BreakpointContent>
+      </BreakpointProxy>
+      <BreakpointProxy
+         BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
+         <BreakpointContent
+            uuid = "8D972519-B04F-480C-8CAA-EECB3D5D8384"
+            shouldBeEnabled = "Yes"
+            ignoreCount = "0"
+            continueAfterRunningActions = "No"
+            filePath = "rzq/controllers/dialogs/AcceptBidDialog.swift"
+            startingColumnNumber = "9223372036854775807"
+            endingColumnNumber = "9223372036854775807"
+            startingLineNumber = "182"
+            endingLineNumber = "182"
+            landmarkName = "acceptBid()"
+            landmarkType = "7">
+         </BreakpointContent>
+      </BreakpointProxy>
+      <BreakpointProxy
+         BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
+         <BreakpointContent
+            uuid = "BEDE72BD-E40F-4815-BDA4-5B6D1ED2BB60"
+            shouldBeEnabled = "Yes"
+            ignoreCount = "0"
+            continueAfterRunningActions = "No"
+            filePath = "rzq/controllers/dialogs/AcceptBidDialog.swift"
+            startingColumnNumber = "9223372036854775807"
+            endingColumnNumber = "9223372036854775807"
+            startingLineNumber = "180"
+            endingLineNumber = "180"
+            landmarkName = "acceptBid()"
+            landmarkType = "7">
+         </BreakpointContent>
+      </BreakpointProxy>
+      <BreakpointProxy
+         BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
+         <BreakpointContent
+            uuid = "D9B50001-475A-468E-9E39-415875E62299"
+            shouldBeEnabled = "Yes"
+            ignoreCount = "0"
+            continueAfterRunningActions = "No"
+            filePath = "rzq/controllers/dialogs/AcceptBidDialog.swift"
+            startingColumnNumber = "9223372036854775807"
+            endingColumnNumber = "9223372036854775807"
+            startingLineNumber = "166"
+            endingLineNumber = "166"
+            landmarkName = "applyAcceptBidAcion()"
             landmarkType = "7">
          </BreakpointContent>
       </BreakpointProxy>
