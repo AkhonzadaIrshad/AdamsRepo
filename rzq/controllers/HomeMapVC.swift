@@ -502,7 +502,6 @@ class HomeMapVC: BaseViewController,LabasLocationManagerDelegate, UICollectionVi
         }
         
         ApiService.getOrderLocation(Authorization: self.loadUser().data?.accessToken ?? "", deliveryId: item.id ?? 0) { (response) in
-            print("shit shit shit")
             let myLatLng = CLLocation(latitude: self.latitude ?? 0.0, longitude: self.longitude ?? 0.0)
             let driverLatLng = CLLocation(latitude: response.locationData?.latitude ?? 0.0, longitude: response.locationData?.longitude ?? 0.0)
             let distanceInMeters = driverLatLng.distance(from: myLatLng)
