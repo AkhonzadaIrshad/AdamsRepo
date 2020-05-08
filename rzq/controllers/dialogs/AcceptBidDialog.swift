@@ -25,6 +25,12 @@ class AcceptBidDialog: BaseVC, PaymentDelegate {
     @IBOutlet weak var lblOrdersCount: MyUILabel!
     @IBOutlet weak var lblOfferPrice: MyUILabel!
     
+    @IBOutlet weak var vwCounter: RoundedView!
+    @IBOutlet weak var lblCounter: UILabel!
+    
+    @IBOutlet weak var vwAccept: CardView!
+    @IBOutlet weak var vwDecline: CardView!
+    
     var deliveryId  : Int?
     var bidId : Int?
     var notificationId : Int?
@@ -32,12 +38,13 @@ class AcceptBidDialog: BaseVC, PaymentDelegate {
     
     var latitude : Double?
     var longitude : Double?
-    
+    var count = 0
     var delegate : AcceptBidDelegate?
     
     override func viewDidLoad() {
         super.viewDidLoad()
-        self.rateView.isUserInteractionEnabled = false        
+        self.rateView.isUserInteractionEnabled = false
+        
     }
     
     func initData() {
@@ -112,6 +119,7 @@ class AcceptBidDialog: BaseVC, PaymentDelegate {
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
         initData()
+        self.startCountDown(startedFrom: item?.createdDate)
     }
     
     func encryptDriverName(name: String) -> String {
@@ -263,5 +271,52 @@ class AcceptBidDialog: BaseVC, PaymentDelegate {
         self.present(vc, animated: true, completion: nil)
     }
     
+    func startCountDown(startedFrom: String?) {
+        _ = Timer.scheduledTimer(timeInterval: 1, target: self, selector: #selector(self.update), userInfo: nil, repeats: true)
+        if let startedTime = startedFrom {
+            initCounter(startedFrom: startedTime)
+        } else {
+            self.count = 0
+        }
+        
+    }
+    
+    @objc func update() {
+        let (minutes, seconds) = secondsToHoursMinutesSeconds(seconds: self.count)
+        if(count > 0) {
+            self.vwCounter.isHidden = false
+            count = count - 1
+            lblCounter.text = String(minutes) + ":" + String(seconds)
+        } else {
+            self.vwCounter.isHidden = true
+            self.vwAccept.isUserInteractionEnabled = false
+            self.vwAccept.backgroundColor = .lightGray
+            self.vwDecline.isUserInteractionEnabled = false
+            self.vwDecline.backgroundColor = .lightGray
+        }
+    }
+    
+    func secondsToHoursMinutesSeconds (seconds : Int) -> (Int, Int) {
+      return (seconds / 60, (seconds % 60))
+    }
+    
+    func initCounter(startedFrom: String) {
+        let inFormatter = DateFormatter()
+        inFormatter.locale = .current
+        inFormatter.dateFormat = "yyyy-MM-dd'T'HH:mm:ss.SSSSSS"
+
+        let outFormatter = DateFormatter()
+        outFormatter.locale = .current
+        outFormatter.dateFormat = "hh:mm:ss"
+
+        let bidDate = inFormatter.date(from: startedFrom) ?? Date()
+        let nowDate = Date()
+        let intervalInMin = (nowDate.timeIntervalSince(bidDate) / 60)
+        if intervalInMin > 5 {
+            self.count = 0
+        } else {
+            self.count = 300 - Int(nowDate.timeIntervalSince(bidDate))
+        }
+    }
     
 }

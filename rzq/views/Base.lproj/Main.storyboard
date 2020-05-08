@@ -12,11 +12,11 @@
         <array key="arabic_font.ttf">
             <string>Cairo-Regular</string>
         </array>
+        <array key="arabic_medium.ttf">
+            <string>Tajawal-Medium</string>
+        </array>
         <array key="arabic_regular.ttf">
             <string>Tajawal-Regular</string>
-        </array>
-        <array key="arabic_semibold.ttf">
-            <string>Tajawal-Medium</string>
         </array>
         <array key="english_regular.otf">
             <string>SFProDisplay-Regular</string>
@@ -20536,6 +20536,37 @@
                                                     </userDefinedRuntimeAttribute>
                                                 </userDefinedRuntimeAttributes>
                                             </view>
+                                            <view hidden="YES" contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="Pt4-Au-H9r" customClass="RoundedView" customModule="rzq" customModuleProvider="target">
+                                                <rect key="frame" x="245" y="366" width="60" height="60"/>
+                                                <subviews>
+                                                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="c0I-1n-4M3">
+                                                        <rect key="frame" x="0.0" y="30" width="60" height="0.0"/>
+                                                        <fontDescription key="fontDescription" type="system" pointSize="17"/>
+                                                        <nil key="textColor"/>
+                                                        <nil key="highlightedColor"/>
+                                                    </label>
+                                                </subviews>
+                                                <color key="backgroundColor" systemColor="systemBackgroundColor" cocoaTouchSystemColor="whiteColor"/>
+                                                <constraints>
+                                                    <constraint firstAttribute="height" constant="60" id="Er3-v6-9De"/>
+                                                    <constraint firstAttribute="width" constant="60" id="XoT-EA-zSm"/>
+                                                    <constraint firstItem="c0I-1n-4M3" firstAttribute="leading" secondItem="Pt4-Au-H9r" secondAttribute="leading" id="iIS-FY-WUh"/>
+                                                    <constraint firstItem="c0I-1n-4M3" firstAttribute="centerX" secondItem="Pt4-Au-H9r" secondAttribute="centerX" id="lur-nD-jD2"/>
+                                                    <constraint firstItem="c0I-1n-4M3" firstAttribute="centerY" secondItem="Pt4-Au-H9r" secondAttribute="centerY" id="nof-Ek-7Sm"/>
+                                                    <constraint firstAttribute="trailing" secondItem="c0I-1n-4M3" secondAttribute="trailing" id="zhM-VT-ydO"/>
+                                                </constraints>
+                                                <userDefinedRuntimeAttributes>
+                                                    <userDefinedRuntimeAttribute type="number" keyPath="borderWidth">
+                                                        <real key="value" value="4"/>
+                                                    </userDefinedRuntimeAttribute>
+                                                    <userDefinedRuntimeAttribute type="color" keyPath="borderColor">
+                                                        <color key="value" systemColor="systemIndigoColor" red="0.34509803919999998" green="0.33725490200000002" blue="0.83921568629999999" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                                                    </userDefinedRuntimeAttribute>
+                                                    <userDefinedRuntimeAttribute type="number" keyPath="cornerRadius">
+                                                        <real key="value" value="30"/>
+                                                    </userDefinedRuntimeAttribute>
+                                                </userDefinedRuntimeAttributes>
+                                            </view>
                                         </subviews>
                                         <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                         <constraints>
@@ -20551,8 +20582,10 @@
                                             <constraint firstItem="0pj-IF-bgg" firstAttribute="top" secondItem="h5b-P9-vd0" secondAttribute="bottom" constant="5" id="F28-Eo-SZw"/>
                                             <constraint firstItem="cuh-v7-0BO" firstAttribute="top" secondItem="RqO-Mb-RMo" secondAttribute="bottom" constant="5" id="Gak-nB-9Az"/>
                                             <constraint firstItem="8lO-OU-1Wr" firstAttribute="top" secondItem="0pj-IF-bgg" secondAttribute="bottom" constant="5" id="Htt-cX-GEd"/>
+                                            <constraint firstAttribute="trailing" secondItem="Pt4-Au-H9r" secondAttribute="trailing" constant="30" id="IJW-HM-r3J"/>
                                             <constraint firstAttribute="trailing" secondItem="aWQ-Ig-Duo" secondAttribute="trailing" constant="12" id="JeD-SO-8oK"/>
                                             <constraint firstItem="zFe-7c-GP1" firstAttribute="top" secondItem="cuh-v7-0BO" secondAttribute="bottom" constant="20" id="Jsx-7u-SaY"/>
+                                            <constraint firstItem="Xc4-iQ-vCB" firstAttribute="top" secondItem="Pt4-Au-H9r" secondAttribute="bottom" constant="30" id="LS0-g8-mgj"/>
                                             <constraint firstItem="h5b-P9-vd0" firstAttribute="leading" secondItem="9RO-pM-KRk" secondAttribute="leading" constant="10" id="P1l-1F-lHt"/>
                                             <constraint firstItem="Tuu-9U-z8z" firstAttribute="top" secondItem="YFK-cu-MOK" secondAttribute="bottom" constant="5" id="QvA-e3-4ip"/>
                                             <constraint firstAttribute="trailing" secondItem="zFe-7c-GP1" secondAttribute="trailing" constant="10" id="RP2-z3-RIo"/>
@@ -20618,6 +20651,7 @@
                     </view>
                     <connections>
                         <outlet property="ivLogo" destination="fah-wT-dfY" id="dMh-zL-ncL"/>
+                        <outlet property="lblCounter" destination="c0I-1n-4M3" id="3Uq-G8-0Ar"/>
                         <outlet property="lblDistance" destination="CfQ-xG-mSp" id="e3R-EL-AgX"/>
                         <outlet property="lblDriverName" destination="RqO-Mb-RMo" id="Kps-qO-6Tz"/>
                         <outlet property="lblMoney" destination="cF0-jL-Mvh" id="WH7-BI-OCZ"/>
@@ -20625,6 +20659,9 @@
                         <outlet property="lblOrdersCount" destination="8lO-OU-1Wr" id="70v-mj-cyG"/>
                         <outlet property="lblTime" destination="R7U-gN-6tK" id="MqD-0Y-7Bo"/>
                         <outlet property="rateView" destination="cuh-v7-0BO" id="kqu-zE-6qR"/>
+                        <outlet property="vwAccept" destination="Iim-Lk-Fpb" id="rcl-O5-kbU"/>
+                        <outlet property="vwCounter" destination="Pt4-Au-H9r" id="JE0-sZ-t06"/>
+                        <outlet property="vwDecline" destination="Xc4-iQ-vCB" id="Qi9-pR-T58"/>
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="1np-rf-fBz" userLabel="First Responder" sceneMemberID="firstResponder"/>
