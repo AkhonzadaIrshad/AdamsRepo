@@ -12134,7 +12134,7 @@
                                         </constraints>
                                     </imageView>
                                     <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Label" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="v0g-H3-A5H">
-                                        <rect key="frame" x="40" y="12.666666666666657" width="70" height="15"/>
+                                        <rect key="frame" x="40" y="12.666666666666657" width="65" height="15"/>
                                         <fontDescription key="fontDescription" type="system" pointSize="12"/>
                                         <nil key="textColor"/>
                                         <nil key="highlightedColor"/>
@@ -12143,7 +12143,7 @@
                                 <color key="backgroundColor" systemColor="systemBackgroundColor" cocoaTouchSystemColor="whiteColor"/>
                                 <constraints>
                                     <constraint firstAttribute="width" constant="110" id="3Ja-20-HK1"/>
-                                    <constraint firstAttribute="right" secondItem="v0g-H3-A5H" secondAttribute="right" id="EV3-dd-5dR"/>
+                                    <constraint firstAttribute="right" secondItem="v0g-H3-A5H" secondAttribute="right" constant="5" id="EV3-dd-5dR"/>
                                     <constraint firstAttribute="height" constant="40" id="G7G-C8-BDY"/>
                                     <constraint firstItem="F3g-Xj-p8l" firstAttribute="leading" secondItem="bsg-f9-Djh" secondAttribute="leading" id="WTb-76-P8D"/>
                                     <constraint firstItem="j5B-eX-b6L" firstAttribute="left" secondItem="bsg-f9-Djh" secondAttribute="left" constant="10" id="fg0-Gi-t9n"/>
