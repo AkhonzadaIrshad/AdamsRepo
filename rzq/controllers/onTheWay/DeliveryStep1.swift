@@ -52,6 +52,8 @@ class DeliveryStep1: BaseVC,LabasLocationManagerDelegate, Step2Delegate, AllShop
     @IBOutlet weak var viewBecomeDriver: UIView!
     
     @IBOutlet weak var ivGoogle: UIButton!
+    @IBOutlet weak var btnListView: UIButton!
+    @IBOutlet weak var lblViewList: UILabel!
     
     var markerLocation: GMSMarker?
     var currentZoom: Float = 0.0
@@ -86,6 +88,7 @@ class DeliveryStep1: BaseVC,LabasLocationManagerDelegate, Step2Delegate, AllShop
     var categories = [TypeClass]()
     
     override func viewDidLoad() {
+        self.lblViewList.text = "DeliveryStep1.listView".localized
         super.viewDidLoad()
         if (self.isArabic()) {
             //  self.ivHandle.image = UIImage(named: "ic_back_arabic")

@@ -5,7 +5,7 @@
   Created by Zaid najjar on 4/1/19.
   Copyright © 2019 technzone. All rights reserved.
 */
-
+"DeliveryStep1.listView" = "View list";
 "bidCell.Accept" = "Accept";
 "bidCell.Decline" = "Decline";
 "km" = "Km";
