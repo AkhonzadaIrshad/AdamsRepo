@@ -55,6 +55,9 @@ class DeliveryStep1: BaseVC,LabasLocationManagerDelegate, Step2Delegate, AllShop
     @IBOutlet weak var btnListView: UIButton!
     @IBOutlet weak var lblViewList: UILabel!
     
+    @IBOutlet weak var btnCheckMenu: MyUIButton!
+    @IBOutlet weak var viewCheckMenu: CardView!
+    
     var markerLocation: GMSMarker?
     var currentZoom: Float = 0.0
     var gMap : GMSMapView?
@@ -81,6 +84,7 @@ class DeliveryStep1: BaseVC,LabasLocationManagerDelegate, Step2Delegate, AllShop
     var shopMarkers = [GMSMarker]()
     
     var selectdCategory: TypeClass?
+    var selectedItems = [ShopMenuItem]()
     
     @IBOutlet weak var viewPop: UIView!
     
@@ -88,6 +92,18 @@ class DeliveryStep1: BaseVC,LabasLocationManagerDelegate, Step2Delegate, AllShop
     var categories = [TypeClass]()
     
     override func viewDidLoad() {
+        
+        if (self.orderModel?.shop?.id ?? 0 > 0) {
+            self.btnCheckMenu.isHidden = false
+            self.viewCheckMenu.isHidden = false
+        }else {
+            self.btnCheckMenu.isHidden = true
+            self.viewCheckMenu.isHidden = true
+        }
+        if (self.orderModel?.selectedItems?.count ?? 0 > 0) {
+            self.selectedItems.append(contentsOf: self.orderModel?.selectedItems ?? [ShopMenuItem]())
+        }
+        
         self.lblViewList.text = "DeliveryStep1.listView".localized
         super.viewDidLoad()
         if (self.isArabic()) {
@@ -216,6 +232,14 @@ class DeliveryStep1: BaseVC,LabasLocationManagerDelegate, Step2Delegate, AllShop
         
     }
     
+    @IBAction func checkMenuAction(_ sender: Any) {
+        let storyboard = UIStoryboard(name: "Main", bundle: nil)
+        let vc : ShopMenuVC = storyboard.instantiateViewController(withIdentifier: "ShopMenuVC") as! ShopMenuVC
+        vc.shopId = self.orderModel?.shop?.id ?? 0
+        vc.selectedItems = self.selectedItems
+        vc.delegate = self
+        self.navigationController?.pushViewController(vc, animated: true)
+    }
     
     //collection delegates
     func numberOfSectionsInCollectionView(collectionView: UICollectionView) -> Int {
@@ -1099,9 +1123,20 @@ extension DeliveryStep1 : GMSMapViewDelegate {
                 
                 let camera = GMSCameraPosition.camera(withLatitude: self.orderModel?.pickUpLatitude ?? 0.0, longitude: self.orderModel?.pickUpLongitude ?? 0.0, zoom: 15.0)
                 self.gMap?.animate(to: camera)
+                
+                if (self.orderModel?.shop?.id ?? 0 > 0) {
+                    self.btnCheckMenu.isHidden = false
+                    self.viewCheckMenu.isHidden = false
+                }else {
+                    self.btnCheckMenu.isHidden = true
+                    self.viewCheckMenu.isHidden = true
+                }
+                if (self.orderModel?.selectedItems?.count ?? 0 > 0) {
+                    self.selectedItems.append(contentsOf: self.orderModel?.selectedItems ?? [ShopMenuItem]())
+                }
             }
             return true
-        }else {
+        } else {
             return true
         }
     }
@@ -1356,5 +1391,25 @@ extension DeliveryStep1: GMSAutocompleteViewControllerDelegate {
     
     func didUpdateAutocompletePredictions(_ viewController: GMSAutocompleteViewController) {
         UIApplication.shared.isNetworkActivityIndicatorVisible = false
+    }
+}
+
+extension DeliveryStep1: ShopMenuDelegate {
+    func onDone(items: [ShopMenuItem], total: Double) {
+        var text = ""
+        for item in items {
+            var itemQuantity = item.quantity ?? 0
+            if (itemQuantity == 0) {
+                itemQuantity = item.count ?? 0
+            }
+            let doubleQuantity = Double(itemQuantity)
+            let doublePrice = item.price ?? 0.0
+            let total = doubleQuantity * doublePrice
+            text = "\(text)\(itemQuantity) x (\(item.name ?? "")) -> (\(total)) \("currency".localized).\n"
+        }
+        self.orderModel?.selectedTotal = total
+        self.orderModel?.edtOrderDetailsText = text
+        self.selectedItems.removeAll()
+        self.selectedItems.append(contentsOf: items)
     }
 }

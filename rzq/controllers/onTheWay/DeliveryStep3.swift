@@ -20,7 +20,7 @@ import AVFoundation
 protocol Step3Delegate {
     func updateModel(model : OTWOrder)
 }
-class DeliveryStep3: BaseVC, UINavigationControllerDelegate, ImagePickerDelegate, ShopMenuDelegate, AVAudioPlayerDelegate {
+class DeliveryStep3: BaseVC, UINavigationControllerDelegate, ImagePickerDelegate, AVAudioPlayerDelegate {
     
     @IBOutlet weak var lblPickupLocation: MyUILabel!
     
@@ -73,11 +73,6 @@ class DeliveryStep3: BaseVC, UINavigationControllerDelegate, ImagePickerDelegate
     
     @IBOutlet weak var btnPaymentMethod: MyUIButton!
     
-    @IBOutlet weak var btnCheckMenu: MyUIButton!
-    
-    @IBOutlet weak var viewCheckMenu: CardView!
-    
-    
     var selectedRoute: NSDictionary!
     
     var selectedImages = [UIImage]()
@@ -110,7 +105,8 @@ class DeliveryStep3: BaseVC, UINavigationControllerDelegate, ImagePickerDelegate
         
         self.isFemale = false
         self.btnGender.setTitle("both_genders".localized, for: .normal)
-        
+        self.selectedTotal = self.orderModel?.selectedTotal
+        self.edtOrderDetails.text = self.orderModel?.edtOrderDetailsText
         SVProgressHUD.setDefaultMaskType(.clear)
         
         //        if (self.isArabic()) {
@@ -134,16 +130,8 @@ class DeliveryStep3: BaseVC, UINavigationControllerDelegate, ImagePickerDelegate
         
         self.drawLocationLine()
         
-        self.edtOrderDetails.text = self.orderModel?.orderDetails ?? ""
-        //  self.edtCost.text = self.orderModel?.orderCost ?? ""
-        
-        if (self.orderModel?.shop?.id ?? 0 > 0) {
-            self.btnCheckMenu.isHidden = false
-            self.viewCheckMenu.isHidden = false
-        }else {
-            self.btnCheckMenu.isHidden = true
-            self.viewCheckMenu.isHidden = true
-        }
+//        self.edtOrderDetails.text = self.orderModel?.orderDetails ?? ""
+//        self.edtCost.text = self.orderModel?.orderCost ?? ""
         
         if (self.orderModel?.fromReorder ?? false) {
             if (self.orderModel?.isFemale ?? false) {
@@ -860,33 +848,6 @@ class DeliveryStep3: BaseVC, UINavigationControllerDelegate, ImagePickerDelegate
         let actionSheet = createPaymentSheet()
         actionSheet.appearance.title.textColor = UIColor.colorPrimary
         actionSheet.present(in: self, from: self.view)
-    }
-    
-    @IBAction func checkMenuAction(_ sender: Any) {
-        let storyboard = UIStoryboard(name: "Main", bundle: nil)
-        let vc : ShopMenuVC = storyboard.instantiateViewController(withIdentifier: "ShopMenuVC") as! ShopMenuVC
-        vc.shopId = self.orderModel?.shop?.id ?? 0
-        vc.selectedItems = self.selectedItems
-        vc.delegate = self
-        self.navigationController?.pushViewController(vc, animated: true)
-    }
-    
-    func onDone(items: [ShopMenuItem], total: Double) {
-        var text = ""
-        for item in items {
-            var itemQuantity = item.quantity ?? 0
-            if (itemQuantity == 0) {
-                itemQuantity = item.count ?? 0
-            }
-            let doubleQuantity = Double(itemQuantity)
-            let doublePrice = item.price ?? 0.0
-            let total = doubleQuantity * doublePrice
-            text = "\(text)\(itemQuantity) x (\(item.name ?? "")) -> (\(total)) \("currency".localized).\n"
-        }
-        self.selectedTotal = total
-        self.edtOrderDetails.text = text
-        self.selectedItems.removeAll()
-        self.selectedItems.append(contentsOf: items)
     }
     
 }

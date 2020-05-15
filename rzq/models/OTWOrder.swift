@@ -27,4 +27,7 @@ class OTWOrder : NSObject {
     
     var images : [String]?
     var voiceRecord: String?
+    
+    var selectedTotal: Double?
+    var edtOrderDetailsText: String?
 }
