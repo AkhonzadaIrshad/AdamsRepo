@@ -1133,18 +1133,22 @@ extension DeliveryStep1 : GMSMapViewDelegate {
                 if (self.orderModel?.shop?.id ?? 0 > 0) {
                     self.btnCheckMenu.isHidden = false
                     self.viewCheckMenu.isHidden = false
+                    self.checkMenuAction(self)
                 }else {
                     self.btnCheckMenu.isHidden = true
                     self.viewCheckMenu.isHidden = true
+                    
                 }
                 if (self.orderModel?.selectedItems?.count ?? 0 > 0) {
                     self.selectedItems.append(contentsOf: self.orderModel?.selectedItems ?? [ShopMenuItem]())
                 }
             }
+            
             return true
         } else {
             return true
         }
+        
     }
     
     
