@@ -358,6 +358,7 @@ class DeliveryStep1: BaseVC,LabasLocationManagerDelegate, Step2Delegate, AllShop
             
             let camera = GMSCameraPosition.camera(withLatitude: self.orderModel?.pickUpLatitude ?? 0.0, longitude: self.orderModel?.pickUpLongitude ?? 0.0, zoom: 15.0)
             self.gMap?.animate(to: camera)
+            self.checkMenuAction(self)
         }
     }
     
