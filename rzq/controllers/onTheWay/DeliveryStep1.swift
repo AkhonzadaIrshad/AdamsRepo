@@ -232,14 +232,6 @@ class DeliveryStep1: BaseVC,LabasLocationManagerDelegate, Step2Delegate, AllShop
         
     }
     
-    @IBAction func checkMenuAction(_ sender: Any) {
-        let storyboard = UIStoryboard(name: "Main", bundle: nil)
-        let vc : ShopMenuVC = storyboard.instantiateViewController(withIdentifier: "ShopMenuVC") as! ShopMenuVC
-        vc.shopId = self.orderModel?.shop?.id ?? 0
-        vc.selectedItems = self.selectedItems
-        vc.delegate = self
-        self.navigationController?.pushViewController(vc, animated: true)
-    }
     
     //collection delegates
     func numberOfSectionsInCollectionView(collectionView: UICollectionView) -> Int {
@@ -279,9 +271,6 @@ class DeliveryStep1: BaseVC,LabasLocationManagerDelegate, Step2Delegate, AllShop
         }
     }
     
-    @IBAction func showShopsList(_ sender: Any) {
-        self.showShopsList()
-    }
     
     func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
         let cell: Step1CatCell = collectionView.dequeueReusableCell(withReuseIdentifier: "Step1CatCell", for: indexPath as IndexPath) as! Step1CatCell
@@ -467,27 +456,6 @@ class DeliveryStep1: BaseVC,LabasLocationManagerDelegate, Step2Delegate, AllShop
         self.present(viewController, animated: true, completion: nil)
     }
     
-    
-    @IBAction func myLocationAction(_ sender: Any) {
-        let camera = GMSCameraPosition.camera(withLatitude: self.latitude ?? 0.0, longitude: self.longitude ?? 0.0, zoom: 20.0)
-        self.gMap?.animate(to: camera)
-    }
-    
-    @IBAction func shopDetailsAction(_ sender: Any) {
-        if let vc = UIStoryboard(name: "Main", bundle: nil).instantiateViewController(withIdentifier: "ShopDetailsVC") as? ShopDetailsVC
-        {
-            vc.latitude = self.latitude ?? 0.0
-            vc.longitude = self.longitude ?? 0.0
-            
-            let shopData = ShopData(nearbyDriversCount: 0, id: self.orderModel?.shop?.id ?? 0, name: self.orderModel?.shop?.name ?? "", address: self.orderModel?.shop?.address ?? "", latitude: self.orderModel?.shop?.latitude ?? 0.0, longitude: self.orderModel?.shop?.longitude ?? 0.0, phoneNumber: self.orderModel?.shop?.phoneNumber ?? "", workingHours: self.orderModel?.shop?.workingHours ?? "", images: self.orderModel?.shop?.images ?? [String](), rate: self.orderModel?.shop?.rate ?? 0.0, type: self.orderModel?.shop?.type ?? TypeClass(id: 0, name: "",image: "", selectedIcon: "", icon: ""), ownerId: self.orderModel?.shop?.ownerId ?? "",googlePlaceId:  self.orderModel?.shop?.googlePlaceId ?? "", openNow: self.orderModel?.shop?.openNow ?? false)
-            shopData.placeId = self.orderModel?.shop?.placeId ?? ""
-            
-            vc.shop = shopData
-            self.navigationController?.pushViewController(vc, animated: true)
-        }
-    }
-    
-    
     func validate() -> Bool {
         if (self.orderModel?.pickUpLatitude ?? 0.0 == 0.0 || self.orderModel?.pickUpLongitude ?? 0.0 == 0.0) {
             self.showBanner(title: "alert".localized, message: "searchfield_tooltip".localized, style: UIColor.INFO)
@@ -543,57 +511,7 @@ class DeliveryStep1: BaseVC,LabasLocationManagerDelegate, Step2Delegate, AllShop
         self.getShopsList(radius: Float(Constants.DEFAULT_RADIUS), rating: 0)
     }
     
-    @IBAction func step1Action(_ sender: Any) {
-        
-    }
-    
-    @IBAction func step2Action(_ sender: Any) {
-        if (self.validate()) {
-            if let vc = UIStoryboard(name: "Main", bundle: nil).instantiateViewController(withIdentifier: "DeliveryStep2") as? DeliveryStep2
-            {
-                self.orderModel?.pickUpDetails = self.edtMoreDetails.text ?? ""
-                vc.latitude = self.latitude
-                vc.longitude = self.longitude
-                vc.orderModel = self.orderModel
-                vc.delegate = self
-                self.navigationController?.pushViewController(vc, animated: true)
-            }
-        }
-    }
-    
-    @IBAction func step3Action(_ sender: Any) {
-        
-    }
-    
-    @IBAction func nextAction(_ sender: Any) {
-        if (self.validate()) {
-            if let vc = UIStoryboard(name: "Main", bundle: nil).instantiateViewController(withIdentifier: "DeliveryStep2") as? DeliveryStep2
-            {
-                self.orderModel?.pickUpDetails = self.edtMoreDetails.text ?? ""
-                vc.latitude = self.latitude
-                vc.longitude = self.longitude
-                vc.orderModel = self.orderModel
-                vc.delegate = self
-                self.navigationController?.pushViewController(vc, animated: true)
-            }
-        }
-    }
-    
-    @IBAction func backAction(_ sender: Any) {
-        UserDefaults.standard.setValue(true, forKey: Constants.OPEN_MENU)
-        if (fromHome ?? false) {
-            self.navigationController?.popViewController(animated: true)
-        }else {
-            let mainStoryboardIpad : UIStoryboard = UIStoryboard(name: "Main", bundle: nil)
-            let initialViewControlleripad : UIViewController = mainStoryboardIpad.instantiateViewController(withIdentifier: self.getHomeView()) as! UINavigationController
-            initialViewControlleripad.modalPresentationStyle = .fullScreen
-            self.present(initialViewControlleripad, animated: true, completion: {})
-        }
-    }
-    
-    @IBAction func searchAction(_ sender: Any) {
-        
-    }
+
     
     fileprivate func getAddressForMapCenter() {
         let point : CGPoint = mapView.center
@@ -875,39 +793,7 @@ class DeliveryStep1: BaseVC,LabasLocationManagerDelegate, Step2Delegate, AllShop
         }
     }
     
-    
-    @IBAction func clearPickLocation(_ sender: Any) {
-        self.moreDetailsView.isHidden = true
-        self.lblSearch.isHidden = false
-        self.ivShop.image = nil
-        self.edtMoreDetails.text = ""
-        self.lblPickupLocation.text = ""
-        self.searchField.text = ""
-        self.ivShop.isHidden = true
-        self.viewShopDetails.isHidden = true
-        self.viewClearField.isHidden = true
-        self.gMap?.clear()
-        self.getShopsList(radius: Float(Constants.DEFAULT_RADIUS), rating: 0)
-        
-        self.lblShopName.text = ""
-        self.shopNameHeight.constant = 0
-        self.viewPin.isHidden = false
-        self.viewSuggest.isHidden = true
-        
-        let camera = GMSCameraPosition.camera(withLatitude: self.latitude ?? 0.0, longitude: self.longitude ?? 0.0, zoom: 11.0)
-        self.gMap?.animate(to: camera)
-        
-    }
-    
-    
-    @IBAction func suggestAction(_ sender: Any) {
-        if let vc = UIStoryboard(name: "Main", bundle: nil).instantiateViewController(withIdentifier: "SuggestShopVC") as? SuggestShopVC
-        {
-            vc.latitude = self.pinLatitude ?? 0.0
-            vc.longitude = self.pinLongitude ?? 0.0
-            self.navigationController?.pushViewController(vc, animated: true)
-        }
-    }
+
     
     func addShopsMarkers() {
         self.gMap?.clear()
@@ -984,6 +870,93 @@ class DeliveryStep1: BaseVC,LabasLocationManagerDelegate, Step2Delegate, AllShop
         UIGraphicsEndImageContext()
         return newImage
     }
+        
+    // MARK: - UI Actions
+    
+    @IBAction func step1Action(_ sender: Any) {
+        
+    }
+    
+    @IBAction func step2Action(_ sender: Any) {
+        if (self.validate()) {
+            if let vc = UIStoryboard(name: "Main", bundle: nil).instantiateViewController(withIdentifier: "DeliveryStep2") as? DeliveryStep2
+            {
+                self.orderModel?.pickUpDetails = self.edtMoreDetails.text ?? ""
+                vc.latitude = self.latitude
+                vc.longitude = self.longitude
+                vc.orderModel = self.orderModel
+                vc.delegate = self
+                self.navigationController?.pushViewController(vc, animated: true)
+            }
+        }
+    }
+    
+    @IBAction func step3Action(_ sender: Any) {
+        
+    }
+    
+    @IBAction func nextAction(_ sender: Any) {
+        if (self.validate()) {
+            if let vc = UIStoryboard(name: "Main", bundle: nil).instantiateViewController(withIdentifier: "DeliveryStep2") as? DeliveryStep2
+            {
+                self.orderModel?.pickUpDetails = self.edtMoreDetails.text ?? ""
+                vc.latitude = self.latitude
+                vc.longitude = self.longitude
+                vc.orderModel = self.orderModel
+                vc.delegate = self
+                self.navigationController?.pushViewController(vc, animated: true)
+            }
+        }
+    }
+    
+    @IBAction func backAction(_ sender: Any) {
+        UserDefaults.standard.setValue(true, forKey: Constants.OPEN_MENU)
+        if (fromHome ?? false) {
+            self.navigationController?.popViewController(animated: true)
+        }else {
+            let mainStoryboardIpad : UIStoryboard = UIStoryboard(name: "Main", bundle: nil)
+            let initialViewControlleripad : UIViewController = mainStoryboardIpad.instantiateViewController(withIdentifier: self.getHomeView()) as! UINavigationController
+            initialViewControlleripad.modalPresentationStyle = .fullScreen
+            self.present(initialViewControlleripad, animated: true, completion: {})
+        }
+    }
+    
+    @IBAction func searchAction(_ sender: Any) {
+        
+    }
+    
+    @IBAction func clearPickLocation(_ sender: Any) {
+        self.moreDetailsView.isHidden = true
+        self.lblSearch.isHidden = false
+        self.ivShop.image = nil
+        self.edtMoreDetails.text = ""
+        self.lblPickupLocation.text = ""
+        self.searchField.text = ""
+        self.ivShop.isHidden = true
+        self.viewShopDetails.isHidden = true
+        self.viewClearField.isHidden = true
+        self.gMap?.clear()
+        self.getShopsList(radius: Float(Constants.DEFAULT_RADIUS), rating: 0)
+        
+        self.lblShopName.text = ""
+        self.shopNameHeight.constant = 0
+        self.viewPin.isHidden = false
+        self.viewSuggest.isHidden = true
+        
+        let camera = GMSCameraPosition.camera(withLatitude: self.latitude ?? 0.0, longitude: self.longitude ?? 0.0, zoom: 11.0)
+        self.gMap?.animate(to: camera)
+        
+    }
+    
+    
+    @IBAction func suggestAction(_ sender: Any) {
+        if let vc = UIStoryboard(name: "Main", bundle: nil).instantiateViewController(withIdentifier: "SuggestShopVC") as? SuggestShopVC
+        {
+            vc.latitude = self.pinLatitude ?? 0.0
+            vc.longitude = self.pinLongitude ?? 0.0
+            self.navigationController?.pushViewController(vc, animated: true)
+        }
+    }
     
     @IBAction func clearFieldAction(_ sender: Any) {
         self.moreDetailsView.isHidden = true
@@ -1051,6 +1024,39 @@ class DeliveryStep1: BaseVC,LabasLocationManagerDelegate, Step2Delegate, AllShop
         
         present(autocompleteController, animated: true, completion: nil)
     }
+    
+    @IBAction func checkMenuAction(_ sender: Any) {
+        let storyboard = UIStoryboard(name: "Main", bundle: nil)
+        let vc : ShopMenuVC = storyboard.instantiateViewController(withIdentifier: "ShopMenuVC") as! ShopMenuVC
+        vc.shopId = self.orderModel?.shop?.id ?? 0
+        vc.selectedItems = self.selectedItems
+        vc.delegate = self
+        self.navigationController?.pushViewController(vc, animated: true)
+    }
+    
+    @IBAction func showShopsList(_ sender: Any) {
+        self.showShopsList()
+    }
+    
+    @IBAction func myLocationAction(_ sender: Any) {
+        let camera = GMSCameraPosition.camera(withLatitude: self.latitude ?? 0.0, longitude: self.longitude ?? 0.0, zoom: 20.0)
+        self.gMap?.animate(to: camera)
+    }
+    
+    @IBAction func shopDetailsAction(_ sender: Any) {
+        if let vc = UIStoryboard(name: "Main", bundle: nil).instantiateViewController(withIdentifier: "ShopDetailsVC") as? ShopDetailsVC
+        {
+            vc.latitude = self.latitude ?? 0.0
+            vc.longitude = self.longitude ?? 0.0
+            
+            let shopData = ShopData(nearbyDriversCount: 0, id: self.orderModel?.shop?.id ?? 0, name: self.orderModel?.shop?.name ?? "", address: self.orderModel?.shop?.address ?? "", latitude: self.orderModel?.shop?.latitude ?? 0.0, longitude: self.orderModel?.shop?.longitude ?? 0.0, phoneNumber: self.orderModel?.shop?.phoneNumber ?? "", workingHours: self.orderModel?.shop?.workingHours ?? "", images: self.orderModel?.shop?.images ?? [String](), rate: self.orderModel?.shop?.rate ?? 0.0, type: self.orderModel?.shop?.type ?? TypeClass(id: 0, name: "",image: "", selectedIcon: "", icon: ""), ownerId: self.orderModel?.shop?.ownerId ?? "",googlePlaceId:  self.orderModel?.shop?.googlePlaceId ?? "", openNow: self.orderModel?.shop?.openNow ?? false)
+            shopData.placeId = self.orderModel?.shop?.placeId ?? ""
+            
+            vc.shop = shopData
+            self.navigationController?.pushViewController(vc, animated: true)
+        }
+    }
+    
     
 }
 
