@@ -15,81 +15,59 @@ import Firebase
 import AMPopTip
 import MarqueeLabel
 
-class DeliveryStep1: BaseVC,LabasLocationManagerDelegate, Step2Delegate, AllShopDelegate, UICollectionViewDelegate, UICollectionViewDataSource, UICollectionViewDelegateFlowLayout {
+class DeliveryStep1: BaseVC,LabasLocationManagerDelegate, Step2Delegate, AllShopDelegate {
+    
+    // MARK: - Outlets
     
     @IBOutlet weak var lblPickupLocation: MyUILabel!
-    
     @IBOutlet weak var mapView: UIView!
-    
     @IBOutlet weak var edtMoreDetails: MyUITextField!
-    
     @IBOutlet weak var searchField: SearchTextField!
-    
     @IBOutlet weak var viewParentSearch: CardView!
-    
     @IBOutlet weak var ivHandle: UIImageView!
-    
     @IBOutlet weak var ivShop: CircleImage!
     @IBOutlet weak var viewShopDetails: CardView!
     @IBOutlet weak var viewClearField: CardView!
-    
     @IBOutlet weak var viewSuggest: UIView!
-    
     @IBOutlet weak var viewPin: UIView!
-    
     @IBOutlet weak var shopNameHeight: NSLayoutConstraint!
-    
     @IBOutlet weak var lblShopName: MarqueeLabel!
-    
     @IBOutlet weak var btnCurrentLocation: UIButton!
-    
     @IBOutlet weak var ivIndicator: UIImageView!
-    
     @IBOutlet weak var moreDetailsView: UIView!
-    
     @IBOutlet weak var lblSearch: MyUILabel!
-    
     @IBOutlet weak var viewBecomeDriver: UIView!
-    
     @IBOutlet weak var ivGoogle: UIButton!
     @IBOutlet weak var btnListView: UIButton!
     @IBOutlet weak var lblViewList: UILabel!
-    
     @IBOutlet weak var btnCheckMenu: MyUIButton!
     @IBOutlet weak var viewCheckMenu: CardView!
+    @IBOutlet weak var viewPop: UIView!
+    @IBOutlet weak var collectionCategories: UICollectionView!
+    
+    // MARK: - Variables
     
     var markerLocation: GMSMarker?
     var currentZoom: Float = 0.0
     var gMap : GMSMapView?
-    
     var fromHome : Bool?
-    
     var latitude : Double?
     var longitude : Double?
-    
     var pinLatitude : Double?
     var pinLongitude : Double?
-    
     var pinMarker : GMSMarker?
     var singleMarker : GMSMarker?
-    
     var selectedLocation : CLLocation?
-    
     var orderModel : OTWOrder?
-    
     var toolTipView : ToolTipView?
-    
     var shops = [DataShop]()
     var filterShops = [DataShop]()
     var shopMarkers = [GMSMarker]()
-    
     var selectdCategory: TypeClass?
     var selectedItems = [ShopMenuItem]()
-    
-    @IBOutlet weak var viewPop: UIView!
-    
-    @IBOutlet weak var collectionCategories: UICollectionView!
     var categories = [TypeClass]()
+    
+    // MARK: - Methods
     
     override func viewDidLoad() {
         
@@ -175,19 +153,6 @@ class DeliveryStep1: BaseVC,LabasLocationManagerDelegate, Step2Delegate, AllShop
             
         }
         
-        //        let popTip = PopTip()
-        //        popTip.bubbleColor = UIColor.processing
-        //        popTip.textColor = UIColor.white
-        //        if (self.isArabic()) {
-        //            popTip.show(text: "current_location_desc".localized, direction: .left, maxWidth: 200, in: self.view, from: self.btnCurrentLocation.frame)
-        //        }else {
-        //            popTip.show(text: "current_location_desc".localized, direction: .left, maxWidth: 200, in: self.view, from: self.btnCurrentLocation.frame)
-        //        }
-        //
-        //        DispatchQueue.main.asyncAfter(deadline: .now() + 3) {
-        //            popTip.hide()
-        //        }
-        
         let flag = App.shared.config?.configSettings?.flag ?? false
         if (flag == false) {
             self.checkForUpdates()
@@ -198,29 +163,12 @@ class DeliveryStep1: BaseVC,LabasLocationManagerDelegate, Step2Delegate, AllShop
             self.getDriverOnGoingDeliveries()
         }
         
-        
-        // self.showSearchFieldToolTip()
-        
-        
         viewSuggest.isHidden = true
         
-        //        let popTip = PopTip()
-        //        popTip.bubbleColor = UIColor.colorPrimary
-        //        popTip.textColor = UIColor.white
-        //
-        //        popTip.show(text: "search_from_google".localized, direction: .left, maxWidth: 260, in: self.view, from: self.ivGoogle.frame)
-        //
         self.viewPop.isHidden = true
-        
-        //        DispatchQueue.main.asyncAfter(deadline: .now() + 11) {
-        //            self.viewPop.isHidden = true
-        //        }
-        
-        
         
         self.collectionCategories.delegate = self
         self.collectionCategories.dataSource = self
-        
         
         ApiService.getAllTypes { (response) in
             let category = TypeClass(id: 0, name: "all_shops".localized, image: "", selectedIcon: "", icon: "")
@@ -231,70 +179,6 @@ class DeliveryStep1: BaseVC,LabasLocationManagerDelegate, Step2Delegate, AllShop
         }
         
     }
-    
-    
-    //collection delegates
-    func numberOfSectionsInCollectionView(collectionView: UICollectionView) -> Int {
-        return 1
-    }
-    
-    func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, sizeForItemAt indexPath: IndexPath) -> CGSize {
-        let label = UILabel(frame: CGRect.zero)
-        label.text = self.categories[indexPath.row].name ?? ""
-        label.sizeToFit()
-        return CGSize(width: label.bounds.width + 8, height: self.collectionCategories.bounds.height - 8)
-    }
-    
-    func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, insetForSectionAt section: Int) -> UIEdgeInsets {
-        return UIEdgeInsets.zero
-    }
-    
-    func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, minimumInteritemSpacingForSectionAt section: Int) -> CGFloat {
-        return 10
-    }
-    
-    func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, minimumLineSpacingForSectionAt section: Int) -> CGFloat {
-        return 10
-    }
-    
-    func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
-        return self.categories.count
-    }
-    
-    func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
-        let selectedCat = self.categories[indexPath.row]
-        self.selectdCategory = selectedCat
-        if selectedCat.id == 0 {
-            self.addShopsMarkers()
-        } else {
-            self.filterShopsMarkers(selectedShopTypeId: selectedCat.id ?? 0)
-        }
-    }
-    
-    
-    func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
-        let cell: Step1CatCell = collectionView.dequeueReusableCell(withReuseIdentifier: "Step1CatCell", for: indexPath as IndexPath) as! Step1CatCell
-        
-        let category = self.categories[indexPath.row]
-        
-        if (self.isArabic()) {
-            cell.transform = CGAffineTransform(scaleX: -1.0, y: 1.0)
-        }
-        
-        cell.lblName.text = category.name ?? ""
-        
-        
-        if (category.image?.count ?? 0 > 0) {
-            let url = URL(string: "\(Constants.IMAGE_URL)\(category.image ?? "")")
-            cell.ivLogo.kf.setImage(with: url)
-        }else {
-            cell.ivLogo.image = UIImage(named: "type_holder")
-        }
-        
-        return cell
-        
-    }
-    
     
     func openShopList() {
         if let vc = UIStoryboard(name: "Main", bundle: nil).instantiateViewController(withIdentifier: "AllShopsVC") as? AllShopsVC
@@ -362,47 +246,19 @@ class DeliveryStep1: BaseVC,LabasLocationManagerDelegate, Step2Delegate, AllShop
         }
     }
     
-    
     func showSearchFieldToolTip() {
         let popTip = PopTip()
         popTip.bubbleColor = UIColor.processing
         popTip.textColor = UIColor.white
         popTip.show(text: "searchfield_tooltip".localized, direction: .down, maxWidth: 900, in: self.view, from: self.viewParentSearch.frame)
-        
-        //        DispatchQueue.main.asyncAfter(deadline: .now() + 3) {
-        //            popTip.hide()
-        //        }
-        
     }
     
     func getDriverOnGoingDeliveries() {
         self.showLoading()
         ApiService.getDriverOnGoingDeliveries(Authorization: self.loadUser().data?.accessToken ?? "") { (response) in
             self.hideLoading()
-            //            for item in response.data ?? [DatumDriverDel]() {
-            //                if (item.time ?? 0 == 0) {
-            //                    ApiService.getDelivery(id: item.id ?? 0) { (response) in
-            //                        let items = response.data?.items ?? [ShopMenuItem]()
-            //                        DispatchQueue.main.async {
-            //                            let messagesVC: ZHCDemoMessagesViewController = ZHCDemoMessagesViewController.init()
-            //                            messagesVC.presentBool = true
-            //
-            //                            let dumOrder = DatumDel(id: item.id ?? 0, title: item.title ?? "", status: item.status ?? 0, statusString: item.statusString ?? "", image: item.image ?? "", createdDate: item.createdDate ?? "", chatId: item.chatId ?? 0, fromAddress: item.fromAddress ?? "", fromLatitude: item.fromLatitude ?? 0.0, fromLongitude: item.fromLongitude ?? 0.0, toAddress: item.toAddress ?? "", toLatitude: item.toLatitude ?? 0.0, toLongitude: item.toLongitude ?? 0.0, providerID: item.providerID ?? "", providerName: item.providerName ?? "", providerImage: item.providerImage ?? "", providerRate: item.providerRate ?? 0.0, time: item.time ?? 0, price: item.price ?? 0.0, serviceName: item.serviceName ?? "", paymentMethod: item.paymentMethod ?? 0, items: items, isPaid: item.isPaid ?? false, invoiceId: item.invoiceId ?? "", toFemaleOnly: item.toFemaleOnly ?? false, shopId: item.shopId ?? 0, OrderPrice: item.OrderPrice ?? 0.0, KnetCommission : item.KnetCommission ?? 0.0, ClientPhone: "", ProviderPhone : "")
-            //
-            //                            messagesVC.order = dumOrder
-            //                            messagesVC.user = self.loadUser()
-            //                            let nav: UINavigationController = UINavigationController.init(rootViewController: messagesVC)
-            //                            nav.modalPresentationStyle = .fullScreen
-            //                            messagesVC.modalPresentationStyle = .fullScreen
-            //                            self.navigationController?.present(nav, animated: true, completion: nil)
-            //                        }
-            //
-            //                    }
-            //                }
-            //            }
         }
     }
-    
     
     func checkForUpdates() {
         let appVersion = Bundle.main.infoDictionary?["CFBundleShortVersionString"] as? String ?? "0.0".replacedArabicDigitsWithEnglish
@@ -440,7 +296,6 @@ class DeliveryStep1: BaseVC,LabasLocationManagerDelegate, Step2Delegate, AllShop
         
     }
     
-    
     func showNormUpdateDialog(titleStr : String, desc : String) {
         let viewController = UIStoryboard(name: "Main", bundle: nil).instantiateViewController(withIdentifier: "normdialogvc") as! NormUpdateDialog
         viewController.dialogTitleStr = titleStr
@@ -462,12 +317,6 @@ class DeliveryStep1: BaseVC,LabasLocationManagerDelegate, Step2Delegate, AllShop
             self.showBanner(title: "alert".localized, message: "searchfield_tooltip".localized, style: UIColor.INFO)
             return false
         }
-        //        if (self.orderModel?.shop?.id ?? 0 == 0) {
-        //            if (self.edtMoreDetails.text?.count ?? 0 == 0) {
-        //                self.showBanner(title: "alert".localized, message: "enter_pickup_details".localized, style: UIColor.INFO)
-        //                return false
-        //            }
-        //        }
         return true
     }
     
@@ -478,15 +327,9 @@ class DeliveryStep1: BaseVC,LabasLocationManagerDelegate, Step2Delegate, AllShop
             self.latitude = location.coordinate.latitude
             self.longitude = location.coordinate.longitude
             
-//            self.latitude = 28.537264
-//            self.longitude = 47.726557
-            
-            
             UserDefaults.standard.setValue(self.latitude, forKey: Constants.LAST_LATITUDE)
             UserDefaults.standard.setValue(self.longitude, forKey: Constants.LAST_LONGITUDE)
-            
-            
-            
+
             self.setUpGoogleMap()
         }
     }
@@ -610,7 +453,7 @@ class DeliveryStep1: BaseVC,LabasLocationManagerDelegate, Step2Delegate, AllShop
         ApiService.getShops(latitude: self.latitude ?? 0.0, longitude: self.longitude ?? 0.0, radius: radius, rating : rating, types : 0) { (response) in
             self.shops.removeAll()
             self.shops.append(contentsOf: response.dataShops ?? [DataShop]())
-            self.addShopsMarkers()
+//            self.addShopsMarkers()
         }
     }
     
@@ -1059,17 +902,16 @@ class DeliveryStep1: BaseVC,LabasLocationManagerDelegate, Step2Delegate, AllShop
             self.navigationController?.pushViewController(vc, animated: true)
         }
     }
-    
-    
 }
 
+// MARK: - GMSMapViewDelegate
+
 extension DeliveryStep1 : GMSMapViewDelegate {
+    
     func mapView(_ mapView: GMSMapView, didChange position: GMSCameraPosition) {
         toolTipView?.removeFromSuperview()
     }
-    func mapView(_ mapView: GMSMapView, idleAt position: GMSCameraPosition) {
-        
-    }
+    
     func mapView(_ mapView: GMSMapView, didTap marker: GMSMarker) -> Bool {
         let id = marker.title ?? "0"
         if (id.contains(find: "my_location")) {
@@ -1154,7 +996,6 @@ extension DeliveryStep1 : GMSMapViewDelegate {
         
     }
     
-    
     func handleOpenNow(shop : ShopData?) {
         if (shop?.googlePlaceId?.count ?? 0 > 0) {
             let isOpen = shop?.openNow ?? false
@@ -1199,7 +1040,6 @@ extension DeliveryStep1 : GMSMapViewDelegate {
         }
     }
     
-    
     func getWeekDay(shop : ShopData?) -> Int {
         var calendar = Calendar.current
         calendar.locale = Locale(identifier: "KW")
@@ -1229,7 +1069,6 @@ extension DeliveryStep1 : GMSMapViewDelegate {
         return hour
     }
     
-    
     func getShopImageByType(type : Int) -> UIImage {
         switch type {
         case Constants.PLACE_BAKERY:
@@ -1256,9 +1095,6 @@ extension DeliveryStep1 : GMSMapViewDelegate {
             return UIImage(named: "ic_place_store")!
         }
     }
-    
-    
-    
     
     func mapView(_ mapView: GMSMapView, didLongPressAt coordinate: CLLocationCoordinate2D) {
         self.gMap?.clear()
@@ -1296,29 +1132,9 @@ extension DeliveryStep1 : GMSMapViewDelegate {
     
 }
 
+// MARK: UITextFieldDelegate
+
 extension DeliveryStep1: UITextFieldDelegate {
-    
-    //    func textField(_ textField: UITextField, shouldChangeCharactersIn range: NSRange, replacementString string: String) -> Bool {
-    //
-    //        //        if textField == self.searchField {
-    //        //            let maxLength = 100
-    //        //            let currentString: NSString = textField.text as NSString? ?? ""
-    //        //            let newString: NSString =
-    //        //                currentString.replacingCharacters(in: range, with: string) as NSString
-    //        //            if (newString.length >= 3) {
-    //        //                self.getShopsByName(name: newString as String, latitude: self.latitude ?? 0.0, longitude: self.longitude ?? 0.0, radius: Float(Constants.DEFAULT_RADIUS))
-    //        //
-    //        //                // self.getShopByPlaces(name: newString as String, latitude: self.latitude ?? 0.0, longitude: self.longitude ?? 0.0)
-    //        //            }
-    //        //            if (newString.length == 0) {
-    //        //                self.gMap?.clear()
-    //        //                self.getShopsList(radius: Float(Constants.DEFAULT_RADIUS), rating: 0)
-    //        //            }
-    //        //            return newString.length <= maxLength
-    //        //        }
-    //
-    //        return false
-    //    }
     
     func textFieldShouldReturn(_ textField: UITextField) -> Bool {
         if (textField == self.searchField) {
@@ -1336,9 +1152,11 @@ extension DeliveryStep1: UITextFieldDelegate {
     }
 }
 
+// MARK: - GMSAutocompleteViewControllerDelegate
+
 extension DeliveryStep1: GMSAutocompleteViewControllerDelegate {
     func viewController(_ viewController: GMSAutocompleteViewController, didAutocompleteWith place: GMSPlace) {
-        //        let camera = GMSCameraPosition.camera(withLatitude:place.coordinate.latitude, longitude:place.coordinate.longitude, zoom: 17.0)
+        
         dismiss(animated: true, completion: {
             
             self.searchField.text = ""
@@ -1374,14 +1192,12 @@ extension DeliveryStep1: GMSAutocompleteViewControllerDelegate {
             
             self.ivShop.image = UIImage(named: "placeholder_order")
             
-            
             self.edtMoreDetails.text = "\(place.name ?? "")\n\(place.formattedAddress ?? "")"
             
             self.lblShopName.text = place.name ?? ""
             self.shopNameHeight.constant = 20
             self.viewPin.isHidden = false
             self.viewSuggest.isHidden = true
-            
             
             let camera = GMSCameraPosition.camera(withLatitude: self.orderModel?.pickUpLatitude ?? 0.0, longitude: self.orderModel?.pickUpLongitude ?? 0.0, zoom: 15.0)
             self.gMap?.animate(to: camera)
@@ -1407,6 +1223,8 @@ extension DeliveryStep1: GMSAutocompleteViewControllerDelegate {
     }
 }
 
+// MARK: - ShopMenuDelegate
+
 extension DeliveryStep1: ShopMenuDelegate {
     func onDone(items: [ShopMenuItem], total: Double) {
         var text = ""
@@ -1424,5 +1242,67 @@ extension DeliveryStep1: ShopMenuDelegate {
         self.orderModel?.edtOrderDetailsText = text
         self.selectedItems.removeAll()
         self.selectedItems.append(contentsOf: items)
+    }
+}
+
+// MARK: - CollectionView delegates
+
+extension DeliveryStep1: UICollectionViewDelegate, UICollectionViewDataSource, UICollectionViewDelegateFlowLayout {
+    
+    func numberOfSectionsInCollectionView(collectionView: UICollectionView) -> Int {
+        return 1
+    }
+    
+    func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, sizeForItemAt indexPath: IndexPath) -> CGSize {
+        let label = UILabel(frame: CGRect.zero)
+        label.text = self.categories[indexPath.row].name ?? ""
+        label.sizeToFit()
+        return CGSize(width: label.bounds.width + 8, height: self.collectionCategories.bounds.height - 8)
+    }
+    
+    func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, insetForSectionAt section: Int) -> UIEdgeInsets {
+        return UIEdgeInsets.zero
+    }
+    
+    func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, minimumInteritemSpacingForSectionAt section: Int) -> CGFloat {
+        return 10
+    }
+    
+    func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, minimumLineSpacingForSectionAt section: Int) -> CGFloat {
+        return 10
+    }
+    
+    func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
+        return self.categories.count
+    }
+    
+    func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
+        let selectedCat = self.categories[indexPath.row]
+        self.selectdCategory = selectedCat
+        if selectedCat.id == 0 {
+            self.addShopsMarkers()
+        } else {
+            self.filterShopsMarkers(selectedShopTypeId: selectedCat.id ?? 0)
+        }
+    }
+    
+    func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
+        let cell: Step1CatCell = collectionView.dequeueReusableCell(withReuseIdentifier: "Step1CatCell", for: indexPath as IndexPath) as! Step1CatCell
+        
+        let category = self.categories[indexPath.row]
+        
+        if (self.isArabic()) {
+            cell.transform = CGAffineTransform(scaleX: -1.0, y: 1.0)
+        }
+        
+        cell.lblName.text = category.name ?? ""
+        
+        if (category.image?.count ?? 0 > 0) {
+            let url = URL(string: "\(Constants.IMAGE_URL)\(category.image ?? "")")
+            cell.ivLogo.kf.setImage(with: url)
+        }else {
+            cell.ivLogo.image = UIImage(named: "type_holder")
+        }
+        return cell
     }
 }
