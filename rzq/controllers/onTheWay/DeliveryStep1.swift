@@ -979,6 +979,8 @@ class DeliveryStep1: BaseVC,LabasLocationManagerDelegate, Step2Delegate, AllShop
         
         let camera = GMSCameraPosition.camera(withLatitude: self.latitude ?? 0.0, longitude: self.longitude ?? 0.0, zoom: 11.0)
         self.gMap?.animate(to: camera)
+        self.viewCheckMenu.isHidden = true
+        self.selectedItems.removeAll()
     }
     
     @IBAction func clearFieldAction2(_ sender: Any) {
