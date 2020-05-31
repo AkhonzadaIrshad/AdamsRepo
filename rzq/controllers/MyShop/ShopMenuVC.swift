@@ -69,7 +69,7 @@ UITableViewDelegate, UITableViewDataSource, CheckOutDoneDelegate {
     
     func loadShopMenu() {
         self.showLoading()
-        ApiService.getMenuByShopId(Authorization: self.loadUser().data?.accessToken ?? "", id: self.shopId ?? 0) { (response) in
+        ApiService.getMenuByShopId(Authorization: DataManager.loadUser().data?.accessToken ?? "", id: self.shopId ?? 0) { (response) in
             self.hideLoading()
             self.categories.removeAll()
             self.categories.append(contentsOf: response.shopMenuData ?? [ShopMenuDatum]())

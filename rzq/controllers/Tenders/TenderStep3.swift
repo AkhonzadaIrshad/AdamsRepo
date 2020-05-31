@@ -257,7 +257,7 @@ class TenderStep3: BaseVC, UINavigationControllerDelegate, ImagePickerDelegate {
     
     @IBAction func placeOrderAction(_ sender: Any) {
         if (self.validate()) {
-            ApiService.createTender(Authorization: self.loadUser().data?.accessToken ?? "", desc: self.edtOrderDetails.text ?? "", toLongitude: self.orderModel?.dropOffLongitude ?? 0.0, toLatitude: self.orderModel?.dropOffLatitude ?? 0.0, time: self.selectedTime ?? 0, price: "\(self.getCost())", address: self.orderModel?.dropOffAddress ?? "", serviceId: self.orderModel?.service?.id ?? 0, dropOffDetails: self.orderModel?.dropOffDetails ?? "") { (response) in
+            ApiService.createTender(Authorization: DataManager.loadUser().data?.accessToken ?? "", desc: self.edtOrderDetails.text ?? "", toLongitude: self.orderModel?.dropOffLongitude ?? 0.0, toLatitude: self.orderModel?.dropOffLatitude ?? 0.0, time: self.selectedTime ?? 0, price: "\(self.getCost())", address: self.orderModel?.dropOffAddress ?? "", serviceId: self.orderModel?.service?.id ?? 0, dropOffDetails: self.orderModel?.dropOffDetails ?? "") { (response) in
                 if (response.data ?? 0 > 0) {
                     self.handleUploadingMedia(id : response.data ?? 0)
                 }else {
@@ -285,7 +285,7 @@ class TenderStep3: BaseVC, UINavigationControllerDelegate, ImagePickerDelegate {
             }else {
                 audioData = Data(base64Encoded: "")
             }
-            ApiService.uploadMedia(Authorization: self.loadUser().data?.accessToken ?? "", deliveryId: id, imagesData: imagesData, audioData: audioData!) { (response) in
+            ApiService.uploadMedia(Authorization: DataManager.loadUser().data?.accessToken ?? "", deliveryId: id, imagesData: imagesData, audioData: audioData!) { (response) in
                 self.hideLoading()
                 if (response.errorCode == 0) {
                     let vc = UIStoryboard(name: "Main", bundle: nil).instantiateViewController(withIdentifier: "SendingOrderVC") as! SendingOrderVC

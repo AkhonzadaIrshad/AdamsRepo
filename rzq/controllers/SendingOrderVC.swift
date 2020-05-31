@@ -36,7 +36,7 @@ class SendingOrderVC: BaseVC {
             self.lblDesc.text = "waiting_provider_bids_desc".localized
         }
         
-        ApiService.updateRegId(Authorization: self.loadUser().data?.accessToken ?? "", regId: Messaging.messaging().fcmToken ?? "not_avaliable") { (response) in
+        ApiService.updateRegId(Authorization: DataManager.loadUser().data?.accessToken ?? "", regId: Messaging.messaging().fcmToken ?? "not_avaliable") { (response) in
             
             
         }

@@ -70,9 +70,9 @@ class RegisterDriverVC: BaseVC, UINavigationControllerDelegate {
              self.edtEmail.textAlignment = NSTextAlignment.right
             self.ivHandle.image = UIImage(named: "ic_back_arabic")
         }
-        self.edtName.text = self.loadUser().data?.fullName ?? ""
-        self.edtMobile.text = self.loadUser().data?.phoneNumber ?? ""
-        self.edtEmail.text = self.loadUser().data?.email ?? ""
+        self.edtName.text = DataManager.loadUser().data?.fullName ?? ""
+        self.edtMobile.text = DataManager.loadUser().data?.phoneNumber ?? ""
+        self.edtEmail.text = DataManager.loadUser().data?.email ?? ""
         
         // Do any additional setup after loading the view.
         self.openWelcomeDriver()
@@ -149,7 +149,7 @@ class RegisterDriverVC: BaseVC, UINavigationControllerDelegate {
             let civilStr = (self.ivCivilId.image?.toBase64())!
             let licenseStr = (self.ivLicense.image?.toBase64())!
             
-            ApiService.registerAsDriver(Authorization: self.loadUser().data?.accessToken ?? "", NationalId: civilStr, DrivingLicense: licenseStr, ProfilePicture: profileStr, Email: self.edtEmail.text ?? "") { (response) in
+            ApiService.registerAsDriver(Authorization: DataManager.loadUser().data?.accessToken ?? "", NationalId: civilStr, DrivingLicense: licenseStr, ProfilePicture: profileStr, Email: self.edtEmail.text ?? "") { (response) in
                 self.hideLoading()
                 if (response.errorCode == 0) {
                     self.showBanner(title: "alert".localized, message: "driver_registered".localized, style: UIColor.SUCCESS)

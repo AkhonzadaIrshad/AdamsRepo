@@ -50,7 +50,7 @@ class HomeListVC: BaseViewController, UITableViewDelegate, UITableViewDataSource
         LabasLocationManager.shared.startUpdatingLocation()
         
       
-        ApiService.updateRegId(Authorization: self.loadUser().data?.accessToken ?? "", regId: Messaging.messaging().fcmToken ?? "not_avaliable") { (response) in
+        ApiService.updateRegId(Authorization: DataManager.loadUser().data?.accessToken ?? "", regId: Messaging.messaging().fcmToken ?? "not_avaliable") { (response) in
             
         }
         
@@ -62,7 +62,7 @@ class HomeListVC: BaseViewController, UITableViewDelegate, UITableViewDataSource
     
     func validateDriverDueAmount() {
         if (self.isProvider()) {
-            let check = self.loadUser().data?.exceededDueAmount ?? false
+            let check = DataManager.loadUser().data?.exceededDueAmount ?? false
             if (check) {
                 //show alert
                 self.showAlertOK(title: "alert".localized, message: "due_amount".localized, actionTitle: "ok".localized)
@@ -78,7 +78,7 @@ class HomeListVC: BaseViewController, UITableViewDelegate, UITableViewDataSource
     func checkForDeepLinkValues() {
         if (App.shared.deepLinkShopId != nil && Int(App.shared.deepLinkShopId ?? "0") ?? 0 > 0) {
             //open shop
-            ApiService.getShopDetails(Authorization: self.loadUser().data?.accessToken ?? "", id: Int(App.shared.deepLinkShopId ?? "0")!) { (response) in
+            ApiService.getShopDetails(Authorization: DataManager.loadUser().data?.accessToken ?? "", id: Int(App.shared.deepLinkShopId ?? "0")!) { (response) in
                 if let vc = UIStoryboard(name: "Main", bundle: nil).instantiateViewController(withIdentifier: "ShopDetailsVC") as? ShopDetailsVC
                 {
                     vc.latitude = self.latitude ?? 0.0
@@ -120,7 +120,7 @@ class HomeListVC: BaseViewController, UITableViewDelegate, UITableViewDataSource
                     
                     
                     messagesVC.order = order
-                    messagesVC.user = self.loadUser()
+                    messagesVC.user = DataManager.loadUser()
                     let nav: UINavigationController = UINavigationController.init(rootViewController: messagesVC)
                     nav.modalPresentationStyle = .fullScreen
                     messagesVC.modalPresentationStyle = .fullScreen
@@ -177,7 +177,7 @@ class HomeListVC: BaseViewController, UITableViewDelegate, UITableViewDataSource
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
         let shop = self.shops[indexPath.row]
         self.showLoading()
-        ApiService.getShopDetails(Authorization: self.loadUser().data?.accessToken ?? "", id: shop.id ?? 0, completion: { (response) in
+        ApiService.getShopDetails(Authorization: DataManager.loadUser().data?.accessToken ?? "", id: shop.id ?? 0, completion: { (response) in
             self.hideLoading()
             if let vc = UIStoryboard(name: "Main", bundle: nil).instantiateViewController(withIdentifier: "ShopDetailsVC") as? ShopDetailsVC
             {
@@ -288,7 +288,7 @@ class HomeListVC: BaseViewController, UITableViewDelegate, UITableViewDataSource
             self.hideLoading()
             
             if (self.isProvider()) {
-                ApiService.updateLocation(Authorization: self.loadUser().data?.accessToken ?? "", latitude: location.coordinate.latitude, longitude: location.coordinate.longitude) { (response) in
+                ApiService.updateLocation(Authorization: DataManager.loadUser().data?.accessToken ?? "", latitude: location.coordinate.latitude, longitude: location.coordinate.longitude) { (response) in
                     
                 }
             }

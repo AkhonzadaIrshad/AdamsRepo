@@ -79,8 +79,6 @@ class NotificationsVC: BaseViewController,LabasLocationManagerDelegate, AcceptBi
                                                    for: .normal)
         
         if (App.shared.notificationSegmentIndex ?? 0 == 0) {
-            // self.segmentControl.selectedSegmentIndex = 0
-            //snuff
             self.segmentControl.selectedSegmentIndex = 1
         }else {
             self.segmentControl.selectedSegmentIndex = 1
@@ -97,8 +95,8 @@ class NotificationsVC: BaseViewController,LabasLocationManagerDelegate, AcceptBi
         super.viewDidAppear(animated)
         self.updateNotifications()
         UserDefaults.standard.setValue(0, forKey: Constants.NOTIFICATION_COUNT)
-        
     }
+    
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
         if self.segmentControl.selectedSegmentIndex == 0 {
@@ -179,7 +177,7 @@ class NotificationsVC: BaseViewController,LabasLocationManagerDelegate, AcceptBi
                         
                         
                         messagesVC.order = order
-                        messagesVC.user = self.loadUser()
+                        messagesVC.user = DataManager.loadUser()
                         // messagesVC.sendWelcomeMessage = true
                         let nav: UINavigationController = UINavigationController.init(rootViewController: messagesVC)
                         nav.modalPresentationStyle = .fullScreen
@@ -194,7 +192,7 @@ class NotificationsVC: BaseViewController,LabasLocationManagerDelegate, AcceptBi
     
     func updateNotifications() {
         self.showLoading()
-        ApiService.getAllNotifications(Authorization: self.loadUser().data?.accessToken ?? "", sortBy: self.sortBy ?? 1) { (response) in
+        ApiService.getAllNotifications(Authorization: DataManager.loadUser().data?.accessToken ?? "", sortBy: self.sortBy ?? 1) { (response) in
             self.refreshControl.endRefreshing()
             self.alerts.removeAll()
             self.actions.removeAll()
@@ -230,7 +228,6 @@ class NotificationsVC: BaseViewController,LabasLocationManagerDelegate, AcceptBi
             
         }
     }
-    
     
     func createSortSheet() -> ActionSheet {
         let title = ActionSheetTitle(title: "sort_notifications_by".localized)
@@ -283,7 +280,6 @@ class NotificationsVC: BaseViewController,LabasLocationManagerDelegate, AcceptBi
         return actionSheet
     }
     
-    
     func labasLocationManager(didUpdateLocation location: CLLocation) {
         if (self.latitude ?? 0.0 == 0.0 || self.longitude ?? 0.0 == 0.0) {
             self.latitude = location.coordinate.latitude
@@ -297,7 +293,7 @@ class NotificationsVC: BaseViewController,LabasLocationManagerDelegate, AcceptBi
     }
     
     func refreshNotifications() {
-        ApiService.getAllNotifications(Authorization: self.loadUser().data?.accessToken ?? "", sortBy: self.sortBy ?? 1) { (response) in
+        ApiService.getAllNotifications(Authorization: DataManager.loadUser().data?.accessToken ?? "", sortBy: self.sortBy ?? 1) { (response) in
             self.alerts.removeAll()
             self.actions.removeAll()
             
@@ -339,7 +335,6 @@ class NotificationsVC: BaseViewController,LabasLocationManagerDelegate, AcceptBi
         initialViewControlleripad.modalPresentationStyle = .fullScreen
         self.present(initialViewControlleripad, animated: true, completion: {})
     }
-    
 }
 
 extension NotificationsVC: UITableViewDelegate, UITableViewDataSource {

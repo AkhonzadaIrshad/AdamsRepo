@@ -139,12 +139,12 @@ class EditProfileVC: BaseVC,UINavigationControllerDelegate {
             }
             
             let strBase64 = self.ivProfile.image?.toBase64()
-            ApiService.updateProfile(Authorization: self.loadUser().data?.accessToken ?? "", FullName: self.edtUserName.text ?? "", Email: self.edtEmail.text ?? "", birthDate: self.btnDate.titleLabel?.text ?? "", gender: gender, profileImage: strBase64 ?? "") { (response) in
+            ApiService.updateProfile(Authorization: DataManager.loadUser().data?.accessToken ?? "", FullName: self.edtUserName.text ?? "", Email: self.edtEmail.text ?? "", birthDate: self.btnDate.titleLabel?.text ?? "", gender: gender, profileImage: strBase64 ?? "") { (response) in
                 self.hideLoading()
                 if (response.errorCode == 0) {
                     self.showBanner(title: "alert".localized, message: "profile_updated_successfully".localized, style: UIColor.SUCCESS)
-                    ApiService.getProfile(Authorization: self.loadUser().data?.accessToken ?? "") { (rsp) in
-                        let userData = self.loadUser().data
+                    ApiService.getProfile(Authorization: DataManager.loadUser().data?.accessToken ?? "") { (rsp) in
+                        let userData = DataManager.loadUser().data
                         let profile = VerifyResponse(data: DataClass(accessToken: userData?.accessToken ?? "", phoneNumber: rsp.dataProfileObj?.phoneNumber ?? "", username: userData?.username ?? "", fullName: rsp.dataProfileObj?.fullName ?? "", userID: userData?.userID ?? "", dateOfBirth: rsp.dataProfileObj?.dateOfBirth ?? "", profilePicture: rsp.dataProfileObj?.image ?? "", email: rsp.dataProfileObj?.email ?? "", gender: rsp.dataProfileObj?.gender ?? 1, rate: userData?.rate ?? 0.0, roles: userData?.roles ?? "", isOnline: userData?.isOnline ?? true, exceededDueAmount: userData?.exceededDueAmount ?? false, dueAmount: userData?.dueAmount ?? 0.0, earnings: userData?.earnings ?? 0.0, balance: userData?.balance ?? 0.0), errorCode: 0, errorMessage: "")
                         self.updateUser(self.getRealmUser(userProfile: profile))
                         DispatchQueue.main.asyncAfter(deadline: .now() + 2, execute: {

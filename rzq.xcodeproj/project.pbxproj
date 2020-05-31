@@ -9,6 +9,7 @@
 /* Begin PBXBuildFile section */
 		5AEDABFCF15B3B611B1F883C /* Pods_rzq.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 6C9F2970658F91B48096D878 /* Pods_rzq.framework */; };
 		675FFA202455EAA500C8AD17 /* RoundedView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 675FFA1F2455EAA500C8AD17 /* RoundedView.swift */; };
+		67693C7A248447B100C944D2 /* DataManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 67693C79248447B100C944D2 /* DataManager.swift */; };
 		8B05CDC42361BD8700E0FF9B /* ShopOwnerMenuResponse.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8B05CDC32361BD8700E0FF9B /* ShopOwnerMenuResponse.swift */; };
 		8B05CDC62361C00F00E0FF9B /* OwnerShopListResponse.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8B05CDC52361C00F00E0FF9B /* OwnerShopListResponse.swift */; };
 		8B112074235DA0F2005F2122 /* ShopMenuTabCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8B112073235DA0F2005F2122 /* ShopMenuTabCell.swift */; };
@@ -226,6 +227,7 @@
 /* Begin PBXFileReference section */
 		172B3F9BB35A5D499A0D11A2 /* Pods-rzq.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-rzq.debug.xcconfig"; path = "Pods/Target Support Files/Pods-rzq/Pods-rzq.debug.xcconfig"; sourceTree = "<group>"; };
 		675FFA1F2455EAA500C8AD17 /* RoundedView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RoundedView.swift; sourceTree = "<group>"; };
+		67693C79248447B100C944D2 /* DataManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DataManager.swift; sourceTree = "<group>"; };
 		6C9F2970658F91B48096D878 /* Pods_rzq.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_rzq.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		8B05CDC32361BD8700E0FF9B /* ShopOwnerMenuResponse.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ShopOwnerMenuResponse.swift; sourceTree = "<group>"; };
 		8B05CDC52361C00F00E0FF9B /* OwnerShopListResponse.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = OwnerShopListResponse.swift; sourceTree = "<group>"; };
@@ -472,6 +474,14 @@
 			name = Frameworks;
 			sourceTree = "<group>";
 		};
+		67693C782484479B00C944D2 /* managers */ = {
+			isa = PBXGroup;
+			children = (
+				67693C79248447B100C944D2 /* DataManager.swift */,
+			);
+			path = managers;
+			sourceTree = "<group>";
+		};
 		8B1F91C522561DFB00B639F1 /* models */ = {
 			isa = PBXGroup;
 			children = (
@@ -510,6 +520,7 @@
 		8B2BCC80224FCEB400CBC7D3 /* rzq */ = {
 			isa = PBXGroup;
 			children = (
+				67693C782484479B00C944D2 /* managers */,
 				8BC54AF42268751400B70A97 /* chat */,
 				8BD45FA522675B0F000FB47A /* rzq.entitlements */,
 				8B1F91C522561DFB00B639F1 /* models */,
@@ -1198,6 +1209,7 @@
 				8B5808BA231271DD004C2A19 /* ChatUserSheet.swift in Sources */,
 				8BC54B0A2268BAB000B70A97 /* MySubscriptionsResponse.swift in Sources */,
 				8BB7CA06227F55F200D7C8F2 /* FilterModel.swift in Sources */,
+				67693C7A248447B100C944D2 /* DataManager.swift in Sources */,
 				8BF4242B229B137F0014596F /* TenderStep3.swift in Sources */,
 				8BAE41DF2299ADA300C7D897 /* RegisterAsServiceProviderVC.swift in Sources */,
 				8BCB780D2254E83A00E52ED0 /* TakeOrderVC.swift in Sources */,

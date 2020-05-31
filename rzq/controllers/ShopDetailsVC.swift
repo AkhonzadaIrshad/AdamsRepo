@@ -72,14 +72,14 @@ class ShopDetailsVC: BaseVC, UITableViewDelegate, UITableViewDataSource, UIColle
         self.infoView.isHidden = false
         gMap = GMSMapView()
         self.setUpGoogleMap()
-        if ((self.loadUser().data?.roles?.contains(find: "Driver"))!) {
+        if ((DataManager.loadUser().data?.roles?.contains(find: "Driver"))!) {
             self.viewBecomeDriver.isHidden = true
             self.segmentControl.isHidden = false
             self.tableView.isHidden = false
             
             self.viewRegister.isHidden = false
             
-            ApiService.getShopPendingDeliveries(Authorization: self.loadUser().data?.accessToken ?? "", shopId: self.shop?.id ?? 0) { (response) in
+            ApiService.getShopPendingDeliveries(Authorization: DataManager.loadUser().data?.accessToken ?? "", shopId: self.shop?.id ?? 0) { (response) in
                 self.items.append(contentsOf: response.shopDelData ?? [ShopDelDatum]())
                 self.tableView.delegate = self
                 self.tableView.dataSource = self
@@ -128,7 +128,7 @@ class ShopDetailsVC: BaseVC, UITableViewDelegate, UITableViewDataSource, UIColle
             self.lblImages.isHidden = true
         }
         
-        if (self.shop?.ownerId?.elementsEqual(self.loadUser().data?.userID ?? "") ?? false) {
+        if (self.shop?.ownerId?.elementsEqual(DataManager.loadUser().data?.userID ?? "") ?? false) {
             self.ivEdit.isHidden = false
         }else {
             self.ivEdit.isHidden = true
@@ -144,7 +144,7 @@ class ShopDetailsVC: BaseVC, UITableViewDelegate, UITableViewDataSource, UIColle
             self.viewRegister.isHidden = true
             
         } else {
-            if ((self.loadUser().data?.roles?.contains(find: "Driver"))!) {
+            if ((DataManager.loadUser().data?.roles?.contains(find: "Driver"))!) {
                 self.viewRegister.isHidden = false
             }else {
                 self.viewRegister.isHidden = true
@@ -562,7 +562,7 @@ class ShopDetailsVC: BaseVC, UITableViewDelegate, UITableViewDataSource, UIColle
     
     func subscribeToPlace() {
         self.showLoading()
-        ApiService.subscribeToPlace(Authorization: self.loadUser().data?.accessToken ?? "", id: shop?.placeId ?? "", name: shop?.name ?? "", address: shop?.address ?? "", latitude: shop?.latitude ?? 0.0, longitude: shop?.longitude ?? 0.0, phoneNumber: shop?.phoneNumber ?? "", workingHours: shop?.workingHours ?? "", image: "", rate: 0) { (response) in
+        ApiService.subscribeToPlace(Authorization: DataManager.loadUser().data?.accessToken ?? "", id: shop?.placeId ?? "", name: shop?.name ?? "", address: shop?.address ?? "", latitude: shop?.latitude ?? 0.0, longitude: shop?.longitude ?? 0.0, phoneNumber: shop?.phoneNumber ?? "", workingHours: shop?.workingHours ?? "", image: "", rate: 0) { (response) in
             self.hideLoading()
             if (response.errorCode == 0) {
                 self.showBanner(title: "alert".localized, message: "registered_to_shop".localized, style: UIColor.SUCCESS)
@@ -574,7 +574,7 @@ class ShopDetailsVC: BaseVC, UITableViewDelegate, UITableViewDataSource, UIColle
     
     func subscribeToShop() {
         self.showLoading()
-        ApiService.subscribeToShop(Authorization: self.loadUser().data?.accessToken ?? "", shopId: self.shop?.id ?? 0) { (response) in
+        ApiService.subscribeToShop(Authorization: DataManager.loadUser().data?.accessToken ?? "", shopId: self.shop?.id ?? 0) { (response) in
             self.hideLoading()
             if (response.errorCode == 0) {
                 self.showBanner(title: "alert".localized, message: "registered_to_shop".localized, style: UIColor.SUCCESS)

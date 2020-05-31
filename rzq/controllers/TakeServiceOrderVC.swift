@@ -289,7 +289,7 @@ class TakeServiceOrderVC: BaseVC, AVAudioPlayerDelegate {
     @IBAction func sendAction(_ sender: Any) {
         if (self.validate()) {
             self.showLoading()
-            ApiService.createBid(Authorization: self.loadUser().data?.accessToken ?? "", deliveryId: self.deliveryId ?? 0, time: self.selectedTime ?? 1, price: self.lblValue.text ?? "", longitude: self.longitude ?? 0.0, latitude: self.latitude ?? 0.0) { (response) in
+            ApiService.createBid(Authorization: DataManager.loadUser().data?.accessToken ?? "", deliveryId: self.deliveryId ?? 0, time: self.selectedTime ?? 1, price: self.lblValue.text ?? "", longitude: self.longitude ?? 0.0, latitude: self.latitude ?? 0.0) { (response) in
                 self.hideLoading()
                 if (response.errorCode == 0) {
                     self.showBanner(title: "alert".localized, message: "bid_sent_to_user".localized, style: UIColor.SUCCESS)

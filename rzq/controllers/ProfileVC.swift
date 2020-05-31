@@ -67,7 +67,7 @@ class ProfileVC: BaseVC {
     
     func loadProfileData() {
         self.showLoading()
-        ApiService.getProfile(Authorization: self.loadUser().data?.accessToken ?? "") { (response) in
+        ApiService.getProfile(Authorization: DataManager.loadUser().data?.accessToken ?? "") { (response) in
             self.hideLoading()
             self.user = response.dataProfileObj
             
@@ -149,7 +149,7 @@ class ProfileVC: BaseVC {
     @IBAction func redeemCouponAction(_ sender: Any) {
         if (edtCoupon.text?.count ?? 0 > 0) {
             self.showLoading()
-            ApiService.redeemCoupon(Authorization: self.loadUser().data?.accessToken ?? "", code: self.edtCoupon.text ?? "") { (response) in
+            ApiService.redeemCoupon(Authorization: DataManager.loadUser().data?.accessToken ?? "", code: self.edtCoupon.text ?? "") { (response) in
                 self.hideLoading()
                 if (response.errorCode ?? 0 == 0) {
                     self.edtCoupon.text = ""

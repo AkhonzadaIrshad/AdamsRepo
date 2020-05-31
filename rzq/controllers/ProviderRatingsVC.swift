@@ -32,7 +32,7 @@ class ProviderRatingsVC: BaseVC, UITableViewDelegate, UITableViewDataSource {
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
         self.showLoading()
-        ApiService.getUserRatings(Authorization: self.loadUser().data?.accessToken ?? "", userId: self.providerId ?? "") { (response) in
+        ApiService.getUserRatings(Authorization: DataManager.loadUser().data?.accessToken ?? "", userId: self.providerId ?? "") { (response) in
             self.hideLoading()
             self.items.append(contentsOf: response.ratingsData?.ratingData ?? [RatingDatum]())
             self.tableView.reloadData()

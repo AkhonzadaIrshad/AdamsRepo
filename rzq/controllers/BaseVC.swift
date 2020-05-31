@@ -218,13 +218,6 @@ class BaseVC: UIViewController,UIGestureRecognizerDelegate {
         return realmUser
     }
     
-    func getUser (realmUser  : RealmUser) -> VerifyResponse {
-        let userData = DataClass(accessToken: realmUser.access_token, phoneNumber: realmUser.phone_number, username: realmUser.user_name, fullName: realmUser.full_name, userID: realmUser.userId, dateOfBirth: realmUser.date_of_birth, profilePicture: realmUser.profile_picture, email: realmUser.email, gender: realmUser.gender, rate: realmUser.rate, roles: realmUser.roles, isOnline: realmUser.isOnline,exceededDueAmount: realmUser.exceeded_amount, dueAmount: realmUser.dueAmount, earnings: realmUser.earnings, balance: realmUser.balance)
-        let verifyResponse = VerifyResponse(data: userData, errorCode: 0, errorMessage: "")
-        
-        return verifyResponse
-    }
-    
     func updateUser(_ objects: RealmUser) {
         let realm = try! Realm()
         try! realm.write {
@@ -232,20 +225,8 @@ class BaseVC: UIViewController,UIGestureRecognizerDelegate {
         }
     }
     
-    
-    func loadUser() -> VerifyResponse{
-        let realm = try! Realm()
-        let realmUser = Array(realm.objects(RealmUser.self))
-        if (realmUser.count > 0) {
-            return self.getUser(realmUser: realmUser[0])
-        }else {
-            return VerifyResponse(data: DataClass(accessToken: "", phoneNumber: "", username: "", fullName: "", userID: "", dateOfBirth: "", profilePicture: "", email: "", gender: 1, rate: 0, roles: "", isOnline: false,exceededDueAmount: false, dueAmount: 0.0, earnings: 0.0, balance: 0.0), errorCode: 0, errorMessage: "")
-        }
-        
-    }
-    
     func isLoggedIn() -> Bool{
-        if (self.loadUser().data?.userID?.count ?? 0 > 0) {
+        if (DataManager.loadUser().data?.userID?.count ?? 0 > 0) {
             return true
         }else {
             self.showAlert(title: "alert".localized, message: "not_logged_in".localized, actionTitle: "login".localized, cancelTitle: "no".localized, actionHandler: {
@@ -264,7 +245,7 @@ class BaseVC: UIViewController,UIGestureRecognizerDelegate {
     }
     
     func isProvider() -> Bool {
-        if ((self.loadUser().data?.roles?.contains(find: "Driver"))! || (self.loadUser().data?.roles?.contains(find: "ServiceProvider"))! || (self.loadUser().data?.roles?.contains(find: "TenderProvider"))!) {
+        if ((DataManager.loadUser().data?.roles?.contains(find: "Driver"))! || (DataManager.loadUser().data?.roles?.contains(find: "ServiceProvider"))! || (DataManager.loadUser().data?.roles?.contains(find: "TenderProvider"))!) {
             return true
         }
         return false

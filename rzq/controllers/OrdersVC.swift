@@ -44,7 +44,7 @@ class OrdersVC: BaseViewController, UITableViewDelegate, UITableViewDataSource {
     
     override func viewDidAppear(_ animated: Bool) {
         super.viewDidAppear(animated)
-        ApiService.getOnGoingDeliveries(Authorization: self.loadUser().data?.accessToken ?? "") { (response) in
+        ApiService.getOnGoingDeliveries(Authorization: DataManager.loadUser().data?.accessToken ?? "") { (response) in
             self.pendingItems.removeAll()
             self.pendingItems.append(contentsOf: response.data ?? [DatumDel]())
             self.tableView.delegate = self
@@ -53,7 +53,7 @@ class OrdersVC: BaseViewController, UITableViewDelegate, UITableViewDataSource {
             self.validateEmptyView()
         }
         
-        ApiService.getPreviousDeliveries(Authorization: self.loadUser().data?.accessToken ?? "", pageSize: 100, pageNumber: 1) { (response) in
+        ApiService.getPreviousDeliveries(Authorization: DataManager.loadUser().data?.accessToken ?? "", pageSize: 100, pageNumber: 1) { (response) in
             self.historyItems.removeAll()
             self.historyItems.append(contentsOf: response.data?.data ?? [Datum]())
             self.tableView.delegate = self
@@ -155,7 +155,7 @@ class OrdersVC: BaseViewController, UITableViewDelegate, UITableViewDataSource {
                     let messagesVC: ZHCDemoMessagesViewController = ZHCDemoMessagesViewController.init()
                     messagesVC.presentBool = true
                     messagesVC.order = item
-                    messagesVC.user = self.loadUser()
+                    messagesVC.user = DataManager.loadUser()
                     let nav: UINavigationController = UINavigationController.init(rootViewController: messagesVC)
                     nav.modalPresentationStyle = .fullScreen
                     messagesVC.modalPresentationStyle = .fullScreen
@@ -222,7 +222,7 @@ class OrdersVC: BaseViewController, UITableViewDelegate, UITableViewDataSource {
     
     func reorderAction(orderId : Int) {
         self.showLoading()
-        ApiService.getShopDetails(Authorization: self.loadUser().data?.accessToken ?? "", id: orderId) { (response) in
+        ApiService.getShopDetails(Authorization: DataManager.loadUser().data?.accessToken ?? "", id: orderId) { (response) in
             
             ApiService.getDelivery(id: orderId) { (order) in
                 self.hideLoading()

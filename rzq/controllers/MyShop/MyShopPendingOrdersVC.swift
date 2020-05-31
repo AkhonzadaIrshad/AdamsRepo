@@ -32,7 +32,7 @@ class MyShopPendingOrdersVC: BaseVC, UITableViewDelegate, UITableViewDataSource 
         self.tableView.estimatedRowHeight = 139.0
         
         self.showLoading()
-        ApiService.getShopOrders(Authorization: self.loadUser().data?.accessToken ?? "", shopId: self.shopId ?? 0) { (response) in
+        ApiService.getShopOrders(Authorization: DataManager.loadUser().data?.accessToken ?? "", shopId: self.shopId ?? 0) { (response) in
             self.hideLoading()
             self.items.append(contentsOf: response.shopOrderData?.shopOrdersData ?? [ShopOrdersDatum]())
             self.tableView.reloadData()

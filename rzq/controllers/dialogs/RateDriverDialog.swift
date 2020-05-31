@@ -45,13 +45,13 @@ class RateDriverDialog: BaseVC {
     }
     
     @IBAction func submitAction(_ sender: Any) {
-        ApiService.rateDriver(Authorization: self.loadUser().data?.accessToken ?? "", deliveryId: self.deliveryId ?? 0, rate: Int(self.ratingView.rating), comment: self.edtComments.text ?? "") { (response) in
+        ApiService.rateDriver(Authorization: DataManager.loadUser().data?.accessToken ?? "", deliveryId: self.deliveryId ?? 0, rate: Int(self.ratingView.rating), comment: self.edtComments.text ?? "") { (response) in
             if (response.errorCode == 0) {
                 self.showBanner(title: "alert".localized, message: "thank_you_for_rating".localized, style: UIColor.SUCCESS)
             }else {
                 self.showBanner(title: "alert".localized, message: response.errorMessage ?? "", style: UIColor.INFO)
             }
-            ApiService.deleteNotification(Authorization: self.loadUser().data?.accessToken ?? "", id: self.notificationId ?? 0, completion: { (response) in
+            ApiService.deleteNotification(Authorization: DataManager.loadUser().data?.accessToken ?? "", id: self.notificationId ?? 0, completion: { (response) in
                 self.delegate?.reloadFromRateDriver()
                 self.dismiss(animated: true, completion: nil)
             })

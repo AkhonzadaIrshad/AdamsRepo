@@ -167,7 +167,7 @@ class MenuItemsVC: BaseVC, UITableViewDelegate, UITableViewDataSource, UINavigat
     
     func createMenuItem(englishName: String, arabicName: String, englishDesc: String, arabicDesc: String, price: String, image: String) {
         self.showLoading()
-        ApiService.owner_createMenuItem(Authorization: self.loadUser().data?.accessToken ?? "", menuId: self.categoryId ?? 0, englishName: englishName, arabicName: arabicName, image: image, price: price.replacedArabicDigitsWithEnglish, englishDesc: englishDesc, arabicDesc: arabicDesc) { (response) in
+        ApiService.owner_createMenuItem(Authorization: DataManager.loadUser().data?.accessToken ?? "", menuId: self.categoryId ?? 0, englishName: englishName, arabicName: arabicName, image: image, price: price.replacedArabicDigitsWithEnglish, englishDesc: englishDesc, arabicDesc: arabicDesc) { (response) in
              
             self.hideLoading()
             
@@ -176,7 +176,7 @@ class MenuItemsVC: BaseVC, UITableViewDelegate, UITableViewDataSource, UINavigat
     
     func updateMenuItem(itemId: Int,englishName: String, arabicName: String, englishDesc: String, arabicDesc: String, price: String, image: String) {
         self.showLoading()
-        ApiService.owner_updateMenuItem(Authorization: self.loadUser().data?.accessToken ?? "", itemId: itemId, englishName: englishName, arabicName: arabicName, image: image, price: price.replacedArabicDigitsWithEnglish, englishDesc: englishDesc, arabicDesc: arabicDesc) { (response) in
+        ApiService.owner_updateMenuItem(Authorization: DataManager.loadUser().data?.accessToken ?? "", itemId: itemId, englishName: englishName, arabicName: arabicName, image: image, price: price.replacedArabicDigitsWithEnglish, englishDesc: englishDesc, arabicDesc: arabicDesc) { (response) in
             self.hideLoading()
         }
     }
@@ -185,7 +185,7 @@ class MenuItemsVC: BaseVC, UITableViewDelegate, UITableViewDataSource, UINavigat
     func deleteItem(itemId: Int, index: Int) {
         self.showAlert(title: "alert".localized, message: "confirm_delete_menu_item".localized, actionTitle: "delete".localized, cancelTitle: "cancel".localized, actionHandler: {
             self.showLoading()
-            ApiService.owner_deleteMenuItem(Authorization: self.loadUser().data?.accessToken ?? "", itemId: itemId) { (response) in
+            ApiService.owner_deleteMenuItem(Authorization: DataManager.loadUser().data?.accessToken ?? "", itemId: itemId) { (response) in
                 self.hideLoading()
                 self.items.remove(at: index)
                 if (self.items.count == 0) {

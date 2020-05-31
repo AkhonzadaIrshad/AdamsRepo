@@ -95,7 +95,7 @@ class ShopDetailsSheet: BaseVC {
     
     @IBAction func detailsAction(_ sender: Any) {
         self.showLoading()
-        ApiService.getShopDetails(Authorization: self.loadUser().data?.accessToken ?? "", id: shop?.id ?? 0, completion: { (response) in
+        ApiService.getShopDetails(Authorization: DataManager.loadUser().data?.accessToken ?? "", id: shop?.id ?? 0, completion: { (response) in
            self.delegate?.onDetails(shopData: response.shopData!)
         })
     }

@@ -82,7 +82,7 @@ class MenuViewController: BaseVC {
     
     override func viewDidLoad() {
         super.viewDidLoad()
-        let user = self.loadUser()
+        let user = DataManager.loadUser()
         
         self.lblName.text = user.data?.fullName ?? ""
         self.lblMobile.text = user.data?.phoneNumber ?? ""
@@ -98,7 +98,7 @@ class MenuViewController: BaseVC {
         if (self.isProvider()) {
             self.lblDue.isHidden = false
             self.lblEarnings.isHidden = false
-            let balance = self.loadUser().data?.earnings ?? 0.0
+            let balance = DataManager.loadUser().data?.earnings ?? 0.0
             let perc = App.shared.config?.configSettings?.percentage ?? 0.0
             let total = balance * perc
             let finalTotal = total / 10.0
@@ -129,7 +129,7 @@ class MenuViewController: BaseVC {
         if (self.isProvider()) {
             self.viewMood.isHidden = false
             self.topViewHeight.constant = 175.0
-            if (self.loadUser().data?.isOnline ?? false) {
+            if (DataManager.loadUser().data?.isOnline ?? false) {
                 self.moodSwitch.isOn = true
             }else {
                 self.moodSwitch.isOn = false
@@ -147,7 +147,7 @@ class MenuViewController: BaseVC {
             self.registeredShopsView.isHidden = true
         }
         
-        if (self.loadUser().data?.userID?.count ?? 0 > 0) {
+        if (DataManager.loadUser().data?.userID?.count ?? 0 > 0) {
             ivProfile.isHidden = false
             lblName.isHidden = false
             lblMobile.isHidden = false
@@ -166,7 +166,7 @@ class MenuViewController: BaseVC {
             lblDue.isHidden = true
             loginView.isHidden  = false
         }
-        if ((self.loadUser().data?.roles?.contains(find: "ShopOwner"))!) {
+        if ((DataManager.loadUser().data?.roles?.contains(find: "ShopOwner"))!) {
             self.viewMyShops.isHidden = false
         }else {
             self.viewMyShops.isHidden = true
@@ -279,9 +279,9 @@ class MenuViewController: BaseVC {
     @IBAction func switchAction(_ sender: UISwitch) {
         self.showLoading()
         if (sender.isOn) {
-            ApiService.goOnline(Authorization: self.loadUser().data?.accessToken ?? "") { (response) in
+            ApiService.goOnline(Authorization: DataManager.loadUser().data?.accessToken ?? "") { (response) in
                 self.hideLoading()
-                let loadedUserData = self.loadUser().data
+                let loadedUserData = DataManager.loadUser().data
                 let dataClass = DataClass(accessToken: loadedUserData?.accessToken ?? "",
                                           phoneNumber: loadedUserData?.phoneNumber ?? "",
                                           username: loadedUserData?.username ?? "",
@@ -304,9 +304,9 @@ class MenuViewController: BaseVC {
                 self.moodSwitch.isOn = true
             }
         }else {
-            ApiService.goOffline(Authorization: self.loadUser().data?.accessToken ?? "") { (response) in
+            ApiService.goOffline(Authorization: DataManager.loadUser().data?.accessToken ?? "") { (response) in
                 self.hideLoading()
-                let loadedUserData = self.loadUser().data
+                let loadedUserData = DataManager.loadUser().data
                 let dataClass = DataClass(accessToken: loadedUserData?.accessToken ?? "",
                                           phoneNumber: loadedUserData?.phoneNumber ?? "",
                                           username: loadedUserData?.username ?? "",
@@ -342,7 +342,7 @@ class MenuViewController: BaseVC {
         self.handleOrdersCounter()
         self.handleWorkingOrdersCounter()
         
-        let user = self.loadUser()
+        let user = DataManager.loadUser()
         let dueAmount = user.data?.dueAmount ?? 0.0
         if (dueAmount >= 0) {
             self.lblDue.textColor = UIColor.app_green

@@ -61,7 +61,7 @@ class IntroVC: UIPageViewController, UIPageViewControllerDataSource, UIPageViewC
     
     func doneAction() {
         UserDefaults.standard.setValue(true, forKey: Constants.DID_SEE_INTRO)
-        if (self.loadUser().data?.userID?.count ?? 0 > 0) {
+        if (DataManager.loadUser().data?.userID?.count ?? 0 > 0) {
             let mainStoryboardIpad : UIStoryboard = UIStoryboard(name: "Main", bundle: nil)
             let initialViewControlleripad : UIViewController = mainStoryboardIpad.instantiateViewController(withIdentifier: self.getHomeView()) as! UINavigationController
             initialViewControlleripad.modalPresentationStyle = .fullScreen

@@ -162,7 +162,7 @@ class DeliveryStep3: BaseVC, UINavigationControllerDelegate, ImagePickerDelegate
             
         }
         
-        if (self.loadUser().data?.gender == 1) {
+        if (DataManager.loadUser().data?.gender == 1) {
             self.viewGender.isHidden = true
             self.lblGender.isHidden = true
         }
@@ -433,7 +433,7 @@ class DeliveryStep3: BaseVC, UINavigationControllerDelegate, ImagePickerDelegate
     
     func generatePaymentUrl() {
         self.showLoading()
-        ApiService.placePayment(user: self.loadUser(), total: self.selectedTotal ?? 0.0, items: self.selectedItems) { (response) in
+        ApiService.placePayment(user: DataManager.loadUser(), total: self.selectedTotal ?? 0.0, items: self.selectedItems) { (response) in
             self.hideLoading()
             if (self.selectedItems.count > 0) {
                 self.createDeliveryWithMenu(invoiceId : response.paymentData?.paymentURL ?? "")
@@ -449,7 +449,7 @@ class DeliveryStep3: BaseVC, UINavigationControllerDelegate, ImagePickerDelegate
         if (self.isCash ?? false) {
             paymentMethod = Constants.PAYMENT_METHOD_CASH
         }
-        ApiService.createDelivery(Authorization: self.loadUser().data?.accessToken ?? "", desc: self.edtOrderDetails.text ?? "", fromLongitude: self.orderModel?.pickUpLongitude ?? 0.0, fromLatitude: self.orderModel?.pickUpLatitude ?? 0.0, toLongitude: self.orderModel?.dropOffLongitude ?? 0.0, toLatitude: self.orderModel?.dropOffLatitude ?? 0.0, time: self.selectedTime ?? 0, estimatedPrice: "\(self.getCost())", fromAddress: self.orderModel?.pickUpAddress ?? "", toAddress: self.orderModel?.dropOffAddress ?? "", shopId: self.orderModel?.shop?.id ?? 0, pickUpDetails : self.orderModel?.pickUpDetails ?? "", dropOffDetails : self.orderModel?.dropOffDetails ?? "",paymentMethod : paymentMethod, isFemale : self.isFemale ?? false, invoiceId: invoiceId) { (response) in
+        ApiService.createDelivery(Authorization: DataManager.loadUser().data?.accessToken ?? "", desc: self.edtOrderDetails.text ?? "", fromLongitude: self.orderModel?.pickUpLongitude ?? 0.0, fromLatitude: self.orderModel?.pickUpLatitude ?? 0.0, toLongitude: self.orderModel?.dropOffLongitude ?? 0.0, toLatitude: self.orderModel?.dropOffLatitude ?? 0.0, time: self.selectedTime ?? 0, estimatedPrice: "\(self.getCost())", fromAddress: self.orderModel?.pickUpAddress ?? "", toAddress: self.orderModel?.dropOffAddress ?? "", shopId: self.orderModel?.shop?.id ?? 0, pickUpDetails : self.orderModel?.pickUpDetails ?? "", dropOffDetails : self.orderModel?.dropOffDetails ?? "",paymentMethod : paymentMethod, isFemale : self.isFemale ?? false, invoiceId: invoiceId) { (response) in
             if (response.data ?? 0 > 0) {
                 self.handleUploadingMedia(id : response.data ?? 0)
             }else {
@@ -465,7 +465,7 @@ class DeliveryStep3: BaseVC, UINavigationControllerDelegate, ImagePickerDelegate
         if (self.isCash ?? false) {
             paymentMethod = Constants.PAYMENT_METHOD_CASH
         }
-        ApiService.createDeliveryWithMenu(Authorization: self.loadUser().data?.accessToken ?? "", desc: self.edtOrderDetails.text ?? "", fromLongitude: self.orderModel?.pickUpLongitude ?? 0.0, fromLatitude: self.orderModel?.pickUpLatitude ?? 0.0, toLongitude: self.orderModel?.dropOffLongitude ?? 0.0, toLatitude: self.orderModel?.dropOffLatitude ?? 0.0, time: self.selectedTime ?? 0, estimatedPrice: "\(self.getCost())", fromAddress: self.orderModel?.pickUpAddress ?? "", toAddress: self.orderModel?.dropOffAddress ?? "", shopId: self.orderModel?.shop?.id ?? 0, pickUpDetails : self.orderModel?.pickUpDetails ?? "", dropOffDetails : self.orderModel?.dropOffDetails ?? "",paymentMethod : paymentMethod, isFemale : self.isFemale ?? false, menuItems : self.selectedItems, invoiceId : invoiceId) { (response) in
+        ApiService.createDeliveryWithMenu(Authorization: DataManager.loadUser().data?.accessToken ?? "", desc: self.edtOrderDetails.text ?? "", fromLongitude: self.orderModel?.pickUpLongitude ?? 0.0, fromLatitude: self.orderModel?.pickUpLatitude ?? 0.0, toLongitude: self.orderModel?.dropOffLongitude ?? 0.0, toLatitude: self.orderModel?.dropOffLatitude ?? 0.0, time: self.selectedTime ?? 0, estimatedPrice: "\(self.getCost())", fromAddress: self.orderModel?.pickUpAddress ?? "", toAddress: self.orderModel?.dropOffAddress ?? "", shopId: self.orderModel?.shop?.id ?? 0, pickUpDetails : self.orderModel?.pickUpDetails ?? "", dropOffDetails : self.orderModel?.dropOffDetails ?? "",paymentMethod : paymentMethod, isFemale : self.isFemale ?? false, menuItems : self.selectedItems, invoiceId : invoiceId) { (response) in
             if (response.data ?? 0 > 0) {
                 self.handleUploadingMedia(id : response.data ?? 0)
             }else {
@@ -492,7 +492,7 @@ class DeliveryStep3: BaseVC, UINavigationControllerDelegate, ImagePickerDelegate
             }else {
                 audioData = Data(base64Encoded: "")
             }
-            ApiService.uploadMedia(Authorization: self.loadUser().data?.accessToken ?? "", deliveryId: id, imagesData: imagesData, audioData: audioData!) { (response) in
+            ApiService.uploadMedia(Authorization: DataManager.loadUser().data?.accessToken ?? "", deliveryId: id, imagesData: imagesData, audioData: audioData!) { (response) in
                 self.hideLoading()
                 if (response.errorCode == 0) {
                     let vc = UIStoryboard(name: "Main", bundle: nil).instantiateViewController(withIdentifier: "SendingOrderVC") as! SendingOrderVC

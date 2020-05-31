@@ -197,7 +197,7 @@ class OrderDetailsVC: BaseVC, UICollectionViewDelegate, UICollectionViewDataSour
         }
         
         
-        if (self.isProvider()  && self.loadUser().data?.userID == self.order?.driverId) {
+        if (self.isProvider()  && DataManager.loadUser().data?.userID == self.order?.driverId) {
             self.viewCancel.isHidden = true
         }else {
             if (self.order?.status == Constants.ORDER_PENDING) {
@@ -208,7 +208,7 @@ class OrderDetailsVC: BaseVC, UICollectionViewDelegate, UICollectionViewDataSour
         }
         
         if (self.order?.status == Constants.ORDER_PROCESSING) {
-            if (self.isProvider() && self.loadUser().data?.userID == self.order?.driverId ?? "") {
+            if (self.isProvider() && DataManager.loadUser().data?.userID == self.order?.driverId ?? "") {
                 viewNavigate.isHidden = false
                 viewNavigateHeight.constant = 40
             }else {
@@ -223,7 +223,7 @@ class OrderDetailsVC: BaseVC, UICollectionViewDelegate, UICollectionViewDataSour
         self.selectPaymentMethod(method: self.order?.paymentMethod ?? Constants.PAYMENT_METHOD_CASH)
         
         if (self.order?.status == Constants.ORDER_PROCESSING || self.order?.status == Constants.ORDER_PENDING || self.order?.status == Constants.ORDER_ON_THE_WAY) {
-            if (self.isProvider() && self.loadUser().data?.userID == self.order?.driverId ?? "") {
+            if (self.isProvider() && DataManager.loadUser().data?.userID == self.order?.driverId ?? "") {
                 self.btnChangeMethod.isHidden = true
                 self.viewChangeMethod.isHidden = true
             }else {
@@ -244,7 +244,7 @@ class OrderDetailsVC: BaseVC, UICollectionViewDelegate, UICollectionViewDataSour
         }
         
         if (self.order?.status == Constants.ORDER_COMPLETED || self.order?.status == Constants.ORDER_CANCELLED || self.order?.status == Constants.ORDER_EXPIRED) {
-            if (self.isProvider() && self.loadUser().data?.userID == self.order?.driverId ?? "") {
+            if (self.isProvider() && DataManager.loadUser().data?.userID == self.order?.driverId ?? "") {
                 self.viewReorder.isHidden = true
             }else {
                 self.viewReorder.isHidden = false
@@ -254,7 +254,7 @@ class OrderDetailsVC: BaseVC, UICollectionViewDelegate, UICollectionViewDataSour
         }
         
         
-        if (self.isProvider() && self.loadUser().data?.userID == self.order?.driverId ?? "") {
+        if (self.isProvider() && DataManager.loadUser().data?.userID == self.order?.driverId ?? "") {
             self.btnPay.isHidden = true
             self.viewPay.isHidden = true
         }else {
@@ -561,7 +561,7 @@ class OrderDetailsVC: BaseVC, UICollectionViewDelegate, UICollectionViewDataSour
             let order = DatumDel(id: self.order?.id ?? 0, title: self.order?.title ?? "", status: self.order?.status ?? 0, statusString: self.order?.statusString ?? "", image: "", createdDate: self.order?.createdDate ?? "", chatId: self.order?.chatId ?? 0, fromAddress: self.order?.fromAddress ?? "", fromLatitude: self.order?.fromLatitude ?? 0.0, fromLongitude: self.order?.fromLongitude ?? 0.0, toAddress: self.order?.toAddress ?? "", toLatitude: self.order?.toLatitude ?? 0.0, toLongitude: self.order?.toLongitude ?? 0.0, providerID: self.order?.driverId, providerName: "", providerImage: "", providerRate: 0, time: self.order?.time ?? 0, price: self.order?.cost ?? 0.0, serviceName: "", paymentMethod: self.order?.paymentMethod ?? 0, items: self.order?.items ?? [ShopMenuItem](), isPaid: self.order?.isPaid ?? false, invoiceId: self.order?.invoiceId ?? "", toFemaleOnly: self.order?.toFemaleOnly ?? false, shopId: self.order?.shopId ?? 0, OrderPrice: self.order?.orderPrice ?? 0.0, KnetCommission: self.order?.KnetCommission ?? 0.0, ClientPhone: self.order?.ClientPhone ?? "", ProviderPhone : self.order?.ProviderPhone ?? "")
             
             messagesVC.order = order
-            messagesVC.user = self.loadUser()
+            messagesVC.user = DataManager.loadUser()
             let nav: UINavigationController = UINavigationController.init(rootViewController: messagesVC)
             nav.modalPresentationStyle = .fullScreen
             messagesVC.modalPresentationStyle = .fullScreen
@@ -570,7 +570,7 @@ class OrderDetailsVC: BaseVC, UICollectionViewDelegate, UICollectionViewDataSour
     }
     
     func cancelDeliveryByUser(reason : String) {
-        ApiService.cancelDelivery(Authorization: self.loadUser().data?.accessToken ?? "", deliveryId: self.order?.id ?? 0, reason : reason, completion: { (response) in
+        ApiService.cancelDelivery(Authorization: DataManager.loadUser().data?.accessToken ?? "", deliveryId: self.order?.id ?? 0, reason : reason, completion: { (response) in
             if (response.errorCode == 0) {
                 self.showBanner(title: "alert".localized, message: "delivery_cancelled".localized, style: UIColor.SUCCESS)
                 DispatchQueue.main.asyncAfter(deadline: .now() + 2, execute: {
@@ -583,7 +583,7 @@ class OrderDetailsVC: BaseVC, UICollectionViewDelegate, UICollectionViewDataSour
     }
     
     func cancelDeliveryByDriver(reason : String) {
-        ApiService.cancelDeliveryByDriver(Authorization: self.loadUser().data?.accessToken ?? "", deliveryId: self.order?.id ?? 0, reason : reason, completion: { (response) in
+        ApiService.cancelDeliveryByDriver(Authorization: DataManager.loadUser().data?.accessToken ?? "", deliveryId: self.order?.id ?? 0, reason : reason, completion: { (response) in
             if (response.errorCode == 0) {
                 self.showBanner(title: "alert".localized, message: "delivery_cancelled".localized, style: UIColor.SUCCESS)
                 DispatchQueue.main.asyncAfter(deadline: .now() + 2, execute: {
@@ -597,7 +597,7 @@ class OrderDetailsVC: BaseVC, UICollectionViewDelegate, UICollectionViewDataSour
     
     @IBAction func cancelOrderAction(_ sender: Any) {
         //        self.showAlert(title: "alert".localized, message: "confirm_cancel_delivery".localized, actionTitle: "yes".localized, cancelTitle: "no".localized, actionHandler: {
-        //            if (self.isProvider() && self.loadUser().data?.userID == self.order?.driverId ?? "") {
+        //            if (self.isProvider() && DataManager.loadUser().data?.userID == self.order?.driverId ?? "") {
         //                self.cancelDeliveryByDriver()
         //            }else {
         //                self.cancelDeliveryByUser()
@@ -605,7 +605,7 @@ class OrderDetailsVC: BaseVC, UICollectionViewDelegate, UICollectionViewDataSour
         //        })
         
         self.showAlertField(title: "alert".localized, message: "confirm_cancel_delivery".localized, actionTitle: "yes".localized, cancelTitle: "no".localized) { (reason) in
-            if (self.isProvider() && self.loadUser().data?.userID == self.order?.driverId ?? "") {
+            if (self.isProvider() && DataManager.loadUser().data?.userID == self.order?.driverId ?? "") {
                 self.cancelDeliveryByDriver(reason : reason)
             }else {
                 self.cancelDeliveryByUser(reason : reason)
@@ -680,7 +680,7 @@ class OrderDetailsVC: BaseVC, UICollectionViewDelegate, UICollectionViewDataSour
     
     func onSubmit(method: Int) {
         self.showLoading()
-        ApiService.changePaymentMethod(Authorization: self.loadUser().data?.accessToken ?? "", orderId: self.order?.id ?? 0, paymentMethod: method) { (response) in
+        ApiService.changePaymentMethod(Authorization: DataManager.loadUser().data?.accessToken ?? "", orderId: self.order?.id ?? 0, paymentMethod: method) { (response) in
             self.hideLoading()
             if (response.errorCode == 0) {
                 self.showBanner(title: "alert".localized, message: "payment_method_changed".localized, style: UIColor.SUCCESS)
@@ -700,7 +700,7 @@ class OrderDetailsVC: BaseVC, UICollectionViewDelegate, UICollectionViewDataSour
             type = 902
         }
         self.showLoading()
-        ApiService.sendUserNotification(Authorization: self.loadUser().data?.accessToken ?? "", arabicTitle: "الطلب \(Constants.ORDER_NUMBER_PREFIX)\(self.order?.id ?? 0)", englishTitle: "Order \(Constants.ORDER_NUMBER_PREFIX)\(self.order?.id ?? 0)", arabicBody: "قام الزبون بتغيير طريقة الدفع", englishbody: "Client changed payment method for this order", userId: self.order?.driverId ?? "", type: type) { (response) in
+        ApiService.sendUserNotification(Authorization: DataManager.loadUser().data?.accessToken ?? "", arabicTitle: "الطلب \(Constants.ORDER_NUMBER_PREFIX)\(self.order?.id ?? 0)", englishTitle: "Order \(Constants.ORDER_NUMBER_PREFIX)\(self.order?.id ?? 0)", arabicBody: "قام الزبون بتغيير طريقة الدفع", englishbody: "Client changed payment method for this order", userId: self.order?.driverId ?? "", type: type) { (response) in
             self.hideLoading()
         }
     }
@@ -729,7 +729,7 @@ class OrderDetailsVC: BaseVC, UICollectionViewDelegate, UICollectionViewDataSour
     
     @IBAction func reorderAction(_ sender: Any) {
         self.showLoading()
-        ApiService.getShopDetails(Authorization: self.loadUser().data?.accessToken ?? "", id: self.order?.shopId ?? 0) { (response) in
+        ApiService.getShopDetails(Authorization: DataManager.loadUser().data?.accessToken ?? "", id: self.order?.shopId ?? 0) { (response) in
             self.hideLoading()
             let storyboard = UIStoryboard(name: "Main", bundle: nil)
             let vc1 : DeliveryStep1 = storyboard.instantiateViewController(withIdentifier: "DeliveryStep1") as! DeliveryStep1
@@ -826,7 +826,7 @@ class OrderDetailsVC: BaseVC, UICollectionViewDelegate, UICollectionViewDataSour
     
     func onPaymentSuccess(payment: PaymentStatusResponse) {
         self.showLoading()
-        ApiService.createPaymentRecord(Authorization: self.loadUser().data?.accessToken ?? "", orderId: self.order?.id ?? 0, payment: payment) { (response) in
+        ApiService.createPaymentRecord(Authorization: DataManager.loadUser().data?.accessToken ?? "", orderId: self.order?.id ?? 0, payment: payment) { (response) in
             self.hideLoading()
             self.delegate?.onOrderPaymentSuccess()
             self.navigationController?.popViewController(animated: true)

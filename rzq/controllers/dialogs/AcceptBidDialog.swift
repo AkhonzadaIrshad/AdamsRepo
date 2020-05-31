@@ -136,7 +136,7 @@ class AcceptBidDialog: BaseVC, PaymentDelegate {
     
     func applyDeclineAction() {
         self.showLoading()
-        ApiService.declineBid(Authorization: self.loadUser().data?.accessToken ?? "", bidId: self.bidId ?? 0) { (response) in
+        ApiService.declineBid(Authorization: DataManager.loadUser().data?.accessToken ?? "", bidId: self.bidId ?? 0) { (response) in
             self.hideLoading()
             if (response.errorCode == 0) {
                 self.showBanner(title: "alert".localized, message: "bid_declined_successfully".localized, style: UIColor.SUCCESS)
@@ -155,7 +155,7 @@ class AcceptBidDialog: BaseVC, PaymentDelegate {
     }
     
     //    func deleteNotification() {
-    //        ApiService.deleteNotification(Authorization: self.loadUser().data?.accessToken ?? "", id: self.notificationId ?? 0) { (response) in
+    //        ApiService.deleteNotification(Authorization: DataManager.loadUser().data?.accessToken ?? "", id: self.notificationId ?? 0) { (response) in
     //            self.showBanner(title: "alert".localized, message: "bid_declined_successfully".localized, style: UIColor.SUCCESS)
     //            DispatchQueue.main.asyncAfter(deadline: .now() + 2, execute: {
     //                self.dismiss(animated: true, completion: nil)
@@ -186,7 +186,7 @@ class AcceptBidDialog: BaseVC, PaymentDelegate {
     }
     func acceptBid() {
         self.showLoading()
-        ApiService.acceptBid(Authorization: self.loadUser().data?.accessToken ?? "", deliveryId: self.deliveryId ?? 0, bidId: self.bidId ?? 0) { (response) in
+        ApiService.acceptBid(Authorization: DataManager.loadUser().data?.accessToken ?? "", deliveryId: self.deliveryId ?? 0, bidId: self.bidId ?? 0) { (response) in
             self.hideLoading()
             if (response.errorCode == 0) {
                 self.showBanner(title: "alert".localized, message: "bid_accepted_successfully".localized, style: UIColor.SUCCESS)
@@ -235,7 +235,7 @@ class AcceptBidDialog: BaseVC, PaymentDelegate {
     
     func onPaymentSuccess(payment : PaymentStatusResponse) {
         self.showLoading()
-        ApiService.createPaymentRecord(Authorization: self.loadUser().data?.accessToken ?? "", orderId: self.deliveryId ?? 0, payment: payment) { (response) in
+        ApiService.createPaymentRecord(Authorization: DataManager.loadUser().data?.accessToken ?? "", orderId: self.deliveryId ?? 0, payment: payment) { (response) in
             self.acceptBid()
         }
         

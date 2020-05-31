@@ -72,7 +72,7 @@ class BaseViewController: UIViewController, SlideMenuDelegate {
     }
     
     func isProvider() -> Bool {
-        if ((self.loadUser().data?.roles?.contains(find: "Driver"))! || (self.loadUser().data?.roles?.contains(find: "ServiceProvider"))! || (self.loadUser().data?.roles?.contains(find: "TenderProvider"))!) {
+        if ((DataManager.loadUser().data?.roles?.contains(find: "Driver"))! || (DataManager.loadUser().data?.roles?.contains(find: "ServiceProvider"))! || (DataManager.loadUser().data?.roles?.contains(find: "TenderProvider"))!) {
             return true
         }
         return false
@@ -443,7 +443,7 @@ class BaseViewController: UIViewController, SlideMenuDelegate {
     
     
     func isLoggedIn() -> Bool{
-        if (self.loadUser().data?.userID?.count ?? 0 > 0) {
+        if (DataManager.loadUser().data?.userID?.count ?? 0 > 0) {
             return true
         }else {
             self.showAlert(title: "alert".localized, message: "not_logged_in".localized, actionTitle: "login".localized, cancelTitle: "no".localized, actionHandler: {
@@ -461,7 +461,7 @@ class BaseViewController: UIViewController, SlideMenuDelegate {
         }
     }
     func isLoggedInNoAlert() -> Bool{
-        if (self.loadUser().data?.userID?.count ?? 0 > 0) {
+        if (DataManager.loadUser().data?.userID?.count ?? 0 > 0) {
             return true
         }else {
             return false

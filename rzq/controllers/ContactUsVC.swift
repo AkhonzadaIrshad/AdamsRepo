@@ -29,7 +29,7 @@ class ContactUsVC: BaseVC {
             self.ivHandle.image = UIImage(named: "ic_back_arabic")
         }
         
-        self.edtMobile.text = self.loadUser().data?.phoneNumber ?? ""
+        self.edtMobile.text = DataManager.loadUser().data?.phoneNumber ?? ""
         
         self.setupFloating()
         // Do any additional setup after loading the view.

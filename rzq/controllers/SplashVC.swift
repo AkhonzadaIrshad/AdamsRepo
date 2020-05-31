@@ -23,7 +23,7 @@ class SplashVC: BaseVC {
         
         let x = Messaging.messaging().fcmToken ?? "not_avaliable"
         
-        ApiService.updateRegId(Authorization: self.loadUser().data?.accessToken ?? "", regId: Messaging.messaging().fcmToken ?? "not_avaliable") { (response) in
+        ApiService.updateRegId(Authorization: DataManager.loadUser().data?.accessToken ?? "", regId: Messaging.messaging().fcmToken ?? "not_avaliable") { (response) in
             
             
         }
@@ -34,7 +34,7 @@ class SplashVC: BaseVC {
         DispatchQueue.main.asyncAfter(deadline: .now()) {
             let check = UserDefaults.standard.value(forKey: Constants.DID_CHOOSE_LANGUAGE) as? Bool ?? false
             if (check) {
-                let user = self.loadUser()
+                let user = DataManager.loadUser()
                 if (user.data?.accessToken?.count ?? 0 > 0) {
                     ApiService.refreshToken(Authorization: user.data?.accessToken ?? "") { (response) in
                         if (response.errorCode == 0) {
@@ -85,7 +85,7 @@ class SplashVC: BaseVC {
     }
     
     func loadTracks() {
-        ApiService.getOnGoingDeliveries(Authorization: self.loadUser().data?.accessToken ?? "") { (response) in
+        ApiService.getOnGoingDeliveries(Authorization: DataManager.loadUser().data?.accessToken ?? "") { (response) in
             if (response.data?.count ?? 0 > 0) {
                 let mainStoryboardIpad : UIStoryboard = UIStoryboard(name: "Main", bundle: nil)
                 let initialViewControlleripad : UIViewController = mainStoryboardIpad.instantiateViewController(withIdentifier: self.getHomeView()) as! UINavigationController

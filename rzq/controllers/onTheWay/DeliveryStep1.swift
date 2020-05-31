@@ -148,7 +148,7 @@ class DeliveryStep1: BaseVC,LabasLocationManagerDelegate, Step2Delegate, AllShop
             
         }
         
-        ApiService.updateRegId(Authorization: self.loadUser().data?.accessToken ?? "", regId: Messaging.messaging().fcmToken ?? "not_avaliable") { (response) in
+        ApiService.updateRegId(Authorization: DataManager.loadUser().data?.accessToken ?? "", regId: Messaging.messaging().fcmToken ?? "not_avaliable") { (response) in
             
             
         }
@@ -192,7 +192,7 @@ class DeliveryStep1: BaseVC,LabasLocationManagerDelegate, Step2Delegate, AllShop
         self.showLoading()
         self.viewPin.isHidden = false
         self.viewSuggest.isHidden = true
-        ApiService.getShopDetails(Authorization: self.loadUser().data?.accessToken ?? "", id: shop.id ?? 0) { (response) in
+        ApiService.getShopDetails(Authorization: DataManager.loadUser().data?.accessToken ?? "", id: shop.id ?? 0) { (response) in
             self.hideLoading()
             self.pinMarker?.map = nil
             self.lblPickupLocation.textColor = UIColor.appDarkBlue
@@ -255,7 +255,7 @@ class DeliveryStep1: BaseVC,LabasLocationManagerDelegate, Step2Delegate, AllShop
     
     func getDriverOnGoingDeliveries() {
         self.showLoading()
-        ApiService.getDriverOnGoingDeliveries(Authorization: self.loadUser().data?.accessToken ?? "") { (response) in
+        ApiService.getDriverOnGoingDeliveries(Authorization: DataManager.loadUser().data?.accessToken ?? "") { (response) in
             self.hideLoading()
         }
     }
@@ -924,7 +924,7 @@ extension DeliveryStep1 : GMSMapViewDelegate {
             self.showLoading()
             self.viewPin.isHidden = false
             self.viewSuggest.isHidden = true
-            ApiService.getShopDetails(Authorization: self.loadUser().data?.accessToken ?? "", id: Int(id)!) { (response) in
+            ApiService.getShopDetails(Authorization: DataManager.loadUser().data?.accessToken ?? "", id: Int(id)!) { (response) in
                 self.hideLoading()
                 self.pinMarker?.map = nil
                 self.lblPickupLocation.textColor = UIColor.appDarkBlue

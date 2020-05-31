@@ -44,7 +44,7 @@ class AddMenuVC: BaseVC, UITableViewDelegate, UITableViewDataSource, CategoryNam
     
     func loadCategories() {
         self.showLoading()
-        ApiService.owner_getShopMenu(Authorization: self.loadUser().data?.accessToken ?? "", shopId: self.shopId ?? 0) { (response) in
+        ApiService.owner_getShopMenu(Authorization: DataManager.loadUser().data?.accessToken ?? "", shopId: self.shopId ?? 0) { (response) in
             self.hideLoading()
             self.items.removeAll()
             self.items.append(contentsOf: response.shopOwnerData ?? [ShopOwnerDatum]())
@@ -135,7 +135,7 @@ class AddMenuVC: BaseVC, UITableViewDelegate, UITableViewDataSource, CategoryNam
     
     func onSubmit(cat: ShopOwnerDatum, englishName: String, arabicName: String) {
         self.showLoading()
-        ApiService.owner_updateMenuCategory(Authorization: self.loadUser().data?.accessToken ?? "", menuId: cat.id ?? 0, englishName: englishName, arabicName: arabicName, image: cat.imageName ?? "") { (response) in
+        ApiService.owner_updateMenuCategory(Authorization: DataManager.loadUser().data?.accessToken ?? "", menuId: cat.id ?? 0, englishName: englishName, arabicName: arabicName, image: cat.imageName ?? "") { (response) in
             self.hideLoading()
             self.sheetController?.closeSheet()
             self.loadCategories()
@@ -149,7 +149,7 @@ class AddMenuVC: BaseVC, UITableViewDelegate, UITableViewDataSource, CategoryNam
     @IBAction func addCategoryAction(_ sender: Any) {
         if (self.fieldEnglishCategory.text?.count ?? 0 > 0 && self.fieldArabicCategory.text?.count ?? 0 > 0) {
             self.showLoading()
-            ApiService.owner_createMenuCategory(Authorization: self.loadUser().data?.accessToken ?? "", shopId: self.shopId ?? 0, englishName: self.fieldEnglishCategory.text ?? "", arabicName: self.fieldArabicCategory.text ?? "", image: "") { (response) in
+            ApiService.owner_createMenuCategory(Authorization: DataManager.loadUser().data?.accessToken ?? "", shopId: self.shopId ?? 0, englishName: self.fieldEnglishCategory.text ?? "", arabicName: self.fieldArabicCategory.text ?? "", image: "") { (response) in
                 self.hideLoading()
                 self.loadCategories()
             }
@@ -161,7 +161,7 @@ class AddMenuVC: BaseVC, UITableViewDelegate, UITableViewDataSource, CategoryNam
     @IBAction func addCatAction(_ sender: Any) {
         if (self.fieldEnglishCategory.text?.count ?? 0 > 0 && self.fieldArabicCategory.text?.count ?? 0 > 0) {
             self.showLoading()
-            ApiService.owner_createMenuCategory(Authorization: self.loadUser().data?.accessToken ?? "", shopId: self.shopId ?? 0, englishName: self.fieldEnglishCategory.text ?? "", arabicName: self.fieldArabicCategory.text ?? "", image: "") { (response) in
+            ApiService.owner_createMenuCategory(Authorization: DataManager.loadUser().data?.accessToken ?? "", shopId: self.shopId ?? 0, englishName: self.fieldEnglishCategory.text ?? "", arabicName: self.fieldArabicCategory.text ?? "", image: "") { (response) in
                 self.hideLoading()
                 self.loadCategories()
             }

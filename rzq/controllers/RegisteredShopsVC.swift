@@ -30,7 +30,7 @@ class RegisteredShopsVC: BaseViewController, UITableViewDelegate, UITableViewDat
     }
     
     func loadShops() {
-        ApiService.getMySubscriptions(Authorization: self.loadUser().data?.accessToken ?? "") { (response) in
+        ApiService.getMySubscriptions(Authorization: DataManager.loadUser().data?.accessToken ?? "") { (response) in
             if (response.subsData?.count ?? 0 > 0) {
                 self.emptyView.isHidden = true
                 self.items.removeAll()
@@ -101,7 +101,7 @@ class RegisteredShopsVC: BaseViewController, UITableViewDelegate, UITableViewDat
         
         cell.onCancel = {
             self.showLoading()
-            //            ApiService.unsubscribeToShop(Authorization: self.loadUser().data?.accessToken ?? "", shopId: item.id ?? 0) { (response) in
+            //            ApiService.unsubscribeToShop(Authorization: DataManager.loadUser().data?.accessToken ?? "", shopId: item.id ?? 0) { (response) in
             //                self.hideLoading()
             //                if (response.errorCode == 0) {
             //                    self.showBanner(title: "alert".localized, message: "unregistered_to_shop".localized, style: UIColor.SUCCESS)
@@ -110,7 +110,7 @@ class RegisteredShopsVC: BaseViewController, UITableViewDelegate, UITableViewDat
             //                    self.showBanner(title: "alert".localized, message: response.errorMessage ?? "", style: UIColor.INFO)
             //                }
             //            }
-            ApiService.unsubscribeFromPlace(Authorization: self.loadUser().data?.accessToken ?? "", id: item.placeId ?? "", completion: { (response) in
+            ApiService.unsubscribeFromPlace(Authorization: DataManager.loadUser().data?.accessToken ?? "", id: item.placeId ?? "", completion: { (response) in
                 self.hideLoading()
                 if (response.errorCode == 0) {
                     self.showBanner(title: "alert".localized, message: "unregistered_to_shop".localized, style: UIColor.SUCCESS)

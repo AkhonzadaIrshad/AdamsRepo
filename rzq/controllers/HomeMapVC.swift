@@ -79,7 +79,7 @@ class HomeMapVC: BaseViewController,LabasLocationManagerDelegate, UICollectionVi
         self.btnLocation.isHidden = true
         
         //snuff
-        ApiService.updateRegId(Authorization: self.loadUser().data?.accessToken ?? "", regId: Messaging.messaging().fcmToken ?? "not_avaliable") { (response) in
+        ApiService.updateRegId(Authorization: DataManager.loadUser().data?.accessToken ?? "", regId: Messaging.messaging().fcmToken ?? "not_avaliable") { (response) in
             
             
         }
@@ -101,7 +101,7 @@ class HomeMapVC: BaseViewController,LabasLocationManagerDelegate, UICollectionVi
     
     func getDriverOnGoingDeliveries() {
         self.showLoading()
-        ApiService.getDriverOnGoingDeliveries(Authorization: self.loadUser().data?.accessToken ?? "") { (response) in
+        ApiService.getDriverOnGoingDeliveries(Authorization: DataManager.loadUser().data?.accessToken ?? "") { (response) in
             self.hideLoading()
             UserDefaults.standard.setValue(response.data?.count ?? 0, forKey: Constants.WORKING_ORDERS_COUNT)
 //            for item in response.data ?? [DatumDriverDel]() {
@@ -115,7 +115,7 @@ class HomeMapVC: BaseViewController,LabasLocationManagerDelegate, UICollectionVi
 //                            let dumOrder = DatumDel(id: item.id ?? 0, title: item.title ?? "", status: item.status ?? 0, statusString: item.statusString ?? "", image: item.image ?? "", createdDate: item.createdDate ?? "", chatId: item.chatId ?? 0, fromAddress: item.fromAddress ?? "", fromLatitude: item.fromLatitude ?? 0.0, fromLongitude: item.fromLongitude ?? 0.0, toAddress: item.toAddress ?? "", toLatitude: item.toLatitude ?? 0.0, toLongitude: item.toLongitude ?? 0.0, providerID: item.providerID ?? "", providerName: item.providerName ?? "", providerImage: item.providerImage ?? "", providerRate: item.providerRate ?? 0.0, time: item.time ?? 0, price: item.price ?? 0.0, serviceName: item.serviceName ?? "", paymentMethod: item.paymentMethod ?? 0, items: items, isPaid: item.isPaid ?? false, invoiceId: item.invoiceId ?? "", toFemaleOnly: item.toFemaleOnly ?? false, shopId: item.shopId ?? 0, OrderPrice: item.OrderPrice ?? 0.0, KnetCommission : item.KnetCommission ?? 0.0, ClientPhone: "", ProviderPhone : "")
 //
 //                            messagesVC.order = dumOrder
-//                            messagesVC.user = self.loadUser()
+//                            messagesVC.user = DataManager.loadUser()
 //                            let nav: UINavigationController = UINavigationController.init(rootViewController: messagesVC)
 //                            nav.modalPresentationStyle = .fullScreen
 //                            messagesVC.modalPresentationStyle = .fullScreen
@@ -150,7 +150,7 @@ class HomeMapVC: BaseViewController,LabasLocationManagerDelegate, UICollectionVi
     func checkForDeepLinkValues() {
         if (App.shared.deepLinkShopId != nil && Int(App.shared.deepLinkShopId ?? "0") ?? 0 > 0) {
             //open shop
-            ApiService.getShopDetails(Authorization: self.loadUser().data?.accessToken ?? "", id: Int(App.shared.deepLinkShopId ?? "0")!) { (response) in
+            ApiService.getShopDetails(Authorization: DataManager.loadUser().data?.accessToken ?? "", id: Int(App.shared.deepLinkShopId ?? "0")!) { (response) in
                 if let vc = UIStoryboard(name: "Main", bundle: nil).instantiateViewController(withIdentifier: "ShopDetailsVC") as? ShopDetailsVC
                 {
                     vc.latitude = self.latitude ?? 0.0
@@ -194,7 +194,7 @@ class HomeMapVC: BaseViewController,LabasLocationManagerDelegate, UICollectionVi
                     
                     
                     messagesVC.order = order
-                    messagesVC.user = self.loadUser()
+                    messagesVC.user = DataManager.loadUser()
                     let nav: UINavigationController = UINavigationController.init(rootViewController: messagesVC)
                     nav.modalPresentationStyle = .fullScreen
                     messagesVC.modalPresentationStyle = .fullScreen
@@ -431,7 +431,7 @@ class HomeMapVC: BaseViewController,LabasLocationManagerDelegate, UICollectionVi
                 let messagesVC: ZHCDemoMessagesViewController = ZHCDemoMessagesViewController.init()
                 messagesVC.presentBool = true
                 messagesVC.order = item
-                messagesVC.user = self.loadUser()
+                messagesVC.user = DataManager.loadUser()
                 let nav: UINavigationController = UINavigationController.init(rootViewController: messagesVC)
                 nav.modalPresentationStyle = .fullScreen
                 messagesVC.modalPresentationStyle = .fullScreen
@@ -501,7 +501,7 @@ class HomeMapVC: BaseViewController,LabasLocationManagerDelegate, UICollectionVi
             cell.ivDot.isHidden = true
         }
         
-        ApiService.getOrderLocation(Authorization: self.loadUser().data?.accessToken ?? "", deliveryId: item.id ?? 0) { (response) in
+        ApiService.getOrderLocation(Authorization: DataManager.loadUser().data?.accessToken ?? "", deliveryId: item.id ?? 0) { (response) in
             let myLatLng = CLLocation(latitude: self.latitude ?? 0.0, longitude: self.longitude ?? 0.0)
             let driverLatLng = CLLocation(latitude: response.locationData?.latitude ?? 0.0, longitude: response.locationData?.longitude ?? 0.0)
             let distanceInMeters = driverLatLng.distance(from: myLatLng)
@@ -738,7 +738,7 @@ class HomeMapVC: BaseViewController,LabasLocationManagerDelegate, UICollectionVi
         }
         
         if (self.isProvider()) {
-            ApiService.updateLocation(Authorization: self.loadUser().data?.accessToken ?? "", latitude: location.coordinate.latitude, longitude: location.coordinate.longitude) { (response) in
+            ApiService.updateLocation(Authorization: DataManager.loadUser().data?.accessToken ?? "", latitude: location.coordinate.latitude, longitude: location.coordinate.longitude) { (response) in
                 
             }
         }
@@ -833,7 +833,7 @@ class HomeMapVC: BaseViewController,LabasLocationManagerDelegate, UICollectionVi
     
     
     func loadTracks() {
-        ApiService.getOnGoingDeliveries(Authorization: self.loadUser().data?.accessToken ?? "") { (response) in
+        ApiService.getOnGoingDeliveries(Authorization: DataManager.loadUser().data?.accessToken ?? "") { (response) in
             self.items.removeAll()
             UserDefaults.standard.setValue(response.data?.count ?? 0, forKey: Constants.ORDERS_COUNT)
             for item in response.data ?? [DatumDel]() {
@@ -860,7 +860,7 @@ class HomeMapVC: BaseViewController,LabasLocationManagerDelegate, UICollectionVi
                 DispatchQueue.main.asyncAfter(deadline: .now() + 2) {
                     self.getDriverLocationAPI(item: itm)
                 }
-                //                ApiService.getOrderLocation(Authorization: self.loadUser().data?.accessToken ?? "", deliveryId: itm.id ?? 0) { (response) in
+                //                ApiService.getOrderLocation(Authorization: DataManager.loadUser().data?.accessToken ?? "", deliveryId: itm.id ?? 0) { (response) in
                 //
                 //                          if (response.locationData != nil) {
                 //                              if (itm.status == Constants.ORDER_ON_THE_WAY) {
@@ -919,7 +919,7 @@ class HomeMapVC: BaseViewController,LabasLocationManagerDelegate, UICollectionVi
         let camera = GMSCameraPosition.camera(withLatitude: shop.latitude ?? 0.0, longitude: shop.longitude ?? 0.0, zoom: self.cameraZoom)
         self.gMap?.animate(to: camera)
         // marker.icon = UIImage(named: "ic_map_shop_selected")
-        ApiService.getShopDetails(Authorization: self.loadUser().data?.accessToken ?? "", id: shop.id ?? 0) { (response) in
+        ApiService.getShopDetails(Authorization: DataManager.loadUser().data?.accessToken ?? "", id: shop.id ?? 0) { (response) in
             self.showShopDetailsSheet(shop: response.shopData!)
         }
     }
@@ -993,7 +993,7 @@ class HomeMapVC: BaseViewController,LabasLocationManagerDelegate, UICollectionVi
     
     func validateDriverDueAmount() {
         if (self.isProvider()) {
-            let check = self.loadUser().data?.exceededDueAmount ?? false
+            let check = DataManager.loadUser().data?.exceededDueAmount ?? false
             if (check) {
                 //show alert
                 self.showAlertOK(title: "alert".localized, message: "due_amount".localized, actionTitle: "ok".localized)
@@ -1099,7 +1099,7 @@ extension HomeMapVC : GMSMapViewDelegate {
         let camera = GMSCameraPosition.camera(withLatitude: marker.position.latitude, longitude: marker.position.longitude, zoom: self.cameraZoom)
         self.gMap?.animate(to: camera)
         // marker.icon = UIImage(named: "ic_map_shop_selected")
-        ApiService.getShopDetails(Authorization: self.loadUser().data?.accessToken ?? "", id: Int(id)!) { (response) in
+        ApiService.getShopDetails(Authorization: DataManager.loadUser().data?.accessToken ?? "", id: Int(id)!) { (response) in
             self.showShopDetailsSheet(shop: response.shopData!)
         }
         

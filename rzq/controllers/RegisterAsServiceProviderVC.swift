@@ -75,9 +75,9 @@ class RegisterAsServiceProviderVC: BaseVC, UINavigationControllerDelegate, Selec
             self.ivHandle.image = UIImage(named: "ic_back_arabic")
             self.ivIndicator.image = UIImage(named: "ic_indicator_arabic")
         }
-        self.edtName.text = self.loadUser().data?.fullName ?? ""
-        self.edtMobile.text = self.loadUser().data?.phoneNumber ?? ""
-        self.edtEmail.text = self.loadUser().data?.email ?? ""
+        self.edtName.text = DataManager.loadUser().data?.fullName ?? ""
+        self.edtMobile.text = DataManager.loadUser().data?.phoneNumber ?? ""
+        self.edtEmail.text = DataManager.loadUser().data?.email ?? ""
         
         // Do any additional setup after loading the view.
     }
@@ -143,7 +143,7 @@ class RegisterAsServiceProviderVC: BaseVC, UINavigationControllerDelegate, Selec
             let profileStr = (self.ivProfile.image?.toBase64())!
             let civilStr = (self.ivCivilId.image?.toBase64())!
             
-            ApiService.registerAsServiceProvider(Authorization: self.loadUser().data?.accessToken ?? "", services: self.selectedServices, serviceName: self.edtService.text ?? "", nationalId: civilStr, profilePicture: profileStr, email: self.edtEmail.text ?? "") { (response) in
+            ApiService.registerAsServiceProvider(Authorization: DataManager.loadUser().data?.accessToken ?? "", services: self.selectedServices, serviceName: self.edtService.text ?? "", nationalId: civilStr, profilePicture: profileStr, email: self.edtEmail.text ?? "") { (response) in
                 self.hideLoading()
                 if (response.errorCode == 0) {
                     self.showBanner(title: "alert".localized, message: "provider_registered".localized, style: UIColor.SUCCESS)

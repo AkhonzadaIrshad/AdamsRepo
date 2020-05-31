@@ -26,7 +26,7 @@ class MyShopsVC: BaseVC, UITableViewDelegate, UITableViewDataSource {
         
         
         self.showLoading()
-        ApiService.owner_getShopList(Authorization: self.loadUser().data?.accessToken ?? "") { (response) in
+        ApiService.owner_getShopList(Authorization: DataManager.loadUser().data?.accessToken ?? "") { (response) in
             self.hideLoading()
             self.items.append(contentsOf: response.shopOwnerListData ?? [ShopOwnerListDatum]())
             self.tableView.reloadData()
@@ -81,7 +81,7 @@ class MyShopsVC: BaseVC, UITableViewDelegate, UITableViewDataSource {
         cell.onEdit = {
             if let vc = UIStoryboard(name: "Main", bundle: nil).instantiateViewController(withIdentifier: "EditShopVC") as? EditShopVC
             {
-                vc.shop = ShopData(nearbyDriversCount: 0, id: item.id ?? 0, name: name, address: item.address ?? "", latitude: item.latitude ?? 0.0, longitude: item.longitude ?? 0.0, phoneNumber: item.phoneNumber ?? "", workingHours: item.workingHours ?? "", images: item.images ?? [String](), rate: item.rate ?? 0.0, type: item.type!, ownerId: self.loadUser().data?.userID ?? "", googlePlaceId: item.googlePlaceID ?? "", openNow: item.isOpen ?? false)
+                vc.shop = ShopData(nearbyDriversCount: 0, id: item.id ?? 0, name: name, address: item.address ?? "", latitude: item.latitude ?? 0.0, longitude: item.longitude ?? 0.0, phoneNumber: item.phoneNumber ?? "", workingHours: item.workingHours ?? "", images: item.images ?? [String](), rate: item.rate ?? 0.0, type: item.type!, ownerId: DataManager.loadUser().data?.userID ?? "", googlePlaceId: item.googlePlaceID ?? "", openNow: item.isOpen ?? false)
                 vc.latitude = UserDefaults.standard.value(forKey: Constants.LAST_LATITUDE) as? Double ?? 0.0
                 vc.longitude = UserDefaults.standard.value(forKey: Constants.LAST_LONGITUDE) as? Double ?? 0.0
                 self.navigationController?.pushViewController(vc, animated: true)
