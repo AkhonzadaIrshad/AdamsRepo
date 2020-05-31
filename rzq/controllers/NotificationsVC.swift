@@ -11,24 +11,21 @@ import CoreLocation
 import Sheeeeeeeeet
 import SVProgressHUD
 
-class NotificationsVC: BaseViewController, UITableViewDelegate, UITableViewDataSource,LabasLocationManagerDelegate, AcceptBidDelegate, RateDriverDelegate {
+class NotificationsVC: BaseViewController,LabasLocationManagerDelegate, AcceptBidDelegate, RateDriverDelegate {
+    
+    // MARK: - Outlets
     
     @IBOutlet weak var btnMenu: UIButton!
-    
     @IBOutlet weak var tableView: UITableView!
-    
     @IBOutlet weak var containerView: UIView!
-    
     @IBOutlet weak var emptyView: EmptyView!
-    
     @IBOutlet weak var btnAbout: UIButton!
-    
     @IBOutlet weak var lblSortBy: MyUILabel!
-    
     @IBOutlet weak var segmentControl: UISegmentedControl!
-    
     @IBOutlet weak var sortViewHeight: NSLayoutConstraint!
     @IBOutlet weak var sortView: UIView!
+    
+    // MARK: - Variables
     
     var alerts = [DatumNot]()
     var actions = [DatumNot]()
@@ -40,6 +37,7 @@ class NotificationsVC: BaseViewController, UITableViewDelegate, UITableViewDataS
     
     var refreshControl = UIRefreshControl()
     
+    // MARK: - Methodes - public - life cycle
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -51,7 +49,6 @@ class NotificationsVC: BaseViewController, UITableViewDelegate, UITableViewDataS
         
         self.segmentControl.setTitleTextAttributes(titleTextAttributes2, for: .normal)
         self.segmentControl.setTitleTextAttributes(titleTextAttributes, for: .selected)
-        
         
         self.latitude = UserDefaults.standard.value(forKey: Constants.LAST_LATITUDE) as? Double ?? 0.0
         self.longitude = UserDefaults.standard.value(forKey: Constants.LAST_LONGITUDE) as? Double ?? 0.0
@@ -94,8 +91,67 @@ class NotificationsVC: BaseViewController, UITableViewDelegate, UITableViewDataS
         refreshControl.attributedTitle = NSAttributedString(string: "pull_to_refresh".localized)
         refreshControl.addTarget(self, action: #selector(refresh), for: .valueChanged)
         self.tableView.addSubview(refreshControl)
+    }
+    
+    override func viewDidAppear(_ animated: Bool) {
+        super.viewDidAppear(animated)
+        self.updateNotifications()
+        UserDefaults.standard.setValue(0, forKey: Constants.NOTIFICATION_COUNT)
         
     }
+    override func viewWillAppear(_ animated: Bool) {
+        super.viewWillAppear(animated)
+        if self.segmentControl.selectedSegmentIndex == 0 {
+            self.sortView.isHidden = true
+            self.sortViewHeight.constant = 0
+        }else {
+            self.sortView.isHidden = false
+            self.sortViewHeight.constant = 36
+        }
+    }
+    
+    // MARK: - Methodes - UI Actions
+    
+    @IBAction func sortByAction(_ sender: Any) {
+        let actionSheet = createSortSheet()
+        actionSheet.appearance.title.textColor = UIColor.colorPrimary
+        actionSheet.present(in: self, from: self.view)
+    }
+    
+    @IBAction func segmentTabChanged(_ sender: Any) {
+        UserDefaults.standard.setValue(0, forKey: Constants.NOTIFICATION_COUNT)
+        if self.segmentControl.selectedSegmentIndex == 0 {
+            self.sortView.isHidden = true
+            self.sortViewHeight.constant = 0
+        }else {
+            self.sortView.isHidden = false
+            self.sortViewHeight.constant = 36
+        }
+        self.tableView.reloadData()
+        
+        if (self.segmentControl.selectedSegmentIndex == 0) {
+            if (self.alerts.count > 0) {
+                self.emptyView.isHidden = true
+                self.tableView.delegate = self
+                self.tableView.dataSource = self
+                self.tableView.reloadData()
+            }else {
+                self.emptyView.isHidden = false
+            }
+        }else {
+            if (self.actions.count > 0) {
+                self.emptyView.isHidden = true
+                self.tableView.delegate = self
+                self.tableView.dataSource = self
+                self.tableView.reloadData()
+            }else {
+                self.emptyView.isHidden = false
+            }
+        }
+    }
+    
+    // MARK: - Methodes - Helpers
+    
     @objc func refresh(_ sender: Any) {
         if self.segmentControl.selectedSegmentIndex == 0 {
             self.sortView.isHidden = true
@@ -133,8 +189,6 @@ class NotificationsVC: BaseViewController, UITableViewDelegate, UITableViewDataS
                     
                 }
             }
-            
-            
         }
     }
     
@@ -177,11 +231,6 @@ class NotificationsVC: BaseViewController, UITableViewDelegate, UITableViewDataS
         }
     }
     
-    @IBAction func sortByAction(_ sender: Any) {
-        let actionSheet = createSortSheet()
-        actionSheet.appearance.title.textColor = UIColor.colorPrimary
-        actionSheet.present(in: self, from: self.view)
-    }
     
     func createSortSheet() -> ActionSheet {
         let title = ActionSheetTitle(title: "sort_notifications_by".localized)
@@ -243,518 +292,8 @@ class NotificationsVC: BaseViewController, UITableViewDelegate, UITableViewDataS
         }
     }
     
-    override func viewDidAppear(_ animated: Bool) {
-        super.viewDidAppear(animated)
-        self.updateNotifications()
-        UserDefaults.standard.setValue(0, forKey: Constants.NOTIFICATION_COUNT)
-        
-    }
-    override func viewWillAppear(_ animated: Bool) {
-        super.viewWillAppear(animated)
-        if self.segmentControl.selectedSegmentIndex == 0 {
-            self.sortView.isHidden = true
-            self.sortViewHeight.constant = 0
-        }else {
-            self.sortView.isHidden = false
-            self.sortViewHeight.constant = 36
-        }
-    }
-    
-    func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        if (self.segmentControl.selectedSegmentIndex == 0) {
-            return self.alerts.count
-        }else {
-            return self.actions.count
-        }
-        
-    }
-    
-    //    func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {
-    //        let item = self.items[indexPath.row]
-    //        switch item.type {
-    //        case Constants.DELIVERY_CREATED:
-    //            return 138.0
-    //        case Constants.BID_CREATED:
-    //            return 138.0s
-    //        default:
-    //            return 78.0
-    //        }
-    //    }
-    
     func reloadFromRateDriver() {
         self.refreshNotifications()
-    }
-    
-    func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
-        //        let item = self.items[indexPath.row]
-        //        if (item.type == Constants.DELIVERY_COMPLETED) {
-        //            let vc = UIStoryboard(name: "Main", bundle: nil).instantiateViewController(withIdentifier: "RateDriverDialog") as! RateDriverDialog
-        //            vc.deliveryId = item.deliveryID ?? 0
-        //            self.definesPresentationContext = true
-        //            vc.modalPresentationStyle = UIModalPresentationStyle.overCurrentContext
-        //            vc.view.backgroundColor = UIColor.clear
-        //            self.present(vc, animated: true, completion: nil)
-        //        }
-    }
-    
-    func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
-        var item = DatumNot(id: 0, type: 0, createdDate: "", createdTime: "", data: "", userID: "", orderID: 0)
-        if (self.segmentControl.selectedSegmentIndex == 0) {
-            item = self.alerts[indexPath.row]
-        }else {
-            item = self.actions[indexPath.row]
-        }
-        switch item.type {
-        case Constants.DELIVERY_CREATED:
-            let cell : DriverOrderCell = tableView.dequeueReusableCell(withIdentifier: "driverordercell", for: indexPath) as! DriverOrderCell
-            
-            let dict = item.data?.convertToDictionary()
-            
-            let fromLatitude = dict?["FromLatitude"] as? Double ?? 0.0
-            let fromLongitude = dict?["FromLongitude"] as? Double ?? 0.0
-            let toLatitude = dict?["ToLatitude"] as? Double ?? 0.0
-            let toLongitude = dict?["ToLongitude"] as? Double ?? 0.0
-            let fromAddress = dict?["FromAddress"] as? String ?? ""
-            let toAddress = dict?["ToAddress"] as? String ?? ""
-            let desc = dict?["Description"] as? String ?? ""
-            let clientName = dict?["UserName"] as? String ?? ""
-            let shopImage = dict?["ShopImage"] as? String ?? ""
-            
-            if (shopImage.count > 0) {
-                let url = URL(string: "\(Constants.IMAGE_URL)\(shopImage)")
-                cell.ivLogo.kf.setImage(with: url)
-            }
-            if (item.type == 1) {
-                cell.ivType.image = UIImage(named: "ic_drive")
-            }else {
-                cell.ivType.image = UIImage(named: "ic_tool")
-            }
-            
-            cell.lblTitle.text = desc
-            let price = dict?["EstimatedPrice"] as? Double ?? 0.0
-            if (price > 10) {
-                cell.lblMoney.text = "\("more_10".localized) \("currency".localized)"
-            }else {
-                cell.lblMoney.text = "\("less_10".localized) \("currency".localized)"
-            }
-            //            cell.lblMoney.text = "\(dict?["EstimatedPrice"] as? Double ?? 0.0) \("currency".localized)"
-            let time = dict?["EstimatedTime"] as? Int ?? 0
-            
-            if (time > 0) {
-                cell.lblTime.text = "\(dict?["EstimatedTime"] as? Int ?? 0) \("hours".localized)"
-            }else {
-                cell.lblTime.text = "asap".localized
-            }
-            
-            let driverLatLng = CLLocation(latitude: self.latitude ?? 0.0, longitude: self.longitude ?? 0.0)
-            let pickupLatLng = CLLocation(latitude: fromLatitude, longitude: fromLongitude)
-            let dropOffLatLng = CLLocation(latitude: toLatitude, longitude: toLongitude)
-            
-            
-            let fromDistanceInMeters = pickupLatLng.distance(from: driverLatLng)
-            let fromDistanceInKM = fromDistanceInMeters / 1000.0
-            
-            let toDistanceInMeters = dropOffLatLng.distance(from: pickupLatLng)
-            let toDistanceInKM = toDistanceInMeters / 1000.0
-            
-            
-            let totalDistanceStr = String(format: "%.2f", (fromDistanceInKM + toDistanceInKM))
-            
-            
-            cell.lblDistance.text = "\(totalDistanceStr) \("km".localized)"
-            
-            cell.onTake = {
-                if let vc = UIStoryboard(name: "Main", bundle: nil).instantiateViewController(withIdentifier: "TakeOrderVC") as? TakeOrderVC
-                {
-                    vc.deliveryId = item.orderID ?? 0
-                    vc.latitude = self.latitude
-                    vc.longitude = self.longitude
-                    
-                    vc.fromLatitude = fromLatitude
-                    vc.fromLongitude = fromLongitude
-                    vc.toLatitude = toLatitude
-                    vc.toLongitude = toLongitude
-                    vc.fromAddress = fromAddress
-                    vc.toAddress = toAddress
-                    vc.clientsName = clientName
-                    vc.desc = desc
-                    self.navigationController?.pushViewController(vc, animated: true)
-                }
-            }
-            
-            
-            cell.lblNotificationDate.text = self.convertDate(isoDate: item.createdDate ?? "")
-            if (item.createdTime?.count ?? 0 > 0) {
-                cell.timeView.isHidden = false
-                cell.lblNotificationTime.text = item.createdTime ?? ""
-            }else {
-                cell.timeView.isHidden = true
-            }
-            
-            return cell
-        case Constants.DELIVERY_CANCELLED:
-            let cell : RegularAlertCell = tableView.dequeueReusableCell(withIdentifier: "regularalertcell", for: indexPath) as! RegularAlertCell
-            
-            let dict = item.data?.convertToDictionary()
-            
-            let arabicTitle = dict?["ArabicTitle"] as? String ?? ""
-            let englishTitle = dict?["EnglishTitle"] as? String ?? ""
-            
-            let arabicBody = dict?["ArabicBody"] as? String ?? ""
-            let englishBody = dict?["EnglishBody"] as? String ?? ""
-            
-            if (self.isArabic()) {
-                cell.lblTitle.text = arabicTitle
-                cell.lblDescription.text = arabicBody
-            }else {
-                cell.lblTitle.text = englishTitle
-                cell.lblDescription.text = englishBody
-            }
-            
-            return cell
-        case Constants.BID_CREATED:
-            let cell : DriverBidCell = tableView.dequeueReusableCell(withIdentifier: "driverbidcell", for: indexPath) as! DriverBidCell
-            
-            let dict = item.data?.convertToDictionary()
-            let shopImage = dict?["ShopImage"] as? String ?? ""
-            
-            if (shopImage.count > 0) {
-                let url = URL(string: "\(Constants.IMAGE_URL)\(shopImage)")
-                cell.ivLogo.kf.setImage(with: url)
-            }
-            
-            
-            var desc = ""
-            if (self.isArabic()) {
-                desc = dict?["ArabicBody"] as? String ?? ""
-            }else {
-                desc = dict?["EnglishBody"] as? String ?? ""
-            }
-            let distance = dict?["Distance"] as? Double ?? 0.0
-            
-            cell.lblTitle.text = desc
-            cell.lblMoney.text = "\(dict?["Price"] as? Double ?? 0.0) \("currency".localized)"
-            let time = dict?["Time"] as? Int ?? 0
-            if (time > 0) {
-                cell.lblTime.text = "\(dict?["Time"] as? Int ?? 0) \("hours".localized)"
-            }else {
-                cell.lblTime.text = "asap".localized
-            }
-            
-            let distanceStr = String(format: "%.2f", (distance))
-            
-            cell.lblDistance.text = "\(distanceStr) \("km".localized)"
-            
-            let vc = UIStoryboard(name: "Main", bundle: nil).instantiateViewController(withIdentifier: "AcceptBidDialog") as! AcceptBidDialog
-            self.definesPresentationContext = true
-            vc.modalPresentationStyle = UIModalPresentationStyle.overCurrentContext
-            vc.view.backgroundColor = UIColor.clear
-            let notificationId = dict?["Id"] as? Int ?? 0
-            vc.item = item
-            vc.notificationId = notificationId
-            vc.delegate = self
-            vc.initData()
-            cell.onCheck = {
-                self.present(vc, animated: true, completion: nil)
-            }
-            
-            cell.onDecline = {
-                vc.applyDeclineAction()
-            }
-            cell.onAccept = {
-                vc.applyAcceptBidAcion()
-            }
-            
-            cell.lblNotificationDate.text = self.convertDate(isoDate: item.createdDate ?? "")
-            if (item.createdTime?.count ?? 0 > 0) {
-                cell.timeView.isHidden = false
-                cell.lblNotificationTime.text = item.createdTime ?? ""
-            }else {
-                cell.timeView.isHidden = true
-            }
-            cell.startCountDown(startedFrom: item.createdDate)
-            return cell
-        case Constants.ON_THE_WAY:
-            let cell : RegularAlertCell = tableView.dequeueReusableCell(withIdentifier: "regularalertcell", for: indexPath) as! RegularAlertCell
-            
-            let dict = item.data?.convertToDictionary()
-            
-            let arabicTitle = dict?["ArabicTitle"] as? String ?? ""
-            let englishTitle = dict?["EnglishTitle"] as? String ?? ""
-            
-            let arabicBody = dict?["ArabicBody"] as? String ?? ""
-            let englishBody = dict?["EnglishBody"] as? String ?? ""
-            
-            if (self.isArabic()) {
-                cell.lblTitle.text = arabicTitle
-                cell.lblDescription.text = arabicBody
-            }else {
-                cell.lblTitle.text = englishTitle
-                cell.lblDescription.text = englishBody
-            }
-            
-            return cell
-            
-        case Constants.DELIVERY_COMPLETED:
-            let cell : OrderCompletedCell = tableView.dequeueReusableCell(withIdentifier: "ordercompletedcell", for: indexPath) as! OrderCompletedCell
-            
-            let dict = item.data?.convertToDictionary()
-            
-            let arabicTitle = dict?["ArabicTitle"] as? String ?? ""
-            let englishTitle = dict?["EnglishTitle"] as? String ?? ""
-            
-            let arabicBody = dict?["ArabicBody"] as? String ?? ""
-            let englishBody = dict?["EnglishBody"] as? String ?? ""
-            
-            if (self.isArabic()) {
-                cell.lblTitle.text = arabicTitle
-                cell.lblDesc.text = arabicBody
-            }else {
-                cell.lblTitle.text = englishTitle
-                cell.lblDesc.text = englishBody
-            }
-            cell.btnRate.setTitle("rate_driver".localized, for: .normal)
-            
-            cell.onRate = {
-                let vc = UIStoryboard(name: "Main", bundle: nil).instantiateViewController(withIdentifier: "RateDriverDialog") as! RateDriverDialog
-                vc.deliveryId = item.orderID ?? 0
-                vc.delegate = self
-                vc.notificationId = item.id ?? 0
-                self.definesPresentationContext = true
-                vc.modalPresentationStyle = UIModalPresentationStyle.overCurrentContext
-                vc.view.backgroundColor = UIColor.clear
-                self.present(vc, animated: true, completion: nil)
-            }
-            
-            return cell
-        case Constants.BID_ACCEPTED:
-            let cell : RegularAlertCell = tableView.dequeueReusableCell(withIdentifier: "regularalertcell", for: indexPath) as! RegularAlertCell
-            
-            let dict = item.data?.convertToDictionary()
-            
-            let arabicTitle = dict?["ArabicTitle"] as? String ?? ""
-            let englishTitle = dict?["EnglishTitle"] as? String ?? ""
-            
-            let arabicBody = dict?["ArabicBody"] as? String ?? ""
-            let englishBody = dict?["EnglishBody"] as? String ?? ""
-            
-            if (self.isArabic()) {
-                cell.lblTitle.text = arabicTitle
-                cell.lblDescription.text = arabicBody
-            }else {
-                cell.lblTitle.text = englishTitle
-                cell.lblDescription.text = englishBody
-            }
-            return cell
-            
-        //service
-        case Constants.SERVICE_CREATED:
-            let cell : DriverOrderCell = tableView.dequeueReusableCell(withIdentifier: "driverordercell", for: indexPath) as! DriverOrderCell
-            
-            let dict = item.data?.convertToDictionary()
-            
-            let toLatitude = dict?["ToLatitude"] as? Double ?? 0.0
-            let toLongitude = dict?["ToLongitude"] as? Double ?? 0.0
-            var serviceName = ""
-            if (self.isArabic()) {
-                serviceName = dict?["ServiceArabicName"] as? String ?? ""
-            }else {
-                serviceName = dict?["ServiceEnglishName"] as? String ?? ""
-            }
-            let toAddress = dict?["ToAddress"] as? String ?? ""
-            let desc = dict?["Description"] as? String ?? ""
-            let clientName = dict?["UserName"] as? String ?? ""
-            let serviceImage = dict?["ServiceImage"] as? String ?? ""
-            
-            if (serviceImage.count > 0) {
-                let url = URL(string: "\(Constants.IMAGE_URL)\(serviceImage)")
-                cell.ivLogo.kf.setImage(with: url)
-            }
-            
-            if (item.type == 1) {
-                cell.ivType.image = UIImage(named: "ic_drive")
-            }else {
-                cell.ivType.image = UIImage(named: "ic_tool")
-            }
-            
-            cell.lblTitle.text = desc
-            let price = dict?["EstimatedPrice"] as? Double ?? 0.0
-            if (price > 10) {
-                cell.lblMoney.text = "> 10 \("currency".localized)"
-            }else {
-                cell.lblMoney.text = "< 10 \("currency".localized)"
-            }
-            //            cell.lblMoney.text = "\(dict?["EstimatedPrice"] as? Double ?? 0.0) \("currency".localized)"
-            let time = dict?["EstimatedTime"] as? Int ?? 0
-            
-            if (time > 0) {
-                cell.lblTime.text = "\(dict?["EstimatedTime"] as? Int ?? 0) \("hours".localized)"
-            }else {
-                cell.lblTime.text = "asap".localized
-            }
-            
-            let driverLatLng = CLLocation(latitude: self.latitude ?? 0.0, longitude: self.longitude ?? 0.0)
-            let dropOffLatLng = CLLocation(latitude: toLatitude, longitude: toLongitude)
-            let distanceInMeters = dropOffLatLng.distance(from: driverLatLng)
-            let distanceInKM = distanceInMeters / 1000.0
-            let distanceStr = String(format: "%.2f", distanceInKM)
-            
-            cell.lblDistance.text = "\(distanceStr) \("km".localized)"
-            
-            cell.onTake = {
-                if let vc = UIStoryboard(name: "Main", bundle: nil).instantiateViewController(withIdentifier: "TakeServiceOrderVC") as? TakeServiceOrderVC
-                {
-                    vc.deliveryId = item.orderID ?? 0
-                    vc.latitude = self.latitude
-                    vc.longitude = self.longitude
-                    vc.toLatitude = toLatitude
-                    vc.toLongitude = toLongitude
-                    vc.toAddress = toAddress
-                    vc.clientsName = clientName
-                    vc.desc = desc
-                    vc.serviceName = serviceName
-                    self.navigationController?.pushViewController(vc, animated: true)
-                }
-            }
-            
-            cell.lblNotificationDate.text = self.convertDate(isoDate: item.createdDate ?? "")
-            if (item.createdTime?.count ?? 0 > 0) {
-                cell.timeView.isHidden = false
-                cell.lblNotificationTime.text = item.createdTime ?? ""
-            }else {
-                cell.timeView.isHidden = true
-            }
-            
-            return cell
-            
-            
-        case Constants.SERVICE_BID_CREATED:
-            let cell : DriverBidCell = tableView.dequeueReusableCell(withIdentifier: "driverbidcell", for: indexPath) as! DriverBidCell
-            
-            let dict = item.data?.convertToDictionary()
-            cell.startCountDown(startedFrom: dict?["Time"] as? String)
-            let shopImage = dict?["ServiceImage"] as? String ?? ""
-            
-            if (shopImage.count > 0) {
-                let url = URL(string: "\(Constants.IMAGE_URL)\(shopImage)")
-                cell.ivLogo.kf.setImage(with: url)
-            }
-            
-            
-            var desc = ""
-            if (self.isArabic()) {
-                desc = dict?["ArabicBody"] as? String ?? ""
-            }else {
-                desc = dict?["EnglishBody"] as? String ?? ""
-            }
-            
-            let Droplatitude = dict?["Latitude"] as? Double ?? 0.0
-            let Droplongitude = dict?["Longitude"] as? Double ?? 0.0
-            
-            cell.lblTitle.text = desc
-            cell.lblMoney.text = "\(dict?["Price"] as? Double ?? 0.0) \("currency".localized)"
-            let time = dict?["Time"] as? Int ?? 0
-            if (time > 0) {
-                cell.lblTime.text = "\(dict?["Time"] as? Int ?? 0) \("hours".localized)"
-            }else {
-                cell.lblTime.text = "asap".localized
-            }
-            
-            let driverLatLng = CLLocation(latitude: self.latitude ?? 0.0, longitude: self.longitude ?? 0.0)
-            let dropOffLatLng = CLLocation(latitude: Droplatitude, longitude: Droplongitude)
-            let distanceInMeters = dropOffLatLng.distance(from: driverLatLng)
-            let distanceInKM = distanceInMeters / 1000.0
-            
-            let distanceStr = String(format: "%.2f", distanceInKM)
-            
-            cell.lblDistance.text = "\(distanceStr) \("km".localized)"
-            
-            cell.onCheck = {
-                let vc = UIStoryboard(name: "Main", bundle: nil).instantiateViewController(withIdentifier: "AcceptBidDialog") as! AcceptBidDialog
-                self.definesPresentationContext = true
-                vc.modalPresentationStyle = UIModalPresentationStyle.overCurrentContext
-                vc.view.backgroundColor = UIColor.clear
-                let notificationId = dict?["Id"] as? Int ?? 0
-                vc.item = item
-                vc.notificationId = notificationId
-                vc.delegate = self
-                
-                self.present(vc, animated: true, completion: nil)
-            }
-            
-            cell.lblNotificationDate.text = self.convertDate(isoDate: item.createdDate ?? "")
-            if (item.createdTime?.count ?? 0 > 0) {
-                cell.timeView.isHidden = false
-                cell.lblNotificationTime.text = item.createdTime ?? ""
-            }else {
-                cell.timeView.isHidden = true
-            }
-            
-            return cell
-            
-        case Constants.SERVICE_COMPLETED:
-            let cell : OrderCompletedCell = tableView.dequeueReusableCell(withIdentifier: "ordercompletedcell", for: indexPath) as! OrderCompletedCell
-            
-            let dict = item.data?.convertToDictionary()
-            
-            let arabicTitle = dict?["ArabicTitle"] as? String ?? ""
-            let englishTitle = dict?["EnglishTitle"] as? String ?? ""
-            
-            let arabicBody = dict?["ArabicBody"] as? String ?? ""
-            let englishBody = dict?["EnglishBody"] as? String ?? ""
-            
-            if (self.isArabic()) {
-                cell.lblTitle.text = arabicTitle
-                cell.lblDesc.text = arabicBody
-            }else {
-                cell.lblTitle.text = englishTitle
-                cell.lblDesc.text = englishBody
-            }
-            
-            cell.btnRate.setTitle("rate_provider".localized, for: .normal)
-            
-            cell.onRate = {
-                let vc = UIStoryboard(name: "Main", bundle: nil).instantiateViewController(withIdentifier: "RateDriverDialog") as! RateDriverDialog
-                vc.deliveryId = item.orderID ?? 0
-                vc.delegate = self
-                vc.notificationId = item.id ?? 0
-                self.definesPresentationContext = true
-                vc.modalPresentationStyle = UIModalPresentationStyle.overCurrentContext
-                vc.view.backgroundColor = UIColor.clear
-                self.present(vc, animated: true, completion: nil)
-            }
-            
-            return cell
-            
-            
-            
-            
-            
-            
-            
-            
-        default:
-            let cell : RegularAlertCell = tableView.dequeueReusableCell(withIdentifier: "regularalertcell", for: indexPath) as! RegularAlertCell
-            
-            let dict = item.data?.convertToDictionary()
-            
-            let arabicTitle = dict?["ArabicTitle"] as? String ?? ""
-            let englishTitle = dict?["EnglishTitle"] as? String ?? ""
-            
-            let arabicBody = dict?["ArabicBody"] as? String ?? ""
-            let englishBody = dict?["EnglishBody"] as? String ?? ""
-            
-            if (self.isArabic()) {
-                cell.lblTitle.text = arabicTitle
-                cell.lblDescription.text = arabicBody
-            }else {
-                cell.lblTitle.text = englishTitle
-                cell.lblDescription.text = englishBody
-            }
-            
-            return cell
-        }
-        
     }
     
     func refreshNotifications() {
@@ -791,11 +330,8 @@ class NotificationsVC: BaseViewController, UITableViewDelegate, UITableViewDataS
                     self.emptyView.isHidden = false
                 }
             }
-            
         }
     }
-    
-    
     
     func onAccept() {
         let mainStoryboardIpad : UIStoryboard = UIStoryboard(name: "Main", bundle: nil)
@@ -804,39 +340,497 @@ class NotificationsVC: BaseViewController, UITableViewDelegate, UITableViewDataS
         self.present(initialViewControlleripad, animated: true, completion: {})
     }
     
+}
+
+extension NotificationsVC: UITableViewDelegate, UITableViewDataSource {
     
-    @IBAction func segmentTabChanged(_ sender: Any) {
-        UserDefaults.standard.setValue(0, forKey: Constants.NOTIFICATION_COUNT)
-        if self.segmentControl.selectedSegmentIndex == 0 {
-            self.sortView.isHidden = true
-            self.sortViewHeight.constant = 0
-        }else {
-            self.sortView.isHidden = false
-            self.sortViewHeight.constant = 36
-        }
-        self.tableView.reloadData()
-        
+    func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
         if (self.segmentControl.selectedSegmentIndex == 0) {
-            if (self.alerts.count > 0) {
-                self.emptyView.isHidden = true
-                self.tableView.delegate = self
-                self.tableView.dataSource = self
-                self.tableView.reloadData()
-            }else {
-                self.emptyView.isHidden = false
-            }
+            return self.alerts.count
         }else {
-            if (self.actions.count > 0) {
-                self.emptyView.isHidden = true
-                self.tableView.delegate = self
-                self.tableView.dataSource = self
-                self.tableView.reloadData()
-            }else {
-                self.emptyView.isHidden = false
-            }
+            return self.actions.count
         }
-        
     }
     
-    
+    func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
+        var item = DatumNot(id: 0, type: 0, createdDate: "", createdTime: "", data: "", userID: "", orderID: 0)
+        if (self.segmentControl.selectedSegmentIndex == 0) {
+            item = self.alerts[indexPath.row]
+        }else {
+            item = self.actions[indexPath.row]
+        }
+        switch item.type {
+        case Constants.DELIVERY_CREATED:
+            return createCellForDeliveryCreated(tableView, indexPath, item)
+        case Constants.DELIVERY_CANCELLED:
+            return createCellForDeliveryCancled(tableView, indexPath, item)
+        case Constants.BID_CREATED:
+            return createCellForBidCreated(tableView, indexPath, item)
+        case Constants.ON_THE_WAY:
+            return createdCellForOnTheWay(tableView, indexPath, item)
+        case Constants.DELIVERY_COMPLETED:
+            return createCellDeliveryCompleted(tableView, indexPath, item)
+        case Constants.BID_ACCEPTED:
+            return createCellForBidAccepted(tableView, indexPath, item)
+        case Constants.SERVICE_CREATED:
+            return createdCellForServiceCreated(tableView, indexPath, item)
+        case Constants.SERVICE_BID_CREATED:
+            return createCellForServiceBidCreated(tableView, indexPath, item)
+        case Constants.SERVICE_COMPLETED:
+            return createdCellForServiceCompleted(tableView, indexPath, item)
+        default:
+            return createCellRegular(tableView, indexPath, item)
+        }
+    }
+}
+
+// MARK: Creating cells methodes
+
+extension NotificationsVC {
+    fileprivate func createCellForDeliveryCreated(_ tableView: UITableView, _ indexPath: IndexPath, _ item: DatumNot) -> UITableViewCell {
+         let cell : DriverOrderCell = tableView.dequeueReusableCell(withIdentifier: "driverordercell", for: indexPath) as! DriverOrderCell
+         
+         let dict = item.data?.convertToDictionary()
+         
+         let fromLatitude = dict?["FromLatitude"] as? Double ?? 0.0
+         let fromLongitude = dict?["FromLongitude"] as? Double ?? 0.0
+         let toLatitude = dict?["ToLatitude"] as? Double ?? 0.0
+         let toLongitude = dict?["ToLongitude"] as? Double ?? 0.0
+         let fromAddress = dict?["FromAddress"] as? String ?? ""
+         let toAddress = dict?["ToAddress"] as? String ?? ""
+         let desc = dict?["Description"] as? String ?? ""
+         let clientName = dict?["UserName"] as? String ?? ""
+         let shopImage = dict?["ShopImage"] as? String ?? ""
+         
+         if (shopImage.count > 0) {
+             let url = URL(string: "\(Constants.IMAGE_URL)\(shopImage)")
+             cell.ivLogo.kf.setImage(with: url)
+         }
+         if (item.type == 1) {
+             cell.ivType.image = UIImage(named: "ic_drive")
+         }else {
+             cell.ivType.image = UIImage(named: "ic_tool")
+         }
+         
+         cell.lblTitle.text = desc
+         let price = dict?["EstimatedPrice"] as? Double ?? 0.0
+         if (price > 10) {
+             cell.lblMoney.text = "\("more_10".localized) \("currency".localized)"
+         }else {
+             cell.lblMoney.text = "\("less_10".localized) \("currency".localized)"
+         }
+         //            cell.lblMoney.text = "\(dict?["EstimatedPrice"] as? Double ?? 0.0) \("currency".localized)"
+         let time = dict?["EstimatedTime"] as? Int ?? 0
+         
+         if (time > 0) {
+             cell.lblTime.text = "\(dict?["EstimatedTime"] as? Int ?? 0) \("hours".localized)"
+         }else {
+             cell.lblTime.text = "asap".localized
+         }
+         
+         let driverLatLng = CLLocation(latitude: self.latitude ?? 0.0, longitude: self.longitude ?? 0.0)
+         let pickupLatLng = CLLocation(latitude: fromLatitude, longitude: fromLongitude)
+         let dropOffLatLng = CLLocation(latitude: toLatitude, longitude: toLongitude)
+         
+         
+         let fromDistanceInMeters = pickupLatLng.distance(from: driverLatLng)
+         let fromDistanceInKM = fromDistanceInMeters / 1000.0
+         
+         let toDistanceInMeters = dropOffLatLng.distance(from: pickupLatLng)
+         let toDistanceInKM = toDistanceInMeters / 1000.0
+         
+         
+         let totalDistanceStr = String(format: "%.2f", (fromDistanceInKM + toDistanceInKM))
+         
+         
+         cell.lblDistance.text = "\(totalDistanceStr) \("km".localized)"
+         
+         cell.onTake = {
+             if let vc = UIStoryboard(name: "Main", bundle: nil).instantiateViewController(withIdentifier: "TakeOrderVC") as? TakeOrderVC
+             {
+                 vc.deliveryId = item.orderID ?? 0
+                 vc.latitude = self.latitude
+                 vc.longitude = self.longitude
+                 
+                 vc.fromLatitude = fromLatitude
+                 vc.fromLongitude = fromLongitude
+                 vc.toLatitude = toLatitude
+                 vc.toLongitude = toLongitude
+                 vc.fromAddress = fromAddress
+                 vc.toAddress = toAddress
+                 vc.clientsName = clientName
+                 vc.desc = desc
+                 self.navigationController?.pushViewController(vc, animated: true)
+             }
+         }
+         
+         
+         cell.lblNotificationDate.text = self.convertDate(isoDate: item.createdDate ?? "")
+         if (item.createdTime?.count ?? 0 > 0) {
+             cell.timeView.isHidden = false
+             cell.lblNotificationTime.text = item.createdTime ?? ""
+         }else {
+             cell.timeView.isHidden = true
+         }
+         
+         return cell
+     }
+     
+     fileprivate func createCellForDeliveryCancled(_ tableView: UITableView, _ indexPath: IndexPath, _ item: DatumNot) -> UITableViewCell {
+         let cell : RegularAlertCell = tableView.dequeueReusableCell(withIdentifier: "regularalertcell", for: indexPath) as! RegularAlertCell
+         
+         let dict = item.data?.convertToDictionary()
+         
+         let arabicTitle = dict?["ArabicTitle"] as? String ?? ""
+         let englishTitle = dict?["EnglishTitle"] as? String ?? ""
+         
+         let arabicBody = dict?["ArabicBody"] as? String ?? ""
+         let englishBody = dict?["EnglishBody"] as? String ?? ""
+         
+         if (self.isArabic()) {
+             cell.lblTitle.text = arabicTitle
+             cell.lblDescription.text = arabicBody
+         }else {
+             cell.lblTitle.text = englishTitle
+             cell.lblDescription.text = englishBody
+         }
+         
+         return cell
+     }
+     
+     fileprivate func createCellForBidCreated(_ tableView: UITableView, _ indexPath: IndexPath, _ item: DatumNot) -> UITableViewCell {
+         let cell : DriverBidCell = tableView.dequeueReusableCell(withIdentifier: "driverbidcell", for: indexPath) as! DriverBidCell
+         
+         let dict = item.data?.convertToDictionary()
+         let shopImage = dict?["ShopImage"] as? String ?? ""
+         
+         if (shopImage.count > 0) {
+             let url = URL(string: "\(Constants.IMAGE_URL)\(shopImage)")
+             cell.ivLogo.kf.setImage(with: url)
+         }
+         var desc = ""
+         if (self.isArabic()) {
+             desc = dict?["ArabicBody"] as? String ?? ""
+         }else {
+             desc = dict?["EnglishBody"] as? String ?? ""
+         }
+         let distance = dict?["Distance"] as? Double ?? 0.0
+         
+         cell.lblTitle.text = desc
+         cell.lblMoney.text = "\(dict?["Price"] as? Double ?? 0.0) \("currency".localized)"
+         let time = dict?["Time"] as? Int ?? 0
+         if (time > 0) {
+             cell.lblTime.text = "\(dict?["Time"] as? Int ?? 0) \("hours".localized)"
+         }else {
+             cell.lblTime.text = "asap".localized
+         }
+         
+         let distanceStr = String(format: "%.2f", (distance))
+         
+         cell.lblDistance.text = "\(distanceStr) \("km".localized)"
+         
+         let vc = UIStoryboard(name: "Main", bundle: nil).instantiateViewController(withIdentifier: "AcceptBidDialog") as! AcceptBidDialog
+         self.definesPresentationContext = true
+         vc.modalPresentationStyle = UIModalPresentationStyle.overCurrentContext
+         vc.view.backgroundColor = UIColor.clear
+         let notificationId = dict?["Id"] as? Int ?? 0
+         vc.item = item
+         vc.notificationId = notificationId
+         vc.delegate = self
+         vc.initData()
+         cell.onCheck = {
+             self.present(vc, animated: true, completion: nil)
+         }
+         
+         cell.onDecline = {
+             vc.applyDeclineAction()
+         }
+         cell.onAccept = {
+             vc.applyAcceptBidAcion()
+         }
+         
+         cell.lblNotificationDate.text = self.convertDate(isoDate: item.createdDate ?? "")
+         if (item.createdTime?.count ?? 0 > 0) {
+             cell.timeView.isHidden = false
+             cell.lblNotificationTime.text = item.createdTime ?? ""
+         }else {
+             cell.timeView.isHidden = true
+         }
+         cell.startCountDown(startedFrom: item.createdDate)
+         return cell
+     }
+     
+     fileprivate func createdCellForOnTheWay(_ tableView: UITableView, _ indexPath: IndexPath, _ item: DatumNot) -> UITableViewCell {
+         let cell : RegularAlertCell = tableView.dequeueReusableCell(withIdentifier: "regularalertcell", for: indexPath) as! RegularAlertCell
+         
+         let dict = item.data?.convertToDictionary()
+         
+         let arabicTitle = dict?["ArabicTitle"] as? String ?? ""
+         let englishTitle = dict?["EnglishTitle"] as? String ?? ""
+         
+         let arabicBody = dict?["ArabicBody"] as? String ?? ""
+         let englishBody = dict?["EnglishBody"] as? String ?? ""
+         
+         if (self.isArabic()) {
+             cell.lblTitle.text = arabicTitle
+             cell.lblDescription.text = arabicBody
+         }else {
+             cell.lblTitle.text = englishTitle
+             cell.lblDescription.text = englishBody
+         }
+         
+         return cell
+     }
+     
+     fileprivate func createCellDeliveryCompleted(_ tableView: UITableView, _ indexPath: IndexPath, _ item: DatumNot) -> UITableViewCell {
+         let cell : OrderCompletedCell = tableView.dequeueReusableCell(withIdentifier: "ordercompletedcell", for: indexPath) as! OrderCompletedCell
+         
+         let dict = item.data?.convertToDictionary()
+         
+         let arabicTitle = dict?["ArabicTitle"] as? String ?? ""
+         let englishTitle = dict?["EnglishTitle"] as? String ?? ""
+         
+         let arabicBody = dict?["ArabicBody"] as? String ?? ""
+         let englishBody = dict?["EnglishBody"] as? String ?? ""
+         
+         if (self.isArabic()) {
+             cell.lblTitle.text = arabicTitle
+             cell.lblDesc.text = arabicBody
+         }else {
+             cell.lblTitle.text = englishTitle
+             cell.lblDesc.text = englishBody
+         }
+         cell.btnRate.setTitle("rate_driver".localized, for: .normal)
+         
+         cell.onRate = {
+             let vc = UIStoryboard(name: "Main", bundle: nil).instantiateViewController(withIdentifier: "RateDriverDialog") as! RateDriverDialog
+             vc.deliveryId = item.orderID ?? 0
+             vc.delegate = self
+             vc.notificationId = item.id ?? 0
+             self.definesPresentationContext = true
+             vc.modalPresentationStyle = UIModalPresentationStyle.overCurrentContext
+             vc.view.backgroundColor = UIColor.clear
+             self.present(vc, animated: true, completion: nil)
+         }
+         
+         return cell
+     }
+     
+     fileprivate func createCellForBidAccepted(_ tableView: UITableView, _ indexPath: IndexPath, _ item: DatumNot) -> UITableViewCell {
+         let cell : RegularAlertCell = tableView.dequeueReusableCell(withIdentifier: "regularalertcell", for: indexPath) as! RegularAlertCell
+         
+         let dict = item.data?.convertToDictionary()
+         
+         let arabicTitle = dict?["ArabicTitle"] as? String ?? ""
+         let englishTitle = dict?["EnglishTitle"] as? String ?? ""
+         
+         let arabicBody = dict?["ArabicBody"] as? String ?? ""
+         let englishBody = dict?["EnglishBody"] as? String ?? ""
+         
+         if (self.isArabic()) {
+             cell.lblTitle.text = arabicTitle
+             cell.lblDescription.text = arabicBody
+         }else {
+             cell.lblTitle.text = englishTitle
+             cell.lblDescription.text = englishBody
+         }
+         return cell
+     }
+     
+     fileprivate func createdCellForServiceCreated(_ tableView: UITableView, _ indexPath: IndexPath, _ item: DatumNot) -> UITableViewCell {
+         let cell : DriverOrderCell = tableView.dequeueReusableCell(withIdentifier: "driverordercell", for: indexPath) as! DriverOrderCell
+         
+         let dict = item.data?.convertToDictionary()
+         
+         let toLatitude = dict?["ToLatitude"] as? Double ?? 0.0
+         let toLongitude = dict?["ToLongitude"] as? Double ?? 0.0
+         var serviceName = ""
+         if (self.isArabic()) {
+             serviceName = dict?["ServiceArabicName"] as? String ?? ""
+         }else {
+             serviceName = dict?["ServiceEnglishName"] as? String ?? ""
+         }
+         let toAddress = dict?["ToAddress"] as? String ?? ""
+         let desc = dict?["Description"] as? String ?? ""
+         let clientName = dict?["UserName"] as? String ?? ""
+         let serviceImage = dict?["ServiceImage"] as? String ?? ""
+         
+         if (serviceImage.count > 0) {
+             let url = URL(string: "\(Constants.IMAGE_URL)\(serviceImage)")
+             cell.ivLogo.kf.setImage(with: url)
+         }
+         
+         if (item.type == 1) {
+             cell.ivType.image = UIImage(named: "ic_drive")
+         }else {
+             cell.ivType.image = UIImage(named: "ic_tool")
+         }
+         
+         cell.lblTitle.text = desc
+         let price = dict?["EstimatedPrice"] as? Double ?? 0.0
+         if (price > 10) {
+             cell.lblMoney.text = "> 10 \("currency".localized)"
+         }else {
+             cell.lblMoney.text = "< 10 \("currency".localized)"
+         }
+         //            cell.lblMoney.text = "\(dict?["EstimatedPrice"] as? Double ?? 0.0) \("currency".localized)"
+         let time = dict?["EstimatedTime"] as? Int ?? 0
+         
+         if (time > 0) {
+             cell.lblTime.text = "\(dict?["EstimatedTime"] as? Int ?? 0) \("hours".localized)"
+         }else {
+             cell.lblTime.text = "asap".localized
+         }
+         
+         let driverLatLng = CLLocation(latitude: self.latitude ?? 0.0, longitude: self.longitude ?? 0.0)
+         let dropOffLatLng = CLLocation(latitude: toLatitude, longitude: toLongitude)
+         let distanceInMeters = dropOffLatLng.distance(from: driverLatLng)
+         let distanceInKM = distanceInMeters / 1000.0
+         let distanceStr = String(format: "%.2f", distanceInKM)
+         
+         cell.lblDistance.text = "\(distanceStr) \("km".localized)"
+         
+         cell.onTake = {
+             if let vc = UIStoryboard(name: "Main", bundle: nil).instantiateViewController(withIdentifier: "TakeServiceOrderVC") as? TakeServiceOrderVC
+             {
+                 vc.deliveryId = item.orderID ?? 0
+                 vc.latitude = self.latitude
+                 vc.longitude = self.longitude
+                 vc.toLatitude = toLatitude
+                 vc.toLongitude = toLongitude
+                 vc.toAddress = toAddress
+                 vc.clientsName = clientName
+                 vc.desc = desc
+                 vc.serviceName = serviceName
+                 self.navigationController?.pushViewController(vc, animated: true)
+             }
+         }
+         
+         cell.lblNotificationDate.text = self.convertDate(isoDate: item.createdDate ?? "")
+         if (item.createdTime?.count ?? 0 > 0) {
+             cell.timeView.isHidden = false
+             cell.lblNotificationTime.text = item.createdTime ?? ""
+         }else {
+             cell.timeView.isHidden = true
+         }
+         return cell
+     }
+     
+     fileprivate func createCellForServiceBidCreated(_ tableView: UITableView, _ indexPath: IndexPath, _ item: DatumNot) -> UITableViewCell {
+         let cell : DriverBidCell = tableView.dequeueReusableCell(withIdentifier: "driverbidcell", for: indexPath) as! DriverBidCell
+         
+         let dict = item.data?.convertToDictionary()
+         cell.startCountDown(startedFrom: dict?["Time"] as? String)
+         let shopImage = dict?["ServiceImage"] as? String ?? ""
+         
+         if (shopImage.count > 0) {
+             let url = URL(string: "\(Constants.IMAGE_URL)\(shopImage)")
+             cell.ivLogo.kf.setImage(with: url)
+         }
+         var desc = ""
+         if (self.isArabic()) {
+             desc = dict?["ArabicBody"] as? String ?? ""
+         }else {
+             desc = dict?["EnglishBody"] as? String ?? ""
+         }
+         
+         let Droplatitude = dict?["Latitude"] as? Double ?? 0.0
+         let Droplongitude = dict?["Longitude"] as? Double ?? 0.0
+         
+         cell.lblTitle.text = desc
+         cell.lblMoney.text = "\(dict?["Price"] as? Double ?? 0.0) \("currency".localized)"
+         let time = dict?["Time"] as? Int ?? 0
+         if (time > 0) {
+             cell.lblTime.text = "\(dict?["Time"] as? Int ?? 0) \("hours".localized)"
+         }else {
+             cell.lblTime.text = "asap".localized
+         }
+         
+         let driverLatLng = CLLocation(latitude: self.latitude ?? 0.0, longitude: self.longitude ?? 0.0)
+         let dropOffLatLng = CLLocation(latitude: Droplatitude, longitude: Droplongitude)
+         let distanceInMeters = dropOffLatLng.distance(from: driverLatLng)
+         let distanceInKM = distanceInMeters / 1000.0
+         
+         let distanceStr = String(format: "%.2f", distanceInKM)
+         
+         cell.lblDistance.text = "\(distanceStr) \("km".localized)"
+         
+         cell.onCheck = {
+             let vc = UIStoryboard(name: "Main", bundle: nil).instantiateViewController(withIdentifier: "AcceptBidDialog") as! AcceptBidDialog
+             self.definesPresentationContext = true
+             vc.modalPresentationStyle = UIModalPresentationStyle.overCurrentContext
+             vc.view.backgroundColor = UIColor.clear
+             let notificationId = dict?["Id"] as? Int ?? 0
+             vc.item = item
+             vc.notificationId = notificationId
+             vc.delegate = self
+             
+             self.present(vc, animated: true, completion: nil)
+         }
+         
+         cell.lblNotificationDate.text = self.convertDate(isoDate: item.createdDate ?? "")
+         if (item.createdTime?.count ?? 0 > 0) {
+             cell.timeView.isHidden = false
+             cell.lblNotificationTime.text = item.createdTime ?? ""
+         }else {
+             cell.timeView.isHidden = true
+         }
+         
+         return cell
+     }
+     
+     fileprivate func createdCellForServiceCompleted(_ tableView: UITableView, _ indexPath: IndexPath, _ item: DatumNot) -> UITableViewCell {
+         let cell : OrderCompletedCell = tableView.dequeueReusableCell(withIdentifier: "ordercompletedcell", for: indexPath) as! OrderCompletedCell
+         
+         let dict = item.data?.convertToDictionary()
+         
+         let arabicTitle = dict?["ArabicTitle"] as? String ?? ""
+         let englishTitle = dict?["EnglishTitle"] as? String ?? ""
+         
+         let arabicBody = dict?["ArabicBody"] as? String ?? ""
+         let englishBody = dict?["EnglishBody"] as? String ?? ""
+         
+         if (self.isArabic()) {
+             cell.lblTitle.text = arabicTitle
+             cell.lblDesc.text = arabicBody
+         }else {
+             cell.lblTitle.text = englishTitle
+             cell.lblDesc.text = englishBody
+         }
+         
+         cell.btnRate.setTitle("rate_provider".localized, for: .normal)
+         
+         cell.onRate = {
+             let vc = UIStoryboard(name: "Main", bundle: nil).instantiateViewController(withIdentifier: "RateDriverDialog") as! RateDriverDialog
+             vc.deliveryId = item.orderID ?? 0
+             vc.delegate = self
+             vc.notificationId = item.id ?? 0
+             self.definesPresentationContext = true
+             vc.modalPresentationStyle = UIModalPresentationStyle.overCurrentContext
+             vc.view.backgroundColor = UIColor.clear
+             self.present(vc, animated: true, completion: nil)
+         }
+         return cell
+     }
+     
+     fileprivate func createCellRegular(_ tableView: UITableView, _ indexPath: IndexPath, _ item: DatumNot) -> UITableViewCell {
+         let cell : RegularAlertCell = tableView.dequeueReusableCell(withIdentifier: "regularalertcell", for: indexPath) as! RegularAlertCell
+         
+         let dict = item.data?.convertToDictionary()
+         
+         let arabicTitle = dict?["ArabicTitle"] as? String ?? ""
+         let englishTitle = dict?["EnglishTitle"] as? String ?? ""
+         
+         let arabicBody = dict?["ArabicBody"] as? String ?? ""
+         let englishBody = dict?["EnglishBody"] as? String ?? ""
+         
+         if (self.isArabic()) {
+             cell.lblTitle.text = arabicTitle
+             cell.lblDescription.text = arabicBody
+         }else {
+             cell.lblTitle.text = englishTitle
+             cell.lblDescription.text = englishBody
+         }
+         return cell
+     }
 }

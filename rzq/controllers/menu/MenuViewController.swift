@@ -281,13 +281,51 @@ class MenuViewController: BaseVC {
         if (sender.isOn) {
             ApiService.goOnline(Authorization: self.loadUser().data?.accessToken ?? "") { (response) in
                 self.hideLoading()
-                self.updateUser(self.getRealmUser(userProfile: VerifyResponse(data: DataClass(accessToken: self.loadUser().data?.accessToken ?? "", phoneNumber: self.loadUser().data?.phoneNumber ?? "", username: self.loadUser().data?.username ?? "", fullName: self.loadUser().data?.fullName ?? "", userID: self.loadUser().data?.userID ?? "", dateOfBirth: self.loadUser().data?.dateOfBirth ?? "", profilePicture: self.loadUser().data?.profilePicture ?? "", email: self.loadUser().data?.email ?? "", gender: self.loadUser().data?.gender ?? 1, rate: self.loadUser().data?.rate ?? 0, roles: self.loadUser().data?.roles ?? "", isOnline: true,exceededDueAmount: self.loadUser().data?.exceededDueAmount ?? false,dueAmount: self.loadUser().data?.dueAmount ?? 0.0, earnings: self.loadUser().data?.earnings ?? 0.0,balance: self.loadUser().data?.balance ?? 0.0), errorCode: 0, errorMessage: "")))
+                let loadedUserData = self.loadUser().data
+                let dataClass = DataClass(accessToken: loadedUserData?.accessToken ?? "",
+                                          phoneNumber: loadedUserData?.phoneNumber ?? "",
+                                          username: loadedUserData?.username ?? "",
+                                          fullName: loadedUserData?.fullName ?? "",
+                                          userID: loadedUserData?.userID ?? "",
+                                          dateOfBirth: loadedUserData?.dateOfBirth ?? "",
+                                          profilePicture: loadedUserData?.profilePicture ?? "",
+                                          email: loadedUserData?.email ?? "",
+                                          gender: loadedUserData?.gender ?? 1,
+                                          rate: loadedUserData?.rate ?? 0,
+                                          roles: loadedUserData?.roles ?? "",
+                                          isOnline: true,
+                                          exceededDueAmount: loadedUserData?.exceededDueAmount ?? false,
+                                          dueAmount: loadedUserData?.dueAmount ?? 0.0,
+                                          earnings: loadedUserData?.earnings ?? 0.0,
+                                          balance: loadedUserData?.balance ?? 0.0)
+                let verifyResponse = VerifyResponse(data: dataClass, errorCode: 0, errorMessage: "")
+                let newUser = self.getRealmUser(userProfile: verifyResponse)
+                self.updateUser(newUser)
                 self.moodSwitch.isOn = true
             }
         }else {
             ApiService.goOffline(Authorization: self.loadUser().data?.accessToken ?? "") { (response) in
                 self.hideLoading()
-                self.updateUser(self.getRealmUser(userProfile: VerifyResponse(data: DataClass(accessToken: self.loadUser().data?.accessToken ?? "", phoneNumber: self.loadUser().data?.phoneNumber ?? "", username: self.loadUser().data?.username ?? "", fullName: self.loadUser().data?.fullName ?? "", userID: self.loadUser().data?.userID ?? "", dateOfBirth: self.loadUser().data?.dateOfBirth ?? "", profilePicture: self.loadUser().data?.profilePicture ?? "", email: self.loadUser().data?.email ?? "", gender: self.loadUser().data?.gender ?? 1, rate: self.loadUser().data?.rate ?? 0, roles: self.loadUser().data?.roles ?? "", isOnline: false,exceededDueAmount: self.loadUser().data?.exceededDueAmount ?? false,dueAmount: self.loadUser().data?.dueAmount ?? 0.0, earnings: self.loadUser().data?.earnings ?? 0.0,balance: self.loadUser().data?.balance ?? 0.0), errorCode: 0, errorMessage: "")))
+                let loadedUserData = self.loadUser().data
+                let dataClass = DataClass(accessToken: loadedUserData?.accessToken ?? "",
+                                          phoneNumber: loadedUserData?.phoneNumber ?? "",
+                                          username: loadedUserData?.username ?? "",
+                                          fullName: loadedUserData?.fullName ?? "",
+                                          userID: loadedUserData?.userID ?? "",
+                                          dateOfBirth: loadedUserData?.dateOfBirth ?? "",
+                                          profilePicture: loadedUserData?.profilePicture ?? "",
+                                          email: loadedUserData?.email ?? "",
+                                          gender: loadedUserData?.gender ?? 1,
+                                          rate: loadedUserData?.rate ?? 0,
+                                          roles: loadedUserData?.roles ?? "",
+                                          isOnline: false,
+                                          exceededDueAmount: loadedUserData?.exceededDueAmount ?? false,
+                                          dueAmount: loadedUserData?.dueAmount ?? 0.0,
+                                          earnings: loadedUserData?.earnings ?? 0.0,
+                                          balance: loadedUserData?.balance ?? 0.0)
+                let verifyResponse = VerifyResponse(data: dataClass, errorCode: 0, errorMessage: "")
+                let newUser = self.getRealmUser(userProfile: verifyResponse)
+                self.updateUser(newUser)
                 self.moodSwitch.isOn = false
             }
         }
