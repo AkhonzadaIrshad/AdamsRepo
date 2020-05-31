@@ -192,76 +192,6 @@ class DeliveryStep3: BaseVC, UINavigationControllerDelegate, ImagePickerDelegate
         bounds = bounds.includingCoordinate(pickMarker.position)
         bounds = bounds.includingCoordinate(dropMarker.position)
         self.gMap?.animate(with: GMSCameraUpdate.fit(bounds, withPadding: 155.0))
-        
-        
-        //        let origin = "\(self.orderModel?.pickUpLatitude ?? 0),\(self.orderModel?.pickUpLongitude ?? 0)"
-        //        let destination = "\(self.orderModel?.dropOffLatitude ?? 0),\(self.orderModel?.dropOffLongitude ?? 0)"
-        //
-        //        let urlString = "https://maps.googleapis.com/maps/api/directions/json?origin=\(origin)&destination=\(destination)&mode=driving&key=\(Constants.GOOGLE_API_KEY)"
-        //
-        //        let url = URL(string: urlString)
-        //        URLSession.shared.dataTask(with: url!, completionHandler: {
-        //            (data, response, error) in
-        //            if(error != nil){
-        //                print("error")
-        //            } else {
-        //                do{
-        //                    let json = try JSONSerialization.jsonObject(with: data!, options:.allowFragments) as! [String : AnyObject]
-        //                    if let routes = json["routes"] as? NSArray {
-        //                        if (routes.count > 0) {
-        //                            self.gMap?.clear()
-        //
-        //                            self.selectedRoute = (json["routes"] as! Array<NSDictionary>)[0]
-        //                            //  self.loadDistanceAndDuration()
-        //
-        //                            OperationQueue.main.addOperation({
-        //                                for route in routes
-        //                                {
-        //                                    let routeOverviewPolyline:NSDictionary = (route as! NSDictionary).value(forKey: "overview_polyline") as! NSDictionary
-        //                                    let points = routeOverviewPolyline.object(forKey: "points")
-        //                                    let path = GMSPath.init(fromEncodedPath: points! as! String)
-        //                                    let polyline = GMSPolyline.init(path: path)
-        //                                    polyline.strokeWidth = 2
-        //                                    polyline.strokeColor = UIColor.appDarkBlue
-        //
-        //                                    let bounds = GMSCoordinateBounds(path: path!)
-        //                                    self.gMap?.animate(with: GMSCameraUpdate.fit(bounds, withPadding: 100.0))
-        //
-        //                                    polyline.map = self.gMap
-        //
-        //
-        //                                    let pickUpPosition = CLLocationCoordinate2D(latitude: self.orderModel?.pickUpLatitude ?? 0, longitude: self.orderModel?.pickUpLongitude ?? 0)
-        //                                    let pickMarker = GMSMarker(position: pickUpPosition)
-        //                                    pickMarker.title = self.orderModel?.pickUpAddress
-        //                                    if (self.orderModel?.shop?.id ?? 0 > 0) {
-        //                                        pickMarker.icon = UIImage(named: "ic_map_shop")
-        //                                    }else {
-        //                                        pickMarker.icon = UIImage(named: "ic_location_pin")
-        //                                    }
-        //                                    pickMarker.map = self.gMap
-        //
-        //
-        //                                    let dropOffPosition = CLLocationCoordinate2D(latitude: self.orderModel?.dropOffLatitude ?? 0, longitude: self.orderModel?.dropOffLongitude ?? 0)
-        //                                    let dropMarker = GMSMarker(position: dropOffPosition)
-        //                                    dropMarker.title = self.orderModel?.dropOffAddress
-        //                                    dropMarker.icon = UIImage(named: "ic_location")
-        //                                    dropMarker.map = self.gMap
-        //
-        //                                }
-        //                            })
-        //                        }else {
-        //                            //no routes
-        //                        }
-        //
-        //                    }else {
-        //                        //no routes
-        //                    }
-        //
-        //                }catch let error as NSError{
-        //                    print("error:\(error)")
-        //                }
-        //            }
-        //        }).resume()
     }
     
     override func viewWillAppear(_ animated: Bool) {
@@ -318,10 +248,6 @@ class DeliveryStep3: BaseVC, UINavigationControllerDelegate, ImagePickerDelegate
         self.view.layoutSubviews()
     }
     
-    //    @IBAction func backAction(_ sender: Any) {
-    //        self.saveBackModel()
-    //    }
-    
     @IBAction func step1Action(_ sender: Any) {
         self.popBack(3)
     }
@@ -373,22 +299,6 @@ class DeliveryStep3: BaseVC, UINavigationControllerDelegate, ImagePickerDelegate
         }
     }
     @IBAction func recordAction(_ sender: Any) {
-        //        if (recorder.isRecording) {
-        //            //stop
-        //            self.btnRecord.setImage(UIImage(named: "ic_microphone"), for: .normal)
-        //            recorder.stop()
-        //            if (recorder.time > 2) {
-        //                self.viewRecording.isHidden = false
-        //            }else {
-        //                self.viewRecording.isHidden = true
-        //            }
-        //        }else {
-        //            //record
-        //            self.btnRecord.setImage(UIImage(named: "ic_recording"), for: .normal)
-        //            recorder.recordName = "order_file"
-        //            recorder.record()
-        //        }
-        //stop
         self.bgRecord.isHidden = true
         self.btnRecord.setImage(UIImage(named: "ic_microphone"), for: .normal)
         self.gif.isHidden = true

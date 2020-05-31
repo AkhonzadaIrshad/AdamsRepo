@@ -1236,7 +1236,7 @@ extension DeliveryStep1: ShopMenuDelegate {
             let doubleQuantity = Double(itemQuantity)
             let doublePrice = item.price ?? 0.0
             let total = doubleQuantity * doublePrice
-            text = "\(text)\(itemQuantity) x (\(item.name ?? "")) -> (\(total)) \("currency".localized).\n"
+            text += "\(itemQuantity) \(item.name ?? ""): \(total) \("currency".localized)\n"
         }
         self.orderModel?.selectedTotal = total
         self.orderModel?.edtOrderDetailsText = text
