@@ -15,7 +15,7 @@ import Firebase
 import AMPopTip
 import MarqueeLabel
 
-class DeliveryStep1: BaseVC,LabasLocationManagerDelegate, Step2Delegate, AllShopDelegate {
+class DeliveryStep1: BaseVC , Step2Delegate, AllShopDelegate {
     
     // MARK: - Outlets
     
@@ -46,7 +46,7 @@ class DeliveryStep1: BaseVC,LabasLocationManagerDelegate, Step2Delegate, AllShop
     @IBOutlet weak var collectionCategories: UICollectionView!
     
     // MARK: - Variables
-    
+    let locationManager = CLLocationManager()
     var markerLocation: GMSMarker?
     var currentZoom: Float = 0.0
     var gMap : GMSMapView?
@@ -70,7 +70,42 @@ class DeliveryStep1: BaseVC,LabasLocationManagerDelegate, Step2Delegate, AllShop
     // MARK: - Methods
     
     override func viewDidLoad() {
+        super.viewDidLoad()
+        self.locationManager.delegate = self
+        // Ask for Authorisation from the User.
+        self.locationManager.requestAlwaysAuthorization()
         
+        // For use in foreground
+        self.locationManager.requestWhenInUseAuthorization()
+    }
+    
+    
+    override func viewWillAppear(_ animated: Bool) {
+        print("viewWillAppear")
+        super.viewWillAppear(animated)
+        if CLLocationManager.locationServicesEnabled() {
+            switch CLLocationManager.authorizationStatus() {
+            case .authorizedAlways, .authorizedWhenInUse:
+                locationManager.delegate = self
+                locationManager.desiredAccuracy = kCLLocationAccuracyNearestTenMeters
+                locationManager.startUpdatingLocation()
+                self.loadData()
+            case .notDetermined:
+                // For use in foreground
+                self.locationManager.requestWhenInUseAuthorization()
+            default:
+                self.showAlert(title: "Enable Location Services", message: "", buttonText: "Setting") {
+                    UIApplication.shared.open(URL(string: UIApplication.openSettingsURLString)!, options: [:], completionHandler: nil)
+                }
+            }
+        } else {
+            self.showAlert(title: "Enable Location Services", message: "", buttonText: "Setting") {
+                UIApplication.shared.open(URL(string: UIApplication.openSettingsURLString)!, options: [:], completionHandler: nil)
+            }
+        }
+    }
+    
+    private func loadData() {
         if (self.orderModel?.shop?.id ?? 0 > 0) {
             self.btnCheckMenu.isHidden = false
             self.viewCheckMenu.isHidden = false
@@ -83,7 +118,6 @@ class DeliveryStep1: BaseVC,LabasLocationManagerDelegate, Step2Delegate, AllShop
         }
         
         self.lblViewList.text = "DeliveryStep1.listView".localized
-        super.viewDidLoad()
         if (self.isArabic()) {
             //  self.ivHandle.image = UIImage(named: "ic_back_arabic")
             self.ivIndicator.image = UIImage(named: "ic_arrow_login_white_arabic")
@@ -99,8 +133,6 @@ class DeliveryStep1: BaseVC,LabasLocationManagerDelegate, Step2Delegate, AllShop
         
         if (self.latitude ?? 0.0 == 0.0 || self.longitude ?? 0.0 == 0.0) {
             self.showLoading()
-            LabasLocationManager.shared.delegate = self
-            LabasLocationManager.shared.startUpdatingLocation()
         }else {
             self.setUpGoogleMap()
         }
@@ -149,8 +181,6 @@ class DeliveryStep1: BaseVC,LabasLocationManagerDelegate, Step2Delegate, AllShop
         }
         
         ApiService.updateRegId(Authorization: DataManager.loadUser().data?.accessToken ?? "", regId: Messaging.messaging().fcmToken ?? "not_avaliable") { (response) in
-            
-            
         }
         
         let flag = App.shared.config?.configSettings?.flag ?? false
@@ -177,9 +207,7 @@ class DeliveryStep1: BaseVC,LabasLocationManagerDelegate, Step2Delegate, AllShop
             self.categories.append(contentsOf: response.data ?? [TypeClass]())
             self.collectionCategories.reloadData()
         }
-        
     }
-    
     func openShopList() {
         if let vc = UIStoryboard(name: "Main", bundle: nil).instantiateViewController(withIdentifier: "AllShopsVC") as? AllShopsVC
         {
@@ -318,20 +346,6 @@ class DeliveryStep1: BaseVC,LabasLocationManagerDelegate, Step2Delegate, AllShop
             return false
         }
         return true
-    }
-    
-    func labasLocationManager(didUpdateLocation location: CLLocation) {
-        self.hideLoading()
-        if (self.latitude ?? 0.0 == 0.0 || self.longitude ?? 0.0 == 0.0) {
-            
-            self.latitude = location.coordinate.latitude
-            self.longitude = location.coordinate.longitude
-            
-            UserDefaults.standard.setValue(self.latitude, forKey: Constants.LAST_LATITUDE)
-            UserDefaults.standard.setValue(self.longitude, forKey: Constants.LAST_LONGITUDE)
-
-            self.setUpGoogleMap()
-        }
     }
     
     func updateModel(model: OTWOrder) {
@@ -1304,5 +1318,25 @@ extension DeliveryStep1: UICollectionViewDelegate, UICollectionViewDataSource, U
             cell.ivLogo.image = UIImage(named: "type_holder")
         }
         return cell
+    }
+}
+
+// MARK: - CLLocationManagerDelegate
+
+extension DeliveryStep1: CLLocationManagerDelegate {
+    
+    
+    func locationManager(_ manager: CLLocationManager, didUpdateLocations locations: [CLLocation]) {
+        self.hideLoading()
+        if (self.latitude ?? 0.0 == 0.0 || self.longitude ?? 0.0 == 0.0) {
+            
+            self.latitude = manager.location?.coordinate.latitude
+            self.longitude = manager.location?.coordinate.longitude
+            
+            UserDefaults.standard.setValue(self.latitude, forKey: Constants.LAST_LATITUDE)
+            UserDefaults.standard.setValue(self.longitude, forKey: Constants.LAST_LONGITUDE)
+
+            self.setUpGoogleMap()
+        }
     }
 }
