@@ -59,6 +59,8 @@ class DeliveryStep2: BaseVC, Step3Delegate {
     var shops = [DataShop]()
     var filterShops = [DataShop]()
     
+    var selectedImages: [UIImage] = []
+    
     @IBOutlet weak var lblSearch: MyUILabel!
     
     override func viewDidLoad() {
@@ -211,6 +213,8 @@ class DeliveryStep2: BaseVC, Step3Delegate {
             if let vc = UIStoryboard(name: "Main", bundle: nil).instantiateViewController(withIdentifier: "DeliveryStep3") as? DeliveryStep3
             {
                 self.orderModel?.dropOffDetails = self.edtMoreDetails.text ?? ""
+                
+                vc.selectedImages = selectedImages
                 vc.latitude = self.latitude
                 vc.longitude = self.longitude
                 vc.orderModel = self.orderModel
@@ -359,6 +363,7 @@ class DeliveryStep2: BaseVC, Step3Delegate {
             {
                 self.orderModel?.dropOffDetails = self.edtMoreDetails.text ?? ""
                 vc.latitude = self.latitude
+                vc.selectedImages = selectedImages
                 vc.longitude = self.longitude
                 vc.orderModel = self.orderModel
                 vc.delegate = self
