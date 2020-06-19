@@ -14,14 +14,44 @@ import CoreLocation
 import Firebase
 import AMPopTip
 import MarqueeLabel
+import MultilineTextField
 
-class DeliveryStep1: BaseVC , Step2Delegate, AllShopDelegate {
+class DeliveryStep1: BaseVC , Step2Delegate, AllShopDelegate, ImagePickerDelegate, UITextViewDelegate {
     
     // MARK: - Outlets
     
+    func onDone(images: [UIImage]) {
+        self.selectedImages = images
+        self.handleImagesView()
+    }
+    
+    @IBOutlet weak var lblImages: MyUILabel!
+    
+    @IBOutlet weak var viewImages: UIView!
+    
+    @IBOutlet weak var viewRecording: UIView!
+    
+    @IBOutlet weak var bgRecord: UIImageView!
+    
+    @IBOutlet weak var edtOrderDetails: MultilineTextField!
+    
+    @IBOutlet weak var btnRecord: UIButton!
+       
+    @IBOutlet weak var btnPlay: UIButton!
+    
+    @IBOutlet weak var gif: UIImageView!
+        
+    
+    var imagePicker: UIImagePickerController!
+    var audioPlayer: AVAudioPlayer?
+    var selectedImages = [UIImage]()
+    let recorder = KAudioRecorder.shared
+    
+    
     @IBOutlet weak var lblPickupLocation: MyUILabel!
     @IBOutlet weak var mapView: UIView!
-    @IBOutlet weak var edtMoreDetails: MyUITextField!
+    //@IBOutlet weak var edtMoreDetails: MyUITextField!
+    var edtMoreDetails: String?
     @IBOutlet weak var searchField: SearchTextField!
     @IBOutlet weak var viewParentSearch: CardView!
     @IBOutlet weak var ivHandle: UIImageView!
@@ -30,11 +60,11 @@ class DeliveryStep1: BaseVC , Step2Delegate, AllShopDelegate {
     @IBOutlet weak var viewClearField: CardView!
     @IBOutlet weak var viewSuggest: UIView!
     @IBOutlet weak var viewPin: UIView!
-    @IBOutlet weak var shopNameHeight: NSLayoutConstraint!
-    @IBOutlet weak var lblShopName: MarqueeLabel!
+    //@IBOutlet weak var shopNameHeight: NSLayoutConstraint!
+    //@IBOutlet weak var lblShopName: MarqueeLabel!
     @IBOutlet weak var btnCurrentLocation: UIButton!
     @IBOutlet weak var ivIndicator: UIImageView!
-    @IBOutlet weak var moreDetailsView: UIView!
+    //@IBOutlet weak var moreDetailsView: UIView!
     @IBOutlet weak var lblSearch: MyUILabel!
     @IBOutlet weak var viewBecomeDriver: UIView!
     @IBOutlet weak var ivGoogle: UIButton!
@@ -74,15 +104,44 @@ class DeliveryStep1: BaseVC , Step2Delegate, AllShopDelegate {
         self.locationManager.delegate = self
         // Ask for Authorisation from the User.
         self.locationManager.requestAlwaysAuthorization()
-        
+        self.edtOrderDetails.delegate = self
+            
         // For use in foreground
         self.locationManager.requestWhenInUseAuthorization()
+        
+        viewLoad()
     }
     
+    func textViewDidChange(_ textView: UITextView) {
+        self.orderModel?.orderDetails = textView.text
+    }
+    
+    @objc public func textDidChanged(_ textField: MyUITextField) {
+        self.orderModel?.orderDetails = textField.text
+    }
+    
+    func viewLoad() {
+           self.edtOrderDetails.text = self.orderModel?.orderDetails
+           
+           edtOrderDetails.placeholder = "order_details".localized
+           edtOrderDetails.placeholderColor = UIColor.lightGray
+           edtOrderDetails.isPlaceholderScrollEnabled = true
+           
+           self.viewRecording.isHidden = true
+           
+           if (self.orderModel?.voiceRecord?.count ?? 0 > 0) {
+               self.viewRecording.isHidden = false
+           }
+           
+       }
     
     override func viewWillAppear(_ animated: Bool) {
         print("viewWillAppear")
         super.viewWillAppear(animated)
+        
+        handleImagesView()
+        
+        
         if CLLocationManager.locationServicesEnabled() {
             switch CLLocationManager.authorizationStatus() {
             case .authorizedAlways, .authorizedWhenInUse:
@@ -138,11 +197,12 @@ class DeliveryStep1: BaseVC , Step2Delegate, AllShopDelegate {
         }
         
         if (self.orderModel?.shop?.id ?? 0 > 0) {
-            self.moreDetailsView.isHidden = false
+            //self.moreDetailsView.isHidden = false
+            self.ivShop.isHidden = false
             self.lblSearch.isHidden = true
             self.lblPickupLocation.text = self.orderModel?.pickUpAddress ?? ""
             self.lblPickupLocation.textColor = UIColor.appDarkBlue
-            //  self.edtMoreDetails.text = self.orderModel?.pickUpAddress ?? ""
+            //  self.edtMoreDetails = self.orderModel?.pickUpAddress ?? ""
             
             self.pinMarker?.map = nil
             self.pinMarker = GMSMarker()
@@ -158,7 +218,7 @@ class DeliveryStep1: BaseVC , Step2Delegate, AllShopDelegate {
             let camera = GMSCameraPosition.camera(withLatitude: self.orderModel?.pickUpLatitude ?? 0.0, longitude: self.orderModel?.pickUpLongitude ?? 0.0, zoom: 15.0)
             self.gMap?.animate(to: camera)
             
-            self.ivShop.isHidden = false
+            
             self.viewShopDetails.isHidden = false
             self.viewClearField.isHidden = false
             
@@ -170,11 +230,12 @@ class DeliveryStep1: BaseVC , Step2Delegate, AllShopDelegate {
                 self.ivShop.kf.setImage(with: url)
             }
             
-            self.edtMoreDetails.text = "\(self.orderModel?.shop?.name ?? "")\n\(self.orderModel?.shop?.address ?? "")"
+            self.edtMoreDetails = "\(self.orderModel?.shop?.name ?? "")\n\(self.orderModel?.shop?.address ?? "")"
             
             
-            self.lblShopName.text = self.orderModel?.shop?.name ?? ""
-            self.shopNameHeight.constant = 20
+            //self.lblShopName.text = self.orderModel?.shop?.name ?? ""
+            //self.shopNameHeight.constant = 20
+            
             self.viewPin.isHidden = false
             self.viewSuggest.isHidden = true
             
@@ -231,16 +292,20 @@ class DeliveryStep1: BaseVC , Step2Delegate, AllShopDelegate {
             self.orderModel?.pickUpLatitude = response.shopData?.latitude ?? 0.0
             self.orderModel?.pickUpLongitude = response.shopData?.longitude ?? 0.0
             
-            self.lblShopName.text = response.shopData?.name ?? ""
-            self.shopNameHeight.constant = 20
+            //self.lblShopName.text = response.shopData?.name ?? ""
+            //self.shopNameHeight.constant = 20
             
-            self.moreDetailsView.isHidden = false
+            //self.moreDetailsView.isHidden = false
+            self.ivShop.isHidden = false
+            
             self.lblSearch.isHidden = true
             self.viewShopDetails.isHidden = false
             self.viewClearField.isHidden = false
             
-            self.ivShop.isHidden = false
-            self.edtMoreDetails.text = "\(response.shopData?.name ?? "")\n\(response.shopData?.address ?? "")"
+            
+            self.edtMoreDetails = "\(response.shopData?.name ?? "")\n\(response.shopData?.address ?? "")"
+            
+            /** step 1 - comment all logic of shop details image  */
             
             if (response.shopData?.images?.count ?? 0 > 0) {
                 let url = URL(string: "\(Constants.IMAGE_URL)\(response.shopData?.images?[0] ?? "")")
@@ -348,6 +413,21 @@ class DeliveryStep1: BaseVC , Step2Delegate, AllShopDelegate {
         return true
     }
     
+    func validateOrderDetail() -> Bool { //TODO:- add to next action
+        if (self.orderModel?.orderDetails?.count ?? 0 == 0) {
+            self.showBanner(title: "alert".localized, message: "enter_order_details".localized, style: UIColor.INFO)
+            return false
+        }
+        
+        //        if (self.edtCost.text?.count ?? 0 == 0) {
+        //            self.showBanner(title: "alert".localized, message: "enter_order_cost".localized, style: UIColor.INFO)
+        //            return false
+        //        }
+        
+        return true
+    }
+    
+    
     func updateModel(model: OTWOrder) {
         self.orderModel = model
     }
@@ -430,8 +510,8 @@ class DeliveryStep1: BaseVC , Step2Delegate, AllShopDelegate {
                             }
                         }
                         
-                        self.shopNameHeight.constant = 20
-                        self.lblShopName.text = strAddresMain
+                        //self.shopNameHeight.constant = 20
+                       // self.lblShopName.text = strAddresMain
                         
                         self.lblPickupLocation.text = strAddresMain
                         self.lblPickupLocation.textColor = UIColor.appDarkBlue
@@ -439,24 +519,24 @@ class DeliveryStep1: BaseVC , Step2Delegate, AllShopDelegate {
                         
                     }
                     else {
-                        self.shopNameHeight.constant = 0
-                        self.lblShopName.text = ""
+                       // self.shopNameHeight.constant = 0
+                        //self.lblShopName.text = ""
                         self.lblPickupLocation.text = "Loading".localized
                         self.lblPickupLocation.textColor = UIColor.appDarkBlue
                         self.orderModel?.pickUpAddress = ""
                     }
                 }
                 else {
-                    self.shopNameHeight.constant = 0
-                    self.lblShopName.text = ""
+                    //self.shopNameHeight.constant = 0
+                   // self.lblShopName.text = ""
                     self.lblPickupLocation.text = "Loading".localized
                     self.lblPickupLocation.textColor = UIColor.appDarkBlue
                     self.orderModel?.pickUpAddress = ""
                 }
             }
             else {
-                self.shopNameHeight.constant = 0
-                self.lblShopName.text = ""
+              //  self.shopNameHeight.constant = 0
+               // self.lblShopName.text = ""
                 self.lblPickupLocation.text = "Loading".localized
                 self.orderModel?.pickUpAddress = ""
             }
@@ -478,6 +558,28 @@ class DeliveryStep1: BaseVC , Step2Delegate, AllShopDelegate {
         let distanceInKM = distanceInMeters / 1000.0
         let distanceStr = String(format: "%.2f", distanceInKM)
         return "(\(distanceStr) \("km".localized))"
+    }
+    
+    @IBAction func recordPress(_ sender: Any) {
+        if (recorder.isRecording) {
+            //stop
+            self.bgRecord.isHidden = true
+            self.btnRecord.setImage(UIImage(named: "ic_microphone"), for: .normal)
+            self.gif.isHidden = true
+            recorder.stop()
+            if (recorder.time > 1) {
+                self.viewRecording.isHidden = false
+            }else {
+                self.viewRecording.isHidden = true
+            }
+        }else {
+            //record
+            self.bgRecord.isHidden = false
+            self.btnRecord.setImage(UIImage(named: "ic_recording"), for: .normal)
+            self.gif.isHidden = false
+            recorder.recordName = "order_file"
+            recorder.record()
+        }
     }
     
     func getShopsByName(name : String, latitude : Double, longitude: Double, radius : Float) {
@@ -507,10 +609,12 @@ class DeliveryStep1: BaseVC , Step2Delegate, AllShopDelegate {
                 self.orderModel?.shop = shop
                 self.orderModel?.pickUpAddress = shop.name ?? ""
                 self.lblPickupLocation.text = shop.name ?? ""
-                self.lblShopName.text = shop.name ?? ""
+                //self.lblShopName.text = shop.name ?? ""
                 self.lblPickupLocation.textColor = UIColor.appDarkBlue
                 
-                self.moreDetailsView.isHidden = false
+                //self.moreDetailsView.isHidden = false
+                self.ivShop.isHidden = false
+                
                 self.lblSearch.isHidden = true
                 
                 self.view.endEditing(true)
@@ -536,10 +640,12 @@ class DeliveryStep1: BaseVC , Step2Delegate, AllShopDelegate {
                 self.applyMarkerImage(from: url!, to: self.singleMarker!)
                 self.singleMarker?.map = self.gMap
                 
-                self.ivShop.isHidden = false
+                
                 self.viewShopDetails.isHidden = false
                 self.viewClearField.isHidden = false
                 
+                
+                // same thing shop image was removed
                 if (shop.images?.count ?? 0 > 0) {
                     let url = URL(string: "\(Constants.IMAGE_URL)\(shop.images?[0] ?? "")")
                     self.ivShop.kf.setImage(with: url)
@@ -550,11 +656,10 @@ class DeliveryStep1: BaseVC , Step2Delegate, AllShopDelegate {
                     self.ivShop.image = UIImage(named: "ic_place_store")
                 }
                 
+                self.edtMoreDetails = "\(shop.name ?? "")\n\(shop.address ?? "")"
                 
-                self.edtMoreDetails.text = "\(shop.name ?? "")\n\(shop.address ?? "")"
-                
-                self.lblShopName.text = shop.name ?? ""
-                self.shopNameHeight.constant = 20
+                // self.lblShopName.text = shop.name ?? ""
+               // self.shopNameHeight.constant = 20
                 self.viewPin.isHidden = false
                 self.viewSuggest.isHidden = true
                 
@@ -598,10 +703,12 @@ class DeliveryStep1: BaseVC , Step2Delegate, AllShopDelegate {
                 self.orderModel?.shop = shop
                 self.orderModel?.pickUpAddress = shop.name ?? ""
                 self.lblPickupLocation.text = shop.name ?? ""
-                self.lblShopName.text = shop.name ?? ""
+             //   self.lblShopName.text = shop.name ?? ""
                 self.lblPickupLocation.textColor = UIColor.appDarkBlue
                 
-                self.moreDetailsView.isHidden = false
+                //self.moreDetailsView.isHidden = false
+                self.ivShop.isHidden = false
+                
                 self.lblSearch.isHidden = true
                 
                 self.view.endEditing(true)
@@ -621,7 +728,7 @@ class DeliveryStep1: BaseVC , Step2Delegate, AllShopDelegate {
                 self.applyMarkerImage(from: url!, to: self.singleMarker!)
                 self.singleMarker?.map = self.gMap
                 
-                self.ivShop.isHidden = false
+                
                 self.viewShopDetails.isHidden = false
                 self.viewClearField.isHidden = false
                 
@@ -636,10 +743,10 @@ class DeliveryStep1: BaseVC , Step2Delegate, AllShopDelegate {
                 }
                 
                 
-                self.edtMoreDetails.text = "\(shop.name ?? "")\n\(shop.address ?? "")"
+                self.edtMoreDetails = "\(shop.name ?? "")\n\(shop.address ?? "")"
                 
-                self.lblShopName.text = shop.name ?? ""
-                self.shopNameHeight.constant = 20
+               // self.lblShopName.text = shop.name ?? ""
+               // self.shopNameHeight.constant = 20
                 self.viewPin.isHidden = false
                 self.viewSuggest.isHidden = true
                 
@@ -739,7 +846,8 @@ class DeliveryStep1: BaseVC , Step2Delegate, AllShopDelegate {
         if (self.validate()) {
             if let vc = UIStoryboard(name: "Main", bundle: nil).instantiateViewController(withIdentifier: "DeliveryStep2") as? DeliveryStep2
             {
-                self.orderModel?.pickUpDetails = self.edtMoreDetails.text ?? ""
+                self.orderModel?.pickUpDetails = self.edtMoreDetails ?? ""
+                vc.selectedImages = selectedImages
                 vc.latitude = self.latitude
                 vc.longitude = self.longitude
                 vc.orderModel = self.orderModel
@@ -754,11 +862,16 @@ class DeliveryStep1: BaseVC , Step2Delegate, AllShopDelegate {
     }
     
     @IBAction func nextAction(_ sender: Any) {
-        if (self.validate()) {
+        
+        self.orderModel?.orderDetails = self.edtOrderDetails.text
+        
+        
+        if (self.validate() && validateOrderDetail()) {
             if let vc = UIStoryboard(name: "Main", bundle: nil).instantiateViewController(withIdentifier: "DeliveryStep2") as? DeliveryStep2
             {
-                self.orderModel?.pickUpDetails = self.edtMoreDetails.text ?? ""
+                self.orderModel?.pickUpDetails = self.edtMoreDetails ?? ""
                 vc.latitude = self.latitude
+                vc.selectedImages = selectedImages
                 vc.longitude = self.longitude
                 vc.orderModel = self.orderModel
                 vc.delegate = self
@@ -784,20 +897,22 @@ class DeliveryStep1: BaseVC , Step2Delegate, AllShopDelegate {
     }
     
     @IBAction func clearPickLocation(_ sender: Any) {
-        self.moreDetailsView.isHidden = true
-        self.lblSearch.isHidden = false
+        //self.moreDetailsView.isHidden = true
         self.ivShop.image = nil
-        self.edtMoreDetails.text = ""
+        self.ivShop.isHidden = true
+        self.lblSearch.isHidden = false
+        
+        self.edtMoreDetails = ""
         self.lblPickupLocation.text = ""
         self.searchField.text = ""
-        self.ivShop.isHidden = true
+        
         self.viewShopDetails.isHidden = true
         self.viewClearField.isHidden = true
         self.gMap?.clear()
         self.getShopsList(radius: Float(Constants.DEFAULT_RADIUS), rating: 0)
         
-        self.lblShopName.text = ""
-        self.shopNameHeight.constant = 0
+        //self.lblShopName.text = ""
+       // self.shopNameHeight.constant = 0
         self.viewPin.isHidden = false
         self.viewSuggest.isHidden = true
         
@@ -817,20 +932,25 @@ class DeliveryStep1: BaseVC , Step2Delegate, AllShopDelegate {
     }
     
     @IBAction func clearFieldAction(_ sender: Any) {
-        self.moreDetailsView.isHidden = true
-        self.lblSearch.isHidden = false
+        //self.moreDetailsView.isHidden = true
+        
+        self.orderModel?.reset()
+        
         self.ivShop.image = nil
-        self.edtMoreDetails.text = ""
+        self.ivShop.isHidden = true
+        self.lblSearch.isHidden = false
+        
+        self.edtMoreDetails = ""
         self.lblPickupLocation.text = ""
         self.searchField.text = ""
-        self.ivShop.isHidden = true
+        
         self.viewShopDetails.isHidden = true
         self.viewClearField.isHidden = true
         self.gMap?.clear()
         self.getShopsList(radius: Float(Constants.DEFAULT_RADIUS), rating: 0)
         
-        self.lblShopName.text = ""
-        self.shopNameHeight.constant = 0
+      //  self.lblShopName.text = ""
+       // self.shopNameHeight.constant = 0
         self.viewPin.isHidden = false
         self.viewSuggest.isHidden = true
         
@@ -841,20 +961,26 @@ class DeliveryStep1: BaseVC , Step2Delegate, AllShopDelegate {
     }
     
     @IBAction func clearFieldAction2(_ sender: Any) {
-        self.moreDetailsView.isHidden = true
-        self.lblSearch.isHidden = false
+        //self.moreDetailsView.isHidden = true
+        
+        self.orderModel?.reset()
+        
         self.ivShop.image = nil
-        self.edtMoreDetails.text = ""
+        self.ivShop.isHidden = true
+        
+        self.lblSearch.isHidden = false
+        
+        self.edtMoreDetails = ""
         self.lblPickupLocation.text = ""
         self.searchField.text = ""
-        self.ivShop.isHidden = true
+        
         self.viewShopDetails.isHidden = true
         self.viewClearField.isHidden = true
         self.gMap?.clear()
         self.getShopsList(radius: Float(Constants.DEFAULT_RADIUS), rating: 0)
         
-        self.lblShopName.text = ""
-        self.shopNameHeight.constant = 0
+        //self.lblShopName.text = ""
+        // self.shopNameHeight.constant = 0
         self.viewPin.isHidden = false
         self.viewSuggest.isHidden = true
         
@@ -949,16 +1075,20 @@ extension DeliveryStep1 : GMSMapViewDelegate {
                 self.orderModel?.pickUpLatitude = response.shopData?.latitude ?? 0.0
                 self.orderModel?.pickUpLongitude = response.shopData?.longitude ?? 0.0
                 
-                self.lblShopName.text = response.shopData?.name ?? ""
-                self.shopNameHeight.constant = 20
+               // self.lblShopName.text = response.shopData?.name ?? ""
+               // self.shopNameHeight.constant = 20
                 
-                self.moreDetailsView.isHidden = false
+                // hide detils always
+                //self.moreDetailsView.isHidden = false
+                self.ivShop.isHidden = false
+                
+                
                 self.lblSearch.isHidden = true
                 self.viewShopDetails.isHidden = false
                 self.viewClearField.isHidden = false
                 
-                self.ivShop.isHidden = false
-                self.edtMoreDetails.text = "\(response.shopData?.name ?? "")\n\(response.shopData?.address ?? "")"
+                
+                self.edtMoreDetails = "\(response.shopData?.name ?? "")\n\(response.shopData?.address ?? "")"
                 
                 if (response.shopData?.images?.count ?? 0 > 0) {
                     let url = URL(string: "\(Constants.IMAGE_URL)\(response.shopData?.images?[0] ?? "")")
@@ -1112,7 +1242,11 @@ extension DeliveryStep1 : GMSMapViewDelegate {
     
     func mapView(_ mapView: GMSMapView, didLongPressAt coordinate: CLLocationCoordinate2D) {
         self.gMap?.clear()
-        self.moreDetailsView.isHidden = false
+        
+        //self.moreDetailsView.isHidden = false
+        //self.viewPin.isHidden = true
+        
+        
         self.lblSearch.isHidden = true
         self.shopMarkers.removeAll()
         self.pinMarker?.map = nil
@@ -1132,13 +1266,15 @@ extension DeliveryStep1 : GMSMapViewDelegate {
         self.getAddressForMapCenter()
         
         //      self.lblShopName.text = ""
-        self.shopNameHeight.constant = 0
-        self.viewPin.isHidden = true
+        //self.shopNameHeight.constant = 0
+        
         self.viewSuggest.isHidden = true
         
         self.ivShop.image = nil
-        self.edtMoreDetails.text = ""
         self.ivShop.isHidden = true
+        
+        self.edtMoreDetails = ""
+        
         self.viewShopDetails.isHidden = true
         self.viewClearField.isHidden = true
         
@@ -1179,10 +1315,13 @@ extension DeliveryStep1: GMSAutocompleteViewControllerDelegate {
             self.orderModel?.shop = nil
             self.orderModel?.pickUpAddress = place.formattedAddress ?? ""
             self.lblPickupLocation.text = place.name ?? ""
-            self.lblShopName.text = place.name ?? ""
+          //  self.lblShopName.text = place.name ?? ""
             self.lblPickupLocation.textColor = UIColor.appDarkBlue
             
-            self.moreDetailsView.isHidden = false
+            // hide details
+            //self.moreDetailsView.isHidden = false
+            self.ivShop.isHidden = false
+            
             self.viewShopDetails.isHidden = true
             self.viewClearField.isHidden = true
             self.lblSearch.isHidden = true
@@ -1201,15 +1340,13 @@ extension DeliveryStep1: GMSAutocompleteViewControllerDelegate {
             self.singleMarker?.icon = UIImage(named: "ic_map_shop_selected")
             
             self.singleMarker?.map = self.gMap
-            
-            self.ivShop.isHidden = false
-            
+                                    
             self.ivShop.image = UIImage(named: "placeholder_order")
             
-            self.edtMoreDetails.text = "\(place.name ?? "")\n\(place.formattedAddress ?? "")"
+            self.edtMoreDetails = "\(place.name ?? "")\n\(place.formattedAddress ?? "")"
             
-            self.lblShopName.text = place.name ?? ""
-            self.shopNameHeight.constant = 20
+           // self.lblShopName.text = place.name ?? ""
+           // self.shopNameHeight.constant = 20
             self.viewPin.isHidden = false
             self.viewSuggest.isHidden = true
             
@@ -1252,6 +1389,7 @@ extension DeliveryStep1: ShopMenuDelegate {
             let total = doubleQuantity * doublePrice
             text += "\(itemQuantity) \(item.name ?? ""): \(total) \("currency".localized)\n"
         }
+        self.edtOrderDetails.text = text
         self.orderModel?.selectedTotal = total
         self.orderModel?.edtOrderDetailsText = text
         self.selectedItems.removeAll()
@@ -1339,4 +1477,184 @@ extension DeliveryStep1: CLLocationManagerDelegate {
             self.setUpGoogleMap()
         }
     }
+}
+
+// addition
+extension DeliveryStep1 {
+    
+    @IBAction func playRecordAction(_ sender: Any) {
+        if (self.orderModel?.voiceRecord?.count ?? 0 > 0) {
+            let url = URL(string: ("\(Constants.IMAGE_URL)\(self.orderModel?.voiceRecord ?? "")"))
+            self.downloadFileFromURL(url: url!)
+        }else {
+            if (recorder.isPlaying) {
+                self.btnPlay.setImage(UIImage(named: "ic_play_record"), for: .normal)
+                recorder.stopPlaying()
+            }else {
+                self.btnPlay.setImage(UIImage(named: "ic_pause"), for: .normal)
+                recorder.play(name:"order_file")
+            }
+        }
+    }
+    
+    @IBAction func deleteRecordAction(_ sender: Any) {
+           recorder.delete(name: "order_file")
+           self.btnRecord.setImage(UIImage(named: "ic_microphone"), for: .normal)
+           self.gif.isHidden = true
+           self.viewRecording.isHidden = true
+       }
+    
+    @IBAction func clearDetailFieldAction(_ sender: Any) {
+        self.edtOrderDetails.text = ""
+        self.orderModel?.orderDetails = String()
+    }
+    
+   
+    
+    @IBAction func recordAction(_ sender: Any) {
+           self.bgRecord.isHidden = true
+           self.btnRecord.setImage(UIImage(named: "ic_microphone"), for: .normal)
+           self.gif.isHidden = true
+           recorder.stop()
+           if (recorder.time > 1) {
+               self.viewRecording.isHidden = false
+           }else {
+               self.viewRecording.isHidden = true
+           }
+       }
+       
+      
+    @IBAction func photoAction(_ sender: Any) {
+           self.showAlertWithCancel(title: "add_image_pic_title".localized, message: "add_salon_pic_message".localized, actionTitle: "camera".localized, cancelTitle: "gallery".localized, actionHandler: {
+               //camera
+               guard UIImagePickerController.isSourceTypeAvailable(.camera) else {
+                   self.selectImageFrom(.photoLibrary)
+                   return
+               }
+               self.selectImageFrom(.camera)
+           }) {
+               //gallery
+               self.imagePicker =  UIImagePickerController()
+               self.imagePicker.delegate = self
+               self.imagePicker.sourceType = .photoLibrary
+               self.present(self.imagePicker, animated: true, completion: nil)
+           }
+       }
+    
+}
+
+
+extension DeliveryStep1 {
+    func handleImagesView() {
+        if (self.selectedImages.count > 0) {
+            // self.viewImages.isHidden = false
+            self.lblImages.text = "\(self.selectedImages.count) \("images".localized)"
+        }else {
+            // self.viewImages.isHidden = true
+            self.lblImages.text = ""
+        }
+    }
+}
+
+
+extension DeliveryStep1: UIImagePickerControllerDelegate, UINavigationControllerDelegate {
+    
+    func imagePickerController(_ picker: UIImagePickerController, didFinishPickingMediaWithInfo info: [UIImagePickerController.InfoKey : Any]){
+        imagePicker.dismiss(animated: true, completion: nil)
+        guard let selectedImage = info[.originalImage] as? UIImage else {
+            print("Image not found!")
+            return
+        }
+        self.selectedImages.append(selectedImage)
+        self.handleImagesView()
+    }
+}
+
+import AVKit
+extension DeliveryStep1: AVAudioPlayerDelegate {
+  func audioPlayerDidFinishPlaying(_ player: AVAudioPlayer, successfully flag: Bool) {
+        DispatchQueue.main.async {
+            self.btnPlay.setImage(UIImage(named: "ic_order_play"), for: .normal)
+        }
+    }
+    
+    
+    func downloadFileFromURL(url:URL){
+        
+        var downloadTask:URLSessionDownloadTask
+        downloadTask = URLSession.shared.downloadTask(with: url, completionHandler: { (url, response, error) in
+            // self.play(url: url!)
+            self.playRecord(path: url!)
+        })
+        
+        downloadTask.resume()
+        
+    }
+    
+    func playRecord(path : URL) {
+        do {
+            self.audioPlayer?.pause()
+            self.audioPlayer = try AVAudioPlayer(contentsOf: path)
+            self.audioPlayer?.delegate = self as AVAudioPlayerDelegate
+            self.audioPlayer?.rate = 1.0
+            self.audioPlayer?.volume = 1.0
+            self.audioPlayer?.play()
+            
+        } catch {
+            print("play(with name:), ",error.localizedDescription)
+        }
+    }
+    
+}
+
+enum ImageSource {
+    case photoLibrary
+    case camera
+}
+
+extension DeliveryStep1 {
+    func selectImageFrom(_ source: ImageSource) {
+        imagePicker =  UIImagePickerController()
+        imagePicker.delegate = self
+        switch source {
+        case .camera:
+            imagePicker.sourceType = .camera
+        case .photoLibrary:
+            imagePicker.sourceType = .photoLibrary
+        }
+        present(imagePicker, animated: true, completion: nil)
+    }
+}
+
+
+extension DeliveryStep1 {
+        
+        @IBAction func openDialogPhotos(_ sender: Any) {
+            if (self.selectedImages.count > 0) {
+                let vc = UIStoryboard(name: "Main", bundle: nil).instantiateViewController(withIdentifier: "ImagePickerDialog") as! ImagePickerDialog
+                vc.selectedImages = self.selectedImages
+                self.definesPresentationContext = true
+                vc.modalPresentationStyle = UIModalPresentationStyle.overCurrentContext
+                vc.view.backgroundColor = UIColor.clear
+                vc.delegate = self
+    
+                self.present(vc, animated: true, completion: nil)
+            }else {
+                self.showAlertWithCancel(title: "add_image_pic_title".localized, message: "add_salon_pic_message".localized, actionTitle: "camera".localized, cancelTitle: "gallery".localized, actionHandler: {
+                    //camera
+                    guard UIImagePickerController.isSourceTypeAvailable(.camera) else {
+                        self.selectImageFrom(.photoLibrary)
+                        return
+                    }
+                    self.selectImageFrom(.camera)
+                }) {
+                    //gallery
+                    self.imagePicker =  UIImagePickerController()
+                    self.imagePicker.delegate = self
+                    self.imagePicker.sourceType = .photoLibrary
+                    self.present(self.imagePicker, animated: true, completion: nil)
+                }
+            }
+        }
+        
 }

@@ -24,10 +24,26 @@ class OTWOrder : NSObject {
     var selectedItems : [ShopMenuItem]?
     var paymentMethod : Int?
     var isFemale : Bool?
+                    
     
     var images : [String]?
     var voiceRecord: String?
     
     var selectedTotal: Double?
     var edtOrderDetailsText: String?
+    
+    
+    func reset() {
+        self.pickUpLongitude = nil
+        self.pickUpLatitude = nil
+        self.dropOffLongitude = nil
+        self.dropOffLatitude = nil
+        self.pickUpAddress = nil
+        self.dropOffAddress = nil
+        self.pickUpDetails = nil
+        self.dropOffDetails = nil
+        self.orderDetails = nil
+        self.orderCost = nil
+    }
+    
 }

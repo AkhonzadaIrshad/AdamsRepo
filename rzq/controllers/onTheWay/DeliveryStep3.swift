@@ -20,7 +20,7 @@ import AVFoundation
 protocol Step3Delegate {
     func updateModel(model : OTWOrder)
 }
-class DeliveryStep3: BaseVC, UINavigationControllerDelegate, ImagePickerDelegate, AVAudioPlayerDelegate {
+class DeliveryStep3: BaseVC {
     
     @IBOutlet weak var lblPickupLocation: MyUILabel!
     
@@ -28,21 +28,21 @@ class DeliveryStep3: BaseVC, UINavigationControllerDelegate, ImagePickerDelegate
     
     @IBOutlet weak var mapView: UIView!
     
-    var audioPlayer: AVAudioPlayer?
     
-    @IBOutlet weak var lblImages: MyUILabel!
     
-    @IBOutlet weak var viewImages: UIView!
-    
-    @IBOutlet weak var viewRecording: UIView!
+//    @IBOutlet weak var lblImages: MyUILabel!
+//
+//    @IBOutlet weak var viewImages: UIView!
+//
+//    @IBOutlet weak var viewRecording: UIView!
     
     @IBOutlet weak var btnTime: MyUIButton!
     
-    @IBOutlet weak var bgRecord: UIImageView!
+    
     
     //  @IBOutlet weak var ivHandle: UIImageView!
     
-    @IBOutlet weak var edtOrderDetails: MultilineTextField!
+    
     
     @IBOutlet weak var gif: UIImageView!
     
@@ -61,11 +61,7 @@ class DeliveryStep3: BaseVC, UINavigationControllerDelegate, ImagePickerDelegate
     var orderModel : OTWOrder?
     
     var delegate : Step3Delegate?
-    
-    @IBOutlet weak var btnRecord: UIButton!
-    
-    @IBOutlet weak var btnPlay: UIButton!
-    
+           
     var selectedTime : Int?
     
     
@@ -75,10 +71,9 @@ class DeliveryStep3: BaseVC, UINavigationControllerDelegate, ImagePickerDelegate
     
     var selectedRoute: NSDictionary!
     
-    var selectedImages = [UIImage]()
+    var selectedImages: [UIImage] = []
     
-    var imagePicker: UIImagePickerController!
-    
+
     var isAboveTen : Bool?
     var isFemale : Bool?
     var isCash : Bool = true
@@ -86,17 +81,20 @@ class DeliveryStep3: BaseVC, UINavigationControllerDelegate, ImagePickerDelegate
     var selectedItems = [ShopMenuItem]()
     var selectedTotal: Double?
     
-    enum ImageSource {
-        case photoLibrary
-        case camera
-    }
-    
-    var recorder = KAudioRecorder.shared
-    
+        
     //hide/show
     @IBOutlet weak var viewGender: UIView!
     @IBOutlet weak var lblGender: MyUILabel!
     
+        
+    
+    
+//    init(selectedImages: [UIImage]) {
+//        self.selectedImages = selectedImages
+//        super.init(nibName: nil, bundle: nil)
+//    }
+    
+   
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -106,7 +104,7 @@ class DeliveryStep3: BaseVC, UINavigationControllerDelegate, ImagePickerDelegate
         self.isFemale = false
         self.btnGender.setTitle("both_genders".localized, for: .normal)
         self.selectedTotal = self.orderModel?.selectedTotal
-        self.edtOrderDetails.text = self.orderModel?.edtOrderDetailsText
+        
         SVProgressHUD.setDefaultMaskType(.clear)
         
         //        if (self.isArabic()) {
@@ -114,16 +112,14 @@ class DeliveryStep3: BaseVC, UINavigationControllerDelegate, ImagePickerDelegate
         //        }
         self.btnTime.setTitle("asap".localized, for: .normal)
         // below are properties that can be optionally customized
-        edtOrderDetails.placeholder = "order_details".localized
-        edtOrderDetails.placeholderColor = UIColor.lightGray
-        edtOrderDetails.isPlaceholderScrollEnabled = true
+       
         
-        let gif = UIImage(gifName: "recording.gif")
-        self.gif.setGifImage(gif)
+//        let gif = UIImage(gifName: "recording.gif")
+//        self.gif.setGifImage(gif)
         
         gMap = GMSMapView()
         self.setUpGoogleMap()
-        self.viewRecording.isHidden = true
+        
         
         self.lblPickupLocation.text = self.orderModel?.pickUpAddress ?? ""
         self.lblDropoffLocation.text = self.orderModel?.dropOffAddress ?? ""
@@ -156,9 +152,7 @@ class DeliveryStep3: BaseVC, UINavigationControllerDelegate, ImagePickerDelegate
                 
             }
             
-            if (self.orderModel?.voiceRecord?.count ?? 0 > 0) {
-                self.viewRecording.isHidden = false
-            }
+           
             
         }
         
@@ -168,6 +162,8 @@ class DeliveryStep3: BaseVC, UINavigationControllerDelegate, ImagePickerDelegate
         }
         
     }
+    
+   
     
     func drawLocationLine() {
         
@@ -196,41 +192,34 @@ class DeliveryStep3: BaseVC, UINavigationControllerDelegate, ImagePickerDelegate
     
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
-        self.handleImagesView()
+        //self.handleImagesView()
     }
     
-    func handleImagesView() {
-        if (self.selectedImages.count > 0) {
-            // self.viewImages.isHidden = false
-            self.lblImages.text = "\(self.selectedImages.count) \("images".localized)"
-        }else {
-            // self.viewImages.isHidden = true
-            self.lblImages.text = ""
-        }
-    }
+    
     
     func handleRecordingView() {
         
     }
     
     func saveBackModel() {
-        self.orderModel?.orderDetails = self.edtOrderDetails.text ?? ""
+        
+        //.text ?? ""
         //  self.orderModel?.orderCost = self.edtCost.text ?? ""
         self.delegate?.updateModel(model: self.orderModel!)
         self.navigationController?.popViewController(animated: true)
     }
     
-    func selectImageFrom(_ source: ImageSource) {
-        imagePicker =  UIImagePickerController()
-        imagePicker.delegate = self
-        switch source {
-        case .camera:
-            imagePicker.sourceType = .camera
-        case .photoLibrary:
-            imagePicker.sourceType = .photoLibrary
-        }
-        present(imagePicker, animated: true, completion: nil)
-    }
+//    func selectImageFrom(_ source: ImageSource) {
+//        imagePicker =  UIImagePickerController()
+//        imagePicker.delegate = self
+//        switch source {
+//        case .camera:
+//            imagePicker.sourceType = .camera
+//        case .photoLibrary:
+//            imagePicker.sourceType = .photoLibrary
+//        }
+//        present(imagePicker, animated: true, completion: nil)
+//    }
     
     
     func setUpGoogleMap() {
@@ -260,63 +249,17 @@ class DeliveryStep3: BaseVC, UINavigationControllerDelegate, ImagePickerDelegate
         
     }
     
-    @IBAction func photoAction(_ sender: Any) {
-        self.showAlertWithCancel(title: "add_image_pic_title".localized, message: "add_salon_pic_message".localized, actionTitle: "camera".localized, cancelTitle: "gallery".localized, actionHandler: {
-            //camera
-            guard UIImagePickerController.isSourceTypeAvailable(.camera) else {
-                self.selectImageFrom(.photoLibrary)
-                return
-            }
-            self.selectImageFrom(.camera)
-        }) {
-            //gallery
-            self.imagePicker =  UIImagePickerController()
-            self.imagePicker.delegate = self
-            self.imagePicker.sourceType = .photoLibrary
-            self.present(self.imagePicker, animated: true, completion: nil)
-        }
-    }
-    
-    @IBAction func recordPress(_ sender: Any) {
-        if (recorder.isRecording) {
-            //stop
-            self.bgRecord.isHidden = true
-            self.btnRecord.setImage(UIImage(named: "ic_microphone"), for: .normal)
-            self.gif.isHidden = true
-            recorder.stop()
-            if (recorder.time > 1) {
-                self.viewRecording.isHidden = false
-            }else {
-                self.viewRecording.isHidden = true
-            }
-        }else {
-            //record
-            self.bgRecord.isHidden = false
-            self.btnRecord.setImage(UIImage(named: "ic_recording"), for: .normal)
-            self.gif.isHidden = false
-            recorder.recordName = "order_file"
-            recorder.record()
-        }
-    }
-    @IBAction func recordAction(_ sender: Any) {
-        self.bgRecord.isHidden = true
-        self.btnRecord.setImage(UIImage(named: "ic_microphone"), for: .normal)
-        self.gif.isHidden = true
-        recorder.stop()
-        if (recorder.time > 1) {
-            self.viewRecording.isHidden = false
-        }else {
-            self.viewRecording.isHidden = true
-        }
-    }
+   
     
     func getCost() -> Double {
-        if (self.isAboveTen ?? false) {
-            return 11.0
-        }else {
-            return 9.0
-        }
-    }
+              if (self.isAboveTen ?? false) {
+                  return 11.0
+              }else {
+                  return 9.0
+              }
+          }
+       
+   
     
     @IBAction func timeAction(_ sender: Any) {
         let actionSheet = createTimeSheet()
@@ -325,20 +268,16 @@ class DeliveryStep3: BaseVC, UINavigationControllerDelegate, ImagePickerDelegate
     }
     
     @IBAction func placeOrderAction(_ sender: Any) {
-        if (self.validate()) {
-            
-            if (self.isCash ?? false) {
-                if (self.selectedItems.count > 0) {
-                    self.createDeliveryWithMenu(invoiceId : "")
-                }else {
-                    self.createDeliveryWithoutMenu(invoiceId : "")
-                }
-            }else {
-                self.generatePaymentUrl()
-            }
-            
-        }
         
+        if (self.isCash ?? false) {
+            if (self.selectedItems.count > 0) {
+                self.createDeliveryWithMenu(invoiceId : "")
+            }else {
+                self.createDeliveryWithoutMenu(invoiceId : "")
+            }
+        }else {
+            self.generatePaymentUrl()
+        }
     }
     
     func generatePaymentUrl() {
@@ -359,7 +298,9 @@ class DeliveryStep3: BaseVC, UINavigationControllerDelegate, ImagePickerDelegate
         if (self.isCash ?? false) {
             paymentMethod = Constants.PAYMENT_METHOD_CASH
         }
-        ApiService.createDelivery(Authorization: DataManager.loadUser().data?.accessToken ?? "", desc: self.edtOrderDetails.text ?? "", fromLongitude: self.orderModel?.pickUpLongitude ?? 0.0, fromLatitude: self.orderModel?.pickUpLatitude ?? 0.0, toLongitude: self.orderModel?.dropOffLongitude ?? 0.0, toLatitude: self.orderModel?.dropOffLatitude ?? 0.0, time: self.selectedTime ?? 0, estimatedPrice: "\(self.getCost())", fromAddress: self.orderModel?.pickUpAddress ?? "", toAddress: self.orderModel?.dropOffAddress ?? "", shopId: self.orderModel?.shop?.id ?? 0, pickUpDetails : self.orderModel?.pickUpDetails ?? "", dropOffDetails : self.orderModel?.dropOffDetails ?? "",paymentMethod : paymentMethod, isFemale : self.isFemale ?? false, invoiceId: invoiceId) { (response) in
+        ApiService.createDelivery(Authorization: DataManager.loadUser().data?.accessToken ?? "",
+            desc: self.orderModel?.orderDetails ?? "",
+            fromLongitude: self.orderModel?.pickUpLongitude ?? 0.0, fromLatitude: self.orderModel?.pickUpLatitude ?? 0.0, toLongitude: self.orderModel?.dropOffLongitude ?? 0.0, toLatitude: self.orderModel?.dropOffLatitude ?? 0.0, time: self.selectedTime ?? 0, estimatedPrice: "\(self.getCost())", fromAddress: self.orderModel?.pickUpAddress ?? "", toAddress: self.orderModel?.dropOffAddress ?? "", shopId: self.orderModel?.shop?.id ?? 0, pickUpDetails : self.orderModel?.pickUpDetails ?? "", dropOffDetails : self.orderModel?.dropOffDetails ?? "",paymentMethod : paymentMethod, isFemale : self.isFemale ?? false, invoiceId: invoiceId) { (response) in
             if (response.data ?? 0 > 0) {
                 self.handleUploadingMedia(id : response.data ?? 0)
             }else {
@@ -375,7 +316,24 @@ class DeliveryStep3: BaseVC, UINavigationControllerDelegate, ImagePickerDelegate
         if (self.isCash ?? false) {
             paymentMethod = Constants.PAYMENT_METHOD_CASH
         }
-        ApiService.createDeliveryWithMenu(Authorization: DataManager.loadUser().data?.accessToken ?? "", desc: self.edtOrderDetails.text ?? "", fromLongitude: self.orderModel?.pickUpLongitude ?? 0.0, fromLatitude: self.orderModel?.pickUpLatitude ?? 0.0, toLongitude: self.orderModel?.dropOffLongitude ?? 0.0, toLatitude: self.orderModel?.dropOffLatitude ?? 0.0, time: self.selectedTime ?? 0, estimatedPrice: "\(self.getCost())", fromAddress: self.orderModel?.pickUpAddress ?? "", toAddress: self.orderModel?.dropOffAddress ?? "", shopId: self.orderModel?.shop?.id ?? 0, pickUpDetails : self.orderModel?.pickUpDetails ?? "", dropOffDetails : self.orderModel?.dropOffDetails ?? "",paymentMethod : paymentMethod, isFemale : self.isFemale ?? false, menuItems : self.selectedItems, invoiceId : invoiceId) { (response) in
+        ApiService.createDeliveryWithMenu(
+            Authorization: DataManager.loadUser().data?.accessToken ?? "",
+            desc: self.orderModel?.orderDetails ?? "",
+            fromLongitude: self.orderModel?.pickUpLongitude ?? 0.0,
+            fromLatitude: self.orderModel?.pickUpLatitude ?? 0.0,
+            toLongitude: self.orderModel?.dropOffLongitude ?? 0.0,
+            toLatitude: self.orderModel?.dropOffLatitude ?? 0.0,
+            time: self.selectedTime ?? 0,
+            estimatedPrice: "\(self.getCost())",
+            fromAddress: self.orderModel?.pickUpAddress ?? "",
+            toAddress: self.orderModel?.dropOffAddress ?? "",
+            shopId: self.orderModel?.shop?.id ?? 0,
+            pickUpDetails : self.orderModel?.pickUpDetails ?? "",
+            dropOffDetails : self.orderModel?.dropOffDetails ?? "",
+            paymentMethod : paymentMethod,
+            isFemale : self.isFemale ?? false,
+            menuItems : self.selectedItems,
+            invoiceId : invoiceId) { (response) in
             if (response.data ?? 0 > 0) {
                 self.handleUploadingMedia(id : response.data ?? 0)
             }else {
@@ -385,6 +343,7 @@ class DeliveryStep3: BaseVC, UINavigationControllerDelegate, ImagePickerDelegate
         }
     }
     
+    let recorder = KAudioRecorder.shared
     func handleUploadingMedia(id : Int) {
         if (self.selectedImages.count > 0 || self.recorder.time > 0) {
             self.showLoading()
@@ -633,107 +592,9 @@ class DeliveryStep3: BaseVC, UINavigationControllerDelegate, ImagePickerDelegate
     }
     
     
-    func validate() -> Bool {
-        if (self.edtOrderDetails.text?.count ?? 0 == 0) {
-            self.showBanner(title: "alert".localized, message: "enter_order_details".localized, style: UIColor.INFO)
-            return false
-        }
-        
-        //        if (self.edtCost.text?.count ?? 0 == 0) {
-        //            self.showBanner(title: "alert".localized, message: "enter_order_cost".localized, style: UIColor.INFO)
-        //            return false
-        //        }
-        
-        return true
-    }
     
-    @IBAction func openDialogPhotos(_ sender: Any) {
-        if (self.selectedImages.count > 0) {
-            let vc = UIStoryboard(name: "Main", bundle: nil).instantiateViewController(withIdentifier: "ImagePickerDialog") as! ImagePickerDialog
-            vc.selectedImages = self.selectedImages
-            self.definesPresentationContext = true
-            vc.modalPresentationStyle = UIModalPresentationStyle.overCurrentContext
-            vc.view.backgroundColor = UIColor.clear
-            vc.delegate = self
-            
-            self.present(vc, animated: true, completion: nil)
-        }else {
-            self.showAlertWithCancel(title: "add_image_pic_title".localized, message: "add_salon_pic_message".localized, actionTitle: "camera".localized, cancelTitle: "gallery".localized, actionHandler: {
-                //camera
-                guard UIImagePickerController.isSourceTypeAvailable(.camera) else {
-                    self.selectImageFrom(.photoLibrary)
-                    return
-                }
-                self.selectImageFrom(.camera)
-            }) {
-                //gallery
-                self.imagePicker =  UIImagePickerController()
-                self.imagePicker.delegate = self
-                self.imagePicker.sourceType = .photoLibrary
-                self.present(self.imagePicker, animated: true, completion: nil)
-            }
-        }
-    }
-    
-    func onDone(images: [UIImage]) {
-        self.selectedImages = images
-        self.handleImagesView()
-    }
-    
-    @IBAction func playRecordAction(_ sender: Any) {
-        if (self.orderModel?.voiceRecord?.count ?? 0 > 0) {
-            let url = URL(string: ("\(Constants.IMAGE_URL)\(self.orderModel?.voiceRecord ?? "")"))
-            self.downloadFileFromURL(url: url!)
-        }else {
-            if (recorder.isPlaying) {
-                self.btnPlay.setImage(UIImage(named: "ic_play_record"), for: .normal)
-                recorder.stopPlaying()
-            }else {
-                self.btnPlay.setImage(UIImage(named: "ic_pause"), for: .normal)
-                recorder.play(name:"order_file")
-            }
-        }
-    }
-    
-    func downloadFileFromURL(url:URL){
-        
-        var downloadTask:URLSessionDownloadTask
-        downloadTask = URLSession.shared.downloadTask(with: url, completionHandler: { (url, response, error) in
-            // self.play(url: url!)
-            self.playRecord(path: url!)
-        })
-        
-        downloadTask.resume()
-        
-    }
-    
-    func playRecord(path : URL) {
-        do {
-            self.audioPlayer?.pause()
-            self.audioPlayer = try AVAudioPlayer(contentsOf: path)
-            self.audioPlayer?.delegate = self as AVAudioPlayerDelegate
-            self.audioPlayer?.rate = 1.0
-            self.audioPlayer?.volume = 1.0
-            self.audioPlayer?.play()
-            
-        } catch {
-            print("play(with name:), ",error.localizedDescription)
-        }
-    }
-    
-    @IBAction func deleteRecordAction(_ sender: Any) {
-        recorder.delete(name: "order_file")
-        self.btnRecord.setImage(UIImage(named: "ic_microphone"), for: .normal)
-        self.gif.isHidden = true
-        self.viewRecording.isHidden = true
-    }
-    
-    func audioPlayerDidFinishPlaying(_ player: AVAudioPlayer, successfully flag: Bool) {
-        DispatchQueue.main.async {
-            self.btnPlay.setImage(UIImage(named: "ic_order_play"), for: .normal)
-        }
-    }
-    
+
+
     @IBAction func backBtnAction(_ sender: Any) {
         self.saveBackModel()
     }
@@ -744,9 +605,7 @@ class DeliveryStep3: BaseVC, UINavigationControllerDelegate, ImagePickerDelegate
         actionSheet.present(in: self, from: self.view)
     }
     
-    @IBAction func clearFieldAction(_ sender: Any) {
-        self.edtOrderDetails.text = ""
-    }
+   
     
     @IBAction func GenderAction(_ sender: Any) {
         let actionSheet = createGenderSheet()
@@ -774,15 +633,4 @@ extension DeliveryStep3 : GMSMapViewDelegate {
         return true
     }
 }
-extension DeliveryStep3: UIImagePickerControllerDelegate {
-    
-    func imagePickerController(_ picker: UIImagePickerController, didFinishPickingMediaWithInfo info: [UIImagePickerController.InfoKey : Any]){
-        imagePicker.dismiss(animated: true, completion: nil)
-        guard let selectedImage = info[.originalImage] as? UIImage else {
-            print("Image not found!")
-            return
-        }
-        self.selectedImages.append(selectedImage)
-        self.handleImagesView()
-    }
-}
+
