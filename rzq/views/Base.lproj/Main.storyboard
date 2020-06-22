@@ -13,11 +13,11 @@
         <array key="arabic_font.ttf">
             <string>Cairo-Regular</string>
         </array>
+        <array key="arabic_medium.ttf">
+            <string>Tajawal-Medium</string>
+        </array>
         <array key="arabic_regular.ttf">
             <string>Tajawal-Regular</string>
-        </array>
-        <array key="arabic_semibold.ttf">
-            <string>Tajawal-Medium</string>
         </array>
         <array key="english_regular.otf">
             <string>SFProDisplay-Regular</string>
@@ -2583,7 +2583,7 @@
                                                                 <userDefinedRuntimeAttribute type="string" keyPath="font_type" value="16,4"/>
                                                             </userDefinedRuntimeAttributes>
                                                         </label>
-                                                        <view contentMode="scaleToFill" ambiguous="YES" translatesAutoresizingMaskIntoConstraints="NO" id="HEX-Q2-Cjr" customClass="ValueStepper" customModule="ValueStepper">
+                                                        <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="HEX-Q2-Cjr" customClass="ValueStepper" customModule="ValueStepper">
                                                             <rect key="frame" x="82.666666666666686" y="32.333333333333336" width="115" height="29"/>
                                                             <color key="backgroundColor" systemColor="systemBackgroundColor" cocoaTouchSystemColor="whiteColor"/>
                                                             <color key="tintColor" red="0.24313725489999999" green="0.01176470588" blue="0.4039215686" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
@@ -2639,7 +2639,7 @@
                                                                 <userDefinedRuntimeAttribute type="string" keyPath="font_type" value="16,4"/>
                                                             </userDefinedRuntimeAttributes>
                                                         </label>
-                                                        <view contentMode="scaleToFill" ambiguous="YES" translatesAutoresizingMaskIntoConstraints="NO" id="qeV-kt-rWQ" customClass="CardView" customModule="rzq" customModuleProvider="target">
+                                                        <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="qeV-kt-rWQ" customClass="CardView" customModule="rzq" customModuleProvider="target">
                                                             <rect key="frame" x="93" y="69.333333333333329" width="90" height="22"/>
                                                             <subviews>
                                                                 <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="price" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="RSQ-bf-tpe" customClass="MyUILabel" customModule="rzq" customModuleProvider="target">
@@ -12554,7 +12554,7 @@
                                                                             <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="sRN-nh-gjT" customClass="MyUIButton" customModule="rzq" customModuleProvider="target">
                                                                                 <rect key="frame" x="0.0" y="0.0" width="0.0" height="30"/>
                                                                                 <fontDescription key="fontDescription" type="system" pointSize="12"/>
-                                                                                <state key="normal" title="Check Menu">
+                                                                                <state key="normal">
                                                                                     <color key="titleColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                                                                 </state>
                                                                                 <userDefinedRuntimeAttributes>

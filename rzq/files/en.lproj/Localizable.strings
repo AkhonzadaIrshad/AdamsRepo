@@ -38,7 +38,7 @@
 
 "currency" = "KWD";
 "hours" = "Hour";
-
+"Check Menu" = "Check Menu";
 "bid_sent_to_user" = "Your bid has been sent to the client successfully.";
 
 "enter_email_first" = "Enter a valid email address first!";

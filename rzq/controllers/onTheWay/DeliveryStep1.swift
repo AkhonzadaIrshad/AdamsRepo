@@ -108,7 +108,7 @@ class DeliveryStep1: BaseVC , Step2Delegate, AllShopDelegate, ImagePickerDelegat
             
         // For use in foreground
         self.locationManager.requestWhenInUseAuthorization()
-        
+        self.btnCheckMenu.setTitle("Check Menu".localized, for: .normal)
         viewLoad()
     }
     
