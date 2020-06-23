@@ -60,7 +60,7 @@
 "33N-BT-81V.normalTitle" = "تاكيد";
 
 /* Class = "UILabel"; text = "Order"; ObjectID = "3Nj-at-qOb"; */
-"3Nj-at-qOb.text" = "اكتب طلبك";
+"3Nj-at-qOb.text" = "تفاصيل";
 
 /* Class = "UILabel"; text = "Add your pin point by long pressing on map."; ObjectID = "3SE-GE-zb0"; */
 "3SE-GE-zb0.text" = "اضف موقعك الخاص على الخريطة بالضغط المطول";
@@ -156,7 +156,7 @@
 "9fQ-QP-aVm.text" = "من";
 
 /* Class = "UILabel"; text = "Order"; ObjectID = "9lm-JE-0FE"; */
-"9lm-JE-0FE.text" = "اكتب طلبك";
+"9lm-JE-0FE.text" = "تفاصيل";
 
 /* Class = "UILabel"; text = "Rate the client."; ObjectID = "9qZ-V6-ojy"; */
 "9qZ-V6-ojy.text" = "قيم الزبون";
@@ -676,7 +676,7 @@
 "ZuZ-F4-CWh.text" = "الى";
 
 /* Class = "UILabel"; text = "Order"; ObjectID = "ZwW-bB-Z6z"; */
-"ZwW-bB-Z6z.text" = "اكتب طلبك";
+"ZwW-bB-Z6z.text" = "تفاصيل";
 
 /* Class = "UIButton"; normalTitle = "Submit"; ObjectID = "Zyd-vK-0oH"; */
 "Zyd-vK-0oH.normalTitle" = "تاكيد";
