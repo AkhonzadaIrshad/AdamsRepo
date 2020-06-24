@@ -10,7 +10,7 @@
 "bidCell.Decline" = "Decline";
 "km" = "Km";
 "Loading" = "Loading";
-
+"Driverbid/AlreadyBidedd" = "You have placed a bid already";
 "add_image_pic_title" = "Add Pictures";
 "add_salon_pic_message" = "Pick pictures from Gallery, or take new photos by Camera.";
 "camera" = "Camera";

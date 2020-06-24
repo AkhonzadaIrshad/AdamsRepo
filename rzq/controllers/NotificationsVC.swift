@@ -405,7 +405,7 @@ extension NotificationsVC {
         
         if let bidedOrders = UserDefaults.standard.array(forKey: "RZKDidedOrders") as? [Int]{
             if bidedOrders.contains(orderId){
-                cell.lblDescAlreadyBided.text = "You already bibded on this Order"
+                cell.lblDescAlreadyBided.text = "Driverbid/AlreadyBidedd".localized
             }
         }
         

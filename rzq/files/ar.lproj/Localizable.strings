@@ -8,6 +8,7 @@
 "DeliveryStep1.listView" = "عرض القائمة";
 "bidCell.Accept" = "قبول";
 "bidCell.Decline" = "رفض";
+"Driverbid/AlreadyBidedd" = "تم اضافة عرض مسبقا";
 
 "km" = "كم";
 "Loading" = "جاري التحميل";
