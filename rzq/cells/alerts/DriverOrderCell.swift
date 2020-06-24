@@ -21,6 +21,7 @@ class DriverOrderCell: UITableViewCell {
     @IBOutlet weak var lblDistance: MyUILabel!
     
     @IBOutlet weak var ivType: UIImageView!
+    @IBOutlet weak var lblDescAlreadyBided: UILabel!
     
     @IBOutlet weak var lblNotificationDate: MyUILabel!
     @IBOutlet weak var lblNotificationTime: MyUILabel!

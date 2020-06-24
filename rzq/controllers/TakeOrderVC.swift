@@ -463,6 +463,14 @@ class TakeOrderVC: BaseVC, AVAudioPlayerDelegate {
                 self.hideLoading()
                 if (response.errorCode == 0) {
                     self.showBanner(title: "alert".localized, message: "bid_sent_to_user".localized, style: UIColor.SUCCESS)
+                    if UserDefaults.standard.array(forKey: "RZKDidedOrders") == nil {
+                        UserDefaults.standard.set([], forKey: "RZKDidedOrders")
+                    }
+                    if var array = UserDefaults.standard.array(forKey: "RZKDidedOrders") as? [Int], let orderID = self.deliveryId {
+                        array.append(orderID)
+                        UserDefaults.standard.set(array, forKey: "RZKDidedOrders")
+                    }
+                    
                     DispatchQueue.main.asyncAfter(deadline: .now() + 2, execute: {
                         self.navigationController?.popViewController(animated: true)
                     })

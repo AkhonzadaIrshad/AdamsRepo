@@ -400,7 +400,16 @@ extension NotificationsVC {
          let desc = dict?["Description"] as? String ?? ""
          let clientName = dict?["UserName"] as? String ?? ""
          let shopImage = dict?["ShopImage"] as? String ?? ""
-         
+         let orderId = dict?["OrderId"] as? Int ?? 0
+        
+        
+        if let bidedOrders = UserDefaults.standard.array(forKey: "RZKDidedOrders") as? [Int]{
+            if bidedOrders.contains(orderId){
+                cell.lblDescAlreadyBided.text = "You already bibded on this Order"
+            }
+        }
+        
+        
          if (shopImage.count > 0) {
              let url = URL(string: "\(Constants.IMAGE_URL)\(shopImage)")
              cell.ivLogo.kf.setImage(with: url)
