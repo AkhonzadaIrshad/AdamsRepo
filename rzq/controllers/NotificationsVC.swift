@@ -341,7 +341,7 @@ class NotificationsVC: BaseViewController,LabasLocationManagerDelegate, AcceptBi
 extension NotificationsVC: UITableViewDelegate, UITableViewDataSource {
     
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        if let data = DataManager.loadUser().data, data.isOnline == false {
+        if let data = DataManager.loadUser().data, data.isOnline == false && (data.roles?.contains(find: "Driver") ?? false) {
             return 0
         }
         if (self.segmentControl.selectedSegmentIndex == 0) {
