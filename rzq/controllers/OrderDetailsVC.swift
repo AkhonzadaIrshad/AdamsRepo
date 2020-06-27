@@ -795,7 +795,7 @@ class OrderDetailsVC: BaseVC, UICollectionViewDelegate, UICollectionViewDataSour
         let  x = self.order?.KnetCommission ?? 0.0
         let commission = (x * 100).rounded() / 100
         
-        let totalCost = orderCost + commission + deliveryCost
+        let totalCost = orderCost + commission
         // let totalCost = orderCost + commission
         
         if (self.order?.items?.count ?? 0 > 0) {
