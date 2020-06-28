@@ -807,10 +807,10 @@ class OrderDetailsVC: BaseVC, UICollectionViewDelegate, UICollectionViewDataSour
             self.present(vc, animated: true, completion: nil)
         }else {
             if (self.order?.orderPrice ?? 0 > 0) {
-                let item = ShopMenuItem(id: 0, name: "delivery_cost", imageName: "", price: deliveryCost, shopMenuItemDescription: "", count: 1)
+//                let item = ShopMenuItem(id: 0, name: "delivery_cost", imageName: "", price: deliveryCost, shopMenuItemDescription: "", count: 1)
                 let item2 = ShopMenuItem(id: 0, name: "order_cost", imageName: "", price: orderCost, shopMenuItemDescription: "", count: 1)
                 let item3 = ShopMenuItem(id: 0, name: "knet_commission", imageName: "", price: commission, shopMenuItemDescription: "", count: 1)
-                vc.items.append(item)
+//                vc.items.append(item)
                 vc.items.append(item2)
                 vc.items.append(item3)
                 //  vc.total =  self.order?.orderPrice ?? 0
