@@ -200,7 +200,9 @@ UITableViewDelegate, UITableViewDataSource {
         cell.lblShopName.text = shop.name ?? ""
         if let hours = shop.workingHours?.trim().split(separator: ",") {
             let day = Calendar.current.component(.weekday, from: Date())
-            cell.lblShopAddress.text = String(hours[day - 1])
+            if hours.count > day - 1 {
+                cell.lblShopAddress.text = String(hours[day - 1])
+            }
         }
         
         let myLatLng = CLLocation(latitude: self.latitude ?? 0.0, longitude: self.longitude ?? 0.0)
