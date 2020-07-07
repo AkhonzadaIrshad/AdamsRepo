@@ -13,11 +13,11 @@
         <array key="arabic_font.ttf">
             <string>Cairo-Regular</string>
         </array>
+        <array key="arabic_medium.ttf">
+            <string>Tajawal-Medium</string>
+        </array>
         <array key="arabic_regular.ttf">
             <string>Tajawal-Regular</string>
-        </array>
-        <array key="arabic_semibold.ttf">
-            <string>Tajawal-Medium</string>
         </array>
         <array key="english_regular.otf">
             <string>SFProDisplay-Regular</string>
@@ -13762,6 +13762,8 @@
                     </view>
                     <navigationItem key="navigationItem" id="qsQ-3e-ClV"/>
                     <connections>
+                        <outlet property="actionSheetConstraintBottom" destination="AqL-Qh-pbg" id="8Pt-xD-uN4"/>
+                        <outlet property="actionSheetView" destination="GPb-Uy-lKw" id="Wdn-Bp-Rxr"/>
                         <outlet property="edtMoreDetails" destination="zIA-Ft-Xgn" id="Hpg-Vf-vDS"/>
                         <outlet property="lblDistance" destination="JVX-6S-R8Q" id="CeS-3H-pYS"/>
                         <outlet property="lblDropLocation" destination="a3Y-zy-pBI" id="I4o-Ro-S3L"/>
@@ -15071,6 +15073,8 @@
                     </view>
                     <navigationItem key="navigationItem" id="Yo9-qh-qDv"/>
                     <connections>
+                        <outlet property="actionSheet" destination="mse-Ol-LZd" id="tFn-dU-zmv"/>
+                        <outlet property="actionSheetConstraintBottom" destination="gAm-EQ-owR" id="FXo-Tu-5q0"/>
                         <outlet property="btnCost" destination="GoF-rZ-Bo8" id="rJp-Ba-DGb"/>
                         <outlet property="btnGender" destination="qnm-yQ-w1I" id="imc-8x-7t2"/>
                         <outlet property="btnPaymentMethod" destination="ogE-BA-wG8" id="Qe3-XV-mzS"/>

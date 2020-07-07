@@ -37,6 +37,9 @@ class DeliveryStep2: BaseVC, Step3Delegate {
     
     @IBOutlet weak var viewFromTo: CardView!
     
+    @IBOutlet weak var actionSheetView: UIView!
+    @IBOutlet weak var actionSheetConstraintBottom: NSLayoutConstraint!
+    
     var currentZoom: Float = 0.0
     var gMap : GMSMapView?
     
@@ -86,6 +89,22 @@ class DeliveryStep2: BaseVC, Step3Delegate {
             popTip.hide()
         }
         
+        let swipeDownGesture = UISwipeGestureRecognizer(target: self, action: #selector(self.hideActionSheet))
+        swipeDownGesture.direction = .down
+        self.actionSheetView.addGestureRecognizer(swipeDownGesture)
+        
+        let swipeUpGesture = UISwipeGestureRecognizer(target: self, action: #selector(self.showActionSheet))
+        swipeUpGesture.direction = .up
+        self.actionSheetView.addGestureRecognizer(swipeUpGesture)
+        
+    }
+    
+    @objc func hideActionSheet() {
+        self.actionSheetConstraintBottom.constant = 50 - self.actionSheetView.frame.height
+    }
+    
+    @objc func showActionSheet() {
+        self.actionSheetConstraintBottom.constant = 0
     }
     
     func googleSearchAction() {

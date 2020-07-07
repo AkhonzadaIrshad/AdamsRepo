@@ -48,6 +48,9 @@ class DeliveryStep3: BaseVC {
     
     @IBOutlet weak var btnCost: MyUIButton!
     
+    @IBOutlet weak var actionSheet: UIView!
+    @IBOutlet weak var actionSheetConstraintBottom: NSLayoutConstraint!
+    
     var markerLocation: GMSMarker?
     
     var currentZoom: Float = 0.0
@@ -160,10 +163,23 @@ class DeliveryStep3: BaseVC {
             self.viewGender.isHidden = true
             self.lblGender.isHidden = true
         }
+        let swipeDownGesture = UISwipeGestureRecognizer(target: self, action: #selector(self.hideActionSheet))
+        swipeDownGesture.direction = .down
+        self.actionSheet.addGestureRecognizer(swipeDownGesture)
         
+        let swipeUpGesture = UISwipeGestureRecognizer(target: self, action: #selector(self.showActionSheet))
+        swipeUpGesture.direction = .up
+        self.actionSheet.addGestureRecognizer(swipeUpGesture)
     }
     
-   
+    @objc func hideActionSheet() {
+        self.actionSheetConstraintBottom.constant = 50 - self.actionSheet.frame.height
+    }
+    
+    @objc func showActionSheet() {
+        self.actionSheetConstraintBottom.constant = 0
+    }
+
     
     func drawLocationLine() {
         
