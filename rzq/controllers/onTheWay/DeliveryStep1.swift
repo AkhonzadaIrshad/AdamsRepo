@@ -40,7 +40,9 @@ class DeliveryStep1: BaseVC , Step2Delegate, AllShopDelegate, ImagePickerDelegat
     @IBOutlet weak var btnPlay: UIButton!
     
     @IBOutlet weak var gif: UIImageView!
-        
+    
+    @IBOutlet weak var buttomSheet: UIView!
+    @IBOutlet weak var actionSheetConstraintBottom: NSLayoutConstraint!
     
     var imagePicker: UIImagePickerController!
     var audioPlayer: AVAudioPlayer?
@@ -110,6 +112,21 @@ class DeliveryStep1: BaseVC , Step2Delegate, AllShopDelegate, ImagePickerDelegat
         self.locationManager.requestWhenInUseAuthorization()
         self.btnCheckMenu.setTitle("Check Menu".localized, for: .normal)
         viewLoad()
+        let swipeDownGesture = UISwipeGestureRecognizer(target: self, action: #selector(self.hideActionSheet))
+        swipeDownGesture.direction = .down
+        self.buttomSheet.addGestureRecognizer(swipeDownGesture)
+        
+        let swipeUpGesture = UISwipeGestureRecognizer(target: self, action: #selector(self.showActionSheet))
+        swipeUpGesture.direction = .up
+        self.buttomSheet.addGestureRecognizer(swipeUpGesture)
+    }
+    
+    @objc func hideActionSheet() {
+        self.actionSheetConstraintBottom.constant = 50 - self.buttomSheet.frame.height
+    }
+    
+    @objc func showActionSheet() {
+        self.actionSheetConstraintBottom.constant = 0
     }
     
     func textViewDidChange(_ textView: UITextView) {

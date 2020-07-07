@@ -13041,12 +13041,14 @@
                     </view>
                     <navigationItem key="navigationItem" id="gpE-RX-Jy8"/>
                     <connections>
+                        <outlet property="actionSheetConstraintBottom" destination="gva-zI-7MH" id="TWL-Xo-HGD"/>
                         <outlet property="bgRecord" destination="ABn-hv-wdu" id="KKB-Rj-nLn"/>
                         <outlet property="btnCheckMenu" destination="sRN-nh-gjT" id="enO-OU-0uV"/>
                         <outlet property="btnCurrentLocation" destination="LBa-dk-CdG" id="HVY-mI-j5R"/>
                         <outlet property="btnListView" destination="F3g-Xj-p8l" id="Jld-fo-zXl"/>
                         <outlet property="btnPlay" destination="2LK-yO-gTW" id="tX0-Vp-L24"/>
                         <outlet property="btnRecord" destination="Tnt-O7-QGp" id="HlU-mk-qfN"/>
+                        <outlet property="buttomSheet" destination="3sh-5Y-vjj" id="20t-kQ-ybm"/>
                         <outlet property="collectionCategories" destination="vjA-N1-zx5" id="4w5-1C-I37"/>
                         <outlet property="edtOrderDetails" destination="2VH-MK-X0f" id="S81-UJ-jEX"/>
                         <outlet property="gif" destination="xWf-vy-tSU" id="GqV-Ix-uEn"/>
