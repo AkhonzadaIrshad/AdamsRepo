@@ -49,6 +49,7 @@ class ZHCDemoMessagesViewController: ZHCMessagesViewController, BillDelegate, Ch
     var latitude : Double?
     var longitude : Double?
     var clientPhoneNumber: String?
+    var shopPhoneNumber: String?
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -57,6 +58,12 @@ class ZHCDemoMessagesViewController: ZHCMessagesViewController, BillDelegate, Ch
                 self.clientPhoneNumber = deliveryResponse.data?.ClientPhone
             }
         }
+        if let shopId = self.order?.shopId {
+            ApiService.getShopDetails(Authorization: DataManager.loadUser().data?.accessToken ?? "", id: shopId) { (response) in
+                self.shopPhoneNumber = response.shopData?.phoneNumber
+            }
+        }
+        
         self.latitude = UserDefaults.standard.value(forKey: Constants.LAST_LATITUDE) as? Double ?? 0.0
         self.longitude = UserDefaults.standard.value(forKey: Constants.LAST_LONGITUDE) as? Double ?? 0.0
         
@@ -382,14 +389,22 @@ class ZHCDemoMessagesViewController: ZHCMessagesViewController, BillDelegate, Ch
             }
         }
         
-//        let callShopItem = self.driverActionButton?.addItem()
-//        callShopItem?.titleLabel.text = "Call Shop"
-//        callShopItem?.titleLabel.backgroundColor = UIColor.white
-//        callShopItem?.titleLabel.textColor = UIColor.black
-//        callShopItem?.titleLabel.font = UIFont(name: self.getBoldFontName(), size: 13)
-//        callShopItem?.imageView.image = UIImage(named: "ic_phone")
-//        callShopItem?.buttonColor = UIColor.appLogoColor
-//        callShopItem?.buttonImageColor = .white
+        let callShopItem = self.driverActionButton?.addItem()
+        callShopItem?.titleLabel.text = "Call Shop"
+        callShopItem?.titleLabel.backgroundColor = UIColor.white
+        callShopItem?.titleLabel.textColor = UIColor.black
+        callShopItem?.titleLabel.font = UIFont(name: self.getBoldFontName(), size: 13)
+        callShopItem?.imageView.image = UIImage(named: "ic_phone")
+        callShopItem?.buttonColor = UIColor.appLogoColor
+        callShopItem?.buttonImageColor = .white
+        callShopItem?.action = { item in
+            if let phoneNumber = self.shopPhoneNumber {
+                guard let url = URL(string: "tel://\(String(phoneNumber))") else {
+                return //be safe
+                }
+                UIApplication.shared.open(url)
+            }
+        }
         
         let callCustomerItem = self.driverActionButton?.addItem()
         callCustomerItem?.titleLabel.text = "Call Custmoer"
@@ -406,7 +421,6 @@ class ZHCDemoMessagesViewController: ZHCMessagesViewController, BillDelegate, Ch
                 }
                 UIApplication.shared.open(url)
             }
-            
         }
         let item4 = self.driverActionButton?.addItem()
         item4?.titleLabel.text = "send_current_location".localized
