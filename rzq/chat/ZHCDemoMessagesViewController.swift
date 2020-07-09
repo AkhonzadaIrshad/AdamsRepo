@@ -390,7 +390,7 @@ class ZHCDemoMessagesViewController: ZHCMessagesViewController, BillDelegate, Ch
         }
         
         let callShopItem = self.driverActionButton?.addItem()
-        callShopItem?.titleLabel.text = "Call Shop"
+        callShopItem?.titleLabel.text = "Call Shop".localized
         callShopItem?.titleLabel.backgroundColor = UIColor.white
         callShopItem?.titleLabel.textColor = UIColor.black
         callShopItem?.titleLabel.font = UIFont(name: self.getBoldFontName(), size: 13)
@@ -407,7 +407,7 @@ class ZHCDemoMessagesViewController: ZHCMessagesViewController, BillDelegate, Ch
         }
         
         let callCustomerItem = self.driverActionButton?.addItem()
-        callCustomerItem?.titleLabel.text = "Call Custmoer"
+        callCustomerItem?.titleLabel.text = "Call Customer".localized
         callCustomerItem?.titleLabel.backgroundColor = UIColor.white
         callCustomerItem?.titleLabel.textColor = UIColor.black
         callCustomerItem?.titleLabel.font = UIFont(name: self.getBoldFontName(), size: 13)
