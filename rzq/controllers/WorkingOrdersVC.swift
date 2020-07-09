@@ -57,6 +57,7 @@ class WorkingOrdersVC: BaseViewController, UITableViewDelegate, UITableViewDataS
         super.viewDidAppear(animated)
         ApiService.getDriverOnGoingDeliveries(Authorization: DataManager.loadUser().data?.accessToken ?? "") { (response) in
             self.pendingItems.removeAll()
+            let data = response.data
             self.pendingItems.append(contentsOf: response.data ?? [DatumDriverDel]())
             self.tableView.delegate = self
             self.tableView.dataSource = self

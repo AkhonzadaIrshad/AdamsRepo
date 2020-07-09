@@ -104,27 +104,6 @@ class HomeMapVC: BaseViewController,LabasLocationManagerDelegate, UICollectionVi
         ApiService.getDriverOnGoingDeliveries(Authorization: DataManager.loadUser().data?.accessToken ?? "") { (response) in
             self.hideLoading()
             UserDefaults.standard.setValue(response.data?.count ?? 0, forKey: Constants.WORKING_ORDERS_COUNT)
-//            for item in response.data ?? [DatumDriverDel]() {
-//                if (item.time ?? 0 == 0) {
-//                    ApiService.getDelivery(id: item.id ?? 0) { (response) in
-//                        let items = response.data?.items ?? [ShopMenuItem]()
-//                        DispatchQueue.main.async {
-//                            let messagesVC: ZHCDemoMessagesViewController = ZHCDemoMessagesViewController.init()
-//                            messagesVC.presentBool = true
-//
-//                            let dumOrder = DatumDel(id: item.id ?? 0, title: item.title ?? "", status: item.status ?? 0, statusString: item.statusString ?? "", image: item.image ?? "", createdDate: item.createdDate ?? "", chatId: item.chatId ?? 0, fromAddress: item.fromAddress ?? "", fromLatitude: item.fromLatitude ?? 0.0, fromLongitude: item.fromLongitude ?? 0.0, toAddress: item.toAddress ?? "", toLatitude: item.toLatitude ?? 0.0, toLongitude: item.toLongitude ?? 0.0, providerID: item.providerID ?? "", providerName: item.providerName ?? "", providerImage: item.providerImage ?? "", providerRate: item.providerRate ?? 0.0, time: item.time ?? 0, price: item.price ?? 0.0, serviceName: item.serviceName ?? "", paymentMethod: item.paymentMethod ?? 0, items: items, isPaid: item.isPaid ?? false, invoiceId: item.invoiceId ?? "", toFemaleOnly: item.toFemaleOnly ?? false, shopId: item.shopId ?? 0, OrderPrice: item.OrderPrice ?? 0.0, KnetCommission : item.KnetCommission ?? 0.0, ClientPhone: "", ProviderPhone : "")
-//
-//                            messagesVC.order = dumOrder
-//                            messagesVC.user = DataManager.loadUser()
-//                            let nav: UINavigationController = UINavigationController.init(rootViewController: messagesVC)
-//                            nav.modalPresentationStyle = .fullScreen
-//                            messagesVC.modalPresentationStyle = .fullScreen
-//                            self.navigationController?.present(nav, animated: true, completion: nil)
-//                        }
-//
-//                    }
-//                }
-//            }
         }
     }
     

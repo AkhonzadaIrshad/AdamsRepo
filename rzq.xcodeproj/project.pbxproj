@@ -1489,7 +1489,7 @@
 				CODE_SIGN_IDENTITY = "iPhone Developer";
 				CODE_SIGN_STYLE = Automatic;
 				CURRENT_PROJECT_VERSION = 4;
-				DEVELOPMENT_TEAM = 8WB4M28PWN;
+				DEVELOPMENT_TEAM = 9EG8DFFCHP;
 				INFOPLIST_FILE = "$(SRCROOT)/rzq/files/Info.plist";
 				IPHONEOS_DEPLOYMENT_TARGET = 11.0;
 				LD_RUNPATH_SEARCH_PATHS = (
@@ -1497,7 +1497,7 @@
 					"@executable_path/Frameworks",
 				);
 				MARKETING_VERSION = 3.6;
-				PRODUCT_BUNDLE_IDENTIFIER = com.technzone.rzq;
+				PRODUCT_BUNDLE_IDENTIFIER = com.technzone.rzq.test;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				PROVISIONING_PROFILE_SPECIFIER = "";
 				SWIFT_VERSION = 5.0;
@@ -1514,7 +1514,7 @@
 				CODE_SIGN_IDENTITY = "iPhone Developer";
 				CODE_SIGN_STYLE = Automatic;
 				CURRENT_PROJECT_VERSION = 4;
-				DEVELOPMENT_TEAM = 8WB4M28PWN;
+				DEVELOPMENT_TEAM = 9EG8DFFCHP;
 				INFOPLIST_FILE = "$(SRCROOT)/rzq/files/Info.plist";
 				IPHONEOS_DEPLOYMENT_TARGET = 11.0;
 				LD_RUNPATH_SEARCH_PATHS = (
@@ -1522,7 +1522,7 @@
 					"@executable_path/Frameworks",
 				);
 				MARKETING_VERSION = 3.6;
-				PRODUCT_BUNDLE_IDENTIFIER = com.technzone.rzq;
+				PRODUCT_BUNDLE_IDENTIFIER = com.technzone.rzq.test;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				PROVISIONING_PROFILE_SPECIFIER = "";
 				SWIFT_VERSION = 5.0;
