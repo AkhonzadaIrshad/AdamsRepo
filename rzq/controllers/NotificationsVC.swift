@@ -85,8 +85,6 @@ class NotificationsVC: BaseViewController,LabasLocationManagerDelegate, AcceptBi
         }
         App.shared.notificationSegmentIndex = 0
         
-        refreshControl = UIRefreshControl()
-        refreshControl.attributedTitle = NSAttributedString(string: "pull_to_refresh".localized)
         refreshControl.addTarget(self, action: #selector(refresh), for: .valueChanged)
         self.tableView.addSubview(refreshControl)
     }
