@@ -54,12 +54,13 @@ class DriverBidCell: UITableViewCell {
     }
     
     func startCountDown(startedFrom: String?) {
-        _ = Timer.scheduledTimer(timeInterval: 1, target: self, selector: #selector(self.update), userInfo: nil, repeats: true)
         if let startedTime = startedFrom {
             initCounter(startedFrom: startedTime)
         } else {
             self.count = 0
         }
+        self.update()
+        _ = Timer.scheduledTimer(timeInterval: 1, target: self, selector: #selector(self.update), userInfo: nil, repeats: true)
         
     }
     
