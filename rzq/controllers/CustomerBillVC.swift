@@ -137,8 +137,9 @@ class CustomerBillVC: BaseVC,UINavigationControllerDelegate, UICollectionViewDel
     @IBAction func sendAction(_ sender: Any) {
         if (self.validate()) {
             var totalStr = "\("order_cost".localized): \(self.edtOrderCost.text ?? "") \n\n \("delivery_cost".localized): \(self.deliveryCost ?? 0.0) \n\n \("total_cost".localized): \(self.lblTotalCost.text ?? "") \n\n \("payment_method".localized): \(self.paymentMethod ?? "")"
-            
+            self.commission = 0
             if (self.paymentMethodInt == Constants.PAYMENT_METHOD_KNET) {
+                self.commission = 0.15
                 totalStr = "\n\n\(totalStr)\n\n\("notify_user_knet".localized)\n\n\("knet_commission".localized): \(self.commission ?? 0.0)"
             }
             
