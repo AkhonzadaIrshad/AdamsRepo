@@ -1405,12 +1405,30 @@ extension DeliveryStep1: ShopMenuDelegate {
             let doublePrice = item.price ?? 0.0
             let total = doubleQuantity * doublePrice
             text += "\(itemQuantity) \(item.name ?? ""): \(total) \("currency".localized)\n"
+            if isLatin(text: item.name ?? "") {
+                self.edtOrderDetails.textAlignment = .left
+            } else {
+                self.edtOrderDetails.textAlignment = .right
+            }
         }
+        
         self.edtOrderDetails.text = text
         self.orderModel?.selectedTotal = total
         self.orderModel?.edtOrderDetailsText = text
         self.selectedItems.removeAll()
         self.selectedItems.append(contentsOf: items)
+    }
+    
+    func isLatin(text: String) -> Bool {
+        let upper = "ABCDEFGHIJKLMNOPQRSTUVWXYZ "
+
+        for c in text.uppercased().trim().map({ String($0) }) {
+            if !upper.contains(c) {
+                return false
+            }
+        }
+
+        return true
     }
 }
 
