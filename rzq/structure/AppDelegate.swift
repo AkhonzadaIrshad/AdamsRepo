@@ -30,14 +30,6 @@ class AppDelegate: UIResponder, UIApplicationDelegate, MOLHResetable,MessagingDe
     var window: UIWindow?
     
     func application(_ application: UIApplication, didFinishLaunchingWithOptions launchOptions: [UIApplication.LaunchOptionsKey: Any]?) -> Bool {
-        // Override point for customization after application launch.
-        
-        
-//        MFSettings.shared.configure(token: Constants.PAYMENT_TOKEN, baseURL: Constants.PAYMENT_URL)
-//
-//        let them = MFTheme(navigationTintColor: .white, navigationBarTintColor: .lightGray, navigationTitle: "Payment", cancelButtonTitle: "Cancel")
-//        MFSettings.shared.setTheme(theme: them)
-        
         //maps
         GMSServices.provideAPIKey("\(Constants.GOOGLE_API_KEY)")
         GMSPlacesClient.provideAPIKey("\(Constants.GOOGLE_API_KEY)")
@@ -102,19 +94,6 @@ class AppDelegate: UIResponder, UIApplicationDelegate, MOLHResetable,MessagingDe
             schemaVersion: 1,
             migrationBlock: { migration, oldSchemaVersion in
                 if oldSchemaVersion < 1 {
-                    
-                    // if just the name of your model's property changed you can do this
-                    //                    migration.renameProperty(onType: NotSureItem.className(), from: "text", to: "title")
-                    //
-                    //                    // if you want to fill a new property with some values you have to enumerate
-                    //                    // the existing objects and set the new value
-                    //                    migration.enumerateObjects(ofType: NotSureItem.className()) { oldObject, newObject in
-                    //                        let text = oldObject!["text"] as! String
-                    //                        newObject!["textDescription"] = "The title is \(text)"
-                    //                    }
-                    
-                    // if you added a new property or removed a property you don't
-                    // have to do anything because Realm automatically detects that
                 }
         }
         )
@@ -122,6 +101,14 @@ class AppDelegate: UIResponder, UIApplicationDelegate, MOLHResetable,MessagingDe
         Realm.Configuration.defaultConfiguration = realmConfig
         
         Fabric.with([Crashlytics.self])
+        
+        // Override point for customization after application launch.
+        // set up your My Fatoorah Merchant details
+        MFSettings.shared.configure(token: "", baseURL: "")
+
+        // you can change color and title of nvgigation bar
+        let them = MFTheme(navigationTintColor: .white, navigationBarTintColor: .lightGray, navigationTitle: "Payment", cancelButtonTitle: "Cancel")
+        MFSettings.shared.setTheme(theme: them)
         
         return true
     }

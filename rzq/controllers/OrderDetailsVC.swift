@@ -791,12 +791,10 @@ class OrderDetailsVC: BaseVC, UICollectionViewDelegate, UICollectionViewDataSour
         let vc : PaymentVC = storyboard.instantiateViewController(withIdentifier: "PaymentVC") as! PaymentVC
         
         let orderCost = self.order?.orderPrice ?? 0.0
-        let deliveryCost = self.order?.cost ?? 0.0
         let  x = self.order?.KnetCommission ?? 0.0
         let commission = (x * 100).rounded() / 100
         
         let totalCost = orderCost + commission
-        // let totalCost = orderCost + commission
         
         if (self.order?.items?.count ?? 0 > 0) {
             vc.items = self.order?.items ?? [ShopMenuItem]()
@@ -807,13 +805,10 @@ class OrderDetailsVC: BaseVC, UICollectionViewDelegate, UICollectionViewDataSour
             self.present(vc, animated: true, completion: nil)
         }else {
             if (self.order?.orderPrice ?? 0 > 0) {
-//                let item = ShopMenuItem(id: 0, name: "delivery_cost", imageName: "", price: deliveryCost, shopMenuItemDescription: "", count: 1)
                 let item2 = ShopMenuItem(id: 0, name: "order_cost", imageName: "", price: orderCost, shopMenuItemDescription: "", count: 1)
                 let item3 = ShopMenuItem(id: 0, name: "knet_commission", imageName: "", price: commission, shopMenuItemDescription: "", count: 1)
-//                vc.items.append(item)
                 vc.items.append(item2)
                 vc.items.append(item3)
-                //  vc.total =  self.order?.orderPrice ?? 0
                 vc.total = totalCost
                 vc.delegate = self
                 vc.modalPresentationStyle = .fullScreen

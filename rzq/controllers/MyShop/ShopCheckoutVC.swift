@@ -141,14 +141,6 @@ class ShopCheckoutVC: BaseVC, UITableViewDelegate, UITableViewDataSource {
         //actual code
         self.delegate?.onDone(selectedItems: self.items)
         self.navigationController?.popViewController(animated: true)
-        
-        
-        //test payment screen
-        //        let storyboard = UIStoryboard(name: "Main", bundle: nil)
-        //        let vc : PaymentVC = storyboard.instantiateViewController(withIdentifier: "PaymentVC") as! PaymentVC
-        //        vc.items = self.items
-        //        vc.total =  self.getTotal()
-        //        self.present(vc, animated: true, completion: nil)
     }
     
     func getTotal() -> Double {

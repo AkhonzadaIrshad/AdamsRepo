@@ -196,7 +196,7 @@ DEPENDENCIES:
   - ZoomImageView
 
 SPEC REPOS:
-  https://github.com/cocoapods/specs.git:
+  https://github.com/CocoaPods/Specs.git:
     - Alamofire
     - AlamofireImage
     - AMPopTip
@@ -312,4 +312,4 @@ SPEC CHECKSUMS:
 
 PODFILE CHECKSUM: 1f782133a6b2b80fbf4aa8733efb7273c80f5302
 
-COCOAPODS: 1.7.2
+COCOAPODS: 1.9.3
