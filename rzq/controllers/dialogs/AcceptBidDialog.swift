@@ -9,12 +9,13 @@
 import UIKit
 import Cosmos
 import CoreLocation
+import MFSDK
 
 protocol AcceptBidDelegate {
     func refreshNotifications()
     func onAccept()
 }
-class AcceptBidDialog: BaseVC, PaymentDelegate {
+class AcceptBidDialog: PaymentViewController, PaymentDelegate {
     
     @IBOutlet weak var ivLogo: CircleImage!
     @IBOutlet weak var lblDriverName: MyUILabel!
@@ -200,39 +201,6 @@ class AcceptBidDialog: BaseVC, PaymentDelegate {
         }
     }
     
-    func startPaymentProcess(orderId : Int) {
-        self.showLoading()
-        ApiService.getDelivery(id: orderId) { (response) in
-            self.hideLoading()
-            let storyboard = UIStoryboard(name: "Main", bundle: nil)
-            let vc : PaymentVC = storyboard.instantiateViewController(withIdentifier: "PaymentVC") as! PaymentVC
-            
-            
-            let orderCost = self.getTotal(items: response.data?.items ?? [ShopMenuItem]())
-            
-            let dict = self.item?.data?.convertToDictionary()
-            let dlvrCost = dict?["Price"] as? Double ?? 0.0
-            let deliveryCost = dlvrCost
-            
-            let knetCommission = App.shared.config?.configSettings?.KnetCommission ?? 0.0
-            
-            var items = response.data?.items ?? [ShopMenuItem]()
-            
-            let item = ShopMenuItem(id: 0, name: "delivery_cost", imageName: "", price: deliveryCost, shopMenuItemDescription: "", count: 1)
-            let item2 = ShopMenuItem(id: 0, name: "knet_commission", imageName: "", price: knetCommission, shopMenuItemDescription: "", count: 1)
-            
-            items.append(item)
-            items.append(item2)
-            
-            vc.items = items
-            
-            vc.total = orderCost + deliveryCost + knetCommission
-            vc.delegate = self
-            vc.modalPresentationStyle = .fullScreen
-            self.present(vc, animated: true, completion: nil)
-        }
-    }
-    
     func onPaymentSuccess(payment : PaymentStatusResponse) {
         self.showLoading()
         ApiService.createPaymentRecord(Authorization: DataManager.loadUser().data?.accessToken ?? "", orderId: self.deliveryId ?? 0, payment: payment) { (response) in
@@ -319,4 +287,92 @@ class AcceptBidDialog: BaseVC, PaymentDelegate {
         }
     }
     
+    
+    func startPaymentProcess(orderId : Int) {
+        self.showLoading()
+        ApiService.getDelivery(id: orderId) { (response) in
+            self.hideLoading()
+            let orderCost = self.getTotal(items: response.data?.items ?? [ShopMenuItem]())
+            
+            let dict = self.item?.data?.convertToDictionary()
+            let dlvrCost = dict?["Price"] as? Double ?? 0.0
+            let deliveryCost = dlvrCost
+            
+            let knetCommission = App.shared.config?.configSettings?.KnetCommission ?? 0.0
+            
+            var items = response.data?.items ?? [ShopMenuItem]()
+            
+            let item = ShopMenuItem(id: 0, name: "delivery_cost", imageName: "", price: deliveryCost, shopMenuItemDescription: "", count: 1)
+            let item2 = ShopMenuItem(id: 0, name: "knet_commission", imageName: "", price: knetCommission, shopMenuItemDescription: "", count: 1)
+            
+            items.append(item)
+            items.append(item2)
+            
+            let total = orderCost + deliveryCost + knetCommission
+            self.ammountToPay = Double(total)
+            self.executePayment(paymentMethodId: 1)
+        }
+    }
+    
+    
+}
+
+class PaymentViewController: BaseVC {
+    //MARK: Variables
+    var paymentMethods: [MFPaymentMethod]?
+    var ammountToPay: Double?
+    
+    func initiatePayment() {
+        let request = generateInitiatePaymentModel()
+        MFPaymentRequest.shared.initiatePayment(request: request, apiLanguage: .english, completion: { [weak self] (result) in
+            switch result {
+            case .success(let initiatePaymentResponse):
+                self?.paymentMethods = initiatePaymentResponse.paymentMethods
+            case .failure(let failError):
+                print("Error: \(failError.errorDescription)")
+            }
+        })
+    }
+    
+    private func generateInitiatePaymentModel() -> MFInitiatePaymentRequest {
+        // you can create initiate payment request with invoice value and currency
+        // let invoiceValue = Double(amountTextField.text ?? "") ?? 0
+        // let request = MFInitiatePaymentRequest(invoiceAmount: invoiceValue, currencyIso: .kuwait_KWD)
+        // return request
+        
+        let request = MFInitiatePaymentRequest()
+        return request
+    }
+    
+    func executePayment(paymentMethodId: Int) {
+        let request = getExecutePaymentRequest(paymentMethodId: paymentMethodId)
+        MFPaymentRequest.shared.executePayment(request: request, apiLanguage: .arabic) { [weak self] response, invoiceId  in
+            switch response {
+            case .success:
+                print("Success")
+            case .failure(let failError):
+                print(failError.errorDescription)
+            }
+        }
+    }
+    
+    private func getExecutePaymentRequest(paymentMethodId: Int) -> MFExecutePaymentRequest {
+        let request = MFExecutePaymentRequest(invoiceValue: self.ammountToPay ?? 0, paymentMethod: 1)
+        //request.userDefinedField = ""
+        request.customerEmail = "a@b.com"// must be email
+        request.customerMobile = ""
+        request.customerCivilId = "Double("
+        let address = MFCustomerAddress(block: "ddd", street: "sss", houseBuildingNo: "sss", address: "sss", addressInstructions: "sss")
+        request.customerAddress = address
+        request.customerReference = ""
+        request.language = .english
+        request.mobileCountryCode = MFMobileCountryCodeISO.kuwait.rawValue
+        request.displayCurrencyIso = .kuwait_KWD
+        // Uncomment this to add products for your invoice
+        //         var productList = [MFProduct]()
+        //        let product = MFProduct(name: "ABC", unitPrice: 1.887, quantity: 1)
+        //         productList.append(product)
+        //         request.invoiceItems = productList
+        return request
+    }
 }

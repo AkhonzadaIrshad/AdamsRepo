@@ -20,7 +20,7 @@ protocol OrderChatDelegate {
     func onOrderPaymentFail()
     func onCloseFromNotification()
 }
-class OrderDetailsVC: BaseVC, UICollectionViewDelegate, UICollectionViewDataSource, UICollectionViewDelegateFlowLayout, AVAudioPlayerDelegate, PaymentSheetDelegate, PaymentDelegate {
+class OrderDetailsVC: PaymentViewController, UICollectionViewDelegate, UICollectionViewDataSource, UICollectionViewDelegateFlowLayout, AVAudioPlayerDelegate, PaymentSheetDelegate, PaymentDelegate {
     
     @IBOutlet weak var mapView: UIView!
     
@@ -787,36 +787,21 @@ class OrderDetailsVC: BaseVC, UICollectionViewDelegate, UICollectionViewDataSour
     
     
     @IBAction func payAction(_ sender: Any) {
-        let storyboard = UIStoryboard(name: "Main", bundle: nil)
-        let vc : PaymentVC = storyboard.instantiateViewController(withIdentifier: "PaymentVC") as! PaymentVC
         
         let orderCost = self.order?.orderPrice ?? 0.0
         let  x = self.order?.KnetCommission ?? 0.0
         let commission = (x * 100).rounded() / 100
         
         let totalCost = orderCost + commission
+        self.ammountToPay = Double(totalCost)
+        self.executePayment(paymentMethodId: 1)
         
-        if (self.order?.items?.count ?? 0 > 0) {
-            vc.items = self.order?.items ?? [ShopMenuItem]()
-            // vc.total =  self.getTotal(items: self.order?.items ?? [ShopMenuItem]())
-            vc.total = totalCost
-            vc.delegate = self
-            vc.modalPresentationStyle = .fullScreen
-            self.present(vc, animated: true, completion: nil)
-        }else {
-            if (self.order?.orderPrice ?? 0 > 0) {
-                let item2 = ShopMenuItem(id: 0, name: "order_cost", imageName: "", price: orderCost, shopMenuItemDescription: "", count: 1)
-                let item3 = ShopMenuItem(id: 0, name: "knet_commission", imageName: "", price: commission, shopMenuItemDescription: "", count: 1)
-                vc.items.append(item2)
-                vc.items.append(item3)
-                vc.total = totalCost
-                vc.delegate = self
-                vc.modalPresentationStyle = .fullScreen
-                self.present(vc, animated: true, completion: nil)
-            }else {
-                self.showBanner(title: "alert".localized, message: "bill_not_issued".localized, style: UIColor.INFO)
-            }
-        }
+//        if (self.order?.items?.count ?? 0 > 0) {
+//
+//        else {
+//                self.showBanner(title: "alert".localized, message: "bill_not_issued".localized, style: UIColor.INFO)
+//            }
+//        }
     }
     
     func onPaymentSuccess(payment: PaymentStatusResponse) {
