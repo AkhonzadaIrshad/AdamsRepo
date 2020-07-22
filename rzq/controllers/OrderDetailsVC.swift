@@ -794,6 +794,7 @@ class OrderDetailsVC: PaymentViewController, UICollectionViewDelegate, UICollect
         
         let totalCost = orderCost + commission
         self.ammountToPay = Double(totalCost)
+        self.initiatePayment()
         self.executePayment(paymentMethodId: 1)
         
 //        if (self.order?.items?.count ?? 0 > 0) {
