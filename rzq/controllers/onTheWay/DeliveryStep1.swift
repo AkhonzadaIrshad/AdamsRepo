@@ -950,7 +950,7 @@ class DeliveryStep1: BaseVC , Step2Delegate, AllShopDelegate, ImagePickerDelegat
     
     @IBAction func clearFieldAction(_ sender: Any) {
         //self.moreDetailsView.isHidden = true
-        
+        self.hideActionSheet()
         self.orderModel?.reset()
         
         self.ivShop.image = nil
@@ -979,7 +979,7 @@ class DeliveryStep1: BaseVC , Step2Delegate, AllShopDelegate, ImagePickerDelegat
     
     @IBAction func clearFieldAction2(_ sender: Any) {
         //self.moreDetailsView.isHidden = true
-        
+        self.hideActionSheet()
         self.orderModel?.reset()
         
         self.ivShop.image = nil
