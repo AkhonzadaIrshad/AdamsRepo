@@ -155,7 +155,7 @@ class DeliveryStep1: BaseVC , Step2Delegate, AllShopDelegate, ImagePickerDelegat
     override func viewWillAppear(_ animated: Bool) {
         print("viewWillAppear")
         super.viewWillAppear(animated)
-        
+        self.hideActionSheet()
         handleImagesView()
         
         
