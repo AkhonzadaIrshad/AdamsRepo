@@ -368,11 +368,6 @@ class PaymentViewController: BaseVC {
         request.language = .english
         request.mobileCountryCode = MFMobileCountryCodeISO.kuwait.rawValue
         request.displayCurrencyIso = .kuwait_KWD
-        // Uncomment this to add products for your invoice
-        //         var productList = [MFProduct]()
-        //        let product = MFProduct(name: "ABC", unitPrice: 1.887, quantity: 1)
-        //         productList.append(product)
-        //         request.invoiceItems = productList
         return request
     }
 }

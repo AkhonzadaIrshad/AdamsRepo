@@ -1464,6 +1464,7 @@ extension DeliveryStep1: UICollectionViewDelegate, UICollectionViewDataSource, U
     }
     
     func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
+        self.clearFieldAction(self)
         let selectedCat = self.categories[indexPath.row]
         self.selectdCategory = selectedCat
         if selectedCat.id == 0 {
