@@ -73,6 +73,8 @@
 	<string>You can select photos to attach to your order.</string>
 	<key>UIAppFonts</key>
 	<array>
+		<string>Cairo-Bold</string>
+		<string>Cairo-Regular</string>
 		<string>arabic_semibold.ttf</string>
 		<string>arabic_regular.ttf</string>
 		<string>arabic_medium.ttf</string>

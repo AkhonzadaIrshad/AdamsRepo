@@ -224,6 +224,8 @@
 		8BFF8E06229DC5C500472F27 /* ShopImageCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8BFF8E05229DC5C500472F27 /* ShopImageCell.swift */; };
 		C185A56724CCD614001B6B10 /* CustomAlert.swift in Sources */ = {isa = PBXBuildFile; fileRef = C185A56624CCD614001B6B10 /* CustomAlert.swift */; };
 		C185A56924CCD65E001B6B10 /* CustomAlert.xib in Resources */ = {isa = PBXBuildFile; fileRef = C185A56824CCD65E001B6B10 /* CustomAlert.xib */; };
+		C185A56C24CDC17A001B6B10 /* Cairo-Bold.ttf in Resources */ = {isa = PBXBuildFile; fileRef = C185A56A24CDC17A001B6B10 /* Cairo-Bold.ttf */; };
+		C185A56D24CDC17A001B6B10 /* Cairo-Regular.ttf in Resources */ = {isa = PBXBuildFile; fileRef = C185A56B24CDC17A001B6B10 /* Cairo-Regular.ttf */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -453,6 +455,8 @@
 		8BFF8E05229DC5C500472F27 /* ShopImageCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ShopImageCell.swift; sourceTree = "<group>"; };
 		C185A56624CCD614001B6B10 /* CustomAlert.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CustomAlert.swift; sourceTree = "<group>"; };
 		C185A56824CCD65E001B6B10 /* CustomAlert.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = CustomAlert.xib; sourceTree = "<group>"; };
+		C185A56A24CDC17A001B6B10 /* Cairo-Bold.ttf */ = {isa = PBXFileReference; lastKnownFileType = file; path = "Cairo-Bold.ttf"; sourceTree = "<group>"; };
+		C185A56B24CDC17A001B6B10 /* Cairo-Regular.ttf */ = {isa = PBXFileReference; lastKnownFileType = file; path = "Cairo-Regular.ttf"; sourceTree = "<group>"; };
 		E55152A97B11159AAAF7C8B3 /* Pods-rzq.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-rzq.release.xcconfig"; path = "Pods/Target Support Files/Pods-rzq/Pods-rzq.release.xcconfig"; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
@@ -746,6 +750,8 @@
 		8B9CA8392250CCB500DE0DC4 /* fonts */ = {
 			isa = PBXGroup;
 			children = (
+				C185A56A24CDC17A001B6B10 /* Cairo-Bold.ttf */,
+				C185A56B24CDC17A001B6B10 /* Cairo-Regular.ttf */,
 				8BF2222E2271AC05005BE71D /* arabic_bold.ttf */,
 				8BF2222C2271AC05005BE71D /* arabic_light.ttf */,
 				8BF2222A2271AC05005BE71D /* arabic_medium.ttf */,
@@ -1036,6 +1042,7 @@
 				8BF2224222720FC0005BE71D /* Localizable.strings in Resources */,
 				8BDA8B7D23856BA800BAFDC3 /* pending_en.gif in Resources */,
 				8B9CA8432250CCDF00DE0DC4 /* english_bold.ttf in Resources */,
+				C185A56C24CDC17A001B6B10 /* Cairo-Bold.ttf in Resources */,
 				8BF222212271A9C5005BE71D /* recording.gif in Resources */,
 				8BD3CA8E227884BF003ABC49 /* pending.gif in Resources */,
 				8BC54B032268767F00B70A97 /* data.json in Resources */,
@@ -1050,6 +1057,7 @@
 				8BCD198D2284420900AFB878 /* FilterSearchCell.xib in Resources */,
 				8BF222302271AC05005BE71D /* arabic_semibold.ttf in Resources */,
 				8B1F91C92256269200B639F1 /* ToolTipView.xib in Resources */,
+				C185A56D24CDC17A001B6B10 /* Cairo-Regular.ttf in Resources */,
 				8B9CA8462250CCDF00DE0DC4 /* english_medium.ttf in Resources */,
 				8BF222322271AC05005BE71D /* arabic_regular.ttf in Resources */,
 				8B9CA8452250CCDF00DE0DC4 /* english_light.ttf in Resources */,

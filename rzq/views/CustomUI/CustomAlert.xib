@@ -7,6 +7,14 @@
         <capability name="Safe area layout guides" minToolsVersion="9.0"/>
         <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
     </dependencies>
+    <customFonts key="customFonts">
+        <array key="Cairo-Bold.ttf">
+            <string>Cairo-Bold</string>
+        </array>
+        <array key="Cairo-Regular.ttf">
+            <string>Cairo-Regular</string>
+        </array>
+    </customFonts>
     <objects>
         <placeholder placeholderIdentifier="IBFilesOwner" id="-1" userLabel="File's Owner" customClass="CustomAlert" customModule="rzq" customModuleProvider="target">
             <connections>
@@ -25,10 +33,10 @@
                     <color key="backgroundColor" white="0.0" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                 </view>
                 <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="QAI-WA-pR2" customClass="RoundedView" customModule="rzq" customModuleProvider="target">
-                    <rect key="frame" x="82" y="308.5" width="250" height="279"/>
+                    <rect key="frame" x="82" y="287.5" width="250" height="321.5"/>
                     <subviews>
                         <stackView opaque="NO" contentMode="scaleToFill" axis="vertical" distribution="equalSpacing" spacing="20" translatesAutoresizingMaskIntoConstraints="NO" id="rjr-jH-q2e">
-                            <rect key="frame" x="15" y="30" width="220" height="219"/>
+                            <rect key="frame" x="15" y="30" width="220" height="261.5"/>
                             <subviews>
                                 <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="Sx4-kM-FbQ">
                                     <rect key="frame" x="0.0" y="0.0" width="220" height="30"/>
@@ -45,7 +53,7 @@
                                                 </imageView>
                                                 <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="How it works" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="fIK-SU-fnC">
                                                     <rect key="frame" x="45" y="0.0" width="165" height="30"/>
-                                                    <fontDescription key="fontDescription" type="system" pointSize="15"/>
+                                                    <fontDescription key="fontDescription" name="Cairo-Regular" family="Cairo" pointSize="14"/>
                                                     <color key="textColor" systemColor="systemGray2Color" red="0.68235294120000001" green="0.68235294120000001" blue="0.69803921570000005" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                                                     <nil key="highlightedColor"/>
                                                 </label>
@@ -60,31 +68,31 @@
                                         <constraint firstAttribute="trailing" secondItem="YN7-CZ-IH2" secondAttribute="trailing" id="s5k-H0-PvK"/>
                                     </constraints>
                                 </view>
-                                <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" textAlignment="natural" lineBreakMode="tailTruncation" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="doJ-U5-eXW">
-                                    <rect key="frame" x="0.0" y="50" width="220" height="109"/>
+                                <label opaque="NO" userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" textAlignment="natural" lineBreakMode="tailTruncation" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="doJ-U5-eXW">
+                                    <rect key="frame" x="0.0" y="50" width="220" height="157.5"/>
                                     <string key="text">عند رقم ١
 كيفية الطلب..
 ١-الطلب من متاجر رزق استخدم القائمة
 ٢-الطلب من مكان اخر استخدم البحث بالاعلى 
 ٣- يمكنك تحديد أي موقع بالضغط المطول عالخريطه</string>
-                                    <fontDescription key="fontDescription" type="system" pointSize="13"/>
+                                    <fontDescription key="fontDescription" name="Cairo-Bold" family="Cairo" pointSize="12"/>
                                     <nil key="textColor"/>
                                     <nil key="highlightedColor"/>
                                 </label>
                                 <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="PSs-qA-V80" customClass="RoundedView" customModule="rzq" customModuleProvider="target">
-                                    <rect key="frame" x="0.0" y="179" width="220" height="40"/>
+                                    <rect key="frame" x="0.0" y="227.5" width="220" height="34"/>
                                     <subviews>
                                         <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="KPL-gw-Cc1" customClass="RoundedView" customModule="rzq" customModuleProvider="target">
-                                            <rect key="frame" x="60" y="0.0" width="100" height="40"/>
+                                            <rect key="frame" x="60" y="0.0" width="100" height="34"/>
                                             <subviews>
                                                 <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="Fgv-56-rbU">
-                                                    <rect key="frame" x="0.0" y="0.0" width="100" height="40"/>
+                                                    <rect key="frame" x="0.0" y="0.0" width="100" height="34"/>
                                                     <color key="backgroundColor" systemColor="systemIndigoColor" red="0.34509803919999998" green="0.33725490200000002" blue="0.83921568629999999" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                                                     <constraints>
-                                                        <constraint firstAttribute="height" constant="40" id="TzF-He-I7d"/>
+                                                        <constraint firstAttribute="height" constant="34" id="TzF-He-I7d"/>
                                                         <constraint firstAttribute="width" constant="100" id="YVZ-nn-rt2"/>
                                                     </constraints>
-                                                    <fontDescription key="fontDescription" type="boldSystem" pointSize="15"/>
+                                                    <fontDescription key="fontDescription" name="Cairo-Bold" family="Cairo" pointSize="17"/>
                                                     <state key="normal" title="OK">
                                                         <color key="titleColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                                     </state>
@@ -102,7 +110,7 @@
                                             </constraints>
                                             <userDefinedRuntimeAttributes>
                                                 <userDefinedRuntimeAttribute type="number" keyPath="cornerRadius">
-                                                    <real key="value" value="20"/>
+                                                    <real key="value" value="17"/>
                                                 </userDefinedRuntimeAttribute>
                                             </userDefinedRuntimeAttributes>
                                         </view>
