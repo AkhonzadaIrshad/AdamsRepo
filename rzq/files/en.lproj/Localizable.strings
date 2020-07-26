@@ -305,5 +305,11 @@
 "all_shops" = "All Shops";
 "Call Shop" = "Call Shop";
 "Call Customer" = "Call Customer";
-"step1.popup.title" = "";
-"step1.popup.description" = "";
+"step1.popup.description" = "To order from  registered shops use the slide list
+To order from any other place use the search above
+You can locate any place by long pressing on the map!";
+
+"step2.popup.description" = "We’ll use your current location to deliver your order!
+If you want to change it, use the search above or by long pressin on the map to any point";
+
+"steps.popup.title" = "HOW TO USE";

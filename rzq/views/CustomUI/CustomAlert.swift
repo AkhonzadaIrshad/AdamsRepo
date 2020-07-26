@@ -44,10 +44,20 @@ class CustomAlert: UIView {
     func configureAsStep1() {
         self.title.text = "steps.popup.title".localized
         self.lblDescription.text = "step1.popup.description".localized
+        if UserDefaults.standard.bool(forKey: "step1AlreadyShowed") {
+            self.isHidden = true
+        } else {
+            UserDefaults.standard.set(true, forKey: "step1AlreadyShowed")
+        }
     }
     
     func configureAsStep2() {
         self.title.text = "steps.popup.title".localized
         self.lblDescription.text = "step2.popup.description".localized
+        if UserDefaults.standard.bool(forKey: "step2AlreadyShowed") {
+            self.isHidden = true
+        } else {
+            UserDefaults.standard.set(true, forKey: "step2AlreadyShowed")
+        }
     }
 }
