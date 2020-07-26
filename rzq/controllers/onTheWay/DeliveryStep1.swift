@@ -44,6 +44,7 @@ class DeliveryStep1: BaseVC , Step2Delegate, AllShopDelegate, ImagePickerDelegat
     @IBOutlet weak var buttomSheet: UIView!
     @IBOutlet weak var actionSheetConstraintBottom: NSLayoutConstraint!
     
+    @IBOutlet weak var customAlert: CustomAlert!
     var imagePicker: UIImagePickerController!
     var audioPlayer: AVAudioPlayer?
     var selectedImages = [UIImage]()
@@ -119,6 +120,7 @@ class DeliveryStep1: BaseVC , Step2Delegate, AllShopDelegate, ImagePickerDelegat
         let swipeUpGesture = UISwipeGestureRecognizer(target: self, action: #selector(self.showActionSheet))
         swipeUpGesture.direction = .up
         self.buttomSheet.addGestureRecognizer(swipeUpGesture)
+        self.customAlert.configureAsStep1()
     }
     
     @objc func hideActionSheet() {

@@ -305,3 +305,5 @@
 "all_shops" = "All Shops";
 "Call Shop" = "Call Shop";
 "Call Customer" = "Call Customer";
+"step1.popup.title" = "";
+"step1.popup.description" = "";

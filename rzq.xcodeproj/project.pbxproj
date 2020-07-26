@@ -222,6 +222,8 @@
 		8BF42431229B16990014596F /* AllTendersResponse.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8BF42430229B16990014596F /* AllTendersResponse.swift */; };
 		8BF6DCBB23706D2A00E9B80B /* PaymentStatusDialog.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8BF6DCBA23706D2A00E9B80B /* PaymentStatusDialog.swift */; };
 		8BFF8E06229DC5C500472F27 /* ShopImageCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8BFF8E05229DC5C500472F27 /* ShopImageCell.swift */; };
+		C185A56724CCD614001B6B10 /* CustomAlert.swift in Sources */ = {isa = PBXBuildFile; fileRef = C185A56624CCD614001B6B10 /* CustomAlert.swift */; };
+		C185A56924CCD65E001B6B10 /* CustomAlert.xib in Resources */ = {isa = PBXBuildFile; fileRef = C185A56824CCD65E001B6B10 /* CustomAlert.xib */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -449,6 +451,8 @@
 		8BF42430229B16990014596F /* AllTendersResponse.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AllTendersResponse.swift; sourceTree = "<group>"; };
 		8BF6DCBA23706D2A00E9B80B /* PaymentStatusDialog.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PaymentStatusDialog.swift; sourceTree = "<group>"; };
 		8BFF8E05229DC5C500472F27 /* ShopImageCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ShopImageCell.swift; sourceTree = "<group>"; };
+		C185A56624CCD614001B6B10 /* CustomAlert.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CustomAlert.swift; sourceTree = "<group>"; };
+		C185A56824CCD65E001B6B10 /* CustomAlert.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = CustomAlert.xib; sourceTree = "<group>"; };
 		E55152A97B11159AAAF7C8B3 /* Pods-rzq.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-rzq.release.xcconfig"; path = "Pods/Target Support Files/Pods-rzq/Pods-rzq.release.xcconfig"; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
@@ -733,6 +737,8 @@
 				8BCD198E228445F500AFB878 /* SearchTextField.swift */,
 				8BC23289228AFD3E00CD086F /* FormTextField.swift */,
 				675FFA1F2455EAA500C8AD17 /* RoundedView.swift */,
+				C185A56624CCD614001B6B10 /* CustomAlert.swift */,
+				C185A56824CCD65E001B6B10 /* CustomAlert.xib */,
 			);
 			path = CustomUI;
 			sourceTree = "<group>";
@@ -1048,6 +1054,7 @@
 				8BF222322271AC05005BE71D /* arabic_regular.ttf in Resources */,
 				8B9CA8452250CCDF00DE0DC4 /* english_light.ttf in Resources */,
 				8B2BCC87224FCEB400CBC7D3 /* Main.storyboard in Resources */,
+				C185A56924CCD65E001B6B10 /* CustomAlert.xib in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -1251,6 +1258,7 @@
 				8BDB970F225B3A3E0036E801 /* Intro3.swift in Sources */,
 				8BCD198B228441F600AFB878 /* FilterSearchCell.swift in Sources */,
 				8B9BA6C8235C77E50058BAF8 /* AddMenuVC.swift in Sources */,
+				C185A56724CCD614001B6B10 /* CustomAlert.swift in Sources */,
 				8B11207C235DED82005F2122 /* ShopCheckoutCell.swift in Sources */,
 				8BCB78052254DE1B00E52ED0 /* DriverBidCell.swift in Sources */,
 				8BCB77FE2254C12F00E52ED0 /* OrdersVC.swift in Sources */,

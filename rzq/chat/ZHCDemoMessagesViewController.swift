@@ -942,19 +942,6 @@ class ZHCDemoMessagesViewController: ZHCMessagesViewController, BillDelegate, Ch
     }
     
     @objc func closePressed() -> Void {
-//        if (self.isProvider() && self.user?.data?.userID == self.order?.providerID) {
-//            if (self.order?.time ?? 0 == 0) {
-//                if (self.order?.status == Constants.ORDER_CANCELLED || self.order?.status == Constants.ORDER_COMPLETED || self.order?.status == Constants.ORDER_EXPIRED) {
-//                    self.navigationController?.dismiss(animated: true, completion: nil);
-//                }else {
-//                    self.showBanner(title: "alert".localized, message: "complete_delivery_first".localized, style: UIColor.INFO)
-//                }
-//            }else {
-//                self.navigationController?.dismiss(animated: true, completion: nil);
-//            }
-//        }else {
-//            self.navigationController?.dismiss(animated: true, completion: nil);
-//        }
         self.navigationController?.dismiss(animated: true, completion: nil);
     }
     

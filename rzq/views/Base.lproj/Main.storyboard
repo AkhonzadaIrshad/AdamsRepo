@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="16097" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" useSafeAreas="YES" colorMatched="YES" initialViewController="BYZ-38-t0r">
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="16097.2" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" useSafeAreas="YES" colorMatched="YES" initialViewController="BYZ-38-t0r">
     <device id="retina5_9" orientation="portrait" appearance="light"/>
     <dependencies>
         <deployment identifier="iOS"/>
@@ -13,11 +13,11 @@
         <array key="arabic_font.ttf">
             <string>Cairo-Regular</string>
         </array>
+        <array key="arabic_medium.ttf">
+            <string>Tajawal-Medium</string>
+        </array>
         <array key="arabic_regular.ttf">
             <string>Tajawal-Regular</string>
-        </array>
-        <array key="arabic_semibold.ttf">
-            <string>Tajawal-Medium</string>
         </array>
         <array key="english_regular.otf">
             <string>SFProDisplay-Regular</string>
@@ -13003,6 +13003,10 @@
                                     <action selector="myLocationAction:" destination="7Sx-hp-CWV" eventType="touchUpInside" id="v93-9a-gRf"/>
                                 </connections>
                             </button>
+                            <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="sJS-wn-EuM" customClass="CustomAlert" customModule="rzq" customModuleProvider="target">
+                                <rect key="frame" x="0.0" y="-6" width="375" height="834"/>
+                                <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                            </view>
                         </subviews>
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                         <constraints>
@@ -13016,16 +13020,19 @@
                             <constraint firstItem="A9H-cE-hxA" firstAttribute="top" secondItem="Jju-3F-VyM" secondAttribute="top" id="V7V-Rg-8wx"/>
                             <constraint firstItem="xWf-vy-tSU" firstAttribute="centerX" secondItem="Jju-3F-VyM" secondAttribute="centerX" id="W4s-go-7uT"/>
                             <constraint firstItem="A9H-cE-hxA" firstAttribute="leading" secondItem="d5N-D6-syc" secondAttribute="leading" id="Whu-6m-l2r"/>
+                            <constraint firstItem="sJS-wn-EuM" firstAttribute="top" secondItem="d5N-D6-syc" secondAttribute="top" constant="-50" id="XdY-fk-5Gu"/>
                             <constraint firstItem="8GC-6D-Gpq" firstAttribute="top" secondItem="A9H-cE-hxA" secondAttribute="bottom" constant="50" id="ZFj-A7-cZV"/>
                             <constraint firstItem="I8Q-pe-Ept" firstAttribute="leading" secondItem="d5N-D6-syc" secondAttribute="leading" id="ZYr-k4-dT2"/>
                             <constraint firstItem="vjA-N1-zx5" firstAttribute="top" secondItem="A9H-cE-hxA" secondAttribute="bottom" id="ZkU-Xj-XBn"/>
                             <constraint firstItem="I8Q-pe-Ept" firstAttribute="top" secondItem="vjA-N1-zx5" secondAttribute="bottom" id="acq-ld-0iv"/>
                             <constraint firstItem="d5N-D6-syc" firstAttribute="trailing" secondItem="kbU-q0-1TA" secondAttribute="trailing" id="bGc-fM-9TY"/>
                             <constraint firstItem="d5N-D6-syc" firstAttribute="trailing" secondItem="w3z-Z6-4LH" secondAttribute="trailing" constant="30" id="cAL-eh-DtX"/>
+                            <constraint firstItem="d5N-D6-syc" firstAttribute="bottom" secondItem="sJS-wn-EuM" secondAttribute="bottom" constant="-50" id="cHr-4m-zDf"/>
                             <constraint firstItem="3sh-5Y-vjj" firstAttribute="top" secondItem="kbU-q0-1TA" secondAttribute="bottom" constant="-50" id="csb-qb-INM"/>
                             <constraint firstItem="bsg-f9-Djh" firstAttribute="left" secondItem="d5N-D6-syc" secondAttribute="left" constant="10" id="eP9-xl-3Iz"/>
                             <constraint firstItem="bsg-f9-Djh" firstAttribute="top" secondItem="I8Q-pe-Ept" secondAttribute="bottom" constant="10" id="eWI-4Q-6sA"/>
                             <constraint firstItem="d5N-D6-syc" firstAttribute="bottom" secondItem="3sh-5Y-vjj" secondAttribute="bottom" id="gva-zI-7MH"/>
+                            <constraint firstItem="sJS-wn-EuM" firstAttribute="leading" secondItem="d5N-D6-syc" secondAttribute="leading" id="i8M-jb-OYj"/>
                             <constraint firstItem="d5N-D6-syc" firstAttribute="trailing" secondItem="4cr-kg-M27" secondAttribute="trailing" constant="100" id="kXZ-ni-Btz"/>
                             <constraint firstItem="w3z-Z6-4LH" firstAttribute="leading" secondItem="d5N-D6-syc" secondAttribute="leading" constant="30" id="mpa-tG-vMu"/>
                             <constraint firstItem="vjA-N1-zx5" firstAttribute="leading" secondItem="d5N-D6-syc" secondAttribute="leading" id="nVi-h5-Eia"/>
@@ -13036,6 +13043,7 @@
                             <constraint firstItem="w3z-Z6-4LH" firstAttribute="top" secondItem="A9H-cE-hxA" secondAttribute="bottom" constant="12" id="vOG-HI-QYM"/>
                             <constraint firstItem="d5N-D6-syc" firstAttribute="right" secondItem="LBa-dk-CdG" secondAttribute="right" constant="10" id="xno-Yq-xpV"/>
                             <constraint firstItem="4cr-kg-M27" firstAttribute="top" secondItem="A9H-cE-hxA" secondAttribute="bottom" constant="2" id="y7I-m4-DvI"/>
+                            <constraint firstItem="d5N-D6-syc" firstAttribute="trailing" secondItem="sJS-wn-EuM" secondAttribute="trailing" id="zJC-NE-KdZ"/>
                         </constraints>
                         <viewLayoutGuide key="safeArea" id="d5N-D6-syc"/>
                     </view>
@@ -13050,6 +13058,7 @@
                         <outlet property="btnRecord" destination="Tnt-O7-QGp" id="HlU-mk-qfN"/>
                         <outlet property="buttomSheet" destination="3sh-5Y-vjj" id="20t-kQ-ybm"/>
                         <outlet property="collectionCategories" destination="vjA-N1-zx5" id="4w5-1C-I37"/>
+                        <outlet property="customAlert" destination="sJS-wn-EuM" id="OOr-Z7-E3B"/>
                         <outlet property="edtOrderDetails" destination="2VH-MK-X0f" id="S81-UJ-jEX"/>
                         <outlet property="gif" destination="xWf-vy-tSU" id="GqV-Ix-uEn"/>
                         <outlet property="ivHandle" destination="Ys6-br-DOz" id="PpD-vQ-L6R"/>
@@ -13739,6 +13748,11 @@
                                     <action selector="myLocationAction:" destination="PZZ-v7-ucg" eventType="touchUpInside" id="w6A-p2-Iuc"/>
                                 </connections>
                             </button>
+                            <view contentMode="scaleToFill" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="0LA-Fl-kU7" customClass="CustomAlert" customModule="rzq" customModuleProvider="target">
+                                <rect key="frame" x="0.0" y="-11" width="375" height="834"/>
+                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                            </view>
                         </subviews>
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                         <constraints>
@@ -13764,6 +13778,7 @@
                     <connections>
                         <outlet property="actionSheetConstraintBottom" destination="AqL-Qh-pbg" id="8Pt-xD-uN4"/>
                         <outlet property="actionSheetView" destination="GPb-Uy-lKw" id="Wdn-Bp-Rxr"/>
+                        <outlet property="customPopUp" destination="0LA-Fl-kU7" id="l3o-Jb-cnQ"/>
                         <outlet property="edtMoreDetails" destination="zIA-Ft-Xgn" id="Hpg-Vf-vDS"/>
                         <outlet property="lblDistance" destination="JVX-6S-R8Q" id="CeS-3H-pYS"/>
                         <outlet property="lblDropLocation" destination="a3Y-zy-pBI" id="I4o-Ro-S3L"/>

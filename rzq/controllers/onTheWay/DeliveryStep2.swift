@@ -40,6 +40,7 @@ class DeliveryStep2: BaseVC, Step3Delegate {
     @IBOutlet weak var actionSheetView: UIView!
     @IBOutlet weak var actionSheetConstraintBottom: NSLayoutConstraint!
     
+    @IBOutlet weak var customPopUp: CustomAlert!
     var currentZoom: Float = 0.0
     var gMap : GMSMapView?
     
@@ -96,7 +97,7 @@ class DeliveryStep2: BaseVC, Step3Delegate {
         let swipeUpGesture = UISwipeGestureRecognizer(target: self, action: #selector(self.showActionSheet))
         swipeUpGesture.direction = .up
         self.actionSheetView.addGestureRecognizer(swipeUpGesture)
-        
+        self.customPopUp.configureAsStep2()
     }
     
     @objc func hideActionSheet() {
