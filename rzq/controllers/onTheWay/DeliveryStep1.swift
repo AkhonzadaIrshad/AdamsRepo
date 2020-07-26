@@ -990,11 +990,15 @@ class DeliveryStep1: BaseVC , Step2Delegate, AllShopDelegate, ImagePickerDelegat
         self.lblSearch.isHidden = false
         
         self.edtMoreDetails = ""
+        self.clearDetailFieldAction(self)
         self.lblPickupLocation.text = ""
         self.searchField.text = ""
-        
+        self.selectedItems = []
+        self.selectdCategory = nil
         self.viewShopDetails.isHidden = true
         self.viewClearField.isHidden = true
+        self.btnCheckMenu.isHidden = true
+        self.viewCheckMenu.isHidden = true
         self.gMap?.clear()
         self.getShopsList(radius: Float(Constants.DEFAULT_RADIUS), rating: 0)
         
