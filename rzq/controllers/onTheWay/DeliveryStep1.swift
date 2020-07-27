@@ -105,6 +105,7 @@ class DeliveryStep1: BaseVC , Step2Delegate, AllShopDelegate, ImagePickerDelegat
     override func viewDidLoad() {
         super.viewDidLoad()
         self.locationManager.delegate = self
+        self.hideActionSheet()
         // Ask for Authorisation from the User.
         self.locationManager.requestAlwaysAuthorization()
         self.edtOrderDetails.delegate = self
@@ -157,7 +158,6 @@ class DeliveryStep1: BaseVC , Step2Delegate, AllShopDelegate, ImagePickerDelegat
     override func viewWillAppear(_ animated: Bool) {
         print("viewWillAppear")
         super.viewWillAppear(animated)
-        self.hideActionSheet()
         handleImagesView()
         
         
@@ -1087,6 +1087,7 @@ extension DeliveryStep1 : GMSMapViewDelegate {
             self.showLoading()
             self.viewPin.isHidden = false
             self.viewSuggest.isHidden = true
+            self.showActionSheet()
             ApiService.getShopDetails(Authorization: DataManager.loadUser().data?.accessToken ?? "", id: Int(id)!) { (response) in
                 self.hideLoading()
                 self.pinMarker?.map = nil
