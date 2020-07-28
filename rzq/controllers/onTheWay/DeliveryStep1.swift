@@ -107,6 +107,12 @@ class DeliveryStep1: BaseVC , Step2Delegate, AllShopDelegate, ImagePickerDelegat
     var selectdCategory: TypeClass?
     var selectedItems = [ShopMenuItem]()
     var categories = [TypeClass]()
+    var searchedShops: [DataShop] {
+        self.shops.filter({
+            return $0.name?.uppercased().contains(find: self.searchedText?.uppercased() ?? "") ?? false
+        })
+    }
+    var searchedText: String?
     
     // MARK: - Methods
     
@@ -133,8 +139,19 @@ class DeliveryStep1: BaseVC , Step2Delegate, AllShopDelegate, ImagePickerDelegat
         self.shopsSearchTableView.delegate = self
         self.shopsSearchTableView.dataSource = self
         self.searchShopsTextField.delegate = self
+        self.searchShopsTextField.addTarget(self, action: #selector(textFieldDidChange), for: .editingChanged)
+
     }
     
+    @objc func textFieldDidChange() {
+        self.searchedText = self.searchShopsTextField.text
+        if searchShopsTextField.text?.isEmpty ?? true {
+            self.shopsSearchTableView.isHidden = true
+        } else {
+            self.shopsSearchTableView.isHidden = false
+            self.shopsSearchTableView.reloadData()
+        }
+    }
     @objc func hideActionSheet() {
         self.actionSheetConstraintBottom.constant = 50 - self.buttomSheet.frame.height
     }
@@ -1328,10 +1345,6 @@ extension DeliveryStep1: UITextFieldDelegate {
     func textFieldDidEndEditing(_ textField: UITextField) {
         self.shopsSearchTableView.isHidden = true
     }
-    
-    func textFieldDidBeginEditing(_ textField: UITextField) {
-        self.shopsSearchTableView.isHidden = false
-    }
 }
 
 // MARK: - GMSAutocompleteViewControllerDelegate
@@ -1713,14 +1726,21 @@ extension DeliveryStep1 {
 
 extension DeliveryStep1: UITableViewDelegate, UITableViewDataSource {
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        self.shops.count
+        self.searchedShops.count
     }
     
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         let cell = UITableViewCell()
-        cell.textLabel?.text = self.shops[indexPath.row].name
+        cell.textLabel?.text = self.searchedShops[indexPath.row].name
         return cell
     }
     
+    func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
+        onSelect(shop: self.searchedShops[indexPath.row])
+        self.searchedText = ""
+        self.shopsSearchTableView.isHidden = true
+        self.searchShopsTextField.text = ""
+        self.searchShopsTextField.resignFirstResponder()
+    }
 }
 
