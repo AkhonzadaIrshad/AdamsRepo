@@ -78,6 +78,10 @@ class DeliveryStep1: BaseVC , Step2Delegate, AllShopDelegate, ImagePickerDelegat
     @IBOutlet weak var viewPop: UIView!
     @IBOutlet weak var collectionCategories: UICollectionView!
     
+    
+    @IBOutlet weak var shopsSearchTableView: UITableView!
+    @IBOutlet weak var searchShopsTextField: UITextField!
+    
     // MARK: - Variables
     let locationManager = CLLocationManager()
     var markerLocation: GMSMarker?
