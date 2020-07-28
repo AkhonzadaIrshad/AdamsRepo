@@ -300,6 +300,7 @@ class DeliveryStep1: BaseVC , Step2Delegate, AllShopDelegate, ImagePickerDelegat
         self.showLoading()
         self.viewPin.isHidden = false
         self.viewSuggest.isHidden = true
+        self.showActionSheet()
         ApiService.getShopDetails(Authorization: DataManager.loadUser().data?.accessToken ?? "", id: shop.id ?? 0) { (response) in
             self.hideLoading()
             self.pinMarker?.map = nil
