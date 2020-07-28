@@ -97,7 +97,11 @@ class DeliveryStep1: BaseVC , Step2Delegate, AllShopDelegate, ImagePickerDelegat
     var selectedLocation : CLLocation?
     var orderModel : OTWOrder?
     var toolTipView : ToolTipView?
-    var shops = [DataShop]()
+    var shops = [DataShop]() {
+        didSet {
+            self.shopsSearchTableView.reloadData()
+        }
+    }
     var filterShops = [DataShop]()
     var shopMarkers = [GMSMarker]()
     var selectdCategory: TypeClass?
@@ -126,6 +130,9 @@ class DeliveryStep1: BaseVC , Step2Delegate, AllShopDelegate, ImagePickerDelegat
         swipeUpGesture.direction = .up
         self.buttomSheet.addGestureRecognizer(swipeUpGesture)
         self.customAlert.configureAsStep1()
+        self.shopsSearchTableView.delegate = self
+        self.shopsSearchTableView.dataSource = self
+        self.searchShopsTextField.delegate = self
     }
     
     @objc func hideActionSheet() {
@@ -1306,7 +1313,9 @@ extension DeliveryStep1: UITextFieldDelegate {
             let query = self.searchField.text ?? ""
             if (query.count > 0) {
                 self.getShopsByName(name: query, latitude: self.latitude ?? 0.0, longitude: self.longitude ?? 0.0, radius: Float(Constants.DEFAULT_RADIUS))
-            }else {
+            } else if textField  == self.searchShopsTextField {
+                self.shopsSearchTableView.isHidden = true
+            } else {
                 self.gMap?.clear()
                 self.getShopsList(radius: Float(Constants.DEFAULT_RADIUS), rating: 0)
             }
@@ -1691,4 +1700,18 @@ extension DeliveryStep1 {
             }
         }
         
+}
+
+
+extension DeliveryStep1: UITableViewDelegate, UITableViewDataSource {
+    func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
+        self.shops.count
+    }
+    
+    func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
+        let cell = UITableViewCell()
+        cell.textLabel?.text = self.shops[indexPath.row].name
+        return cell
+    }
+    
 }
