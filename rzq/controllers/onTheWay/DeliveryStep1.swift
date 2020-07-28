@@ -312,10 +312,6 @@ class DeliveryStep1: BaseVC , Step2Delegate, AllShopDelegate, ImagePickerDelegat
             self.orderModel?.pickUpLatitude = response.shopData?.latitude ?? 0.0
             self.orderModel?.pickUpLongitude = response.shopData?.longitude ?? 0.0
             
-            //self.lblShopName.text = response.shopData?.name ?? ""
-            //self.shopNameHeight.constant = 20
-            
-            //self.moreDetailsView.isHidden = false
             self.ivShop.isHidden = false
             
             self.lblSearch.isHidden = true
@@ -438,11 +434,6 @@ class DeliveryStep1: BaseVC , Step2Delegate, AllShopDelegate, ImagePickerDelegat
             self.showBanner(title: "alert".localized, message: "enter_order_details".localized, style: UIColor.INFO)
             return false
         }
-        
-        //        if (self.edtCost.text?.count ?? 0 == 0) {
-        //            self.showBanner(title: "alert".localized, message: "enter_order_cost".localized, style: UIColor.INFO)
-        //            return false
-        //        }
         
         return true
     }
@@ -614,9 +605,6 @@ class DeliveryStep1: BaseVC , Step2Delegate, AllShopDelegate, ImagePickerDelegat
                 filterItems.append(item1)
             }
             
-            //            self.searchField.theme.font = UIFont.systemFont(ofSize: 13)
-            //            self.searchField.startVisibleWithoutInteraction = true
-            //            self.searchField.startSuggestingInmediately = true
             self.searchField.theme.font = UIFont.systemFont(ofSize: 13)
             self.searchField.forceNoFiltering = true
             self.searchField.filterItems(filterItems)
@@ -765,8 +753,6 @@ class DeliveryStep1: BaseVC , Step2Delegate, AllShopDelegate, ImagePickerDelegat
                 
                 self.edtMoreDetails = "\(shop.name ?? "")\n\(shop.address ?? "")"
                 
-               // self.lblShopName.text = shop.name ?? ""
-               // self.shopNameHeight.constant = 20
                 self.viewPin.isHidden = false
                 self.viewSuggest.isHidden = true
                 
@@ -1331,7 +1317,7 @@ extension DeliveryStep1: UITextFieldDelegate {
 
 extension DeliveryStep1: GMSAutocompleteViewControllerDelegate {
     func viewController(_ viewController: GMSAutocompleteViewController, didAutocompleteWith place: GMSPlace) {
-        
+        self.showActionSheet()
         dismiss(animated: true, completion: {
             
             self.searchField.text = ""
