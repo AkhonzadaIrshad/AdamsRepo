@@ -1324,6 +1324,14 @@ extension DeliveryStep1: UITextFieldDelegate {
         }
         return false
     }
+    
+    func textFieldDidEndEditing(_ textField: UITextField) {
+        self.shopsSearchTableView.isHidden = true
+    }
+    
+    func textFieldDidBeginEditing(_ textField: UITextField) {
+        self.shopsSearchTableView.isHidden = false
+    }
 }
 
 // MARK: - GMSAutocompleteViewControllerDelegate
@@ -1715,3 +1723,4 @@ extension DeliveryStep1: UITableViewDelegate, UITableViewDataSource {
     }
     
 }
+
