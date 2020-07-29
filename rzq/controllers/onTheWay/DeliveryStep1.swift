@@ -82,6 +82,8 @@ class DeliveryStep1: BaseVC , Step2Delegate, AllShopDelegate, ImagePickerDelegat
     @IBOutlet weak var shopsSearchTableView: UITableView!
     @IBOutlet weak var searchShopsTextField: UITextField!
     
+    @IBOutlet weak var catFilterSearchStack: UIStackView!
+    
     // MARK: - Variables
     let locationManager = CLLocationManager()
     var markerLocation: GMSMarker?
@@ -1492,6 +1494,7 @@ extension DeliveryStep1: UICollectionViewDelegate, UICollectionViewDataSource, U
     }
     
     func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
+        self.catFilterSearchStack.isHidden = false
         self.clearFieldAction(self)
         let selectedCat = self.categories[indexPath.row]
         self.selectdCategory = selectedCat
