@@ -1744,6 +1744,7 @@ extension DeliveryStep1: UITableViewDelegate, UITableViewDataSource {
         self.shopsSearchTableView.isHidden = true
         self.searchShopsTextField.text = ""
         self.searchShopsTextField.resignFirstResponder()
+        self.catFilterSearchStack.isHidden = true
     }
 }
 
