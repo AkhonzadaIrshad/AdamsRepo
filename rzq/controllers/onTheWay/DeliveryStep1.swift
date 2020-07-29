@@ -109,7 +109,7 @@ class DeliveryStep1: BaseVC , Step2Delegate, AllShopDelegate, ImagePickerDelegat
     var categories = [TypeClass]()
     var searchedShops: [DataShop] {
         self.shops.filter({
-            return $0.name?.uppercased().contains(find: self.searchedText?.uppercased() ?? "") ?? false
+            return ($0.name?.uppercased().contains(find: self.searchedText?.uppercased() ?? "") ?? false ) && $0.type?.id == self.selectdCategory?.id
         })
     }
     var searchedText: String?
