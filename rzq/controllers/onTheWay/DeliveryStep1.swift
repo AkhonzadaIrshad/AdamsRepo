@@ -658,12 +658,6 @@ class DeliveryStep1: BaseVC , Step2Delegate, AllShopDelegate, ImagePickerDelegat
                 self.view.endEditing(true)
                 
                 for marker in self.shopMarkers {
-                    //                    marker.icon = UIImage(named: "ic_map_shop")
-                    //                    if (marker.title == "\(shop.id ?? 0)") {
-                    //                        marker.icon = UIImage(named: "ic_map_shop_selected")
-                    //                    }else {
-                    //                        marker.map = nil
-                    //                    }
                     marker.map = nil
                 }
                 
@@ -1116,18 +1110,11 @@ extension DeliveryStep1 : GMSMapViewDelegate {
                 self.orderModel?.pickUpLatitude = response.shopData?.latitude ?? 0.0
                 self.orderModel?.pickUpLongitude = response.shopData?.longitude ?? 0.0
                 
-               // self.lblShopName.text = response.shopData?.name ?? ""
-               // self.shopNameHeight.constant = 20
-                
-                // hide detils always
-                //self.moreDetailsView.isHidden = false
                 self.ivShop.isHidden = false
-                
                 
                 self.lblSearch.isHidden = true
                 self.viewShopDetails.isHidden = false
                 self.viewClearField.isHidden = false
-                
                 
                 self.edtMoreDetails = "\(response.shopData?.name ?? "")\n\(response.shopData?.address ?? "")"
                 
