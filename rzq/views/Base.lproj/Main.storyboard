@@ -13037,15 +13037,15 @@
                             <constraint firstItem="xWf-vy-tSU" firstAttribute="centerY" secondItem="Jju-3F-VyM" secondAttribute="centerY" id="2X5-CA-c7i"/>
                             <constraint firstItem="d5N-D6-syc" firstAttribute="trailing" secondItem="I8Q-pe-Ept" secondAttribute="trailing" id="4fM-A7-8Xk"/>
                             <constraint firstItem="3sh-5Y-vjj" firstAttribute="leading" secondItem="d5N-D6-syc" secondAttribute="leading" id="8Lo-Al-HpF"/>
-                            <constraint firstItem="LR0-b6-eoZ" firstAttribute="leading" secondItem="bsg-f9-Djh" secondAttribute="trailing" id="93u-BW-qXI"/>
+                            <constraint firstItem="LR0-b6-eoZ" firstAttribute="left" secondItem="bsg-f9-Djh" secondAttribute="right" id="93u-BW-qXI"/>
                             <constraint firstItem="LR0-b6-eoZ" firstAttribute="top" secondItem="bsg-f9-Djh" secondAttribute="top" id="9U4-qR-bOq"/>
                             <constraint firstItem="kbU-q0-1TA" firstAttribute="top" secondItem="A9H-cE-hxA" secondAttribute="bottom" id="AEK-1o-7vA"/>
-                            <constraint firstItem="Hha-LX-Jv4" firstAttribute="leading" secondItem="bsg-f9-Djh" secondAttribute="leading" id="CDt-XO-cXo"/>
-                            <constraint firstItem="d5N-D6-syc" firstAttribute="trailing" secondItem="LR0-b6-eoZ" secondAttribute="trailing" id="FIB-ba-NEx"/>
+                            <constraint firstItem="Hha-LX-Jv4" firstAttribute="left" secondItem="bsg-f9-Djh" secondAttribute="left" id="CDt-XO-cXo"/>
+                            <constraint firstItem="d5N-D6-syc" firstAttribute="right" secondItem="LR0-b6-eoZ" secondAttribute="right" id="FIB-ba-NEx"/>
                             <constraint firstItem="4cr-kg-M27" firstAttribute="leading" secondItem="d5N-D6-syc" secondAttribute="leading" constant="15" id="Gf9-si-Xf7"/>
                             <constraint firstItem="kbU-q0-1TA" firstAttribute="leading" secondItem="d5N-D6-syc" secondAttribute="leading" id="J7L-zs-LgO"/>
                             <constraint firstItem="LBa-dk-CdG" firstAttribute="top" secondItem="A9H-cE-hxA" secondAttribute="bottom" constant="8" id="Kq4-c3-eSX"/>
-                            <constraint firstItem="Hha-LX-Jv4" firstAttribute="trailing" secondItem="LR0-b6-eoZ" secondAttribute="trailing" id="LIr-2U-Zj8"/>
+                            <constraint firstItem="Hha-LX-Jv4" firstAttribute="right" secondItem="LR0-b6-eoZ" secondAttribute="right" id="LIr-2U-Zj8"/>
                             <constraint firstItem="LR0-b6-eoZ" firstAttribute="height" secondItem="bsg-f9-Djh" secondAttribute="height" id="SUX-uU-lrQ"/>
                             <constraint firstItem="A9H-cE-hxA" firstAttribute="top" secondItem="Jju-3F-VyM" secondAttribute="top" id="V7V-Rg-8wx"/>
                             <constraint firstItem="xWf-vy-tSU" firstAttribute="centerX" secondItem="Jju-3F-VyM" secondAttribute="centerX" id="W4s-go-7uT"/>
@@ -16338,19 +16338,19 @@
                                                         </userDefinedRuntimeAttributes>
                                                     </view>
                                                     <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="zzz" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="Wlm-ad-pp1">
-                                                        <rect key="frame" x="105" y="78" width="142" height="15.333333333333329"/>
+                                                        <rect key="frame" x="105" y="78" width="142" height="16.666666666666671"/>
                                                         <fontDescription key="fontDescription" name="Dosis-SemiBold" family="Dosis" pointSize="13"/>
                                                         <nil key="textColor"/>
                                                         <nil key="highlightedColor"/>
                                                     </label>
                                                     <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="zzz" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="EC4-Jp-8TF">
-                                                        <rect key="frame" x="105" y="98.333333333333343" width="140" height="15.333333333333329"/>
+                                                        <rect key="frame" x="105" y="99.666666666666657" width="140" height="16.666666666666671"/>
                                                         <fontDescription key="fontDescription" name="Dosis-SemiBold" family="Dosis" pointSize="13"/>
                                                         <nil key="textColor"/>
                                                         <nil key="highlightedColor"/>
                                                     </label>
                                                     <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="zzz" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="biu-iK-fgJ">
-                                                        <rect key="frame" x="105" y="118.66666666666666" width="140" height="14"/>
+                                                        <rect key="frame" x="105" y="121.33333333333333" width="140" height="15.333333333333329"/>
                                                         <fontDescription key="fontDescription" name="Dosis-SemiBold" family="Dosis" pointSize="12"/>
                                                         <nil key="textColor"/>
                                                         <nil key="highlightedColor"/>
@@ -21829,7 +21829,7 @@
                                 <rect key="frame" x="0.0" y="87" width="375" height="100"/>
                                 <subviews>
                                     <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Notifications" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="HO9-nX-gir" customClass="MyUILabel" customModule="rzq" customModuleProvider="target">
-                                        <rect key="frame" x="20" y="9.9999999999999982" width="112" height="23.333333333333329"/>
+                                        <rect key="frame" x="20" y="10" width="107" height="37.666666666666664"/>
                                         <fontDescription key="fontDescription" name="Cairo-Regular" family="Cairo" pointSize="20"/>
                                         <color key="textColor" red="0.24313725490196078" green="0.054901960784313725" blue="0.40392156862745099" alpha="1" colorSpace="calibratedRGB"/>
                                         <nil key="highlightedColor"/>
@@ -21838,7 +21838,7 @@
                                         </userDefinedRuntimeAttributes>
                                     </label>
                                     <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Turn Notifications ON or Off" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="NGg-52-YiS" customClass="MyUILabel" customModule="rzq" customModuleProvider="target">
-                                        <rect key="frame" x="20" y="43.333333333333343" width="198" height="24"/>
+                                        <rect key="frame" x="20" y="57.666666666666657" width="185.66666666666666" height="24"/>
                                         <constraints>
                                             <constraint firstAttribute="height" constant="24" id="elY-41-xTQ"/>
                                         </constraints>
@@ -21881,7 +21881,7 @@
                                 <rect key="frame" x="0.0" y="187" width="375" height="80"/>
                                 <subviews>
                                     <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Language" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="uGG-sH-IUg" customClass="MyUILabel" customModule="rzq" customModuleProvider="target">
-                                        <rect key="frame" x="20.000000000000007" y="28.333333333333343" width="88.666666666666686" height="23.333333333333329"/>
+                                        <rect key="frame" x="20" y="21.333333333333339" width="81.666666666666671" height="37.666666666666657"/>
                                         <fontDescription key="fontDescription" name="Cairo-Regular" family="Cairo" pointSize="20"/>
                                         <color key="textColor" red="0.24313725490196078" green="0.054901960784313725" blue="0.40392156862745099" alpha="1" colorSpace="calibratedRGB"/>
                                         <nil key="highlightedColor"/>
@@ -21897,26 +21897,26 @@
                                         </constraints>
                                     </view>
                                     <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="English" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="avm-Z0-cTH">
-                                        <rect key="frame" x="316.33333333333331" y="31.333333333333343" width="48.666666666666686" height="17.666666666666671"/>
+                                        <rect key="frame" x="319" y="26" width="46" height="28.333333333333329"/>
                                         <fontDescription key="fontDescription" name="Cairo-Regular" family="Cairo" pointSize="15"/>
                                         <color key="textColor" white="0.33333333329999998" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                         <nil key="highlightedColor"/>
                                     </label>
                                     <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="ic_unchecked_orange" translatesAutoresizingMaskIntoConstraints="NO" id="m4R-6p-KjD">
-                                        <rect key="frame" x="291.33333333333331" y="30" width="20" height="20"/>
+                                        <rect key="frame" x="294" y="30" width="20" height="20"/>
                                         <constraints>
                                             <constraint firstAttribute="height" constant="20" id="Mye-Qf-55w"/>
                                             <constraint firstAttribute="width" constant="20" id="OqB-JI-GrR"/>
                                         </constraints>
                                     </imageView>
                                     <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="العربية" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="aW2-h1-oL0">
-                                        <rect key="frame" x="242.00000000000003" y="31.333333333333343" width="34.333333333333343" height="17.666666666666671"/>
+                                        <rect key="frame" x="237" y="32.666666666666657" width="42" height="15"/>
                                         <fontDescription key="fontDescription" name="Tajawal-Regular" family="Tajawal" pointSize="15"/>
                                         <color key="textColor" white="0.33333333329999998" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                         <nil key="highlightedColor"/>
                                     </label>
                                     <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="ic_checked" translatesAutoresizingMaskIntoConstraints="NO" id="ov3-LE-0y8">
-                                        <rect key="frame" x="212" y="30" width="20" height="20"/>
+                                        <rect key="frame" x="207" y="30" width="20" height="20"/>
                                         <constraints>
                                             <constraint firstAttribute="width" constant="20" id="cI5-4y-Or2"/>
                                             <constraint firstAttribute="height" constant="20" id="lfm-Zt-Sdd"/>
