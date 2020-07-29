@@ -313,3 +313,4 @@ You can locate any place by long pressing on the map!";
 If you want to change it, use the search above or by long pressin on the map to any point";
 
 "steps.popup.title" = "HOW TO USE";
+"step1.catFilter.search.placeholder" = "search in";

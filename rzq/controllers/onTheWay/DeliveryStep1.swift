@@ -1494,10 +1494,17 @@ extension DeliveryStep1: UICollectionViewDelegate, UICollectionViewDataSource, U
     }
     
     func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
-        self.catFilterSearchStack.isHidden = false
-        self.clearFieldAction(self)
         let selectedCat = self.categories[indexPath.row]
         self.selectdCategory = selectedCat
+        if self.isArabic() {
+            self.searchShopsTextField.textAlignment = .right
+        } else {
+            self.searchShopsTextField.textAlignment = .left
+        }
+        self.searchShopsTextField.placeholder = "step1.catFilter.search.placeholder".localized + " \(self.selectdCategory?.name ?? "")"
+        
+        self.catFilterSearchStack.isHidden = false
+        self.clearFieldAction(self)
         if selectedCat.id == 0 {
             self.addShopsMarkers()
         } else {
