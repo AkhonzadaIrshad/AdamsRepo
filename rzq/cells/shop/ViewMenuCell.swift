@@ -11,11 +11,8 @@ import UIKit
 class ViewMenuCell: UITableViewCell {
 
     @IBOutlet weak var lblItemName: MyUILabel!
-    
     @IBOutlet weak var lblQuantity: MyUILabel!
-    
     @IBOutlet weak var lblPrice: MyUILabel!
-    
     @IBOutlet weak var lblTotal: MyUILabel!
     
 }

@@ -35,6 +35,7 @@ class HomeMapVC: BaseViewController,LabasLocationManagerDelegate, UICollectionVi
     
     
     @IBOutlet weak var collectionView: UICollectionView!
+    @IBOutlet weak var navBar: NavBar!
     
     let cameraZoom : Float = 15.0
     

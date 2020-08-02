@@ -226,6 +226,8 @@
 		C185A56924CCD65E001B6B10 /* CustomAlert.xib in Resources */ = {isa = PBXBuildFile; fileRef = C185A56824CCD65E001B6B10 /* CustomAlert.xib */; };
 		C185A56C24CDC17A001B6B10 /* Cairo-Bold.ttf in Resources */ = {isa = PBXBuildFile; fileRef = C185A56A24CDC17A001B6B10 /* Cairo-Bold.ttf */; };
 		C185A56D24CDC17A001B6B10 /* Cairo-Regular.ttf in Resources */ = {isa = PBXBuildFile; fileRef = C185A56B24CDC17A001B6B10 /* Cairo-Regular.ttf */; };
+		C1F86AEF24D75F48005698F4 /* NavBar.swift in Sources */ = {isa = PBXBuildFile; fileRef = C1F86AEE24D75F48005698F4 /* NavBar.swift */; };
+		C1F86AF124D75F58005698F4 /* NavBar.xib in Resources */ = {isa = PBXBuildFile; fileRef = C1F86AF024D75F58005698F4 /* NavBar.xib */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -457,6 +459,8 @@
 		C185A56824CCD65E001B6B10 /* CustomAlert.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = CustomAlert.xib; sourceTree = "<group>"; };
 		C185A56A24CDC17A001B6B10 /* Cairo-Bold.ttf */ = {isa = PBXFileReference; lastKnownFileType = file; path = "Cairo-Bold.ttf"; sourceTree = "<group>"; };
 		C185A56B24CDC17A001B6B10 /* Cairo-Regular.ttf */ = {isa = PBXFileReference; lastKnownFileType = file; path = "Cairo-Regular.ttf"; sourceTree = "<group>"; };
+		C1F86AEE24D75F48005698F4 /* NavBar.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NavBar.swift; sourceTree = "<group>"; };
+		C1F86AF024D75F58005698F4 /* NavBar.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = NavBar.xib; sourceTree = "<group>"; };
 		E55152A97B11159AAAF7C8B3 /* Pods-rzq.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-rzq.release.xcconfig"; path = "Pods/Target Support Files/Pods-rzq/Pods-rzq.release.xcconfig"; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
@@ -728,6 +732,7 @@
 		8B9CA8302250CA7700DE0DC4 /* CustomUI */ = {
 			isa = PBXGroup;
 			children = (
+				C1F86AF224D75F86005698F4 /* Navbar */,
 				8B9CA8312250CA8400DE0DC4 /* MyUIButton.swift */,
 				8B9CA8332250CA9C00DE0DC4 /* MyUILabel.swift */,
 				8B9CA8352250CAB000DE0DC4 /* MyUITextView.swift */,
@@ -959,6 +964,15 @@
 			name = Pods;
 			sourceTree = "<group>";
 		};
+		C1F86AF224D75F86005698F4 /* Navbar */ = {
+			isa = PBXGroup;
+			children = (
+				C1F86AEE24D75F48005698F4 /* NavBar.swift */,
+				C1F86AF024D75F58005698F4 /* NavBar.xib */,
+			);
+			path = Navbar;
+			sourceTree = "<group>";
+		};
 /* End PBXGroup section */
 
 /* Begin PBXNativeTarget section */
@@ -1059,6 +1073,7 @@
 				8B1F91C92256269200B639F1 /* ToolTipView.xib in Resources */,
 				C185A56D24CDC17A001B6B10 /* Cairo-Regular.ttf in Resources */,
 				8B9CA8462250CCDF00DE0DC4 /* english_medium.ttf in Resources */,
+				C1F86AF124D75F58005698F4 /* NavBar.xib in Resources */,
 				8BF222322271AC05005BE71D /* arabic_regular.ttf in Resources */,
 				8B9CA8452250CCDF00DE0DC4 /* english_light.ttf in Resources */,
 				8B2BCC87224FCEB400CBC7D3 /* Main.storyboard in Resources */,
@@ -1226,6 +1241,7 @@
 				8BB7CA06227F55F200D7C8F2 /* FilterModel.swift in Sources */,
 				67693C7A248447B100C944D2 /* DataManager.swift in Sources */,
 				8BF4242B229B137F0014596F /* TenderStep3.swift in Sources */,
+				C1F86AEF24D75F48005698F4 /* NavBar.swift in Sources */,
 				8BAE41DF2299ADA300C7D897 /* RegisterAsServiceProviderVC.swift in Sources */,
 				8BCB780D2254E83A00E52ED0 /* TakeOrderVC.swift in Sources */,
 				8BDAA8B72275905D00F59D5E /* ImageSliderVC.swift in Sources */,
