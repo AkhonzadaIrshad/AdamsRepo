@@ -65,9 +65,9 @@ class NavBar: UIView {
     }
     
     private func localize() {
-        self.lblHome.text = "Home"
-        self.lblOrders.text = "Orders"
-        self.lblNotifications.text = "Notifications"
-        self.lblProfile.text = "Profile"
+        self.lblHome.text = "navbar.home".localized
+        self.lblOrders.text = "navbar.orders".localized
+        self.lblNotifications.text = "navbar.notifications".localized
+        self.lblProfile.text = "navbar.profile".localized
     }
 }

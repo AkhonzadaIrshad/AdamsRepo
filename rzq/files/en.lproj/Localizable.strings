@@ -314,3 +314,9 @@ If you want to change it, use the search above or by long pressin on the map to 
 
 "steps.popup.title" = "HOW TO USE";
 "step1.catFilter.search.placeholder" = "search in";
+
+
+"navbar.home" = "HOME";
+"navbar.orders" = "ORDERS";
+"navbar.notifications" = "NOTIFICATIONS";
+"navbar.profile" = "PROFILE";

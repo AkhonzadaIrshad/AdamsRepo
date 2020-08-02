@@ -321,3 +321,8 @@
 ٢-الطلب من مكان اخر استخدم البحث بالاعلى
 ٣- يمكنك تحديد أي موقع بالضغط المطول عالخريطه";
 "step1.catFilter.search.placeholder" = "ابحث في";
+
+"navbar.home" = "الرئيسية";
+"navbar.orders" = "الطلبات";
+"navbar.notifications" = "الاشعارات";
+"navbar.profile" = "صفحتي";
