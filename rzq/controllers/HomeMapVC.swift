@@ -68,7 +68,11 @@ class HomeMapVC: BaseViewController,LabasLocationManagerDelegate, UICollectionVi
     override func viewDidLoad() {
         super.viewDidLoad()
         gMap = GMSMapView()
-        
+        if self.isProvider() {
+            self.navBar.isHidden = false
+        } else {
+            self.navBar.isHidden = true
+        }
         self.btnMenu.addTarget(self, action: #selector(BaseViewController.onSlideMenuButtonPressed(_:)), for: UIControl.Event.touchUpInside)
         
         self.btnAbout.addTarget(self, action: #selector(BaseViewController.onAboutPressed(_:)), for: UIControl.Event.touchUpInside)
