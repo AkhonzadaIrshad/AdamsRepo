@@ -68,6 +68,7 @@ class HomeMapVC: BaseViewController,LabasLocationManagerDelegate, UICollectionVi
     override func viewDidLoad() {
         super.viewDidLoad()
         gMap = GMSMapView()
+        self.navBar.delegate = self
         if self.isProvider() {
             self.navBar.isHidden = false
         } else {
@@ -123,11 +124,6 @@ class HomeMapVC: BaseViewController,LabasLocationManagerDelegate, UICollectionVi
             UserDefaults.standard.setValue(false, forKey: Constants.OPEN_MENU)
             self.onSlideMenuButtonPressed(self.btnMenu)
         }
-        
-        //        let notificationsCount = UserDefaults.standard.value(forKey: Constants.NOTIFICATION_COUNT) as? Int ?? 0
-        //        if (notificationsCount > 0) {
-        //            self.openViewControllerBasedOnIdentifier("NotificationsVC")
-        //        }
         
     }
     
@@ -1115,4 +1111,22 @@ extension HomeMapVC: UITextFieldDelegate {
         return false
     }
     
+}
+
+extension HomeMapVC: NavBarDelegate {
+    func goToHomeScreen() {
+        self.slideMenuItemSelectedAtIndex(1)
+    }
+    
+    func goToOrdersScreen() {
+        self.slideMenuItemSelectedAtIndex(2)
+    }
+    
+    func goToNotificationsScreen() {
+        self.slideMenuItemSelectedAtIndex(3)
+    }
+    
+    func goToProfileScreen() {
+        self.slideMenuItemSelectedAtIndex(12)
+    }
 }

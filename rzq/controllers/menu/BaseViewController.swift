@@ -194,20 +194,12 @@ class BaseViewController: UIViewController, SlideMenuDelegate {
     func openViewControllerBasedOnIdentifier(_ strIdentifier:String) {
         let destViewController : UIViewController = self.storyboard!.instantiateViewController(withIdentifier: strIdentifier)
         
-        //temperorary fixed crash
-        //        if (self.navigationController?.topViewController == nil) {
-        //            return
-        //        }
-        
         guard let topViewController : UIViewController = self.navigationController?.topViewController else {
             return
         }
         
         if (topViewController.restorationIdentifier! == destViewController.restorationIdentifier!){
             print("Same VC")
-//            let btn = UIButton()
-//            btn.tag = 10
-//            self.onSlideMenuButtonPressed(btn)
         } else {
             self.navigationController!.pushViewController(destViewController, animated: true)
         }
@@ -225,37 +217,6 @@ class BaseViewController: UIViewController, SlideMenuDelegate {
             return Constants.ENGLISH_FONT_REGULAR
         }
     }
-    
-    //    func addSlideMenuButton(){
-    //        let btnShowMenu = UIButton(type: UIButton.ButtonType.system)
-    //        btnShowMenu.setImage(self.defaultMenuImage(), for: UIControl.State())
-    //        btnShowMenu.frame = CGRect(x: 0, y: 0, width: 30, height: 30)
-    //        btnShowMenu.addTarget(self, action: #selector(BaseViewController.onSlideMenuButtonPressed(_:)), for: UIControl.Event.touchUpInside)
-    //        let customBarItem = UIBarButtonItem(customView: btnShowMenu)
-    //        self.navigationItem.leftBarButtonItem = customBarItem;
-    //    }
-    //
-    //    func defaultMenuImage() -> UIImage {
-    //        var defaultMenuImage = UIImage()
-    //
-    //        UIGraphicsBeginImageContextWithOptions(CGSize(width: 30, height: 22), false, 0.0)
-    //
-    //        UIColor.black.setFill()
-    //        UIBezierPath(rect: CGRect(x: 0, y: 3, width: 30, height: 1)).fill()
-    //        UIBezierPath(rect: CGRect(x: 0, y: 10, width: 30, height: 1)).fill()
-    //        UIBezierPath(rect: CGRect(x: 0, y: 17, width: 30, height: 1)).fill()
-    //
-    //        UIColor.white.setFill()
-    //        UIBezierPath(rect: CGRect(x: 0, y: 4, width: 30, height: 1)).fill()
-    //        UIBezierPath(rect: CGRect(x: 0, y: 11,  width: 30, height: 1)).fill()
-    //        UIBezierPath(rect: CGRect(x: 0, y: 18, width: 30, height: 1)).fill()
-    //
-    //        defaultMenuImage = UIGraphicsGetImageFromCurrentImageContext()!
-    //
-    //        UIGraphicsEndImageContext()
-    //
-    //        return defaultMenuImage;
-    //    }
     
     @objc func  onAboutPressed(_ sender : UIButton) {
         //selectedTag = 8
@@ -474,7 +435,5 @@ class BaseViewController: UIViewController, SlideMenuDelegate {
            dateFormatter.dateFormat = "dd/MM/yyyy hh:mm a"
         let displayDate = dateFormatter.string(from: date ?? Date())
            return displayDate
-       }
-    
-    
+       }    
 }

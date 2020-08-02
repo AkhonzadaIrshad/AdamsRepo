@@ -8,6 +8,13 @@
 
 import UIKit
 
+protocol NavBarDelegate {
+    func goToHomeScreen()
+    func goToOrdersScreen()
+    func goToNotificationsScreen()
+    func goToProfileScreen()
+}
+
 class NavBar: UIView {
     
     private let nibName = "NavBar"
@@ -16,6 +23,8 @@ class NavBar: UIView {
     @IBOutlet weak var lblOrders: UILabel!
     @IBOutlet weak var lblNotifications: UILabel!
     @IBOutlet weak var lblProfile: UILabel!
+    
+    var delegate: NavBarDelegate!
     
     required init?(coder aDecoder: NSCoder) {
         super.init(coder: aDecoder)
@@ -41,18 +50,18 @@ class NavBar: UIView {
     
     
     @IBAction func btnHomeClicked(_ sender: Any) {
-        print("Home")
+        delegate.goToHomeScreen()
     }
     
     @IBAction func btnOrdersClicked(_ sender: Any) {
-        print("Orders")
+        delegate.goToOrdersScreen()
     }
     
     @IBAction func btnNotificationsClicked(_ sender: Any) {
-        print("Notifications")
+        delegate.goToNotificationsScreen()
     }
     @IBAction func btnProfileClicked(_ sender: Any) {
-        print("Profile")
+        delegate.goToProfileScreen()
     }
     
     private func localize() {
