@@ -33,7 +33,7 @@
                                         <action selector="btnHomeClicked:" destination="-1" eventType="touchUpInside" id="Yyb-2v-he5"/>
                                     </connections>
                                 </button>
-                                <stackView opaque="NO" contentMode="scaleToFill" axis="vertical" alignment="center" translatesAutoresizingMaskIntoConstraints="NO" id="Kcx-9S-MHj">
+                                <stackView opaque="NO" userInteractionEnabled="NO" contentMode="scaleToFill" axis="vertical" alignment="center" translatesAutoresizingMaskIntoConstraints="NO" id="Kcx-9S-MHj">
                                     <rect key="frame" x="0.0" y="10" width="94.5" height="71"/>
                                     <subviews>
                                         <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="z3W-A3-YwJ">
@@ -83,7 +83,7 @@
                                         <action selector="btnOrdersClicked:" destination="-1" eventType="touchUpInside" id="opx-af-niH"/>
                                     </connections>
                                 </button>
-                                <stackView opaque="NO" contentMode="scaleToFill" axis="vertical" alignment="center" translatesAutoresizingMaskIntoConstraints="NO" id="tem-Yc-mgt">
+                                <stackView opaque="NO" userInteractionEnabled="NO" contentMode="scaleToFill" axis="vertical" alignment="center" translatesAutoresizingMaskIntoConstraints="NO" id="tem-Yc-mgt">
                                     <rect key="frame" x="0.0" y="10" width="94.5" height="71"/>
                                     <subviews>
                                         <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="7Nm-Is-Ibe">
@@ -133,7 +133,7 @@
                                         <action selector="btnNotificationsClicked:" destination="-1" eventType="touchUpInside" id="flb-qJ-Cmx"/>
                                     </connections>
                                 </button>
-                                <stackView opaque="NO" contentMode="scaleToFill" axis="vertical" alignment="center" translatesAutoresizingMaskIntoConstraints="NO" id="BrS-HZ-Jnp">
+                                <stackView opaque="NO" userInteractionEnabled="NO" contentMode="scaleToFill" axis="vertical" alignment="center" translatesAutoresizingMaskIntoConstraints="NO" id="BrS-HZ-Jnp">
                                     <rect key="frame" x="0.0" y="10" width="94.5" height="71"/>
                                     <subviews>
                                         <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="ae6-Kq-ge9">
@@ -183,7 +183,7 @@
                                         <action selector="btnProfileClicked:" destination="-1" eventType="touchUpInside" id="OAz-x0-Yc8"/>
                                     </connections>
                                 </button>
-                                <stackView opaque="NO" contentMode="scaleToFill" axis="vertical" alignment="center" translatesAutoresizingMaskIntoConstraints="NO" id="Vdg-pk-JU2">
+                                <stackView opaque="NO" userInteractionEnabled="NO" contentMode="scaleToFill" axis="vertical" alignment="center" translatesAutoresizingMaskIntoConstraints="NO" id="Vdg-pk-JU2">
                                     <rect key="frame" x="0.0" y="10" width="94.5" height="71"/>
                                     <subviews>
                                         <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="2dr-7h-Pwb">
