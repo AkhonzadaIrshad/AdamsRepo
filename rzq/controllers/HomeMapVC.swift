@@ -69,7 +69,7 @@ class HomeMapVC: BaseViewController,LabasLocationManagerDelegate, UICollectionVi
         super.viewDidLoad()
         gMap = GMSMapView()
         self.navBar.delegate = self
-        if self.isProvider() {
+        if DataManager.loadUser().data?.roles?.contains(find: "Driver") ?? false {
             self.navBar.isHidden = false
         } else {
             self.navBar.isHidden = true
