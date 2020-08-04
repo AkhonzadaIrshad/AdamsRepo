@@ -18151,6 +18151,13 @@
                                     <constraint firstItem="j20-gq-uOE" firstAttribute="leading" secondItem="TWz-6m-w2G" secondAttribute="leading" constant="20" id="sGF-Vi-OHV"/>
                                 </constraints>
                             </view>
+                            <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="w1C-MK-MO0" customClass="NavBar" customModule="rzq" customModuleProvider="target">
+                                <rect key="frame" x="0.0" y="732" width="375" height="80"/>
+                                <color key="backgroundColor" systemColor="systemBackgroundColor" cocoaTouchSystemColor="whiteColor"/>
+                                <constraints>
+                                    <constraint firstAttribute="height" constant="80" id="zKI-Vz-YeB"/>
+                                </constraints>
+                            </view>
                         </subviews>
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                         <constraints>
@@ -18173,7 +18180,9 @@
                             <constraint firstItem="ZxU-K9-FxZ" firstAttribute="top" secondItem="IVO-Wy-ZPd" secondAttribute="bottom" constant="5" id="Rxn-I3-MQy"/>
                             <constraint firstItem="Cal-TT-9Kn" firstAttribute="leading" secondItem="1Tj-Ga-0O2" secondAttribute="leading" constant="10" id="ShW-j3-gYW"/>
                             <constraint firstAttribute="trailing" secondItem="Zfg-WV-Kzs" secondAttribute="trailing" constant="10" id="VVh-mq-H3o"/>
+                            <constraint firstAttribute="bottom" secondItem="w1C-MK-MO0" secondAttribute="bottom" id="W3Y-Y6-0xv"/>
                             <constraint firstItem="pO8-7w-er0" firstAttribute="leading" secondItem="gcc-wr-aUN" secondAttribute="leading" constant="20" id="WPL-cW-Np8"/>
+                            <constraint firstItem="gcc-wr-aUN" firstAttribute="trailing" secondItem="w1C-MK-MO0" secondAttribute="trailing" id="XOb-VP-QLI"/>
                             <constraint firstItem="neB-q2-PUZ" firstAttribute="top" secondItem="TWz-6m-w2G" secondAttribute="bottom" constant="8" id="XgK-2t-SEr"/>
                             <constraint firstItem="5zk-d3-Dsg" firstAttribute="leading" secondItem="x33-cI-svf" secondAttribute="trailing" constant="-20" id="Xte-8L-uNO"/>
                             <constraint firstItem="Zfg-WV-Kzs" firstAttribute="top" secondItem="RVO-iw-Y28" secondAttribute="bottom" constant="10" id="aMU-Zl-Lwg"/>
@@ -18211,6 +18220,7 @@
                             <constraint firstAttribute="trailing" secondItem="Cal-TT-9Kn" secondAttribute="trailing" constant="10" id="voc-A2-hzX"/>
                             <constraint firstItem="3pP-zC-Wfk" firstAttribute="leading" secondItem="gcc-wr-aUN" secondAttribute="leading" constant="10" id="wkW-jY-ErJ"/>
                             <constraint firstItem="TWz-6m-w2G" firstAttribute="top" secondItem="n3x-0l-Uhp" secondAttribute="bottom" constant="5" id="xJJ-6h-BKW"/>
+                            <constraint firstItem="w1C-MK-MO0" firstAttribute="leading" secondItem="gcc-wr-aUN" secondAttribute="leading" id="xk7-Uv-GjU"/>
                             <constraint firstItem="83Z-MH-qcX" firstAttribute="top" secondItem="ZxU-K9-FxZ" secondAttribute="bottom" constant="10" id="yxz-VW-nIB"/>
                             <constraint firstItem="IVO-Wy-ZPd" firstAttribute="top" secondItem="Cal-TT-9Kn" secondAttribute="bottom" constant="8" id="zr0-sN-MjA"/>
                         </constraints>
@@ -18234,6 +18244,7 @@
                         <outlet property="lblName" destination="pO8-7w-er0" id="Fre-tD-Z6i"/>
                         <outlet property="lblOrderCount" destination="RVO-iw-Y28" id="T5P-al-iB6"/>
                         <outlet property="lineDueAmount" destination="83Z-MH-qcX" id="3tn-nE-EKu"/>
+                        <outlet property="navBar" destination="w1C-MK-MO0" id="ZsD-Mn-cyx"/>
                         <outlet property="ratingView" destination="qJd-E4-LQY" id="KyW-yE-3Yn"/>
                         <outlet property="viewEarnings" destination="TWz-6m-w2G" id="xZV-sn-aSJ"/>
                         <outlet property="viewRegisterDriver" destination="3pP-zC-Wfk" id="gjW-dm-ue4"/>

@@ -46,6 +46,7 @@ class ProfileVC: BaseVC {
     @IBOutlet weak var earningsHeight: NSLayoutConstraint!
     @IBOutlet weak var lblEarnings: MyUILabel!
     
+    @IBOutlet weak var navBar: NavBar!
     
     var user : DataProfileObj?
     
@@ -56,6 +57,7 @@ class ProfileVC: BaseVC {
             self.ivIndicator1.image = UIImage(named: "ic_indicator_arabic")
             self.ivIndicator2.image = UIImage(named: "ic_indicator_arabic")
         }
+        self.navBar.delegate = self
         // Do any additional setup after loading the view.
         
     }
@@ -191,4 +193,22 @@ class ProfileVC: BaseVC {
             
         })
     }
+}
+
+extension ProfileVC: NavBarDelegate {
+   func goToHomeScreen() {
+       self.slideMenuItemSelectedAtIndex(1)
+   }
+   
+   func goToOrdersScreen() {
+       self.slideMenuItemSelectedAtIndex(99)
+   }
+   
+   func goToNotificationsScreen() {
+       self.slideMenuItemSelectedAtIndex(3)
+   }
+   
+   func goToProfileScreen() {
+       self.slideMenuItemSelectedAtIndex(12)
+   }
 }

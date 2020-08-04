@@ -41,9 +41,7 @@ class MenuViewController: BaseVC {
     @IBOutlet weak var lblEarnings: UILabel!
     
     @IBOutlet weak var viewMyShops: UIView!
-    
-    var selectedTag = 1
-    
+        
     @IBOutlet weak var viewMood: UIView!
     
     @IBOutlet weak var ivSelect1: UIImageView!
@@ -52,9 +50,7 @@ class MenuViewController: BaseVC {
     @IBOutlet weak var ivSelect3: UIImageView!
     @IBOutlet weak var ivSelect4: UIImageView!
     @IBOutlet weak var ivSelect5: UIImageView!
-    //    @IBOutlet weak var ivSelect6: UIImageView!
-    //    @IBOutlet weak var ivSelect7: UIImageView!
-    //    @IBOutlet weak var lvSelect8: UIImageView!
+
     @IBOutlet weak var ivSelect9: UIImageView!
     @IBOutlet weak var ivSelect10: UIImageView!
     @IBOutlet weak var ivSelect11: UIImageView!
