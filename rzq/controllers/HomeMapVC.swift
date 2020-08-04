@@ -1119,7 +1119,7 @@ extension HomeMapVC: NavBarDelegate {
     }
     
     func goToOrdersScreen() {
-        self.slideMenuItemSelectedAtIndex(2)
+        self.slideMenuItemSelectedAtIndex(99)
     }
     
     func goToNotificationsScreen() {
