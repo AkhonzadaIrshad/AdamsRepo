@@ -317,6 +317,6 @@ If you want to change it, use the search above or by long pressin on the map to 
 
 
 "navbar.home" = "HOME";
-"navbar.orders" = "ORDERS";
+"navbar.orders" = "WORKING ORDERS";
 "navbar.notifications" = "NOTIFICATIONS";
 "navbar.profile" = "PROFILE";

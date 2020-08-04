@@ -323,6 +323,6 @@
 "step1.catFilter.search.placeholder" = "ابحث في";
 
 "navbar.home" = "الرئيسية";
-"navbar.orders" = "الطلبات";
+"navbar.orders" = "الطلبات الجارية";
 "navbar.notifications" = "الاشعارات";
 "navbar.profile" = "صفحتي";
