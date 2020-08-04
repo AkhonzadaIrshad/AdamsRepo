@@ -20,13 +20,14 @@ class WorkingOrdersVC: BaseViewController, UITableViewDelegate, UITableViewDataS
     @IBOutlet weak var containerView: UIView!
     
     @IBOutlet weak var emptyView: EmptyView!
+    @IBOutlet weak var navBar: NavBar!
     
     var pendingItems = [DatumDriverDel]()
     var historyItems = [DatumDelObj]()
     
     override func viewDidLoad() {
         super.viewDidLoad()
-
+        self.navBar.delegate = self
            self.btnMenu.addTarget(self, action: #selector(BaseViewController.onSlideMenuButtonPressed(_:)), for: UIControl.Event.touchUpInside)
         
          self.btnAbout.addTarget(self, action: #selector(BaseViewController.onAboutPressed(_:)), for: UIControl.Event.touchUpInside)
@@ -209,4 +210,22 @@ class WorkingOrdersVC: BaseViewController, UITableViewDelegate, UITableViewDataS
     }
 
 
+}
+
+extension WorkingOrdersVC: NavBarDelegate {
+    func goToHomeScreen() {
+        self.slideMenuItemSelectedAtIndex(1)
+    }
+    
+    func goToOrdersScreen() {
+        self.slideMenuItemSelectedAtIndex(99)
+    }
+    
+    func goToNotificationsScreen() {
+        self.slideMenuItemSelectedAtIndex(3)
+    }
+    
+    func goToProfileScreen() {
+        self.slideMenuItemSelectedAtIndex(12)
+    }
 }
