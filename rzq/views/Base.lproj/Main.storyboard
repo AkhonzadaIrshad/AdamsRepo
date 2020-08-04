@@ -2583,7 +2583,7 @@
                                                                 <userDefinedRuntimeAttribute type="string" keyPath="font_type" value="16,4"/>
                                                             </userDefinedRuntimeAttributes>
                                                         </label>
-                                                        <view contentMode="scaleToFill" ambiguous="YES" translatesAutoresizingMaskIntoConstraints="NO" id="HEX-Q2-Cjr" customClass="ValueStepper" customModule="ValueStepper">
+                                                        <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="HEX-Q2-Cjr" customClass="ValueStepper" customModule="ValueStepper">
                                                             <rect key="frame" x="82.666666666666686" y="32.333333333333336" width="115" height="29"/>
                                                             <color key="backgroundColor" systemColor="systemBackgroundColor" cocoaTouchSystemColor="whiteColor"/>
                                                             <color key="tintColor" red="0.24313725489999999" green="0.01176470588" blue="0.4039215686" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
@@ -2639,7 +2639,7 @@
                                                                 <userDefinedRuntimeAttribute type="string" keyPath="font_type" value="16,4"/>
                                                             </userDefinedRuntimeAttributes>
                                                         </label>
-                                                        <view contentMode="scaleToFill" ambiguous="YES" translatesAutoresizingMaskIntoConstraints="NO" id="qeV-kt-rWQ" customClass="CardView" customModule="rzq" customModuleProvider="target">
+                                                        <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="qeV-kt-rWQ" customClass="CardView" customModule="rzq" customModuleProvider="target">
                                                             <rect key="frame" x="93" y="69.333333333333329" width="90" height="22"/>
                                                             <subviews>
                                                                 <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="price" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="RSQ-bf-tpe" customClass="MyUILabel" customModule="rzq" customModuleProvider="target">
@@ -8295,7 +8295,7 @@
                                 </userDefinedRuntimeAttributes>
                             </view>
                             <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="Y7C-cV-Gwj">
-                                <rect key="frame" x="10" y="92" width="355" height="676"/>
+                                <rect key="frame" x="10" y="92" width="355" height="640"/>
                                 <subviews>
                                     <segmentedControl opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="top" segmentControlStyle="plain" selectedSegmentIndex="0" translatesAutoresizingMaskIntoConstraints="NO" id="cfg-Ln-2ey">
                                         <rect key="frame" x="0.0" y="8" width="355" height="32"/>
@@ -8364,7 +8364,7 @@
                                         </connections>
                                     </view>
                                     <tableView clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" bouncesZoom="NO" dataMode="prototypes" style="plain" separatorStyle="none" rowHeight="-1" estimatedRowHeight="-1" sectionHeaderHeight="28" sectionFooterHeight="28" translatesAutoresizingMaskIntoConstraints="NO" id="WWd-ad-NVD">
-                                        <rect key="frame" x="0.0" y="88" width="355" height="588"/>
+                                        <rect key="frame" x="0.0" y="88" width="355" height="552"/>
                                         <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                         <prototypes>
                                             <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" preservesSuperviewLayoutMargins="YES" selectionStyle="none" indentationWidth="10" reuseIdentifier="driverordercell" rowHeight="165" id="JCv-aw-NCm" customClass="DriverOrderCell" customModule="rzq" customModuleProvider="target">
@@ -9291,10 +9291,10 @@
                                         </prototypes>
                                     </tableView>
                                     <view hidden="YES" contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="B9D-hO-Hh4" customClass="EmptyView" customModule="rzq" customModuleProvider="target">
-                                        <rect key="frame" x="10" y="88" width="335" height="388"/>
+                                        <rect key="frame" x="10" y="88" width="335" height="352"/>
                                         <subviews>
                                             <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Notifications will appear here." textAlignment="center" lineBreakMode="tailTruncation" numberOfLines="3" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="DIS-ZJ-rPI" customClass="MyUILabel" customModule="rzq" customModuleProvider="target">
-                                                <rect key="frame" x="20" y="300" width="295" height="18"/>
+                                                <rect key="frame" x="20" y="264" width="295" height="18"/>
                                                 <fontDescription key="fontDescription" type="system" pointSize="15"/>
                                                 <color key="textColor" cocoaTouchSystemColor="scrollViewTexturedBackgroundColor"/>
                                                 <nil key="highlightedColor"/>
@@ -9303,7 +9303,7 @@
                                                 </userDefinedRuntimeAttributes>
                                             </label>
                                             <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="No Notifications" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="opX-fr-VEN" customClass="MyUILabel" customModule="rzq" customModuleProvider="target">
-                                                <rect key="frame" x="20" y="251.33333333333329" width="295" height="28.666666666666657"/>
+                                                <rect key="frame" x="20" y="215.33333333333331" width="295" height="28.666666666666657"/>
                                                 <fontDescription key="fontDescription" type="system" pointSize="24"/>
                                                 <color key="textColor" red="0.24313725489999999" green="0.054901960780000002" blue="0.4039215686" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                                                 <nil key="highlightedColor"/>
@@ -9312,7 +9312,7 @@
                                                 </userDefinedRuntimeAttributes>
                                             </label>
                                             <imageView userInteractionEnabled="NO" contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="empty_notifications" translatesAutoresizingMaskIntoConstraints="NO" id="5GM-Wb-3eg">
-                                                <rect key="frame" x="97.666666666666686" y="91.333333333333314" width="140" height="140"/>
+                                                <rect key="frame" x="97.666666666666686" y="55.333333333333343" width="140" height="140"/>
                                                 <constraints>
                                                     <constraint firstAttribute="width" constant="140" id="V0K-tA-H1H"/>
                                                     <constraint firstAttribute="height" constant="140" id="en3-xK-525"/>
@@ -9351,15 +9351,25 @@
                                     <constraint firstAttribute="trailing" secondItem="WWd-ad-NVD" secondAttribute="trailing" id="z4y-yl-Ugn"/>
                                 </constraints>
                             </view>
+                            <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="5zf-83-dOH" customClass="NavBar" customModule="rzq" customModuleProvider="target">
+                                <rect key="frame" x="0.0" y="732" width="375" height="80"/>
+                                <color key="backgroundColor" systemColor="systemBackgroundColor" cocoaTouchSystemColor="whiteColor"/>
+                                <constraints>
+                                    <constraint firstAttribute="height" constant="80" id="KOk-We-XFb"/>
+                                </constraints>
+                            </view>
                         </subviews>
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                         <constraints>
                             <constraint firstItem="Y7C-cV-Gwj" firstAttribute="leading" secondItem="UbP-CZ-TdK" secondAttribute="leading" constant="10" id="BF3-aw-HHK"/>
-                            <constraint firstItem="UbP-CZ-TdK" firstAttribute="bottom" secondItem="Y7C-cV-Gwj" secondAttribute="bottom" constant="10" id="CUj-q3-pk5"/>
                             <constraint firstItem="UbP-CZ-TdK" firstAttribute="trailing" secondItem="Y7C-cV-Gwj" secondAttribute="trailing" constant="10" id="IEL-Jx-JN8"/>
                             <constraint firstItem="Y7C-cV-Gwj" firstAttribute="top" secondItem="Dcp-JB-NdF" secondAttribute="bottom" constant="10" id="Llw-1n-wuD"/>
+                            <constraint firstAttribute="bottom" secondItem="5zf-83-dOH" secondAttribute="bottom" id="Tee-lZ-X4n"/>
                             <constraint firstAttribute="trailing" secondItem="Dcp-JB-NdF" secondAttribute="trailing" id="Ynf-R6-25t"/>
+                            <constraint firstItem="5zf-83-dOH" firstAttribute="leading" secondItem="UbP-CZ-TdK" secondAttribute="leading" id="euJ-yn-dGm"/>
                             <constraint firstItem="Dcp-JB-NdF" firstAttribute="top" secondItem="eWM-Px-tSX" secondAttribute="top" id="fA6-hY-BoK"/>
+                            <constraint firstItem="5zf-83-dOH" firstAttribute="top" secondItem="Y7C-cV-Gwj" secondAttribute="bottom" id="gSp-Pa-Ub2"/>
+                            <constraint firstItem="UbP-CZ-TdK" firstAttribute="trailing" secondItem="5zf-83-dOH" secondAttribute="trailing" id="qIG-zJ-2Z3"/>
                             <constraint firstItem="Dcp-JB-NdF" firstAttribute="leading" secondItem="UbP-CZ-TdK" secondAttribute="leading" id="uDt-gF-BmN"/>
                         </constraints>
                         <viewLayoutGuide key="safeArea" id="UbP-CZ-TdK"/>
@@ -9371,6 +9381,7 @@
                         <outlet property="containerView" destination="Y7C-cV-Gwj" id="wfc-Fm-CZB"/>
                         <outlet property="emptyView" destination="B9D-hO-Hh4" id="SjQ-qo-fji"/>
                         <outlet property="lblSortBy" destination="HUm-F0-Xmy" id="Vlu-KG-HHp"/>
+                        <outlet property="navBar" destination="5zf-83-dOH" id="Jfp-a5-Cnf"/>
                         <outlet property="segmentControl" destination="cfg-Ln-2ey" id="Kt3-z6-4Bx"/>
                         <outlet property="sortView" destination="ALB-Mc-rvX" id="SkH-RA-TLh"/>
                         <outlet property="sortViewHeight" destination="SnK-kO-0rB" id="5nj-cy-Vt1"/>

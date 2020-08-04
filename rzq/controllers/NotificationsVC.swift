@@ -24,7 +24,7 @@ class NotificationsVC: BaseViewController,LabasLocationManagerDelegate, AcceptBi
     @IBOutlet weak var segmentControl: UISegmentedControl!
     @IBOutlet weak var sortViewHeight: NSLayoutConstraint!
     @IBOutlet weak var sortView: UIView!
-    
+    @IBOutlet weak var navBar: NavBar!
     // MARK: - Variables
     
     var alerts = [DatumNot]()
@@ -41,7 +41,7 @@ class NotificationsVC: BaseViewController,LabasLocationManagerDelegate, AcceptBi
     
     override func viewDidLoad() {
         super.viewDidLoad()
-        
+        self.navBar.delegate = self
         SVProgressHUD.setDefaultMaskType(.clear)
         
         let titleTextAttributes = [NSAttributedString.Key.foregroundColor: UIColor.white]
@@ -839,4 +839,22 @@ extension NotificationsVC {
          }
          return cell
      }
+}
+
+extension NotificationsVC: NavBarDelegate {
+    func goToHomeScreen() {
+        self.slideMenuItemSelectedAtIndex(1)
+    }
+    
+    func goToOrdersScreen() {
+        self.slideMenuItemSelectedAtIndex(2)
+    }
+    
+    func goToNotificationsScreen() {
+        self.slideMenuItemSelectedAtIndex(3)
+    }
+    
+    func goToProfileScreen() {
+        self.slideMenuItemSelectedAtIndex(12)
+    }
 }
