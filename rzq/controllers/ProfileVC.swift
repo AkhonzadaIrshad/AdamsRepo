@@ -57,9 +57,12 @@ class ProfileVC: BaseVC {
             self.ivIndicator1.image = UIImage(named: "ic_indicator_arabic")
             self.ivIndicator2.image = UIImage(named: "ic_indicator_arabic")
         }
-        self.navBar.delegate = self
-        // Do any additional setup after loading the view.
-        
+        if DataManager.loadUser().data?.roles?.contains(find: "Driver") ?? false {
+            self.navBar.isHidden = false
+        } else {
+            self.navBar.isHidden = true
+        }
+        self.navBar.delegate = self        
     }
     
     override func viewDidAppear(_ animated: Bool) {

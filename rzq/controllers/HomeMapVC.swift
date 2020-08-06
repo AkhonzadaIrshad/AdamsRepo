@@ -542,72 +542,6 @@ class HomeMapVC: BaseViewController,LabasLocationManagerDelegate, UICollectionVi
         bounds = bounds.includingCoordinate(self.dropMarker?.position ?? CLLocationCoordinate2D(latitude: self.latitude ?? 0.0, longitude: self.longitude ?? 0.0))
         self.gMap?.animate(with: GMSCameraUpdate.fit(bounds, withPadding: 155.0))
         
-        
-        
-        //        let origin = "\(fromLatitude ?? 0),\(fromLongitude ?? 0)"
-        //        let destination = "\(toLatitude ?? 0),\(toLongitude ?? 0)"
-        //
-        //        let urlString = "https://maps.googleapis.com/maps/api/directions/json?origin=\(origin)&destination=\(destination)&mode=driving&key=\(Constants.GOOGLE_API_KEY)"
-        //
-        //        let url = URL(string: urlString)
-        //        URLSession.shared.dataTask(with: url!, completionHandler: {
-        //            (data, response, error) in
-        //            if(error != nil) {
-        //                print("error")
-        //            } else {
-        //                do {
-        //                    let json = try JSONSerialization.jsonObject(with: data!, options:.allowFragments) as! [String : AnyObject]
-        //                    if let routes = json["routes"] as? NSArray {
-        //                        if (routes.count > 0) {
-        //                            self.gMap?.clear()
-        //
-        //                            self.selectedRoute = (json["routes"] as! Array<NSDictionary>)[0]
-        //                            //  self.loadDistanceAndDuration()
-        //
-        //                            OperationQueue.main.addOperation({
-        //                                for route in routes
-        //                                {
-        //                                    let routeOverviewPolyline:NSDictionary = (route as! NSDictionary).value(forKey: "overview_polyline") as! NSDictionary
-        //                                    let points = routeOverviewPolyline.object(forKey: "points")
-        //                                    let path = GMSPath.init(fromEncodedPath: points! as! String)
-        //                                    self.polyline = GMSPolyline.init(path: path)
-        //                                    self.polyline?.strokeWidth = 2
-        //                                    self.polyline?.strokeColor = UIColor.appDarkBlue
-        //
-        //                                    let bounds = GMSCoordinateBounds(path: path!)
-        //                                    self.gMap?.animate(with: GMSCameraUpdate.fit(bounds, withPadding: 30.0))
-        //
-        //                                    self.polyline?.map = self.gMap
-        //
-        //
-        //                                    let pickUpPosition = CLLocationCoordinate2D(latitude: fromLatitude ?? 0.0, longitude: fromLongitude ?? 0.0)
-        //                                    self.pickMarker = GMSMarker(position: pickUpPosition)
-        //                                    self.pickMarker?.title = "track"
-        //                                    self.pickMarker?.icon = UIImage(named: "ic_map_driver")
-        //                                    self.pickMarker?.map = self.gMap
-        //
-        //
-        //                                    let dropOffPosition = CLLocationCoordinate2D(latitude: toLatitude ?? 0.0, longitude: toLongitude ?? 0.0)
-        //                                    self.dropMarker = GMSMarker(position: dropOffPosition)
-        //                                    self.dropMarker?.title = "track"
-        //                                    self.dropMarker?.icon = UIImage(named: "ic_location")
-        //                                    self.dropMarker?.map = self.gMap
-        //
-        //                                }
-        //                            })
-        //                        }else {
-        //                            //no routes
-        //                        }
-        //
-        //                    } else {
-        //                        //no routes
-        //                    }
-        //
-        //                } catch let error as NSError{
-        //                    print("error:\(error)")
-        //                }
-        //            }
-        //        }).resume()
     }
     
     
@@ -694,9 +628,6 @@ class HomeMapVC: BaseViewController,LabasLocationManagerDelegate, UICollectionVi
         self.latitude = location.coordinate.latitude
         self.longitude = location.coordinate.longitude
         
-//                self.latitude = 28.537264
-//                self.longitude = 47.726557
-        
         UserDefaults.standard.setValue(self.latitude, forKey: Constants.LAST_LATITUDE)
         UserDefaults.standard.setValue(self.longitude, forKey: Constants.LAST_LONGITUDE)
         
@@ -705,12 +636,8 @@ class HomeMapVC: BaseViewController,LabasLocationManagerDelegate, UICollectionVi
             self.latitude = location.coordinate.latitude
             self.longitude = location.coordinate.longitude
             
-            
             UserDefaults.standard.setValue(self.latitude, forKey: Constants.LAST_LATITUDE)
             UserDefaults.standard.setValue(self.longitude, forKey: Constants.LAST_LONGITUDE)
-            
-            
-            
             
             self.hideLoading()
             self.setUpGoogleMap()
@@ -762,14 +689,6 @@ class HomeMapVC: BaseViewController,LabasLocationManagerDelegate, UICollectionVi
         self.mapView.addSubview(gMap!)
         gMap?.bindFrameToSuperviewBounds()
         self.view.layoutSubviews()
-        
-        
-        //        ApiService.getPlacesAPI(input: "mac", types: "geocode", latitude: self.latitude ?? 0.0, longitude: self.longitude ?? 0.0) { (response) in
-        //            let x = response.status ?? ""
-        //        }
-        
-        
-        //   self.getShopsList(radius: Float(Constants.DEFAULT_RADIUS), rating: 0, types : 64)
         self.loadTracks()
     }
     
@@ -787,13 +706,6 @@ class HomeMapVC: BaseViewController,LabasLocationManagerDelegate, UICollectionVi
         gMap?.bindFrameToSuperviewBounds()
         self.view.layoutSubviews()
         
-        
-        //        ApiService.getPlacesAPI(input: "mac", types: "geocode", latitude: self.latitude ?? 0.0, longitude: self.longitude ?? 0.0) { (response) in
-        //            let x = response.status ?? ""
-        //        }
-        
-        
-        //   self.getShopsList(radius: Float(Constants.DEFAULT_RADIUS), rating: 0, types : 64)
         DispatchQueue.main.asyncAfter(deadline: .now() + 3) {
             self.loadTracks()
         }
@@ -840,30 +752,6 @@ class HomeMapVC: BaseViewController,LabasLocationManagerDelegate, UICollectionVi
                 DispatchQueue.main.asyncAfter(deadline: .now() + 2) {
                     self.getDriverLocationAPI(item: itm)
                 }
-                //                ApiService.getOrderLocation(Authorization: DataManager.loadUser().data?.accessToken ?? "", deliveryId: itm.id ?? 0) { (response) in
-                //
-                //                          if (response.locationData != nil) {
-                //                              if (itm.status == Constants.ORDER_ON_THE_WAY) {
-                //                                  self.drawLocationLine(driverLocation: response.locationData!, order: itm)
-                //                              }else if (itm.status == Constants.ORDER_PROCESSING) {
-                //                                  if (itm.time ?? 0 <= 1) {
-                //                                      self.drawLocationLine(driverLocation: response.locationData!, order: itm)
-                //                                  }else {
-                //                                      self.polyline?.map = nil
-                //                                      self.pickMarker?.map = nil
-                //                                      self.dropMarker?.map = nil
-                //                                  }
-                //                              }else {
-                //                                  self.polyline?.map = nil
-                //                                  self.pickMarker?.map = nil
-                //                                  self.dropMarker?.map = nil
-                //                              }
-                //                          }
-                //                      }
-                
-                
-                
-                
             }else {
                 self.stopTimer()
                 // self.searchView.isHidden = false

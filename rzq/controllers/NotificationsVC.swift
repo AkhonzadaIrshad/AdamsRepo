@@ -43,7 +43,11 @@ class NotificationsVC: BaseViewController,LabasLocationManagerDelegate, AcceptBi
         super.viewDidLoad()
         self.navBar.delegate = self
         SVProgressHUD.setDefaultMaskType(.clear)
-        
+        if DataManager.loadUser().data?.roles?.contains(find: "Driver") ?? false {
+            self.navBar.isHidden = false
+        } else {
+            self.navBar.isHidden = true
+        }
         let titleTextAttributes = [NSAttributedString.Key.foregroundColor: UIColor.white]
         let titleTextAttributes2 = [NSAttributedString.Key.foregroundColor: UIColor.black]
         
