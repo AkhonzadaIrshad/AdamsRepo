@@ -92,7 +92,7 @@ class SplashVC: BaseVC {
                 initialViewControlleripad.modalPresentationStyle = .fullScreen
                 self.present(initialViewControlleripad, animated: true, completion: {})
             }else {
-                if let vc = UIStoryboard(name: "Main", bundle: nil).instantiateViewController(withIdentifier: "step1navigation") as? UINavigationController
+                if let vc = UIStoryboard(name: "Main", bundle: nil).instantiateViewController(withIdentifier: "MapNavigationController") as? UINavigationController
                 {
                     vc.modalPresentationStyle = .fullScreen
                     self.present(vc, animated: true, completion: nil)
