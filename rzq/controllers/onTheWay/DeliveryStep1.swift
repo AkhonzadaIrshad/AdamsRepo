@@ -1271,10 +1271,7 @@ extension DeliveryStep1 : GMSMapViewDelegate {
     func mapView(_ mapView: GMSMapView, didLongPressAt coordinate: CLLocationCoordinate2D) {
         self.gMap?.clear()
         
-        //self.moreDetailsView.isHidden = false
-        //self.viewPin.isHidden = true
-        
-        
+        self.showActionSheet()
         self.lblSearch.isHidden = true
         self.shopMarkers.removeAll()
         self.pinMarker?.map = nil
