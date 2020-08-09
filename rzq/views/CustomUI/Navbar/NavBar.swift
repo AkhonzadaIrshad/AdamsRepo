@@ -23,6 +23,8 @@ class NavBar: UIView {
     @IBOutlet weak var lblOrders: UILabel!
     @IBOutlet weak var lblNotifications: UILabel!
     @IBOutlet weak var lblProfile: UILabel!
+    @IBOutlet weak var ordersCounterIcon: UIImageView!
+    @IBOutlet weak var notificationsCounterIcon: UIImageView!
     
     var delegate: NavBarDelegate!
     
@@ -41,6 +43,31 @@ class NavBar: UIView {
         view.frame = self.bounds
         self.addSubview(view)
         self.localize()
+        self.refreshCounters()
+    }
+    
+    func refreshCounters() {
+        self.handleOrdersCounter()
+        self.handleNotificationCounter()
+    }
+    private func handleNotificationCounter() {
+        let count = UserDefaults.standard.value(forKey: Constants.NOTIFICATION_COUNT) as? Int ?? 0
+        if (count > 0){
+            self.notificationsCounterIcon.isHidden = false
+            // self.btnCounter.setTitle("\(count)", for: .normal)
+        }else {
+            self.notificationsCounterIcon.isHidden = true
+        }
+    }
+    
+    private func handleOrdersCounter() {
+        let count = UserDefaults.standard.value(forKey: Constants.ORDERS_COUNT) as? Int ?? 0
+        if (count > 0){
+            self.ordersCounterIcon.isHidden = false
+            // self.btnCounter.setTitle("\(count)", for: .normal)
+        }else {
+            self.ordersCounterIcon.isHidden = true
+        }
     }
     
     func loadViewFromNib() -> UIView? {

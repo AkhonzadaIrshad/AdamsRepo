@@ -116,6 +116,7 @@ class HomeMapVC: BaseViewController,LabasLocationManagerDelegate, UICollectionVi
     
     override func viewDidAppear(_ animated: Bool) {
         super.viewDidAppear(animated)
+        self.navBar.refreshCounters()
         self.checkForDeepLinkValues()
         self.handleNotification()
         

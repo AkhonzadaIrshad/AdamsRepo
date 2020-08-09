@@ -95,6 +95,7 @@ class NotificationsVC: BaseViewController,LabasLocationManagerDelegate, AcceptBi
     
     override func viewDidAppear(_ animated: Bool) {
         super.viewDidAppear(animated)
+        self.navBar.refreshCounters()
         self.updateNotifications()
         UserDefaults.standard.setValue(0, forKey: Constants.NOTIFICATION_COUNT)
         self.tableView.reloadData()

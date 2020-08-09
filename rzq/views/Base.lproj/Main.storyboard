@@ -13,11 +13,11 @@
         <array key="Cairo-Regular.ttf">
             <string>Cairo-Regular</string>
         </array>
+        <array key="arabic_medium.ttf">
+            <string>Tajawal-Medium</string>
+        </array>
         <array key="arabic_regular.ttf">
             <string>Tajawal-Regular</string>
-        </array>
-        <array key="arabic_semibold.ttf">
-            <string>Tajawal-Medium</string>
         </array>
         <array key="english_regular.otf">
             <string>SFProDisplay-Regular</string>

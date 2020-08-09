@@ -61,6 +61,7 @@ class WorkingOrdersVC: BaseViewController, UITableViewDelegate, UITableViewDataS
    
     override func viewDidAppear(_ animated: Bool) {
         super.viewDidAppear(animated)
+        self.navBar.refreshCounters()
         ApiService.getDriverOnGoingDeliveries(Authorization: DataManager.loadUser().data?.accessToken ?? "") { (response) in
             self.pendingItems.removeAll()
             let data = response.data

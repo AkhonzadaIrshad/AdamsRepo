@@ -67,6 +67,7 @@ class ProfileVC: BaseVC {
     
     override func viewDidAppear(_ animated: Bool) {
         super.viewDidAppear(animated)
+        self.navBar.refreshCounters()
        self.loadProfileData()
     }
     
