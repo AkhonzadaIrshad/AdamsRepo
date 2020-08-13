@@ -23,33 +23,14 @@ protocol Step3Delegate {
 class DeliveryStep3: BaseVC {
     
     @IBOutlet weak var lblPickupLocation: MyUILabel!
-    
     @IBOutlet weak var lblDropoffLocation: MyUILabel!
-    
     @IBOutlet weak var mapView: UIView!
-    
-    
-    
-//    @IBOutlet weak var lblImages: MyUILabel!
-//
-//    @IBOutlet weak var viewImages: UIView!
-//
-//    @IBOutlet weak var viewRecording: UIView!
-    
     @IBOutlet weak var btnTime: MyUIButton!
-    
-    
-    
-    //  @IBOutlet weak var ivHandle: UIImageView!
-    
-    
-    
     @IBOutlet weak var gif: UIImageView!
-    
     @IBOutlet weak var btnCost: MyUIButton!
-    
     @IBOutlet weak var actionSheet: UIView!
     @IBOutlet weak var actionSheetConstraintBottom: NSLayoutConstraint!
+    @IBOutlet weak var btnPlaceOrder: MyUIButton!
     
     var markerLocation: GMSMarker?
     
@@ -284,7 +265,7 @@ class DeliveryStep3: BaseVC {
     }
     
     @IBAction func placeOrderAction(_ sender: Any) {
-        
+        self.btnPlaceOrder.isUserInteractionEnabled = false
         if (self.isCash ?? false) {
             if (self.selectedItems.count > 0) {
                 self.createDeliveryWithMenu(invoiceId : "")

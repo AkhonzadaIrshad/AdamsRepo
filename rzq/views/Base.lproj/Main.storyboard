@@ -15165,6 +15165,7 @@
                         <outlet property="btnCost" destination="GoF-rZ-Bo8" id="rJp-Ba-DGb"/>
                         <outlet property="btnGender" destination="qnm-yQ-w1I" id="imc-8x-7t2"/>
                         <outlet property="btnPaymentMethod" destination="ogE-BA-wG8" id="Qe3-XV-mzS"/>
+                        <outlet property="btnPlaceOrder" destination="1CT-yu-bU4" id="1ZI-xQ-uEf"/>
                         <outlet property="btnTime" destination="Ngi-hT-k3s" id="zMn-G7-UMN"/>
                         <outlet property="lblDropoffLocation" destination="4OD-Dj-1ln" id="y7q-KV-bKN"/>
                         <outlet property="lblGender" destination="0Y7-NU-UDK" id="mjP-CE-Yiq"/>
