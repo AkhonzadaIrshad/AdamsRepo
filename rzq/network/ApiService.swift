@@ -1542,7 +1542,6 @@ class ApiService : NSObject {
                                     "UserDefinedField" : "Rzq_03",
                                     "CustomerAddress" : customerAddress,
                                     "ExpiryDate" : "2021-01-01T09:28:01.271Z",
-                                    "SupplierCode" : 0,
                                     "InvoiceItems" : invoiceItems]
         
         

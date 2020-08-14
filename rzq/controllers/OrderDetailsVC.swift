@@ -796,13 +796,6 @@ class OrderDetailsVC: PaymentViewController, UICollectionViewDelegate, UICollect
         self.ammountToPay = Double(totalCost)
         self.initiatePayment()
         self.executePayment(paymentMethodId: 1)
-        
-//        if (self.order?.items?.count ?? 0 > 0) {
-//
-//        else {
-//                self.showBanner(title: "alert".localized, message: "bill_not_issued".localized, style: UIColor.INFO)
-//            }
-//        }
     }
     
     func onPaymentSuccess(payment: PaymentStatusResponse) {

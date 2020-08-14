@@ -155,15 +155,6 @@ class AcceptBidDialog: PaymentViewController, PaymentDelegate {
         applyDeclineAction()
     }
     
-    //    func deleteNotification() {
-    //        ApiService.deleteNotification(Authorization: DataManager.loadUser().data?.accessToken ?? "", id: self.notificationId ?? 0) { (response) in
-    //            self.showBanner(title: "alert".localized, message: "bid_declined_successfully".localized, style: UIColor.SUCCESS)
-    //            DispatchQueue.main.asyncAfter(deadline: .now() + 2, execute: {
-    //                self.dismiss(animated: true, completion: nil)
-    //            })
-    //        }
-    //    }
-    
     @IBAction func acceptAction(_ sender: Any) {
         self.applyAcceptBidAcion()
     }
