@@ -356,8 +356,7 @@ class PaymentViewController: BaseVC {
         //request.userDefinedField = ""
         request.customerEmail = loadUser().data?.email ?? ""// must be email
         request.customerMobile = loadUser().data?.phoneNumber ?? ""
-        request.customerCivilId = "Double("
-        request.customerReference = ""
+        request.customerName = loadUser().data?.fullName ?? ""
         request.language = .english
         request.mobileCountryCode = MFMobileCountryCodeISO.kuwait.rawValue
         request.displayCurrencyIso = .kuwait_KWD
