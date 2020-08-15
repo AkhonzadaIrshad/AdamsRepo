@@ -350,11 +350,9 @@ class PaymentViewController: BaseVC {
     private func getExecutePaymentRequest(paymentMethodId: Int) -> MFExecutePaymentRequest {
         let request = MFExecutePaymentRequest(invoiceValue: self.ammountToPay ?? 0, paymentMethod: 1)
         //request.userDefinedField = ""
-        request.customerEmail = "a@b.com"// must be email
-        request.customerMobile = ""
+        request.customerEmail = loadUser().data?.email ?? ""// must be email
+        request.customerMobile = loadUser().data?.phoneNumber ?? ""
         request.customerCivilId = "Double("
-        let address = MFCustomerAddress(block: "ddd", street: "sss", houseBuildingNo: "sss", address: "sss", addressInstructions: "sss")
-        request.customerAddress = address
         request.customerReference = ""
         request.language = .english
         request.mobileCountryCode = MFMobileCountryCodeISO.kuwait.rawValue
