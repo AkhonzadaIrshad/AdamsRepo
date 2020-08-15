@@ -337,12 +337,16 @@ class PaymentViewController: BaseVC {
     
     func executePayment(paymentMethodId: Int) {
         let request = getExecutePaymentRequest(paymentMethodId: paymentMethodId)
-        MFPaymentRequest.shared.executePayment(request: request, apiLanguage: .arabic) { [weak self] response, invoiceId  in
+        MFPaymentRequest.shared.executePayment(request: request, apiLanguage: .arabic) { response, invoiceId  in
             switch response {
             case .success:
-                print("Success")
-            case .failure(let failError):
-                print(failError.errorDescription)
+                if let url = URL(string: "http://www.rzqapp.com/success.html") {
+                    UIApplication.shared.open(url)
+                }
+            case .failure:
+                if let url = URL(string: "http://www.rzqapp.com/failed.html") {
+                    UIApplication.shared.open(url)
+                }
             }
         }
     }
