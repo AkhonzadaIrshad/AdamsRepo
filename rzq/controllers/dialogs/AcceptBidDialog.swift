@@ -304,62 +304,62 @@ class AcceptBidDialog: PaymentViewController, PaymentDelegate {
             self.executePayment(paymentMethodId: 1)
         }
     }
-    
+    var paymentMethods: [MFPaymentMethod]?
+    var ammountToPay: Double?
+       
+       func initiatePayment() {
+           let request = generateInitiatePaymentModel()
+           MFPaymentRequest.shared.initiatePayment(request: request, apiLanguage: .english, completion: { [weak self] (result) in
+               switch result {
+               case .success(let initiatePaymentResponse):
+                   self?.paymentMethods = initiatePaymentResponse.paymentMethods
+               case .failure(let failError):
+                   print("Error: \(failError.errorDescription)")
+               }
+           })
+       }
+       
+       private func generateInitiatePaymentModel() -> MFInitiatePaymentRequest {
+           // you can create initiate payment request with invoice value and currency
+           // let invoiceValue = Double(amountTextField.text ?? "") ?? 0
+           // let request = MFInitiatePaymentRequest(invoiceAmount: invoiceValue, currencyIso: .kuwait_KWD)
+           // return request
+           
+           let request = MFInitiatePaymentRequest()
+           return request
+       }
+       
+       func executePayment(paymentMethodId: Int) {
+           let request = getExecutePaymentRequest(paymentMethodId: paymentMethodId)
+           MFPaymentRequest.shared.executePayment(request: request, apiLanguage: .arabic) { response, invoiceId  in
+               switch response {
+               case .success:
+                   if let url = URL(string: "http://www.rzqapp.com/success.html") {
+                       UIApplication.shared.open(url)
+                   }
+               case .failure:
+                   if let url = URL(string: "http://www.rzqapp.com/failed.html") {
+                       UIApplication.shared.open(url)
+                   }
+               }
+           }
+       }
+       
+       private func getExecutePaymentRequest(paymentMethodId: Int) -> MFExecutePaymentRequest {
+           let request = MFExecutePaymentRequest(invoiceValue: self.ammountToPay ?? 0, paymentMethod: 1)
+           //request.userDefinedField = ""
+           request.customerEmail = loadUser().data?.email ?? ""// must be email
+           request.customerMobile = loadUser().data?.phoneNumber ?? ""
+           request.customerName = loadUser().data?.fullName ?? ""
+           request.language = .english
+           request.mobileCountryCode = MFMobileCountryCodeISO.kuwait.rawValue
+           request.displayCurrencyIso = .kuwait_KWD
+           return request
+       }
     
 }
 
 class PaymentViewController: BaseVC {
     //MARK: Variables
-    var paymentMethods: [MFPaymentMethod]?
-    var ammountToPay: Double?
-    
-    func initiatePayment() {
-        let request = generateInitiatePaymentModel()
-        MFPaymentRequest.shared.initiatePayment(request: request, apiLanguage: .english, completion: { [weak self] (result) in
-            switch result {
-            case .success(let initiatePaymentResponse):
-                self?.paymentMethods = initiatePaymentResponse.paymentMethods
-            case .failure(let failError):
-                print("Error: \(failError.errorDescription)")
-            }
-        })
-    }
-    
-    private func generateInitiatePaymentModel() -> MFInitiatePaymentRequest {
-        // you can create initiate payment request with invoice value and currency
-        // let invoiceValue = Double(amountTextField.text ?? "") ?? 0
-        // let request = MFInitiatePaymentRequest(invoiceAmount: invoiceValue, currencyIso: .kuwait_KWD)
-        // return request
-        
-        let request = MFInitiatePaymentRequest()
-        return request
-    }
-    
-    func executePayment(paymentMethodId: Int) {
-        let request = getExecutePaymentRequest(paymentMethodId: paymentMethodId)
-        MFPaymentRequest.shared.executePayment(request: request, apiLanguage: .arabic) { response, invoiceId  in
-            switch response {
-            case .success:
-                if let url = URL(string: "http://www.rzqapp.com/success.html") {
-                    UIApplication.shared.open(url)
-                }
-            case .failure:
-                if let url = URL(string: "http://www.rzqapp.com/failed.html") {
-                    UIApplication.shared.open(url)
-                }
-            }
-        }
-    }
-    
-    private func getExecutePaymentRequest(paymentMethodId: Int) -> MFExecutePaymentRequest {
-        let request = MFExecutePaymentRequest(invoiceValue: self.ammountToPay ?? 0, paymentMethod: 1)
-        //request.userDefinedField = ""
-        request.customerEmail = loadUser().data?.email ?? ""// must be email
-        request.customerMobile = loadUser().data?.phoneNumber ?? ""
-        request.customerName = loadUser().data?.fullName ?? ""
-        request.language = .english
-        request.mobileCountryCode = MFMobileCountryCodeISO.kuwait.rawValue
-        request.displayCurrencyIso = .kuwait_KWD
-        return request
-    }
+   
 }
