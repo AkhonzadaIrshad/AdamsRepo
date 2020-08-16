@@ -142,6 +142,7 @@ class DeliveryStep1: BaseVC , Step2Delegate, AllShopDelegate, ImagePickerDelegat
         self.shopsSearchTableView.dataSource = self
         self.searchShopsTextField.delegate = self
         self.searchShopsTextField.addTarget(self, action: #selector(textFieldDidChange), for: .editingChanged)
+        gMap = GMSMapView()
 
     }
     
@@ -236,7 +237,6 @@ class DeliveryStep1: BaseVC , Step2Delegate, AllShopDelegate, ImagePickerDelegat
         if (self.orderModel == nil) {
             self.orderModel = OTWOrder()
         }
-        gMap = GMSMapView()
         self.searchField.delegate = self
         
         if (self.latitude ?? 0.0 == 0.0 || self.longitude ?? 0.0 == 0.0) {
