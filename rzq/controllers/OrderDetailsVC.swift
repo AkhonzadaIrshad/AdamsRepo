@@ -834,7 +834,7 @@ class OrderDetailsVC: PaymentViewController, UICollectionViewDelegate, UICollect
     }
     var paymentMethods: [MFPaymentMethod]?
     var ammountToPay: Double?
-    
+    var invoiceId : String?
     func initiatePayment() {
         let request = generateInitiatePaymentModel()
         MFPaymentRequest.shared.initiatePayment(request: request, apiLanguage: .english, completion: { [weak self] (result) in
@@ -862,12 +862,12 @@ class OrderDetailsVC: PaymentViewController, UICollectionViewDelegate, UICollect
         MFPaymentRequest.shared.executePayment(request: request, apiLanguage: .arabic) { response, invoiceId  in
             switch response {
             case .success:
-                if let url = URL(string: "http://www.rzqapp.com/success.html") {
-                    UIApplication.shared.open(url)
-                }
+                self.invoiceId = invoiceId
+                self.getPaymentStatus()
             case .failure:
-                if let url = URL(string: "http://www.rzqapp.com/failed.html") {
-                    UIApplication.shared.open(url)
+                self.showBanner(title: "alert".localized, message: "payment_failed".localized, style: UIColor.INFO)
+                DispatchQueue.main.asyncAfter(deadline: .now() + 1) {
+                    self.onPaymentFail()
                 }
             }
         }
@@ -883,6 +883,34 @@ class OrderDetailsVC: PaymentViewController, UICollectionViewDelegate, UICollect
         request.mobileCountryCode = MFMobileCountryCodeISO.kuwait.rawValue
         request.displayCurrencyIso = .kuwait_KWD
         return request
+    }
+    
+    
+    func getPaymentStatus() {
+        self.showLoading()
+        ApiService.getPaymentStatus(invoiceId: self.invoiceId ?? "") { (response) in
+            self.hideLoading()
+            if (response.isSuccess ?? false) {
+                if (response.paymentStatusData?.invoiceStatus == "Paid") {
+                    self.showBanner(title: "alert".localized, message: "paid_successfully".localized, style: UIColor.SUCCESS)
+                    DispatchQueue.main.asyncAfter(deadline: .now() + 1) {
+                        self.onPaymentSuccess(payment : response)
+                        self.dismiss(animated: true, completion: nil)
+                    }
+                } else {
+                    self.showBanner(title: "alert".localized, message: response.paymentStatusData?.invoiceStatus ?? "", style: UIColor.INFO)
+                    DispatchQueue.main.asyncAfter(deadline: .now() + 1) {
+                        self.onPaymentFail()
+                        self.dismiss(animated: true, completion: nil)
+                    }
+                }
+            }else {
+                self.showBanner(title: "alert".localized, message: response.message ?? "", style: UIColor.ERROR)
+                DispatchQueue.main.asyncAfter(deadline: .now() + 1) {
+                    self.dismiss(animated: true, completion: nil)
+                }
+            }
+        }
     }
 }
 
