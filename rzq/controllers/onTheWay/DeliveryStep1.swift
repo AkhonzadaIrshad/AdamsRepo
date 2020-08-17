@@ -142,7 +142,7 @@ class DeliveryStep1: BaseVC , Step2Delegate, AllShopDelegate, ImagePickerDelegat
         self.shopsSearchTableView.dataSource = self
         self.searchShopsTextField.delegate = self
         self.searchShopsTextField.addTarget(self, action: #selector(textFieldDidChange), for: .editingChanged)
-        gMap = GMSMapView()
+        self.setUpGoogleMap()
 
     }
     
@@ -1533,6 +1533,28 @@ extension DeliveryStep1: CLLocationManagerDelegate {
             UserDefaults.standard.setValue(self.longitude, forKey: Constants.LAST_LONGITUDE)
 
             self.setUpGoogleMap()
+        }
+    }
+    func locationManager(_ manager: CLLocationManager, didChangeAuthorization status: CLAuthorizationStatus) {
+                if CLLocationManager.locationServicesEnabled() {
+            switch CLLocationManager.authorizationStatus() {
+            case .authorizedAlways, .authorizedWhenInUse:
+                locationManager.delegate = self
+                locationManager.desiredAccuracy = kCLLocationAccuracyNearestTenMeters
+                locationManager.startUpdatingLocation()
+                self.loadData()
+            case .notDetermined:
+                // For use in foreground
+                self.locationManager.requestWhenInUseAuthorization()
+            default:
+                self.showAlert(title: "Enable Location Services", message: "", buttonText: "Setting") {
+                    UIApplication.shared.open(URL(string: UIApplication.openSettingsURLString)!, options: [:], completionHandler: nil)
+                }
+            }
+        } else {
+            self.showAlert(title: "Enable Location Services", message: "", buttonText: "Setting") {
+                UIApplication.shared.open(URL(string: UIApplication.openSettingsURLString)!, options: [:], completionHandler: nil)
+            }
         }
     }
 }
