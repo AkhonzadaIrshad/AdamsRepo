@@ -16,7 +16,7 @@ import AMPopTip
 import MarqueeLabel
 import MultilineTextField
 
-class DeliveryStep1: BaseVC , Step2Delegate, AllShopDelegate, ImagePickerDelegate, UITextViewDelegate {
+class DeliveryStep1: BaseVC , Step3Delegate, AllShopDelegate, ImagePickerDelegate, UITextViewDelegate {
     
     // MARK: - Outlets
     
@@ -873,7 +873,7 @@ class DeliveryStep1: BaseVC , Step2Delegate, AllShopDelegate, ImagePickerDelegat
     
     @IBAction func step2Action(_ sender: Any) {
         if (self.validate()) {
-            if let vc = UIStoryboard(name: "Main", bundle: nil).instantiateViewController(withIdentifier: "DeliveryStep2") as? DeliveryStep2
+            if let vc = UIStoryboard(name: "Main", bundle: nil).instantiateViewController(withIdentifier: "DeliveryStep3") as? DeliveryStep3
             {
                 self.orderModel?.pickUpDetails = self.edtMoreDetails ?? ""
                 vc.selectedImages = selectedImages
@@ -896,7 +896,7 @@ class DeliveryStep1: BaseVC , Step2Delegate, AllShopDelegate, ImagePickerDelegat
         
         
         if (self.validate() && validateOrderDetail()) {
-            if let vc = UIStoryboard(name: "Main", bundle: nil).instantiateViewController(withIdentifier: "DeliveryStep2") as? DeliveryStep2
+            if let vc = UIStoryboard(name: "Main", bundle: nil).instantiateViewController(withIdentifier: "DeliveryStep3") as? DeliveryStep3
             {
                 self.orderModel?.pickUpDetails = self.edtMoreDetails ?? ""
                 vc.latitude = self.latitude
