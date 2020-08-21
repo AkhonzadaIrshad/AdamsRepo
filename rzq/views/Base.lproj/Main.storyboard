@@ -12043,7 +12043,7 @@
                                 </userDefinedRuntimeAttributes>
                             </view>
                             <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="kbU-q0-1TA">
-                                <rect key="frame" x="0.0" y="87" width="375" height="391"/>
+                                <rect key="frame" x="0.0" y="87" width="375" height="421"/>
                                 <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                             </view>
                             <view hidden="YES" contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="w3z-Z6-4LH" customClass="CardView" customModule="rzq" customModuleProvider="target">
@@ -12217,13 +12217,13 @@
                                 </constraints>
                             </view>
                             <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="3sh-5Y-vjj">
-                                <rect key="frame" x="0.0" y="428" width="375" height="350"/>
+                                <rect key="frame" x="0.0" y="458" width="375" height="320"/>
                                 <subviews>
                                     <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="SmG-Gl-32h">
-                                        <rect key="frame" x="0.0" y="50" width="375" height="300"/>
+                                        <rect key="frame" x="0.0" y="50" width="375" height="270"/>
                                         <subviews>
                                             <stackView opaque="NO" contentMode="scaleToFill" axis="vertical" spacing="4" translatesAutoresizingMaskIntoConstraints="NO" id="M3m-Bg-02P">
-                                                <rect key="frame" x="30" y="8" width="315" height="288"/>
+                                                <rect key="frame" x="30" y="8" width="315" height="258"/>
                                                 <subviews>
                                                     <label hidden="YES" opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Search from above" textAlignment="natural" lineBreakMode="tailTruncation" numberOfLines="2" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="hqX-pI-KDM" customClass="MyUILabel" customModule="rzq" customModuleProvider="target">
                                                         <rect key="frame" x="0.0" y="0.0" width="315" height="0.0"/>
@@ -12277,7 +12277,7 @@
                                                                 </constraints>
                                                             </imageView>
                                                             <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="You can add your pin point by long pressing on map." textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="07d-kV-ywD" customClass="MyUILabel" customModule="rzq" customModuleProvider="target">
-                                                                <rect key="frame" x="15" y="1.6666666666666856" width="300" height="12"/>
+                                                                <rect key="frame" x="15" y="1.6666666666666288" width="300" height="12"/>
                                                                 <fontDescription key="fontDescription" type="system" pointSize="10"/>
                                                                 <color key="textColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                                                 <nil key="highlightedColor"/>
@@ -12297,10 +12297,10 @@
                                                         </constraints>
                                                     </view>
                                                     <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="FS8-dB-jSA">
-                                                        <rect key="frame" x="0.0" y="19" width="315" height="114"/>
+                                                        <rect key="frame" x="0.0" y="19" width="315" height="106"/>
                                                         <subviews>
                                                             <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Order" textAlignment="natural" lineBreakMode="tailTruncation" numberOfLines="2" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="LQ1-Fu-KOi" customClass="MyUILabel" customModule="rzq" customModuleProvider="target">
-                                                                <rect key="frame" x="5" y="-26.333333333333314" width="55" height="14.333333333333334"/>
+                                                                <rect key="frame" x="5" y="-34.333333333333314" width="55" height="14.333333333333336"/>
                                                                 <constraints>
                                                                     <constraint firstAttribute="width" constant="55" id="S8A-Oy-vRB"/>
                                                                 </constraints>
@@ -12312,7 +12312,7 @@
                                                                 </userDefinedRuntimeAttributes>
                                                             </label>
                                                             <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="fKf-Kp-WwP" customClass="CardView" customModule="rzq" customModuleProvider="target">
-                                                                <rect key="frame" x="0.0" y="-1" width="315" height="115"/>
+                                                                <rect key="frame" x="0.0" y="-9" width="315" height="115"/>
                                                                 <subviews>
                                                                     <imageView hidden="YES" userInteractionEnabled="NO" contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="ic_bg_record" translatesAutoresizingMaskIntoConstraints="NO" id="ABn-hv-wdu">
                                                                         <rect key="frame" x="283" y="88" width="22" height="22"/>
@@ -12511,17 +12511,17 @@
                                                         </constraints>
                                                     </view>
                                                     <stackView opaque="NO" contentMode="scaleToFill" alignment="center" spacing="8" translatesAutoresizingMaskIntoConstraints="NO" id="kd2-H4-OID">
-                                                        <rect key="frame" x="0.0" y="137" width="315" height="102"/>
+                                                        <rect key="frame" x="0.0" y="129" width="315" height="80"/>
                                                         <subviews>
                                                             <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="251" translatesAutoresizingMaskIntoConstraints="NO" id="k92-Qt-CFp" customClass="CircleImage" customModule="rzq" customModuleProvider="target">
-                                                                <rect key="frame" x="0.0" y="21" width="60" height="60"/>
+                                                                <rect key="frame" x="0.0" y="10" width="60" height="60"/>
                                                                 <constraints>
                                                                     <constraint firstAttribute="width" constant="60" id="sNw-Sc-2Hm"/>
                                                                     <constraint firstAttribute="height" constant="60" id="u2A-LH-JDB"/>
                                                                 </constraints>
                                                             </imageView>
                                                             <stackView opaque="NO" contentMode="scaleToFill" distribution="fillEqually" spacingType="standard" translatesAutoresizingMaskIntoConstraints="NO" id="VjB-DG-4ox">
-                                                                <rect key="frame" x="68" y="51" width="247" height="0.0"/>
+                                                                <rect key="frame" x="68" y="40" width="247" height="0.0"/>
                                                                 <subviews>
                                                                     <view hidden="YES" contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="5gW-cX-Slj" customClass="CardView" customModule="rzq" customModuleProvider="target">
                                                                         <rect key="frame" x="0.0" y="0.0" width="8" height="30"/>
@@ -12639,7 +12639,7 @@
                                                         </subviews>
                                                     </stackView>
                                                     <stackView opaque="NO" contentMode="scaleToFill" spacing="8" translatesAutoresizingMaskIntoConstraints="NO" id="iEC-lN-AMi">
-                                                        <rect key="frame" x="0.0" y="243" width="315" height="45"/>
+                                                        <rect key="frame" x="0.0" y="213" width="315" height="45"/>
                                                         <subviews>
                                                             <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="ySF-EC-8p1" customClass="CardView" customModule="rzq" customModuleProvider="target">
                                                                 <rect key="frame" x="0.0" y="0.0" width="315" height="45"/>
@@ -12700,7 +12700,7 @@
                                             <constraint firstAttribute="height" constant="50" id="t85-Jh-A3R"/>
                                         </constraints>
                                     </imageView>
-                                    <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="DvF-RE-5p6">
+                                    <view hidden="YES" contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="DvF-RE-5p6">
                                         <rect key="frame" x="165" y="-20" width="45" height="45"/>
                                         <subviews>
                                             <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="ebI-1Y-Ry5">
@@ -12728,7 +12728,7 @@
                                             <constraint firstAttribute="height" constant="45" id="mfk-zW-KvM"/>
                                         </constraints>
                                     </view>
-                                    <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="WGA-7U-OkY">
+                                    <view hidden="YES" contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="WGA-7U-OkY">
                                         <rect key="frame" x="75" y="-10" width="45" height="45"/>
                                         <subviews>
                                             <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="1lr-bo-tJd">
@@ -12756,7 +12756,7 @@
                                             <constraint firstAttribute="trailing" secondItem="R6t-Wg-oTW" secondAttribute="trailing" id="tqf-5v-27n"/>
                                         </constraints>
                                     </view>
-                                    <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="21l-DJ-whW">
+                                    <view hidden="YES" contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="21l-DJ-whW">
                                         <rect key="frame" x="255" y="-10" width="45" height="45"/>
                                         <subviews>
                                             <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="pg8-7e-BYs">
@@ -12784,7 +12784,7 @@
                                             <constraint firstAttribute="bottom" secondItem="U4R-Ee-xEp" secondAttribute="bottom" id="gAN-Sm-Jji"/>
                                         </constraints>
                                     </view>
-                                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="From" textAlignment="center" lineBreakMode="tailTruncation" numberOfLines="3" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="NU9-gr-UDw" customClass="MyUILabel" customModule="rzq" customModuleProvider="target">
+                                    <label hidden="YES" opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="From" textAlignment="center" lineBreakMode="tailTruncation" numberOfLines="3" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="NU9-gr-UDw" customClass="MyUILabel" customModule="rzq" customModuleProvider="target">
                                         <rect key="frame" x="78" y="43" width="60" height="15.666666666666664"/>
                                         <constraints>
                                             <constraint firstAttribute="width" constant="60" id="wOG-Mw-48X"/>
@@ -12796,7 +12796,7 @@
                                             <userDefinedRuntimeAttribute type="string" keyPath="font_type" value="13,2"/>
                                         </userDefinedRuntimeAttributes>
                                     </label>
-                                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="To" textAlignment="center" lineBreakMode="tailTruncation" numberOfLines="3" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="Tda-f0-cfv" customClass="MyUILabel" customModule="rzq" customModuleProvider="target">
+                                    <label hidden="YES" opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="To" textAlignment="center" lineBreakMode="tailTruncation" numberOfLines="3" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="Tda-f0-cfv" customClass="MyUILabel" customModule="rzq" customModuleProvider="target">
                                         <rect key="frame" x="157.66666666666666" y="33" width="60" height="15.666666666666664"/>
                                         <constraints>
                                             <constraint firstAttribute="width" constant="60" id="sp0-7z-sh0"/>
@@ -12808,7 +12808,7 @@
                                             <userDefinedRuntimeAttribute type="string" keyPath="font_type" value="13,2"/>
                                         </userDefinedRuntimeAttributes>
                                     </label>
-                                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Order" textAlignment="center" lineBreakMode="tailTruncation" numberOfLines="3" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="3Nj-at-qOb" customClass="MyUILabel" customModule="rzq" customModuleProvider="target">
+                                    <label hidden="YES" opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Order" textAlignment="center" lineBreakMode="tailTruncation" numberOfLines="3" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="3Nj-at-qOb" customClass="MyUILabel" customModule="rzq" customModuleProvider="target">
                                         <rect key="frame" x="233" y="43" width="70" height="15.666666666666664"/>
                                         <constraints>
                                             <constraint firstAttribute="width" constant="70" id="gQv-m6-KlH"/>
@@ -12839,7 +12839,7 @@
                                     <constraint firstAttribute="trailing" secondItem="SmG-Gl-32h" secondAttribute="trailing" id="ZZm-CZ-BSB"/>
                                     <constraint firstItem="SmG-Gl-32h" firstAttribute="leading" secondItem="3sh-5Y-vjj" secondAttribute="leading" id="d4g-8i-Cu6"/>
                                     <constraint firstItem="DvF-RE-5p6" firstAttribute="centerX" secondItem="3sh-5Y-vjj" secondAttribute="centerX" id="hLF-rv-0pm"/>
-                                    <constraint firstAttribute="height" constant="350" id="jSl-SN-kvY"/>
+                                    <constraint firstAttribute="height" constant="320" id="jSl-SN-kvY"/>
                                     <constraint firstItem="21l-DJ-whW" firstAttribute="leading" secondItem="DvF-RE-5p6" secondAttribute="trailing" constant="45" id="oV4-5d-lCf"/>
                                     <constraint firstItem="DvF-RE-5p6" firstAttribute="top" secondItem="3sh-5Y-vjj" secondAttribute="top" constant="-20" id="q03-tM-THo"/>
                                     <constraint firstItem="S2w-IB-enY" firstAttribute="top" secondItem="3sh-5Y-vjj" secondAttribute="top" id="vHQ-ez-hKR"/>
@@ -14415,7 +14415,7 @@
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
                             <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="uqf-NX-YrQ">
-                                <rect key="frame" x="0.0" y="44" width="375" height="484"/>
+                                <rect key="frame" x="0.0" y="44" width="375" height="534"/>
                                 <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                             </view>
                             <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="pQG-NR-5JU" customClass="CardView" customModule="rzq" customModuleProvider="target">
@@ -14544,13 +14544,13 @@
                                 </userDefinedRuntimeAttributes>
                             </view>
                             <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="mse-Ol-LZd">
-                                <rect key="frame" x="0.0" y="478" width="375" height="300"/>
+                                <rect key="frame" x="0.0" y="528" width="375" height="250"/>
                                 <subviews>
                                     <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="6sE-W5-plC">
-                                        <rect key="frame" x="0.0" y="50" width="375" height="250"/>
+                                        <rect key="frame" x="0.0" y="50" width="375" height="200"/>
                                         <subviews>
                                             <stackView opaque="NO" contentMode="scaleToFill" distribution="fillEqually" spacing="10" translatesAutoresizingMaskIntoConstraints="NO" id="vVp-Zg-tv4">
-                                                <rect key="frame" x="30" y="195" width="315" height="45"/>
+                                                <rect key="frame" x="30" y="145" width="315" height="45"/>
                                                 <subviews>
                                                     <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="msA-RH-w0U" customClass="CardView" customModule="rzq" customModuleProvider="target">
                                                         <rect key="frame" x="0.0" y="0.0" width="152.66666666666666" height="45"/>
@@ -14635,7 +14635,7 @@
                                                 </subviews>
                                             </stackView>
                                             <stackView opaque="NO" contentMode="scaleToFill" distribution="fillEqually" spacing="8" translatesAutoresizingMaskIntoConstraints="NO" id="vdO-vf-83U">
-                                                <rect key="frame" x="30" y="63" width="315" height="16"/>
+                                                <rect key="frame" x="30" y="13" width="315" height="16"/>
                                                 <subviews>
                                                     <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Cost" textAlignment="natural" lineBreakMode="tailTruncation" numberOfLines="2" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="t8W-M9-YHp" customClass="MyUILabel" customModule="rzq" customModuleProvider="target">
                                                         <rect key="frame" x="0.0" y="0.0" width="153.66666666666666" height="16"/>
@@ -14661,7 +14661,7 @@
                                                 </constraints>
                                             </stackView>
                                             <stackView opaque="NO" contentMode="scaleToFill" distribution="fillEqually" spacing="8" translatesAutoresizingMaskIntoConstraints="NO" id="3Zv-WX-aLe">
-                                                <rect key="frame" x="30" y="84" width="315" height="37"/>
+                                                <rect key="frame" x="30" y="34" width="315" height="37"/>
                                                 <subviews>
                                                     <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="MKV-LA-kDt">
                                                         <rect key="frame" x="0.0" y="0.0" width="153.66666666666666" height="37"/>
@@ -14789,7 +14789,7 @@
                                                 </constraints>
                                             </stackView>
                                             <stackView opaque="NO" contentMode="scaleToFill" distribution="fillEqually" spacing="8" translatesAutoresizingMaskIntoConstraints="NO" id="3z2-RU-UNc">
-                                                <rect key="frame" x="30" y="129" width="315" height="16"/>
+                                                <rect key="frame" x="30" y="79" width="315" height="16"/>
                                                 <subviews>
                                                     <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Choose Driver Gender" textAlignment="natural" lineBreakMode="tailTruncation" numberOfLines="2" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="0Y7-NU-UDK" customClass="MyUILabel" customModule="rzq" customModuleProvider="target">
                                                         <rect key="frame" x="0.0" y="0.0" width="153.66666666666666" height="16"/>
@@ -14815,7 +14815,7 @@
                                                 </constraints>
                                             </stackView>
                                             <stackView opaque="NO" contentMode="scaleToFill" distribution="fillEqually" spacing="8" translatesAutoresizingMaskIntoConstraints="NO" id="EH8-aq-APR">
-                                                <rect key="frame" x="30" y="150" width="315" height="37"/>
+                                                <rect key="frame" x="30" y="100" width="315" height="37"/>
                                                 <subviews>
                                                     <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="hqW-tN-5da">
                                                         <rect key="frame" x="0.0" y="0.0" width="153.66666666666666" height="37"/>
@@ -14968,7 +14968,7 @@
                                             <constraint firstAttribute="height" constant="50" id="24k-Iu-CrE"/>
                                         </constraints>
                                     </imageView>
-                                    <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="iWP-mW-xbB">
+                                    <view hidden="YES" contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="iWP-mW-xbB">
                                         <rect key="frame" x="165" y="-20" width="45" height="45"/>
                                         <subviews>
                                             <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="Qbn-mA-ClI">
@@ -14996,7 +14996,7 @@
                                             <constraint firstAttribute="bottom" secondItem="Qbn-mA-ClI" secondAttribute="bottom" id="ocI-BS-d7h"/>
                                         </constraints>
                                     </view>
-                                    <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="YGW-e7-t5j">
+                                    <view hidden="YES" contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="YGW-e7-t5j">
                                         <rect key="frame" x="75" y="-10" width="45" height="45"/>
                                         <subviews>
                                             <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="aKq-YJ-URX">
@@ -15024,7 +15024,7 @@
                                             <constraint firstItem="8Vc-II-UUg" firstAttribute="leading" secondItem="YGW-e7-t5j" secondAttribute="leading" id="oQ8-s0-dW8"/>
                                         </constraints>
                                     </view>
-                                    <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="Hod-Gn-Fqb">
+                                    <view hidden="YES" contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="Hod-Gn-Fqb">
                                         <rect key="frame" x="255" y="-10" width="45" height="45"/>
                                         <subviews>
                                             <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="YYw-1b-nsQ">
@@ -15052,7 +15052,7 @@
                                             <constraint firstItem="YYw-1b-nsQ" firstAttribute="top" secondItem="Hod-Gn-Fqb" secondAttribute="top" id="y0N-og-eN6"/>
                                         </constraints>
                                     </view>
-                                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="From" textAlignment="center" lineBreakMode="tailTruncation" numberOfLines="3" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="Tao-wo-bxH" customClass="MyUILabel" customModule="rzq" customModuleProvider="target">
+                                    <label hidden="YES" opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="From" textAlignment="center" lineBreakMode="tailTruncation" numberOfLines="3" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="Tao-wo-bxH" customClass="MyUILabel" customModule="rzq" customModuleProvider="target">
                                         <rect key="frame" x="78" y="43" width="60" height="15.666666666666664"/>
                                         <constraints>
                                             <constraint firstAttribute="width" constant="60" id="shh-KJ-FMv"/>
@@ -15064,7 +15064,7 @@
                                             <userDefinedRuntimeAttribute type="string" keyPath="font_type" value="13,2"/>
                                         </userDefinedRuntimeAttributes>
                                     </label>
-                                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="To" textAlignment="center" lineBreakMode="tailTruncation" numberOfLines="3" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="pcG-mP-HG8" customClass="MyUILabel" customModule="rzq" customModuleProvider="target">
+                                    <label hidden="YES" opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="To" textAlignment="center" lineBreakMode="tailTruncation" numberOfLines="3" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="pcG-mP-HG8" customClass="MyUILabel" customModule="rzq" customModuleProvider="target">
                                         <rect key="frame" x="157.66666666666666" y="33" width="60" height="15.666666666666664"/>
                                         <constraints>
                                             <constraint firstAttribute="width" constant="60" id="Ajd-ew-0Nn"/>
@@ -15076,7 +15076,7 @@
                                             <userDefinedRuntimeAttribute type="string" keyPath="font_type" value="13,2"/>
                                         </userDefinedRuntimeAttributes>
                                     </label>
-                                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Order" textAlignment="center" lineBreakMode="tailTruncation" numberOfLines="3" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="ZwW-bB-Z6z" customClass="MyUILabel" customModule="rzq" customModuleProvider="target">
+                                    <label hidden="YES" opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Order" textAlignment="center" lineBreakMode="tailTruncation" numberOfLines="3" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="ZwW-bB-Z6z" customClass="MyUILabel" customModule="rzq" customModuleProvider="target">
                                         <rect key="frame" x="233" y="43" width="70" height="15.666666666666664"/>
                                         <constraints>
                                             <constraint firstAttribute="width" constant="70" id="COf-z5-njV"/>
@@ -15109,7 +15109,7 @@
                                     <constraint firstItem="YGW-e7-t5j" firstAttribute="top" secondItem="mse-Ol-LZd" secondAttribute="top" constant="-10" id="m1v-BP-JoB"/>
                                     <constraint firstItem="6sE-W5-plC" firstAttribute="top" secondItem="7pz-VS-1pI" secondAttribute="bottom" id="pYk-G6-CZX"/>
                                     <constraint firstItem="6sE-W5-plC" firstAttribute="leading" secondItem="mse-Ol-LZd" secondAttribute="leading" id="s0r-VX-W5M"/>
-                                    <constraint firstAttribute="height" constant="300" id="xDt-k5-OJk"/>
+                                    <constraint firstAttribute="height" constant="250" id="xDt-k5-OJk"/>
                                     <constraint firstItem="Hod-Gn-Fqb" firstAttribute="leading" secondItem="iWP-mW-xbB" secondAttribute="trailing" constant="45" id="zRv-Px-VYs"/>
                                 </constraints>
                             </view>

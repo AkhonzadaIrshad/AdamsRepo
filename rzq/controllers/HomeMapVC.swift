@@ -101,7 +101,7 @@ class HomeMapVC: BaseViewController {
         if (self.isProvider()) {
             self.getDriverOnGoingDeliveries()
         }
-        
+        self.setupLocationFields()
     }
     
     override func viewWillAppear(_ animated: Bool) {
