@@ -35,7 +35,12 @@ class HomeMapVC: BaseViewController {
     @IBOutlet weak var collectionView: UICollectionView!
     @IBOutlet weak var navBar: NavBar!
     @IBOutlet weak var searchView: CardView!
-
+    @IBOutlet weak var fullAdressTextView: UITextView!
+    
+    @IBOutlet weak var locationPartTextField: UITextField!
+    @IBOutlet weak var streetTextField: UITextField!
+    @IBOutlet weak var houseTextField: UITextField!
+    
     // MARK: - Properties - public
     
     let cameraZoom : Float = 15.0
@@ -196,6 +201,11 @@ class HomeMapVC: BaseViewController {
     }
     
     // MARK: - Methodes - Helpers
+    func setupLocationFields() {
+        self.houseTextField.placeholder = "homeMapVC.house.placeholder".localized
+        self.locationPartTextField.placeholder = "homeMapVC.part.placeholder".localized
+        self.streetTextField.placeholder = "homeMapVC.street.placeholder".localized
+    }
     
     func getDriverOnGoingDeliveries() {
         self.showLoading()
@@ -731,7 +741,7 @@ class HomeMapVC: BaseViewController {
                         }
                         
                         self.lblLocation.text = strAddresMain
-                        
+                        self.fullAdressTextView.text = strAddresMain
                     }
                     else {
                         
