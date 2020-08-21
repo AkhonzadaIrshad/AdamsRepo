@@ -30,11 +30,7 @@ class HomeMapVC: BaseViewController {
     @IBOutlet weak var btnLocation: UIButton!
     @IBOutlet weak var lblLocation: MyUILabel!
     
-    
     @IBOutlet weak var viewOnTheWay: UIView!
-    @IBOutlet weak var viewServices: UIView!
-    @IBOutlet weak var viewTenders: UIView!
-    
     
     @IBOutlet weak var collectionView: UICollectionView!
     @IBOutlet weak var navBar: NavBar!
@@ -96,9 +92,6 @@ class HomeMapVC: BaseViewController {
         NotificationCenter.default.addObserver(self, selector: #selector(appCameToForeground), name: UIApplication.willEnterForegroundNotification, object: nil)
         
         self.validateDriverDueAmount()
-        
-        self.viewServices.isHidden = true
-        self.viewTenders.isHidden = true
         
         if (self.isProvider()) {
             self.getDriverOnGoingDeliveries()
@@ -648,15 +641,12 @@ class HomeMapVC: BaseViewController {
                 }
             }
             if (self.items.count > 0) {
-                //  self.searchView.isHidden = true
                 self.collectionView.isHidden = false
                 self.collectionView.delegate = self
                 self.collectionView.dataSource = self
                 self.collectionView.reloadData()
                // self.viewOnTheWay.isHidden = true
                 self.viewOnTheWay.isHidden = false
-                self.viewServices.isHidden = true
-                self.viewTenders.isHidden = true
                 
                 
                 
@@ -667,15 +657,12 @@ class HomeMapVC: BaseViewController {
                 }
             }else {
                 self.stopTimer()
-                // self.searchView.isHidden = false
                 self.collectionView.isHidden = true
                 self.polyline?.map = nil
                 self.pickMarker?.map = nil
                 self.dropMarker?.map = nil
                 self.viewOnTheWay.isHidden = false
                 //back to false when u want to show them
-                self.viewServices.isHidden = true
-                self.viewTenders.isHidden = true
                 self.stopTimer()
             }
             
