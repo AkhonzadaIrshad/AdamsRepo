@@ -320,3 +320,7 @@ If you want to change it, use the search above or by long pressin on the map to 
 "navbar.orders" = "WORKING ORDERS";
 "navbar.notifications" = "NOTIFICATIONS";
 "navbar.profile" = "PROFILE";
+
+"homeMapVC.house.placeholder" = "house";
+"homeMapVC.piece.placeholder" = "piece";
+"homeMapVC.street.placeholder" = "street";

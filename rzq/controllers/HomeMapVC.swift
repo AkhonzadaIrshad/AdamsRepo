@@ -203,7 +203,7 @@ class HomeMapVC: BaseViewController {
     // MARK: - Methodes - Helpers
     func setupLocationFields() {
         self.houseTextField.placeholder = "homeMapVC.house.placeholder".localized
-        self.locationPartTextField.placeholder = "homeMapVC.part.placeholder".localized
+        self.locationPartTextField.placeholder = "homeMapVC.piece.placeholder".localized
         self.streetTextField.placeholder = "homeMapVC.street.placeholder".localized
     }
     
