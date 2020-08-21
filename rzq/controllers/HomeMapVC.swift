@@ -16,7 +16,9 @@ import CoreLocation
 import SnapKit
 import Firebase
 
-class HomeMapVC: BaseViewController,LabasLocationManagerDelegate, UICollectionViewDelegate, UICollectionViewDataSource, UICollectionViewDelegateFlowLayout, UIScrollViewDelegate,FilterSheetDelegate, ShopSheetDelegate, FilterListDelegate {
+class HomeMapVC: BaseViewController {
+    
+    // MARK: - Outlets
     
     @IBOutlet weak var edtSearch: MyUITextField!
     
@@ -36,6 +38,9 @@ class HomeMapVC: BaseViewController,LabasLocationManagerDelegate, UICollectionVi
     
     @IBOutlet weak var collectionView: UICollectionView!
     @IBOutlet weak var navBar: NavBar!
+    @IBOutlet weak var searchView: CardView!
+
+    // MARK: - Properties - public
     
     let cameraZoom : Float = 15.0
     
@@ -51,9 +56,7 @@ class HomeMapVC: BaseViewController,LabasLocationManagerDelegate, UICollectionVi
     var shops = [DataShop]()
     var items = [DatumDel]()
     var shopMarkers = [GMSMarker]()
-    
-    @IBOutlet weak var searchView: CardView!
-    
+        
     var mModel : FilterModel?
     
     var polyline : GMSPolyline?
@@ -61,9 +64,11 @@ class HomeMapVC: BaseViewController,LabasLocationManagerDelegate, UICollectionVi
     var dropMarker : GMSMarker?
     
     var collectionViewFlowLayout : UICollectionViewFlowLayout?
+    var timerDispatchSourceTimer : DispatchSourceTimer?
     
     weak var timer: Timer?
-    var timerDispatchSourceTimer : DispatchSourceTimer?
+    
+    // MARK: - Methodes - Life Cycle
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -79,7 +84,6 @@ class HomeMapVC: BaseViewController,LabasLocationManagerDelegate, UICollectionVi
         self.btnAbout.addTarget(self, action: #selector(BaseViewController.onAboutPressed(_:)), for: UIControl.Event.touchUpInside)
         
         self.edtSearch.delegate = self
-        // self.showLoading()
         
         self.lblLocation.isHidden = true
         self.btnLocation.isHidden = true
@@ -87,17 +91,14 @@ class HomeMapVC: BaseViewController,LabasLocationManagerDelegate, UICollectionVi
         //snuff
         ApiService.updateRegId(Authorization: DataManager.loadUser().data?.accessToken ?? "", regId: Messaging.messaging().fcmToken ?? "not_avaliable") { (response) in
             
-            
         }
         
         NotificationCenter.default.addObserver(self, selector: #selector(appCameToForeground), name: UIApplication.willEnterForegroundNotification, object: nil)
-        
         
         self.validateDriverDueAmount()
         
         self.viewServices.isHidden = true
         self.viewTenders.isHidden = true
-        
         
         if (self.isProvider()) {
             self.getDriverOnGoingDeliveries()
@@ -105,14 +106,16 @@ class HomeMapVC: BaseViewController,LabasLocationManagerDelegate, UICollectionVi
         
     }
     
-    func getDriverOnGoingDeliveries() {
-        self.showLoading()
-        ApiService.getDriverOnGoingDeliveries(Authorization: DataManager.loadUser().data?.accessToken ?? "") { (response) in
-            self.hideLoading()
-            UserDefaults.standard.setValue(response.data?.count ?? 0, forKey: Constants.WORKING_ORDERS_COUNT)
+    override func viewWillAppear(_ animated: Bool) {
+        super.viewWillAppear(animated)
+        LabasLocationManager.shared.delegate = self
+        if (self.latitude ?? 0.0 == 0.0 || self.longitude ?? 0.0 == 0.0) {
+            self.loadLastLocation()
+            LabasLocationManager.shared.startUpdatingLocation()
+        }else {
+            self.setUpGoogleMap()
         }
     }
-    
     
     override func viewDidAppear(_ animated: Bool) {
         super.viewDidAppear(animated)
@@ -125,15 +128,95 @@ class HomeMapVC: BaseViewController,LabasLocationManagerDelegate, UICollectionVi
             UserDefaults.standard.setValue(false, forKey: Constants.OPEN_MENU)
             self.onSlideMenuButtonPressed(self.btnMenu)
         }
+    }
+    
+    override func viewDidLayoutSubviews() {
+        super.viewDidLayoutSubviews()
+        collectionViewFlowLayout = collectionView?.collectionViewLayout as? UICollectionViewFlowLayout
+    }
+    
+    // if appropriate, make sure to stop your timer in `deinit`
+    deinit {
+        stopTimer()
+    }
+    
+    // MARK: - Methodes - UI Actions
+    
+    @IBAction func goToCurrentLocation(_ sender: Any) {
+        let camera = GMSCameraPosition.camera(withLatitude: self.latitude ?? 0.0, longitude: self.longitude ?? 0.0, zoom: self.cameraZoom)
+        self.gMap?.animate(to: camera)
+    }
+    
+    @IBAction func openShopsFilter(_ sender: Any) {
+        if let vc = UIStoryboard(name: "Main", bundle: nil).instantiateViewController(withIdentifier: "FilterShopsVC") as? FilterShopsVC {
+            vc.delegate = self
+            vc.latitude = self.latitude
+            vc.longitude = self.longitude
+            self.navigationController?.pushViewController(vc, animated: true)
+        }
+    }
+    
+    @IBAction func filterAction(_ sender: Any) {
+        let sheetContent = UIStoryboard(name: "Main", bundle: nil).instantiateViewController(withIdentifier: "FilterSheet") as! FilterSheet
         
+        sheetContent.delegate = self
+        sheetContent.mModel = self.mModel
+        let sheet = SheetViewController(controller: sheetContent, sizes: [.fullScreen, .fixed(self.view.frame.size.height - 50)])
+        sheet.willDismiss = { _ in
+            // This is called just before the sheet is dismissed
+        }
+        sheet.didDismiss = { _ in
+            // This is called after the sheet is dismissed
+        }
+        self.present(sheet, animated: false, completion: nil)
+    }
+    
+    @IBAction func onTheWayAction(_ sender: Any) {
+        if (self.isLoggedIn()) {
+            if let vc = UIStoryboard(name: "Main", bundle: nil).instantiateViewController(withIdentifier: "DeliveryStep1") as? DeliveryStep1 {
+                vc.latitude = self.latitude
+                vc.longitude = self.longitude
+                vc.fromHome = true
+                self.navigationController?.pushViewController(vc, animated: true)
+            }
+        }
+    }
+    
+    @IBAction func servicesAction(_ sender: Any) {
+        if (self.isLoggedIn()) {
+            if let vc = UIStoryboard(name: "Main", bundle: nil).instantiateViewController(withIdentifier: "ServiceStep1") as? ServiceStep1 {
+                vc.latitude = self.latitude
+                vc.longitude = self.longitude
+                self.navigationController?.pushViewController(vc, animated: true)
+            }
+        }
+    }
+    
+    @IBAction func tendersAction(_ sender: Any) {
+        if (self.isLoggedIn()) {
+            if let vc = UIStoryboard(name: "Main", bundle: nil).instantiateViewController(withIdentifier: "TenderStep1") as? TenderStep1 {
+                vc.latitude = self.latitude
+                vc.longitude = self.longitude
+                self.navigationController?.pushViewController(vc, animated: true)
+            }
+        }
+    }
+    
+    // MARK: - Methodes - Helpers
+    
+    func getDriverOnGoingDeliveries() {
+        self.showLoading()
+        ApiService.getDriverOnGoingDeliveries(Authorization: DataManager.loadUser().data?.accessToken ?? "") { (response) in
+            self.hideLoading()
+            UserDefaults.standard.setValue(response.data?.count ?? 0, forKey: Constants.WORKING_ORDERS_COUNT)
+        }
     }
     
     func checkForDeepLinkValues() {
         if (App.shared.deepLinkShopId != nil && Int(App.shared.deepLinkShopId ?? "0") ?? 0 > 0) {
             //open shop
             ApiService.getShopDetails(Authorization: DataManager.loadUser().data?.accessToken ?? "", id: Int(App.shared.deepLinkShopId ?? "0")!) { (response) in
-                if let vc = UIStoryboard(name: "Main", bundle: nil).instantiateViewController(withIdentifier: "ShopDetailsVC") as? ShopDetailsVC
-                {
+                if let vc = UIStoryboard(name: "Main", bundle: nil).instantiateViewController(withIdentifier: "ShopDetailsVC") as? ShopDetailsVC {
                     vc.latitude = self.latitude ?? 0.0
                     vc.longitude = self.longitude ?? 0.0
                     vc.shop = response.shopData!
@@ -172,7 +255,6 @@ class HomeMapVC: BaseViewController,LabasLocationManagerDelegate, UICollectionVi
                     messagesVC.presentBool = true
                     
                     let order = DatumDel(id: response.data?.id ?? 0, title: response.data?.title ?? "", status: response.data?.status ?? 0, statusString: response.data?.statusString ?? "", image: "", createdDate: response.data?.createdDate ?? "", chatId: response.data?.chatId ?? 0, fromAddress: response.data?.fromAddress ?? "", fromLatitude: response.data?.fromLatitude ?? 0.0, fromLongitude: response.data?.fromLongitude ?? 0.0, toAddress: response.data?.toAddress ?? "", toLatitude: response.data?.toLatitude ?? 0.0, toLongitude: response.data?.toLongitude ?? 0.0, providerID: response.data?.driverId, providerName: "", providerImage: "", providerRate: 0, time: response.data?.time ?? 0, price: response.data?.cost ?? 0.0, serviceName: "",paymentMethod: response.data?.paymentMethod ?? 0, items: response.data?.items ?? [ShopMenuItem](),isPaid: response.data?.isPaid ?? false, invoiceId : response.data?.invoiceId ?? "", toFemaleOnly: response.data?.toFemaleOnly ?? false, shopId: response.data?.shopId ?? 0, OrderPrice: response.data?.orderPrice ?? 0.0, KnetCommission: response.data?.KnetCommission ?? 0.0, ClientPhone: response.data?.ClientPhone ?? "", ProviderPhone : response.data?.ProviderPhone ?? "")
-                    
                     
                     messagesVC.order = order
                     messagesVC.user = DataManager.loadUser()
@@ -302,11 +384,6 @@ class HomeMapVC: BaseViewController,LabasLocationManagerDelegate, UICollectionVi
         
     }
     
-    override func viewDidLayoutSubviews() {
-        super.viewDidLayoutSubviews()
-        collectionViewFlowLayout = collectionView?.collectionViewLayout as? UICollectionViewFlowLayout
-    }
-    
     func scrollToNearestVisibleCollectionViewCell() {
         let visibleCenterPositionOfScrollView = Float(collectionView.contentOffset.x + (self.collectionView!.bounds.size.width / 2))
         var closestCellIndex = -1
@@ -345,100 +422,11 @@ class HomeMapVC: BaseViewController,LabasLocationManagerDelegate, UICollectionVi
         let item = self.items[(visibleIndexPath?.row)!]
         self.getDriverLocation(item: item)
     }
-    
-    
-    func scrollViewDidEndDecelerating(_ scrollView: UIScrollView) {
-        scrollToNearestVisibleCollectionViewCell()
-    }
-    
-    func scrollViewDidEndDragging(_ scrollView: UIScrollView, willDecelerate decelerate: Bool) {
-        if !decelerate {
-            scrollToNearestVisibleCollectionViewCell()
-        }
-    }
-    
-    //collection delegates
-    func numberOfSectionsInCollectionView(collectionView: UICollectionView) -> Int {
-        return 1
-    }
-    
-    func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, sizeForItemAt indexPath: IndexPath) -> CGSize {
-        return CGSize(width: self.view.bounds.width - 60.0, height: self.collectionView.bounds.height)
-        
-    }
-    
-    func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, insetForSectionAt section: Int) -> UIEdgeInsets {
-        return UIEdgeInsets.zero
-    }
-    
-    func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, minimumInteritemSpacingForSectionAt section: Int) -> CGFloat {
-        return 10
-    }
-    
-    func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, minimumLineSpacingForSectionAt section: Int) -> CGFloat {
-        return 10
-    }
-    
-    func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
-        return self.items.count
-    }
-    
-    func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
-        
-    }
-    
-    func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
-        let cell: PendingOrderCell = collectionView.dequeueReusableCell(withReuseIdentifier: "pendingordercell", for: indexPath as IndexPath) as! PendingOrderCell
-        
-        let count = UserDefaults.standard.value(forKey: Constants.NOTIFICATION_CHAT_COUNT) as? Int ?? 0
-        if (count > 0) {
-            cell.ivDot.isHidden = false
-        }else {
-            cell.ivDot.isHidden = true
-        }
-        
-        let item = self.items[indexPath.row]
-        let url = URL(string: "\(Constants.IMAGE_URL)\(item.providerImage ?? "")")
-        cell.ivLogo.kf.setImage(with: url)
-        
-        cell.lblDriverName.text = self.encryptDriverName(name: item.providerName ?? "")
-        cell.ratingView.rating = item.providerRate ?? 0.0
-        
-        cell.lblPrice.text = "\(item.price ?? 0.0) \("currency".localized)"
-        cell.lblPayment.text = "cash".localized
-        
-        cell.onChat = {
-            DispatchQueue.main.async {
-                let messagesVC: ZHCDemoMessagesViewController = ZHCDemoMessagesViewController.init()
-                messagesVC.presentBool = true
-                messagesVC.order = item
-                messagesVC.user = DataManager.loadUser()
-                let nav: UINavigationController = UINavigationController.init(rootViewController: messagesVC)
-                nav.modalPresentationStyle = .fullScreen
-                messagesVC.modalPresentationStyle = .fullScreen
-                self.navigationController?.present(nav, animated: true, completion: nil)
-            }
-        }
-        
-        self.getDriverLocation(item: item)
-        
-        return cell
-        
-    }
-    
-    
-    
+            
     func stopTimer() {
         timer?.invalidate()
-        //timerDispatchSourceTimer?.suspend() // if you want to suspend timer
         timerDispatchSourceTimer?.cancel()
     }
-    
-    // if appropriate, make sure to stop your timer in `deinit`
-    deinit {
-        stopTimer()
-    }
-    
     
     func getDriverLocation(item : DatumDel) {
         stopTimer()
@@ -464,7 +452,6 @@ class HomeMapVC: BaseViewController,LabasLocationManagerDelegate, UICollectionVi
     
     
     func getDriverLocationAPI(item : DatumDel) {
-        
         let visibleRect = CGRect(origin: self.collectionView.contentOffset, size: self.collectionView.bounds.size)
         let visiblePoint = CGPoint(x: visibleRect.midX, y: visibleRect.midY)
         let visibleIndexPath = self.collectionView.indexPathForItem(at: visiblePoint)
@@ -576,36 +563,6 @@ class HomeMapVC: BaseViewController,LabasLocationManagerDelegate, UICollectionVi
         self.present(vc, animated: true, completion: nil)
     }
     
-    @IBAction func goToCurrentLocation(_ sender: Any) {
-        let camera = GMSCameraPosition.camera(withLatitude: self.latitude ?? 0.0, longitude: self.longitude ?? 0.0, zoom: self.cameraZoom)
-        self.gMap?.animate(to: camera)
-    }
-    
-    func onOrder(order: OTWOrder) {
-        if (self.isLoggedIn()) {
-            if let vc = UIStoryboard(name: "Main", bundle: nil).instantiateViewController(withIdentifier: "DeliveryStep1") as? DeliveryStep1
-            {
-                vc.orderModel = OTWOrder()
-                vc.orderModel = order
-                vc.latitude = self.latitude
-                vc.longitude = self.longitude
-                vc.fromHome = true
-                self.navigationController?.pushViewController(vc, animated: true)
-            }
-        }
-    }
-    
-    func onDetails(shopData: ShopData) {
-        self.hideLoading()
-        if let vc = UIStoryboard(name: "Main", bundle: nil).instantiateViewController(withIdentifier: "ShopDetailsVC") as? ShopDetailsVC
-        {
-            vc.latitude = self.latitude ?? 0.0
-            vc.longitude = self.longitude ?? 0.0
-            vc.shop = shopData
-            self.navigationController?.pushViewController(vc, animated: true)
-        }
-    }
-    
     func addShopsMarkers() {
         self.gMap?.clear()
         for center in self.shops {
@@ -623,52 +580,7 @@ class HomeMapVC: BaseViewController,LabasLocationManagerDelegate, UICollectionVi
         marker.snippet = ""
         marker.map = gMap
     }
-    
-    func labasLocationManager(didUpdateLocation location: CLLocation) {
-        
-        self.latitude = location.coordinate.latitude
-        self.longitude = location.coordinate.longitude
-        
-        UserDefaults.standard.setValue(self.latitude, forKey: Constants.LAST_LATITUDE)
-        UserDefaults.standard.setValue(self.longitude, forKey: Constants.LAST_LONGITUDE)
-        
-        if (self.latitude ?? 0.0 == 0.0 || self.longitude ?? 0.0 == 0.0) {
-            
-            self.latitude = location.coordinate.latitude
-            self.longitude = location.coordinate.longitude
-            
-            UserDefaults.standard.setValue(self.latitude, forKey: Constants.LAST_LATITUDE)
-            UserDefaults.standard.setValue(self.longitude, forKey: Constants.LAST_LONGITUDE)
-            
-            self.hideLoading()
-            self.setUpGoogleMap()
-            
-        }
-        
-        if (self.isProvider()) {
-            ApiService.updateLocation(Authorization: DataManager.loadUser().data?.accessToken ?? "", latitude: location.coordinate.latitude, longitude: location.coordinate.longitude) { (response) in
-                
-            }
-        }
-        
-        let cllLocation = CLLocation(latitude: self.latitude ?? 0.0, longitude: self.longitude ?? 0.0)
-        self.lblLocation.isHidden = false
-        self.btnLocation.isHidden = false
-        self.GetAnnotationUsingCoordinated(cllLocation)
-        //  self.loadTracks()
-    }
-    
-    override func viewWillAppear(_ animated: Bool) {
-        super.viewWillAppear(animated)
-        LabasLocationManager.shared.delegate = self
-        if (self.latitude ?? 0.0 == 0.0 || self.longitude ?? 0.0 == 0.0) {
-            self.loadLastLocation()
-            LabasLocationManager.shared.startUpdatingLocation()
-        }else {
-            self.setUpGoogleMap()
-        }
-    }
-    
+
     func loadLastLocation() {
         self.latitude = UserDefaults.standard.value(forKey: Constants.LAST_LATITUDE) as? Double ?? 0.0
         self.longitude = UserDefaults.standard.value(forKey: Constants.LAST_LONGITUDE) as? Double ?? 0.0
@@ -770,96 +682,6 @@ class HomeMapVC: BaseViewController,LabasLocationManagerDelegate, UICollectionVi
         }
     }
     
-    @IBAction func searchAction(_ sender: Any) {
-        
-    }
-    
-    @IBAction func openShopsFilter(_ sender: Any) {
-        if let vc = UIStoryboard(name: "Main", bundle: nil).instantiateViewController(withIdentifier: "FilterShopsVC") as? FilterShopsVC
-        {
-            vc.delegate = self
-            vc.latitude = self.latitude
-            vc.longitude = self.longitude
-            self.navigationController?.pushViewController(vc, animated: true)
-        }
-    }
-    
-    func onClick(shop: DataShop) {
-        let camera = GMSCameraPosition.camera(withLatitude: shop.latitude ?? 0.0, longitude: shop.longitude ?? 0.0, zoom: self.cameraZoom)
-        self.gMap?.animate(to: camera)
-        // marker.icon = UIImage(named: "ic_map_shop_selected")
-        ApiService.getShopDetails(Authorization: DataManager.loadUser().data?.accessToken ?? "", id: shop.id ?? 0) { (response) in
-            self.showShopDetailsSheet(shop: response.shopData!)
-        }
-    }
-    
-    @IBAction func filterAction(_ sender: Any) {
-        let sheetContent = UIStoryboard(name: "Main", bundle: nil).instantiateViewController(withIdentifier: "FilterSheet") as! FilterSheet
-        //        // Do any additional setup after loading the view, typically from a nib.
-        //        let bottomSheet = MDCBottomSheetController(contentViewController: sheetContent)
-        //
-        //        bottomSheet.preferredContentSize = CGSize(width: self.view.frame.size.width, height: self.view.frame.size.height - 50)
-        //        self.present(bottomSheet, animated: true, completion: nil)
-        
-        sheetContent.delegate = self
-        sheetContent.mModel = self.mModel
-        let sheet = SheetViewController(controller: sheetContent, sizes: [.fullScreen, .fixed(self.view.frame.size.height - 50)])
-        sheet.willDismiss = { _ in
-            // This is called just before the sheet is dismissed
-        }
-        sheet.didDismiss = { _ in
-            // This is called after the sheet is dismissed
-        }
-        self.present(sheet, animated: false, completion: nil)
-    }
-    
-    func onApply(radius: Float, rating: Double, types : Int, model : FilterModel) {
-        gMap?.clear()
-        self.mModel = FilterModel()
-        self.mModel = model
-        self.getShopsList(radius: radius, rating: rating, types : types)
-    }
-    
-    func onClear() {
-        gMap?.clear()
-        self.mModel = FilterModel()
-        self.getShopsList(radius: Float(Constants.DEFAULT_RADIUS), rating: 0, types : 0)
-    }
-    
-    @IBAction func onTheWayAction(_ sender: Any) {
-        if (self.isLoggedIn()) {
-            if let vc = UIStoryboard(name: "Main", bundle: nil).instantiateViewController(withIdentifier: "DeliveryStep1") as? DeliveryStep1
-            {
-                vc.latitude = self.latitude
-                vc.longitude = self.longitude
-                vc.fromHome = true
-                self.navigationController?.pushViewController(vc, animated: true)
-            }
-        }
-    }
-    
-    @IBAction func servicesAction(_ sender: Any) {
-        if (self.isLoggedIn()) {
-            if let vc = UIStoryboard(name: "Main", bundle: nil).instantiateViewController(withIdentifier: "ServiceStep1") as? ServiceStep1
-            {
-                vc.latitude = self.latitude
-                vc.longitude = self.longitude
-                self.navigationController?.pushViewController(vc, animated: true)
-            }
-        }
-    }
-    
-    @IBAction func tendersAction(_ sender: Any) {
-        if (self.isLoggedIn()) {
-            if let vc = UIStoryboard(name: "Main", bundle: nil).instantiateViewController(withIdentifier: "TenderStep1") as? TenderStep1
-            {
-                vc.latitude = self.latitude
-                vc.longitude = self.longitude
-                self.navigationController?.pushViewController(vc, animated: true)
-            }
-        }
-    }
-    
     func validateDriverDueAmount() {
         if (self.isProvider()) {
             let check = DataManager.loadUser().data?.exceededDueAmount ?? false
@@ -942,13 +764,10 @@ class HomeMapVC: BaseViewController,LabasLocationManagerDelegate, UICollectionVi
     
 }
 
+// MARK: - GMSMapViewDelegate
+
 extension HomeMapVC : GMSMapViewDelegate {
-    func mapView(_ mapView: GMSMapView, didChange position: GMSCameraPosition) {
-        
-    }
-    func mapView(_ mapView: GMSMapView, idleAt position: GMSCameraPosition) {
-        
-    }
+    
     func mapView(_ mapView: GMSMapView, didTap marker: GMSMarker) -> Bool {
         let id = marker.title ?? "0"
         if (id.contains(find: "track")) {
@@ -967,16 +786,16 @@ extension HomeMapVC : GMSMapViewDelegate {
         marker.icon = UIImage(named: "ic_map_shop_selected")
         let camera = GMSCameraPosition.camera(withLatitude: marker.position.latitude, longitude: marker.position.longitude, zoom: self.cameraZoom)
         self.gMap?.animate(to: camera)
-        // marker.icon = UIImage(named: "ic_map_shop_selected")
         ApiService.getShopDetails(Authorization: DataManager.loadUser().data?.accessToken ?? "", id: Int(id)!) { (response) in
             self.showShopDetailsSheet(shop: response.shopData!)
         }
         
-        // self.getBCDetailsAPI(bcid: Int(id) ?? 0)
         return true
     }
     
 }
+
+// MARK: - UITextFieldDelegate
 
 extension HomeMapVC: UITextFieldDelegate {
     
@@ -1002,6 +821,8 @@ extension HomeMapVC: UITextFieldDelegate {
     
 }
 
+// MARK: - NavBarDelegate
+
 extension HomeMapVC: NavBarDelegate {
     func goToHomeScreen() {
         self.slideMenuItemSelectedAtIndex(1)
@@ -1017,5 +838,185 @@ extension HomeMapVC: NavBarDelegate {
     
     func goToProfileScreen() {
         self.slideMenuItemSelectedAtIndex(12)
+    }
+}
+
+// MARK: - CollectionView delegates
+
+extension HomeMapVC: UICollectionViewDelegate, UICollectionViewDataSource, UICollectionViewDelegateFlowLayout {
+    
+    func numberOfSectionsInCollectionView(collectionView: UICollectionView) -> Int {
+        return 1
+    }
+    
+    func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, sizeForItemAt indexPath: IndexPath) -> CGSize {
+        return CGSize(width: self.view.bounds.width - 60.0, height: self.collectionView.bounds.height)
+        
+    }
+    
+    func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, insetForSectionAt section: Int) -> UIEdgeInsets {
+        return UIEdgeInsets.zero
+    }
+    
+    func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, minimumInteritemSpacingForSectionAt section: Int) -> CGFloat {
+        return 10
+    }
+    
+    func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, minimumLineSpacingForSectionAt section: Int) -> CGFloat {
+        return 10
+    }
+    
+    func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
+        return self.items.count
+    }
+    
+    func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
+        let cell: PendingOrderCell = collectionView.dequeueReusableCell(withReuseIdentifier: "pendingordercell", for: indexPath as IndexPath) as! PendingOrderCell
+        
+        let count = UserDefaults.standard.value(forKey: Constants.NOTIFICATION_CHAT_COUNT) as? Int ?? 0
+        if (count > 0) {
+            cell.ivDot.isHidden = false
+        }else {
+            cell.ivDot.isHidden = true
+        }
+        
+        let item = self.items[indexPath.row]
+        let url = URL(string: "\(Constants.IMAGE_URL)\(item.providerImage ?? "")")
+        cell.ivLogo.kf.setImage(with: url)
+        
+        cell.lblDriverName.text = self.encryptDriverName(name: item.providerName ?? "")
+        cell.ratingView.rating = item.providerRate ?? 0.0
+        
+        cell.lblPrice.text = "\(item.price ?? 0.0) \("currency".localized)"
+        cell.lblPayment.text = "cash".localized
+        
+        cell.onChat = {
+            DispatchQueue.main.async {
+                let messagesVC: ZHCDemoMessagesViewController = ZHCDemoMessagesViewController.init()
+                messagesVC.presentBool = true
+                messagesVC.order = item
+                messagesVC.user = DataManager.loadUser()
+                let nav: UINavigationController = UINavigationController.init(rootViewController: messagesVC)
+                nav.modalPresentationStyle = .fullScreen
+                messagesVC.modalPresentationStyle = .fullScreen
+                self.navigationController?.present(nav, animated: true, completion: nil)
+            }
+        }
+        
+        self.getDriverLocation(item: item)
+        
+        return cell
+        
+    }
+}
+
+// MARK: - FilterSheetDelegate
+
+extension HomeMapVC: FilterSheetDelegate {
+    func onApply(radius: Float, rating: Double, types : Int, model : FilterModel) {
+        gMap?.clear()
+        self.mModel = FilterModel()
+        self.mModel = model
+        self.getShopsList(radius: radius, rating: rating, types : types)
+    }
+    
+    func onClear() {
+        gMap?.clear()
+        self.mModel = FilterModel()
+        self.getShopsList(radius: Float(Constants.DEFAULT_RADIUS), rating: 0, types : 0)
+    }
+}
+
+// MARK: - ShopSheetDelegate
+
+extension HomeMapVC: ShopSheetDelegate {
+    func onOrder(order: OTWOrder) {
+        if (self.isLoggedIn()) {
+            if let vc = UIStoryboard(name: "Main", bundle: nil).instantiateViewController(withIdentifier: "DeliveryStep1") as? DeliveryStep1
+            {
+                vc.orderModel = OTWOrder()
+                vc.orderModel = order
+                vc.latitude = self.latitude
+                vc.longitude = self.longitude
+                vc.fromHome = true
+                self.navigationController?.pushViewController(vc, animated: true)
+            }
+        }
+    }
+    
+    func onDetails(shopData: ShopData) {
+        self.hideLoading()
+        if let vc = UIStoryboard(name: "Main", bundle: nil).instantiateViewController(withIdentifier: "ShopDetailsVC") as? ShopDetailsVC
+        {
+            vc.latitude = self.latitude ?? 0.0
+            vc.longitude = self.longitude ?? 0.0
+            vc.shop = shopData
+            self.navigationController?.pushViewController(vc, animated: true)
+        }
+    }
+}
+
+// MARK: - UIScrollViewDelegate
+
+extension HomeMapVC: UIScrollViewDelegate {
+    
+    func scrollViewDidEndDecelerating(_ scrollView: UIScrollView) {
+        scrollToNearestVisibleCollectionViewCell()
+    }
+    
+    func scrollViewDidEndDragging(_ scrollView: UIScrollView, willDecelerate decelerate: Bool) {
+        if !decelerate {
+            scrollToNearestVisibleCollectionViewCell()
+        }
+    }
+}
+
+//MARK: - FilterListDelegate
+
+extension HomeMapVC: FilterListDelegate {
+    func onClick(shop: DataShop) {
+        let camera = GMSCameraPosition.camera(withLatitude: shop.latitude ?? 0.0, longitude: shop.longitude ?? 0.0, zoom: self.cameraZoom)
+        self.gMap?.animate(to: camera)
+        // marker.icon = UIImage(named: "ic_map_shop_selected")
+        ApiService.getShopDetails(Authorization: DataManager.loadUser().data?.accessToken ?? "", id: shop.id ?? 0) { (response) in
+            self.showShopDetailsSheet(shop: response.shopData!)
+        }
+    }
+}
+
+//MARK: - LabasLocationManagerDelegate
+
+extension HomeMapVC: LabasLocationManagerDelegate {
+    
+    func labasLocationManager(didUpdateLocation location: CLLocation) {
+        
+        self.latitude = location.coordinate.latitude
+        self.longitude = location.coordinate.longitude
+        
+        UserDefaults.standard.setValue(self.latitude, forKey: Constants.LAST_LATITUDE)
+        UserDefaults.standard.setValue(self.longitude, forKey: Constants.LAST_LONGITUDE)
+        
+        if (self.latitude ?? 0.0 == 0.0 || self.longitude ?? 0.0 == 0.0) {
+            
+            self.latitude = location.coordinate.latitude
+            self.longitude = location.coordinate.longitude
+            
+            UserDefaults.standard.setValue(self.latitude, forKey: Constants.LAST_LATITUDE)
+            UserDefaults.standard.setValue(self.longitude, forKey: Constants.LAST_LONGITUDE)
+            
+            self.hideLoading()
+            self.setUpGoogleMap()
+        }
+        
+        if (self.isProvider()) {
+            ApiService.updateLocation(Authorization: DataManager.loadUser().data?.accessToken ?? "", latitude: location.coordinate.latitude, longitude: location.coordinate.longitude) { (response) in
+                
+            }
+        }
+        
+        let cllLocation = CLLocation(latitude: self.latitude ?? 0.0, longitude: self.longitude ?? 0.0)
+        self.lblLocation.isHidden = false
+        self.btnLocation.isHidden = false
+        self.GetAnnotationUsingCoordinated(cllLocation)
     }
 }
