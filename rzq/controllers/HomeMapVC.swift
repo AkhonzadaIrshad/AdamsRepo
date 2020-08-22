@@ -176,14 +176,14 @@ class HomeMapVC: BaseViewController {
                 vc.longitude = self.longitude
                 vc.orderModel = OTWOrder()
                 var address = self.fullAdressTextView.text ?? ""
-                if let street = self.streetTextField.text {
-                    address +=  " " + street
+                if let street = self.streetTextField.text, !street.isEmpty {
+                    address +=  " \("homeMapVC.street.placeholder".localized)" + street
                 }
-                if let house = self.houseTextField.text {
-                    address += " " + house
+                if let house = self.houseTextField.text, !house.isEmpty {
+                    address += " \("homeMapVC.house.placeholder".localized)" + house
                 }
-                if let piece = self.locationPartTextField.text {
-                    address +=  " " + piece
+                if let piece = self.locationPartTextField.text, !piece.isEmpty  {
+                    address +=  " \("homeMapVC.piece.placeholder".localized)" + piece
                 }
                 vc.orderModel?.dropOffAddress = address
                 vc.orderModel?.dropOffLatitude = self.latitude
