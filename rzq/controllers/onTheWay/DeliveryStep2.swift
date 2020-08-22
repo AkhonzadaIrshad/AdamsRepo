@@ -399,15 +399,14 @@ class DeliveryStep2: BaseVC, Step3Delegate {
         self.dropLocation = location
         self.GetAnnotationUsingCoordinated(location)
     }
+    
     fileprivate func getAddressForMapCenter(location : CLLocation) {
         self.dropLocation = location
         self.GetAnnotationUsingCoordinated(location)
     }
     
     fileprivate func GetAnnotationUsingCoordinated(_ location : CLLocation) {
-        
         GMSGeocoder().reverseGeocodeCoordinate(location.coordinate) { (response, error) in
-            
             var strAddresMain : String = ""
             
             if let address : GMSAddress = response?.firstResult() {
@@ -487,9 +486,6 @@ class DeliveryStep2: BaseVC, Step3Delegate {
     @IBAction func backBtnAction(_ sender: Any) {
         self.saveBackModel()
     }
-    
-    
-    
     
     func getShopByPlaces(name : String, latitude : Double, longitude: Double) {
         
@@ -593,31 +589,6 @@ extension DeliveryStep2 : GMSMapViewDelegate {
             return true
         }
         if (Int(id) ?? 0 > 0) {
-//            toolTipView?.removeFromSuperview()
-//            toolTipView = UIView.fromNib()
-//            if (self.orderModel?.shop?.id ?? 0 > 0) {
-//                toolTipView?.lblTitle.text = self.orderModel?.shop?.name ?? ""
-//                toolTipView?.lblDescription.text = self.orderModel?.shop?.address ?? ""
-//                if (self.orderModel?.shop?.images?.count ?? 0 > 0) {
-//                    let url = URL(string: "\(Constants.IMAGE_URL)\(self.orderModel?.shop?.images?[0] ?? "")")
-//                    toolTipView?.ivLogo.kf.setImage(with: url)
-//                }else {
-//                   toolTipView?.ivLogo.image = UIImage(named: "ic_map_shop_selected")
-//                }
-//            }else {
-//                toolTipView?.lblTitle.text = self.orderModel?.pickUpAddress ?? ""
-//                toolTipView?.lblDescription.text = ""
-//                toolTipView?.ivLogo.image = UIImage(named: "ic_location_pin")
-//            }
-//
-//            if (self.orderModel?.shop?.id ?? 0 > 0) {
-//                marker.icon = UIImage(named: "ic_map_shop_selected")
-//            }else {
-//                marker.icon = UIImage(named: "ic_location_pin")
-//            }
-//
-//            toolTipView?.center = mapView.projection.point(for: marker.position)
-//            mapView.addSubview(toolTipView!)
             return true
         }else {
             return true

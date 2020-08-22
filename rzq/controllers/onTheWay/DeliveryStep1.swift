@@ -20,11 +20,6 @@ class DeliveryStep1: BaseVC , Step3Delegate, AllShopDelegate, ImagePickerDelegat
     
     // MARK: - Outlets
     
-    func onDone(images: [UIImage]) {
-        self.selectedImages = images
-        self.handleImagesView()
-    }
-    
     @IBOutlet weak var lblImages: MyUILabel!
     
     @IBOutlet weak var viewImages: UIView!
@@ -213,6 +208,9 @@ class DeliveryStep1: BaseVC , Step3Delegate, AllShopDelegate, ImagePickerDelegat
         }
     }
     
+    override func viewWillDisappear(_ animated: Bool) {
+    
+    }
     private func loadData() {
         if (self.orderModel?.shop?.id ?? 0 > 0) {
             self.btnCheckMenu.isHidden = false
@@ -467,6 +465,10 @@ class DeliveryStep1: BaseVC , Step3Delegate, AllShopDelegate, ImagePickerDelegat
         return true
     }
     
+    func onDone(images: [UIImage]) {
+        self.selectedImages = images
+        self.handleImagesView()
+    }
     
     func updateModel(model: OTWOrder) {
         self.orderModel = model
@@ -898,7 +900,7 @@ class DeliveryStep1: BaseVC , Step3Delegate, AllShopDelegate, ImagePickerDelegat
         if (self.validate() && validateOrderDetail()) {
             if let vc = UIStoryboard(name: "Main", bundle: nil).instantiateViewController(withIdentifier: "DeliveryStep3") as? DeliveryStep3
             {
-                self.orderModel?.pickUpDetails = self.edtMoreDetails ?? ""
+                vc.orderModel?.dropOffAddress = self.orderModel?.dropOffAddress
                 vc.latitude = self.latitude
                 vc.selectedImages = selectedImages
                 vc.longitude = self.longitude

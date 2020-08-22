@@ -174,6 +174,20 @@ class HomeMapVC: BaseViewController {
             if let vc = UIStoryboard(name: "Main", bundle: nil).instantiateViewController(withIdentifier: "DeliveryStep1") as? DeliveryStep1 {
                 vc.latitude = self.latitude
                 vc.longitude = self.longitude
+                vc.orderModel = OTWOrder()
+                var address = self.fullAdressTextView.text ?? ""
+                if let street = self.streetTextField.text {
+                    address +=  " " + street
+                }
+                if let house = self.houseTextField.text {
+                    address += " " + house
+                }
+                if let piece = self.locationPartTextField.text {
+                    address +=  " " + piece
+                }
+                vc.orderModel?.dropOffAddress = address
+                vc.orderModel?.dropOffLatitude = self.latitude
+                vc.orderModel?.dropOffLongitude = self.longitude
                 vc.fromHome = true
                 self.navigationController?.pushViewController(vc, animated: true)
             }

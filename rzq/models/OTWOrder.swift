@@ -36,12 +36,8 @@ class OTWOrder : NSObject {
     func reset() {
         self.pickUpLongitude = nil
         self.pickUpLatitude = nil
-        self.dropOffLongitude = nil
-        self.dropOffLatitude = nil
         self.pickUpAddress = nil
-        self.dropOffAddress = nil
         self.pickUpDetails = nil
-        self.dropOffDetails = nil
         self.orderDetails = nil
         self.orderCost = nil
     }
