@@ -16372,19 +16372,19 @@
                                                         </userDefinedRuntimeAttributes>
                                                     </view>
                                                     <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="zzz" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="Wlm-ad-pp1">
-                                                        <rect key="frame" x="105" y="78" width="142" height="16.666666666666671"/>
+                                                        <rect key="frame" x="105" y="78" width="142" height="15.333333333333329"/>
                                                         <fontDescription key="fontDescription" name="Dosis-SemiBold" family="Dosis" pointSize="13"/>
                                                         <nil key="textColor"/>
                                                         <nil key="highlightedColor"/>
                                                     </label>
                                                     <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="zzz" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="EC4-Jp-8TF">
-                                                        <rect key="frame" x="105" y="99.666666666666657" width="140" height="16.666666666666671"/>
+                                                        <rect key="frame" x="105" y="98.333333333333343" width="140" height="15.333333333333329"/>
                                                         <fontDescription key="fontDescription" name="Dosis-SemiBold" family="Dosis" pointSize="13"/>
                                                         <nil key="textColor"/>
                                                         <nil key="highlightedColor"/>
                                                     </label>
                                                     <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="zzz" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="biu-iK-fgJ">
-                                                        <rect key="frame" x="105" y="121.33333333333333" width="140" height="15.333333333333329"/>
+                                                        <rect key="frame" x="105" y="118.66666666666666" width="140" height="14"/>
                                                         <fontDescription key="fontDescription" name="Dosis-SemiBold" family="Dosis" pointSize="12"/>
                                                         <nil key="textColor"/>
                                                         <nil key="highlightedColor"/>
@@ -21955,13 +21955,13 @@
                                         </constraints>
                                     </imageView>
                                     <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="العربية" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="aW2-h1-oL0">
-                                        <rect key="frame" x="234.33333333333334" y="32.666666666666657" width="42.000000000000028" height="15"/>
+                                        <rect key="frame" x="242.00000000000003" y="31.333333333333343" width="34.333333333333343" height="17.666666666666671"/>
                                         <fontDescription key="fontDescription" name="Tajawal-Regular" family="Tajawal" pointSize="15"/>
                                         <color key="textColor" white="0.33333333329999998" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                         <nil key="highlightedColor"/>
                                     </label>
                                     <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="ic_checked" translatesAutoresizingMaskIntoConstraints="NO" id="ov3-LE-0y8">
-                                        <rect key="frame" x="204.33333333333334" y="30" width="20" height="20"/>
+                                        <rect key="frame" x="212" y="30" width="20" height="20"/>
                                         <constraints>
                                             <constraint firstAttribute="width" constant="20" id="cI5-4y-Or2"/>
                                             <constraint firstAttribute="height" constant="20" id="lfm-Zt-Sdd"/>
