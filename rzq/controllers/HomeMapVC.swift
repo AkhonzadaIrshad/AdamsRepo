@@ -22,8 +22,7 @@ class HomeMapVC: BaseViewController {
     
     @IBOutlet weak var edtSearch: MyUITextField!
     
-    @IBOutlet weak var mapView: UIView!
-    
+    @IBOutlet weak var mapView: GMSMapView!
     @IBOutlet weak var btnMenu: UIButton!
     
     @IBOutlet weak var btnAbout: UIButton!
@@ -40,6 +39,7 @@ class HomeMapVC: BaseViewController {
     @IBOutlet weak var locationPartTextField: UITextField!
     @IBOutlet weak var streetTextField: UITextField!
     @IBOutlet weak var houseTextField: UITextField!
+    @IBOutlet weak var viewGoogleMap: UIView!
     
     // MARK: - Properties - public
     
@@ -73,7 +73,6 @@ class HomeMapVC: BaseViewController {
     
     override func viewDidLoad() {
         super.viewDidLoad()
-        gMap = GMSMapView()
         self.navBar.delegate = self
         if DataManager.loadUser().data?.roles?.contains(find: "Driver") ?? false {
             self.navBar.isHidden = false
@@ -107,12 +106,11 @@ class HomeMapVC: BaseViewController {
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
         LabasLocationManager.shared.delegate = self
-        if (self.latitude ?? 0.0 == 0.0 || self.longitude ?? 0.0 == 0.0) {
-            self.loadLastLocation()
-            LabasLocationManager.shared.startUpdatingLocation()
-        }else {
-            self.setUpGoogleMap()
-        }
+//        self.loadLastLocation()
+        LabasLocationManager.shared.startUpdatingLocation()
+        let loc = CLLocationCoordinate2D(latitude: self.latitude ?? 24.7136, longitude: self.longitude ?? 46.6753)
+        self.mapView.camera = GMSCameraPosition(target: loc, zoom: 15, bearing: 0, viewingAngle: 0)
+        setUpGoogleMap()
     }
     
     override func viewDidAppear(_ animated: Bool) {
@@ -597,48 +595,30 @@ class HomeMapVC: BaseViewController {
         marker.snippet = ""
         marker.map = gMap
     }
-
-    func loadLastLocation() {
-        self.latitude = UserDefaults.standard.value(forKey: Constants.LAST_LATITUDE) as? Double ?? 0.0
-        self.longitude = UserDefaults.standard.value(forKey: Constants.LAST_LONGITUDE) as? Double ?? 0.0
-        
-        let cllLocation = CLLocation(latitude: self.latitude ?? 0.0, longitude: self.longitude ?? 0.0)
-        self.lblLocation.isHidden = false
-        self.btnLocation.isHidden = false
-        self.GetAnnotationUsingCoordinated(cllLocation)
-        
-        let camera = GMSCameraPosition.camera(withLatitude: self.latitude ?? 0.0, longitude: self.longitude ?? 0.0, zoom: self.cameraZoom)
-        gMap = GMSMapView.map(withFrame: CGRect(x: 0, y: 0, width: self.mapView.frame.width, height: self.mapView.frame.height), camera: camera)
-        gMap?.delegate = self
-        let marker = GMSMarker()
-        marker.position = CLLocationCoordinate2D(latitude: self.latitude ?? 0.0, longitude: self.longitude ?? 0.0)
-        marker.title =  ""
-        marker.snippet = ""
-        marker.map = gMap
-        
-        self.mapView.addSubview(gMap!)
-        gMap?.bindFrameToSuperviewBounds()
-        self.view.layoutSubviews()
-        self.loadTracks()
-    }
     
-    func setUpGoogleMap() {
-        let camera = GMSCameraPosition.camera(withLatitude: self.latitude ?? 0.0, longitude: self.longitude ?? 0.0, zoom: self.cameraZoom)
-        gMap = GMSMapView.map(withFrame: CGRect(x: 0, y: 0, width: self.mapView.frame.width, height: self.mapView.frame.height), camera: camera)
-        gMap?.delegate = self
-        let marker = GMSMarker()
-        marker.position = CLLocationCoordinate2D(latitude: self.latitude ?? 0.0, longitude: self.longitude ?? 0.0)
-        marker.title =  ""
-        marker.snippet = ""
-        marker.map = gMap
+    fileprivate func setUpGoogleMap() {
         
-        self.mapView.addSubview(gMap!)
-        gMap?.bindFrameToSuperviewBounds()
-        self.view.layoutSubviews()
+        var latitude : CLLocationDegrees = LabasLocationManager.shared.defaultLocation.coordinate.latitude
+        var longitude : CLLocationDegrees = LabasLocationManager.shared.defaultLocation.coordinate.longitude
         
-        DispatchQueue.main.asyncAfter(deadline: .now() + 3) {
-            self.loadTracks()
+        if let currentLocation = LabasLocationManager.shared.currentLocation {
+            latitude = currentLocation.coordinate.latitude
+            longitude = currentLocation.coordinate.longitude
+        } else {
+            LabasLocationManager.shared.delegate = self
+            LabasLocationManager.shared.startUpdatingLocation()
         }
+        
+        currentZoom = 15
+        
+        let camera : GMSCameraPosition = GMSCameraPosition.camera(withLatitude: latitude, longitude: longitude, zoom: 15, bearing: 3, viewingAngle: 0)
+        
+        mapView.camera = camera
+        mapView.delegate = self
+        mapView.isMyLocationEnabled = true
+        mapView.settings.myLocationButton = false
+        mapView.settings.compassButton = false
+        mapView.isIndoorEnabled = false
     }
     
     func encryptDriverName(name: String) -> String {
@@ -702,13 +682,59 @@ class HomeMapVC: BaseViewController {
             }
         }
     }
+}
+
+// MARK: - GMSMapViewDelegate
+
+extension HomeMapVC : GMSMapViewDelegate {
+    
+    func mapView(_ mapView: GMSMapView, didTap marker: GMSMarker) -> Bool {
+        let id = marker.title ?? "0"
+        if (id.contains(find: "track")) {
+            return true
+        }
+        if (id.contains(find: "my_location")) {
+            return true
+        }
+        if (id == "0" || id == "") {
+            return true
+        }
+        for mark in self.shopMarkers {
+            mark.icon = UIImage(named: "ic_map_shop")
+        }
+        
+        marker.icon = UIImage(named: "ic_map_shop_selected")
+        let camera = GMSCameraPosition.camera(withLatitude: marker.position.latitude, longitude: marker.position.longitude, zoom: self.cameraZoom)
+        self.gMap?.animate(to: camera)
+        ApiService.getShopDetails(Authorization: DataManager.loadUser().data?.accessToken ?? "", id: Int(id)!) { (response) in
+            self.showShopDetailsSheet(shop: response.shopData!)
+        }
+        
+        return true
+    }
+    
+    func mapView(_ mapView: GMSMapView, didChange position: GMSCameraPosition) {
+        mapView.clear()
+        self.fullAdressTextView.text = "Loading".localized
+    }
+    
+    func mapView(_ mapView: GMSMapView, idleAt position: GMSCameraPosition) {
+        self.fullAdressTextView.text = "Loading".localized
+        self.getAddressForMapCenter()
+    }
+    
+    fileprivate func getAddressForMapCenter() {
+        let point : CGPoint = mapView.center
+        let coordinate : CLLocationCoordinate2D = mapView.projection.coordinate(for: point)
+        let location =  CLLocation.init(latitude: coordinate.latitude, longitude: coordinate.longitude)
+        self.longitude = location.coordinate.longitude
+        self.latitude = location.coordinate.latitude
+        self.GetAnnotationUsingCoordinated(location)
+    }
     
     fileprivate func GetAnnotationUsingCoordinated(_ location : CLLocation) {
-        
         GMSGeocoder().reverseGeocodeCoordinate(location.coordinate) { (response, error) in
-            
             var strAddresMain : String = ""
-            
             if let address : GMSAddress = response?.firstResult() {
                 if let lines = address.lines  {
                     if (lines.count > 0) {
@@ -745,7 +771,7 @@ class HomeMapVC: BaseViewController {
                             }
                         }
                         
-                        if let country = address.country { 
+                        if let country = address.country {
                             if strSubTitle.count > 0 {
                                 strSubTitle = "\(strSubTitle), \(country)"
                             }
@@ -754,56 +780,23 @@ class HomeMapVC: BaseViewController {
                             }
                         }
                         
-                        self.lblLocation.text = strAddresMain
                         self.fullAdressTextView.text = strAddresMain
+                        self.latitude = location.coordinate.latitude
+                        self.longitude = location.coordinate.longitude
                     }
                     else {
-                        
-                        self.lblLocation.text = "Loading".localized
+                        self.fullAdressTextView.text = "Loading".localized
                     }
                 }
                 else {
-                    
-                    self.lblLocation.text = "Loading".localized
+                    self.fullAdressTextView.text = "Loading".localized
                 }
             }
             else {
-                self.lblLocation.text = "Loading".localized
+                self.fullAdressTextView.text = "Loading".localized
             }
         }
     }
-    
-}
-
-// MARK: - GMSMapViewDelegate
-
-extension HomeMapVC : GMSMapViewDelegate {
-    
-    func mapView(_ mapView: GMSMapView, didTap marker: GMSMarker) -> Bool {
-        let id = marker.title ?? "0"
-        if (id.contains(find: "track")) {
-            return true
-        }
-        if (id.contains(find: "my_location")) {
-            return true
-        }
-        if (id == "0" || id == "") {
-            return true
-        }
-        for mark in self.shopMarkers {
-            mark.icon = UIImage(named: "ic_map_shop")
-        }
-        
-        marker.icon = UIImage(named: "ic_map_shop_selected")
-        let camera = GMSCameraPosition.camera(withLatitude: marker.position.latitude, longitude: marker.position.longitude, zoom: self.cameraZoom)
-        self.gMap?.animate(to: camera)
-        ApiService.getShopDetails(Authorization: DataManager.loadUser().data?.accessToken ?? "", id: Int(id)!) { (response) in
-            self.showShopDetailsSheet(shop: response.shopData!)
-        }
-        
-        return true
-    }
-    
 }
 
 // MARK: - UITextFieldDelegate
@@ -999,35 +992,16 @@ extension HomeMapVC: FilterListDelegate {
 
 extension HomeMapVC: LabasLocationManagerDelegate {
     
-    func labasLocationManager(didUpdateLocation location: CLLocation) {
+    func labasLocationManager(didUpdateLocation location:CLLocation) {
         
-        self.latitude = location.coordinate.latitude
-        self.longitude = location.coordinate.longitude
-        
-        UserDefaults.standard.setValue(self.latitude, forKey: Constants.LAST_LATITUDE)
-        UserDefaults.standard.setValue(self.longitude, forKey: Constants.LAST_LONGITUDE)
-        
-        if (self.latitude ?? 0.0 == 0.0 || self.longitude ?? 0.0 == 0.0) {
+        if let currentLocation = LabasLocationManager.shared.currentLocation {
+            let latitude = currentLocation.coordinate.latitude
+            let longitude = currentLocation.coordinate.longitude
             
-            self.latitude = location.coordinate.latitude
-            self.longitude = location.coordinate.longitude
+            let camera : GMSCameraPosition = GMSCameraPosition.camera(withLatitude: latitude, longitude: longitude, zoom: 15, bearing: 3, viewingAngle: 0)
             
-            UserDefaults.standard.setValue(self.latitude, forKey: Constants.LAST_LATITUDE)
-            UserDefaults.standard.setValue(self.longitude, forKey: Constants.LAST_LONGITUDE)
-            
-            self.hideLoading()
-            self.setUpGoogleMap()
+            self.mapView.animate(to: camera)
+            LabasLocationManager.shared.stopUpdatingLocation()
         }
-        
-        if (self.isProvider()) {
-            ApiService.updateLocation(Authorization: DataManager.loadUser().data?.accessToken ?? "", latitude: location.coordinate.latitude, longitude: location.coordinate.longitude) { (response) in
-                
-            }
-        }
-        
-        let cllLocation = CLLocation(latitude: self.latitude ?? 0.0, longitude: self.longitude ?? 0.0)
-        self.lblLocation.isHidden = false
-        self.btnLocation.isHidden = false
-        self.GetAnnotationUsingCoordinated(cllLocation)
     }
 }

@@ -19,28 +19,29 @@ struct RequestLoction {
 }
 
 class SelectLocationViewController: BaseVC {
-    var locationSelected = false
-    
-    var delegate : SelectLocationDelegate?
     
     @IBOutlet weak var btnBack: UIButton!
-    
     @IBOutlet weak var ivHandle: UIImageView!
     
     var selectedLocation:CLLocation?
+    
     // MARK: Properties
+    
     var markerLocation: GMSMarker?
     var currentZoom: Float = 0.0
     var mapView = GMSMapView()
-    //    var locationManager = CLLocationManager()
     var requestLocation: RequestLoction?
+    var locationSelected = false
+    var delegate : SelectLocationDelegate?
     
     // MARK: Outlets
+    
     @IBOutlet weak var viewGoogleMap: UIView!
     @IBOutlet weak var imgPinCenter: UIImageView!
     @IBOutlet var selectedLocationLabel: UILabel!
     
     // MARK: UIViewController
+    
     override func viewDidLoad() {
         super.viewDidLoad()
         if (self.isArabic()) {
@@ -48,18 +49,11 @@ class SelectLocationViewController: BaseVC {
         }
         let loc = CLLocationCoordinate2D(latitude: 24.7136, longitude: 46.6753)
         mapView.camera = GMSCameraPosition(target: loc, zoom: 15, bearing: 0, viewingAngle: 0)
-        
         setUpGoogleMap()
     }
     
     override func viewWillDisappear(_ animated: Bool) {
         super.viewWillDisappear(animated)
-        
-        //        if self.locationSelected == false {
-        //            self.addLocationVC?.gpsButton.stopAnimation()
-        //            self.addLocationVC?.manualButtonClicked((self.addLocationVC?.manualButton)!)
-        //        }
-        
     }
     
     // MARK:- Methods
@@ -100,7 +94,6 @@ class SelectLocationViewController: BaseVC {
         locationSelected = true
         self.delegate?.selectedLocation(location: self.selectedLocation!, address: self.selectedLocationLabel.text ?? "")
         self.navigationController?.popViewController(animated: true)
-        
     }
     
     
@@ -110,10 +103,9 @@ class SelectLocationViewController: BaseVC {
         UITextField.appearance(whenContainedInInstancesOf: [UISearchBar.self]).defaultTextAttributes = [NSAttributedString.Key.foregroundColor: UIColor.white]
         present(autocompleteController, animated: true, completion: nil)
     }
+    
     // MARK: Public methods
-    
-    
-    
+
     fileprivate func setUpGoogleMap() {
         
         var latitude : CLLocationDegrees = LabasLocationManager.shared.defaultLocation.coordinate.latitude
@@ -122,9 +114,6 @@ class SelectLocationViewController: BaseVC {
         if let currentLocation = LabasLocationManager.shared.currentLocation {
             latitude = currentLocation.coordinate.latitude
             longitude = currentLocation.coordinate.longitude
-            
-            //            latitude = 24.7136
-            //            longitude = 46.6753
         } else {
             LabasLocationManager.shared.delegate = self
             LabasLocationManager.shared.startUpdatingLocation()
@@ -159,11 +148,8 @@ class SelectLocationViewController: BaseVC {
     }
     
     fileprivate func GetAnnotationUsingCoordinated(_ location : CLLocation) {
-        
         GMSGeocoder().reverseGeocodeCoordinate(location.coordinate) { (response, error) in
-            
             var strAddresMain : String = ""
-            
             if let address : GMSAddress = response?.firstResult() {
                 if let lines = address.lines  {
                     if (lines.count > 0) {
@@ -233,7 +219,6 @@ class SelectLocationViewController: BaseVC {
     @IBAction func backAction(_ sender: Any) {
         self.navigationController?.popViewController(animated: true)
     }
-    
 }
 
 extension SelectLocationViewController : GMSMapViewDelegate {
@@ -246,10 +231,7 @@ extension SelectLocationViewController : GMSMapViewDelegate {
         self.selectedLocationLabel.text = "Loading".localized
         self.getAddressForMapCenter()
     }
-    
-    
 }
-
 
 extension SelectLocationViewController: LabasLocationManagerDelegate {
     func labasLocationManager(didUpdateLocation location:CLLocation) {
@@ -265,7 +247,6 @@ extension SelectLocationViewController: LabasLocationManagerDelegate {
         }
         
     }
-    
 }
 
 extension SelectLocationViewController: GMSAutocompleteViewControllerDelegate {
