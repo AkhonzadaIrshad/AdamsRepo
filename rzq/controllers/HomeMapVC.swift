@@ -139,8 +139,8 @@ class HomeMapVC: BaseViewController {
     // MARK: - Methodes - UI Actions
     
     @IBAction func goToCurrentLocation(_ sender: Any) {
-        let camera = GMSCameraPosition.camera(withLatitude: self.latitude ?? 0.0, longitude: self.longitude ?? 0.0, zoom: self.cameraZoom)
-        self.gMap?.animate(to: camera)
+        let camera = GMSCameraPosition.camera(withLatitude: LabasLocationManager.shared.currentLocation?.coordinate.latitude ?? 0.0, longitude: LabasLocationManager.shared.currentLocation?.coordinate.longitude ?? 0.0, zoom: self.cameraZoom)
+        self.mapView?.animate(to: camera)
     }
     
     @IBAction func openShopsFilter(_ sender: Any) {
