@@ -327,6 +327,6 @@
 "navbar.notifications" = "الاشعارات";
 "navbar.profile" = "صفحتي";
 
-"homeMapVC.house.placeholder" = "البيت";
+"homeMapVC.house.placeholder" = "المنزل";
 "homeMapVC.piece.placeholder" = "قطعة";
 "homeMapVC.street.placeholder" = "شارع";
