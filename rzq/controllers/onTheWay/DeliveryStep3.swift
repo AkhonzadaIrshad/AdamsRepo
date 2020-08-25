@@ -31,6 +31,7 @@ class DeliveryStep3: BaseVC {
     @IBOutlet weak var actionSheet: UIView!
     @IBOutlet weak var actionSheetConstraintBottom: NSLayoutConstraint!
     @IBOutlet weak var btnPlaceOrder: MyUIButton!
+    @IBOutlet weak var lblDeliverToTitle: MyUILabel!
     
     var markerLocation: GMSMarker?
     
@@ -91,15 +92,7 @@ class DeliveryStep3: BaseVC {
         
         SVProgressHUD.setDefaultMaskType(.clear)
         
-        //        if (self.isArabic()) {
-        //            self.ivHandle.image = UIImage(named: "ic_back_arabic")
-        //        }
         self.btnTime.setTitle("asap".localized, for: .normal)
-        // below are properties that can be optionally customized
-       
-        
-//        let gif = UIImage(gifName: "recording.gif")
-//        self.gif.setGifImage(gif)
         
         gMap = GMSMapView()
         self.setUpGoogleMap()
@@ -107,7 +100,7 @@ class DeliveryStep3: BaseVC {
         
         self.lblPickupLocation.text = self.orderModel?.pickUpAddress ?? ""
         self.lblDropoffLocation.text = self.orderModel?.dropOffAddress ?? ""
-        
+        self.lblDeliverToTitle.text = "deliveryStep3.pickingView.to".localized
         self.drawLocationLine()
         
 //        self.edtOrderDetails.text = self.orderModel?.orderDetails ?? ""

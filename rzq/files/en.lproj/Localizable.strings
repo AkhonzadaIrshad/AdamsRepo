@@ -324,3 +324,8 @@ If you want to change it, use the search above or by long pressin on the map to 
 "homeMapVC.house.placeholder" = "house";
 "homeMapVC.piece.placeholder" = "zone";
 "homeMapVC.street.placeholder" = "street";
+
+// MARK: - Delivery Step 3
+
+"deliveryStep3.pickingView.to" = "Deliver to";
+

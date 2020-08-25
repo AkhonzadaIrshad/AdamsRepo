@@ -14486,7 +14486,7 @@
                                             <constraint firstAttribute="width" constant="12" id="hHm-SN-2IZ"/>
                                         </constraints>
                                     </imageView>
-                                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="To" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="GxW-fC-auU" customClass="MyUILabel" customModule="rzq" customModuleProvider="target">
+                                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Deliver to" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="GxW-fC-auU" customClass="MyUILabel" customModule="rzq" customModuleProvider="target">
                                         <rect key="frame" x="37" y="64.666666666666671" width="228" height="14.333333333333329"/>
                                         <fontDescription key="fontDescription" type="system" pointSize="12"/>
                                         <color key="textColor" red="0.31372549020000001" green="0.31372549020000001" blue="0.31372549020000001" alpha="1" colorSpace="calibratedRGB"/>
@@ -15161,6 +15161,7 @@
                         <outlet property="btnPaymentMethod" destination="ogE-BA-wG8" id="Qe3-XV-mzS"/>
                         <outlet property="btnPlaceOrder" destination="1CT-yu-bU4" id="1ZI-xQ-uEf"/>
                         <outlet property="btnTime" destination="Ngi-hT-k3s" id="zMn-G7-UMN"/>
+                        <outlet property="lblDeliverToTitle" destination="GxW-fC-auU" id="uGE-Mb-guU"/>
                         <outlet property="lblDropoffLocation" destination="4OD-Dj-1ln" id="y7q-KV-bKN"/>
                         <outlet property="lblGender" destination="0Y7-NU-UDK" id="mjP-CE-Yiq"/>
                         <outlet property="lblPickupLocation" destination="cym-gg-NwA" id="h3M-A0-mm9"/>
