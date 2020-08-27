@@ -115,11 +115,7 @@ class PhoneVerificationDialog: BaseVC, CBPinEntryViewDelegate {
                 if (response?.errorCode == 0) {
                     self.deleteUsers()
                     self.updateUser(self.getRealmUser(userProfile: response!))
-                    
-                    //                    let mainStoryboardIpad : UIStoryboard = UIStoryboard(name: "Main", bundle: nil)
-                    //                    let initialViewControlleripad : UIViewController = mainStoryboardIpad.instantiateViewController(withIdentifier: self.getHomeView()) as! UINavigationController
-                    //                    self.present(initialViewControlleripad, animated: true, completion: {})
-                    
+                
                     if let vc = UIStoryboard(name: "Main", bundle: nil).instantiateViewController(withIdentifier: "step1navigation") as? UINavigationController
                     {
                         vc.modalPresentationStyle = .fullScreen

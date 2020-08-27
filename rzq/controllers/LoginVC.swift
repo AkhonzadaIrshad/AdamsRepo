@@ -189,14 +189,39 @@ func sectionTitleForPreferredCountries(in countryPickerView: CountryPickerView) 
         ApiService.registerUser(phoneNumber: "\(code)\(mobile)", fullName: self.edtUserName.text ?? "", email: "", birthDate: "", gender: gender, isResend: false) { (response) in
             self.hideLoading()
             if (response.errorCode == 0) {
-                let vc = UIStoryboard(name: "Main", bundle: nil).instantiateViewController(withIdentifier: "PhoneVerificationDialog") as! PhoneVerificationDialog
-                self.definesPresentationContext = true
-                vc.modalPresentationStyle = UIModalPresentationStyle.overCurrentContext
-                vc.view.backgroundColor = UIColor.clear
-                vc.userId = response.data ?? ""
-                vc.delegate = self
+                self.showLoading()
+                ApiService.verifyPinCode(userId: response.data ?? "", code: "5555") { (response, status) in
+                    self.hideLoading()
+                    if (status != 0) {
+                        self.showBanner(title: "alert".localized, message: "wrong_verification_code".localized, style: UIColor.INFO)
+                        return
+                    }
+                    if (response?.errorCode == 0) {
+                        self.deleteUsers()
+                        self.updateUser(self.getRealmUser(userProfile: response!))
+                    
+                        if let vc = UIStoryboard(name: "Main", bundle: nil).instantiateViewController(withIdentifier: "HomeMapVC") as? HomeMapVC
+                        {
+                            vc.modalPresentationStyle = .fullScreen
+                            self.present(vc, animated: true, completion: nil)
+                        }
+                        
+                        
+                    }else if (response?.errorCode == 18) {
+                        self.showBanner(title: "alert".localized, message: "account_inactive".localized, style: UIColor.INFO)
+                    }else {
+                        self.showBanner(title: "alert".localized, message: "wrong_verification_code".localized, style: UIColor.INFO)
+                    }
+                }
                 
-                self.present(vc, animated: true, completion: nil)
+//                let vc = UIStoryboard(name: "Main", bundle: nil).instantiateViewController(withIdentifier: "PhoneVerificationDialog") as! PhoneVerificationDialog
+//                self.definesPresentationContext = true
+//                vc.modalPresentationStyle = UIModalPresentationStyle.overCurrentContext
+//                vc.view.backgroundColor = UIColor.clear
+//                vc.userId = response.data ?? ""
+//                vc.delegate = self
+//
+//                self.present(vc, animated: true, completion: nil)
             }else {
                 self.showBanner(title: "alert".localized, message: response.errorMessage ?? "", style: UIColor.INFO)
             }
