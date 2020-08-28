@@ -171,7 +171,8 @@ class DeliveryStep3: BaseVC {
         let dropOffPosition = CLLocationCoordinate2D(latitude: self.orderModel?.dropOffLatitude ?? 0, longitude: self.orderModel?.dropOffLongitude ?? 0)
         let dropMarker = GMSMarker(position: dropOffPosition)
         dropMarker.title = self.orderModel?.dropOffAddress
-        dropMarker.icon = UIImage(named: "ic_location")
+        dropMarker.icon = UIImage(named: "ic_map_user_location")
+        dropMarker.setIconSize(scaledToSize: CGSize(width: 30, height: 45))
         dropMarker.map = self.gMap
         
         var bounds = GMSCoordinateBounds()
@@ -185,43 +186,15 @@ class DeliveryStep3: BaseVC {
         //self.handleImagesView()
     }
     
-    
-    
-    func handleRecordingView() {
-        
-    }
-    
     func saveBackModel() {
-        
-        //.text ?? ""
-        //  self.orderModel?.orderCost = self.edtCost.text ?? ""
         self.delegate?.updateModel(model: self.orderModel!)
         self.navigationController?.popViewController(animated: true)
     }
-    
-//    func selectImageFrom(_ source: ImageSource) {
-//        imagePicker =  UIImagePickerController()
-//        imagePicker.delegate = self
-//        switch source {
-//        case .camera:
-//            imagePicker.sourceType = .camera
-//        case .photoLibrary:
-//            imagePicker.sourceType = .photoLibrary
-//        }
-//        present(imagePicker, animated: true, completion: nil)
-//    }
-    
     
     func setUpGoogleMap() {
         let camera = GMSCameraPosition.camera(withLatitude: self.latitude ?? 0.0, longitude: self.longitude ?? 0.0, zoom: 15.0)
         gMap = GMSMapView.map(withFrame: CGRect(x: 0, y: 0, width: self.mapView.frame.width, height: self.mapView.frame.height), camera: camera)
         gMap?.delegate = self
-        let marker = GMSMarker()
-        marker.position = CLLocationCoordinate2D(latitude: self.latitude ?? 0.0, longitude: self.longitude ?? 0.0)
-        marker.title =  ""
-        marker.snippet = ""
-        marker.map = gMap
-        
         self.mapView.addSubview(gMap!)
         gMap?.bindFrameToSuperviewBounds()
         self.view.layoutSubviews()
@@ -624,3 +597,12 @@ extension DeliveryStep3 : GMSMapViewDelegate {
     }
 }
 
+extension GMSMarker {
+    func setIconSize(scaledToSize newSize: CGSize) {
+        UIGraphicsBeginImageContextWithOptions(newSize, false, 0.0)
+        icon?.draw(in: CGRect(x: 0, y: 0, width: newSize.width, height: newSize.height))
+        let newImage: UIImage = UIGraphicsGetImageFromCurrentImageContext()!
+        UIGraphicsEndImageContext()
+        icon = newImage
+    }
+}
