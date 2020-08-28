@@ -40,6 +40,7 @@ class HomeMapVC: BaseViewController {
     @IBOutlet weak var streetTextField: UITextField!
     @IBOutlet weak var houseTextField: UITextField!
     @IBOutlet weak var viewGoogleMap: UIView!
+    @IBOutlet weak var lblDeliverTo: MyUILabel!
     
     // MARK: - Properties - public
     
@@ -73,6 +74,7 @@ class HomeMapVC: BaseViewController {
     
     override func viewDidLoad() {
         super.viewDidLoad()
+        self.lblDeliverTo.text = "deliveryStep3.pickingView.to".localized
         self.navBar.delegate = self
         if DataManager.loadUser().data?.roles?.contains(find: "Driver") ?? false {
             self.navBar.isHidden = false
@@ -85,8 +87,8 @@ class HomeMapVC: BaseViewController {
         
         self.edtSearch.delegate = self
         
-        self.lblLocation.isHidden = true
-        self.btnLocation.isHidden = true
+//        self.lblLocation.isHidden = true
+//        self.btnLocation.isHidden = true
         
         //snuff
         ApiService.updateRegId(Authorization: DataManager.loadUser().data?.accessToken ?? "", regId: Messaging.messaging().fcmToken ?? "not_avaliable") { (response) in
@@ -716,10 +718,12 @@ extension HomeMapVC : GMSMapViewDelegate {
     func mapView(_ mapView: GMSMapView, didChange position: GMSCameraPosition) {
         mapView.clear()
         self.fullAdressTextView.text = "Loading".localized
+        self.lblLocation.text = "Loading".localized
     }
     
     func mapView(_ mapView: GMSMapView, idleAt position: GMSCameraPosition) {
         self.fullAdressTextView.text = "Loading".localized
+        self.lblLocation.text = "Loading".localized
         self.getAddressForMapCenter()
     }
     
@@ -781,19 +785,23 @@ extension HomeMapVC : GMSMapViewDelegate {
                         }
                         
                         self.fullAdressTextView.text = strAddresMain
+                        self.lblLocation.text = strAddresMain
                         self.latitude = location.coordinate.latitude
                         self.longitude = location.coordinate.longitude
                     }
                     else {
                         self.fullAdressTextView.text = "Loading".localized
+                        self.lblLocation.text = "Loading".localized
                     }
                 }
                 else {
                     self.fullAdressTextView.text = "Loading".localized
+                    self.lblLocation.text = "Loading".localized
                 }
             }
             else {
                 self.fullAdressTextView.text = "Loading".localized
+                self.lblLocation.text = "Loading".localized
             }
         }
     }

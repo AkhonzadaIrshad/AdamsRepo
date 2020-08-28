@@ -3984,18 +3984,32 @@
                                             <constraint firstAttribute="height" constant="40" id="sNk-0c-sKm"/>
                                         </constraints>
                                     </imageView>
-                                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Your Location" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="kLg-k9-A7X" customClass="MyUILabel" customModule="rzq" customModuleProvider="target">
-                                        <rect key="frame" x="86" y="44" width="174" height="24"/>
-                                        <constraints>
-                                            <constraint firstAttribute="height" constant="24" id="Woo-uL-k9j"/>
-                                        </constraints>
-                                        <fontDescription key="fontDescription" type="system" pointSize="15"/>
-                                        <color key="textColor" red="0.21176470588235294" green="0.21176470588235294" blue="0.21176470588235294" alpha="1" colorSpace="calibratedRGB"/>
-                                        <nil key="highlightedColor"/>
-                                        <userDefinedRuntimeAttributes>
-                                            <userDefinedRuntimeAttribute type="string" keyPath="font_type" value="15,2"/>
-                                        </userDefinedRuntimeAttributes>
-                                    </label>
+                                    <stackView opaque="NO" contentMode="scaleToFill" axis="vertical" translatesAutoresizingMaskIntoConstraints="NO" id="pXB-LF-FCI">
+                                        <rect key="frame" x="79" y="47" width="181" height="32"/>
+                                        <subviews>
+                                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="cSM-Z2-PiK" customClass="MyUILabel" customModule="rzq" customModuleProvider="target">
+                                                <rect key="frame" x="0.0" y="0.0" width="181" height="15"/>
+                                                <constraints>
+                                                    <constraint firstAttribute="height" constant="15" id="0tU-3k-4XG"/>
+                                                </constraints>
+                                                <fontDescription key="fontDescription" type="system" pointSize="10"/>
+                                                <color key="textColor" red="0.21176470589999999" green="0.21176470589999999" blue="0.21176470589999999" alpha="1" colorSpace="calibratedRGB"/>
+                                                <nil key="highlightedColor"/>
+                                                <userDefinedRuntimeAttributes>
+                                                    <userDefinedRuntimeAttribute type="string" keyPath="font_type" value="15,2"/>
+                                                </userDefinedRuntimeAttributes>
+                                            </label>
+                                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Your Location" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="kLg-k9-A7X" customClass="MyUILabel" customModule="rzq" customModuleProvider="target">
+                                                <rect key="frame" x="0.0" y="15" width="181" height="17"/>
+                                                <fontDescription key="fontDescription" type="system" pointSize="14"/>
+                                                <color key="textColor" red="0.21176470588235294" green="0.21176470588235294" blue="0.21176470588235294" alpha="1" colorSpace="calibratedRGB"/>
+                                                <nil key="highlightedColor"/>
+                                                <userDefinedRuntimeAttributes>
+                                                    <userDefinedRuntimeAttribute type="string" keyPath="font_type" value="15,2"/>
+                                                </userDefinedRuntimeAttributes>
+                                            </label>
+                                        </subviews>
+                                    </stackView>
                                     <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="eIy-es-md4">
                                         <rect key="frame" x="18" y="45" width="22" height="22"/>
                                         <constraints>
@@ -4023,17 +4037,17 @@
                                 <constraints>
                                     <constraint firstAttribute="trailing" secondItem="tPZ-uO-eQh" secondAttribute="trailing" constant="10" id="Cxk-o3-vFq"/>
                                     <constraint firstAttribute="bottom" secondItem="9zx-sT-LLd" secondAttribute="bottom" constant="15" id="FfV-Dm-1KH"/>
+                                    <constraint firstItem="tPZ-uO-eQh" firstAttribute="leading" secondItem="pXB-LF-FCI" secondAttribute="trailing" constant="5" id="JWq-GU-zmW"/>
                                     <constraint firstAttribute="trailing" secondItem="QlY-1F-MW7" secondAttribute="trailing" constant="15" id="R3a-CW-di2"/>
                                     <constraint firstAttribute="bottom" secondItem="QlY-1F-MW7" secondAttribute="bottom" constant="5" id="RGQ-vA-Zef"/>
                                     <constraint firstItem="eIy-es-md4" firstAttribute="leading" secondItem="Cze-Ol-CeJ" secondAttribute="leading" constant="18" id="S0e-7F-Jti"/>
-                                    <constraint firstItem="kLg-k9-A7X" firstAttribute="leading" secondItem="9zx-sT-LLd" secondAttribute="trailing" constant="12" id="S9B-YQ-iap"/>
                                     <constraint firstAttribute="bottom" secondItem="eIy-es-md4" secondAttribute="bottom" constant="15" id="eXw-Qz-Mh6"/>
                                     <constraint firstAttribute="bottom" secondItem="tPZ-uO-eQh" secondAttribute="bottom" constant="5" id="jX8-1v-9HI"/>
-                                    <constraint firstAttribute="bottom" secondItem="kLg-k9-A7X" secondAttribute="bottom" constant="14" id="ljl-yT-pPP"/>
+                                    <constraint firstItem="pXB-LF-FCI" firstAttribute="leading" secondItem="9zx-sT-LLd" secondAttribute="trailing" constant="5" id="lmK-xM-Znh"/>
                                     <constraint firstItem="tPZ-uO-eQh" firstAttribute="top" secondItem="Cze-Ol-CeJ" secondAttribute="top" constant="30" id="qbM-u3-h91"/>
                                     <constraint firstItem="9zx-sT-LLd" firstAttribute="leading" secondItem="eIy-es-md4" secondAttribute="trailing" constant="12" id="s44-T8-KvG"/>
+                                    <constraint firstAttribute="bottom" secondItem="pXB-LF-FCI" secondAttribute="bottom" constant="3" id="scu-Sd-ms2"/>
                                     <constraint firstAttribute="height" constant="82" id="ss1-nA-h9M"/>
-                                    <constraint firstItem="QlY-1F-MW7" firstAttribute="leading" secondItem="kLg-k9-A7X" secondAttribute="trailing" constant="10" id="uh2-g6-Q7c"/>
                                 </constraints>
                                 <userDefinedRuntimeAttributes>
                                     <userDefinedRuntimeAttribute type="number" keyPath="cornerRadius">
@@ -4609,6 +4623,7 @@
                         <outlet property="edtSearch" destination="vbg-kE-oLC" id="CSQ-tV-v5D"/>
                         <outlet property="fullAdressTextView" destination="2lG-15-RxT" id="SPg-Vl-gw0"/>
                         <outlet property="houseTextField" destination="mnZ-bI-7KP" id="pXH-yc-4rX"/>
+                        <outlet property="lblDeliverTo" destination="cSM-Z2-PiK" id="LUe-wR-G13"/>
                         <outlet property="lblLocation" destination="kLg-k9-A7X" id="xai-0X-KnQ"/>
                         <outlet property="locationPartTextField" destination="z7C-aa-cnP" id="bKo-eF-1QL"/>
                         <outlet property="mapView" destination="uRS-wK-seh" id="pNK-Yc-woY"/>

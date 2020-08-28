@@ -330,3 +330,5 @@
 "homeMapVC.house.placeholder" = "المنزل";
 "homeMapVC.piece.placeholder" = "قطعة";
 "homeMapVC.street.placeholder" = "شارع";
+
+"deliveryStep3.pickingView.to" = "الى:";
