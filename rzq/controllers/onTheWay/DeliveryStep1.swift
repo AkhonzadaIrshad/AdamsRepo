@@ -56,8 +56,10 @@ class DeliveryStep1: BaseVC , Step3Delegate, AllShopDelegate, ImagePickerDelegat
     @IBOutlet weak var ivShop: CircleImage!
     @IBOutlet weak var viewShopDetails: CardView!
     @IBOutlet weak var viewClearField: CardView!
-    @IBOutlet weak var viewSuggest: UIView!
-    @IBOutlet weak var viewPin: UIView!
+    @IBOutlet weak var viewCheckMenu: CardView!
+    @IBOutlet weak var viewSuggest: UIStackView!
+    @IBOutlet weak var viewPin: UIStackView!
+    
     //@IBOutlet weak var shopNameHeight: NSLayoutConstraint!
     //@IBOutlet weak var lblShopName: MarqueeLabel!
     @IBOutlet weak var btnCurrentLocation: UIButton!
@@ -69,7 +71,6 @@ class DeliveryStep1: BaseVC , Step3Delegate, AllShopDelegate, ImagePickerDelegat
     @IBOutlet weak var btnListView: UIButton!
     @IBOutlet weak var lblViewList: UILabel!
     @IBOutlet weak var btnCheckMenu: MyUIButton!
-    @IBOutlet weak var viewCheckMenu: CardView!
     @IBOutlet weak var viewPop: UIView!
     @IBOutlet weak var collectionCategories: UICollectionView!
     
@@ -116,7 +117,6 @@ class DeliveryStep1: BaseVC , Step3Delegate, AllShopDelegate, ImagePickerDelegat
     override func viewDidLoad() {
         super.viewDidLoad()
         self.locationManager.delegate = self
-        self.hideActionSheet()
         // Ask for Authorisation from the User.
         self.locationManager.requestAlwaysAuthorization()
         self.edtOrderDetails.delegate = self
@@ -138,7 +138,7 @@ class DeliveryStep1: BaseVC , Step3Delegate, AllShopDelegate, ImagePickerDelegat
         self.searchShopsTextField.delegate = self
         self.searchShopsTextField.addTarget(self, action: #selector(textFieldDidChange), for: .editingChanged)
         self.setUpGoogleMap()
-
+        self.hideActionSheet()
     }
     
     @objc func textFieldDidChange() {
@@ -151,7 +151,7 @@ class DeliveryStep1: BaseVC , Step3Delegate, AllShopDelegate, ImagePickerDelegat
         }
     }
     @objc func hideActionSheet() {
-        self.actionSheetConstraintBottom.constant = 50 - self.buttomSheet.frame.height
+        self.actionSheetConstraintBottom.constant = 70 - self.buttomSheet.frame.height
     }
     
     @objc func showActionSheet() {
