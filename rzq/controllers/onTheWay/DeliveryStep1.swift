@@ -1505,12 +1505,10 @@ extension DeliveryStep1: UICollectionViewDelegate, UICollectionViewDataSource, U
         let cell: Step1CatCell = collectionView.dequeueReusableCell(withReuseIdentifier: "Step1CatCell", for: indexPath as IndexPath) as! Step1CatCell
         
         let category = self.categories[indexPath.row]
-        
-        if (self.isArabic()) {
-            cell.transform = CGAffineTransform(scaleX: -1.0, y: 1.0)
-        }
-        
         cell.lblName.text = category.name ?? ""
+        if (self.isArabic()) {
+            cell.lblName.transform = CGAffineTransform(scaleX: -1.0, y: 1.0)
+        }
         
         if (category.image?.count ?? 0 > 0) {
             let url = URL(string: "\(Constants.IMAGE_URL)\(category.image ?? "")")

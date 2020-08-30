@@ -12828,7 +12828,7 @@
                                                         <constraint firstAttribute="height" constant="30" id="mfX-3v-dto"/>
                                                     </constraints>
                                                 </imageView>
-                                                <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Near Me" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="bhU-Wd-oHu" customClass="MyUILabel" customModule="rzq" customModuleProvider="target">
+                                                <label opaque="NO" userInteractionEnabled="NO" contentMode="scaleAspectFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Near Me" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="bhU-Wd-oHu" customClass="MyUILabel" customModule="rzq" customModuleProvider="target">
                                                     <rect key="frame" x="0.0" y="54" width="92" height="7"/>
                                                     <fontDescription key="fontDescription" type="system" pointSize="12"/>
                                                     <color key="textColor" white="0.0" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
@@ -12844,9 +12844,9 @@
                                                 <constraint firstAttribute="bottom" secondItem="bhU-Wd-oHu" secondAttribute="bottom" constant="4" id="RsI-Fm-KJw"/>
                                                 <constraint firstItem="Wq5-LD-9Wi" firstAttribute="leading" relation="greaterThanOrEqual" secondItem="d9x-cb-Lf4" secondAttribute="leading" constant="4" id="Syk-n9-ful"/>
                                                 <constraint firstItem="bhU-Wd-oHu" firstAttribute="topMargin" secondItem="Wq5-LD-9Wi" secondAttribute="bottom" constant="15" id="Y46-w5-G51"/>
-                                                <constraint firstItem="bhU-Wd-oHu" firstAttribute="leading" secondItem="d9x-cb-Lf4" secondAttribute="leading" constant="4" id="cy2-1O-bvM"/>
+                                                <constraint firstItem="bhU-Wd-oHu" firstAttribute="leading" secondItem="d9x-cb-Lf4" secondAttribute="leadingMargin" constant="-8" id="cy2-1O-bvM"/>
                                                 <constraint firstItem="Wq5-LD-9Wi" firstAttribute="centerX" secondItem="d9x-cb-Lf4" secondAttribute="centerX" id="nvt-8e-pLX"/>
-                                                <constraint firstAttribute="trailing" secondItem="bhU-Wd-oHu" secondAttribute="trailing" constant="4" id="roh-Na-KNt"/>
+                                                <constraint firstAttribute="trailing" secondItem="bhU-Wd-oHu" secondAttribute="trailingMargin" constant="8" id="roh-Na-KNt"/>
                                                 <constraint firstAttribute="trailing" relation="greaterThanOrEqual" secondItem="Wq5-LD-9Wi" secondAttribute="trailing" constant="4" id="x7E-Ks-iE1"/>
                                             </constraints>
                                         </collectionViewCellContentView>
