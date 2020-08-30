@@ -1047,12 +1047,29 @@ class DeliveryStep1: BaseVC , Step3Delegate, AllShopDelegate, ImagePickerDelegat
     }
     
     @IBAction func checkMenuAction(_ sender: Any) {
-        let storyboard = UIStoryboard(name: "Main", bundle: nil)
-        let vc : ShopMenuVC = storyboard.instantiateViewController(withIdentifier: "ShopMenuVC") as! ShopMenuVC
-        vc.shopId = self.orderModel?.shop?.id ?? 0
-        vc.selectedItems = self.selectedItems
-        vc.delegate = self
-        self.navigationController?.pushViewController(vc, animated: true)
+        self.handleCheckMenuAction(showPopUpIfEmpty: true)
+    }
+    
+    private func handleCheckMenuAction(showPopUpIfEmpty: Bool) {
+        self.showLoading()
+        ApiService.getMenuByShopId(Authorization: DataManager.loadUser().data?.accessToken ?? "", id: self.orderModel?.shop?.id ?? 0) { (response) in
+            let storyboard = UIStoryboard(name: "Main", bundle: nil)
+            let vc : ShopMenuVC = storyboard.instantiateViewController(withIdentifier: "ShopMenuVC") as! ShopMenuVC
+            vc.shopId = self.orderModel?.shop?.id ?? 0
+            vc.selectedItems = self.selectedItems
+            vc.delegate = self
+            
+            self.hideLoading()
+            vc.categories.removeAll()
+            vc.categories.append(contentsOf: response.shopMenuData ?? [ShopMenuDatum]())
+            if (vc.categories.count == 0) {
+                if showPopUpIfEmpty {
+                    self.showBanner(title: "alert".localized, message: "no_menu".localized, style: UIColor.INFO)
+                }
+            } else {
+                self.navigationController?.pushViewController(vc, animated: true)
+            }
+        }
     }
     
     @IBAction func showShopsList(_ sender: Any) {
@@ -1151,7 +1168,7 @@ extension DeliveryStep1 : GMSMapViewDelegate {
                 if (self.orderModel?.shop?.id ?? 0 > 0) {
                     self.btnCheckMenu.isHidden = false
                     self.viewCheckMenu.isHidden = false
-                    self.checkMenuAction(self)
+                    self.handleCheckMenuAction(showPopUpIfEmpty: false)
                 }else {
                     self.btnCheckMenu.isHidden = true
                     self.viewCheckMenu.isHidden = true

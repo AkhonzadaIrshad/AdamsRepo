@@ -81,7 +81,7 @@ UITableViewDelegate, UITableViewDataSource, CheckOutDoneDelegate {
                 DispatchQueue.main.asyncAfter(deadline: .now() + 1) {
                     self.navigationController?.popViewController(animated: true)
                 }
-            }else {
+            } else {
                 self.categories[0].isChecked = true
                 self.items.removeAll()
                 self.items.append(contentsOf: response.shopMenuData?[0].shopMenuItems ?? [ShopMenuItem]())
