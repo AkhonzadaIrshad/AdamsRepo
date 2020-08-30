@@ -21,35 +21,25 @@ class DeliveryStep1: BaseVC , Step3Delegate, AllShopDelegate, ImagePickerDelegat
     // MARK: - Outlets
     
     @IBOutlet weak var lblImages: MyUILabel!
-    
     @IBOutlet weak var viewImages: UIView!
-    
     @IBOutlet weak var viewRecording: UIView!
-    
     @IBOutlet weak var bgRecord: UIImageView!
-    
     @IBOutlet weak var edtOrderDetails: MultilineTextField!
-    
     @IBOutlet weak var btnRecord: UIButton!
-       
     @IBOutlet weak var btnPlay: UIButton!
-    
     @IBOutlet weak var gif: UIImageView!
-    
     @IBOutlet weak var buttomSheet: UIView!
     @IBOutlet weak var actionSheetConstraintBottom: NSLayoutConstraint!
-    
     @IBOutlet weak var customAlert: CustomAlert!
+    
     var imagePicker: UIImagePickerController!
     var audioPlayer: AVAudioPlayer?
     var selectedImages = [UIImage]()
     let recorder = KAudioRecorder.shared
     
-    
     @IBOutlet weak var lblPickupLocation: MyUILabel!
     @IBOutlet weak var mapView: UIView!
     //@IBOutlet weak var edtMoreDetails: MyUITextField!
-    var edtMoreDetails: String?
     @IBOutlet weak var searchField: SearchTextField!
     @IBOutlet weak var viewParentSearch: CardView!
     @IBOutlet weak var ivHandle: UIImageView!
@@ -60,11 +50,8 @@ class DeliveryStep1: BaseVC , Step3Delegate, AllShopDelegate, ImagePickerDelegat
     @IBOutlet weak var viewSuggest: UIStackView!
     @IBOutlet weak var viewPin: UIStackView!
     
-    //@IBOutlet weak var shopNameHeight: NSLayoutConstraint!
-    //@IBOutlet weak var lblShopName: MarqueeLabel!
     @IBOutlet weak var btnCurrentLocation: UIButton!
     @IBOutlet weak var ivIndicator: UIImageView!
-    //@IBOutlet weak var moreDetailsView: UIView!
     @IBOutlet weak var lblSearch: MyUILabel!
     @IBOutlet weak var viewBecomeDriver: UIView!
     @IBOutlet weak var ivGoogle: UIButton!
@@ -73,7 +60,6 @@ class DeliveryStep1: BaseVC , Step3Delegate, AllShopDelegate, ImagePickerDelegat
     @IBOutlet weak var btnCheckMenu: MyUIButton!
     @IBOutlet weak var viewPop: UIView!
     @IBOutlet weak var collectionCategories: UICollectionView!
-    
     
     @IBOutlet weak var shopsSearchTableView: UITableView!
     @IBOutlet weak var searchShopsTextField: UITextField!
@@ -111,7 +97,8 @@ class DeliveryStep1: BaseVC , Step3Delegate, AllShopDelegate, ImagePickerDelegat
         })
     }
     var searchedText: String?
-    
+    var edtMoreDetails: String?
+
     // MARK: - Methods
     
     override func viewDidLoad() {

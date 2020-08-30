@@ -9,10 +9,6 @@
 import UIKit
 
 class Step1CatCell: UICollectionViewCell {
-
     @IBOutlet weak var lblName: MyUILabel!
-    
     @IBOutlet weak var ivLogo: CircleImage!
-   
-
 }
