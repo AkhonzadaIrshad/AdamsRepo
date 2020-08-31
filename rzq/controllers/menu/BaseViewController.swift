@@ -182,7 +182,6 @@ class BaseViewController: UIViewController, SlideMenuDelegate {
     
     func getHomeView() -> String {
         if (App.shared.config?.configSettings?.isMapView ?? true) {
-            // return "HomeMapVC"
             return "MapNavigationController"
         }else {
             //  return "HomeListVC"

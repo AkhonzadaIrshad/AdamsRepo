@@ -88,7 +88,6 @@ class IntroVC: UIPageViewController, UIPageViewControllerDataSource, UIPageViewC
     
     func getHomeView() -> String {
         if (App.shared.config?.configSettings?.isMapView ?? true) {
-            // return "HomeMapVC"
             return "MapNavigationController"
         }else {
             //  return "HomeListVC"

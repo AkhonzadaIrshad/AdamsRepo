@@ -33,57 +33,6 @@ class BaseVC: BaseViewController, UIGestureRecognizerDelegate {
         return true
     }
     
-    
-//    func isArabic() -> Bool {
-//        if (MOLHLanguage.currentAppleLanguage() == "ar") {
-//            return true
-//        }else {
-//            return false
-//        }
-//    }
-//
-//    func getHomeView() -> String {
-//        if (App.shared.config?.configSettings?.isMapView ?? true) {
-//            // return "HomeMapVC"
-//            return "MapNavigationController"
-//        }else {
-//            //  return "HomeListVC"
-//            return "MapNavigationController"
-//        }
-//    }
-//
-//
-//    func getFontName() -> String {
-//        if (self.isArabic()) {
-//            return Constants.ARABIC_FONT_REGULAR
-//        }else {
-//            return Constants.ENGLISH_FONT_REGULAR
-//        }
-//    }
-//
-//    func showBanner(title:String, message:String,style: UIColor) {
-//        let banner = Banner(title: title, subtitle: message, image: nil, backgroundColor: style)
-//        banner.dismissesOnTap = true
-//        banner.textColor = UIColor.white
-//        if (isArabic()) {
-//            banner.titleLabel.font = UIFont(name: Constants.ARABIC_FONT_REGULAR, size: 16)
-//            banner.detailLabel.font = UIFont(name: Constants.ARABIC_FONT_REGULAR, size: 14)
-//        }else {
-//            banner.titleLabel.font = UIFont(name: Constants.ENGLISH_FONT_REGULAR, size: 16)
-//            banner.detailLabel.font = UIFont(name: Constants.ENGLISH_FONT_REGULAR, size: 14)
-//        }
-//
-//        banner.show(duration: 2.0)
-//    }
-//
-//    func showLoading() {
-//        SVProgressHUD.show()
-//    }
-//    func hideLoading() {
-//        SVProgressHUD.dismiss()
-//    }
-//
-    
     func showAlert(title:String,
                    message:String,
                    buttonText:String = "Ok".localized,

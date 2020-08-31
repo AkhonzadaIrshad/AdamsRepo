@@ -203,7 +203,10 @@ func sectionTitleForPreferredCountries(in countryPickerView: CountryPickerView) 
                         if let vc = UIStoryboard(name: "Main", bundle: nil).instantiateViewController(withIdentifier: "HomeMapVC") as? HomeMapVC
                         {
                             vc.modalPresentationStyle = .fullScreen
-                            self.present(vc, animated: true, completion: nil)
+                            let navVC = UINavigationController(rootViewController: vc)
+                            navVC.navigationBar.isHidden = true
+                            navVC.modalPresentationStyle = .fullScreen
+                            self.present(navVC, animated: true, completion: nil)
                         }
                         
                         
