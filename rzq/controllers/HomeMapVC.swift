@@ -103,6 +103,8 @@ class HomeMapVC: BaseViewController {
             self.getDriverOnGoingDeliveries()
         }
         self.setupLocationFields()
+        let searchAddressTapGesture = UITapGestureRecognizer(target: self, action: #selector(self.searchLocationClicked(_:)))
+        self.fullAdressTextView.addGestureRecognizer(searchAddressTapGesture)
     }
     
     override func viewWillAppear(_ animated: Bool) {
@@ -212,6 +214,12 @@ class HomeMapVC: BaseViewController {
                 self.navigationController?.pushViewController(vc, animated: true)
             }
         }
+    }
+    
+    @objc func searchLocationClicked(_ sender: UIButton) {
+        let autocompleteController = GMSAutocompleteViewController()
+        autocompleteController.delegate = self
+        present(autocompleteController, animated: true, completion: nil)
     }
     
     // MARK: - Methodes - Helpers
@@ -1011,5 +1019,33 @@ extension HomeMapVC: LabasLocationManagerDelegate {
             self.mapView.animate(to: camera)
             LabasLocationManager.shared.stopUpdatingLocation()
         }
+    }
+}
+
+// MARK: - GMSAutocompleteViewControllerDelegate
+extension HomeMapVC: GMSAutocompleteViewControllerDelegate {
+    func viewController(_ viewController: GMSAutocompleteViewController, didAutocompleteWith place: GMSPlace) {
+        let camera = GMSCameraPosition.camera(withLatitude:place.coordinate.latitude, longitude:place.coordinate.longitude, zoom: 17.0)
+        dismiss(animated: true, completion: {
+            self.mapView.animate(to: camera)
+            self.fullAdressTextView.text = place.formattedAddress
+            self.lblLocation.text = place.formattedAddress
+        })
+    }
+    
+    func viewController(_ viewController: GMSAutocompleteViewController, didFailAutocompleteWithError error: Error) {
+        print("Error: ", error.localizedDescription)
+    }
+    
+    func wasCancelled(_ viewController: GMSAutocompleteViewController) {
+        dismiss(animated: true, completion: nil)
+    }
+    
+    func didRequestAutocompletePredictions(_ viewController: GMSAutocompleteViewController) {
+        UIApplication.shared.isNetworkActivityIndicatorVisible = true
+    }
+    
+    func didUpdateAutocompletePredictions(_ viewController: GMSAutocompleteViewController) {
+        UIApplication.shared.isNetworkActivityIndicatorVisible = false
     }
 }
