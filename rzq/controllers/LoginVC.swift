@@ -89,14 +89,14 @@ class LoginVC: BaseVC, CountryPickerViewDataSource, CountryPickerViewDelegate, P
         self.genderSegment.setTitleTextAttributes(titleTextAttributes2, for: .normal)
         self.genderSegment.setTitleTextAttributes(titleTextAttributes, for: .selected)
         
-        if (flag == true) {
-            self.lblGender.isHidden = true
-            self.genderSegment.isHidden = true
-        }else {
-            self.lblGender.isHidden = false
-            self.genderSegment.isHidden = false
-        }
-    
+//        if (flag == true) {
+//            self.lblGender.isHidden = true
+//            self.genderSegment.isHidden = true
+//        }else {
+//            self.lblGender.isHidden = false
+//            self.genderSegment.isHidden = false
+//        }
+//    
 }
 
 
