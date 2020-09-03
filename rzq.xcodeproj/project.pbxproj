@@ -222,6 +222,7 @@
 		8BF42431229B16990014596F /* AllTendersResponse.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8BF42430229B16990014596F /* AllTendersResponse.swift */; };
 		8BF6DCBB23706D2A00E9B80B /* PaymentStatusDialog.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8BF6DCBA23706D2A00E9B80B /* PaymentStatusDialog.swift */; };
 		8BFF8E06229DC5C500472F27 /* ShopImageCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8BFF8E05229DC5C500472F27 /* ShopImageCell.swift */; };
+		C12DF48F250195A10001D42D /* DriverBidCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = C12DF48E250195A10001D42D /* DriverBidCell.xib */; };
 		C185A56724CCD614001B6B10 /* CustomAlert.swift in Sources */ = {isa = PBXBuildFile; fileRef = C185A56624CCD614001B6B10 /* CustomAlert.swift */; };
 		C185A56924CCD65E001B6B10 /* CustomAlert.xib in Resources */ = {isa = PBXBuildFile; fileRef = C185A56824CCD65E001B6B10 /* CustomAlert.xib */; };
 		C185A56C24CDC17A001B6B10 /* Cairo-Bold.ttf in Resources */ = {isa = PBXBuildFile; fileRef = C185A56A24CDC17A001B6B10 /* Cairo-Bold.ttf */; };
@@ -455,6 +456,7 @@
 		8BF42430229B16990014596F /* AllTendersResponse.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AllTendersResponse.swift; sourceTree = "<group>"; };
 		8BF6DCBA23706D2A00E9B80B /* PaymentStatusDialog.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PaymentStatusDialog.swift; sourceTree = "<group>"; };
 		8BFF8E05229DC5C500472F27 /* ShopImageCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ShopImageCell.swift; sourceTree = "<group>"; };
+		C12DF48E250195A10001D42D /* DriverBidCell.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = DriverBidCell.xib; sourceTree = "<group>"; };
 		C185A56624CCD614001B6B10 /* CustomAlert.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CustomAlert.swift; sourceTree = "<group>"; };
 		C185A56824CCD65E001B6B10 /* CustomAlert.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = CustomAlert.xib; sourceTree = "<group>"; };
 		C185A56A24CDC17A001B6B10 /* Cairo-Bold.ttf */ = {isa = PBXFileReference; lastKnownFileType = file; path = "Cairo-Bold.ttf"; sourceTree = "<group>"; };
@@ -848,6 +850,7 @@
 				8BCB78022254DE0B00E52ED0 /* DriverOrderCell.swift */,
 				8BCB78042254DE1B00E52ED0 /* DriverBidCell.swift */,
 				8BCB78062254DE2B00E52ED0 /* RegularAlertCell.swift */,
+				C12DF48E250195A10001D42D /* DriverBidCell.xib */,
 			);
 			path = alerts;
 			sourceTree = "<group>";
@@ -1076,6 +1079,7 @@
 				C1F86AF124D75F58005698F4 /* NavBar.xib in Resources */,
 				8BF222322271AC05005BE71D /* arabic_regular.ttf in Resources */,
 				8B9CA8452250CCDF00DE0DC4 /* english_light.ttf in Resources */,
+				C12DF48F250195A10001D42D /* DriverBidCell.xib in Resources */,
 				8B2BCC87224FCEB400CBC7D3 /* Main.storyboard in Resources */,
 				C185A56924CCD65E001B6B10 /* CustomAlert.xib in Resources */,
 			);

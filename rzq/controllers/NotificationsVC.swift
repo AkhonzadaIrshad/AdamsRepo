@@ -510,7 +510,7 @@ extension NotificationsVC {
      }
      
      fileprivate func createCellForBidCreated(_ tableView: UITableView, _ indexPath: IndexPath, _ item: DatumNot) -> UITableViewCell {
-         let cell : DriverBidCell = tableView.dequeueReusableCell(withIdentifier: "driverbidcell", for: indexPath) as! DriverBidCell
+        let cell : DriverBidCell = Bundle.main.loadNibNamed("DriverBidCell", owner: self, options: nil)?.first as! DriverBidCell
          
          let dict = item.data?.convertToDictionary()
          let shopImage = dict?["ShopImage"] as? String ?? ""
