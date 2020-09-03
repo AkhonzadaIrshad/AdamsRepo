@@ -1277,7 +1277,7 @@ extension DeliveryStep1 : GMSMapViewDelegate {
     func mapView(_ mapView: GMSMapView, didLongPressAt coordinate: CLLocationCoordinate2D) {
         self.gMap?.clear()
         if let currentLocation = self.locationManager.location {
-            if CLLocation(latitude: coordinate.latitude, longitude: coordinate.longitude).distance(from: currentLocation ) < 5 {
+            if CLLocation(latitude: coordinate.latitude, longitude: coordinate.longitude).distance(from: currentLocation ) < 65 {
                        self.edtOrderDetails.placeholder = "deliveryStep1.edtDetails.yourLocation.placeholder".localized
                    } else {
                        self.edtOrderDetails.placeholder = "order_details".localized
