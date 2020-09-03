@@ -465,6 +465,7 @@ class DeliveryStep1: BaseVC , Step3Delegate, AllShopDelegate, ImagePickerDelegat
         let camera = GMSCameraPosition.camera(withLatitude: self.latitude ?? 0.0, longitude: self.longitude ?? 0.0, zoom: 11.0)
         gMap = GMSMapView.map(withFrame: CGRect(x: 0, y: 0, width: self.mapView.frame.width, height: self.mapView.frame.height), camera: camera)
         gMap?.delegate = self
+        gMap?.isMyLocationEnabled = true
         let marker = GMSMarker()
         marker.position = CLLocationCoordinate2D(latitude: self.latitude ?? 0.0, longitude: self.longitude ?? 0.0)
         marker.title =  ""
