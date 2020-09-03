@@ -1066,7 +1066,6 @@ class DeliveryStep1: BaseVC , Step3Delegate, AllShopDelegate, ImagePickerDelegat
     
     @IBAction func myLocationAction(_ sender: Any) {
         let camera = GMSCameraPosition.camera(withLatitude: self.locationManager.location?.coordinate.latitude ?? 0.0, longitude: self.locationManager.location?.coordinate.longitude ?? 0.0, zoom: 20.0)
-        self.edtOrderDetails.placeholder = "deliveryStep1.edtDetails.yourLocation.placeholder".localized
         self.gMap?.animate(to: camera)
     }
     
@@ -1277,7 +1276,13 @@ extension DeliveryStep1 : GMSMapViewDelegate {
     
     func mapView(_ mapView: GMSMapView, didLongPressAt coordinate: CLLocationCoordinate2D) {
         self.gMap?.clear()
-        
+        if let currentLocation = self.locationManager.location {
+            if CLLocation(latitude: coordinate.latitude, longitude: coordinate.longitude).distance(from: currentLocation ) < 5 {
+                       self.edtOrderDetails.placeholder = "deliveryStep1.edtDetails.yourLocation.placeholder".localized
+                   } else {
+                       self.edtOrderDetails.placeholder = "order_details".localized
+                   }
+        }
         self.showActionSheet()
         self.lblSearch.isHidden = true
         self.shopMarkers.removeAll()
