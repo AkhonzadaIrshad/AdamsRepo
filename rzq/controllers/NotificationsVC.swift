@@ -430,7 +430,6 @@ extension NotificationsVC {
          }else {
              cell.lblMoney.text = "\("less_10".localized) \("currency".localized)"
          }
-         //            cell.lblMoney.text = "\(dict?["EstimatedPrice"] as? Double ?? 0.0) \("currency".localized)"
          let time = dict?["EstimatedTime"] as? Int ?? 0
          
          if (time > 0) {
@@ -528,7 +527,7 @@ extension NotificationsVC {
          let distance = dict?["Distance"] as? Double ?? 0.0
          
          cell.lblTitle.text = desc
-         cell.lblMoney.text = "\(dict?["Price"] as? Double ?? 0.0) \("currency".localized)"
+        cell.lblMoney.text = "price".localized + " \(dict?["Price"] as? Double ?? 0.0) \("currency".localized)"
          let time = dict?["Time"] as? Int ?? 0
          if (time > 0) {
              cell.lblTime.text = "\(dict?["Time"] as? Int ?? 0) \("hours".localized)"
