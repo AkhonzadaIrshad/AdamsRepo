@@ -1105,6 +1105,7 @@ extension DeliveryStep1 : GMSMapViewDelegate {
             self.viewPin.isHidden = false
             self.viewSuggest.isHidden = true
             self.showActionSheet()
+            self.edtOrderDetails.placeholder = "order_details".localized
             ApiService.getShopDetails(Authorization: DataManager.loadUser().data?.accessToken ?? "", id: Int(id)!) { (response) in
                 self.hideLoading()
                 self.pinMarker?.map = nil
