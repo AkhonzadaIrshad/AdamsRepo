@@ -110,11 +110,8 @@ class HomeMapVC: BaseViewController {
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
         LabasLocationManager.shared.delegate = self
-//        self.loadLastLocation()
         LabasLocationManager.shared.startUpdatingLocation()
         setUpGoogleMap()
-        let loc = CLLocationCoordinate2D(latitude: UserDefaults.standard.double(forKey: "lastSelectedLatitude") , longitude: UserDefaults.standard.double(forKey: "lastSelectedLongitude"))
-        self.mapView.camera = GMSCameraPosition(target: loc, zoom: 15, bearing: 0, viewingAngle: 0)
     }
     
     override func viewDidAppear(_ animated: Bool) {
@@ -128,6 +125,15 @@ class HomeMapVC: BaseViewController {
             UserDefaults.standard.setValue(false, forKey: Constants.OPEN_MENU)
             self.onSlideMenuButtonPressed(self.btnMenu)
         }
+        
+        var latitude: Double = UserDefaults.standard.double(forKey: "lastSelectedLatitude")
+        var longitude: Double = UserDefaults.standard.double(forKey: "lastSelectedLongitude")
+        if latitude == 0 || longitude == 0 {
+            latitude = LabasLocationManager.shared.currentLocation?.coordinate.latitude ?? 0
+            longitude = LabasLocationManager.shared.currentLocation?.coordinate.longitude ?? 0
+        }
+        let loc = CLLocationCoordinate2D(latitude: latitude , longitude: longitude)
+        self.mapView.camera = GMSCameraPosition(target: loc, zoom: 15, bearing: 0, viewingAngle: 0)
     }
     
     override func viewDidLayoutSubviews() {
