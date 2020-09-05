@@ -264,11 +264,7 @@ class OrdersVC: BaseViewController, UITableViewDelegate, UITableViewDataSource {
                 vc1.orderModel = model
                 vc2.orderModel = model
                 vc3.orderModel = model
-                
-                let defaults = UserDefaults.standard
-                vc1.latitude = defaults.value(forKey: Constants.LAST_LATITUDE) as? Double ?? 0.0
-                vc1.longitude = defaults.value(forKey: Constants.LAST_LONGITUDE) as? Double ?? 0.0
-                
+                                
                 vc2.latitude = order.data?.fromLatitude ?? 0.0
                 vc2.longitude = order.data?.fromLongitude ?? 0.0
                 

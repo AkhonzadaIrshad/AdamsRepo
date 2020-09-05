@@ -244,8 +244,8 @@ class HomeListVC: BaseViewController, UITableViewDelegate, UITableViewDataSource
         {
             vc.orderModel = OTWOrder()
             vc.fromHome = true
-            vc.latitude = self.latitude ?? 0.0
-            vc.longitude = self.longitude ?? 0.0
+            UserDefaults.standard.set(self.latitude ?? 0.0, forKey: "lastSelectedLatitude")
+            UserDefaults.standard.set(self.longitude ?? 0.0, forKey: "lastSelectedLongitude")
             self.navigationController?.pushViewController(vc, animated: true)
         }
     }

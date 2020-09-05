@@ -112,9 +112,9 @@ class HomeMapVC: BaseViewController {
         LabasLocationManager.shared.delegate = self
 //        self.loadLastLocation()
         LabasLocationManager.shared.startUpdatingLocation()
-        let loc = CLLocationCoordinate2D(latitude: self.latitude ?? 24.7136, longitude: self.longitude ?? 46.6753)
-        self.mapView.camera = GMSCameraPosition(target: loc, zoom: 15, bearing: 0, viewingAngle: 0)
         setUpGoogleMap()
+        let loc = CLLocationCoordinate2D(latitude: UserDefaults.standard.double(forKey: "lastSelectedLatitude") , longitude: UserDefaults.standard.double(forKey: "lastSelectedLongitude"))
+        self.mapView.camera = GMSCameraPosition(target: loc, zoom: 15, bearing: 0, viewingAngle: 0)
     }
     
     override func viewDidAppear(_ animated: Bool) {
@@ -174,8 +174,8 @@ class HomeMapVC: BaseViewController {
     @IBAction func onTheWayAction(_ sender: Any) {
         if (self.isLoggedIn()) {
             if let vc = UIStoryboard(name: "Main", bundle: nil).instantiateViewController(withIdentifier: "DeliveryStep1") as? DeliveryStep1 {
-                vc.latitude = self.latitude
-                vc.longitude = self.longitude
+                UserDefaults.standard.set(self.latitude, forKey: "lastSelectedLatitude")
+                UserDefaults.standard.set(self.longitude, forKey: "lastSelectedLongitude")
                 vc.orderModel = OTWOrder()
                 var address = self.fullAdressTextView.text ?? ""
                 if let street = self.streetTextField.text, !street.isEmpty {
@@ -607,21 +607,12 @@ class HomeMapVC: BaseViewController {
     }
     
     fileprivate func setUpGoogleMap() {
-        
-        var latitude : CLLocationDegrees = LabasLocationManager.shared.defaultLocation.coordinate.latitude
-        var longitude : CLLocationDegrees = LabasLocationManager.shared.defaultLocation.coordinate.longitude
-        
-        if let currentLocation = LabasLocationManager.shared.currentLocation {
-            latitude = currentLocation.coordinate.latitude
-            longitude = currentLocation.coordinate.longitude
-        } else {
-            LabasLocationManager.shared.delegate = self
-            LabasLocationManager.shared.startUpdatingLocation()
-        }
+        let latitude : CLLocationDegrees = UserDefaults.standard.double(forKey: "lastSelectedLatitude")
+        let longitude : CLLocationDegrees = UserDefaults.standard.double(forKey: "lastSelectedLongitude")
         
         currentZoom = 15
         
-        let camera : GMSCameraPosition = GMSCameraPosition.camera(withLatitude: latitude, longitude: longitude, zoom: 15, bearing: 3, viewingAngle: 0)
+        let camera : GMSCameraPosition = GMSCameraPosition.camera(withLatitude: latitude, longitude: longitude, zoom: 25, bearing: 3, viewingAngle: 0)
         
         mapView.camera = camera
         mapView.delegate = self
@@ -956,8 +947,8 @@ extension HomeMapVC: ShopSheetDelegate {
             {
                 vc.orderModel = OTWOrder()
                 vc.orderModel = order
-                vc.latitude = self.latitude
-                vc.longitude = self.longitude
+                UserDefaults.standard.set(self.latitude, forKey: "lastSelectedLatitude")
+                UserDefaults.standard.set(self.longitude, forKey: "lastSelectedLongitude")
                 vc.fromHome = true
                 self.navigationController?.pushViewController(vc, animated: true)
             }
@@ -1010,15 +1001,6 @@ extension HomeMapVC: LabasLocationManagerDelegate {
     
     func labasLocationManager(didUpdateLocation location:CLLocation) {
         
-        if let currentLocation = LabasLocationManager.shared.currentLocation {
-            let latitude = currentLocation.coordinate.latitude
-            let longitude = currentLocation.coordinate.longitude
-            
-            let camera : GMSCameraPosition = GMSCameraPosition.camera(withLatitude: latitude, longitude: longitude, zoom: 15, bearing: 3, viewingAngle: 0)
-            
-            self.mapView.animate(to: camera)
-            LabasLocationManager.shared.stopUpdatingLocation()
-        }
     }
 }
 

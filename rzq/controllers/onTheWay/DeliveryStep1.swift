@@ -72,8 +72,12 @@ class DeliveryStep1: BaseVC , Step3Delegate, AllShopDelegate, ImagePickerDelegat
     var currentZoom: Float = 0.0
     var gMap : GMSMapView?
     var fromHome : Bool?
-    var latitude : Double?
-    var longitude : Double?
+    var latitude : Double? {
+        return UserDefaults.standard.double(forKey: "lastSelectedLatitude")
+    }
+    var longitude : Double? {
+        return UserDefaults.standard.double(forKey: "lastSelectedLongitude")
+    }
     var pinLatitude : Double?
     var pinLongitude : Double?
     var pinMarker : GMSMarker?
@@ -1536,13 +1540,6 @@ extension DeliveryStep1: CLLocationManagerDelegate {
     func locationManager(_ manager: CLLocationManager, didUpdateLocations locations: [CLLocation]) {
         self.hideLoading()
         if (self.latitude ?? 0.0 == 0.0 || self.longitude ?? 0.0 == 0.0) {
-            
-            self.latitude = manager.location?.coordinate.latitude
-            self.longitude = manager.location?.coordinate.longitude
-            
-            UserDefaults.standard.setValue(self.latitude, forKey: Constants.LAST_LATITUDE)
-            UserDefaults.standard.setValue(self.longitude, forKey: Constants.LAST_LONGITUDE)
-
             self.setUpGoogleMap()
         }
     }

@@ -771,8 +771,8 @@ class OrderDetailsVC: PaymentViewController, UICollectionViewDelegate, UICollect
             vc2.orderModel = model
             vc3.orderModel = model
             
-            vc1.latitude = self.latitude ?? 0.0
-            vc1.longitude = self.longitude ?? 0.0
+            UserDefaults.standard.set(self.latitude ?? 0.0, forKey: "lastSelectedLatitude")
+            UserDefaults.standard.set(self.longitude ?? 0.0, forKey: "lastSelectedLongitude")
             
             vc2.latitude = self.order?.fromLatitude ?? 0.0
             vc2.longitude = self.order?.fromLongitude ?? 0.0
