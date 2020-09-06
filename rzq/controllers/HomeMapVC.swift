@@ -105,6 +105,9 @@ class HomeMapVC: BaseViewController {
         self.setupLocationFields()
         let searchAddressTapGesture = UITapGestureRecognizer(target: self, action: #selector(self.searchLocationClicked(_:)))
         self.fullAdressTextView.addGestureRecognizer(searchAddressTapGesture)
+        DispatchQueue.main.asyncAfter(deadline: .now() + 1) {
+            self.loadTracks()
+        }
     }
     
     override func viewWillAppear(_ animated: Bool) {
@@ -676,7 +679,7 @@ class HomeMapVC: BaseViewController {
                 //back to false when u want to show them
                 self.stopTimer()
             }
-            
+            self.collectionView.reloadData()
         }
     }
     
