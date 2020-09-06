@@ -50,7 +50,6 @@ class HomeMapVC: BaseViewController {
     
     var markerLocation: GMSMarker?
     var currentZoom: Float = 0.0
-    var gMap : GMSMapView?
     
     var latitude : Double?
     var longitude : Double?
@@ -544,25 +543,25 @@ class HomeMapVC: BaseViewController {
         toLatitude = order.toLatitude ?? 0.0
         toLongitude = order.toLongitude ?? 0.0
         
-        self.gMap?.clear()
+        self.mapView.clear()
         
         let pickUpPosition = CLLocationCoordinate2D(latitude: fromLatitude ?? 0.0, longitude: fromLongitude ?? 0.0)
         self.pickMarker = GMSMarker(position: pickUpPosition)
         self.pickMarker?.title = "track"
         self.pickMarker?.icon = UIImage(named: "ic_map_driver")
-        self.pickMarker?.map = self.gMap
+        self.pickMarker?.map = self.mapView
         
         
         let dropOffPosition = CLLocationCoordinate2D(latitude: toLatitude ?? 0.0, longitude: toLongitude ?? 0.0)
         self.dropMarker = GMSMarker(position: dropOffPosition)
         self.dropMarker?.title = "track"
         self.dropMarker?.icon = UIImage(named: "ic_location")
-        self.dropMarker?.map = self.gMap
+        self.dropMarker?.map = self.mapView
         
         var bounds = GMSCoordinateBounds()
         bounds = bounds.includingCoordinate(self.pickMarker?.position ?? CLLocationCoordinate2D(latitude: self.latitude ?? 0.0, longitude: self.longitude ?? 0.0))
         bounds = bounds.includingCoordinate(self.dropMarker?.position ?? CLLocationCoordinate2D(latitude: self.latitude ?? 0.0, longitude: self.longitude ?? 0.0))
-        self.gMap?.animate(with: GMSCameraUpdate.fit(bounds, withPadding: 155.0))
+        self.mapView?.animate(with: GMSCameraUpdate.fit(bounds, withPadding: 155.0))
         
     }
     
@@ -598,21 +597,21 @@ class HomeMapVC: BaseViewController {
     }
     
     func addShopsMarkers() {
-        self.gMap?.clear()
+        self.mapView?.clear()
         for center in self.shops {
             let marker = GMSMarker()
             marker.position = CLLocationCoordinate2D(latitude: center.latitude ?? 0.0, longitude: center.longitude ?? 0.0)
             marker.title =  "\(center.id ?? 0)"
             marker.snippet = "\(center.phoneNumber ?? "")"
             marker.icon = UIImage(named: "ic_map_shop")
-            marker.map = gMap
+            marker.map = mapView
             self.shopMarkers.append(marker)
         }
         let marker = GMSMarker()
         marker.position = CLLocationCoordinate2D(latitude: self.latitude ?? 0.0, longitude: self.longitude ?? 0.0)
         marker.title =  "my_location"
         marker.snippet = ""
-        marker.map = gMap
+        marker.map = mapView
     }
     
     fileprivate func setUpGoogleMap() {
@@ -667,7 +666,7 @@ class HomeMapVC: BaseViewController {
                 //snuff33
                 let itm = self.items[0]
                 DispatchQueue.main.asyncAfter(deadline: .now() + 2) {
-                    self.getDriverLocationAPI(item: itm)
+                    self.getDriverLocation(item: itm)
                 }
             }else {
                 self.stopTimer()
@@ -715,7 +714,7 @@ extension HomeMapVC : GMSMapViewDelegate {
         
         marker.icon = UIImage(named: "ic_map_shop_selected")
         let camera = GMSCameraPosition.camera(withLatitude: marker.position.latitude, longitude: marker.position.longitude, zoom: self.cameraZoom)
-        self.gMap?.animate(to: camera)
+        self.mapView?.animate(to: camera)
         ApiService.getShopDetails(Authorization: DataManager.loadUser().data?.accessToken ?? "", id: Int(id)!) { (response) in
             self.showShopDetailsSheet(shop: response.shopData!)
         }
@@ -724,7 +723,6 @@ extension HomeMapVC : GMSMapViewDelegate {
     }
     
     func mapView(_ mapView: GMSMapView, didChange position: GMSCameraPosition) {
-        mapView.clear()
         self.fullAdressTextView.text = "Loading".localized
         self.lblLocation.text = "Loading".localized
     }
@@ -830,7 +828,7 @@ extension HomeMapVC: UITextFieldDelegate {
                 self.getShopsByName(name : newString as String, latitude: self.latitude ?? 0.0, longitude: self.longitude ?? 0.0, radius: Float(Constants.DEFAULT_RADIUS))
             }
             if (newString.length == 0) {
-                self.gMap?.clear()
+                self.mapView?.clear()
                 self.getShopsList(radius: Float(Constants.DEFAULT_RADIUS), rating: 0, types : 0)
             }
             return newString.length <= maxLength
@@ -934,14 +932,14 @@ extension HomeMapVC: UICollectionViewDelegate, UICollectionViewDataSource, UICol
 
 extension HomeMapVC: FilterSheetDelegate {
     func onApply(radius: Float, rating: Double, types : Int, model : FilterModel) {
-        gMap?.clear()
+        mapView?.clear()
         self.mModel = FilterModel()
         self.mModel = model
         self.getShopsList(radius: radius, rating: rating, types : types)
     }
     
     func onClear() {
-        gMap?.clear()
+        mapView?.clear()
         self.mModel = FilterModel()
         self.getShopsList(radius: Float(Constants.DEFAULT_RADIUS), rating: 0, types : 0)
     }
@@ -996,7 +994,7 @@ extension HomeMapVC: UIScrollViewDelegate {
 extension HomeMapVC: FilterListDelegate {
     func onClick(shop: DataShop) {
         let camera = GMSCameraPosition.camera(withLatitude: shop.latitude ?? 0.0, longitude: shop.longitude ?? 0.0, zoom: self.cameraZoom)
-        self.gMap?.animate(to: camera)
+        self.mapView?.animate(to: camera)
         // marker.icon = UIImage(named: "ic_map_shop_selected")
         ApiService.getShopDetails(Authorization: DataManager.loadUser().data?.accessToken ?? "", id: shop.id ?? 0) { (response) in
             self.showShopDetailsSheet(shop: response.shopData!)
