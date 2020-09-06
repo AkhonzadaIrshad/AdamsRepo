@@ -1070,6 +1070,7 @@ class DeliveryStep1: BaseVC , Step3Delegate, AllShopDelegate, ImagePickerDelegat
     
     @IBAction func myLocationAction(_ sender: Any) {
         let camera = GMSCameraPosition.camera(withLatitude: self.locationManager.location?.coordinate.latitude ?? 0.0, longitude: self.locationManager.location?.coordinate.longitude ?? 0.0, zoom: 20.0)
+        self.addPickerOnDropOffLocation(coordinate: self.locationManager.location!.coordinate)
         self.gMap?.animate(to: camera)
     }
     
@@ -1280,6 +1281,10 @@ extension DeliveryStep1 : GMSMapViewDelegate {
     }
     
     func mapView(_ mapView: GMSMapView, didLongPressAt coordinate: CLLocationCoordinate2D) {
+        self.addPickerOnDropOffLocation(coordinate: coordinate)
+    }
+    
+    func addPickerOnDropOffLocation(coordinate: CLLocationCoordinate2D) {
         self.gMap?.clear()
         if let currentLocation = self.locationManager.location {
             if CLLocation(latitude: coordinate.latitude, longitude: coordinate.longitude).distance(from: currentLocation ) < 65 {
@@ -1307,9 +1312,6 @@ extension DeliveryStep1 : GMSMapViewDelegate {
         self.orderModel?.pickUpLongitude = coordinate.longitude
         self.getAddressForMapCenter()
         
-        //      self.lblShopName.text = ""
-        //self.shopNameHeight.constant = 0
-        
         self.viewSuggest.isHidden = true
         
         self.ivShop.image = nil
@@ -1319,9 +1321,7 @@ extension DeliveryStep1 : GMSMapViewDelegate {
         
         self.viewShopDetails.isHidden = true
         self.viewClearField.isHidden = true
-        
     }
-    
 }
 
 // MARK: UITextFieldDelegate
