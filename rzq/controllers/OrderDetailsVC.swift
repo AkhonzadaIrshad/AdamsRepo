@@ -792,7 +792,7 @@ class OrderDetailsVC: PaymentViewController, UICollectionViewDelegate, UICollect
         
         let orderCost = self.order?.orderPrice ?? 0.0
         let  x = self.order?.KnetCommission ?? 0.0
-        let commission = (x * 100).rounded() / 100
+        let commission = 0.15
         
         let totalCost = orderCost + commission
         self.ammountToPay = Double(totalCost)
@@ -864,7 +864,8 @@ class OrderDetailsVC: PaymentViewController, UICollectionViewDelegate, UICollect
             case .success:
                 self.invoiceId = invoiceId
                 self.getPaymentStatus()
-            case .failure:
+            case .failure(let error):
+                print(error)
                 self.showBanner(title: "alert".localized, message: "payment_failed".localized, style: UIColor.INFO)
                 DispatchQueue.main.asyncAfter(deadline: .now() + 1) {
                     self.onPaymentFail()
@@ -883,13 +884,10 @@ class OrderDetailsVC: PaymentViewController, UICollectionViewDelegate, UICollect
         request.mobileCountryCode = MFMobileCountryCodeISO.kuwait.rawValue
         request.displayCurrencyIso = .kuwait_KWD
         if let cost = self.order?.cost,let orderPrice = self.order?.orderPrice {
-            request.invoiceItems.append(MFProduct(name: "order_cost", unitPrice: orderPrice, quantity: 1))
+            request.invoiceItems.append(MFProduct(name: "order_cost", unitPrice: orderPrice - cost, quantity: 1))
             request.invoiceItems.append(MFProduct(name: "delivery_cost", unitPrice: cost, quantity: 1))
         }
-        
-        if let knetCommission = self.order?.KnetCommission {
-            request.invoiceItems.append(MFProduct(name: "knet_commission", unitPrice: knetCommission, quantity: 1))
-        }
+        request.invoiceItems.append(MFProduct(name: "knet_commission", unitPrice: 0.15, quantity: 1))
         return request
     }
     
