@@ -41,13 +41,7 @@ class PaymentVC: BaseVC, WKNavigationDelegate, WKUIDelegate {
                 let link = URL(string:response.paymentData?.paymentURL ?? "")!
                 let request = URLRequest(url: link)
                 self.webView.load(request)
-                
-                //test this
-//                let webVC = SwiftModalWebVC(urlString: response.paymentData?.paymentURL ?? "")
-//                self.present(webVC, animated: true, completion: nil)
-                //
-                
-            }else {
+            } else {
                 self.showBanner(title: "alert".localized, message: response.message ?? "", style: UIColor.ERROR)
                 DispatchQueue.main.asyncAfter(deadline: .now() + 1) {
                     self.dismiss(animated: true, completion: nil)

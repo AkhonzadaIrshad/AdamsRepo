@@ -882,6 +882,14 @@ class OrderDetailsVC: PaymentViewController, UICollectionViewDelegate, UICollect
         request.language = .english
         request.mobileCountryCode = MFMobileCountryCodeISO.kuwait.rawValue
         request.displayCurrencyIso = .kuwait_KWD
+        if let cost = self.order?.cost,let orderPrice = self.order?.orderPrice {
+            request.invoiceItems.append(MFProduct(name: "order_cost", unitPrice: orderPrice, quantity: 1))
+            request.invoiceItems.append(MFProduct(name: "delivery_cost", unitPrice: cost, quantity: 1))
+        }
+        
+        if let knetCommission = self.order?.KnetCommission {
+            request.invoiceItems.append(MFProduct(name: "knet_commission", unitPrice: knetCommission, quantity: 1))
+        }
         return request
     }
     
