@@ -801,8 +801,8 @@ class OrderDetailsVC: PaymentViewController, UICollectionViewDelegate, UICollect
         
         vc.total = totalCost
         
-        let item = ShopMenuItem(id: 0, name: "delivery_cost", imageName: "", price: deliveryCost, shopMenuItemDescription: "", count: 1)
-        let item2 = ShopMenuItem(id: 1, name: "order_cost", imageName: "", price: orderCost - deliveryCost, shopMenuItemDescription: "", count: 1)
+        let item = ShopMenuItem(id: 0, name: "driverFee", imageName: "", price: deliveryCost, shopMenuItemDescription: "", count: 1)
+        let item2 = ShopMenuItem(id: 1, name: "order_price", imageName: "", price: orderCost - deliveryCost, shopMenuItemDescription: "", count: 1)
         let item3 = ShopMenuItem(id: 2, name: "knet_commission", imageName: "", price: knetCommistion, shopMenuItemDescription: "", count: 1)
         vc.items.append(item)
         vc.items.append(item2)
