@@ -791,13 +791,30 @@ class OrderDetailsVC: PaymentViewController, UICollectionViewDelegate, UICollect
     @IBAction func payAction(_ sender: Any) {
         
         let orderCost = self.order?.orderPrice ?? 0.0
-        let  x = self.order?.KnetCommission ?? 0.0
-        let commission = 0.15
+        let knetCommistion = (0.15 * 100).rounded() / 100
+        let deliveryCost = self.order?.cost ?? 0.0
         
-        let totalCost = orderCost + commission
-        self.ammountToPay = Double(totalCost)
-        self.initiatePayment()
-        self.executePayment(paymentMethodId: 1)
+        let totalCost = orderCost + knetCommistion
+        
+        let storyboard = UIStoryboard(name: "Main", bundle: nil)
+        let vc : PaymentVC = storyboard.instantiateViewController(withIdentifier: "PaymentVC") as! PaymentVC
+        
+        vc.total = totalCost
+        
+        let item = ShopMenuItem(id: 0, name: "delivery_cost", imageName: "", price: deliveryCost, shopMenuItemDescription: "", count: 1)
+        let item2 = ShopMenuItem(id: 1, name: "order_cost", imageName: "", price: orderCost - deliveryCost, shopMenuItemDescription: "", count: 1)
+        let item3 = ShopMenuItem(id: 2, name: "knet_commission", imageName: "", price: knetCommistion, shopMenuItemDescription: "", count: 1)
+        vc.items.append(item)
+        vc.items.append(item2)
+        vc.items.append(item3)
+        vc.delegate = self
+        
+        vc.modalPresentationStyle = .fullScreen
+        self.present(vc, animated: true, completion: nil)
+//
+//        self.ammountToPay = Double(totalCost)
+//        self.initiatePayment()
+//        self.executePayment(paymentMethodId: 1)
     }
     
     func onPaymentSuccess(payment: PaymentStatusResponse) {
