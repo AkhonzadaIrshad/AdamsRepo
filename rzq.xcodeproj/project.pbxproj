@@ -501,7 +501,6 @@
 			children = (
 				8BD329C3225C9A5F0060900A /* realm */,
 				8BD329BA225C8C700060900A /* responses */,
-				8BD329B8225C8C660060900A /* requests */,
 				8B1F91C622561E0800B639F1 /* OTWOrder.swift */,
 				8B84A168225A31560090CB5D /* App.swift */,
 				8BF222362271D0BA005BE71D /* ShopType.swift */,
@@ -863,13 +862,6 @@
 				8BCD8DE62296B94F00400D7B /* ServiceStep3.swift */,
 			);
 			path = Services;
-			sourceTree = "<group>";
-		};
-		8BD329B8225C8C660060900A /* requests */ = {
-			isa = PBXGroup;
-			children = (
-			);
-			path = requests;
 			sourceTree = "<group>";
 		};
 		8BD329BA225C8C700060900A /* responses */ = {
