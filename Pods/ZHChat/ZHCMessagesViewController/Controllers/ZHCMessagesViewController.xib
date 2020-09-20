@@ -22,7 +22,7 @@
             <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
             <subviews>
                 <tableView clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" style="plain" separatorStyle="none" rowHeight="44" sectionHeaderHeight="28" sectionFooterHeight="28" translatesAutoresizingMaskIntoConstraints="NO" id="Hcn-J0-AYf" customClass="ZHCMessagesTableView">
-                    <rect key="frame" x="0.0" y="130" width="375" height="682"/>
+                    <rect key="frame" x="0.0" y="0.0" width="375" height="812"/>
                     <color key="backgroundColor" red="1" green="1" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                     <connections>
                         <outlet property="dataSource" destination="-1" id="Zs6-xN-6ok"/>
@@ -42,7 +42,7 @@
                 <constraint firstItem="6fi-Eo-nLP" firstAttribute="leading" secondItem="i5M-Pr-FkT" secondAttribute="leading" id="7d9-Qc-dQC"/>
                 <constraint firstAttribute="bottom" secondItem="Hcn-J0-AYf" secondAttribute="bottom" id="FLJ-hv-4EC"/>
                 <constraint firstAttribute="bottom" secondItem="6fi-Eo-nLP" secondAttribute="bottom" id="NN5-BO-919"/>
-                <constraint firstItem="Hcn-J0-AYf" firstAttribute="top" secondItem="i5M-Pr-FkT" secondAttribute="top" constant="130" id="No2-Pw-KHm"/>
+                <constraint firstItem="Hcn-J0-AYf" firstAttribute="top" secondItem="i5M-Pr-FkT" secondAttribute="top" id="No2-Pw-KHm"/>
                 <constraint firstAttribute="trailing" secondItem="6fi-Eo-nLP" secondAttribute="trailing" id="OWx-m0-qk3"/>
                 <constraint firstItem="Hcn-J0-AYf" firstAttribute="leading" secondItem="i5M-Pr-FkT" secondAttribute="leading" id="e0b-ip-qMv"/>
                 <constraint firstAttribute="trailing" secondItem="Hcn-J0-AYf" secondAttribute="trailing" id="nrf-6t-FxS"/>

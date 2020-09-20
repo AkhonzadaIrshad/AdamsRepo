@@ -40,7 +40,7 @@ class ZHCDemoMessagesViewController: ZHCMessagesViewController, BillDelegate, Ch
     
     lazy var stackView: UIStackView = {
     let stackView = UIStackView()
-        stackView.axis = .vertical
+        stackView.axis = .horizontal
         stackView.alignment = .fill
         stackView.distribution = .fillEqually
         stackView.translatesAutoresizingMaskIntoConstraints = false
@@ -768,7 +768,7 @@ class ZHCDemoMessagesViewController: ZHCMessagesViewController, BillDelegate, Ch
         
         let view = UIView()
         view.translatesAutoresizingMaskIntoConstraints = false
-        view.backgroundColor = .white
+        view.backgroundColor = .clear
         
         self.view.addSubview(view)
         
@@ -776,26 +776,25 @@ class ZHCDemoMessagesViewController: ZHCMessagesViewController, BillDelegate, Ch
         view.topAnchor.constraint(equalTo: self.view.topAnchor, constant: 0).isActive = true
         view.leftAnchor.constraint(equalTo: self.view.leftAnchor, constant: 0).isActive = true
         view.rightAnchor.constraint(equalTo: self.view.rightAnchor, constant: 0).isActive = true
-        view.heightAnchor.constraint(equalToConstant: 125).isActive = true
+        view.heightAnchor.constraint(equalToConstant: 70).isActive = true
         
         // Add stackView to the View
         view.addSubview(stackView)
         
         // Setup Constraints
         self.stackView.topAnchor.constraint(equalTo: view.topAnchor, constant: 10).isActive = true
-        self.stackView.bottomAnchor.constraint(equalTo: view.bottomAnchor, constant: 10).isActive = true
-        self.stackView.leftAnchor.constraint(equalTo: view.leftAnchor, constant: 35).isActive = true
-        self.stackView.rightAnchor.constraint(equalTo: view.rightAnchor, constant: -35).isActive = true
         self.stackView.centerXAnchor.constraint(equalTo: self.view.centerXAnchor).isActive = true
         
         self.stackView.addArrangedSubview(paybutton)
         
         self.paybutton.heightAnchor.constraint(equalToConstant: 50).isActive = true
-        
+        self.paybutton.widthAnchor.constraint(equalToConstant: 50).isActive = true
+       
         if (self.order?.status == Constants.ORDER_ON_THE_WAY || self.order?.status == Constants.ORDER_PROCESSING) {
             self.stackView.addArrangedSubview(callDriverbutton)
 
             self.callDriverbutton.heightAnchor.constraint(equalToConstant: 50).isActive = true
+            self.callDriverbutton.widthAnchor.constraint(equalToConstant: 50).isActive = true
         }
     }
     
