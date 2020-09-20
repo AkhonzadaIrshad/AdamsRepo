@@ -17,10 +17,10 @@ import SwiftyGif
 class ZHCDemoMessagesViewController: ZHCMessagesViewController, BillDelegate, ChatDelegate,UINavigationControllerDelegate, LabasLocationManagerDelegate, PaymentStatusDelegate, OrderChatDelegate, RateDriverDelegate {
     
     lazy var callDriverbutton: UIButton = {
-        let button = UIButton()
+        let button = UIButton(type: .custom)
         button.backgroundColor = UIColor.appLogoColor
         button.addTarget(self, action: #selector(onCallTheDriver), for: .touchUpInside)
-        button.layer.cornerRadius = 25
+        button.layer.cornerRadius = 17.5
         button.layer.masksToBounds = true
         button.setImage(UIImage(named: "chat_call"), for: .normal)
         button.translatesAutoresizingMaskIntoConstraints = false
@@ -28,10 +28,10 @@ class ZHCDemoMessagesViewController: ZHCMessagesViewController, BillDelegate, Ch
     }()
     
     lazy var paybutton: UIButton = {
-        let button = UIButton()
+        let button = UIButton(type: .custom)
         button.backgroundColor = UIColor.appLogoColor
         button.addTarget(self, action: #selector(onPayOrder), for: .touchUpInside)
-        button.layer.cornerRadius = 25
+        button.layer.cornerRadius = 17.5
         button.layer.masksToBounds = true
         button.setTitle("payOrder".localized, for: .normal)
         button.translatesAutoresizingMaskIntoConstraints = false
@@ -44,7 +44,7 @@ class ZHCDemoMessagesViewController: ZHCMessagesViewController, BillDelegate, Ch
         stackView.alignment = .fill
         stackView.distribution = .fillEqually
         stackView.translatesAutoresizingMaskIntoConstraints = false
-        stackView.spacing = 15
+        stackView.spacing = 10
         return stackView
     }()
     
@@ -770,31 +770,32 @@ class ZHCDemoMessagesViewController: ZHCMessagesViewController, BillDelegate, Ch
         view.translatesAutoresizingMaskIntoConstraints = false
         view.backgroundColor = .clear
         
-        self.view.addSubview(view)
-        
+        //self.view.addSubview(view)
+        self.navigationItem.titleView = view
+
         // Setup View Constrint
-        view.topAnchor.constraint(equalTo: self.view.topAnchor, constant: 0).isActive = true
-        view.leftAnchor.constraint(equalTo: self.view.leftAnchor, constant: 0).isActive = true
-        view.rightAnchor.constraint(equalTo: self.view.rightAnchor, constant: 0).isActive = true
+        view.topAnchor.constraint(equalTo: self.navigationItem.titleView!.topAnchor, constant: 0).isActive = true
+        view.leftAnchor.constraint(equalTo: self.navigationItem.titleView!.leftAnchor, constant: 0).isActive = true
+        view.rightAnchor.constraint(equalTo: self.navigationItem.titleView!.rightAnchor, constant: 0).isActive = true
         view.heightAnchor.constraint(equalToConstant: 70).isActive = true
+        view.widthAnchor.constraint(equalToConstant: 100).isActive = true
         
         // Add stackView to the View
         view.addSubview(stackView)
         
         // Setup Constraints
-        self.stackView.topAnchor.constraint(equalTo: view.topAnchor, constant: 10).isActive = true
-        self.stackView.centerXAnchor.constraint(equalTo: self.view.centerXAnchor).isActive = true
-        
+        self.stackView.centerXAnchor.constraint(equalTo: view.centerXAnchor).isActive = true
+        self.stackView.centerYAnchor.constraint(equalTo: view.centerYAnchor).isActive = true
         self.stackView.addArrangedSubview(paybutton)
         
-        self.paybutton.heightAnchor.constraint(equalToConstant: 50).isActive = true
-        self.paybutton.widthAnchor.constraint(equalToConstant: 50).isActive = true
+        self.paybutton.heightAnchor.constraint(equalToConstant: 35).isActive = true
+        self.paybutton.widthAnchor.constraint(equalToConstant: 35).isActive = true
        
         if (self.order?.status == Constants.ORDER_ON_THE_WAY || self.order?.status == Constants.ORDER_PROCESSING) {
             self.stackView.addArrangedSubview(callDriverbutton)
 
-            self.callDriverbutton.heightAnchor.constraint(equalToConstant: 50).isActive = true
-            self.callDriverbutton.widthAnchor.constraint(equalToConstant: 50).isActive = true
+            self.callDriverbutton.heightAnchor.constraint(equalToConstant: 35).isActive = true
+            self.callDriverbutton.widthAnchor.constraint(equalToConstant: 35).isActive = true
         }
     }
     
