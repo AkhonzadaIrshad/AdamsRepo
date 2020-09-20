@@ -1,11 +1,9 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<document type="com.apple.InterfaceBuilder3.CocoaTouch.XIB" version="3.0" toolsVersion="14490.70" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" useSafeAreas="YES" colorMatched="YES">
-    <device id="retina5_9" orientation="portrait">
-        <adaptation id="fullscreen"/>
-    </device>
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.XIB" version="3.0" toolsVersion="17156" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" useSafeAreas="YES" colorMatched="YES">
+    <device id="retina5_9" orientation="portrait" appearance="light"/>
     <dependencies>
         <deployment identifier="iOS"/>
-        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="14490.49"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="17125"/>
         <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
     </dependencies>
     <objects>
@@ -24,7 +22,7 @@
             <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
             <subviews>
                 <tableView clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" style="plain" separatorStyle="none" rowHeight="44" sectionHeaderHeight="28" sectionFooterHeight="28" translatesAutoresizingMaskIntoConstraints="NO" id="Hcn-J0-AYf" customClass="ZHCMessagesTableView">
-                    <rect key="frame" x="0.0" y="0.0" width="375" height="812"/>
+                    <rect key="frame" x="0.0" y="130" width="375" height="682"/>
                     <color key="backgroundColor" red="1" green="1" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                     <connections>
                         <outlet property="dataSource" destination="-1" id="Zs6-xN-6ok"/>
@@ -44,11 +42,12 @@
                 <constraint firstItem="6fi-Eo-nLP" firstAttribute="leading" secondItem="i5M-Pr-FkT" secondAttribute="leading" id="7d9-Qc-dQC"/>
                 <constraint firstAttribute="bottom" secondItem="Hcn-J0-AYf" secondAttribute="bottom" id="FLJ-hv-4EC"/>
                 <constraint firstAttribute="bottom" secondItem="6fi-Eo-nLP" secondAttribute="bottom" id="NN5-BO-919"/>
-                <constraint firstItem="Hcn-J0-AYf" firstAttribute="top" secondItem="i5M-Pr-FkT" secondAttribute="top" id="No2-Pw-KHm"/>
+                <constraint firstItem="Hcn-J0-AYf" firstAttribute="top" secondItem="i5M-Pr-FkT" secondAttribute="top" constant="130" id="No2-Pw-KHm"/>
                 <constraint firstAttribute="trailing" secondItem="6fi-Eo-nLP" secondAttribute="trailing" id="OWx-m0-qk3"/>
                 <constraint firstItem="Hcn-J0-AYf" firstAttribute="leading" secondItem="i5M-Pr-FkT" secondAttribute="leading" id="e0b-ip-qMv"/>
                 <constraint firstAttribute="trailing" secondItem="Hcn-J0-AYf" secondAttribute="trailing" id="nrf-6t-FxS"/>
             </constraints>
+            <point key="canvasLocation" x="-262" y="108"/>
         </view>
     </objects>
 </document>

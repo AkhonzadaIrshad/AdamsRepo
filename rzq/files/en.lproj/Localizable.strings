@@ -329,3 +329,7 @@ If you want to change it, use the search above or by long pressin on the map to 
 
 "deliveryStep3.pickingView.to" = "Deliver to";
 "deliveryStep1.edtDetails.yourLocation.placeholder" = "Type what you want to send from your location eg. “Clothes, keys...”";
+
+// MARK: - Pay Order
+
+"payOrder" = "Pay";

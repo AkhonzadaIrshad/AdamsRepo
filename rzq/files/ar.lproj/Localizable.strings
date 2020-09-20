@@ -333,3 +333,7 @@
 
 "deliveryStep3.pickingView.to" = "التوصيل الى";
 "deliveryStep1.edtDetails.yourLocation.placeholder" =" اكتب ماذا تريد ان ترسل من موقعك مثال ' ملابس، مفاتيح، اغراض...'";
+
+// MARK: - Pay Order
+
+"payOrder" = "دفع الطلب";

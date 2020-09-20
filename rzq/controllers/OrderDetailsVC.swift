@@ -256,31 +256,31 @@ class OrderDetailsVC: PaymentViewController, UICollectionViewDelegate, UICollect
         }
         
         
-        if (self.isProvider() && DataManager.loadUser().data?.userID == self.order?.driverId ?? "") {
-            self.btnPay.isHidden = true
-            self.viewPay.isHidden = true
-        }else {
-            // if (self.isPay ?? false) {
-            if (self.order?.paymentMethod == Constants.PAYMENT_METHOD_KNET && (self.order?.isPaid ?? false) == false) {
-                if (self.order?.status == Constants.ORDER_PENDING || self.order?.status == Constants.ORDER_PROCESSING || self.order?.status == Constants.ORDER_ON_THE_WAY) {
-                    //for testing
-                    self.btnPay.isHidden = false
-                    self.viewPay.isHidden = false
-                }else {
-                    self.btnPay.isHidden = true
-                    self.viewPay.isHidden = true
-                }
-            }else {
-                self.btnPay.isHidden = true
-                self.viewPay.isHidden = true
-            }
-            
-            //            }else {
-            //                self.btnPay.isHidden = true
-            //                self.viewPay.isHidden = true
-            //            }
-            
-        }
+//        if (self.isProvider() && DataManager.loadUser().data?.userID == self.order?.driverId ?? "") {
+//            self.btnPay.isHidden = true
+//            self.viewPay.isHidden = true
+//        }else {
+//            // if (self.isPay ?? false) {
+//            if (self.order?.paymentMethod == Constants.PAYMENT_METHOD_KNET && (self.order?.isPaid ?? false) == false) {
+//                if (self.order?.status == Constants.ORDER_PENDING || self.order?.status == Constants.ORDER_PROCESSING || self.order?.status == Constants.ORDER_ON_THE_WAY) {
+//                    //for testing
+//                    self.btnPay.isHidden = true
+//                    self.viewPay.isHidden = true
+//                }else {
+//                    self.btnPay.isHidden = true
+//                    self.viewPay.isHidden = true
+//                }
+//            }else {
+//                self.btnPay.isHidden = true
+//                self.viewPay.isHidden = true
+//            }
+//            
+//            //            }else {
+//            //                self.btnPay.isHidden = true
+//            //                self.viewPay.isHidden = true
+//            //            }
+//            
+//        }
         
         
         

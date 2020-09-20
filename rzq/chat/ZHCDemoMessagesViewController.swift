@@ -16,10 +16,44 @@ import SwiftyGif
 
 class ZHCDemoMessagesViewController: ZHCMessagesViewController, BillDelegate, ChatDelegate,UINavigationControllerDelegate, LabasLocationManagerDelegate, PaymentStatusDelegate, OrderChatDelegate, RateDriverDelegate {
     
+    lazy var callDriverbutton: UIButton = {
+        let button = UIButton()
+        button.backgroundColor = UIColor.appLogoColor
+        button.addTarget(self, action: #selector(onCallTheDriver), for: .touchUpInside)
+        button.layer.cornerRadius = 25
+        button.layer.masksToBounds = true
+        button.setImage(UIImage(named: "chat_call"), for: .normal)
+        button.translatesAutoresizingMaskIntoConstraints = false
+        return button
+    }()
+    
+    lazy var paybutton: UIButton = {
+        let button = UIButton()
+        button.backgroundColor = UIColor.appLogoColor
+        button.addTarget(self, action: #selector(onPayOrder), for: .touchUpInside)
+        button.layer.cornerRadius = 25
+        button.layer.masksToBounds = true
+        button.setTitle("payOrder".localized, for: .normal)
+        button.translatesAutoresizingMaskIntoConstraints = false
+        return button
+    }()
+    
+    lazy var stackView: UIStackView = {
+    let stackView = UIStackView()
+        stackView.axis = .vertical
+        stackView.alignment = .fill
+        stackView.distribution = .fillEqually
+        stackView.translatesAutoresizingMaskIntoConstraints = false
+        stackView.spacing = 15
+        return stackView
+    }()
+    
     var demoData: ZHModelData = ZHModelData.init()
     var presentBool: Bool = false
     
-    var order : DatumDel?
+    var order: DatumDel?
+    var orderInfo: DataClassDelObj?
+    var orderIsPay: Bool = false
     var user : VerifyResponse?
     
     var delegate : ChatDelegate?
@@ -53,6 +87,9 @@ class ZHCDemoMessagesViewController: ZHCMessagesViewController, BillDelegate, Ch
     
     override func viewDidLoad() {
         super.viewDidLoad()
+        getOrderData()
+        setupHeaderbuttons()
+        
         if let id = self.order?.id {
             ApiService.getDelivery(id: id) { (deliveryResponse) in
                 self.clientPhoneNumber = deliveryResponse.data?.ClientPhone
@@ -176,6 +213,36 @@ class ZHCDemoMessagesViewController: ZHCMessagesViewController, BillDelegate, Ch
             }
         }
         
+    }
+    
+    private func getOrderData() {
+        ApiService.getDelivery(id: self.order?.id ?? 0) { (response) in
+            self.orderInfo = response.data
+            if (self.order?.isPaid ?? false) {
+                self.orderIsPay = false
+            }else {
+                self.orderIsPay = true
+            }
+            self.diplayPaybutton()
+        }
+    }
+    
+    private func diplayPaybutton() {
+        if (self.isProvider() && DataManager.loadUser().data?.userID == self.orderInfo?.driverId ?? "") {
+            self.paybutton.isHidden = true
+        }else {
+            // if (self.isPay ?? false) {
+            if (self.orderInfo?.paymentMethod == Constants.PAYMENT_METHOD_KNET && (self.orderInfo?.isPaid ?? false) == false) {
+                if (self.orderInfo?.status == Constants.ORDER_PENDING || self.orderInfo?.status == Constants.ORDER_PROCESSING || self.orderInfo?.status == Constants.ORDER_ON_THE_WAY) {
+                    //for testing
+                    self.paybutton.isHidden = false
+                }else {
+                    self.paybutton.isHidden = true
+                }
+            }else {
+                self.paybutton.isHidden = true
+            }
+        }
     }
     
     @objc func orderInfoAction() {
@@ -697,6 +764,70 @@ class ZHCDemoMessagesViewController: ZHCMessagesViewController, BillDelegate, Ch
         self.present(initialViewControlleripad, animated: true, completion: {})
     }
     
+    private func setupHeaderbuttons() {
+        
+        let view = UIView()
+        view.translatesAutoresizingMaskIntoConstraints = false
+        view.backgroundColor = .white
+        
+        self.view.addSubview(view)
+        
+        // Setup View Constrint
+        view.topAnchor.constraint(equalTo: self.view.topAnchor, constant: 0).isActive = true
+        view.leftAnchor.constraint(equalTo: self.view.leftAnchor, constant: 0).isActive = true
+        view.rightAnchor.constraint(equalTo: self.view.rightAnchor, constant: 0).isActive = true
+        view.heightAnchor.constraint(equalToConstant: 125).isActive = true
+        
+        // Add stackView to the View
+        view.addSubview(stackView)
+        
+        // Setup Constraints
+        self.stackView.topAnchor.constraint(equalTo: view.topAnchor, constant: 10).isActive = true
+        self.stackView.bottomAnchor.constraint(equalTo: view.bottomAnchor, constant: 10).isActive = true
+        self.stackView.leftAnchor.constraint(equalTo: view.leftAnchor, constant: 35).isActive = true
+        self.stackView.rightAnchor.constraint(equalTo: view.rightAnchor, constant: -35).isActive = true
+        self.stackView.centerXAnchor.constraint(equalTo: self.view.centerXAnchor).isActive = true
+        
+        self.stackView.addArrangedSubview(paybutton)
+        
+        self.paybutton.heightAnchor.constraint(equalToConstant: 50).isActive = true
+        
+        if (self.order?.status == Constants.ORDER_ON_THE_WAY || self.order?.status == Constants.ORDER_PROCESSING) {
+            self.stackView.addArrangedSubview(callDriverbutton)
+
+            self.callDriverbutton.heightAnchor.constraint(equalToConstant: 50).isActive = true
+        }
+    }
+    
+    @objc func onCallTheDriver(){
+        self.callNumber(phone: self.order?.ProviderPhone ?? "")
+
+    }
+    
+    @objc func onPayOrder() {
+        let orderCost = self.orderInfo?.orderPrice ?? 0.0
+        let knetCommistion = (0.15 * 100).rounded() / 100
+        let deliveryCost = self.orderInfo?.cost ?? 0.0
+        
+        let totalCost = orderCost + knetCommistion
+        
+        let storyboard = UIStoryboard(name: "Main", bundle: nil)
+        let vc : PaymentVC = storyboard.instantiateViewController(withIdentifier: "PaymentVC") as! PaymentVC
+        
+        vc.total = totalCost
+        
+        let item = ShopMenuItem(id: 0, name: "driverFee", imageName: "", price: deliveryCost, shopMenuItemDescription: "", count: 1)
+        let item2 = ShopMenuItem(id: 1, name: "order_price", imageName: "", price: orderCost - deliveryCost, shopMenuItemDescription: "", count: 1)
+        let item3 = ShopMenuItem(id: 2, name: "knet_commission", imageName: "", price: knetCommistion, shopMenuItemDescription: "", count: 1)
+        vc.items.append(item)
+        vc.items.append(item2)
+        vc.items.append(item3)
+        vc.delegate = self
+        
+        vc.modalPresentationStyle = .fullScreen
+        self.present(vc, animated: true, completion: nil)
+    }
+    
     func setupUserFloating() {
         self.actionButton?.removeFromSuperview()
         self.actionButton = JJFloatingActionButton()
@@ -709,18 +840,18 @@ class ZHCDemoMessagesViewController: ZHCMessagesViewController, BillDelegate, Ch
         self.actionButton?.layer.shadowRadius = CGFloat(2)
         
         if (self.order?.status == Constants.ORDER_ON_THE_WAY || self.order?.status == Constants.ORDER_PROCESSING) {
-            let item90 = actionButton?.addItem()
-                      item90?.titleLabel.text = "chat_calldriver".localized
-                      item90?.titleLabel.backgroundColor = UIColor.white
-                      item90?.titleLabel.textColor = UIColor.black
-                      item90?.titleLabel.font = UIFont(name: self.getBoldFontName(), size: 13)
-                      item90?.imageView.image = UIImage(named: "chat_call")
-                      item90?.buttonColor = UIColor.appLogoColor
-                      item90?.buttonImageColor = .white
-                      item90?.action = { item in
-                        self.callNumber(phone: self.order?.ProviderPhone ?? "")
-                      }
-        }
+//            let item90 = actionButton?.addItem()
+//                      item90?.titleLabel.text = "chat_calldriver".localized
+//                      item90?.titleLabel.backgroundColor = UIColor.white
+//                      item90?.titleLabel.textColor = UIColor.black
+//                      item90?.titleLabel.font = UIFont(name: self.getBoldFontName(), size: 13)
+//                      item90?.imageView.image = UIImage(named: "chat_call")
+//                      item90?.buttonColor = UIColor.appLogoColor
+//                      item90?.buttonImageColor = .white
+//                      item90?.action = { item in
+//                        self.callNumber(phone: self.order?.ProviderPhone ?? "")
+//                      }
+       }
         
         if (self.order?.status != Constants.ORDER_ON_THE_WAY) {
             let item = actionButton?.addItem()
@@ -1307,6 +1438,14 @@ class ZHCDemoMessagesViewController: ZHCMessagesViewController, BillDelegate, Ch
                UIApplication.shared.openURL(url)
            }
        }
+    
+    func showLoading() {
+        SVProgressHUD.show()
+    }
+    
+    func hideLoading() {
+        SVProgressHUD.dismiss()
+    }
 }
 
 extension ZHCDemoMessagesViewController: UIImagePickerControllerDelegate {
@@ -1343,5 +1482,26 @@ extension ZHCDemoMessagesViewController: JJFloatingActionButtonDelegate {
     func floatingActionButtonDidClose(_ button: JJFloatingActionButton) {
         //  self.driverActionButton?.open()
         //  self.actionButton?.open()
+    }
+}
+
+extension ZHCDemoMessagesViewController: PaymentDelegate {
+    func onPaymentSuccess(payment: PaymentStatusResponse) {
+        self.showLoading()
+        ApiService.createPaymentRecord(Authorization: DataManager.loadUser().data?.accessToken ?? "", orderId: self.order?.id ?? 0, payment: payment) { (response) in
+            self.hideLoading()
+            self.sendTextMessage(text: "I have successfully paid my order using Knet.\n\n\nلقد قمت بدفع الطلب باستخدام كي نت بنجاح.")
+            SVProgressHUD.show()
+            ApiService.sendUserNotification(Authorization: self.user?.data?.accessToken ?? "", arabicTitle: "الطلب \(Constants.ORDER_NUMBER_PREFIX)\(self.order?.id ?? 0)", englishTitle: "Order \(Constants.ORDER_NUMBER_PREFIX)\(self.order?.id ?? 0)", arabicBody: "قام الزبون بدفع الطلب باستخدام كي نت", englishbody: "Client paid using Knet", userId: self.order?.providerID ?? "", type: 989) { (response) in
+                SVProgressHUD.dismiss()
+            }
+            self.navigationController?.popViewController(animated: true)
+        }
+        
+    }
+    
+    func onPaymentFail() {
+        //self.delegate?.onOrderPaymentFail()
+        self.sendTextMessage(text: "I did'nt pay my order using Knet, is it possible that we use cash?\n\n\nلم اتمكن من الدفع باستخدام كي نت، هل من الممكن الدفع كاش؟")
     }
 }
