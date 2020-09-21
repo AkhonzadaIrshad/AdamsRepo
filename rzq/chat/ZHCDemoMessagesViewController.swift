@@ -228,7 +228,7 @@ class ZHCDemoMessagesViewController: ZHCMessagesViewController, BillDelegate, Ch
     }
     
     private func diplayPaybutton() {
-        if (self.isProvider() && DataManager.loadUser().data?.userID == self.orderInfo?.driverId ?? "") {
+        if (self.isProvider() && DataManager.loadUser().data?.userID == self.orderInfo?.driverId ?? "") ||  ((self.orderInfo?.orderPrice) == nil) || ((self.user?.data?.roles?.contains(find: "Driver")) == true) {
             self.paybutton.isHidden = true
         }else {
             // if (self.isPay ?? false) {
@@ -791,7 +791,7 @@ class ZHCDemoMessagesViewController: ZHCMessagesViewController, BillDelegate, Ch
         self.paybutton.heightAnchor.constraint(equalToConstant: 35).isActive = true
         self.paybutton.widthAnchor.constraint(equalToConstant: 35).isActive = true
        
-        if (self.order?.status == Constants.ORDER_ON_THE_WAY || self.order?.status == Constants.ORDER_PROCESSING) {
+        if ((self.order?.status == Constants.ORDER_ON_THE_WAY || self.order?.status == Constants.ORDER_PROCESSING) && ((self.user?.data?.roles?.contains(find: "Driver")) == false)) {
             self.stackView.addArrangedSubview(callDriverbutton)
 
             self.callDriverbutton.heightAnchor.constraint(equalToConstant: 35).isActive = true
