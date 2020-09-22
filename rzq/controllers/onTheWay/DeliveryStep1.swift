@@ -20,6 +20,7 @@ class DeliveryStep1: BaseVC , Step3Delegate, AllShopDelegate, ImagePickerDelegat
     
     // MARK: - Outlets
     
+    @IBOutlet weak var shopNaleKabel: MyUILabel!
     @IBOutlet weak var lblImages: MyUILabel!
     @IBOutlet weak var viewImages: UIView!
     @IBOutlet weak var viewRecording: UIView!
@@ -161,7 +162,7 @@ class DeliveryStep1: BaseVC , Step3Delegate, AllShopDelegate, ImagePickerDelegat
            self.edtOrderDetails.text = self.orderModel?.orderDetails
            
            edtOrderDetails.placeholder = "order_details".localized
-           edtOrderDetails.placeholderColor = UIColor.lightGray
+           edtOrderDetails.placeholderColor = UIColor.appLogoColor
            edtOrderDetails.isPlaceholderScrollEnabled = true
            
            self.viewRecording.isHidden = true
@@ -1123,7 +1124,7 @@ extension DeliveryStep1 : GMSMapViewDelegate {
                 self.orderModel?.pickUpLongitude = response.shopData?.longitude ?? 0.0
                 
                 self.ivShop.isHidden = false
-                
+                self.shopNaleKabel.text = response.shopData?.name ?? "" 
                 self.lblSearch.isHidden = true
                 self.viewShopDetails.isHidden = false
                 self.viewClearField.isHidden = false
