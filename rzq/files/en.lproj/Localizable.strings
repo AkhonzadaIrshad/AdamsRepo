@@ -333,3 +333,5 @@ If you want to change it, use the search above or by long pressin on the map to 
 // MARK: - Pay Order
 
 "payOrder" = "Pay";
+"payOrderErrorMessage" = "You can't pay now until the driver exports the invoice ";
+"PayOrder.Alert.OK" = "OK";

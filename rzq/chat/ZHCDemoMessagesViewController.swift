@@ -231,17 +231,18 @@ class ZHCDemoMessagesViewController: ZHCMessagesViewController, BillDelegate, Ch
         if (self.isProvider() && DataManager.loadUser().data?.userID == self.orderInfo?.driverId ?? "") ||  ((self.orderInfo?.orderPrice) == nil) || ((self.user?.data?.roles?.contains(find: "Driver")) == true) {
             self.paybutton.isHidden = true
         }else {
-            // if (self.isPay ?? false) {
-            if (self.orderInfo?.paymentMethod == Constants.PAYMENT_METHOD_KNET && (self.orderInfo?.isPaid ?? false) == false) {
-                if (self.orderInfo?.status == Constants.ORDER_PENDING || self.orderInfo?.status == Constants.ORDER_PROCESSING || self.orderInfo?.status == Constants.ORDER_ON_THE_WAY) {
-                    //for testing
-                    self.paybutton.isHidden = false
-                }else {
-                    self.paybutton.isHidden = true
-                }
-            }else {
-                self.paybutton.isHidden = true
-            }
+//            // if (self.isPay ?? false) {
+//            if (self.orderInfo?.paymentMethod == Constants.PAYMENT_METHOD_KNET && (self.orderInfo?.isPaid ?? false) == false) {
+//                if (self.orderInfo?.status == Constants.ORDER_PENDING || self.orderInfo?.status == Constants.ORDER_PROCESSING || self.orderInfo?.status == Constants.ORDER_ON_THE_WAY) {
+//                    //for testing
+//                    self.paybutton.isHidden = false
+//                }else {
+//                    self.paybutton.isHidden = true
+//                }
+//            }else {
+//                self.paybutton.isHidden = true
+//            }
+            self.paybutton.isHidden = false
         }
     }
     
@@ -791,7 +792,7 @@ class ZHCDemoMessagesViewController: ZHCMessagesViewController, BillDelegate, Ch
         self.paybutton.heightAnchor.constraint(equalToConstant: 35).isActive = true
         self.paybutton.widthAnchor.constraint(equalToConstant: 35).isActive = true
        
-        if ((self.order?.status == Constants.ORDER_ON_THE_WAY || self.order?.status == Constants.ORDER_PROCESSING) && ((self.user?.data?.roles?.contains(find: "Driver")) == false)) {
+        if self.user?.data?.roles?.contains(find: "Driver") == false {
             self.stackView.addArrangedSubview(callDriverbutton)
 
             self.callDriverbutton.heightAnchor.constraint(equalToConstant: 35).isActive = true
@@ -805,27 +806,44 @@ class ZHCDemoMessagesViewController: ZHCMessagesViewController, BillDelegate, Ch
     }
     
     @objc func onPayOrder() {
-        let orderCost = self.orderInfo?.orderPrice ?? 0.0
-        let knetCommistion = (0.15 * 100).rounded() / 100
-        let deliveryCost = self.orderInfo?.cost ?? 0.0
         
-        let totalCost = orderCost + knetCommistion
-        
-        let storyboard = UIStoryboard(name: "Main", bundle: nil)
-        let vc : PaymentVC = storyboard.instantiateViewController(withIdentifier: "PaymentVC") as! PaymentVC
-        
-        vc.total = totalCost
-        
-        let item = ShopMenuItem(id: 0, name: "driverFee", imageName: "", price: deliveryCost, shopMenuItemDescription: "", count: 1)
-        let item2 = ShopMenuItem(id: 1, name: "order_price", imageName: "", price: orderCost - deliveryCost, shopMenuItemDescription: "", count: 1)
-        let item3 = ShopMenuItem(id: 2, name: "knet_commission", imageName: "", price: knetCommistion, shopMenuItemDescription: "", count: 1)
-        vc.items.append(item)
-        vc.items.append(item2)
-        vc.items.append(item3)
-        vc.delegate = self
-        
-        vc.modalPresentationStyle = .fullScreen
-        self.present(vc, animated: true, completion: nil)
+        if self.orderInfo?.orderPrice != nil {
+            let orderCost = self.orderInfo?.orderPrice ?? 0.0
+            let knetCommistion = (0.15 * 100).rounded() / 100
+            let deliveryCost = self.orderInfo?.cost ?? 0.0
+            
+            let totalCost = orderCost + knetCommistion
+            
+            let storyboard = UIStoryboard(name: "Main", bundle: nil)
+            let vc : PaymentVC = storyboard.instantiateViewController(withIdentifier: "PaymentVC") as! PaymentVC
+            
+            vc.total = totalCost
+            
+            let item = ShopMenuItem(id: 0, name: "driverFee", imageName: "", price: deliveryCost, shopMenuItemDescription: "", count: 1)
+            let item2 = ShopMenuItem(id: 1, name: "order_price", imageName: "", price: orderCost - deliveryCost, shopMenuItemDescription: "", count: 1)
+            let item3 = ShopMenuItem(id: 2, name: "knet_commission", imageName: "", price: knetCommistion, shopMenuItemDescription: "", count: 1)
+            vc.items.append(item)
+            vc.items.append(item2)
+            vc.items.append(item3)
+            vc.delegate = self
+            
+            vc.modalPresentationStyle = .fullScreen
+            self.present(vc, animated: true, completion: nil)
+        } else {
+            let alert = UIAlertController(title: "alert".localized, message: "payOrderErrorMessage".localized, preferredStyle: .alert)
+            alert.addAction(UIAlertAction(title: "PayOrder.Alert.OK".localized, style: .cancel, handler: { action in
+                  switch action.style {
+                  case .default:
+                        print("default")
+                  case .cancel:
+                        print("cancel")
+                  case .destructive:
+                        print("destructive")
+                  @unknown default:
+                    print("error")
+                  }}))
+            self.present(alert, animated: true, completion: nil)
+        }
     }
     
     func setupUserFloating() {

@@ -337,3 +337,5 @@
 // MARK: - Pay Order
 
 "payOrder" = "دفع";
+"payOrderErrorMessage" = "لا يمكنك الدفع الآن حتى يصدر السائق الفاتورة";
+"PayOrder.Alert.OK" = "حسنا";
