@@ -75,6 +75,8 @@
 "minutes" = "دقيقة";
 
 "order_cost" = "تكلفة الطلب";
+"Pay_Order_Message" = "بالضغط على كلمة ادفع في الاعلى";
+
 "delivery_cost" = "تكلفة التوصيل";
 "total_cost" = "التكلفة الكلية";
 "delivery_started" = "تم بدأ توصيل الطلب.";

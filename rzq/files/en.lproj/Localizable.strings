@@ -71,7 +71,7 @@
 "cancel_order" = "Cancel Order";
 "on_my_way" = "On my Way";
 "minutes" = "Min";
-
+"Pay_Order_Message" = "By clicking on the word Pay above";
 "order_cost" = "Order Cost";
 "delivery_cost" = "Delivery Cost";
 "total_cost" = "Total Cost";

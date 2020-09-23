@@ -203,6 +203,7 @@ class DeliveryStep1: BaseVC , Step3Delegate, AllShopDelegate, ImagePickerDelegat
     override func viewWillDisappear(_ animated: Bool) {
     
     }
+    
     private func loadData() {
         if (self.orderModel?.shop?.id ?? 0 > 0) {
             self.btnCheckMenu.isHidden = false

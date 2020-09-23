@@ -140,7 +140,9 @@ class CustomerBillVC: BaseVC,UINavigationControllerDelegate, UICollectionViewDel
             self.commission = 0
             if (self.paymentMethodInt == Constants.PAYMENT_METHOD_KNET) {
                 self.commission = 0.15
-                totalStr = "\n\n\(totalStr)\n\n\("notify_user_knet".localized)\n\n\("knet_commission".localized): \(self.commission ?? 0.0)"
+                totalStr = "\n\n\(totalStr)\n\n\("notify_user_knet".localized)\n\n\("knet_commission".localized): \(self.commission ?? 0.0) \n\n \("Pay_Order_Message".localized)"
+            } else {
+                totalStr = "\n\n\(totalStr)\n\n \("Pay_Order_Message".localized)"
             }
             
             self.delegate?.onDone(images: self.selectedImages,orderCost: self.totalCost ?? 0.0, costDetails: totalStr)
