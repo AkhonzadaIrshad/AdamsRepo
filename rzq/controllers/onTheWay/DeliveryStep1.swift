@@ -925,7 +925,8 @@ class DeliveryStep1: BaseVC , Step3Delegate, AllShopDelegate, ImagePickerDelegat
         self.ivShop.image = nil
         self.ivShop.isHidden = true
         self.lblSearch.isHidden = false
-        
+        self.shopNaleKabel.text = ""
+
         self.edtMoreDetails = ""
         self.lblPickupLocation.text = ""
         self.searchField.text = ""
@@ -963,7 +964,7 @@ class DeliveryStep1: BaseVC , Step3Delegate, AllShopDelegate, ImagePickerDelegat
         self.ivShop.image = nil
         self.ivShop.isHidden = true
         self.lblSearch.isHidden = false
-        
+        self.shopNaleKabel.text = ""
         self.edtMoreDetails = ""
         self.lblPickupLocation.text = ""
         self.searchField.text = ""
