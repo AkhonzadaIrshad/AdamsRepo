@@ -228,7 +228,7 @@ class ZHCDemoMessagesViewController: ZHCMessagesViewController, BillDelegate, Ch
     }
     
     private func diplayPaybutton() {
-        if (self.isProvider() && DataManager.loadUser().data?.userID == self.orderInfo?.driverId ?? "") ||  ((self.orderInfo?.orderPrice) == nil) || ((self.user?.data?.roles?.contains(find: "Driver")) == true) {
+        if  self.user?.data?.roles?.contains(find: "Driver") == true {
             self.paybutton.isHidden = true
         }else {
 //            // if (self.isPay ?? false) {
