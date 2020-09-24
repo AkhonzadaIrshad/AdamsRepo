@@ -223,8 +223,8 @@ class ZHCDemoMessagesViewController: ZHCMessagesViewController, BillDelegate, Ch
             }else {
                 self.orderIsPay = true
             }
-            self.diplayPaybutton()
         }
+        self.diplayPaybutton()
     }
     
     private func diplayPaybutton() {
