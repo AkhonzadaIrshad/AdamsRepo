@@ -262,7 +262,7 @@ func validateFields() -> Bool {
         self.showBanner(title: "alert".localized, message: "enter_name_first".localized, style: UIColor.INFO)
         return false
     }
-    if (self.edtMobileNumber.text?.count ?? 0 < 6) {
+    if (self.edtMobileNumber.text?.count ?? 0 < 8) {
         self.showBanner(title: "alert".localized, message: "enter_mobile_first".localized, style: UIColor.INFO)
         return false
     }
