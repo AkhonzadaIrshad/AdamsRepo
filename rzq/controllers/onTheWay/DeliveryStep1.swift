@@ -91,6 +91,8 @@ class DeliveryStep1: BaseVC , Step3Delegate, AllShopDelegate, ImagePickerDelegat
             self.shopsSearchTableView.reloadData()
         }
     }
+    var fromdeepLink: Bool = false
+    var shopeID: Int?
     var filterShops = [DataShop]()
     var shopMarkers = [GMSMarker]()
     var selectdCategory: TypeClass?
@@ -108,6 +110,7 @@ class DeliveryStep1: BaseVC , Step3Delegate, AllShopDelegate, ImagePickerDelegat
     
     override func viewDidLoad() {
         super.viewDidLoad()
+        
         self.locationManager.delegate = self
         // Ask for Authorisation from the User.
         self.locationManager.requestAlwaysAuthorization()
@@ -129,8 +132,13 @@ class DeliveryStep1: BaseVC , Step3Delegate, AllShopDelegate, ImagePickerDelegat
         self.shopsSearchTableView.dataSource = self
         self.searchShopsTextField.delegate = self
         self.searchShopsTextField.addTarget(self, action: #selector(textFieldDidChange), for: .editingChanged)
-        self.setUpGoogleMap()
-        self.hideActionSheet()
+        if !fromdeepLink {
+            self.setUpGoogleMap()
+            self.hideActionSheet()
+
+        } else {
+            displayShop(shopId: shopeID ?? 0)
+        }
     }
     
     @objc func textFieldDidChange() {
@@ -313,6 +321,64 @@ class DeliveryStep1: BaseVC , Step3Delegate, AllShopDelegate, ImagePickerDelegat
         {
             vc.delegate = self
             self.navigationController?.pushViewController(vc, animated: true)
+        }
+    }
+    func displayShop(shopId: Int) {
+        self.showLoading()
+        self.viewPin.isHidden = false
+        self.viewSuggest.isHidden = true
+        self.showActionSheet()
+        ApiService.getShopDetails(Authorization: DataManager.loadUser().data?.accessToken ?? "", id: shopId) { (response) in
+            self.hideLoading()
+            self.pinMarker?.map = nil
+            self.lblPickupLocation.textColor = UIColor.appDarkBlue
+            self.lblPickupLocation.text = response.shopData?.name ?? ""
+            let dataShop = DataShop(id: response.shopData?.id ?? 0, name: response.shopData?.name ?? "", address: response.shopData?.address ?? "", latitude: response.shopData?.latitude ?? 0.0, longitude: response.shopData?.longitude ?? 0.0, phoneNumber: response.shopData?.phoneNumber ?? "", workingHours: response.shopData?.workingHours ?? "", images: response.shopData?.images ?? [String](), rate: response.shopData?.rate ?? 0.0, type: response.shopData?.type ?? TypeClass(id: 0, name: "",image: "", selectedIcon: "", icon: ""),ownerId: response.shopData?.ownerId ?? "", googlePlaceId: response.shopData?.googlePlaceId ?? "", openNow : response.shopData?.openNow ?? false, NearbyDriversCount : response.shopData?.nearbyDriversCount ?? 0)
+            self.orderModel?.shop = dataShop
+            self.orderModel?.pickUpAddress = response.shopData?.name ?? ""
+            self.orderModel?.pickUpLatitude = response.shopData?.latitude ?? 0.0
+            self.orderModel?.pickUpLongitude = response.shopData?.longitude ?? 0.0
+            
+            self.ivShop.isHidden = false
+            
+            self.lblSearch.isHidden = true
+            self.viewShopDetails.isHidden = false
+            self.viewClearField.isHidden = false
+            
+            
+            self.edtMoreDetails = "\(response.shopData?.name ?? "")\n\(response.shopData?.address ?? "")"
+            
+            /** step 1 - comment all logic of shop details image  */
+            
+            if (response.shopData?.images?.count ?? 0 > 0) {
+                let url = URL(string: "\(Constants.IMAGE_URL)\(response.shopData?.images?[0] ?? "")")
+                self.ivShop.kf.setImage(with: url)
+            }else if (response.shopData?.type?.image?.count ?? 0 > 0){
+                let url = URL(string: "\(Constants.IMAGE_URL)\(response.shopData?.type?.image ?? "")")
+                self.ivShop.kf.setImage(with: url)
+            }else {
+                self.ivShop.image = UIImage(named: "ic_place_store")
+            }
+            
+            for mark in self.shopMarkers {
+                mark.map = nil
+            }
+            self.singleMarker?.map = nil
+            self.singleMarker = GMSMarker()
+            self.singleMarker?.position = CLLocationCoordinate2D(latitude: dataShop.latitude ?? 0.0, longitude: dataShop.longitude ?? 0.0)
+            self.singleMarker?.title =  "\(dataShop.id ?? 0)"
+            self.singleMarker?.snippet = ""
+            self.singleMarker?.icon = UIImage(named: "ic_shop_empty_selected")
+            // snuff1
+            let url = URL(string: "\(Constants.IMAGE_URL)\(response.shopData?.type?.selectedIcon ?? "")")
+            self.applyMarkerImage(from: url!, to: self.singleMarker!)
+            self.singleMarker?.map = self.gMap
+            
+            self.handleOpenNow(shop: response.shopData)
+            
+            let camera = GMSCameraPosition.camera(withLatitude: self.orderModel?.pickUpLatitude ?? 0.0, longitude: self.orderModel?.pickUpLongitude ?? 0.0, zoom: 15.0)
+            self.gMap?.animate(to: camera)
+            self.checkMenuAction(self)
         }
     }
     

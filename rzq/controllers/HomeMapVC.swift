@@ -69,10 +69,17 @@ class HomeMapVC: BaseViewController {
     
     weak var timer: Timer?
     
+    @objc func willEnterForeground() {
+            self.checkForDeepLinkValues()
+    }
+    
     // MARK: - Methodes - Life Cycle
     
     override func viewDidLoad() {
         super.viewDidLoad()
+        NotificationCenter.default.addObserver(self, selector: #selector(willEnterForeground),
+                                               name: UIApplication.willEnterForegroundNotification,
+                                                  object: nil)
         self.lblDeliverTo.text = "deliveryStep3.pickingView.to".localized
         self.navBar.delegate = self
         if DataManager.loadUser().data?.roles?.contains(find: "Driver") ?? false {
@@ -249,11 +256,13 @@ class HomeMapVC: BaseViewController {
         if (App.shared.deepLinkShopId != nil && Int(App.shared.deepLinkShopId ?? "0") ?? 0 > 0) {
             //open shop
             ApiService.getShopDetails(Authorization: DataManager.loadUser().data?.accessToken ?? "", id: Int(App.shared.deepLinkShopId ?? "0")!) { (response) in
-                if let vc = UIStoryboard(name: "Main", bundle: nil).instantiateViewController(withIdentifier: "ShopDetailsVC") as? ShopDetailsVC {
-                    vc.latitude = self.latitude ?? 0.0
-                    vc.longitude = self.longitude ?? 0.0
-                    vc.shop = response.shopData!
+               // DispatchQueue.main.async {
+                if let vc = UIStoryboard(name: "Main", bundle: nil).instantiateViewController(withIdentifier: "DeliveryStep1") as? DeliveryStep1 {
+                    vc.fromdeepLink = true
+                    let shop: ShopData = response.shopData!
+                    vc.shopeID = shop.id
                     self.navigationController?.pushViewController(vc, animated: true)
+                    //}
                 }
             }
             App.shared.deepLinkShopId = "0"
