@@ -61,7 +61,7 @@ class PaymentVC: BaseVC, WKNavigationDelegate, WKUIDelegate {
     
     override func observeValue(forKeyPath keyPath: String?, of object: Any?, change: [NSKeyValueChangeKey : Any]?, context: UnsafeMutableRawPointer?) {
         if keyPath == #keyPath(WKWebView.url) {
-            print("### URL:", self.webView.url!)
+           // print("### URL:", self.webView.url!)
             let currentUrl = self.webView.url?.absoluteString ?? ""
             if (currentUrl.contains(find: Constants.PAYMENT_SUCCESS_URL)) {
                 self.getPaymentStatus()
