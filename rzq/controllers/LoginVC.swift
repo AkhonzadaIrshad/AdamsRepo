@@ -266,8 +266,18 @@ func validateFields() -> Bool {
         self.showBanner(title: "alert".localized, message: "enter_mobile_first".localized, style: UIColor.INFO)
         return false
     }
-    
-    return true
+    if  edtMobileNumber.text?.first == "6" {
+        return true
+    } else
+        if edtMobileNumber.text?.first == "9" {
+            return true
+        } else
+            if edtMobileNumber.text?.first == "5" {
+                return true
+            } else {
+                self.showBanner(title: "alert".localized, message: "enter_valid_mobile_number".localized, style: UIColor.INFO)
+                return false
+            }
 }
 
 @objc func openTerms(sender:UITapGestureRecognizer) {

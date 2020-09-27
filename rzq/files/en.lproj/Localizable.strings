@@ -30,6 +30,7 @@
 "alert" = "Alert";
 "enter_name_first" = "Enter your name first!";
 "enter_mobile_first" = "Enter your mobile number first!";
+"enter_valid_mobile_number" = "please enter a valid mobile number";
 "wrong_verification_code" = "Enter a valid verification code!";
 "choose_shop_or_pickup" = "Choose a shop or put your own pick up location on map first.";
 "choose_drop_location" = "Choose drop off location on map first.";

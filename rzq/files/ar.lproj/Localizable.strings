@@ -32,6 +32,7 @@
 "alert" = "تنبيه";
 "enter_name_first" = "ادخل اسمك اولاً!";
 "enter_mobile_first" = "ادخل رقم هاتفك اولاً!";
+"enter_valid_mobile_number" = "الرجاء إدخال رقم جوال صحيح";
 "wrong_verification_code" = "ادخل رمز تحقق صحيح!";
 "choose_shop_or_pickup" = "اختر مكان او قم بوضع مكانك على الخريطة";
 "choose_drop_location" = "اختر موقع التوصيل اولاً";
