@@ -462,6 +462,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate, MOLHResetable,MessagingDe
             if rootViewController is ZHCDemoMessagesViewController {
                 let vc = rootViewController as! ZHCDemoMessagesViewController
                 vc.getChatMessages()
+                vc.getNewOrderData()
             }
         }
     }

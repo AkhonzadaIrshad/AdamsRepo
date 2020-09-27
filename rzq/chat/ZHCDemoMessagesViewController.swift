@@ -215,7 +215,7 @@ class ZHCDemoMessagesViewController: ZHCMessagesViewController, BillDelegate, Ch
         
     }
     
-    private func getOrderData() {
+     func getOrderData() {
         ApiService.getDelivery(id: self.order?.id ?? 0) { (response) in
             self.orderInfo = response.data
             if (self.order?.isPaid ?? false) {
@@ -243,6 +243,17 @@ class ZHCDemoMessagesViewController: ZHCMessagesViewController, BillDelegate, Ch
 //                self.paybutton.isHidden = true
 //            }
             self.paybutton.isHidden = false
+        }
+    }
+    
+    func getNewOrderData() {
+        ApiService.getDelivery(id: self.order?.id ?? 0) { (response) in
+            self.orderInfo = response.data
+            if (self.order?.isPaid ?? false) {
+                self.orderIsPay = false
+            }else {
+                self.orderIsPay = true
+            }
         }
     }
     
