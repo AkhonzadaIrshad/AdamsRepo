@@ -167,8 +167,8 @@ class DeliveryStep3: BaseVC {
         }
         pickMarker.map = self.gMap
         
-        
-        let dropOffPosition = CLLocationCoordinate2D(latitude: self.orderModel?.dropOffLatitude ?? 0, longitude: self.orderModel?.dropOffLongitude ?? 0)
+   
+        let dropOffPosition = CLLocationCoordinate2D(latitude: (self.orderModel?.dropOffLatitude ?? UserDefaults.standard.double(forKey: "lastSelectedLatitude")) , longitude: (self.orderModel?.dropOffLongitude ?? UserDefaults.standard.double(forKey: "lastSelectedLongitude")) )
         let dropMarker = GMSMarker(position: dropOffPosition)
         dropMarker.title = self.orderModel?.dropOffAddress
         dropMarker.icon = UIImage(named: "ic_map_user_location")

@@ -960,10 +960,11 @@ class DeliveryStep1: BaseVC , Step3Delegate, AllShopDelegate, ImagePickerDelegat
         if (self.validate() && validateOrderDetail()) {
             if let vc = UIStoryboard(name: "Main", bundle: nil).instantiateViewController(withIdentifier: "DeliveryStep3") as? DeliveryStep3
             {
+
                 vc.orderModel?.dropOffAddress = self.orderModel?.dropOffAddress
-                vc.latitude = self.latitude
+                vc.latitude = self.latitude == 0 ? LabasLocationManager.shared.currentLocation?.coordinate.latitude : self.latitude
                 vc.selectedImages = selectedImages
-                vc.longitude = self.longitude
+                vc.longitude = self.longitude == 0 ? LabasLocationManager.shared.currentLocation?.coordinate.longitude : self.longitude
                 vc.orderModel = self.orderModel
                 vc.delegate = self
                 self.navigationController?.pushViewController(vc, animated: true)
