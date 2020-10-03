@@ -199,7 +199,7 @@ func sectionTitleForPreferredCountries(in countryPickerView: CountryPickerView) 
                     if (response?.errorCode == 0) {
                         self.deleteUsers()
                         self.updateUser(self.getRealmUser(userProfile: response!))
-                    
+                        self.checkUsersubscriptiontoShops()
                         if let vc = UIStoryboard(name: "Main", bundle: nil).instantiateViewController(withIdentifier: "HomeMapVC") as? HomeMapVC
                         {
                             vc.modalPresentationStyle = .fullScreen
@@ -232,6 +232,21 @@ func sectionTitleForPreferredCountries(in countryPickerView: CountryPickerView) 
     }
 }
 
+    func checkUsersubscriptiontoShops() {
+        ApiService.getMySubscriptions(Authorization: DataManager.loadUser().data?.accessToken ?? "") { (response) in
+            if (response.subsData?.count ?? 0 > 0) {
+               print("user already subscriped to a shop")
+            }else {
+                
+                print("user doesn't subscriped to a shop")
+                ApiService.subscribeToShop(Authorization: DataManager.loadUser().data?.accessToken ?? "", shopId: 386) { (response) in
+                    print("user is subscriped to a shop now")
+                }
+            }
+            
+        }
+    }
+    
 func resend() {
     var code = self.countryPicker.selectedCountry.phoneCode
     code = code.replacingOccurrences(of: "+", with: "")
