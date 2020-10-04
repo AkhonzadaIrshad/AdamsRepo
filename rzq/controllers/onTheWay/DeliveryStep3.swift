@@ -97,7 +97,7 @@ class DeliveryStep3: BaseVC {
         gMap = GMSMapView()
         self.setUpGoogleMap()
         
-        
+        self.orderModel?.dropOffAddress = UserDefaults.standard.string(forKey: "MainAdress")
         self.lblPickupLocation.text = self.orderModel?.pickUpAddress ?? ""
         self.lblDropoffLocation.text = self.orderModel?.dropOffAddress ?? ""
         self.lblDeliverToTitle.text = "deliveryStep3.pickingView.to".localized

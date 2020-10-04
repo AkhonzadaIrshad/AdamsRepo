@@ -192,7 +192,13 @@ class HomeMapVC: BaseViewController {
                 UserDefaults.standard.set(self.latitude, forKey: "lastSelectedLatitude")
                 UserDefaults.standard.set(self.longitude, forKey: "lastSelectedLongitude")
                 vc.orderModel = OTWOrder()
-                var address = self.fullAdressTextView.text ?? ""
+                var address: String
+                if self.self.fullAdressTextView.text == "Loading".localized {
+                    address = ""
+                } else {
+                    address = self.fullAdressTextView.text
+                }
+               
                 if let street = self.streetTextField.text, !street.isEmpty {
                     address +=  " \("homeMapVC.street.placeholder".localized) " + street
                 }
@@ -800,6 +806,8 @@ extension HomeMapVC : GMSMapViewDelegate {
                         }
                         
                         self.fullAdressTextView.text = strAddresMain
+                        UserDefaults.standard.set(strAddresMain, forKey: "MainAdress")  //String
+
                         self.lblLocation.text = strAddresMain
                         self.latitude = location.coordinate.latitude
                         self.longitude = location.coordinate.longitude

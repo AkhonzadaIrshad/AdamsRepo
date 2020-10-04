@@ -5,12 +5,6 @@
       location = "group:../../../../../Downloads/starbucks dhajeej.gpx">
    </FileRef>
    <FileRef
-      location = "group:../../../../../Downloads/default.gpx">
-   </FileRef>
-   <FileRef
-      location = "group:../../../../../Downloads/default.gpx">
-   </FileRef>
-   <FileRef
       location = "group:rzq.xcodeproj">
    </FileRef>
    <FileRef
