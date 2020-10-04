@@ -96,8 +96,22 @@ class DeliveryStep3: BaseVC {
         
         gMap = GMSMapView()
         self.setUpGoogleMap()
+        var address = UserDefaults.standard.string(forKey: "MainAdress") ?? ""
         
-        self.orderModel?.dropOffAddress = UserDefaults.standard.string(forKey: "MainAdress")
+        if let street = UserDefaults.standard.string(forKey: "street") {
+            address +=  " \("homeMapVC.street.placeholder".localized) " + street
+        }
+        
+        if let house = UserDefaults.standard.string(forKey: "house") {
+            address += " \("homeMapVC.house.placeholder".localized) " + house
+
+        }
+        
+        if let piece = UserDefaults.standard.string(forKey: "piece")  {
+            address +=  " \("homeMapVC.piece.placeholder".localized) " + piece
+        }
+        
+        self.orderModel?.dropOffAddress = address
         self.lblPickupLocation.text = self.orderModel?.pickUpAddress ?? ""
         self.lblDropoffLocation.text = self.orderModel?.dropOffAddress ?? ""
         self.lblDeliverToTitle.text = "deliveryStep3.pickingView.to".localized

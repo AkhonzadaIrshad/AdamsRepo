@@ -201,12 +201,17 @@ class HomeMapVC: BaseViewController {
                
                 if let street = self.streetTextField.text, !street.isEmpty {
                     address +=  " \("homeMapVC.street.placeholder".localized) " + street
+                    UserDefaults.standard.set(street, forKey: "street")  //String
                 }
                 if let house = self.houseTextField.text, !house.isEmpty {
                     address += " \("homeMapVC.house.placeholder".localized) " + house
+                    UserDefaults.standard.set(house, forKey: "house")  //String
+
                 }
                 if let piece = self.locationPartTextField.text, !piece.isEmpty  {
                     address +=  " \("homeMapVC.piece.placeholder".localized) " + piece
+                    UserDefaults.standard.set(piece, forKey: "piece")  //String
+
                 }
                 vc.orderModel?.dropOffAddress = address
                 vc.orderModel?.dropOffLatitude = self.latitude
@@ -806,7 +811,7 @@ extension HomeMapVC : GMSMapViewDelegate {
                         }
                         
                         self.fullAdressTextView.text = strAddresMain
-                        UserDefaults.standard.set(strAddresMain, forKey: "MainAdress")  //String
+                        UserDefaults.standard.set(strAddresMain, forKey: "MainAdress")
 
                         self.lblLocation.text = strAddresMain
                         self.latitude = location.coordinate.latitude
