@@ -73,12 +73,8 @@ class DeliveryStep1: BaseVC , Step3Delegate, AllShopDelegate, ImagePickerDelegat
     var currentZoom: Float = 0.0
     var gMap : GMSMapView?
     var fromHome : Bool?
-    var latitude : Double? {
-        return UserDefaults.standard.double(forKey: "lastSelectedLatitude")
-    }
-    var longitude : Double? {
-        return UserDefaults.standard.double(forKey: "lastSelectedLongitude")
-    }
+    var latitude : Double?
+    var longitude : Double?
     var pinLatitude : Double?
     var pinLongitude : Double?
     var pinMarker : GMSMarker?
@@ -138,6 +134,13 @@ class DeliveryStep1: BaseVC , Step3Delegate, AllShopDelegate, ImagePickerDelegat
 
         } else {
             displayShop(shopId: shopeID ?? 0)
+        }
+        if DataManager.loadUser().data?.roles?.contains(find: "Driver") == true {
+            latitude = LabasLocationManager.shared.currentLocation?.coordinate.latitude ?? 0
+            longitude = LabasLocationManager.shared.currentLocation?.coordinate.longitude ?? 0
+        } else {
+                self.latitude = UserDefaults.standard.value(forKey: Constants.LAST_LATITUDE) as? Double ?? 0.0
+                self.longitude = UserDefaults.standard.value(forKey: Constants.LAST_LONGITUDE) as? Double ?? 0.0
         }
     }
     
@@ -311,6 +314,7 @@ class DeliveryStep1: BaseVC , Step3Delegate, AllShopDelegate, ImagePickerDelegat
         ApiService.getAllTypes { (response) in
             let category = TypeClass(id: 0, name: "all_shops".localized, image: "", selectedIcon: "", icon: "")
             category.isChecked = true
+            self.categories.removeAll()
             self.categories.append(category)
             self.categories.append(contentsOf: response.data ?? [TypeClass]())
             self.collectionCategories.reloadData()
@@ -1193,7 +1197,8 @@ extension DeliveryStep1 : GMSMapViewDelegate {
                 self.orderModel?.pickUpLongitude = response.shopData?.longitude ?? 0.0
                 
                 self.ivShop.isHidden = false
-                self.shopNaleKabel.text = response.shopData?.name ?? "" 
+                self.shopNaleKabel.text = "\(response.shopData?.name ?? "")"
+                self.shopNaleKabel.font_type = "15,5"
                 self.lblSearch.isHidden = true
                 self.viewShopDetails.isHidden = false
                 self.viewClearField.isHidden = false

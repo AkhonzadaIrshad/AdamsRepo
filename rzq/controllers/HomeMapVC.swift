@@ -134,13 +134,20 @@ class HomeMapVC: BaseViewController {
             UserDefaults.standard.setValue(false, forKey: Constants.OPEN_MENU)
             self.onSlideMenuButtonPressed(self.btnMenu)
         }
-        
-        var latitude: Double = UserDefaults.standard.double(forKey: "lastSelectedLatitude")
-        var longitude: Double = UserDefaults.standard.double(forKey: "lastSelectedLongitude")
-        if latitude == 0 || longitude == 0 {
+        var latitude: Double
+        var longitude: Double
+        if DataManager.loadUser().data?.roles?.contains(find: "Driver") == true {
             latitude = LabasLocationManager.shared.currentLocation?.coordinate.latitude ?? 0
             longitude = LabasLocationManager.shared.currentLocation?.coordinate.longitude ?? 0
+        } else {
+             latitude = UserDefaults.standard.double(forKey: "lastSelectedLatitude")
+             longitude = UserDefaults.standard.double(forKey: "lastSelectedLongitude")
+            if latitude == 0 || longitude == 0 {
+                latitude = LabasLocationManager.shared.currentLocation?.coordinate.latitude ?? 0
+                longitude = LabasLocationManager.shared.currentLocation?.coordinate.longitude ?? 0
+            }
         }
+    
         let loc = CLLocationCoordinate2D(latitude: latitude , longitude: longitude)
         self.mapView.camera = GMSCameraPosition(target: loc, zoom: 15, bearing: 0, viewingAngle: 0)
     }
@@ -1029,7 +1036,22 @@ extension HomeMapVC: FilterListDelegate {
 extension HomeMapVC: LabasLocationManagerDelegate {
     
     func labasLocationManager(didUpdateLocation location:CLLocation) {
-        
+        var latitude: Double
+        var longitude: Double
+        if DataManager.loadUser().data?.roles?.contains(find: "Driver") == true {
+            latitude = LabasLocationManager.shared.currentLocation?.coordinate.latitude ?? 0
+            longitude = LabasLocationManager.shared.currentLocation?.coordinate.longitude ?? 0
+        } else {
+             latitude = UserDefaults.standard.double(forKey: "lastSelectedLatitude")
+             longitude = UserDefaults.standard.double(forKey: "lastSelectedLongitude")
+            if latitude == 0 || longitude == 0 {
+                latitude = LabasLocationManager.shared.currentLocation?.coordinate.latitude ?? 0
+                longitude = LabasLocationManager.shared.currentLocation?.coordinate.longitude ?? 0
+            }
+        }
+    
+        let loc = CLLocationCoordinate2D(latitude: latitude , longitude: longitude)
+        self.mapView.camera = GMSCameraPosition(target: loc, zoom: 15, bearing: 0, viewingAngle: 0)
     }
 }
 

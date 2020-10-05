@@ -85,11 +85,17 @@ class TakeOrderVC: BaseVC, AVAudioPlayerDelegate {
         if (self.isArabic()) {
             self.ivHandle.image = UIImage(named: "ic_back_arabic")
         }
-        if (self.latitude == nil || self.latitude == 0.0) {
-            self.latitude = UserDefaults.standard.value(forKey: Constants.LAST_LATITUDE) as? Double ?? 0.0
-        }
-        if (self.longitude == nil || self.longitude == 0.0) {
-            self.longitude = UserDefaults.standard.value(forKey: Constants.LAST_LONGITUDE) as? Double ?? 0.0
+    
+        if DataManager.loadUser().data?.roles?.contains(find: "Driver") == true {
+            latitude = LabasLocationManager.shared.currentLocation?.coordinate.latitude ?? 0
+            longitude = LabasLocationManager.shared.currentLocation?.coordinate.longitude ?? 0
+        } else {
+            if (self.latitude == nil || self.latitude == 0.0) {
+                self.latitude = UserDefaults.standard.value(forKey: Constants.LAST_LATITUDE) as? Double ?? 0.0
+            }
+            if (self.longitude == nil || self.longitude == 0.0) {
+                self.longitude = UserDefaults.standard.value(forKey: Constants.LAST_LONGITUDE) as? Double ?? 0.0
+            }
         }
         gMap = GMSMapView()
         self.setUpGoogleMap()
