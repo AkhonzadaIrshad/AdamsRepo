@@ -33,12 +33,13 @@ UITableViewDelegate, UITableViewDataSource {
         didSet {
             if (shops.count > 0) {
                 self.tableShops.restore()
+                
             } else {
                 self.tableShops.setEmptyView(title: "no_shops".localized, message: "no_shops_desc".localized, image: "bg_no_data")
             }
         }
     }
-    
+    var shopsWithDistance = [ShopWithDistance]()
     var latitude : Double?
     var longitude : Double?
     
@@ -47,7 +48,8 @@ UITableViewDelegate, UITableViewDataSource {
     override func viewDidLoad() {
         super.viewDidLoad()
         
-        
+        self.sortedShopsByDistance()
+
         self.fieldSearch.delegate = self
         
         if (self.isArabic()) {
@@ -188,17 +190,18 @@ UITableViewDelegate, UITableViewDataSource {
         return 118.0
     }
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        return self.shops.count
+        return self.shopsWithDistance.count
     }
     
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         let cell: AllShopCell = tableView.dequeueReusableCell(withIdentifier: "AllShopCell", for: indexPath as IndexPath) as! AllShopCell
+        let shopeId = self.shopsWithDistance[indexPath.row].shopId
         
-        let shop = self.shops[indexPath.row]
+        let shop = self.shops.filter({ $0.id == shopeId }).first
+           // self.shops[indexPath.row]
         
-        
-        cell.lblShopName.text = shop.name ?? ""
-        if let hours = shop.workingHours?.trim().split(separator: ",") {
+        cell.lblShopName.text = shop?.name ?? ""
+        if let hours = shop?.workingHours?.trim().split(separator: ",") {
             let day = Calendar.current.component(.weekday, from: Date())
             if hours.count > day - 1 {
                 cell.lblShopAddress.text = String(hours[day - 1])
@@ -206,18 +209,17 @@ UITableViewDelegate, UITableViewDataSource {
         }
         
         let myLatLng = CLLocation(latitude: self.latitude ?? 0.0, longitude: self.longitude ?? 0.0)
-        let driverLatLng = CLLocation(latitude: shop.latitude ?? 0.0, longitude: shop.longitude ?? 0.0)
+        let driverLatLng = CLLocation(latitude: shop?.latitude ?? 0.0, longitude: shop?.longitude ?? 0.0)
         let distanceInMeters = driverLatLng.distance(from: myLatLng)
         let distanceInKM = distanceInMeters / 1000.0
         let distanceStr = String(format: "%.2f", distanceInKM)
         
         cell.lblDistance.text = "\(distanceStr) \("km".localized)"
-        
-        if (shop.images?.count ?? 0 > 0) {
-            let url = URL(string: "\(Constants.IMAGE_URL)\(shop.images?[0] ?? "")")
+        if (shop?.images?.count ?? 0 > 0) {
+            let url = URL(string: "\(Constants.IMAGE_URL)\(shop?.images?[0] ?? "")")
             cell.ivLogo.kf.setImage(with: url)
-        }else if (shop.type?.image?.count ?? 0 > 0){
-            let url = URL(string: "\(Constants.IMAGE_URL)\(shop.type?.image ?? "")")
+        }else if (shop?.type?.image?.count ?? 0 > 0){
+            let url = URL(string: "\(Constants.IMAGE_URL)\(shop?.type?.image ?? "")")
             cell.ivLogo.kf.setImage(with: url)
         }else {
             cell.ivLogo.image = UIImage(named: "ic_place_store")
@@ -227,16 +229,21 @@ UITableViewDelegate, UITableViewDataSource {
     }
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
         //go to delivery step 1
-        let shop = self.shops[indexPath.row]
-        self.delegate?.onSelect(shop: shop)
-        self.navigationController?.popViewController(animated: true)
+        let shopeId = self.shopsWithDistance[indexPath.row].shopId
+        
+        if let shop = self.shops.filter({ $0.id == shopeId }).first {
+            // let shop = self.shops[indexPath.row]
+             self.delegate?.onSelect(shop: shop)
+             self.navigationController?.popViewController(animated: true)
+        }
     }
     
     
     func loadShops(type : Int, keyword : String) {
-        ApiService.getShopsPrioritySearch(keyword : keyword,latitude: self.latitude ?? 0.0, longitude: self.longitude ?? 0.0, radius: Float(Constants.DEFAULT_RADIUS), rating: 0, types: type) { (response) in
+        ApiService.getShopsPrioritySearch(keyword : keyword,latitude: self.latitude ?? 0.0, longitude: self.longitude ?? 0.0, radius: Float(Constants.DEFAULT_RADIUS), rating: 0, types: type) { [self] (response) in
             self.shops.removeAll()
             self.shops.append(contentsOf: response.dataShops ?? [DataShop]())
+            self.sortedShopsByDistance()
             self.tableShops.reloadData()
         }
     }
@@ -245,10 +252,25 @@ UITableViewDelegate, UITableViewDataSource {
         ApiService.getShopsByName(name: keyword, latitude: self.latitude ?? 0.0, longitude: self.longitude ?? 0.0, radius: Float(Constants.DEFAULT_RADIUS)) { (response) in
             self.shops.removeAll()
             self.shops.append(contentsOf: response.dataShops ?? [DataShop]())
+            self.sortedShopsByDistance()
             self.tableShops.reloadData()
         }
     }
     
+    func sortedShopsByDistance() {
+        self.shopsWithDistance.removeAll()
+        for shop in self.shops {
+            let myLatLng = CLLocation(latitude: self.latitude ?? 0.0, longitude: self.longitude ?? 0.0)
+            let driverLatLng = CLLocation(latitude: shop.latitude ?? 0.0, longitude: shop.longitude ?? 0.0)
+            let distanceInMeters = driverLatLng.distance(from: myLatLng)
+            let distanceInKM = distanceInMeters / 1000.0
+            _ = String(format: "%.2f", distanceInKM)
+            
+            self.shopsWithDistance.append(ShopWithDistance(shopId: shop.id ?? 0, distance: distanceInKM))
+            
+        }
+        self.shopsWithDistance.sort(by: { $0.distance < $1.distance })
+    }
     
     
     @IBAction func backAction(_ sender: Any) {

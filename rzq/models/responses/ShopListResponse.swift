@@ -7,6 +7,10 @@
 //
 
 import Foundation
+struct ShopWithDistance {
+    let shopId: Int
+    let distance: Double
+}
 
 class ShopListResponse: Codable {
     let dataShops: [DataShop]?
