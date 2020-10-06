@@ -45,7 +45,7 @@ class HomeMapVC: BaseViewController {
     // MARK: - Properties - public
     
     let cameraZoom : Float = 15.0
-    
+    var firstTime: Bool = true
     var selectedRoute: NSDictionary!
     
     var markerLocation: GMSMarker?
@@ -1049,9 +1049,12 @@ extension HomeMapVC: LabasLocationManagerDelegate {
                 longitude = LabasLocationManager.shared.currentLocation?.coordinate.longitude ?? 0
             }
         }
-    
-        let loc = CLLocationCoordinate2D(latitude: latitude , longitude: longitude)
-        self.mapView.camera = GMSCameraPosition(target: loc, zoom: 15, bearing: 0, viewingAngle: 0)
+        if firstTime {
+            let loc = CLLocationCoordinate2D(latitude: latitude , longitude: longitude)
+            self.mapView.camera = GMSCameraPosition(target: loc, zoom: 15, bearing: 0, viewingAngle: 0)
+            firstTime = false
+        }
+      
     }
 }
 
