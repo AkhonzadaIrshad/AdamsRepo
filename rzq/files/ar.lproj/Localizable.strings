@@ -342,3 +342,7 @@
 "payOrder" = "دفع";
 "payOrderErrorMessage" = "لا يمكنك الدفع الآن حتى يصدر السائق الفاتورة";
 "PayOrder.Alert.OK" = "حسنا";
+"OtherShops" = "Other shops";
+"OurShops" = "متاجرنا";
+"OtherShops" = "متاجر اخرى";
+

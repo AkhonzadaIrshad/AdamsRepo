@@ -10,6 +10,9 @@
 		5AEDABFCF15B3B611B1F883C /* Pods_rzq.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 6C9F2970658F91B48096D878 /* Pods_rzq.framework */; };
 		675FFA202455EAA500C8AD17 /* RoundedView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 675FFA1F2455EAA500C8AD17 /* RoundedView.swift */; };
 		67693C7A248447B100C944D2 /* DataManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 67693C79248447B100C944D2 /* DataManager.swift */; };
+		8A0878C22531260C00C4D0C4 /* LocationAPIHelper.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8A0878C12531260C00C4D0C4 /* LocationAPIHelper.swift */; };
+		8A0878C52531269000C4D0C4 /* LocationAPIHelper+Nearby.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8A0878C42531269000C4D0C4 /* LocationAPIHelper+Nearby.swift */; };
+		8A0878C82531272200C4D0C4 /* NearByTypes.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8A0878C72531272200C4D0C4 /* NearByTypes.swift */; };
 		8B05CDC42361BD8700E0FF9B /* ShopOwnerMenuResponse.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8B05CDC32361BD8700E0FF9B /* ShopOwnerMenuResponse.swift */; };
 		8B05CDC62361C00F00E0FF9B /* OwnerShopListResponse.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8B05CDC52361C00F00E0FF9B /* OwnerShopListResponse.swift */; };
 		8B112074235DA0F2005F2122 /* ShopMenuTabCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8B112073235DA0F2005F2122 /* ShopMenuTabCell.swift */; };
@@ -236,6 +239,9 @@
 		675FFA1F2455EAA500C8AD17 /* RoundedView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RoundedView.swift; sourceTree = "<group>"; };
 		67693C79248447B100C944D2 /* DataManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DataManager.swift; sourceTree = "<group>"; };
 		6C9F2970658F91B48096D878 /* Pods_rzq.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_rzq.framework; sourceTree = BUILT_PRODUCTS_DIR; };
+		8A0878C12531260C00C4D0C4 /* LocationAPIHelper.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LocationAPIHelper.swift; sourceTree = "<group>"; };
+		8A0878C42531269000C4D0C4 /* LocationAPIHelper+Nearby.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "LocationAPIHelper+Nearby.swift"; sourceTree = "<group>"; };
+		8A0878C72531272200C4D0C4 /* NearByTypes.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NearByTypes.swift; sourceTree = "<group>"; };
 		8B05CDC32361BD8700E0FF9B /* ShopOwnerMenuResponse.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ShopOwnerMenuResponse.swift; sourceTree = "<group>"; };
 		8B05CDC52361C00F00E0FF9B /* OwnerShopListResponse.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = OwnerShopListResponse.swift; sourceTree = "<group>"; };
 		8B112073235DA0F2005F2122 /* ShopMenuTabCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ShopMenuTabCell.swift; sourceTree = "<group>"; };
@@ -496,6 +502,16 @@
 			path = managers;
 			sourceTree = "<group>";
 		};
+		8A08787D252F623500C4D0C4 /* Search Location */ = {
+			isa = PBXGroup;
+			children = (
+				8A0878C12531260C00C4D0C4 /* LocationAPIHelper.swift */,
+				8A0878C42531269000C4D0C4 /* LocationAPIHelper+Nearby.swift */,
+				8A0878C72531272200C4D0C4 /* NearByTypes.swift */,
+			);
+			path = "Search Location";
+			sourceTree = "<group>";
+		};
 		8B1F91C522561DFB00B639F1 /* models */ = {
 			isa = PBXGroup;
 			children = (
@@ -552,6 +568,7 @@
 		8B2BCC93224FCED500CBC7D3 /* controllers */ = {
 			isa = PBXGroup;
 			children = (
+				8A08787D252F623500C4D0C4 /* Search Location */,
 				8BC13D2B23F3F5E700A78F88 /* ShopList */,
 				8BA88851235B5F8300EEB63B /* MyShop */,
 				8BF42425229B131B0014596F /* Tenders */,
@@ -1258,6 +1275,7 @@
 				8B5EB8B22250EC8D00DC657C /* BaseViewController.swift in Sources */,
 				8B2BCCA0224FD6E000CBC7D3 /* IntroVC.swift in Sources */,
 				8B05CDC62361C00F00E0FF9B /* OwnerShopListResponse.swift in Sources */,
+				8A0878C52531269000C4D0C4 /* LocationAPIHelper+Nearby.swift in Sources */,
 				8BF2221F22719E4D005BE71D /* ShopCell.swift in Sources */,
 				8BD329C2225C98710060900A /* CreateAddressResponse.swift in Sources */,
 				8BD45FA222672D44000FB47A /* ShopDeliveriesResponse.swift in Sources */,
@@ -1303,6 +1321,7 @@
 				8BD3CA90227884D5003ABC49 /* SendingOrderVC.swift in Sources */,
 				8BE56885236C73DE00793484 /* ProviderRatingRespones.swift in Sources */,
 				8B1F91C02255F02100B639F1 /* AudioRecorderManager.swift in Sources */,
+				8A0878C82531272200C4D0C4 /* NearByTypes.swift in Sources */,
 				8BCB77FC2254BA6C00E52ED0 /* ShopDetailsVC.swift in Sources */,
 				8BC54AFC2268752100B70A97 /* ZHPhotoItem.swift in Sources */,
 				8BEF648D22536849003AE522 /* DeliveryStep3.swift in Sources */,
@@ -1337,6 +1356,7 @@
 				8BE1FA90228C42E300B98E5E /* HourItem.swift in Sources */,
 				8BAE41E32299B17300C7D897 /* SelectServicesVC.swift in Sources */,
 				8B121BAB2265FB380083069F /* QuestionCell.swift in Sources */,
+				8A0878C22531260C00C4D0C4 /* LocationAPIHelper.swift in Sources */,
 				8BE5687D236C617000793484 /* ViewMenuCell.swift in Sources */,
 				8B56C0412270D01400E2DDC5 /* ChatResponse.swift in Sources */,
 				8BE1FA88228C316000B98E5E /* ShopTypesFilterVC.swift in Sources */,

@@ -301,9 +301,9 @@ open class SearchTextField: UITextField {
                     tableHeight -= tableBottomMargin
                 }
                 
-                var tableViewFrame = CGRect(x: 0, y: 0, width: frame.size.width - 4, height: tableHeight)
+                var tableViewFrame = CGRect(x: 0, y: 0, width: UIScreen.main.bounds.size.width - 20, height: tableHeight)
                 tableViewFrame.origin = self.convert(tableViewFrame.origin, to: nil)
-                tableViewFrame.origin.x += 2 + tableXOffset
+               // tableViewFrame.origin.x += 2 + tableXOffset
                 tableViewFrame.origin.y += frame.size.height + 2 + tableYOffset
                 UIView.animate(withDuration: 0.2, animations: { [weak self] in
                     self?.tableView?.frame = tableViewFrame

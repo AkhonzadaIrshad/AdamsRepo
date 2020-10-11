@@ -301,7 +301,8 @@
 "search_from_google" = "Search from google places here";
 "reason_here" = "Write cancel reason here";
 "chat_calldriver" = "Call Driver";
-
+"OtherShops" = "Other shops";
+"OurShops" = "Our shops";
 "open_24hours" = "Works 24 hours";
 "all_shops" = "All Shops";
 "Call Shop" = "Call Shop";

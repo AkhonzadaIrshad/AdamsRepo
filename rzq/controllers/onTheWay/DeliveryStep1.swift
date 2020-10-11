@@ -20,6 +20,9 @@ class DeliveryStep1: BaseVC , Step3Delegate, AllShopDelegate, ImagePickerDelegat
     
     // MARK: - Outlets
     
+    @IBOutlet weak var searchByKeyWordsBackgroundView: UIView!
+    @IBOutlet weak var searchByKeywordTableView: UITableView!
+    @IBOutlet weak var searchByKeyWordsView: UIView!
     @IBOutlet weak var shopNaleKabel: MyUILabel!
     @IBOutlet weak var lblImages: MyUILabel!
     @IBOutlet weak var viewImages: UIView!
@@ -101,11 +104,17 @@ class DeliveryStep1: BaseVC , Step3Delegate, AllShopDelegate, ImagePickerDelegat
     }
     var searchedText: String?
     var edtMoreDetails: String?
+    var autocompleteResults :[GApiResponse.Autocomplete] = []
 
     // MARK: - Methods
     
     override func viewDidLoad() {
         super.viewDidLoad()
+        let nib = UINib.init(nibName: "FilterSearchCell", bundle: nil)
+        searchByKeywordTableView?.register(nib, forCellReuseIdentifier: "filtersearchcell")
+        
+        searchByKeywordTableView?.rowHeight = UITableView.automaticDimension
+        searchByKeywordTableView?.estimatedRowHeight = 45.0
         
         self.locationManager.delegate = self
         // Ask for Authorisation from the User.
@@ -687,22 +696,26 @@ class DeliveryStep1: BaseVC , Step3Delegate, AllShopDelegate, ImagePickerDelegat
             recorder.record()
         }
     }
-    
+    var filterShopsWithDispanceItems = [SearchTextFieldItem]()
+
     func getShopsByName(name : String, latitude : Double, longitude: Double, radius : Float) {
         ApiService.getShopsByName(name: name,latitude: latitude, longitude: longitude, radius: radius) { (response) in
             self.shops.removeAll()
-            var filterItems = [SearchTextFieldItem]()
+            
             self.filterShops.removeAll()
             self.filterShops.append(contentsOf: response.dataShops ?? [DataShop]())
             
             for shop in self.filterShops {
                 let item1 = SearchTextFieldItem(title: "\(shop.name ?? "")  \(self.getShopDistance(latitude: shop.latitude ?? 0.0, longitude: shop.longitude ?? 0.0))", subtitle: shop.address ?? "", image: UIImage(named: "ic_location"))
-                filterItems.append(item1)
+                self.filterShopsWithDispanceItems.append(item1)
             }
-            
+            self.shopsSearchTableView.reloadData()
+            self.searchByKeywordTableView.reloadData()
+            self.searchByKeyWordsBackgroundView.isHidden = false
+            self.searchByKeyWordsView.isHidden = false
             self.searchField.theme.font = UIFont.systemFont(ofSize: 13)
             self.searchField.forceNoFiltering = true
-            self.searchField.filterItems(filterItems)
+           // self.searchField.filterItems(filterShopsWithDispanceItems)
             self.searchField.itemSelectionHandler = { filteredResults, itemPosition in
                 // Just in case you need the item position
                 let shop = self.filterShops[itemPosition]
@@ -1402,6 +1415,36 @@ extension DeliveryStep1 : GMSMapViewDelegate {
 // MARK: UITextFieldDelegate
 
 extension DeliveryStep1: UITextFieldDelegate {
+//    func textFieldShouldReturn(_ textField: UITextField) -> Bool {
+//        textField.resignFirstResponder()
+//        hideResults() ; return true
+//    }
+    func textField(_ textField: UITextField, shouldChangeCharactersIn range: NSRange, replacementString string: String) -> Bool {        let text = textField.text! as NSString
+        let fullText = text.replacingCharacters(in: range, with: string)
+        let searchText = fullText //fullText.filter ({!" ".contains($0) })
+        if (range.length > 0)
+          {
+            // We're deleting
+             if searchText.count <= 3 {
+                hideResults()
+                
+            }
+          }
+          else
+          {
+            // We're adding
+            if searchText.count == 5 || searchText.count >= 10 {
+                showResults(string:fullText)
+                self.getShopsByName(name: searchText, latitude: self.latitude ?? 0.0, longitude: self.longitude ?? 0.0, radius: Float(Constants.DEFAULT_RADIUS))
+
+              
+            }else if searchText.count < 5 {
+                hideResults()
+            }
+          }
+
+        return true
+    }
     
     func textFieldShouldReturn(_ textField: UITextField) -> Bool {
         if (textField == self.searchField) {
@@ -1425,6 +1468,32 @@ extension DeliveryStep1: UITextFieldDelegate {
     }
 }
 
+// MARK: - Search by keywords
+
+extension DeliveryStep1 {
+    func hideResults(){
+        searchByKeyWordsView.isHidden = true
+        searchByKeyWordsBackgroundView.isHidden = true
+        autocompleteResults.removeAll()
+        filterShopsWithDispanceItems.removeAll()
+        searchByKeywordTableView.reloadData()
+    }
+    
+    func showResults(string: String){
+        var input = GInput()
+        input.keyword = string
+        GoogleApi.shared.callApi(input: input) { (response) in
+            if response.isValidFor(.autocomplete) {
+                DispatchQueue.main.async {
+                    self.searchByKeyWordsView.isHidden = false
+                    self.searchByKeyWordsBackgroundView.isHidden = false
+                    self.autocompleteResults = response.data as! [GApiResponse.Autocomplete]
+                    self.searchByKeywordTableView.reloadData()
+                }
+            } else { print(response.error ?? "ERROR") }
+        }
+    }
+}
 // MARK: - GMSAutocompleteViewControllerDelegate
 
 extension DeliveryStep1: GMSAutocompleteViewControllerDelegate {
@@ -1824,23 +1893,231 @@ extension DeliveryStep1 {
 
 
 extension DeliveryStep1: UITableViewDelegate, UITableViewDataSource {
+    func tableView(_ tableView: UITableView, viewForHeaderInSection section: Int) -> UIView? {
+
+        let sectionView = UIView(frame: CGRect(x: 0, y: 0, width: tableView.frame.size.width, height: 25))
+        sectionView.backgroundColor = UIColor(white: 0, alpha: 0.1)
+
+        let sectionName = UILabel(frame: CGRect(x: 0, y: 0, width: tableView.frame.size.width, height: 25))
+        if section == 0 {
+            sectionName.text = "OurShops".localized
+        } else {
+            sectionName.text = "OtherShops".localized
+        }
+        sectionName.textColor = UIColor.black
+        sectionName.font = UIFont.systemFont(ofSize: 14)
+
+        sectionView.addSubview(sectionName)
+        return sectionView
+    }
+
+    func numberOfSections(in tableView: UITableView) -> Int {
+        return 2
+    }
+    
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        self.searchedShops.count
+        if section == 0 {
+            if tableView == searchByKeywordTableView {
+                return filterShopsWithDispanceItems.count
+            } else {
+               return self.searchedShops.count
+            }
+        } else {
+            if tableView == searchByKeywordTableView {
+                return self.autocompleteResults.count
+            } else {
+               return self.searchedShops.count
+            }
+        }
+       return 0
     }
     
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
-        let cell = UITableViewCell()
-        cell.textLabel?.text = self.searchedShops[indexPath.row].name
-        return cell
+        if indexPath.section == 0 {
+            if tableView == searchByKeywordTableView {
+                
+                let cell : FilterSearchCell = tableView.dequeueReusableCell(withIdentifier: "filtersearchcell", for: indexPath) as! FilterSearchCell
+                
+                cell.lblTitle.text = filterShopsWithDispanceItems[indexPath.row].title
+                cell.lblDesc.text = filterShopsWithDispanceItems[indexPath.row].subtitle
+                return cell
+                
+            } else {
+                let cell = UITableViewCell()
+                cell.textLabel?.text = self.searchedShops[indexPath.row].name
+                return cell
+            }
+        } else {
+            if tableView == searchByKeywordTableView {
+                
+                let cell : FilterSearchCell = tableView.dequeueReusableCell(withIdentifier: "filtersearchcell", for: indexPath) as! FilterSearchCell
+                
+                cell.lblTitle.text = autocompleteResults[indexPath.row].formattedAddress
+                cell.lblDesc.text = ""
+                return cell
+                
+            } else {
+                let cell = UITableViewCell()
+                cell.textLabel?.text = self.searchedShops[indexPath.row].name
+                return cell
+            }
+        }
+       
     }
     
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
-        onSelect(shop: self.searchedShops[indexPath.row])
-        self.searchedText = ""
-        self.shopsSearchTableView.isHidden = true
-        self.searchShopsTextField.text = ""
-        self.searchShopsTextField.resignFirstResponder()
-        self.catFilterSearchStack.isHidden = true
+        if indexPath.section == 0 {
+            if tableView == searchByKeywordTableView {
+                getSelectedShopFromSearch(row: indexPath.row)
+            } else {
+                onSelect(shop: self.searchedShops[indexPath.row])
+                self.searchedText = ""
+                self.shopsSearchTableView.isHidden = true
+                self.searchShopsTextField.text = ""
+                self.searchShopsTextField.resignFirstResponder()
+                self.catFilterSearchStack.isHidden = true
+            }
+        } else {
+            if tableView == searchByKeywordTableView {
+                getPlaceInfo(row: indexPath.row)
+            } else {
+                onSelect(shop: self.searchedShops[indexPath.row])
+                self.searchedText = ""
+                self.shopsSearchTableView.isHidden = true
+                self.searchShopsTextField.text = ""
+                self.searchShopsTextField.resignFirstResponder()
+                self.catFilterSearchStack.isHidden = true
+            }
+        }
+    }
+    func getSelectedShopFromSearch(row: Int) {
+        // Just in case you need the item position
+        let itemPosition: SearchTextFieldItem = self.filterShopsWithDispanceItems[row]
+        let shop = self.filterShops[row]
+        self.searchField.text = shop.name ?? ""
+        self.orderModel?.pickUpLatitude = shop.latitude ?? 0.0
+        self.orderModel?.pickUpLongitude = shop.longitude ?? 0.0
+        self.orderModel?.shop = shop
+        self.orderModel?.pickUpAddress = shop.name ?? ""
+        self.lblPickupLocation.text = shop.name ?? ""
+        //self.lblShopName.text = shop.name ?? ""
+        self.lblPickupLocation.textColor = UIColor.appDarkBlue
+        
+        //self.moreDetailsView.isHidden = false
+        self.ivShop.isHidden = false
+        
+        self.lblSearch.isHidden = true
+        
+        self.view.endEditing(true)
+        
+        for marker in self.shopMarkers {
+            marker.map = nil
+        }
+        
+        self.singleMarker?.map = nil
+        self.singleMarker = GMSMarker()
+        self.singleMarker?.position = CLLocationCoordinate2D(latitude: shop.latitude ?? 0.0, longitude: shop.longitude ?? 0.0)
+        self.singleMarker?.title =  "\(shop.id ?? 0)"
+        self.singleMarker?.snippet = "\(shop.phoneNumber ?? "")"
+        self.singleMarker?.icon = UIImage(named: "ic_shop_empty_selected")
+        //snuff1
+        let url = URL(string: "\(Constants.IMAGE_URL)\(shop.type?.selectedIcon ?? "")")
+        self.applyMarkerImage(from: url!, to: self.singleMarker!)
+        self.singleMarker?.map = self.gMap
+        
+        
+        self.viewShopDetails.isHidden = false
+        self.viewClearField.isHidden = false
+        DispatchQueue.main.async {
+            self.searchByKeyWordsBackgroundView.isHidden = true
+            self.searchByKeyWordsView.isHidden = true
+            self.searchField.text = shop.name ?? ""
+            self.searchField.endEditing(true)
+            self.view.endEditing(true)
+        }
+        // same thing shop image was removed
+        if (shop.images?.count ?? 0 > 0) {
+            let url = URL(string: "\(Constants.IMAGE_URL)\(shop.images?[0] ?? "")")
+            self.ivShop.kf.setImage(with: url)
+        }else if (shop.type?.image?.count ?? 0 > 0){
+            let url = URL(string: "\(Constants.IMAGE_URL)\(shop.type?.image ?? "")")
+            self.ivShop.kf.setImage(with: url)
+        }else {
+            self.ivShop.image = UIImage(named: "ic_place_store")
+        }
+        
+        self.edtMoreDetails = "\(shop.name ?? "")\n\(shop.address ?? "")"
+        
+        // self.lblShopName.text = shop.name ?? ""
+       // self.shopNameHeight.constant = 20
+        self.viewPin.isHidden = false
+        self.viewSuggest.isHidden = true
+        
+        
+        let camera = GMSCameraPosition.camera(withLatitude: self.orderModel?.pickUpLatitude ?? 0.0, longitude: self.orderModel?.pickUpLongitude ?? 0.0, zoom: 15.0)
+        self.gMap?.animate(to: camera)
+        
+    }
+    
+    func getPlaceInfo(row: Int) {
+        var input = GInput()
+        input.keyword = autocompleteResults[row].placeId
+        GoogleApi.shared.callApi(.placeInformation,input: input) { (response) in
+            if let place =  response.data as? GApiResponse.PlaceInfo, response.isValidFor(.placeInformation) {
+                DispatchQueue.main.async {
+                    self.searchByKeyWordsBackgroundView.isHidden = true
+                    self.searchByKeyWordsView.isHidden = true
+
+                    if let lat = place.latitude, let lng = place.longitude{
+                        for marker in self.shopMarkers {
+                            marker.map = nil
+                        }
+                        self.searchField.text = place.formattedAddress ?? ""
+                        self.searchField.endEditing(true)
+                        self.view.endEditing(true)
+                        self.orderModel?.pickUpLatitude = lat
+                        self.orderModel?.pickUpLongitude = lng
+                       // self.orderModel?.shop = shop
+                        self.orderModel?.pickUpAddress = place.title ?? ""
+                        self.singleMarker?.map = nil
+                        self.singleMarker = GMSMarker()
+                        self.singleMarker?.position = CLLocationCoordinate2D(latitude: lat , longitude: lng )
+                       // self.singleMarker?.title =  "\(place.placeId ?? 0)"
+                      //  self.singleMarker?.snippet = "\(place.phoneNumber ?? "")"
+                        self.singleMarker?.icon = UIImage(named: "ic_shop_empty_selected")
+                        //snuff1
+                      //  let url = URL(string: "\(Constants.IMAGE_URL)\(shop.type?.selectedIcon ?? "")")
+                       // self.applyMarkerImage(from: url!, to: self.singleMarker!)
+                        self.singleMarker?.map = self.gMap
+                        
+                        
+                        self.viewShopDetails.isHidden = false
+                        self.viewClearField.isHidden = false
+                        
+                        
+                        // same thing shop image was removed
+                
+                            self.ivShop.image = UIImage(named: "ic_place_store")
+              
+                        
+                        self.edtMoreDetails = "\(place.title ?? "")\n\(place.formattedAddress ?? "")"
+                        
+                        // self.lblShopName.text = shop.name ?? ""
+                       // self.shopNameHeight.constant = 20
+                        self.viewPin.isHidden = false
+                        self.viewSuggest.isHidden = true
+                        
+                        
+                        let camera = GMSCameraPosition.camera(withLatitude: self.orderModel?.pickUpLatitude ?? 0.0, longitude: self.orderModel?.pickUpLongitude ?? 0.0, zoom: 15.0)
+                        self.gMap?.animate(to: camera)
+                    }
+                }
+            } else { print(response.error ?? "ERROR") }
+        }
     }
 }
+
+
+
+
 

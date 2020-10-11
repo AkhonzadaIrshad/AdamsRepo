@@ -31,6 +31,8 @@ class AppDelegate: UIResponder, UIApplicationDelegate, MOLHResetable,MessagingDe
     
     func application(_ application: UIApplication, didFinishLaunchingWithOptions launchOptions: [UIApplication.LaunchOptionsKey: Any]?) -> Bool {
         //maps
+        GoogleApi.shared.initialiseWithKey("AIzaSyDY0pMaR18bji55KFsKX_PTm0AkuvaXpdE")
+
         GMSServices.provideAPIKey("\(Constants.GOOGLE_API_KEY)")
         GMSPlacesClient.provideAPIKey("\(Constants.GOOGLE_API_KEY)")
         
