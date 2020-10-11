@@ -2084,7 +2084,7 @@ extension DeliveryStep1: UITableViewDelegate, UITableViewDataSource {
                         self.singleMarker?.position = CLLocationCoordinate2D(latitude: lat , longitude: lng )
                        // self.singleMarker?.title =  "\(place.placeId ?? 0)"
                       //  self.singleMarker?.snippet = "\(place.phoneNumber ?? "")"
-                        self.singleMarker?.icon = UIImage(named: "ic_shop_empty_selected")
+                        self.singleMarker?.icon = UIImage(named: "ic_location_pin")
                         //snuff1
                       //  let url = URL(string: "\(Constants.IMAGE_URL)\(shop.type?.selectedIcon ?? "")")
                        // self.applyMarkerImage(from: url!, to: self.singleMarker!)
@@ -2097,10 +2097,10 @@ extension DeliveryStep1: UITableViewDelegate, UITableViewDataSource {
                         
                         // same thing shop image was removed
                 
-                            self.ivShop.image = UIImage(named: "ic_place_store")
+                            self.ivShop.image = UIImage(named: "ic_location_pin")
               
                         
-                        self.edtMoreDetails = "\(place.title ?? "")\n\(place.formattedAddress ?? "")"
+                        self.edtMoreDetails = "\(place.title ?? "")\n\(place.formattedAddress)"
                         
                         // self.lblShopName.text = shop.name ?? ""
                        // self.shopNameHeight.constant = 20
