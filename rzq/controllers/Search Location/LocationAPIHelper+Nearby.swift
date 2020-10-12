@@ -20,7 +20,7 @@ class NearbyExtension: NSObject {
             allResults.removeAll()
         }
         
-        GoogleApi.shared.callApi(.nearBy, input: input) { (response) in
+        GoogleApi.shared.callApi(.nearBy, input: input, lati: "", long: "") { (response) in
             if let nearByPlaces =  response.data as? [GApiResponse.NearBy]{
                 self.allResults.append(contentsOf: nearByPlaces)
                 if let token = response.nextPageToken {

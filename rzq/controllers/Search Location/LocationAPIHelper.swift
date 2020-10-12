@@ -186,12 +186,12 @@ class GoogleApi : NSObject {
     func initialiseWithKey(_ key:String) {
         googleApiKey = key
     }
-    func getUrl(_  usedFor:UsedFor,input:String) -> String {
+    func getUrl(_  usedFor:UsedFor, input:String, lati:String, long: String) -> String {
         guard !input.isEmpty else { return input }
         switch usedFor {
         case .autocomplete:
             let updatedInput = input.lowercased()
-            return String(format: "%@?input=%@&key=%@",GoogleUrl.autocomplete.rawValue,updatedInput,googleApiKey)
+            return String(format: "%@?input=%@&components=country:KW&location=%@,-%@&key=%@",GoogleUrl.autocomplete.rawValue,updatedInput,lati,long,googleApiKey)
         case .placeInformation:
             return String(format: "%@?placeid=%@&key=%@",GoogleUrl.placeInfo.rawValue,input,googleApiKey)
         case .reverseGeo:
@@ -253,7 +253,7 @@ class GoogleApi : NSObject {
         }
     }
     
-    func callApi(_ api : UsedFor = .autocomplete,input:GInput,completion: @escaping GCallback) {
+    func callApi(_ api : UsedFor = .autocomplete,input:GInput, lati: String, long: String ,completion: @escaping GCallback) {
         let covertedInput = getConvertedInputFor(api,input:input)
         guard !covertedInput.isEmpty && !googleApiKey.isEmpty else {
             let eDesc = googleApiKey.isEmpty ? "Please add valid google api key" : "Some error occured"
@@ -282,7 +282,7 @@ class GoogleApi : NSObject {
             completion(response)
             return;
         } else {
-            let urlString = getUrl(api, input: covertedInput)
+            let urlString = getUrl(api, input: covertedInput,lati: lati, long: long)
             print("Google api request - \(urlString)")
             let url =  URL(string: urlString.addingPercentEncoding(withAllowedCharacters: .urlFragmentAllowed)!)!
             let urlSession = URLSession(configuration: URLSessionConfiguration.default)

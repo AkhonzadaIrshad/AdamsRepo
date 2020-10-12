@@ -1482,7 +1482,10 @@ extension DeliveryStep1 {
     func showResults(string: String){
         var input = GInput()
         input.keyword = string
-        GoogleApi.shared.callApi(input: input) { (response) in
+        let lati = "\(self.latitude ?? 0)"
+        let long = "\(self.longitude ?? 0)"
+        
+        GoogleApi.shared.callApi(input: input,lati: lati, long: long) { (response) in
             if response.isValidFor(.autocomplete) {
                 DispatchQueue.main.async {
                     self.searchByKeyWordsView.isHidden = false
@@ -2071,7 +2074,10 @@ extension DeliveryStep1: UITableViewDelegate, UITableViewDataSource {
         
         var input = GInput()
         input.keyword = autocompleteResults[row].placeId
-        GoogleApi.shared.callApi(.placeInformation,input: input) { (response) in
+        let lati = "\(self.latitude ?? 0)"
+        let long = "\(self.longitude ?? 0)"
+        
+        GoogleApi.shared.callApi(.placeInformation,input: input,lati: lati, long: long) { (response) in
             if let place =  response.data as? GApiResponse.PlaceInfo, response.isValidFor(.placeInformation) {
                 DispatchQueue.main.async {
                     self.searchByKeyWordsBackgroundView.isHidden = true
