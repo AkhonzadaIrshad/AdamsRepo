@@ -1992,9 +1992,15 @@ extension DeliveryStep1: UITableViewDelegate, UITableViewDataSource {
     }
     func getSelectedShopFromSearch(row: Int) {
         // Just in case you need the item position
+        self.edtOrderDetails.placeholder = "order_details".localized
+       
+
+        self.showActionSheet()
         let itemPosition: SearchTextFieldItem = self.filterShopsWithDispanceItems[row]
         let shop = self.filterShops[row]
         self.searchField.text = shop.name ?? ""
+        self.shopNaleKabel.text = "\(shop.name ?? "")"
+        self.shopNaleKabel.font_type = "15,5"
         self.orderModel?.pickUpLatitude = shop.latitude ?? 0.0
         self.orderModel?.pickUpLongitude = shop.longitude ?? 0.0
         self.orderModel?.shop = shop
@@ -2060,6 +2066,9 @@ extension DeliveryStep1: UITableViewDelegate, UITableViewDataSource {
     }
     
     func getPlaceInfo(row: Int) {
+        
+        self.edtOrderDetails.placeholder = "deliveryStep1.edtDetails.yourLocation.placeholder".localized
+        
         var input = GInput()
         input.keyword = autocompleteResults[row].placeId
         GoogleApi.shared.callApi(.placeInformation,input: input) { (response) in
@@ -2106,8 +2115,16 @@ extension DeliveryStep1: UITableViewDelegate, UITableViewDataSource {
                        // self.shopNameHeight.constant = 20
                         self.viewPin.isHidden = false
                         self.viewSuggest.isHidden = true
+                        self.viewSuggest.isHidden = true
                         
+                        self.ivShop.isHidden = true
                         
+                        self.edtMoreDetails = ""
+                        
+                        self.viewShopDetails.isHidden = true
+                        self.viewClearField.isHidden = true
+                        self.showActionSheet()
+
                         let camera = GMSCameraPosition.camera(withLatitude: self.orderModel?.pickUpLatitude ?? 0.0, longitude: self.orderModel?.pickUpLongitude ?? 0.0, zoom: 15.0)
                         self.gMap?.animate(to: camera)
                     }
