@@ -1378,9 +1378,11 @@ extension DeliveryStep1 : GMSMapViewDelegate {
             if CLLocation(latitude: coordinate.latitude, longitude: coordinate.longitude).distance(from: currentLocation ) < 65 {
                        self.edtOrderDetails.placeholder = "deliveryStep1.edtDetails.yourLocation.placeholder".localized
                    } else {
-                       self.edtOrderDetails.placeholder = "order_details".localized
+                       //self.edtOrderDetails.placeholder = "order_details".localized
+                    self.edtOrderDetails.placeholder = "deliveryStep1.edtDetails.yourLocation.placeholder".localized
                    }
         }
+        self.edtOrderDetails.placeholder = "deliveryStep1.edtDetails.yourLocation.placeholder".localized
         self.showActionSheet()
         self.lblSearch.isHidden = true
         self.shopMarkers.removeAll()
