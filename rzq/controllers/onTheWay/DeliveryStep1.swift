@@ -1972,6 +1972,7 @@ extension DeliveryStep1: UITableViewDelegate, UITableViewDataSource {
         if indexPath.section == 0 {
             if tableView == searchByKeywordTableView {
                 getSelectedShopFromSearch(row: indexPath.row)
+              
             } else {
                 onSelect(shop: self.searchedShops[indexPath.row])
                 self.searchedText = ""
@@ -2001,6 +2002,16 @@ extension DeliveryStep1: UITableViewDelegate, UITableViewDataSource {
         self.showActionSheet()
         let itemPosition: SearchTextFieldItem = self.filterShopsWithDispanceItems[row]
         let shop = self.filterShops[row]
+        let selectedCategoryFromShop = self.categories.filter { $0.id == shop.type?.id }
+        self.selectdCategory = selectedCategoryFromShop.first
+        if self.isArabic() {
+            self.searchShopsTextField.textAlignment = .right
+        } else {
+            self.searchShopsTextField.textAlignment = .left
+        }
+        self.searchShopsTextField.placeholder = "step1.catFilter.search.placeholder".localized + " \(self.selectdCategory?.name ?? "")"
+        
+        self.catFilterSearchStack.isHidden = false
         self.searchField.text = shop.name ?? ""
         self.shopNaleKabel.text = "\(shop.name ?? "")"
         self.shopNaleKabel.font_type = "15,5"
