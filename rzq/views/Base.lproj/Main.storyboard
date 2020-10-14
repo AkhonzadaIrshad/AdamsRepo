@@ -3989,7 +3989,7 @@
                                         </constraints>
                                     </imageView>
                                     <stackView opaque="NO" contentMode="scaleToFill" axis="vertical" translatesAutoresizingMaskIntoConstraints="NO" id="pXB-LF-FCI">
-                                        <rect key="frame" x="79" y="47" width="181" height="32"/>
+                                        <rect key="frame" x="79" y="52" width="181" height="15"/>
                                         <subviews>
                                             <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="cSM-Z2-PiK" customClass="MyUILabel" customModule="rzq" customModuleProvider="target">
                                                 <rect key="frame" x="0.0" y="0.0" width="181" height="15"/>
@@ -4000,11 +4000,11 @@
                                                 <color key="textColor" red="0.21176470589999999" green="0.21176470589999999" blue="0.21176470589999999" alpha="1" colorSpace="calibratedRGB"/>
                                                 <nil key="highlightedColor"/>
                                                 <userDefinedRuntimeAttributes>
-                                                    <userDefinedRuntimeAttribute type="string" keyPath="font_type" value="16,5"/>
+                                                    <userDefinedRuntimeAttribute type="string" keyPath="font_type" value="17,5"/>
                                                 </userDefinedRuntimeAttributes>
                                             </label>
-                                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Your Location" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="kLg-k9-A7X" customClass="MyUILabel" customModule="rzq" customModuleProvider="target">
-                                                <rect key="frame" x="0.0" y="15" width="181" height="17"/>
+                                            <label hidden="YES" opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Your Location" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="kLg-k9-A7X" customClass="MyUILabel" customModule="rzq" customModuleProvider="target">
+                                                <rect key="frame" x="0.0" y="0.0" width="181" height="0.0"/>
                                                 <fontDescription key="fontDescription" type="system" pointSize="14"/>
                                                 <color key="textColor" red="0.21176470588235294" green="0.21176470588235294" blue="0.21176470588235294" alpha="1" colorSpace="calibratedRGB"/>
                                                 <nil key="highlightedColor"/>
@@ -4050,7 +4050,7 @@
                                     <constraint firstItem="pXB-LF-FCI" firstAttribute="leading" secondItem="9zx-sT-LLd" secondAttribute="trailing" constant="5" id="lmK-xM-Znh"/>
                                     <constraint firstItem="tPZ-uO-eQh" firstAttribute="top" secondItem="Cze-Ol-CeJ" secondAttribute="top" constant="30" id="qbM-u3-h91"/>
                                     <constraint firstItem="9zx-sT-LLd" firstAttribute="leading" secondItem="eIy-es-md4" secondAttribute="trailing" constant="12" id="s44-T8-KvG"/>
-                                    <constraint firstAttribute="bottom" secondItem="pXB-LF-FCI" secondAttribute="bottom" constant="3" id="scu-Sd-ms2"/>
+                                    <constraint firstAttribute="bottom" secondItem="pXB-LF-FCI" secondAttribute="bottom" constant="15" id="scu-Sd-ms2"/>
                                     <constraint firstAttribute="height" constant="82" id="ss1-nA-h9M"/>
                                 </constraints>
                                 <userDefinedRuntimeAttributes>
@@ -4090,7 +4090,7 @@
                                 </constraints>
                             </view>
                             <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="dQ2-ig-382">
-                                <rect key="frame" x="167.66666666666666" y="386" width="40" height="40"/>
+                                <rect key="frame" x="127.66666666666669" y="346" width="40" height="40"/>
                                 <subviews>
                                     <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="ic_location_pin" translatesAutoresizingMaskIntoConstraints="NO" id="jBL-4C-5BE">
                                         <rect key="frame" x="0.0" y="0.0" width="40" height="40"/>
@@ -4607,12 +4607,12 @@
                             <constraint firstItem="ghU-bQ-LbU" firstAttribute="trailing" secondItem="p6j-oS-mdW" secondAttribute="trailing" constant="5" id="VLm-SL-Rph"/>
                             <constraint firstItem="3Mw-39-5Ni" firstAttribute="centerX" secondItem="Mhb-lB-0j9" secondAttribute="centerX" id="dME-f7-r6i"/>
                             <constraint firstItem="ghU-bQ-LbU" firstAttribute="trailing" secondItem="uRS-wK-seh" secondAttribute="trailing" id="dTL-gp-BMr"/>
-                            <constraint firstItem="dQ2-ig-382" firstAttribute="centerX" secondItem="Mhb-lB-0j9" secondAttribute="centerX" id="gZ2-96-YSh"/>
+                            <constraint firstItem="dQ2-ig-382" firstAttribute="centerX" secondItem="Mhb-lB-0j9" secondAttribute="centerX" constant="-40" id="gZ2-96-YSh"/>
                             <constraint firstItem="375-2a-tr6" firstAttribute="leading" secondItem="ghU-bQ-LbU" secondAttribute="leading" constant="15" id="gnJ-wu-WoT"/>
                             <constraint firstItem="ybM-2d-5HM" firstAttribute="leading" secondItem="ghU-bQ-LbU" secondAttribute="leading" id="hEs-hK-yyp"/>
                             <constraint firstItem="ghU-bQ-LbU" firstAttribute="trailing" secondItem="375-2a-tr6" secondAttribute="trailing" constant="15" id="jck-Nz-C1F"/>
                             <constraint firstItem="Cze-Ol-CeJ" firstAttribute="top" secondItem="Mhb-lB-0j9" secondAttribute="top" id="jgZ-da-JP0"/>
-                            <constraint firstItem="dQ2-ig-382" firstAttribute="centerY" secondItem="Mhb-lB-0j9" secondAttribute="centerY" id="jmU-aJ-H9p"/>
+                            <constraint firstItem="dQ2-ig-382" firstAttribute="centerY" secondItem="Mhb-lB-0j9" secondAttribute="centerY" constant="-40" id="jmU-aJ-H9p"/>
                             <constraint firstItem="UN8-RI-HiB" firstAttribute="top" secondItem="3Mw-39-5Ni" secondAttribute="top" id="kIr-x4-K14"/>
                             <constraint firstItem="Cze-Ol-CeJ" firstAttribute="leading" secondItem="ghU-bQ-LbU" secondAttribute="leading" id="l7r-ku-Djd"/>
                             <constraint firstItem="ghU-bQ-LbU" firstAttribute="trailing" secondItem="Cze-Ol-CeJ" secondAttribute="trailing" id="y8e-8g-2eg"/>

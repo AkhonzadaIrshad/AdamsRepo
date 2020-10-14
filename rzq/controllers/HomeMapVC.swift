@@ -77,6 +77,19 @@ class HomeMapVC: BaseViewController {
     
     override func viewDidLoad() {
         super.viewDidLoad()
+    
+        if let street = UserDefaults.standard.string(forKey: "house") {
+            self.streetTextField.text = street
+        }
+        
+        if let house = UserDefaults.standard.string(forKey: "house")  {
+            self.houseTextField.text = house
+        }
+        
+        if let piece = UserDefaults.standard.string(forKey: "piece") {
+            self.locationPartTextField.text = piece
+        }
+        
         NotificationCenter.default.addObserver(self, selector: #selector(willEnterForeground),
                                                name: UIApplication.willEnterForegroundNotification,
                                                   object: nil)
@@ -586,10 +599,19 @@ class HomeMapVC: BaseViewController {
         self.dropMarker?.map = self.mapView
         
         var bounds = GMSCoordinateBounds()
-        bounds = bounds.includingCoordinate(self.pickMarker?.position ?? CLLocationCoordinate2D(latitude: self.latitude ?? 0.0, longitude: self.longitude ?? 0.0))
-        bounds = bounds.includingCoordinate(self.dropMarker?.position ?? CLLocationCoordinate2D(latitude: self.latitude ?? 0.0, longitude: self.longitude ?? 0.0))
-        self.mapView?.animate(with: GMSCameraUpdate.fit(bounds, withPadding: 155.0))
-        
+        if fromLatitude ?? 0.0 > 0.0 && fromLongitude ?? 0.0 > 0.0 {
+            bounds = bounds.includingCoordinate(self.pickMarker?.position ?? CLLocationCoordinate2D(latitude: self.latitude ?? 0.0, longitude: self.longitude ?? 0.0))
+           // bounds = bounds.includingCoordinate(self.dropMarker?.position ?? CLLocationCoordinate2D(latitude: self.latitude ?? 0.0, longitude: self.longitude ?? 0.0))
+            let camera : GMSCameraPosition = GMSCameraPosition.camera(withLatitude: fromLatitude ?? 0.0, longitude: longitude ?? 0.0, zoom: 12, bearing: 3, viewingAngle: 0)
+            
+            mapView.camera = camera
+        } else {
+            bounds = bounds.includingCoordinate(self.pickMarker?.position ?? CLLocationCoordinate2D(latitude: self.latitude ?? 0.0, longitude: self.longitude ?? 0.0))
+            bounds = bounds.includingCoordinate(self.dropMarker?.position ?? CLLocationCoordinate2D(latitude: self.latitude ?? 0.0, longitude: self.longitude ?? 0.0))
+            self.mapView?.animate(with: GMSCameraUpdate.fit(bounds, withPadding: 0.0))
+
+        }
+       
     }
     
     

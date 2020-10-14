@@ -182,7 +182,7 @@ class DeliveryStep1: BaseVC , Step3Delegate, AllShopDelegate, ImagePickerDelegat
            self.edtOrderDetails.text = self.orderModel?.orderDetails
            
            edtOrderDetails.placeholder = "order_details".localized
-           edtOrderDetails.placeholderColor = UIColor.appLogoColor
+           edtOrderDetails.placeholderColor = UIColor.appLightGray
            edtOrderDetails.isPlaceholderScrollEnabled = true
            
            self.viewRecording.isHidden = true
