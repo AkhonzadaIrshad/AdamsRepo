@@ -2024,7 +2024,15 @@ extension DeliveryStep1: UITableViewDelegate, UITableViewDataSource {
         self.lblPickupLocation.text = shop.name ?? ""
         //self.lblShopName.text = shop.name ?? ""
         self.lblPickupLocation.textColor = UIColor.appDarkBlue
-        
+        if (self.orderModel?.shop?.id ?? 0 > 0) {
+            self.btnCheckMenu.isHidden = false
+            self.viewCheckMenu.isHidden = false
+            self.handleCheckMenuAction(showPopUpIfEmpty: false)
+        }else {
+            self.btnCheckMenu.isHidden = true
+            self.viewCheckMenu.isHidden = true
+            
+        }
         //self.moreDetailsView.isHidden = false
         self.ivShop.isHidden = false
         
