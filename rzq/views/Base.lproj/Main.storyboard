@@ -11653,9 +11653,9 @@
                                                         <fontDescription key="fontDescription" type="system" pointSize="13"/>
                                                         <textInputTraits key="textInputTraits" returnKeyType="search"/>
                                                         <userDefinedRuntimeAttributes>
-                                                            <userDefinedRuntimeAttribute type="string" keyPath="font_type" value="13,3"/>
+                                                            <userDefinedRuntimeAttribute type="string" keyPath="font_type" value="13,1"/>
                                                             <userDefinedRuntimeAttribute type="color" keyPath="placeHolderColor">
-                                                                <color key="value" white="0.0" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                                                                <color key="value" white="0.66666666666666663" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                                             </userDefinedRuntimeAttribute>
                                                         </userDefinedRuntimeAttributes>
                                                     </textField>
@@ -12765,9 +12765,9 @@
                                                         <fontDescription key="fontDescription" type="system" pointSize="13"/>
                                                         <textInputTraits key="textInputTraits"/>
                                                         <userDefinedRuntimeAttributes>
-                                                            <userDefinedRuntimeAttribute type="string" keyPath="font_type" value="13,3"/>
+                                                            <userDefinedRuntimeAttribute type="string" keyPath="font_type" value="13,1"/>
                                                             <userDefinedRuntimeAttribute type="color" keyPath="placeHolderColor">
-                                                                <color key="value" red="0.73333333333333328" green="0.73333333333333328" blue="0.73333333333333328" alpha="1" colorSpace="calibratedRGB"/>
+                                                                <color key="value" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                                             </userDefinedRuntimeAttribute>
                                                         </userDefinedRuntimeAttributes>
                                                     </textField>
@@ -27825,7 +27825,7 @@
             <size key="intrinsicContentSize" width="127" height="34"/>
         </designable>
         <designable name="90c-lM-y4l">
-            <size key="intrinsicContentSize" width="65.666666666666671" height="34"/>
+            <size key="intrinsicContentSize" width="59.666666666666664" height="34"/>
         </designable>
         <designable name="B1E-yb-xia">
             <size key="intrinsicContentSize" width="119.33333333333333" height="34"/>
@@ -27834,7 +27834,7 @@
             <size key="intrinsicContentSize" width="119.33333333333333" height="34"/>
         </designable>
         <designable name="N1t-JS-2FB">
-            <size key="intrinsicContentSize" width="124.66666666666667" height="34"/>
+            <size key="intrinsicContentSize" width="109" height="34"/>
         </designable>
         <designable name="OzZ-db-ahS">
             <size key="intrinsicContentSize" width="66" height="34"/>
