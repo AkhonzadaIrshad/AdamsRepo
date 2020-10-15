@@ -2091,7 +2091,7 @@ extension DeliveryStep1: UITableViewDelegate, UITableViewDataSource {
     
     func getPlaceInfo(row: Int) {
         
-        self.edtOrderDetails.placeholder = "deliveryStep1.edtDetails.yourLocation.placeholder".localized
+        //self.edtOrderDetails.placeholder = "deliveryStep1.edtDetails.yourLocation.placeholder".localized
         
         var input = GInput()
         input.keyword = autocompleteResults[row].placeId
