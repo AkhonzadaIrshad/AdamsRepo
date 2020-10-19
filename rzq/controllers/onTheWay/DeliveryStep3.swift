@@ -246,15 +246,28 @@ class DeliveryStep3: BaseVC {
     
     @IBAction func placeOrderAction(_ sender: Any) {
         self.btnPlaceOrder.isUserInteractionEnabled = false
-        if (self.isCash ?? false) {
-            if (self.selectedItems.count > 0) {
-                self.createDeliveryWithMenu(invoiceId : "")
-            }else {
-                self.createDeliveryWithoutMenu(invoiceId : "")
-            }
-        }else {
-            self.generatePaymentUrl()
-        }
+        let vc = UIStoryboard(name: "Main", bundle: nil).instantiateViewController(withIdentifier: "SendingOrderVC") as! SendingOrderVC
+       
+        vc.selectedItems = self.selectedItems
+        vc.isCash = self.isCash
+        vc.orderModel = self.orderModel
+        vc.selectedTime = self.selectedTime
+        vc.selectedTotal = self.selectedTotal
+        vc.isFemale = self.isFemale
+        vc.selectedImages = self.selectedImages
+        vc.isAboveTen = self.isAboveTen
+
+        vc.modalPresentationStyle = .fullScreen
+        self.present(vc, animated: true, completion: nil)
+//        if (self.isCash ?? false) {
+//            if (self.selectedItems.count > 0) {
+//                self.createDeliveryWithMenu(invoiceId : "")
+//            }else {
+//                self.createDeliveryWithoutMenu(invoiceId : "")
+//            }
+//        }else {
+//            self.generatePaymentUrl()
+//        }
     }
     
     func generatePaymentUrl() {
