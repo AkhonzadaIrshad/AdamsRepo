@@ -14,11 +14,11 @@
         <array key="Cairo-Regular.ttf">
             <string>Cairo-Regular</string>
         </array>
-        <array key="arabic_medium.ttf">
-            <string>Tajawal-Medium</string>
-        </array>
         <array key="arabic_regular.ttf">
             <string>Tajawal-Regular</string>
+        </array>
+        <array key="arabic_semibold.ttf">
+            <string>Tajawal-Medium</string>
         </array>
         <array key="english_regular.otf">
             <string>SFProDisplay-Regular</string>
@@ -4090,7 +4090,7 @@
                                 </constraints>
                             </view>
                             <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="dQ2-ig-382">
-                                <rect key="frame" x="127.66666666666669" y="346" width="40" height="40"/>
+                                <rect key="frame" x="167.66666666666666" y="386" width="40" height="40"/>
                                 <subviews>
                                     <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="ic_location_pin" translatesAutoresizingMaskIntoConstraints="NO" id="jBL-4C-5BE">
                                         <rect key="frame" x="0.0" y="0.0" width="40" height="40"/>
@@ -4607,12 +4607,12 @@
                             <constraint firstItem="ghU-bQ-LbU" firstAttribute="trailing" secondItem="p6j-oS-mdW" secondAttribute="trailing" constant="5" id="VLm-SL-Rph"/>
                             <constraint firstItem="3Mw-39-5Ni" firstAttribute="centerX" secondItem="Mhb-lB-0j9" secondAttribute="centerX" id="dME-f7-r6i"/>
                             <constraint firstItem="ghU-bQ-LbU" firstAttribute="trailing" secondItem="uRS-wK-seh" secondAttribute="trailing" id="dTL-gp-BMr"/>
-                            <constraint firstItem="dQ2-ig-382" firstAttribute="centerX" secondItem="Mhb-lB-0j9" secondAttribute="centerX" constant="-40" id="gZ2-96-YSh"/>
+                            <constraint firstItem="dQ2-ig-382" firstAttribute="centerX" secondItem="Mhb-lB-0j9" secondAttribute="centerX" id="gZ2-96-YSh"/>
                             <constraint firstItem="375-2a-tr6" firstAttribute="leading" secondItem="ghU-bQ-LbU" secondAttribute="leading" constant="15" id="gnJ-wu-WoT"/>
                             <constraint firstItem="ybM-2d-5HM" firstAttribute="leading" secondItem="ghU-bQ-LbU" secondAttribute="leading" id="hEs-hK-yyp"/>
                             <constraint firstItem="ghU-bQ-LbU" firstAttribute="trailing" secondItem="375-2a-tr6" secondAttribute="trailing" constant="15" id="jck-Nz-C1F"/>
                             <constraint firstItem="Cze-Ol-CeJ" firstAttribute="top" secondItem="Mhb-lB-0j9" secondAttribute="top" id="jgZ-da-JP0"/>
-                            <constraint firstItem="dQ2-ig-382" firstAttribute="centerY" secondItem="Mhb-lB-0j9" secondAttribute="centerY" constant="-40" id="jmU-aJ-H9p"/>
+                            <constraint firstItem="dQ2-ig-382" firstAttribute="centerY" secondItem="Mhb-lB-0j9" secondAttribute="centerY" id="jmU-aJ-H9p"/>
                             <constraint firstItem="UN8-RI-HiB" firstAttribute="top" secondItem="3Mw-39-5Ni" secondAttribute="top" id="kIr-x4-K14"/>
                             <constraint firstItem="Cze-Ol-CeJ" firstAttribute="leading" secondItem="ghU-bQ-LbU" secondAttribute="leading" id="l7r-ku-Djd"/>
                             <constraint firstItem="ghU-bQ-LbU" firstAttribute="trailing" secondItem="Cze-Ol-CeJ" secondAttribute="trailing" id="y8e-8g-2eg"/>
@@ -27830,7 +27830,7 @@
             <size key="intrinsicContentSize" width="355" height="39.220703125"/>
         </designable>
         <designable name="90c-lM-y4l">
-            <size key="intrinsicContentSize" width="307" height="38.823671875000002"/>
+            <size key="intrinsicContentSize" width="307" height="40.209671874999998"/>
         </designable>
         <designable name="9x5-0P-Zxx">
             <size key="intrinsicContentSize" width="95" height="15"/>
@@ -27848,7 +27848,7 @@
             <size key="intrinsicContentSize" width="85" height="13"/>
         </designable>
         <designable name="N1t-JS-2FB">
-            <size key="intrinsicContentSize" width="190" height="38.823671875000002"/>
+            <size key="intrinsicContentSize" width="190" height="40.209671874999998"/>
         </designable>
         <designable name="OzZ-db-ahS">
             <size key="intrinsicContentSize" width="355" height="39.220703125"/>

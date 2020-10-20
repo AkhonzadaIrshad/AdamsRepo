@@ -25,16 +25,20 @@ class NotificationsVC: BaseViewController,LabasLocationManagerDelegate, AcceptBi
     @IBOutlet weak var sortViewHeight: NSLayoutConstraint!
     @IBOutlet weak var sortView: UIView!
     @IBOutlet weak var navBar: NavBar!
+    
     // MARK: - Variables
     
     var alerts = [DatumNot]()
+    var existAlerts = [DatumNot]()
     var actions = [DatumNot]()
-    
+   
     var latitude : Double?
     var longitude : Double?
     
     var sortBy : Int?
-    
+    var responseCount: Int = 0
+    var alertsCount: Int = 0
+    var hasNewValue: Bool = false
     var refreshControl = UIRefreshControl()
     
     // MARK: - Methodes - public - life cycle
@@ -198,16 +202,25 @@ class NotificationsVC: BaseViewController,LabasLocationManagerDelegate, AcceptBi
         self.showLoading()
         ApiService.getAllNotifications(Authorization: DataManager.loadUser().data?.accessToken ?? "", sortBy: self.sortBy ?? 1) { (response) in
             self.refreshControl.endRefreshing()
+            print(self.alerts.count)
+            self.alertsCount = self.actions.count
+            self.responseCount = response.data?.count ?? 0
             self.alerts.removeAll()
             self.actions.removeAll()
             self.hideLoading()
             for not in response.data ?? [DatumNot]() {
                 if (not.type == Constants.DELIVERY_CREATED || not.type == Constants.SERVICE_CREATED || not.type == Constants.BID_CREATED || not.type == Constants.SERVICE_BID_CREATED) {
                     self.actions.append(not)
+                    
                 }else {
                     self.alerts.append(not)
+                    self.existAlerts.append(not)
                 }
             }
+            self.hasNewValue = self.actions.count > self.alertsCount
+           
+            let reversed2 = self.actions.sorted { ($0.createdDate ?? "\(Date())" > "\(Date())") && ($0.createdDate ?? "\(Date())" > $1.createdDate ?? "\(Date())") }
+            self.actions = reversed2
             self.tableView.reloadData()
             
             if (self.segmentControl.selectedSegmentIndex == 0) {
@@ -510,7 +523,13 @@ extension NotificationsVC {
      
      fileprivate func createCellForBidCreated(_ tableView: UITableView, _ indexPath: IndexPath, _ item: DatumNot) -> UITableViewCell {
         let cell : DriverBidCell = Bundle.main.loadNibNamed("DriverBidCell", owner: self, options: nil)?.first as! DriverBidCell
-         
+        //cell.bidCardView.backgroundColor = UIColor.green.withAlphaComponent(0.1)
+
+        if indexPath.row == 0 && hasNewValue == true && self.actions.count > 0  {
+            self.alertsCount = self.actions.count
+           // cell.bidCardView.backgroundColor = UIColor.green.withAlphaComponent(0.1)
+           // cell.bidContainerView.back
+        }
          let dict = item.data?.convertToDictionary()
          let shopImage = dict?["ShopImage"] as? String ?? ""
          
@@ -525,7 +544,6 @@ extension NotificationsVC {
              desc = dict?["EnglishBody"] as? String ?? ""
          }
          let distance = dict?["Distance"] as? Double ?? 0.0
-         
          cell.lblTitle.text = desc
         cell.lblMoney.text = "price".localized + " \(dict?["Price"] as? Double ?? 0.0) \("currency".localized)"
          let time = dict?["Time"] as? Int ?? 0
@@ -567,6 +585,7 @@ extension NotificationsVC {
              cell.timeView.isHidden = true
          }
          cell.startCountDown(startedFrom: item.createdDate)
+        cell.setTimer()
          return cell
      }
      
@@ -764,7 +783,7 @@ extension NotificationsVC {
          let distanceStr = String(format: "%.2f", distanceInKM)
          
          cell.lblDistance.text = "\(distanceStr) \("km".localized)"
-         
+        cell.bidContainerView.backgroundColor = .yellow
          cell.onCheck = {
              let vc = UIStoryboard(name: "Main", bundle: nil).instantiateViewController(withIdentifier: "AcceptBidDialog") as! AcceptBidDialog
              self.definesPresentationContext = true

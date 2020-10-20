@@ -10,6 +10,8 @@ import UIKit
 
 class DriverBidCell: UITableViewCell {
 
+    @IBOutlet weak var bidCardView: CardView!
+    @IBOutlet weak var bidContainerView: CardView!
     @IBOutlet weak var ivLogo: UIImageView!
     @IBOutlet weak var lblTitle: MyUILabel!
     @IBOutlet weak var lblMoney: MyUILabel!
@@ -34,7 +36,9 @@ class DriverBidCell: UITableViewCell {
     var onDecline: (() -> Void)? = nil
     var onAccept: (() -> Void)? = nil
     var count = 120
-    
+    var seconds = 1
+    var secondTimer:Timer?
+    var firstTime: Bool = false
     @IBAction func checkOfferAction(_ sender: Any) {
         if let onCheck = self.onCheck {
             onCheck()
@@ -46,6 +50,29 @@ class DriverBidCell: UITableViewCell {
     
     @IBAction func btnAcceptClicked(_ sender: Any) {
         self.onAccept?()
+    }
+    // for setup of timer and variable
+    func setTimer() {
+        seconds = 1
+
+        secondTimer?.invalidate()
+        secondTimer = Timer.scheduledTimer(timeInterval: 1.0, target: self, selector: #selector(updateUI), userInfo: nil, repeats: true)
+    }
+
+    //method to update your UI
+    @objc func updateUI() {
+        //update your UI here
+
+        //also update your seconds variable value by 1
+        seconds += 1
+        if seconds == 25 {
+            secondTimer?.invalidate()
+            secondTimer = nil
+            DispatchQueue.main.async {
+                self.bidCardView.backgroundColor = .white
+            }
+        }
+        print(seconds)
     }
     
     func startCountDown(startedFrom: String?) {
@@ -64,6 +91,7 @@ class DriverBidCell: UITableViewCell {
         if(count > 0) {
             count = count - 1
             counterLbl.text = String(minutes) + ":" + String(seconds)
+
         } else {
             self.vwCountDown.isHidden = true
             self.vwAcceptBid.isUserInteractionEnabled = false
