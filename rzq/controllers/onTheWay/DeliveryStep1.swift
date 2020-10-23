@@ -163,7 +163,7 @@ class DeliveryStep1: BaseVC , Step3Delegate, AllShopDelegate, ImagePickerDelegat
         }
     }
     @objc func hideActionSheet() {
-        self.actionSheetConstraintBottom.constant = 70 - self.buttomSheet.frame.height
+        self.actionSheetConstraintBottom.constant = 55 - self.buttomSheet.frame.height
     }
     
     @objc func showActionSheet() {
@@ -1009,7 +1009,7 @@ class DeliveryStep1: BaseVC , Step3Delegate, AllShopDelegate, ImagePickerDelegat
         //self.moreDetailsView.isHidden = true
         self.ivShop.image = nil
         self.ivShop.isHidden = true
-        self.lblSearch.isHidden = false
+        self.lblSearch.isHidden = true
         self.shopNaleKabel.text = ""
 
         self.edtMoreDetails = ""
@@ -1048,7 +1048,7 @@ class DeliveryStep1: BaseVC , Step3Delegate, AllShopDelegate, ImagePickerDelegat
         
         self.ivShop.image = nil
         self.ivShop.isHidden = true
-        self.lblSearch.isHidden = false
+        self.lblSearch.isHidden = true
         self.shopNaleKabel.text = ""
         self.edtMoreDetails = ""
         self.lblPickupLocation.text = ""
@@ -1078,7 +1078,7 @@ class DeliveryStep1: BaseVC , Step3Delegate, AllShopDelegate, ImagePickerDelegat
         self.ivShop.image = nil
         self.ivShop.isHidden = true
         
-        self.lblSearch.isHidden = false
+        self.lblSearch.isHidden = true
         
         self.edtMoreDetails = ""
         self.clearDetailFieldAction(self)
