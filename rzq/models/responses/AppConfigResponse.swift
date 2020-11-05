@@ -93,7 +93,18 @@ class ConfigSettings: Codable {
     let percentage, dueAmountLimit, showNotificationPeriod: Double?
     let isMapView: Bool?
     let radius, driversLimit, orderTimeConstraint, minimumOneKMValue: Double?
-    let minimumFiveKMValue, maximumValue, incrementValue, shopLimit: Double?
+    let minimumFiveKMValue,
+        MaximumOneKmValue,
+        MaximumFiveKmValue,
+        minimumTenKmValue,
+        MaximumTenKmValue,
+        MinimumTwentyKmValue,
+        MaximumTwentyKmValue,
+        MinimumThirtyKmValue,
+        MaximumThirtyKmValue,
+        maximumValue,
+        incrementValue,
+        shopLimit: Double?
     let KnetCommission: Double?
     
     enum CodingKeys: String, CodingKey {
@@ -111,9 +122,18 @@ class ConfigSettings: Codable {
         case incrementValue = "IncrementValue"
         case shopLimit = "ShopLimit"
         case KnetCommission = "KnetCommission"
+        case minimumTenKmValue = "MinimumTenKmValue"
+        case MaximumTenKmValue = "MaximumTenKmValue"
+        case MinimumTwentyKmValue = "MinimumTwentyKmValue"
+        case MaximumTwentyKmValue = "MaximumTwentyKmValue"
+        case MinimumThirtyKmValue = "MinimumThirtyKmValue"
+        case MaximumThirtyKmValue = "MaximumThirtyKmValue"
+        case MaximumOneKmValue = "MaximumOneKmValue"
+        case MaximumFiveKmValue = "MaximumFiveKmValue"
     }
     
-    init(flag: Bool?, percentage: Double?, dueAmountLimit: Double?, showNotificationPeriod: Double?, isMapView: Bool?, radius: Double?, driversLimit: Double?, orderTimeConstraint: Double?, minimumOneKMValue: Double?, minimumFiveKMValue: Double?, maximumValue: Double?, incrementValue: Double?, shopLimit: Double?, KnetCommission: Double?) {
+    init(flag: Bool?, percentage: Double?, dueAmountLimit: Double?, showNotificationPeriod: Double?, isMapView: Bool?, radius: Double?, driversLimit: Double?, orderTimeConstraint: Double?, minimumOneKMValue: Double?, minimumFiveKMValue: Double?, maximumValue: Double?, incrementValue: Double?, shopLimit: Double?, KnetCommission: Double?, minimumTenKmValue: Double?, MaximumTenKmValue: Double? , MinimumTwentyKmValue: Double? , MaximumTwentyKmValue: Double? , MinimumThirtyKmValue: Double? , MaximumThirtyKmValue: Double?,
+          MaximumOneKmValue: Double? , MaximumFiveKmValue:  Double?) {
         self.flag = flag
         self.percentage = percentage
         self.dueAmountLimit = dueAmountLimit
@@ -128,6 +148,14 @@ class ConfigSettings: Codable {
         self.incrementValue = incrementValue
         self.shopLimit = shopLimit
         self.KnetCommission = KnetCommission
+        self.minimumTenKmValue = minimumTenKmValue
+        self.MaximumTenKmValue = MaximumTenKmValue
+        self.MinimumTwentyKmValue = MinimumTwentyKmValue
+        self.MaximumTwentyKmValue = MaximumTwentyKmValue
+        self.MinimumThirtyKmValue = MinimumThirtyKmValue
+        self.MaximumThirtyKmValue = MaximumThirtyKmValue
+        self.MaximumOneKmValue = MaximumOneKmValue
+        self.MaximumFiveKmValue = MaximumFiveKmValue
     }
 }
 

@@ -119,14 +119,25 @@ class TakeOrderVC: BaseVC, AVAudioPlayerDelegate {
         let distanceInMeters = dropOffLatLng.distance(from: driverLatLng)
         let distanceInKM = distanceInMeters / 1000.0
         
-        if (distanceInKM > 1.0) {
-            self.minValue = App.shared.config?.configSettings?.minimumFiveKMValue ?? 0.0
-        }else {
+        if (distanceInKM > 1.0 && distanceInKM <= 5) {
             self.minValue = App.shared.config?.configSettings?.minimumOneKMValue ?? 0.0
+            self.maxValue = App.shared.config?.configSettings?.MaximumFiveKmValue ?? 0.0
+        } else if (distanceInKM > 5.0 && distanceInKM <= 10) {
+            self.minValue = App.shared.config?.configSettings?.minimumFiveKMValue ?? 0.0
+            self.maxValue = App.shared.config?.configSettings?.MaximumTenKmValue ?? 0.0
+        } else if (distanceInKM > 10.0 && distanceInKM <= 20) {
+            self.minValue = App.shared.config?.configSettings?.minimumTenKmValue ?? 0.0
+            self.maxValue = App.shared.config?.configSettings?.MaximumTwentyKmValue ?? 0.0
+        } else if (distanceInKM > 20.0 && distanceInKM <= 30) {
+            self.minValue = App.shared.config?.configSettings?.MinimumTwentyKmValue ?? 0.0
+            self.maxValue = App.shared.config?.configSettings?.MaximumThirtyKmValue ?? 0.0
+        } else if  distanceInKM <= 1.0 {
+            self.minValue = App.shared.config?.configSettings?.minimumOneKMValue ?? 0.0
+            self.maxValue = App.shared.config?.configSettings?.MaximumFiveKmValue ?? 0.0
         }
-        self.maxValue = App.shared.config?.configSettings?.maximumValue ?? 0.0
+       // self.maxValue = App.shared.config?.configSettings?.maximumValue ?? 0.0
         self.lblMin.text = "\(self.minValue)"
-        self.lblMax.text = "\(App.shared.config?.configSettings?.maximumValue ?? 0.0)"
+        self.lblMax.text = "\(self.maxValue)"
         self.lblValue.text = "\(self.minValue)"
         
         ApiService.getDelivery(id: self.deliveryId ?? 0) { (response) in
