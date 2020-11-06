@@ -114,9 +114,9 @@ class TakeOrderVC: BaseVC, AVAudioPlayerDelegate {
         lblOrderDescription.placeholderColor = UIColor.black
         lblOrderDescription.isPlaceholderScrollEnabled = true
         
-        let driverLatLng = CLLocation(latitude: self.latitude ?? 0.0, longitude: self.longitude ?? 0.0)
-        let dropOffLatLng = CLLocation(latitude: self.fromLatitude ?? 0.0, longitude: self.fromLongitude ?? 0.0)
-        let distanceInMeters = dropOffLatLng.distance(from: driverLatLng)
+        let shopLatLng = CLLocation(latitude: self.fromLatitude ?? 0.0, longitude: self.fromLongitude ?? 0.0)
+        let dropOffLatLng = CLLocation(latitude: self.toLatitude ?? 0.0, longitude: self.toLongitude ?? 0.0)
+        let distanceInMeters = dropOffLatLng.distance(from: shopLatLng)
         let distanceInKM = distanceInMeters / 1000.0
         
         if (distanceInKM >= 1.0 && distanceInKM < 5) {
