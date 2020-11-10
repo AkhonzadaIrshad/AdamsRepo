@@ -43,7 +43,8 @@ class HomeMapVC: BaseViewController {
     @IBOutlet weak var lblDeliverTo: MyUILabel!
     
     // MARK: - Properties - public
-    
+    var driverLocation: LocationData?
+
     let cameraZoom : Float = 15.0
     var firstTime: Bool = true
     var selectedRoute: NSDictionary!
@@ -570,14 +571,13 @@ class HomeMapVC: BaseViewController {
             }
         }
     }
-    
-    
+        
     func drawLocationLine(driverLocation : LocationData, order : DatumDel) {
         var fromLatitude : Double?
         var fromLongitude : Double?
         var toLatitude : Double?
         var toLongitude : Double?
-        
+        self.driverLocation = driverLocation
         fromLatitude = driverLocation.latitude ?? 0.0
         fromLongitude = driverLocation.longitude ?? 0.0
         toLatitude = order.toLatitude ?? 0.0
@@ -972,6 +972,17 @@ extension HomeMapVC: UICollectionViewDelegate, UICollectionViewDataSource, UICol
             }
         }
         
+        cell.onTrack = {
+            DispatchQueue.main.async {
+                
+                let fromLatitude = self.driverLocation?.latitude ?? 0.0
+                let fromLongitude = self.driverLocation?.longitude ?? 0.0
+
+                let camera : GMSCameraPosition = GMSCameraPosition.camera(withLatitude: fromLatitude , longitude: fromLongitude , zoom: 15, bearing: 3, viewingAngle: 0)
+                
+                self.mapView.camera = camera
+            }
+        }
         self.getDriverLocation(item: item)
         
         return cell

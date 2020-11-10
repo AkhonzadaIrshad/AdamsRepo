@@ -1268,6 +1268,9 @@
 /* Class = "UILabel"; text = "Add your pin point by long pressing on map."; ObjectID = "wl4-A4-RMZ"; */
 "wl4-A4-RMZ.text" = "اضف موقعك الخاص على الخريطة بالضغط المطول";
 
+/* Object ID IY2-mh-Q9i of UIButton */
+"IY2-mh-Q9i.normalTitle" = "تتبع";
+
 /* Class = "UIButton"; normalTitle = "Track"; ObjectID = "wld-TF-0GR"; */
 "wld-TF-0GR.normalTitle" = "تتبع";
 

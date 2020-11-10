@@ -28,6 +28,7 @@ class PendingOrderCell: UICollectionViewCell {
     @IBOutlet weak var ivDot: UIImageView!
     
     var onChat : (() -> Void)? = nil
+    var onTrack: (() -> Void)? = nil
     
     @IBAction func chatAction(_ sender: Any) {
         if let onChat = self.onChat {
@@ -35,4 +36,9 @@ class PendingOrderCell: UICollectionViewCell {
         }
     }
     
+    @IBAction func trackAction(_ sender: Any) {
+        if let onTrack = self.onTrack {
+            onTrack()
+        }
+    }
 }

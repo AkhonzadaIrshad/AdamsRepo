@@ -8,6 +8,9 @@
 /* Class = "UILabel"; text = "Distance"; ObjectID = "0Uq-fT-4kx"; */
 "0Uq-fT-4kx.text" = "Distance";
 
+/* Object ID IY2-mh-Q9i of UIButton */
+"IY2-mh-Q9i.normalTitle" = "track";
+
 /* Class = "UIButton"; normalTitle = "Check This Offer"; ObjectID = "0mE-E5-yMM"; */
 "0mE-E5-yMM.normalTitle" = "More";
 
