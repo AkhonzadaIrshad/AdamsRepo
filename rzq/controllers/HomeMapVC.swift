@@ -41,6 +41,7 @@ class HomeMapVC: BaseViewController {
     @IBOutlet weak var houseTextField: UITextField!
     @IBOutlet weak var viewGoogleMap: UIView!
     @IBOutlet weak var lblDeliverTo: MyUILabel!
+    @IBOutlet weak var locationPinImageView: UIImageView!
     
     // MARK: - Properties - public
     var driverLocation: LocationData?
@@ -180,6 +181,8 @@ class HomeMapVC: BaseViewController {
     
     @IBAction func goToCurrentLocation(_ sender: Any) {
         let camera = GMSCameraPosition.camera(withLatitude: LabasLocationManager.shared.currentLocation?.coordinate.latitude ?? 0.0, longitude: LabasLocationManager.shared.currentLocation?.coordinate.longitude ?? 0.0, zoom: self.cameraZoom)
+        self.locationPinImageView.isHidden = false
+
         self.mapView?.animate(to: camera)
     }
     
@@ -974,7 +977,7 @@ extension HomeMapVC: UICollectionViewDelegate, UICollectionViewDataSource, UICol
         
         cell.onTrack = {
             DispatchQueue.main.async {
-                
+                self.locationPinImageView.isHidden = true
                 let fromLatitude = self.driverLocation?.latitude ?? 0.0
                 let fromLongitude = self.driverLocation?.longitude ?? 0.0
 
