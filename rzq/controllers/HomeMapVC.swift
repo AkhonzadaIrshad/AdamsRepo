@@ -960,7 +960,7 @@ extension HomeMapVC: UICollectionViewDelegate, UICollectionViewDataSource, UICol
         cell.ratingView.rating = item.providerRate ?? 0.0
         
         cell.lblPrice.text = "\(item.price ?? 0.0) \("currency".localized)"
-        cell.lblPayment.text = "cash".localized
+        cell.lblPayment.text = self.getPaymentMethod(method: item.paymentMethod ?? 0)
         
         cell.onChat = {
             DispatchQueue.main.async {
@@ -990,6 +990,19 @@ extension HomeMapVC: UICollectionViewDelegate, UICollectionViewDataSource, UICol
         
         return cell
         
+    }
+    
+    func getPaymentMethod(method: Int) -> String {
+        switch method {
+        case Constants.PAYMENT_METHOD_CASH:
+            return "cash".localized
+        case Constants.PAYMENT_METHOD_KNET:
+            return "knet".localized
+        case Constants.PAYMENT_METHOD_BALANCE:
+            return "coupon".localized
+        default:
+            return "cash".localized
+        }
     }
 }
 
