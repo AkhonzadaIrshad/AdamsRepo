@@ -110,6 +110,18 @@ class DeliveryStep1: BaseVC , Step3Delegate, AllShopDelegate, ImagePickerDelegat
     
     override func viewDidLoad() {
         super.viewDidLoad()
+
+        var displayToolView =  UserDefaults.standard.value(forKey: "displayToolView") as? Int ?? 0
+        if displayToolView < 2 {
+            displayToolView += 1
+            let gradientColor = UIColor.colorPrimary
+            let gradientColor2 = UIColor.colorPrimary
+            let preference = ToolTipPreferences()
+            preference.drawing.bubble.gradientColors = [gradientColor, gradientColor2]
+            btnCurrentLocation.showToolTip(identifier: "", message: "tool.message".localized, arrowPosition: .right, preferences: preference, delegate: nil)
+            UserDefaults.standard.set(displayToolView, forKey: "displayToolView")
+        }
+        
         let nib = UINib.init(nibName: "FilterSearchCell", bundle: nil)
         searchByKeywordTableView?.register(nib, forCellReuseIdentifier: "filtersearchcell")
         

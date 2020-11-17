@@ -1098,11 +1098,11 @@ extension HomeMapVC: LabasLocationManagerDelegate {
                 longitude = LabasLocationManager.shared.currentLocation?.coordinate.longitude ?? 0
             }
         }
-        if firstTime {
-            let loc = CLLocationCoordinate2D(latitude: latitude , longitude: longitude)
-            self.mapView.camera = GMSCameraPosition(target: loc, zoom: 15, bearing: 0, viewingAngle: 0)
-            firstTime = false
-        }
+            if firstTime {
+                let loc = CLLocationCoordinate2D(latitude: latitude , longitude: longitude)
+                self.mapView.camera = GMSCameraPosition(target: loc, zoom: 15, bearing: 0, viewingAngle: 0)
+                firstTime = false
+            }
       
     }
 }
