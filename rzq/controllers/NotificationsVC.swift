@@ -40,6 +40,7 @@ class NotificationsVC: BaseViewController,LabasLocationManagerDelegate, AcceptBi
     var alertsCount: Int = 0
     var hasNewValue: Bool = false
     var refreshControl = UIRefreshControl()
+    @IBOutlet weak var navbarHeightConstraint: NSLayoutConstraint!
     
     // MARK: - Methodes - public - life cycle
     
@@ -49,8 +50,10 @@ class NotificationsVC: BaseViewController,LabasLocationManagerDelegate, AcceptBi
         SVProgressHUD.setDefaultMaskType(.clear)
         if DataManager.loadUser().data?.roles?.contains(find: "Driver") ?? false {
             self.navBar.isHidden = false
+            navbarHeightConstraint.constant = 80
         } else {
             self.navBar.isHidden = true
+            navbarHeightConstraint.constant = 0
         }
         let titleTextAttributes = [NSAttributedString.Key.foregroundColor: UIColor.white]
         let titleTextAttributes2 = [NSAttributedString.Key.foregroundColor: UIColor.black]
@@ -356,6 +359,22 @@ class NotificationsVC: BaseViewController,LabasLocationManagerDelegate, AcceptBi
 
 extension NotificationsVC: UITableViewDelegate, UITableViewDataSource {
     
+//    func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {
+//        var item = DatumNot(id: 0, type: 0, createdDate: "", createdTime: "", data: "", userID: "", orderID: 0)
+//        if (self.segmentControl.selectedSegmentIndex == 0) {
+//            item = self.alerts[indexPath.row]
+//        }else {
+//            item = self.actions[indexPath.row]
+//        }
+//        switch item.type {
+//        
+//        case Constants.BID_CREATED: break
+//           // return 330.0
+//       
+//        default:
+//           return 165.0
+//        }
+//    }
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
         if let data = DataManager.loadUser().data, data.isOnline == false && (data.roles?.contains(find: "Driver") ?? false) {
             return 0

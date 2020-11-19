@@ -1,9 +1,9 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<document type="com.apple.InterfaceBuilder3.CocoaTouch.XIB" version="3.0" toolsVersion="17156" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" useSafeAreas="YES" colorMatched="YES">
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.XIB" version="3.0" toolsVersion="17506" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" useSafeAreas="YES" colorMatched="YES">
     <device id="retina6_1" orientation="portrait" appearance="light"/>
     <dependencies>
         <deployment identifier="iOS"/>
-        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="17125"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="17505"/>
         <capability name="Safe area layout guides" minToolsVersion="9.0"/>
         <capability name="System colors in document resources" minToolsVersion="11.0"/>
         <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
@@ -15,14 +15,21 @@
             <rect key="frame" x="0.0" y="0.0" width="437" height="316"/>
             <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
             <subviews>
+                <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="Zzw-OM-hn9">
+                    <rect key="frame" x="0.0" y="267" width="437" height="2"/>
+                    <color key="backgroundColor" white="0.66666666666666663" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                    <constraints>
+                        <constraint firstAttribute="height" constant="2" id="XaV-zu-NH5"/>
+                    </constraints>
+                </view>
                 <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="STd-iQ-n5P" customClass="CardView" customModule="rzq" customModuleProvider="target">
-                    <rect key="frame" x="0.0" y="0.0" width="437" height="282"/>
+                    <rect key="frame" x="0.0" y="0.0" width="437" height="247"/>
                     <subviews>
                         <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="Uk8-P7-rVd" customClass="CardView" customModule="rzq" customModuleProvider="target">
-                            <rect key="frame" x="1" y="1" width="435" height="280"/>
+                            <rect key="frame" x="1" y="1" width="435" height="245"/>
                             <subviews>
                                 <stackView opaque="NO" contentMode="scaleToFill" axis="vertical" spacing="10" translatesAutoresizingMaskIntoConstraints="NO" id="qnF-c9-ika">
-                                    <rect key="frame" x="10" y="10" width="415" height="260"/>
+                                    <rect key="frame" x="10" y="10" width="415" height="225"/>
                                     <subviews>
                                         <stackView opaque="NO" contentMode="scaleToFill" alignment="center" spacing="12" translatesAutoresizingMaskIntoConstraints="NO" id="Xms-aP-cPt">
                                             <rect key="frame" x="0.0" y="0.0" width="415" height="50"/>
@@ -124,10 +131,10 @@
                                             </constraints>
                                         </stackView>
                                         <stackView opaque="NO" contentMode="scaleToFill" alignment="center" spacing="10" translatesAutoresizingMaskIntoConstraints="NO" id="AAH-kM-xHa">
-                                            <rect key="frame" x="0.0" y="130" width="415" height="95"/>
+                                            <rect key="frame" x="0.0" y="130" width="415" height="60"/>
                                             <subviews>
                                                 <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="I4G-Ou-ysn" customClass="RoundedView" customModule="rzq" customModuleProvider="target">
-                                                    <rect key="frame" x="0.0" y="17.5" width="60" height="60"/>
+                                                    <rect key="frame" x="0.0" y="0.0" width="60" height="60"/>
                                                     <subviews>
                                                         <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="lOv-0T-oqc">
                                                             <rect key="frame" x="0.0" y="30" width="60" height="0.0"/>
@@ -158,7 +165,7 @@
                                                     </userDefinedRuntimeAttributes>
                                                 </view>
                                                 <stackView opaque="NO" contentMode="scaleToFill" distribution="fillEqually" spacing="10" translatesAutoresizingMaskIntoConstraints="NO" id="xkA-fi-73i">
-                                                    <rect key="frame" x="70" y="27.5" width="285" height="40"/>
+                                                    <rect key="frame" x="70" y="10" width="285" height="40"/>
                                                     <subviews>
                                                         <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="MIY-NL-ivo" customClass="RoundedView" customModule="rzq" customModuleProvider="target">
                                                             <rect key="frame" x="0.0" y="0.0" width="137.5" height="40"/>
@@ -218,7 +225,7 @@
                                                     </constraints>
                                                 </stackView>
                                                 <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="system" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="kI4-lQ-q0D" customClass="MyUIButton" customModule="rzq" customModuleProvider="target">
-                                                    <rect key="frame" x="365" y="33.5" width="50" height="28"/>
+                                                    <rect key="frame" x="365" y="16" width="50" height="28"/>
                                                     <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                                     <constraints>
                                                         <constraint firstAttribute="width" constant="50" id="pQ4-jl-wke"/>
@@ -240,7 +247,7 @@
                                             </constraints>
                                         </stackView>
                                         <stackView opaque="NO" contentMode="scaleToFill" distribution="fillEqually" translatesAutoresizingMaskIntoConstraints="NO" id="RfG-Sj-A51">
-                                            <rect key="frame" x="0.0" y="235" width="415" height="25"/>
+                                            <rect key="frame" x="0.0" y="200" width="415" height="25"/>
                                             <subviews>
                                                 <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Label" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="TeR-XQ-HFE" customClass="MyUILabel" customModule="rzq" customModuleProvider="target">
                                                     <rect key="frame" x="0.0" y="0.0" width="207.5" height="25"/>
@@ -336,10 +343,14 @@
             <viewLayoutGuide key="safeArea" id="vUN-kp-3ea"/>
             <color key="backgroundColor" systemColor="systemBackgroundColor"/>
             <constraints>
+                <constraint firstAttribute="bottom" secondItem="Zzw-OM-hn9" secondAttribute="bottom" constant="12" id="2ti-Zs-GUP"/>
                 <constraint firstItem="STd-iQ-n5P" firstAttribute="leading" secondItem="iN0-l3-epB" secondAttribute="leading" id="Hfx-Xn-XTw"/>
+                <constraint firstAttribute="trailing" secondItem="Zzw-OM-hn9" secondAttribute="trailing" id="TTM-1g-1Sh"/>
                 <constraint firstItem="vUN-kp-3ea" firstAttribute="trailing" secondItem="STd-iQ-n5P" secondAttribute="trailing" id="Yqg-UZ-U8d"/>
+                <constraint firstItem="STd-iQ-n5P" firstAttribute="bottom" secondItem="iN0-l3-epB" secondAttribute="bottom" constant="-24" id="bqT-Tc-iDS"/>
                 <constraint firstItem="vUN-kp-3ea" firstAttribute="bottom" secondItem="STd-iQ-n5P" secondAttribute="bottom" id="gp7-5J-CdY"/>
                 <constraint firstItem="STd-iQ-n5P" firstAttribute="top" secondItem="iN0-l3-epB" secondAttribute="top" id="lUp-0p-JXz"/>
+                <constraint firstItem="Zzw-OM-hn9" firstAttribute="leading" secondItem="iN0-l3-epB" secondAttribute="leading" id="tRF-xg-sV4"/>
             </constraints>
             <freeformSimulatedSizeMetrics key="simulatedDestinationMetrics"/>
             <connections>
