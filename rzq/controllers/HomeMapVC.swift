@@ -80,7 +80,7 @@ class HomeMapVC: BaseViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
     
-        if let street = UserDefaults.standard.string(forKey: "house") {
+        if let street = UserDefaults.standard.string(forKey: "street") {
             self.streetTextField.text = street
         }
         
