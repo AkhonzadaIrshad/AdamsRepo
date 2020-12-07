@@ -1090,6 +1090,11 @@ extension HomeMapVC: LabasLocationManagerDelegate {
         if DataManager.loadUser().data?.roles?.contains(find: "Driver") == true {
             latitude = LabasLocationManager.shared.currentLocation?.coordinate.latitude ?? 0
             longitude = LabasLocationManager.shared.currentLocation?.coordinate.longitude ?? 0
+            if (self.isProvider()) {
+                ApiService.updateLocation(Authorization: DataManager.loadUser().data?.accessToken ?? "", latitude: latitude, longitude: longitude) { (response) in
+                    
+                }
+            }
         } else {
              latitude = UserDefaults.standard.double(forKey: "lastSelectedLatitude")
              longitude = UserDefaults.standard.double(forKey: "lastSelectedLongitude")
@@ -1097,11 +1102,20 @@ extension HomeMapVC: LabasLocationManagerDelegate {
                 latitude = LabasLocationManager.shared.currentLocation?.coordinate.latitude ?? 0
                 longitude = LabasLocationManager.shared.currentLocation?.coordinate.longitude ?? 0
             }
+            if (self.isProvider()) {
+                ApiService.updateLocation(Authorization: DataManager.loadUser().data?.accessToken ?? "", latitude: latitude, longitude: longitude) { (response) in
+                    
+                }
+            }
         }
             if firstTime {
                 let loc = CLLocationCoordinate2D(latitude: latitude , longitude: longitude)
                 self.mapView.camera = GMSCameraPosition(target: loc, zoom: 15, bearing: 0, viewingAngle: 0)
                 firstTime = false
+                if (self.isProvider()) {
+                    ApiService.updateLocation(Authorization: DataManager.loadUser().data?.accessToken ?? "", latitude: latitude, longitude: longitude) { (response) in
+                    }
+                }
             }
       
     }

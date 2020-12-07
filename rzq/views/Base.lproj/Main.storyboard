@@ -14,11 +14,11 @@
         <array key="Cairo-Regular.ttf">
             <string>Cairo-Regular</string>
         </array>
-        <array key="arabic_medium.ttf">
-            <string>Tajawal-Medium</string>
-        </array>
         <array key="arabic_regular.ttf">
             <string>Tajawal-Regular</string>
+        </array>
+        <array key="arabic_semibold.ttf">
+            <string>Tajawal-Medium</string>
         </array>
         <array key="english_regular.otf">
             <string>SFProDisplay-Regular</string>
@@ -17765,6 +17765,19 @@
                                     <constraint firstAttribute="height" constant="80" id="zKI-Vz-YeB"/>
                                 </constraints>
                             </view>
+                            <button hidden="YES" opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="system" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="ujS-XL-m0i">
+                                <rect key="frame" x="258" y="303" width="105" height="30"/>
+                                <color key="backgroundColor" red="0.91502684349999996" green="0.62828755380000001" blue="0.12914347649999999" alpha="1" colorSpace="custom" customColorSpace="displayP3"/>
+                                <constraints>
+                                    <constraint firstAttribute="width" constant="105" id="STP-ZP-TLN"/>
+                                </constraints>
+                                <state key="normal" title="withrow">
+                                    <color key="titleColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                                </state>
+                                <userDefinedRuntimeAttributes>
+                                    <userDefinedRuntimeAttribute type="string" keyPath="font_type" value="14,4"/>
+                                </userDefinedRuntimeAttributes>
+                            </button>
                         </subviews>
                         <viewLayoutGuide key="safeArea" id="gcc-wr-aUN"/>
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
@@ -17787,6 +17800,7 @@
                             <constraint firstItem="gcc-wr-aUN" firstAttribute="trailing" secondItem="IVO-Wy-ZPd" secondAttribute="trailing" constant="20" id="QdL-iC-uQv"/>
                             <constraint firstItem="ZxU-K9-FxZ" firstAttribute="top" secondItem="IVO-Wy-ZPd" secondAttribute="bottom" constant="5" id="Rxn-I3-MQy"/>
                             <constraint firstItem="Cal-TT-9Kn" firstAttribute="leading" secondItem="1Tj-Ga-0O2" secondAttribute="leading" constant="10" id="ShW-j3-gYW"/>
+                            <constraint firstItem="83Z-MH-qcX" firstAttribute="top" secondItem="ujS-XL-m0i" secondAttribute="bottom" constant="7" id="Ukp-OM-Nbm"/>
                             <constraint firstAttribute="trailing" secondItem="Zfg-WV-Kzs" secondAttribute="trailing" constant="10" id="VVh-mq-H3o"/>
                             <constraint firstAttribute="bottom" secondItem="w1C-MK-MO0" secondAttribute="bottom" id="W3Y-Y6-0xv"/>
                             <constraint firstItem="pO8-7w-er0" firstAttribute="leading" secondItem="gcc-wr-aUN" secondAttribute="leading" constant="20" id="WPL-cW-Np8"/>
@@ -17825,6 +17839,7 @@
                             <constraint firstItem="n2V-XQ-2tr" firstAttribute="top" secondItem="1Tj-Ga-0O2" secondAttribute="top" id="rmg-Vi-IKf"/>
                             <constraint firstItem="gcc-wr-aUN" firstAttribute="trailing" secondItem="neB-q2-PUZ" secondAttribute="trailing" constant="20" id="rph-lA-Dc9"/>
                             <constraint firstAttribute="trailing" secondItem="83Z-MH-qcX" secondAttribute="trailing" constant="10" id="uMI-s7-7bh"/>
+                            <constraint firstItem="gcc-wr-aUN" firstAttribute="trailing" secondItem="ujS-XL-m0i" secondAttribute="trailing" constant="12" id="vCk-H2-eoL"/>
                             <constraint firstAttribute="trailing" secondItem="Cal-TT-9Kn" secondAttribute="trailing" constant="10" id="voc-A2-hzX"/>
                             <constraint firstItem="3pP-zC-Wfk" firstAttribute="leading" secondItem="gcc-wr-aUN" secondAttribute="leading" constant="10" id="wkW-jY-ErJ"/>
                             <constraint firstItem="TWz-6m-w2G" firstAttribute="top" secondItem="n3x-0l-Uhp" secondAttribute="bottom" constant="5" id="xJJ-6h-BKW"/>
@@ -17856,6 +17871,7 @@
                         <outlet property="viewEarnings" destination="TWz-6m-w2G" id="xZV-sn-aSJ"/>
                         <outlet property="viewRegisterDriver" destination="3pP-zC-Wfk" id="gjW-dm-ue4"/>
                         <outlet property="viewRegisterPRovider" destination="bd0-6a-dVz" id="N6m-px-DLz"/>
+                        <outlet property="withrowButton" destination="ujS-XL-m0i" id="AAW-Jl-50y"/>
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="xun-Ov-NsW" userLabel="First Responder" sceneMemberID="firstResponder"/>
@@ -17870,7 +17886,7 @@
                     </connections>
                 </tapGestureRecognizer>
             </objects>
-            <point key="canvasLocation" x="7174" y="1572"/>
+            <point key="canvasLocation" x="7173.6000000000004" y="1571.6748768472908"/>
         </scene>
         <!--Edit ProfileVC-->
         <scene sceneID="Tpk-64-pur">
@@ -21486,7 +21502,7 @@
                                 <rect key="frame" x="0.0" y="87" width="375" height="100"/>
                                 <subviews>
                                     <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Notifications" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="HO9-nX-gir" customClass="MyUILabel" customModule="rzq" customModuleProvider="target">
-                                        <rect key="frame" x="20" y="10" width="107" height="37.666666666666664"/>
+                                        <rect key="frame" x="20" y="9.9999999999999982" width="112" height="23.333333333333329"/>
                                         <fontDescription key="fontDescription" name="Cairo-Regular" family="Cairo" pointSize="20"/>
                                         <color key="textColor" red="0.24313725490196078" green="0.054901960784313725" blue="0.40392156862745099" alpha="1" colorSpace="calibratedRGB"/>
                                         <nil key="highlightedColor"/>
@@ -21495,7 +21511,7 @@
                                         </userDefinedRuntimeAttributes>
                                     </label>
                                     <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Turn Notifications ON or Off" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="NGg-52-YiS" customClass="MyUILabel" customModule="rzq" customModuleProvider="target">
-                                        <rect key="frame" x="20" y="57.666666666666657" width="185.66666666666666" height="24"/>
+                                        <rect key="frame" x="20" y="43.333333333333343" width="198" height="24"/>
                                         <constraints>
                                             <constraint firstAttribute="height" constant="24" id="elY-41-xTQ"/>
                                         </constraints>
@@ -21538,7 +21554,7 @@
                                 <rect key="frame" x="0.0" y="187" width="375" height="80"/>
                                 <subviews>
                                     <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Language" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="uGG-sH-IUg" customClass="MyUILabel" customModule="rzq" customModuleProvider="target">
-                                        <rect key="frame" x="20" y="21.333333333333339" width="81.666666666666671" height="37.666666666666657"/>
+                                        <rect key="frame" x="20.000000000000007" y="28.333333333333343" width="88.666666666666686" height="23.333333333333329"/>
                                         <fontDescription key="fontDescription" name="Cairo-Regular" family="Cairo" pointSize="20"/>
                                         <color key="textColor" red="0.24313725490196078" green="0.054901960784313725" blue="0.40392156862745099" alpha="1" colorSpace="calibratedRGB"/>
                                         <nil key="highlightedColor"/>
@@ -21554,26 +21570,26 @@
                                         </constraints>
                                     </view>
                                     <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="English" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="avm-Z0-cTH">
-                                        <rect key="frame" x="319" y="26" width="46" height="28.333333333333329"/>
+                                        <rect key="frame" x="316.33333333333331" y="31.333333333333343" width="48.666666666666686" height="17.666666666666671"/>
                                         <fontDescription key="fontDescription" name="Cairo-Regular" family="Cairo" pointSize="15"/>
                                         <color key="textColor" white="0.33333333329999998" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                         <nil key="highlightedColor"/>
                                     </label>
                                     <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="ic_unchecked_orange" translatesAutoresizingMaskIntoConstraints="NO" id="m4R-6p-KjD">
-                                        <rect key="frame" x="294" y="30" width="20" height="20"/>
+                                        <rect key="frame" x="291.33333333333331" y="30" width="20" height="20"/>
                                         <constraints>
                                             <constraint firstAttribute="height" constant="20" id="Mye-Qf-55w"/>
                                             <constraint firstAttribute="width" constant="20" id="OqB-JI-GrR"/>
                                         </constraints>
                                     </imageView>
                                     <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="العربية" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="aW2-h1-oL0">
-                                        <rect key="frame" x="237" y="32.666666666666657" width="42" height="15"/>
+                                        <rect key="frame" x="234.33333333333334" y="32.666666666666657" width="42.000000000000028" height="15"/>
                                         <fontDescription key="fontDescription" name="Tajawal-Regular" family="Tajawal" pointSize="15"/>
                                         <color key="textColor" white="0.33333333329999998" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                         <nil key="highlightedColor"/>
                                     </label>
                                     <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="ic_checked" translatesAutoresizingMaskIntoConstraints="NO" id="ov3-LE-0y8">
-                                        <rect key="frame" x="207" y="30" width="20" height="20"/>
+                                        <rect key="frame" x="204.33333333333334" y="30" width="20" height="20"/>
                                         <constraints>
                                             <constraint firstAttribute="width" constant="20" id="cI5-4y-Or2"/>
                                             <constraint firstAttribute="height" constant="20" id="lfm-Zt-Sdd"/>

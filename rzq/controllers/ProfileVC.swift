@@ -15,6 +15,7 @@ class ProfileVC: BaseVC {
     @IBOutlet weak var ivProfile: CircleImage!
     @IBOutlet weak var ivDriverBadge: UIImageView!
     @IBOutlet weak var ivProviderBadge: UIImageView!
+    @IBOutlet weak var withrowButton: UIButton!
     
     @IBOutlet weak var ivHandle: UIImageView!
     
@@ -124,6 +125,11 @@ class ProfileVC: BaseVC {
                 let finalTotal = total / 10.0
                 self.lblDueAmount.text = "\(response.dataProfileObj?.dueAmount ?? 0.0) \("currency".localized)"
                 
+                if response.dataProfileObj?.dueAmount ?? 0 >= -10 {
+                    self.withrowButton.isHidden = false
+                } else {
+                    self.withrowButton.isHidden = true
+                }
                 self.viewEarnings.isHidden = false
                 self.earningsHeight.constant = 51
                 self.lblEarnings.text = "\(response.dataProfileObj?.earnings ?? 0) \("currency".localized)"
@@ -132,6 +138,7 @@ class ProfileVC: BaseVC {
                 self.lineDueAmount.isHidden = true
                 self.dueTitleHeight.constant = 0
                 self.lblDueTitle.isHidden = true
+                self.withrowButton.isHidden = true
                 self.lblDueAmount.text = ""
                 self.viewEarnings.isHidden = true
                 self.earningsHeight.constant = 0
