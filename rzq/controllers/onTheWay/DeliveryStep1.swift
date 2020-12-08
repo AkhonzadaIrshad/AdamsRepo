@@ -942,7 +942,12 @@ class DeliveryStep1: BaseVC , Step3Delegate, AllShopDelegate, ImagePickerDelegat
                 else { return }
             
             DispatchQueue.main.async {
-                marker.icon = self.imageWithImage(image: image, scaledToSize: CGSize(width: 48.0, height: 48.0))
+               // marker.icon = self.imageWithImage(image: image, scaledToSize: CGSize(width: 48.0, height: 48.0))
+                let image = self.imageWithImage(image: image, scaledToSize: CGSize(width: 48.0, height: 48.0))
+                let storeView = StoreMarkerView.instanceFromNib()
+                storeView.storiImaView.image = image
+                storeView.storiImaView.layer.cornerRadius = 14
+                marker.iconView = storeView
                 //  marker.icon = image
             }
         }

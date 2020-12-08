@@ -15,6 +15,8 @@
 		8A0878C82531272200C4D0C4 /* NearByTypes.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8A0878C72531272200C4D0C4 /* NearByTypes.swift */; };
 		8A3D9A4525642AB40012711C /* ToolTip.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8A3D9A4425642AB40012711C /* ToolTip.swift */; };
 		8A3D9A4825642B140012711C /* Extension.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8A3D9A4725642B140012711C /* Extension.swift */; };
+		8AE6E066258015AD00889D2C /* StoreMarkerView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8AE6E065258015AD00889D2C /* StoreMarkerView.swift */; };
+		8AE6E06A258015B900889D2C /* StoreMarkerView.xib in Resources */ = {isa = PBXBuildFile; fileRef = 8AE6E069258015B900889D2C /* StoreMarkerView.xib */; };
 		8B05CDC42361BD8700E0FF9B /* ShopOwnerMenuResponse.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8B05CDC32361BD8700E0FF9B /* ShopOwnerMenuResponse.swift */; };
 		8B05CDC62361C00F00E0FF9B /* OwnerShopListResponse.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8B05CDC52361C00F00E0FF9B /* OwnerShopListResponse.swift */; };
 		8B112074235DA0F2005F2122 /* ShopMenuTabCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8B112073235DA0F2005F2122 /* ShopMenuTabCell.swift */; };
@@ -246,6 +248,8 @@
 		8A0878C72531272200C4D0C4 /* NearByTypes.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NearByTypes.swift; sourceTree = "<group>"; };
 		8A3D9A4425642AB40012711C /* ToolTip.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ToolTip.swift; sourceTree = "<group>"; };
 		8A3D9A4725642B140012711C /* Extension.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Extension.swift; sourceTree = "<group>"; };
+		8AE6E065258015AD00889D2C /* StoreMarkerView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = StoreMarkerView.swift; sourceTree = "<group>"; };
+		8AE6E069258015B900889D2C /* StoreMarkerView.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = StoreMarkerView.xib; sourceTree = "<group>"; };
 		8B05CDC32361BD8700E0FF9B /* ShopOwnerMenuResponse.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ShopOwnerMenuResponse.swift; sourceTree = "<group>"; };
 		8B05CDC52361C00F00E0FF9B /* OwnerShopListResponse.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = OwnerShopListResponse.swift; sourceTree = "<group>"; };
 		8B112073235DA0F2005F2122 /* ShopMenuTabCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ShopMenuTabCell.swift; sourceTree = "<group>"; };
@@ -516,6 +520,15 @@
 			path = "Search Location";
 			sourceTree = "<group>";
 		};
+		8AE6E0642580157D00889D2C /* Custom Marker */ = {
+			isa = PBXGroup;
+			children = (
+				8AE6E065258015AD00889D2C /* StoreMarkerView.swift */,
+				8AE6E069258015B900889D2C /* StoreMarkerView.xib */,
+			);
+			path = "Custom Marker";
+			sourceTree = "<group>";
+		};
 		8B1F91C522561DFB00B639F1 /* models */ = {
 			isa = PBXGroup;
 			children = (
@@ -755,6 +768,7 @@
 		8B9CA8302250CA7700DE0DC4 /* CustomUI */ = {
 			isa = PBXGroup;
 			children = (
+				8AE6E0642580157D00889D2C /* Custom Marker */,
 				C1F86AF224D75F86005698F4 /* Navbar */,
 				8B9CA8312250CA8400DE0DC4 /* MyUIButton.swift */,
 				8B9CA8332250CA9C00DE0DC4 /* MyUILabel.swift */,
@@ -1074,6 +1088,7 @@
 				8BF2224222720FC0005BE71D /* Localizable.strings in Resources */,
 				8BDA8B7D23856BA800BAFDC3 /* pending_en.gif in Resources */,
 				8B9CA8432250CCDF00DE0DC4 /* english_bold.ttf in Resources */,
+				8AE6E06A258015B900889D2C /* StoreMarkerView.xib in Resources */,
 				C185A56C24CDC17A001B6B10 /* Cairo-Bold.ttf in Resources */,
 				8BF222212271A9C5005BE71D /* recording.gif in Resources */,
 				8BD3CA8E227884BF003ABC49 /* pending.gif in Resources */,
@@ -1267,6 +1282,7 @@
 				8BCB780D2254E83A00E52ED0 /* TakeOrderVC.swift in Sources */,
 				8BDAA8B72275905D00F59D5E /* ImageSliderVC.swift in Sources */,
 				8B3DC29E236044930089B35A /* MenuListResponse.swift in Sources */,
+				8AE6E066258015AD00889D2C /* StoreMarkerView.swift in Sources */,
 				8B121BA12265D4BB0083069F /* FAQsResponse.swift in Sources */,
 				8BEF6497225394B4003AE522 /* HomeListVC.swift in Sources */,
 				8BF42427229B133C0014596F /* TenderStep1.swift in Sources */,
