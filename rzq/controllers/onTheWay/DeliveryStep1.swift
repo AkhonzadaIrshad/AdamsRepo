@@ -105,6 +105,8 @@ class DeliveryStep1: BaseVC , Step3Delegate, AllShopDelegate, ImagePickerDelegat
     var searchedText: String?
     var edtMoreDetails: String?
     var autocompleteResults :[GApiResponse.Autocomplete] = []
+    var myscale = CGFloat()
+
 
     // MARK: - Methods
     
@@ -563,11 +565,11 @@ class DeliveryStep1: BaseVC , Step3Delegate, AllShopDelegate, ImagePickerDelegat
         gMap = GMSMapView.map(withFrame: CGRect(x: 0, y: 0, width: self.mapView.frame.width, height: self.mapView.frame.height), camera: camera)
         gMap?.delegate = self
         gMap?.isMyLocationEnabled = true
-        let marker = GMSMarker()
-        marker.position = CLLocationCoordinate2D(latitude: self.latitude ?? 0.0, longitude: self.longitude ?? 0.0)
-        marker.title =  ""
-        marker.snippet = ""
-        marker.map = gMap
+//        let marker = GMSMarker()
+//        marker.position = CLLocationCoordinate2D(latitude: self.latitude ?? 0.0, longitude: self.longitude ?? 0.0)
+//        marker.title =  ""
+//        marker.snippet = ""
+//       // marker.map = gMap
         
         self.mapView.addSubview(gMap!)
         gMap?.bindFrameToSuperviewBounds()
@@ -880,7 +882,7 @@ class DeliveryStep1: BaseVC , Step3Delegate, AllShopDelegate, ImagePickerDelegat
     
 
     
-    func addShopsMarkers() {
+    func addShopsMarkers(useScale: Bool = false) {
         self.gMap?.clear()
         for center in self.shops {
             let marker = GMSMarker()
@@ -890,7 +892,9 @@ class DeliveryStep1: BaseVC , Step3Delegate, AllShopDelegate, ImagePickerDelegat
             self.singleMarker?.icon = UIImage(named: "ic_shop_empty")
             // snuff1
             let url = URL(string: "\(Constants.IMAGE_URL)\(center.type?.icon ?? "")")
-            self.applyMarkerImage(from: url!, to: marker)
+            if useScale {
+                self.applyMarkerImage(from: url!, to: marker,isScaled: useScale)
+            }
             self.singleMarker?.map = self.gMap
             marker.map = gMap
             self.shopMarkers.append(marker)
@@ -902,7 +906,7 @@ class DeliveryStep1: BaseVC , Step3Delegate, AllShopDelegate, ImagePickerDelegat
         marker.map = gMap
     }
     
-    func filterShopsMarkers(selectedShopTypeId: Int) {
+    func filterShopsMarkers(selectedShopTypeId: Int, isScaled: Bool = false, dispalyShopeName: Bool = false) {
         self.gMap?.clear()
         let selectedShops = self.shops.filter({$0.type?.id == selectedShopTypeId})
         for center in selectedShops{
@@ -910,19 +914,37 @@ class DeliveryStep1: BaseVC , Step3Delegate, AllShopDelegate, ImagePickerDelegat
             marker.position = CLLocationCoordinate2D(latitude: center.latitude ?? 0.0, longitude: center.longitude ?? 0.0)
             marker.title =  "\(center.id ?? 0)"
             marker.snippet = "\(center.phoneNumber ?? "")"
-            self.singleMarker?.icon = UIImage(named: "ic_shop_empty")
+            //self.singleMarker?.icon = UIImage(named: "ic_shop_empty")
             // snuff1
             let url = URL(string: "\(Constants.IMAGE_URL)\(center.type?.icon ?? "")")
-            self.applyMarkerImage(from: url!, to: marker)
+            self.applyMarkerImage(from: url!, to: marker, isScaled: isScaled, dispalyShopeName: dispalyShopeName, ShopeName: center.name ?? "")
+
             self.singleMarker?.map = self.gMap
-            marker.map = gMap
             self.shopMarkers.append(marker)
         }
-        let marker = GMSMarker()
-        marker.position = CLLocationCoordinate2D(latitude: self.latitude ?? 0.0, longitude: self.longitude ?? 0.0)
-        marker.title =  "my_location"
-        marker.snippet = ""
-        marker.map = gMap
+//        let marker = GMSMarker()
+//        marker.position = CLLocationCoordinate2D(latitude: self.latitude ?? 0.0, longitude: self.longitude ?? 0.0)
+//        marker.title =  "my_location"
+//        marker.snippet = ""
+//        marker.map = gMap
+    }
+    
+    func filterShopsInfoMarkers(selectedShopTypeId: Int, isScaled: Bool = false, dispalyShopeName: Bool = false) {
+        self.gMap?.clear()
+        let selectedShops = self.shops.filter({$0.type?.id == selectedShopTypeId})
+        for center in selectedShops{
+            let marker = GMSMarker()
+            marker.position = CLLocationCoordinate2D(latitude: center.latitude ?? 0.0, longitude: center.longitude ?? 0.0)
+            marker.title =  "\(center.id ?? 0)"
+            marker.snippet = "\(center.phoneNumber ?? "")"
+            //self.singleMarker?.icon = UIImage(named: "ic_shop_empty")
+            // snuff1
+            let url = URL(string: "\(Constants.IMAGE_URL)\(center.type?.icon ?? "")")
+            self.applyInfoMarkerImage(from: url!, to: marker, isScaled: isScaled, dispalyShopeName: dispalyShopeName, ShopeName: center.name ?? "")
+
+            self.singleMarker?.map = self.gMap
+            self.shopMarkers.append(marker)
+        }
     }
     
     func showShopsList() {
@@ -934,7 +956,7 @@ class DeliveryStep1: BaseVC , Step3Delegate, AllShopDelegate, ImagePickerDelegat
         }
     }
     
-    func applyMarkerImage(from url: URL, to marker: GMSMarker) {
+    func applyMarkerImage(from url: URL, to marker: GMSMarker, isScaled: Bool = false, dispalyShopeName: Bool = false, ShopeName: String = "") {
         DispatchQueue.global(qos: .background).async {
             guard let data = try? Data(contentsOf: url),
                 // let image = UIImage(data: data)?.cropped()
@@ -945,10 +967,45 @@ class DeliveryStep1: BaseVC , Step3Delegate, AllShopDelegate, ImagePickerDelegat
                // marker.icon = self.imageWithImage(image: image, scaledToSize: CGSize(width: 48.0, height: 48.0))
                 let image = self.imageWithImage(image: image, scaledToSize: CGSize(width: 48.0, height: 48.0))
                 let storeView = StoreMarkerView.instanceFromNib()
+                if isScaled {
+                storeView.transform = CGAffineTransform.identity.scaledBy(x: self.myscale, y: self.myscale);
+                }
+
                 storeView.storiImaView.image = image
                 storeView.storiImaView.layer.cornerRadius = 14
                 marker.iconView = storeView
+                marker.map = self.gMap
+
+            }
+        }
+    }
+    
+    func applyInfoMarkerImage(from url: URL, to marker: GMSMarker, isScaled: Bool = false, dispalyShopeName: Bool = false, ShopeName: String = "") {
+        DispatchQueue.global(qos: .background).async {
+            guard let data = try? Data(contentsOf: url),
+                // let image = UIImage(data: data)?.cropped()
+                let image = UIImage(data: data)
+                else { return }
+            
+            DispatchQueue.main.async {
+               // marker.icon = self.imageWithImage(image: image, scaledToSize: CGSize(width: 48.0, height: 48.0))
+                let image = self.imageWithImage(image: image, scaledToSize: CGSize(width: 48.0, height: 48.0))
+                let storeView = MarkerInfo.instanceFromNib()
+                if isScaled {
+                storeView.transform = CGAffineTransform.identity.scaledBy(x: self.myscale, y: self.myscale);
+                }
+
+                storeView.markerImageView.image = image
+                storeView.storeNameLabel.text = ShopeName
+                storeView.layer.borderWidth = 1
+                storeView.layer.borderColor = UIColor.clear.cgColor
+                //storeView.dropShadow(color: .darkGray, opacity: 1, offSet: CGSize(width: -1, height: 1), radius: 3, scale: true)
+                storeView.layer.cornerRadius = 10
+
+                marker.iconView = storeView
                 //  marker.icon = image
+                marker.map = self.gMap
+
             }
         }
     }
@@ -1201,6 +1258,21 @@ extension DeliveryStep1 : GMSMapViewDelegate {
         toolTipView?.removeFromSuperview()
     }
     
+    func mapView(_ mapView: GMSMapView, idleAt position: GMSCameraPosition) {
+        
+        if position.zoom > 12 && position.zoom < 15 {
+            myscale = 2
+            filterShopsMarkers(selectedShopTypeId: self.selectdCategory?.id ?? 0, isScaled: true)
+        } else if position.zoom >= 15 {
+           // filterShopsMarkers(selectedShopTypeId: self.selectdCategory?.id ?? 0, isScaled: true, dispalyShopeName: true)
+            filterShopsInfoMarkers(selectedShopTypeId: self.selectdCategory?.id ?? 0)
+        } else {
+
+            filterShopsMarkers(selectedShopTypeId: self.selectdCategory?.id ?? 0, isScaled: false)
+        }
+        print(position.zoom)
+    }
+    
     func mapView(_ mapView: GMSMapView, didTap marker: GMSMarker) -> Bool {
         let id = marker.title ?? "0"
         if (id.contains(find: "my_location")) {
@@ -1256,7 +1328,7 @@ extension DeliveryStep1 : GMSMapViewDelegate {
                 self.singleMarker?.icon = UIImage(named: "ic_shop_empty_selected")
                 // snuff1
                 let url = URL(string: "\(Constants.IMAGE_URL)\(response.shopData?.type?.selectedIcon ?? "")")
-                self.applyMarkerImage(from: url!, to: self.singleMarker!)
+                self.applyMarkerImage(from: url!, to: self.singleMarker!, ShopeName: response.shopData?.name ?? "")
                 self.singleMarker?.map = self.gMap
                 
                 self.handleOpenNow(shop: response.shopData)
@@ -2069,7 +2141,7 @@ extension DeliveryStep1: UITableViewDelegate, UITableViewDataSource {
         self.singleMarker?.icon = UIImage(named: "ic_shop_empty_selected")
         //snuff1
         let url = URL(string: "\(Constants.IMAGE_URL)\(shop.type?.selectedIcon ?? "")")
-        self.applyMarkerImage(from: url!, to: self.singleMarker!)
+        self.applyMarkerImage(from: url!, to: self.singleMarker!, ShopeName: shop.name ?? "")
         self.singleMarker?.map = self.gMap
         
         

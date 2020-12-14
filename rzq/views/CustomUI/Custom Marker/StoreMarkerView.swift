@@ -12,6 +12,10 @@ class StoreMarkerView: UIView {
 
     @IBOutlet weak var storiImaView: UIImageView!
    
+    @IBOutlet weak var shopNameHeightConstraint: NSLayoutConstraint!
+    @IBOutlet weak var ShopNameStackView: UIStackView!
+    @IBOutlet weak var shopeNameLabel: UILabel!
+   
     class func instanceFromNib() -> StoreMarkerView {
         return UINib(nibName: "StoreMarkerView", bundle: nil).instantiate(withOwner: nil, options: nil)[0] as! StoreMarkerView
       }

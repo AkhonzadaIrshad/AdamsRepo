@@ -15,6 +15,8 @@
 		8A0878C82531272200C4D0C4 /* NearByTypes.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8A0878C72531272200C4D0C4 /* NearByTypes.swift */; };
 		8A3D9A4525642AB40012711C /* ToolTip.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8A3D9A4425642AB40012711C /* ToolTip.swift */; };
 		8A3D9A4825642B140012711C /* Extension.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8A3D9A4725642B140012711C /* Extension.swift */; };
+		8A9C6C812588060C00592202 /* MarkerInfo.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8A9C6C802588060C00592202 /* MarkerInfo.swift */; };
+		8A9C6C842588061E00592202 /* MarkerInfo.xib in Resources */ = {isa = PBXBuildFile; fileRef = 8A9C6C832588061E00592202 /* MarkerInfo.xib */; };
 		8AE6E066258015AD00889D2C /* StoreMarkerView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8AE6E065258015AD00889D2C /* StoreMarkerView.swift */; };
 		8AE6E06A258015B900889D2C /* StoreMarkerView.xib in Resources */ = {isa = PBXBuildFile; fileRef = 8AE6E069258015B900889D2C /* StoreMarkerView.xib */; };
 		8B05CDC42361BD8700E0FF9B /* ShopOwnerMenuResponse.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8B05CDC32361BD8700E0FF9B /* ShopOwnerMenuResponse.swift */; };
@@ -248,6 +250,8 @@
 		8A0878C72531272200C4D0C4 /* NearByTypes.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NearByTypes.swift; sourceTree = "<group>"; };
 		8A3D9A4425642AB40012711C /* ToolTip.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ToolTip.swift; sourceTree = "<group>"; };
 		8A3D9A4725642B140012711C /* Extension.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Extension.swift; sourceTree = "<group>"; };
+		8A9C6C802588060C00592202 /* MarkerInfo.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MarkerInfo.swift; sourceTree = "<group>"; };
+		8A9C6C832588061E00592202 /* MarkerInfo.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = MarkerInfo.xib; sourceTree = "<group>"; };
 		8AE6E065258015AD00889D2C /* StoreMarkerView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = StoreMarkerView.swift; sourceTree = "<group>"; };
 		8AE6E069258015B900889D2C /* StoreMarkerView.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = StoreMarkerView.xib; sourceTree = "<group>"; };
 		8B05CDC32361BD8700E0FF9B /* ShopOwnerMenuResponse.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ShopOwnerMenuResponse.swift; sourceTree = "<group>"; };
@@ -525,6 +529,8 @@
 			children = (
 				8AE6E065258015AD00889D2C /* StoreMarkerView.swift */,
 				8AE6E069258015B900889D2C /* StoreMarkerView.xib */,
+				8A9C6C802588060C00592202 /* MarkerInfo.swift */,
+				8A9C6C832588061E00592202 /* MarkerInfo.xib */,
 			);
 			path = "Custom Marker";
 			sourceTree = "<group>";
@@ -1090,6 +1096,7 @@
 				8B9CA8432250CCDF00DE0DC4 /* english_bold.ttf in Resources */,
 				8AE6E06A258015B900889D2C /* StoreMarkerView.xib in Resources */,
 				C185A56C24CDC17A001B6B10 /* Cairo-Bold.ttf in Resources */,
+				8A9C6C842588061E00592202 /* MarkerInfo.xib in Resources */,
 				8BF222212271A9C5005BE71D /* recording.gif in Resources */,
 				8BD3CA8E227884BF003ABC49 /* pending.gif in Resources */,
 				8BC54B032268767F00B70A97 /* data.json in Resources */,
@@ -1284,6 +1291,7 @@
 				8B3DC29E236044930089B35A /* MenuListResponse.swift in Sources */,
 				8AE6E066258015AD00889D2C /* StoreMarkerView.swift in Sources */,
 				8B121BA12265D4BB0083069F /* FAQsResponse.swift in Sources */,
+				8A9C6C812588060C00592202 /* MarkerInfo.swift in Sources */,
 				8BEF6497225394B4003AE522 /* HomeListVC.swift in Sources */,
 				8BF42427229B133C0014596F /* TenderStep1.swift in Sources */,
 				8BF4242F229B14B40014596F /* TNDROrder.swift in Sources */,
