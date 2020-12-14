@@ -1260,10 +1260,10 @@ extension DeliveryStep1 : GMSMapViewDelegate {
     
     func mapView(_ mapView: GMSMapView, idleAt position: GMSCameraPosition) {
         
-        if position.zoom > 12 && position.zoom < 15 {
+        if position.zoom > 12 && position.zoom < 14 {
             myscale = 2
             filterShopsMarkers(selectedShopTypeId: self.selectdCategory?.id ?? 0, isScaled: true)
-        } else if position.zoom >= 15 {
+        } else if position.zoom >= 14 {
            // filterShopsMarkers(selectedShopTypeId: self.selectdCategory?.id ?? 0, isScaled: true, dispalyShopeName: true)
             filterShopsInfoMarkers(selectedShopTypeId: self.selectdCategory?.id ?? 0)
         } else {
