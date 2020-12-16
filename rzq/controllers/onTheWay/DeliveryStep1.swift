@@ -1740,7 +1740,7 @@ extension DeliveryStep1: UICollectionViewDelegate, UICollectionViewDataSource, U
         } else {
             self.searchShopsTextField.textAlignment = .left
         }
-        self.searchShopsTextField.placeholder = "step1.catFilter.search.placeholder".localized + " \(self.selectdCategory?.name ?? "")"
+//        self.searchShopsTextField.placeholder = "step1.catFilter.search.placeholder".localized + " \(self.selectdCategory?.name ?? "")"
         
         self.catFilterSearchStack.isHidden = false
         self.clearFieldAction(self)
@@ -2100,7 +2100,7 @@ extension DeliveryStep1: UITableViewDelegate, UITableViewDataSource {
         } else {
             self.searchShopsTextField.textAlignment = .left
         }
-        self.searchShopsTextField.placeholder = "step1.catFilter.search.placeholder".localized + " \(self.selectdCategory?.name ?? "")"
+//        self.searchShopsTextField.placeholder = "step1.catFilter.search.placeholder".localized + " \(self.selectdCategory?.name ?? "")"
         
         self.catFilterSearchStack.isHidden = false
         self.searchField.text = shop.name ?? ""
