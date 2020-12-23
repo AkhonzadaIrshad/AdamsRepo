@@ -293,8 +293,8 @@ class AcceptBidDialog: PaymentViewController, PaymentDelegate {
             
             var items = response.data?.items ?? [ShopMenuItem]()
             
-            let item = ShopMenuItem(id: 0, name: "delivery_cost", imageName: "", price: deliveryCost, shopMenuItemDescription: "", count: 1)
-            let item2 = ShopMenuItem(id: 0, name: "knet_commission", imageName: "", price: knetCommission, shopMenuItemDescription: "", count: 1)
+            let item = ShopMenuItem(id: 0, name: "delivery_cost", imageName: "", price: deliveryCost, shopMenuItemDescription: "", count: 1, isOutOfStock: false)
+            let item2 = ShopMenuItem(id: 0, name: "knet_commission", imageName: "", price: knetCommission, shopMenuItemDescription: "", count: 1, isOutOfStock: false)
             
             items.append(item)
             items.append(item2)

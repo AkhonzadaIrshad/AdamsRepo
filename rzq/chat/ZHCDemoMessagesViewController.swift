@@ -830,9 +830,9 @@ class ZHCDemoMessagesViewController: ZHCMessagesViewController, BillDelegate, Ch
             
             vc.total = totalCost
             
-            let item = ShopMenuItem(id: 0, name: "driverFee", imageName: "", price: deliveryCost, shopMenuItemDescription: "", count: 1)
-            let item2 = ShopMenuItem(id: 1, name: "order_price", imageName: "", price: orderCost - deliveryCost, shopMenuItemDescription: "", count: 1)
-            let item3 = ShopMenuItem(id: 2, name: "knet_commission", imageName: "", price: knetCommistion, shopMenuItemDescription: "", count: 1)
+            let item = ShopMenuItem(id: 0, name: "driverFee", imageName: "", price: deliveryCost, shopMenuItemDescription: "", count: 1, isOutOfStock: false)
+            let item2 = ShopMenuItem(id: 1, name: "order_price", imageName: "", price: orderCost - deliveryCost, shopMenuItemDescription: "", count: 1, isOutOfStock: false)
+            let item3 = ShopMenuItem(id: 2, name: "knet_commission", imageName: "", price: knetCommistion, shopMenuItemDescription: "", count: 1, isOutOfStock: false)
             vc.items.append(item)
             vc.items.append(item2)
             vc.items.append(item3)

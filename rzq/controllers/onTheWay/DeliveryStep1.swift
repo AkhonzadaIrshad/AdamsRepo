@@ -2088,7 +2088,6 @@ extension DeliveryStep1: UITableViewDelegate, UITableViewDataSource {
     func getSelectedShopFromSearch(row: Int) {
         // Just in case you need the item position
         self.edtOrderDetails.placeholder = "order_details".localized
-       
 
         self.showActionSheet()
         let itemPosition: SearchTextFieldItem = self.filterShopsWithDispanceItems[row]

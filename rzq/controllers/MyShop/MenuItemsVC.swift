@@ -124,17 +124,31 @@ class MenuItemsVC: BaseVC, UITableViewDelegate, UITableViewDataSource, UINavigat
             
             if (item.id ?? 0 > 0) {
                 self.updateMenuItem(itemId: item.id ?? 0 ,englishName: cell.fieldEnglishTitle.text ?? "", arabicName: cell.fieldArabicTitle.text ?? "", englishDesc: cell.fieldEnglishDescription.text ?? "", arabicDesc: cell.fieldArabicDescription.text ?? "", price: (cell.fieldPrice.text ?? "0.0").replacedArabicDigitsWithEnglish, image: ((cell.btnLogo.image(for: .normal)?.toBase64())!))
+                ApiService.owner_updateoutOfStock(Authorization: DataManager.loadUser().data?.accessToken ?? "", itemId: item.id ?? 0, IsOutOfStock: cell.outOfStockSwitch.isOn) { (response) in
+                    print(response)
+                }
             }else {
                 self.createMenuItem(englishName: cell.fieldEnglishTitle.text ?? "", arabicName: cell.fieldArabicTitle.text ?? "", englishDesc: cell.fieldEnglishDescription.text ?? "", arabicDesc: cell.fieldArabicDescription.text ?? "", price: (cell.fieldPrice.text ?? "0.0").replacedArabicDigitsWithEnglish, image: ((cell.btnLogo.image(for: .normal)?.toBase64())!))
+                ApiService.owner_updateoutOfStock(Authorization: DataManager.loadUser().data?.accessToken ?? "", itemId: item.id ?? 0, IsOutOfStock: cell.outOfStockSwitch.isOn) { (response) in
+                    print(response)
+                }
             }
             
             item.status = Constants.MENU_ITEM_LOCKED
             cell.lockCell()
         }
         
+        cell.onOutOfStock = {
+            ApiService.owner_updateoutOfStock(Authorization: DataManager.loadUser().data?.accessToken ?? "", itemId: item.id ?? 0, IsOutOfStock: cell.outOfStockSwitch.isOn) { (response) in
+                print(response)
+            }
+        }
         cell.onAddImage = {
             self.selectedIndexPath = indexPath
             self.addImageAction()
+            ApiService.owner_updateoutOfStock(Authorization: DataManager.loadUser().data?.accessToken ?? "", itemId: item.id ?? 0, IsOutOfStock: cell.outOfStockSwitch.isOn) { (response) in
+                print(response)
+            }
         }
         
         if (item.status == Constants.MENU_ITEM_UNLOCKED) {
@@ -180,7 +194,6 @@ class MenuItemsVC: BaseVC, UITableViewDelegate, UITableViewDataSource, UINavigat
             self.hideLoading()
         }
     }
-    
     
     func deleteItem(itemId: Int, index: Int) {
         self.showAlert(title: "alert".localized, message: "confirm_delete_menu_item".localized, actionTitle: "delete".localized, cancelTitle: "cancel".localized, actionHandler: {

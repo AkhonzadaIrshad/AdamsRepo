@@ -57,6 +57,7 @@ class ShopMenuItem: Codable {
     let shopMenuItemDescription: String?
     var quantity : Int?
     let count : Int?
+    let isOutOfStock: Bool
 
     enum CodingKeys: String, CodingKey {
         case id = "Id"
@@ -65,14 +66,16 @@ class ShopMenuItem: Codable {
         case price = "Price"
         case shopMenuItemDescription = "Description"
         case count = "Count"
+        case isOutOfStock = "IsOutOfStock"
     }
 
-    init(id: Int?, name: String?, imageName: String?, price: Double?, shopMenuItemDescription: String?, count : Int) {
+    init(id: Int?, name: String?, imageName: String?, price: Double?, shopMenuItemDescription: String?, count : Int, isOutOfStock: Bool) {
         self.id = id
         self.name = name
         self.imageName = imageName
         self.price = price
         self.shopMenuItemDescription = shopMenuItemDescription
         self.count = count
+        self.isOutOfStock = isOutOfStock
     }
 }

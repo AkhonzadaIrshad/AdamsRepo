@@ -193,7 +193,14 @@ UITableViewDelegate, UITableViewDataSource, CheckOutDoneDelegate {
         cell.lblTitle.text = item.name ?? ""
         cell.lblDescription.text = item.shopMenuItemDescription ?? ""
         cell.lblPrice.text = "\(item.price ?? 0.0) \("currency".localized)"
-        
+
+        if item.isOutOfStock {
+            cell.outofStockLabel.isHidden = false
+            cell.viewStepper.isHidden = true
+        } else {
+            cell.outofStockLabel.isHidden = true
+            cell.viewStepper.isHidden = false
+        }
         
         cell.valueChanged = {
             item.quantity = cell.selectedValue ?? 0

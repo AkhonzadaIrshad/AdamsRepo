@@ -17,6 +17,7 @@ class ShopMenuItemCell: UITableViewCell {
     @IBOutlet weak var lblTitle: MyUILabel!
     @IBOutlet weak var lblPrice: MyUILabel!
     
+    @IBOutlet weak var outofStockLabel: MyUILabel!
     @IBOutlet weak var lblDescription: MyUILabel!
     
     @IBOutlet weak var viewStepper: ValueStepper!

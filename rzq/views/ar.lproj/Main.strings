@@ -183,6 +183,9 @@
 "zGP-ze-o5o.normalTitle" = "التوجه الى المتجر";
 "5D1-Yu-Sjf.normalTitle" = "التوجه الى الزبون";
 
+/* Class = "UILabel"; text = "Out of Stock"; ObjectID = "N1d-TP-ZZc"; */
+"N1d-TP-ZZc.text" = "إنتهى من المخزن";
+
 "pIv-uu-KK5.text" = "تصفية";
 /* Class = "UILabel"; text = "Nearby Shops"; ObjectID = "AWR-iL-fTg"; */
 "AWR-iL-fTg.text" = "الاماكن القريبة";

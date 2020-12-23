@@ -1976,6 +1976,28 @@ class ApiService : NSObject {
         }
     }
     
+    static func owner_updateoutOfStock(Authorization : String, itemId: Int, IsOutOfStock : Bool,completion:@escaping(_ response : BaseResponse)-> Void) {
+        
+        let headers = [Constants.AUTH_HEADER: "bearer \(Authorization)",
+            Constants.LANG_HEADER : self.getLang()]
+        
+        let all : [String : Any] = ["Id" : itemId,
+                                    "IsOutOfStock" : IsOutOfStock
+                                    ]
+        
+        AFManager.request("\(Constants.BASE_URL)ShopCategory/UpdateIsOutOfStock", method: .post, parameters: all ,encoding: JSONEncoding.default, headers: headers)
+            .responseJSON { response in
+                if let json = response.data {
+                    do {
+                        let decoder = JSONDecoder()
+                        let baseResponse = try decoder.decode(BaseResponse.self, from: json)
+                        completion(baseResponse)
+                    }catch let err {
+                        print(err)
+                    }
+                }
+        }
+    }
     
     static func getShopOrders(Authorization : String, shopId : Int, completion:@escaping(_ response : ShopOrdersResponse)-> Void) {
         

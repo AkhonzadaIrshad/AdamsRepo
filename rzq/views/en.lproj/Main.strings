@@ -17,6 +17,9 @@
 /* Class = "UILabel"; text = "Number Of Orders"; ObjectID = "0pj-IF-bgg"; */
 "0pj-IF-bgg.text" = "Number Of Orders";
 
+/* Class = "UILabel"; text = "Out of Stock"; ObjectID = "N1d-TP-ZZc"; */
+"N1d-TP-ZZc.text" = "Out of Stock";
+
 /* Class = "UILabel"; text = "Label"; ObjectID = "12G-AH-mVh"; */
 "12G-AH-mVh.text" = "Label";
 

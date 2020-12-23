@@ -13,30 +13,31 @@ class MenuItemCell: UITableViewCell {
     
     @IBOutlet weak var fieldEnglishTitle: MyUITextField!
     @IBOutlet weak var fieldArabicTitle: MyUITextField!
-    
     @IBOutlet weak var fieldPrice: MyUITextField!
-    
     @IBOutlet weak var fieldEnglishDescription: MultilineTextField!
     @IBOutlet weak var fieldArabicDescription: MultilineTextField!
     
     @IBOutlet weak var btnLogo: UIButton!
-    
     @IBOutlet weak var btnDelete: UIButton!
-    
     @IBOutlet weak var btnEdit: UIButton!
-    
     @IBOutlet weak var btnSave: UIButton!
+    @IBOutlet weak var outOfStockSwitch: UISwitch!
     
     
     var onDelete : (() -> Void)? = nil
     var onEdit : (() -> Void)? = nil
     var onSave : (() -> Void)? = nil
     var onAddImage : (() -> Void)? = nil
-    
+    var onOutOfStock:(() -> Void)? = nil
     
     override class func awakeFromNib() {
         super.awakeFromNib()
-        
+    }
+    
+    @IBAction func onOutOfStock(_ sender: Any) {
+        if let onOutOfStock = self.onOutOfStock {
+            onOutOfStock()
+        }
     }
     
     @IBAction func deleteAction(_ sender: Any) {
@@ -75,6 +76,7 @@ class MenuItemCell: UITableViewCell {
         self.btnSave.isHidden = true
         self.btnEdit.isHidden = false
     }
+    
     func unlockCell() {
         self.fieldEnglishTitle.isEnabled = true
         self.fieldArabicTitle.isEnabled = true
@@ -87,4 +89,5 @@ class MenuItemCell: UITableViewCell {
         self.btnSave.isHidden = false
         self.btnEdit.isHidden = true
     }
+    
 }
