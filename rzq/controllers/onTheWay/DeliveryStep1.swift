@@ -908,6 +908,8 @@ class DeliveryStep1: BaseVC , Step3Delegate, AllShopDelegate, ImagePickerDelegat
     
     func filterShopsMarkers(selectedShopTypeId: Int, isScaled: Bool = false, dispalyShopeName: Bool = false) {
         self.gMap?.clear()
+        self.shopMarkers.removeAll()
+        
         let selectedShops = self.shops.filter({$0.type?.id == selectedShopTypeId})
         for center in selectedShops{
             let marker = GMSMarker()
@@ -931,14 +933,14 @@ class DeliveryStep1: BaseVC , Step3Delegate, AllShopDelegate, ImagePickerDelegat
     
     func filterShopsInfoMarkers(selectedShopTypeId: Int, isScaled: Bool = false, dispalyShopeName: Bool = false) {
         self.gMap?.clear()
+        self.shopMarkers.removeAll()
+       
         let selectedShops = self.shops.filter({$0.type?.id == selectedShopTypeId})
         for center in selectedShops{
             let marker = GMSMarker()
             marker.position = CLLocationCoordinate2D(latitude: center.latitude ?? 0.0, longitude: center.longitude ?? 0.0)
             marker.title =  "\(center.id ?? 0)"
             marker.snippet = "\(center.phoneNumber ?? "")"
-            //self.singleMarker?.icon = UIImage(named: "ic_shop_empty")
-            // snuff1
             let url = URL(string: "\(Constants.IMAGE_URL)\(center.type?.icon ?? "")")
             self.applyInfoMarkerImage(from: url!, to: marker, isScaled: isScaled, dispalyShopeName: dispalyShopeName, ShopeName: center.name ?? "")
 
@@ -1231,7 +1233,10 @@ class DeliveryStep1: BaseVC , Step3Delegate, AllShopDelegate, ImagePickerDelegat
     
     @IBAction func myLocationAction(_ sender: Any) {
         let camera = GMSCameraPosition.camera(withLatitude: self.locationManager.location?.coordinate.latitude ?? 0.0, longitude: self.locationManager.location?.coordinate.longitude ?? 0.0, zoom: 20.0)
-        self.addPickerOnDropOffLocation(coordinate: self.locationManager.location!.coordinate)
+        
+        if let coordinate = self.locationManager.location?.coordinate {
+            self.addPickerOnDropOffLocation(coordinate: coordinate)
+        }
         self.gMap?.animate(to: camera)
     }
     
@@ -1263,11 +1268,9 @@ extension DeliveryStep1 : GMSMapViewDelegate {
         if position.zoom > 12 && position.zoom < 14 {
             myscale = 2
             filterShopsMarkers(selectedShopTypeId: self.selectdCategory?.id ?? 0, isScaled: true)
-        } else if position.zoom >= 14 {
-           // filterShopsMarkers(selectedShopTypeId: self.selectdCategory?.id ?? 0, isScaled: true, dispalyShopeName: true)
+        } else if position.zoom >= 15 {
             filterShopsInfoMarkers(selectedShopTypeId: self.selectdCategory?.id ?? 0)
         } else {
-
             filterShopsMarkers(selectedShopTypeId: self.selectdCategory?.id ?? 0, isScaled: false)
         }
         print(position.zoom)

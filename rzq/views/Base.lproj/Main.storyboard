@@ -14,11 +14,11 @@
         <array key="Cairo-Regular.ttf">
             <string>Cairo-Regular</string>
         </array>
-        <array key="arabic_medium.ttf">
-            <string>Tajawal-Medium</string>
-        </array>
         <array key="arabic_regular.ttf">
             <string>Tajawal-Regular</string>
+        </array>
+        <array key="arabic_semibold.ttf">
+            <string>Tajawal-Medium</string>
         </array>
         <array key="english_regular.otf">
             <string>SFProDisplay-Regular</string>
@@ -27946,7 +27946,7 @@
             <size key="intrinsicContentSize" width="355" height="39.220703125"/>
         </designable>
         <designable name="90c-lM-y4l">
-            <size key="intrinsicContentSize" width="307" height="40.209671874999998"/>
+            <size key="intrinsicContentSize" width="307" height="38.823671875000002"/>
         </designable>
         <designable name="9x5-0P-Zxx">
             <size key="intrinsicContentSize" width="95" height="15"/>
@@ -27964,7 +27964,7 @@
             <size key="intrinsicContentSize" width="85" height="13"/>
         </designable>
         <designable name="N1t-JS-2FB">
-            <size key="intrinsicContentSize" width="190" height="40.209671874999998"/>
+            <size key="intrinsicContentSize" width="190" height="38.823671875000002"/>
         </designable>
         <designable name="OzZ-db-ahS">
             <size key="intrinsicContentSize" width="355" height="39.220703125"/>
