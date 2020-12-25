@@ -158,6 +158,8 @@ class DeliveryStep1: BaseVC , Step3Delegate, AllShopDelegate, ImagePickerDelegat
         } else {
             displayShop(shopId: shopeID ?? 0)
         }
+        self.getShopsList(radius: Float(Constants.DEFAULT_RADIUS), rating: 0)
+
         if DataManager.loadUser().data?.roles?.contains(find: "Driver") == true {
             latitude = LabasLocationManager.shared.currentLocation?.coordinate.latitude ?? 0
             longitude = LabasLocationManager.shared.currentLocation?.coordinate.longitude ?? 0
@@ -790,10 +792,7 @@ class DeliveryStep1: BaseVC , Step3Delegate, AllShopDelegate, ImagePickerDelegat
                 
                 let camera = GMSCameraPosition.camera(withLatitude: self.orderModel?.pickUpLatitude ?? 0.0, longitude: self.orderModel?.pickUpLongitude ?? 0.0, zoom: 15.0)
                 self.gMap?.animate(to: camera)
-                
-                
             }
-            
         }
     }
     
@@ -892,18 +891,16 @@ class DeliveryStep1: BaseVC , Step3Delegate, AllShopDelegate, ImagePickerDelegat
             self.singleMarker?.icon = UIImage(named: "ic_shop_empty")
             // snuff1
             let url = URL(string: "\(Constants.IMAGE_URL)\(center.type?.icon ?? "")")
-            if useScale {
-                self.applyMarkerImage(from: url!, to: marker,isScaled: useScale)
-            }
+            self.applyMarkerImage(from: url!, to: marker,isScaled: useScale)
             self.singleMarker?.map = self.gMap
-            marker.map = gMap
+            //marker.map = gMap
             self.shopMarkers.append(marker)
         }
-        let marker = GMSMarker()
-        marker.position = CLLocationCoordinate2D(latitude: self.latitude ?? 0.0, longitude: self.longitude ?? 0.0)
-        marker.title =  "my_location"
-        marker.snippet = ""
-        marker.map = gMap
+//        let marker = GMSMarker()
+//        marker.position = CLLocationCoordinate2D(latitude: self.latitude ?? 0.0, longitude: self.longitude ?? 0.0)
+//        marker.title =  "my_location"
+//        marker.snippet = ""
+//        marker.map = gMap
     }
     
     func filterShopsMarkers(selectedShopTypeId: Int, isScaled: Bool = false, dispalyShopeName: Bool = false) {
@@ -911,7 +908,7 @@ class DeliveryStep1: BaseVC , Step3Delegate, AllShopDelegate, ImagePickerDelegat
         self.shopMarkers.removeAll()
         
         let selectedShops = self.shops.filter({$0.type?.id == selectedShopTypeId})
-        for center in selectedShops{
+        for center in selectedShops {
             let marker = GMSMarker()
             marker.position = CLLocationCoordinate2D(latitude: center.latitude ?? 0.0, longitude: center.longitude ?? 0.0)
             marker.title =  "\(center.id ?? 0)"
@@ -1748,7 +1745,9 @@ extension DeliveryStep1: UICollectionViewDelegate, UICollectionViewDataSource, U
         self.catFilterSearchStack.isHidden = false
         self.clearFieldAction(self)
         if selectedCat.id == 0 {
-            self.addShopsMarkers()
+            self.addShopsMarkers(useScale: false)
+            //self.filterShopsMarkers(selectedShopTypeId: selectedCat.id ?? 0)
+
         } else {
             self.filterShopsMarkers(selectedShopTypeId: selectedCat.id ?? 0)
         }
