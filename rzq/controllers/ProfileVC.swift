@@ -61,7 +61,7 @@ class ProfileVC: BaseVC {
         if DataManager.loadUser().data?.roles?.contains(find: "Driver") ?? false {
             self.navBar.isHidden = false
         } else {
-            self.navBar.isHidden = true
+            self.navBar.isHidden = false
         }
         self.navBar.delegate = self        
     }

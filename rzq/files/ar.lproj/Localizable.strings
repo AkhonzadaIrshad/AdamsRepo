@@ -327,6 +327,7 @@
 
 "navbar.home" = "الرئيسية";
 "navbar.orders" = "الطلبات الجارية";
+"navbar.orders.custmer" = "طلباتي";
 "navbar.notifications" = "الاشعارات";
 "navbar.profile" = "صفحتي";
 
@@ -349,3 +350,7 @@
 // MARK: - Tool Info
 
 "tool.message" = "اضغط على الزر اذا تريد ارسال شي من موقعك الحالي";
+
+طلباتيالاشعارات
+الرئيسية
+حسابي

@@ -93,7 +93,11 @@ class NavBar: UIView {
     
     private func localize() {
         self.lblHome.text = "navbar.home".localized
-        self.lblOrders.text = "navbar.orders".localized
+        if DataManager.loadUser().data?.roles?.contains(find: "Driver") ?? false {
+            self.lblOrders.text = "navbar.orders".localized
+        } else {
+            self.lblOrders.text = "navbar.orders.custmer".localized
+        }
         self.lblNotifications.text = "navbar.notifications".localized
         self.lblProfile.text = "navbar.profile".localized
     }

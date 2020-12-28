@@ -18,10 +18,10 @@
 "12G-AH-mVh.text" = "Label";
 
 /* Class = "UIButton"; normalTitle = "Place Order"; ObjectID = "1CT-yu-bU4"; */
-"1CT-yu-bU4.normalTitle" = "تاكيد الطلب";
+"1CT-yu-bU4.normalTitle" = "أسعار التوصيل";
 
 /* Class = "UILabel"; text = "Order"; ObjectID = "1TR-hb-f0r"; */
-"1TR-hb-f0r.text" = "التالي";
+"1TR-hb-f0r.text" = "طلب جديد";
 
 /* Class = "UILabel"; text = "Place Images"; ObjectID = "1cQ-t2-rCZ"; */
 "1cQ-t2-rCZ.text" = "صور المكان";

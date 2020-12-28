@@ -52,8 +52,8 @@ class NotificationsVC: BaseViewController,LabasLocationManagerDelegate, AcceptBi
             self.navBar.isHidden = false
             navbarHeightConstraint.constant = 80
         } else {
-            self.navBar.isHidden = true
-            navbarHeightConstraint.constant = 0
+            self.navBar.isHidden = false
+            navbarHeightConstraint.constant = 80
         }
         let titleTextAttributes = [NSAttributedString.Key.foregroundColor: UIColor.white]
         let titleTextAttributes2 = [NSAttributedString.Key.foregroundColor: UIColor.black]
