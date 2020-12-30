@@ -136,6 +136,7 @@ class HomeMapVC: BaseViewController {
         LabasLocationManager.shared.delegate = self
         LabasLocationManager.shared.startUpdatingLocation()
         setUpGoogleMap()
+        loadTracks()
     }
     
     override func viewDidAppear(_ animated: Bool) {
