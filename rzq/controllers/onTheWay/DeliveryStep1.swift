@@ -91,6 +91,7 @@ class DeliveryStep1: BaseVC , Step3Delegate, AllShopDelegate, ImagePickerDelegat
             self.shopsSearchTableView.reloadData()
         }
     }
+    var selectAllCategory: Bool = false
     var fromdeepLink: Bool = false
     var shopeID: Int?
     var filterShops = [DataShop]()
@@ -884,6 +885,8 @@ class DeliveryStep1: BaseVC , Step3Delegate, AllShopDelegate, ImagePickerDelegat
     
     func addShopsMarkers(useScale: Bool = false) {
         self.gMap?.clear()
+        self.shopMarkers.removeAll()
+
         for center in self.shops {
             let marker = GMSMarker()
             marker.position = CLLocationCoordinate2D(latitude: center.latitude ?? 0.0, longitude: center.longitude ?? 0.0)
@@ -897,11 +900,25 @@ class DeliveryStep1: BaseVC , Step3Delegate, AllShopDelegate, ImagePickerDelegat
             //marker.map = gMap
             self.shopMarkers.append(marker)
         }
-//        let marker = GMSMarker()
-//        marker.position = CLLocationCoordinate2D(latitude: self.latitude ?? 0.0, longitude: self.longitude ?? 0.0)
-//        marker.title =  "my_location"
-//        marker.snippet = ""
-//        marker.map = gMap
+    }
+    
+    func addShopsInfoMarkers(useScale: Bool = false) {
+        self.gMap?.clear()
+        self.shopMarkers.removeAll()
+
+        for center in self.shops {
+            let marker = GMSMarker()
+            marker.position = CLLocationCoordinate2D(latitude: center.latitude ?? 0.0, longitude: center.longitude ?? 0.0)
+            marker.title =  "\(center.id ?? 0)"
+            marker.snippet = "\(center.phoneNumber ?? "")"
+            self.singleMarker?.icon = UIImage(named: "ic_shop_empty")
+            // snuff1
+            let url = URL(string: "\(Constants.IMAGE_URL)\(center.type?.icon ?? "")")
+            self.applyInfoMarkerImage(from: url!, to: marker, isScaled: useScale, dispalyShopeName: false, ShopeName: center.name ?? "")
+            self.singleMarker?.map = self.gMap
+            //marker.map = gMap
+            self.shopMarkers.append(marker)
+        }
     }
     
     func filterShopsMarkers(selectedShopTypeId: Int, isScaled: Bool = false, dispalyShopeName: Bool = false) {
@@ -922,11 +939,7 @@ class DeliveryStep1: BaseVC , Step3Delegate, AllShopDelegate, ImagePickerDelegat
             self.singleMarker?.map = self.gMap
             self.shopMarkers.append(marker)
         }
-//        let marker = GMSMarker()
-//        marker.position = CLLocationCoordinate2D(latitude: self.latitude ?? 0.0, longitude: self.longitude ?? 0.0)
-//        marker.title =  "my_location"
-//        marker.snippet = ""
-//        marker.map = gMap
+
     }
     
     func filterShopsInfoMarkers(selectedShopTypeId: Int, isScaled: Bool = false, dispalyShopeName: Bool = false) {
@@ -1263,14 +1276,24 @@ extension DeliveryStep1 : GMSMapViewDelegate {
     }
     
     func mapView(_ mapView: GMSMapView, idleAt position: GMSCameraPosition) {
-        
-       if position.zoom >= 12 && isZoomed == false {
-            isZoomed = true
-            filterShopsInfoMarkers(selectedShopTypeId: self.selectdCategory?.id ?? 0)
-        } else if position.zoom < 12 && isZoomed == true {
-            isZoomed = false
-            filterShopsMarkers(selectedShopTypeId: self.selectdCategory?.id ?? 0, isScaled: false)
+        if selectAllCategory {
+            if position.zoom >= 12 && isZoomed == false {
+                 isZoomed = true
+                addShopsInfoMarkers()
+             } else if position.zoom < 12 && isZoomed == true {
+                 isZoomed = false
+                addShopsMarkers()
+             }
+        } else {
+            if position.zoom >= 12 && isZoomed == false {
+                 isZoomed = true
+                 filterShopsInfoMarkers(selectedShopTypeId: self.selectdCategory?.id ?? 0)
+             } else if position.zoom < 12 && isZoomed == true {
+                 isZoomed = false
+                 filterShopsMarkers(selectedShopTypeId: self.selectdCategory?.id ?? 0, isScaled: false)
+             }
         }
+      
         print(position.zoom)
     }
     
@@ -1746,10 +1769,13 @@ extension DeliveryStep1: UICollectionViewDelegate, UICollectionViewDataSource, U
         self.catFilterSearchStack.isHidden = false
         self.clearFieldAction(self)
         if selectedCat.id == 0 {
+            selectAllCategory = true
             self.addShopsMarkers(useScale: false)
             //self.filterShopsMarkers(selectedShopTypeId: selectedCat.id ?? 0)
 
         } else {
+            selectAllCategory = false
+
             self.filterShopsMarkers(selectedShopTypeId: selectedCat.id ?? 0)
         }
     }
