@@ -40,7 +40,8 @@ class DeliveryStep1: BaseVC , Step3Delegate, AllShopDelegate, ImagePickerDelegat
     var audioPlayer: AVAudioPlayer?
     var selectedImages = [UIImage]()
     let recorder = KAudioRecorder.shared
-    
+    var isZoomed: Bool = false
+
     @IBOutlet weak var lblPickupLocation: MyUILabel!
     @IBOutlet weak var mapView: UIView!
     //@IBOutlet weak var edtMoreDetails: MyUITextField!
@@ -929,11 +930,12 @@ class DeliveryStep1: BaseVC , Step3Delegate, AllShopDelegate, ImagePickerDelegat
     }
     
     func filterShopsInfoMarkers(selectedShopTypeId: Int, isScaled: Bool = false, dispalyShopeName: Bool = false) {
+       
         self.gMap?.clear()
         self.shopMarkers.removeAll()
        
         let selectedShops = self.shops.filter({$0.type?.id == selectedShopTypeId})
-        for center in selectedShops{
+        for center in selectedShops {
             let marker = GMSMarker()
             marker.position = CLLocationCoordinate2D(latitude: center.latitude ?? 0.0, longitude: center.longitude ?? 0.0)
             marker.title =  "\(center.id ?? 0)"
@@ -1262,12 +1264,11 @@ extension DeliveryStep1 : GMSMapViewDelegate {
     
     func mapView(_ mapView: GMSMapView, idleAt position: GMSCameraPosition) {
         
-        if position.zoom > 12 && position.zoom < 14 {
-            myscale = 2
-            filterShopsMarkers(selectedShopTypeId: self.selectdCategory?.id ?? 0, isScaled: true)
-        } else if position.zoom >= 15 {
+       if position.zoom >= 12 && isZoomed == false {
+            isZoomed = true
             filterShopsInfoMarkers(selectedShopTypeId: self.selectdCategory?.id ?? 0)
-        } else {
+        } else if position.zoom < 12 && isZoomed == true {
+            isZoomed = false
             filterShopsMarkers(selectedShopTypeId: self.selectdCategory?.id ?? 0, isScaled: false)
         }
         print(position.zoom)

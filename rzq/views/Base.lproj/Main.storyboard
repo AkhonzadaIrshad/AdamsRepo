@@ -2636,7 +2636,7 @@
                                                                 <userDefinedRuntimeAttribute type="string" keyPath="font_type" value="16,4"/>
                                                             </userDefinedRuntimeAttributes>
                                                         </label>
-                                                        <view contentMode="scaleToFill" ambiguous="YES" translatesAutoresizingMaskIntoConstraints="NO" id="HEX-Q2-Cjr" customClass="ValueStepper" customModule="ValueStepper">
+                                                        <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="HEX-Q2-Cjr" customClass="ValueStepper" customModule="ValueStepper">
                                                             <rect key="frame" x="82.666666666666686" y="32.333333333333336" width="115" height="29"/>
                                                             <color key="backgroundColor" systemColor="systemBackgroundColor"/>
                                                             <color key="tintColor" red="0.24313725489999999" green="0.01176470588" blue="0.4039215686" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
@@ -2692,7 +2692,7 @@
                                                                 <userDefinedRuntimeAttribute type="string" keyPath="font_type" value="16,4"/>
                                                             </userDefinedRuntimeAttributes>
                                                         </label>
-                                                        <view contentMode="scaleToFill" ambiguous="YES" translatesAutoresizingMaskIntoConstraints="NO" id="qeV-kt-rWQ" customClass="CardView" customModule="rzq" customModuleProvider="target">
+                                                        <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="qeV-kt-rWQ" customClass="CardView" customModule="rzq" customModuleProvider="target">
                                                             <rect key="frame" x="93" y="69.333333333333329" width="90" height="22"/>
                                                             <subviews>
                                                                 <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="price" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="RSQ-bf-tpe" customClass="MyUILabel" customModule="rzq" customModuleProvider="target">
@@ -4183,16 +4183,19 @@
                                                 <subviews>
                                                     <textField opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" borderStyle="roundedRect" textAlignment="natural" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="z7C-aa-cnP">
                                                         <rect key="frame" x="0.0" y="0.0" width="88.333333333333329" height="30"/>
+                                                        <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                                         <fontDescription key="fontDescription" type="system" pointSize="14"/>
                                                         <textInputTraits key="textInputTraits"/>
                                                     </textField>
                                                     <textField opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" borderStyle="roundedRect" textAlignment="natural" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="YSB-fa-yD2">
                                                         <rect key="frame" x="98.333333333333343" y="0.0" width="88.333333333333343" height="30"/>
+                                                        <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                                         <fontDescription key="fontDescription" type="system" pointSize="14"/>
                                                         <textInputTraits key="textInputTraits"/>
                                                     </textField>
                                                     <textField opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" borderStyle="roundedRect" textAlignment="natural" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="mnZ-bI-7KP">
                                                         <rect key="frame" x="196.66666666666666" y="0.0" width="88.333333333333343" height="30"/>
+                                                        <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                                         <fontDescription key="fontDescription" type="system" pointSize="14"/>
                                                         <textInputTraits key="textInputTraits"/>
                                                     </textField>
@@ -6463,10 +6466,10 @@
                                 </connections>
                             </segmentedControl>
                             <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="6Ok-kj-GQs">
-                                <rect key="frame" x="10" y="133" width="355" height="635"/>
+                                <rect key="frame" x="10" y="133" width="355" height="585"/>
                                 <subviews>
                                     <tableView clipsSubviews="YES" contentMode="scaleToFill" bounces="NO" bouncesZoom="NO" dataMode="prototypes" style="plain" separatorStyle="none" rowHeight="-1" estimatedRowHeight="-1" sectionHeaderHeight="28" sectionFooterHeight="28" translatesAutoresizingMaskIntoConstraints="NO" id="fdr-D3-Bfx">
-                                        <rect key="frame" x="0.0" y="0.0" width="355" height="635"/>
+                                        <rect key="frame" x="0.0" y="0.0" width="355" height="585"/>
                                         <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                         <prototypes>
                                             <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" preservesSuperviewLayoutMargins="YES" selectionStyle="none" indentationWidth="10" reuseIdentifier="ordercell" rowHeight="235" id="7HA-V8-99j" customClass="OrderCell" customModule="rzq" customModuleProvider="target">
@@ -6751,10 +6754,10 @@
                                         </prototypes>
                                     </tableView>
                                     <view hidden="YES" contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="YnI-PM-DyP" customClass="EmptyView" customModule="rzq" customModuleProvider="target">
-                                        <rect key="frame" x="10" y="10" width="335" height="615"/>
+                                        <rect key="frame" x="10" y="10" width="335" height="565"/>
                                         <subviews>
                                             <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Orders will appear here." textAlignment="center" lineBreakMode="tailTruncation" numberOfLines="3" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="gDr-0c-CkO" customClass="MyUILabel" customModule="rzq" customModuleProvider="target">
-                                                <rect key="frame" x="20" y="517" width="295" height="18"/>
+                                                <rect key="frame" x="20" y="467" width="295" height="18"/>
                                                 <fontDescription key="fontDescription" type="system" pointSize="15"/>
                                                 <color key="textColor" systemColor="scrollViewTexturedBackgroundColor"/>
                                                 <nil key="highlightedColor"/>
@@ -6763,7 +6766,7 @@
                                                 </userDefinedRuntimeAttributes>
                                             </label>
                                             <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="No Orders" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="wyo-25-FFx" customClass="MyUILabel" customModule="rzq" customModuleProvider="target">
-                                                <rect key="frame" x="20" y="463" width="295" height="29"/>
+                                                <rect key="frame" x="20" y="413" width="295" height="29"/>
                                                 <fontDescription key="fontDescription" type="system" pointSize="24"/>
                                                 <color key="textColor" red="0.24313725489999999" green="0.054901960780000002" blue="0.4039215686" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                                                 <nil key="highlightedColor"/>
@@ -6772,7 +6775,7 @@
                                                 </userDefinedRuntimeAttributes>
                                             </label>
                                             <imageView userInteractionEnabled="NO" contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="empty_orders" translatesAutoresizingMaskIntoConstraints="NO" id="gY1-Pq-vX0">
-                                                <rect key="frame" x="97.666666666666686" y="283" width="140" height="140"/>
+                                                <rect key="frame" x="97.666666666666686" y="233" width="140" height="140"/>
                                                 <constraints>
                                                     <constraint firstAttribute="height" constant="140" id="6ny-BR-3tQ"/>
                                                     <constraint firstAttribute="width" constant="140" id="8z8-4N-2Uz"/>
@@ -6805,16 +6808,26 @@
                                     <constraint firstAttribute="trailing" secondItem="fdr-D3-Bfx" secondAttribute="trailing" id="rk8-Bd-kEQ"/>
                                 </constraints>
                             </view>
+                            <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="QQ0-M1-SBO" customClass="NavBar" customModule="rzq" customModuleProvider="target">
+                                <rect key="frame" x="0.0" y="732" width="375" height="80"/>
+                                <color key="backgroundColor" systemColor="systemBackgroundColor"/>
+                                <constraints>
+                                    <constraint firstAttribute="height" constant="80" id="4lg-Oj-CfO"/>
+                                </constraints>
+                            </view>
                         </subviews>
                         <viewLayoutGuide key="safeArea" id="qsk-WZ-5NZ"/>
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                         <constraints>
+                            <constraint firstItem="qsk-WZ-5NZ" firstAttribute="trailing" secondItem="QQ0-M1-SBO" secondAttribute="trailing" id="4t2-ha-pfG"/>
                             <constraint firstItem="qsk-WZ-5NZ" firstAttribute="trailing" secondItem="6Ok-kj-GQs" secondAttribute="trailing" constant="10" id="BYI-CI-nVs"/>
                             <constraint firstItem="Uwv-JB-sZi" firstAttribute="leading" secondItem="qsk-WZ-5NZ" secondAttribute="leading" constant="20" id="Fhd-VT-lwR"/>
                             <constraint firstItem="qsk-WZ-5NZ" firstAttribute="trailing" secondItem="Uwv-JB-sZi" secondAttribute="trailing" constant="20" id="LOG-uq-XpZ"/>
                             <constraint firstItem="ulx-NA-JD0" firstAttribute="leading" secondItem="qsk-WZ-5NZ" secondAttribute="leading" id="M59-08-nh9"/>
-                            <constraint firstItem="qsk-WZ-5NZ" firstAttribute="bottom" secondItem="6Ok-kj-GQs" secondAttribute="bottom" constant="10" id="TSo-32-sqU"/>
+                            <constraint firstItem="qsk-WZ-5NZ" firstAttribute="bottom" secondItem="6Ok-kj-GQs" secondAttribute="bottom" constant="60" id="TSo-32-sqU"/>
+                            <constraint firstAttribute="bottom" secondItem="QQ0-M1-SBO" secondAttribute="bottom" id="U5Q-Ki-fSs"/>
                             <constraint firstItem="ulx-NA-JD0" firstAttribute="trailing" secondItem="qsk-WZ-5NZ" secondAttribute="trailing" id="arb-z2-FPs"/>
+                            <constraint firstItem="QQ0-M1-SBO" firstAttribute="leading" secondItem="qsk-WZ-5NZ" secondAttribute="leading" id="hLp-Df-Qbx"/>
                             <constraint firstItem="ulx-NA-JD0" firstAttribute="top" secondItem="aU4-lA-ynO" secondAttribute="top" id="hhG-Ko-0hM"/>
                             <constraint firstItem="Uwv-JB-sZi" firstAttribute="top" secondItem="ulx-NA-JD0" secondAttribute="bottom" constant="10" id="k7m-to-IpU"/>
                             <constraint firstItem="6Ok-kj-GQs" firstAttribute="leading" secondItem="qsk-WZ-5NZ" secondAttribute="leading" constant="10" id="kHq-Va-ZHA"/>
@@ -6827,6 +6840,7 @@
                         <outlet property="btnMenu" destination="gHz-nN-vTs" id="Oin-gY-afM"/>
                         <outlet property="containerView" destination="6Ok-kj-GQs" id="O1k-XO-HWz"/>
                         <outlet property="emptyView" destination="YnI-PM-DyP" id="jij-0p-uHv"/>
+                        <outlet property="navBar" destination="QQ0-M1-SBO" id="h3L-Bw-boU"/>
                         <outlet property="segmentControl" destination="Uwv-JB-sZi" id="eeV-Fy-Mgv"/>
                         <outlet property="tableView" destination="fdr-D3-Bfx" id="ysX-kw-K8s"/>
                     </connections>
@@ -27936,47 +27950,80 @@
         </scene>
     </scenes>
     <designables>
+        <designable name="2tF-5H-IPi">
+            <size key="intrinsicContentSize" width="250" height="46"/>
+        </designable>
         <designable name="5GO-LM-Dij">
-            <size key="intrinsicContentSize" width="66" height="34"/>
+            <size key="intrinsicContentSize" width="355" height="39.220703125"/>
         </designable>
         <designable name="6is-zz-e44">
-            <size key="intrinsicContentSize" width="127" height="34"/>
+            <size key="intrinsicContentSize" width="355" height="39.220703125"/>
         </designable>
         <designable name="90c-lM-y4l">
-            <size key="intrinsicContentSize" width="65.666666666666671" height="34"/>
+            <size key="intrinsicContentSize" width="307" height="40.209671874999998"/>
+        </designable>
+        <designable name="9x5-0P-Zxx">
+            <size key="intrinsicContentSize" width="95" height="15"/>
         </designable>
         <designable name="B1E-yb-xia">
-            <size key="intrinsicContentSize" width="119.33333333333333" height="34"/>
+            <size key="intrinsicContentSize" width="355" height="39.220703125"/>
         </designable>
         <designable name="Eve-f6-3rY">
-            <size key="intrinsicContentSize" width="119.33333333333333" height="34"/>
+            <size key="intrinsicContentSize" width="355" height="39.220703125"/>
+        </designable>
+        <designable name="HEX-Q2-Cjr">
+            <size key="intrinsicContentSize" width="141" height="29"/>
+        </designable>
+        <designable name="HoH-2r-bXt">
+            <size key="intrinsicContentSize" width="85" height="13"/>
         </designable>
         <designable name="N1t-JS-2FB">
-            <size key="intrinsicContentSize" width="124.66666666666667" height="34"/>
+            <size key="intrinsicContentSize" width="190" height="40.209671874999998"/>
         </designable>
         <designable name="OzZ-db-ahS">
-            <size key="intrinsicContentSize" width="66" height="34"/>
+            <size key="intrinsicContentSize" width="355" height="39.220703125"/>
+        </designable>
+        <designable name="Qb3-oA-PjQ">
+            <size key="intrinsicContentSize" width="90" height="14"/>
         </designable>
         <designable name="VLl-Pe-OvH">
-            <size key="intrinsicContentSize" width="127" height="34"/>
+            <size key="intrinsicContentSize" width="355" height="39.220703125"/>
         </designable>
         <designable name="WNE-Kv-mJf">
-            <size key="intrinsicContentSize" width="127" height="34"/>
+            <size key="intrinsicContentSize" width="355" height="39.220703125"/>
         </designable>
         <designable name="Xex-Z2-xZR">
-            <size key="intrinsicContentSize" width="119.33333333333333" height="34"/>
+            <size key="intrinsicContentSize" width="355" height="39.220703125"/>
+        </designable>
+        <designable name="cuh-v7-0BO">
+            <size key="intrinsicContentSize" width="240" height="44"/>
+        </designable>
+        <designable name="dff-qk-xlK">
+            <size key="intrinsicContentSize" width="245" height="45"/>
         </designable>
         <designable name="l9U-cg-OnC">
-            <size key="intrinsicContentSize" width="119.33333333333333" height="34"/>
+            <size key="intrinsicContentSize" width="355" height="39.220703125"/>
         </designable>
         <designable name="oQv-W2-GkD">
-            <size key="intrinsicContentSize" width="127" height="34"/>
+            <size key="intrinsicContentSize" width="355" height="39.220703125"/>
+        </designable>
+        <designable name="opg-hq-AYY">
+            <size key="intrinsicContentSize" width="250" height="46"/>
+        </designable>
+        <designable name="qJd-E4-LQY">
+            <size key="intrinsicContentSize" width="160" height="28"/>
         </designable>
         <designable name="qhJ-HP-SER">
-            <size key="intrinsicContentSize" width="66" height="34"/>
+            <size key="intrinsicContentSize" width="355" height="39.220703125"/>
+        </designable>
+        <designable name="rQF-cZ-L2Y">
+            <size key="intrinsicContentSize" width="75" height="11"/>
+        </designable>
+        <designable name="ufK-cl-Eh2">
+            <size key="intrinsicContentSize" width="141" height="29"/>
         </designable>
         <designable name="ynO-9o-kWx">
-            <size key="intrinsicContentSize" width="66" height="34"/>
+            <size key="intrinsicContentSize" width="355" height="39.220703125"/>
         </designable>
     </designables>
     <resources>

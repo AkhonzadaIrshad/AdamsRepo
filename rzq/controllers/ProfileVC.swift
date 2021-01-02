@@ -212,8 +212,11 @@ extension ProfileVC: NavBarDelegate {
    }
    
    func goToOrdersScreen() {
-       self.slideMenuItemSelectedAtIndex(99)
-   }
+    if DataManager.loadUser().data?.roles?.contains(find: "Driver") ?? false {
+        self.slideMenuItemSelectedAtIndex(99)
+    } else {
+        self.slideMenuItemSelectedAtIndex(2)
+    }   }
    
    func goToNotificationsScreen() {
        self.slideMenuItemSelectedAtIndex(3)

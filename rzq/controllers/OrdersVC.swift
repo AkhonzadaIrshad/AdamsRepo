@@ -10,6 +10,7 @@ import UIKit
 
 class OrdersVC: BaseViewController, UITableViewDelegate, UITableViewDataSource {
     
+    @IBOutlet weak var navBar: NavBar!
     @IBOutlet weak var segmentControl: UISegmentedControl!
     @IBOutlet weak var btnMenu: UIButton!
     
@@ -28,6 +29,7 @@ class OrdersVC: BaseViewController, UITableViewDelegate, UITableViewDataSource {
         
         let titleTextAttributes = [NSAttributedString.Key.foregroundColor: UIColor.white]
         let titleTextAttributes2 = [NSAttributedString.Key.foregroundColor: UIColor.black]
+        navBar.delegate = self
         
         self.segmentControl.setTitleTextAttributes(titleTextAttributes2, for: .normal)
         self.segmentControl.setTitleTextAttributes(titleTextAttributes, for: .selected)
@@ -282,4 +284,28 @@ class OrdersVC: BaseViewController, UITableViewDelegate, UITableViewDataSource {
         }
     }
     
+}
+
+// MARK: - NavBarDelegate
+
+extension OrdersVC: NavBarDelegate {
+    func goToHomeScreen() {
+        self.slideMenuItemSelectedAtIndex(1)
+    }
+    
+    func goToOrdersScreen() {
+        if DataManager.loadUser().data?.roles?.contains(find: "Driver") ?? false {
+            self.slideMenuItemSelectedAtIndex(99)
+        } else {
+            self.slideMenuItemSelectedAtIndex(2)
+        }
+    }
+    
+    func goToNotificationsScreen() {
+        self.slideMenuItemSelectedAtIndex(3)
+    }
+    
+    func goToProfileScreen() {
+        self.slideMenuItemSelectedAtIndex(12)
+    }
 }
