@@ -34,10 +34,12 @@ class MenuViewController: BaseVC {
     
     @IBOutlet weak var topViewHeight: NSLayoutConstraint!
     
+    @IBOutlet weak var makeOrderLabel: MyUILabel!
     @IBOutlet weak var lblBalance: UILabel!
     
     @IBOutlet weak var lblDue: UILabel!
     
+    @IBOutlet weak var makeOrderSwitch: UISwitch!
     @IBOutlet weak var lblEarnings: UILabel!
     
     @IBOutlet weak var viewMyShops: UIView!
@@ -122,9 +124,12 @@ class MenuViewController: BaseVC {
             self.ivProfile.kf.setImage(with: url)
         }
         
+        let dispalyMakeOrderButton = UserDefaults.standard.bool(forKey: "dispalyMakeOerderButton")
+        self.makeOrderSwitch.isOn = dispalyMakeOrderButton
+
         if (self.isProvider()) {
             self.viewMood.isHidden = false
-            self.topViewHeight.constant = 175.0
+            self.topViewHeight.constant = 275.0
             if (DataManager.loadUser().data?.isOnline ?? false) {
                 self.moodSwitch.isOn = true
             }else {
@@ -269,6 +274,14 @@ class MenuViewController: BaseVC {
         default:
             self.ivSelect1.isHidden = false
             break
+        }
+    }
+    
+    @IBAction func onMakeOrder(_ sender: UISwitch) {
+        if sender.isOn {
+            UserDefaults.standard.set(true, forKey: "dispalyMakeOerderButton")
+        } else {
+            UserDefaults.standard.set(false, forKey: "dispalyMakeOerderButton")
         }
     }
     

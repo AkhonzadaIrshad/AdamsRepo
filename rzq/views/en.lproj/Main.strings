@@ -838,6 +838,9 @@
 /* Class = "UILabel"; text = "Your Mood"; ObjectID = "gwx-wi-Blk"; */
 "gwx-wi-Blk.text" = "Your Mood";
 
+/* Class = "UILabel"; text = "Your Mood"; ObjectID = "bhM-LW-F70"; */
+"bhM-LW-F70.text" = "Make Order";
+
 /* Class = "UILabel"; text = "Shop Details"; ObjectID = "h45-Yu-eZh"; */
 "h45-Yu-eZh.text" = "Shop Details";
 

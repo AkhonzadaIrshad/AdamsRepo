@@ -80,6 +80,7 @@ class HomeMapVC: BaseViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
     
+        
         if let street = UserDefaults.standard.string(forKey: "street") {
             self.streetTextField.text = street
         }
@@ -133,6 +134,7 @@ class HomeMapVC: BaseViewController {
     
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
+        
         LabasLocationManager.shared.delegate = self
         LabasLocationManager.shared.startUpdatingLocation()
         setUpGoogleMap()
@@ -141,6 +143,7 @@ class HomeMapVC: BaseViewController {
     
     override func viewDidAppear(_ animated: Bool) {
         super.viewDidAppear(animated)
+        
         self.navBar.refreshCounters()
         self.checkForDeepLinkValues()
         self.handleNotification()
@@ -171,6 +174,21 @@ class HomeMapVC: BaseViewController {
     override func viewDidLayoutSubviews() {
         super.viewDidLayoutSubviews()
         collectionViewFlowLayout = collectionView?.collectionViewLayout as? UICollectionViewFlowLayout
+       
+        if self.isProvider() {
+            let dispalyMakeOrderButton = UserDefaults.standard.bool(forKey: "dispalyMakeOerderButton")
+           if dispalyMakeOrderButton {
+               self.streetTextField.isHidden = false
+               self.houseTextField.isHidden = false
+               self.locationPartTextField.isHidden = false
+               self.viewOnTheWay.isHidden = false
+           } else {
+               self.viewOnTheWay.isHidden = true
+               self.streetTextField.isHidden = true
+               self.houseTextField.isHidden = true
+               self.locationPartTextField.isHidden = true
+           }
+        }
     }
     
     // if appropriate, make sure to stop your timer in `deinit`
@@ -712,7 +730,22 @@ class HomeMapVC: BaseViewController {
                 self.collectionView.dataSource = self
                 self.collectionView.reloadData()
                // self.viewOnTheWay.isHidden = true
-                self.viewOnTheWay.isHidden = false
+                if self.isProvider() {
+                    let dispalyMakeOrderButton = UserDefaults.standard.bool(forKey: "dispalyMakeOerderButton")
+                   if dispalyMakeOrderButton {
+                       self.streetTextField.isHidden = false
+                       self.houseTextField.isHidden = false
+                       self.locationPartTextField.isHidden = false
+                       self.viewOnTheWay.isHidden = false
+                   } else {
+                       self.viewOnTheWay.isHidden = true
+                       self.streetTextField.isHidden = true
+                       self.houseTextField.isHidden = true
+                       self.locationPartTextField.isHidden = true
+                   }
+                } else {
+                    self.viewOnTheWay.isHidden = false
+                }
                 
                 
                 
@@ -727,7 +760,22 @@ class HomeMapVC: BaseViewController {
                 self.polyline?.map = nil
                 self.pickMarker?.map = nil
                 self.dropMarker?.map = nil
-                self.viewOnTheWay.isHidden = false
+                if self.isProvider() {
+                    let dispalyMakeOrderButton = UserDefaults.standard.bool(forKey: "dispalyMakeOerderButton")
+                   if dispalyMakeOrderButton {
+                       self.streetTextField.isHidden = false
+                       self.houseTextField.isHidden = false
+                       self.locationPartTextField.isHidden = false
+                       self.viewOnTheWay.isHidden = false
+                   } else {
+                       self.viewOnTheWay.isHidden = true
+                       self.streetTextField.isHidden = true
+                       self.houseTextField.isHidden = true
+                       self.locationPartTextField.isHidden = true
+                   }
+                } else {
+                    self.viewOnTheWay.isHidden = false
+                }
                 //back to false when u want to show them
                 self.stopTimer()
             }

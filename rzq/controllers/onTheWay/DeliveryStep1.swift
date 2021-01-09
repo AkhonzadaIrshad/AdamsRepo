@@ -111,7 +111,7 @@ class DeliveryStep1: BaseVC , Step3Delegate, AllShopDelegate, ImagePickerDelegat
 
 
     // MARK: - Methods
-    
+
     override func viewDidLoad() {
         super.viewDidLoad()
 
@@ -894,7 +894,7 @@ class DeliveryStep1: BaseVC , Step3Delegate, AllShopDelegate, ImagePickerDelegat
             marker.snippet = "\(center.phoneNumber ?? "")"
             self.singleMarker?.icon = UIImage(named: "ic_shop_empty")
             // snuff1
-            let url = URL(string: "\(Constants.IMAGE_URL)\(center.type?.icon ?? "")")
+            let url = URL(string: "\(Constants.IMAGE_URL)\(center.type?.image ?? "")")
             self.applyMarkerImage(from: url!, to: marker,isScaled: useScale)
             self.singleMarker?.map = self.gMap
             //marker.map = gMap
@@ -913,7 +913,7 @@ class DeliveryStep1: BaseVC , Step3Delegate, AllShopDelegate, ImagePickerDelegat
             marker.snippet = "\(center.phoneNumber ?? "")"
             self.singleMarker?.icon = UIImage(named: "ic_shop_empty")
             // snuff1
-            let url = URL(string: "\(Constants.IMAGE_URL)\(center.type?.icon ?? "")")
+            let url = URL(string: "\(Constants.IMAGE_URL)\(center.type?.image ?? "")")
             self.applyInfoMarkerImage(from: url!, to: marker, isScaled: useScale, dispalyShopeName: false, ShopeName: center.name ?? "")
             self.singleMarker?.map = self.gMap
             //marker.map = gMap
@@ -924,6 +924,7 @@ class DeliveryStep1: BaseVC , Step3Delegate, AllShopDelegate, ImagePickerDelegat
     func filterShopsMarkers(selectedShopTypeId: Int, isScaled: Bool = false, dispalyShopeName: Bool = false) {
         self.gMap?.clear()
         self.shopMarkers.removeAll()
+        self.singleMarker?.map = nil
         
         let selectedShops = self.shops.filter({$0.type?.id == selectedShopTypeId})
         for center in selectedShops {
@@ -933,10 +934,10 @@ class DeliveryStep1: BaseVC , Step3Delegate, AllShopDelegate, ImagePickerDelegat
             marker.snippet = "\(center.phoneNumber ?? "")"
             //self.singleMarker?.icon = UIImage(named: "ic_shop_empty")
             // snuff1
-            let url = URL(string: "\(Constants.IMAGE_URL)\(center.type?.icon ?? "")")
+            let url = URL(string: "\(Constants.IMAGE_URL)\(center.type?.image ?? "")")
             self.applyMarkerImage(from: url!, to: marker, isScaled: isScaled, dispalyShopeName: dispalyShopeName, ShopeName: center.name ?? "")
 
-            self.singleMarker?.map = self.gMap
+          //  self.singleMarker?.map = self.gMap
             self.shopMarkers.append(marker)
         }
 
@@ -946,17 +947,18 @@ class DeliveryStep1: BaseVC , Step3Delegate, AllShopDelegate, ImagePickerDelegat
        
         self.gMap?.clear()
         self.shopMarkers.removeAll()
-       
+        self.singleMarker?.map = nil
+        
         let selectedShops = self.shops.filter({$0.type?.id == selectedShopTypeId})
         for center in selectedShops {
             let marker = GMSMarker()
             marker.position = CLLocationCoordinate2D(latitude: center.latitude ?? 0.0, longitude: center.longitude ?? 0.0)
             marker.title =  "\(center.id ?? 0)"
             marker.snippet = "\(center.phoneNumber ?? "")"
-            let url = URL(string: "\(Constants.IMAGE_URL)\(center.type?.icon ?? "")")
+            let url = URL(string: "\(Constants.IMAGE_URL)\(center.type?.image ?? "")")
             self.applyInfoMarkerImage(from: url!, to: marker, isScaled: isScaled, dispalyShopeName: dispalyShopeName, ShopeName: center.name ?? "")
 
-            self.singleMarker?.map = self.gMap
+           // self.singleMarker?.map = self.gMap
             self.shopMarkers.append(marker)
         }
     }
@@ -971,6 +973,19 @@ class DeliveryStep1: BaseVC , Step3Delegate, AllShopDelegate, ImagePickerDelegat
     }
     
     func applyMarkerImage(from url: URL, to marker: GMSMarker, isScaled: Bool = false, dispalyShopeName: Bool = false, ShopeName: String = "") {
+        
+        let storeView = StoreMarkerView.instanceFromNib()
+        
+        DispatchQueue.main.async {
+            if isScaled {
+            storeView.transform = CGAffineTransform.identity.scaledBy(x: self.myscale, y: self.myscale);
+            }
+
+            storeView.storiImaView.layer.cornerRadius = 14
+            marker.iconView = storeView
+            marker.map = self.gMap
+        }
+        
         DispatchQueue.global(qos: .background).async {
             guard let data = try? Data(contentsOf: url),
                 // let image = UIImage(data: data)?.cropped()
@@ -980,21 +995,31 @@ class DeliveryStep1: BaseVC , Step3Delegate, AllShopDelegate, ImagePickerDelegat
             DispatchQueue.main.async {
                // marker.icon = self.imageWithImage(image: image, scaledToSize: CGSize(width: 48.0, height: 48.0))
                 let image = self.imageWithImage(image: image, scaledToSize: CGSize(width: 48.0, height: 48.0))
-                let storeView = StoreMarkerView.instanceFromNib()
-                if isScaled {
-                storeView.transform = CGAffineTransform.identity.scaledBy(x: self.myscale, y: self.myscale);
-                }
-
                 storeView.storiImaView.image = image
-                storeView.storiImaView.layer.cornerRadius = 14
-                marker.iconView = storeView
-                marker.map = self.gMap
-
             }
         }
     }
     
     func applyInfoMarkerImage(from url: URL, to marker: GMSMarker, isScaled: Bool = false, dispalyShopeName: Bool = false, ShopeName: String = "") {
+        let storeView = MarkerInfo.instanceFromNib()
+
+        DispatchQueue.main.async {
+            if isScaled {
+            storeView.transform = CGAffineTransform.identity.scaledBy(x: self.myscale, y: self.myscale);
+            }
+
+            storeView.storeNameLabel.text = ShopeName
+            storeView.markerImageView.layer.cornerRadius = 17.5
+            storeView.layer.borderWidth = 0.4
+            storeView.layer.borderColor = UIColor.lightGray.cgColor
+          //  storeView.dropShadow(color: .darkGray, opacity: 1, offSet: CGSize(width: -1, height: 1), radius: 3, scale: true)
+            storeView.layer.cornerRadius = 5
+
+            marker.iconView = storeView
+            //  marker.icon = image
+            marker.map = self.gMap
+        }
+        
         DispatchQueue.global(qos: .background).async {
             guard let data = try? Data(contentsOf: url),
                 // let image = UIImage(data: data)?.cropped()
@@ -1004,24 +1029,10 @@ class DeliveryStep1: BaseVC , Step3Delegate, AllShopDelegate, ImagePickerDelegat
             DispatchQueue.main.async {
                // marker.icon = self.imageWithImage(image: image, scaledToSize: CGSize(width: 48.0, height: 48.0))
                 let image = self.imageWithImage(image: image, scaledToSize: CGSize(width: 48.0, height: 48.0))
-                let storeView = MarkerInfo.instanceFromNib()
-                if isScaled {
-                storeView.transform = CGAffineTransform.identity.scaledBy(x: self.myscale, y: self.myscale);
-                }
-
                 storeView.markerImageView.image = image
-                storeView.storeNameLabel.text = ShopeName
-                storeView.layer.borderWidth = 1
-                storeView.layer.borderColor = UIColor.clear.cgColor
-                //storeView.dropShadow(color: .darkGray, opacity: 1, offSet: CGSize(width: -1, height: 1), radius: 3, scale: true)
-                storeView.layer.cornerRadius = 10
-
-                marker.iconView = storeView
-                //  marker.icon = image
-                marker.map = self.gMap
-
             }
         }
+  
     }
     
     func imageWithImage(image:UIImage, scaledToSize newSize:CGSize) -> UIImage{
@@ -1299,6 +1310,7 @@ extension DeliveryStep1 : GMSMapViewDelegate {
     
     func mapView(_ mapView: GMSMapView, didTap marker: GMSMarker) -> Bool {
         let id = marker.title ?? "0"
+        isZoomed = true
         if (id.contains(find: "my_location")) {
             return true
         }
@@ -1351,9 +1363,9 @@ extension DeliveryStep1 : GMSMapViewDelegate {
                 self.singleMarker?.snippet = ""
                 self.singleMarker?.icon = UIImage(named: "ic_shop_empty_selected")
                 // snuff1
-                let url = URL(string: "\(Constants.IMAGE_URL)\(response.shopData?.type?.selectedIcon ?? "")")
+                let url = URL(string: "\(Constants.IMAGE_URL)\(response.shopData?.type?.image ?? "")")
                 self.applyMarkerImage(from: url!, to: self.singleMarker!, ShopeName: response.shopData?.name ?? "")
-                self.singleMarker?.map = self.gMap
+              //  self.singleMarker?.map = self.gMap
                 
                 self.handleOpenNow(shop: response.shopData)
                 
@@ -2168,7 +2180,7 @@ extension DeliveryStep1: UITableViewDelegate, UITableViewDataSource {
         self.singleMarker?.snippet = "\(shop.phoneNumber ?? "")"
         self.singleMarker?.icon = UIImage(named: "ic_shop_empty_selected")
         //snuff1
-        let url = URL(string: "\(Constants.IMAGE_URL)\(shop.type?.selectedIcon ?? "")")
+        let url = URL(string: "\(Constants.IMAGE_URL)\(shop.type?.image ?? "")")
         self.applyMarkerImage(from: url!, to: self.singleMarker!, ShopeName: shop.name ?? "")
         self.singleMarker?.map = self.gMap
         

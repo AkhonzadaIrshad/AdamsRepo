@@ -20,6 +20,9 @@
 /* Class = "UIButton"; normalTitle = "Place Order"; ObjectID = "1CT-yu-bU4"; */
 "1CT-yu-bU4.normalTitle" = "أسعار التوصيل";
 
+/* Class = "UILabel"; text = "Your Mood"; ObjectID = "bhM-LW-F70"; */
+"bhM-LW-F70.text" = "تفعيل تقديم الطلب";
+
 /* Class = "UILabel"; text = "Order"; ObjectID = "1TR-hb-f0r"; */
 "1TR-hb-f0r.text" = "طلب جديد";
 
