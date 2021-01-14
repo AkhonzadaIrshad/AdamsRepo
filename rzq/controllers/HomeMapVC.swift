@@ -42,8 +42,13 @@ class HomeMapVC: BaseViewController {
     @IBOutlet weak var viewGoogleMap: UIView!
     @IBOutlet weak var lblDeliverTo: MyUILabel!
     @IBOutlet weak var locationPinImageView: UIImageView!
+    @IBOutlet weak var locationPinView: UIView!
     
-    // MARK: - Properties - public
+    // MARK: - Properties
+    
+    private var driverCurentLocationLatitude: Double = 0.0
+    private var driverCurentLocationLongitude: Double = 0.0
+    
     var driverLocation: LocationData?
 
     let cameraZoom : Float = 15.0
@@ -174,20 +179,24 @@ class HomeMapVC: BaseViewController {
     override func viewDidLayoutSubviews() {
         super.viewDidLayoutSubviews()
         collectionViewFlowLayout = collectionView?.collectionViewLayout as? UICollectionViewFlowLayout
-       
+        
         if self.isProvider() {
             let dispalyMakeOrderButton = UserDefaults.standard.bool(forKey: "dispalyMakeOerderButton")
-           if dispalyMakeOrderButton {
-               self.streetTextField.isHidden = false
-               self.houseTextField.isHidden = false
-               self.locationPartTextField.isHidden = false
-               self.viewOnTheWay.isHidden = false
-           } else {
-               self.viewOnTheWay.isHidden = true
-               self.streetTextField.isHidden = true
-               self.houseTextField.isHidden = true
-               self.locationPartTextField.isHidden = true
-           }
+            if dispalyMakeOrderButton {
+                self.mapView.clear()
+                self.streetTextField.isHidden = false
+                self.houseTextField.isHidden = false
+                self.locationPartTextField.isHidden = false
+                self.viewOnTheWay.isHidden = false
+                self.locationPinView.isHidden = false
+            } else {
+                self.displayDriverCurrentLocation(self.driverCurentLocationLatitude, longitude: self.driverCurentLocationLongitude)
+                self.locationPinView.isHidden = true
+                self.viewOnTheWay.isHidden = true
+                self.streetTextField.isHidden = true
+                self.houseTextField.isHidden = true
+                self.locationPartTextField.isHidden = true
+            }
         }
     }
     
@@ -681,6 +690,7 @@ class HomeMapVC: BaseViewController {
         let marker = GMSMarker()
         marker.position = CLLocationCoordinate2D(latitude: self.latitude ?? 0.0, longitude: self.longitude ?? 0.0)
         marker.title =  "my_location"
+        marker.icon = UIImage(named: "ic_map_driver")
         marker.snippet = ""
         marker.map = mapView
     }
@@ -695,7 +705,7 @@ class HomeMapVC: BaseViewController {
         
         mapView.camera = camera
         mapView.delegate = self
-        mapView.isMyLocationEnabled = true
+        mapView.isMyLocationEnabled = false
         mapView.settings.myLocationButton = false
         mapView.settings.compassButton = false
         mapView.isIndoorEnabled = false
@@ -1131,6 +1141,16 @@ extension HomeMapVC: FilterListDelegate {
             self.showShopDetailsSheet(shop: response.shopData!)
         }
     }
+    
+    private func displayDriverCurrentLocation(_ latitude: Double, longitude: Double) {
+        let marker = GMSMarker()
+        marker.position = CLLocationCoordinate2D(latitude: latitude, longitude: longitude)
+        marker.title =  "my_location"
+        marker.icon = UIImage(named: "ic_map_driver")
+        marker.snippet = ""
+        marker.map = mapView
+    }
+    
 }
 
 //MARK: - LabasLocationManagerDelegate
@@ -1143,9 +1163,13 @@ extension HomeMapVC: LabasLocationManagerDelegate {
         if DataManager.loadUser().data?.roles?.contains(find: "Driver") == true {
             latitude = LabasLocationManager.shared.currentLocation?.coordinate.latitude ?? 0
             longitude = LabasLocationManager.shared.currentLocation?.coordinate.longitude ?? 0
+            driverCurentLocationLatitude = latitude
+            driverCurentLocationLongitude = longitude
+           
             if (self.isProvider()) {
+                self.displayDriverCurrentLocation(latitude, longitude: longitude)
+
                 ApiService.updateLocation(Authorization: DataManager.loadUser().data?.accessToken ?? "", latitude: latitude, longitude: longitude) { (response) in
-                    
                 }
             }
         } else {
