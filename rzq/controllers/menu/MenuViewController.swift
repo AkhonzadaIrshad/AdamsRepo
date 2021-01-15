@@ -37,6 +37,7 @@ class MenuViewController: BaseVC {
     @IBOutlet weak var makeOrderLabel: MyUILabel!
     @IBOutlet weak var lblBalance: UILabel!
     
+    @IBOutlet weak var makeOrderView: UIView!
     @IBOutlet weak var lblDue: UILabel!
     
     @IBOutlet weak var makeOrderSwitch: UISwitch!
@@ -130,6 +131,7 @@ class MenuViewController: BaseVC {
         if (self.isProvider()) {
             self.viewMood.isHidden = false
             self.topViewHeight.constant = 275.0
+            self.makeOrderView.isHidden = false
             if (DataManager.loadUser().data?.isOnline ?? false) {
                 self.moodSwitch.isOn = true
             }else {
@@ -140,7 +142,8 @@ class MenuViewController: BaseVC {
             self.registeredShopsHeight.constant = 50
             self.registeredShopsView.isHidden = false
         } else {
-            self.topViewHeight.constant = 125.0
+            self.topViewHeight.constant = 175.0
+            self.makeOrderView.isHidden = true
             self.viewMood.isHidden = true
             lblWorkingOrders.text = "register_as_driver".localized
             lblWorkingOrders.textColor = UIColor.processing
