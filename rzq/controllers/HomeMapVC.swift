@@ -1167,7 +1167,7 @@ extension HomeMapVC: LabasLocationManagerDelegate {
             driverCurentLocationLongitude = longitude
            
             if (self.isProvider()) {
-                self.displayDriverCurrentLocation(latitude, longitude: longitude)
+               // self.displayDriverCurrentLocation(latitude, longitude: longitude)
 
                 ApiService.updateLocation(Authorization: DataManager.loadUser().data?.accessToken ?? "", latitude: latitude, longitude: longitude) { (response) in
                 }

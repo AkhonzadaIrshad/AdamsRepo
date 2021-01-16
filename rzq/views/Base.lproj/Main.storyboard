@@ -14,11 +14,11 @@
         <array key="Cairo-Regular.ttf">
             <string>Cairo-Regular</string>
         </array>
-        <array key="arabic_medium.ttf">
-            <string>Tajawal-Medium</string>
-        </array>
         <array key="arabic_regular.ttf">
             <string>Tajawal-Regular</string>
+        </array>
+        <array key="arabic_semibold.ttf">
+            <string>Tajawal-Medium</string>
         </array>
         <array key="english_regular.otf">
             <string>SFProDisplay-Regular</string>
@@ -21619,7 +21619,7 @@
                                 <rect key="frame" x="0.0" y="87" width="375" height="100"/>
                                 <subviews>
                                     <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Notifications" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="HO9-nX-gir" customClass="MyUILabel" customModule="rzq" customModuleProvider="target">
-                                        <rect key="frame" x="20" y="10" width="107" height="37.666666666666664"/>
+                                        <rect key="frame" x="20" y="9.9999999999999982" width="112" height="23.333333333333329"/>
                                         <fontDescription key="fontDescription" name="Cairo-Regular" family="Cairo" pointSize="20"/>
                                         <color key="textColor" red="0.24313725490196078" green="0.054901960784313725" blue="0.40392156862745099" alpha="1" colorSpace="calibratedRGB"/>
                                         <nil key="highlightedColor"/>
@@ -21628,7 +21628,7 @@
                                         </userDefinedRuntimeAttributes>
                                     </label>
                                     <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Turn Notifications ON or Off" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="NGg-52-YiS" customClass="MyUILabel" customModule="rzq" customModuleProvider="target">
-                                        <rect key="frame" x="20" y="57.666666666666657" width="185.66666666666666" height="24"/>
+                                        <rect key="frame" x="20" y="43.333333333333343" width="198" height="24"/>
                                         <constraints>
                                             <constraint firstAttribute="height" constant="24" id="elY-41-xTQ"/>
                                         </constraints>
@@ -21671,7 +21671,7 @@
                                 <rect key="frame" x="0.0" y="187" width="375" height="80"/>
                                 <subviews>
                                     <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Language" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="uGG-sH-IUg" customClass="MyUILabel" customModule="rzq" customModuleProvider="target">
-                                        <rect key="frame" x="20" y="21.333333333333339" width="81.666666666666671" height="37.666666666666657"/>
+                                        <rect key="frame" x="20.000000000000007" y="28.333333333333343" width="88.666666666666686" height="23.333333333333329"/>
                                         <fontDescription key="fontDescription" name="Cairo-Regular" family="Cairo" pointSize="20"/>
                                         <color key="textColor" red="0.24313725490196078" green="0.054901960784313725" blue="0.40392156862745099" alpha="1" colorSpace="calibratedRGB"/>
                                         <nil key="highlightedColor"/>
@@ -21687,26 +21687,26 @@
                                         </constraints>
                                     </view>
                                     <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="English" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="avm-Z0-cTH">
-                                        <rect key="frame" x="319" y="26" width="46" height="28.333333333333329"/>
+                                        <rect key="frame" x="316.33333333333331" y="31.333333333333343" width="48.666666666666686" height="17.666666666666671"/>
                                         <fontDescription key="fontDescription" name="Cairo-Regular" family="Cairo" pointSize="15"/>
                                         <color key="textColor" white="0.33333333329999998" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                         <nil key="highlightedColor"/>
                                     </label>
                                     <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="ic_unchecked_orange" translatesAutoresizingMaskIntoConstraints="NO" id="m4R-6p-KjD">
-                                        <rect key="frame" x="294" y="30" width="20" height="20"/>
+                                        <rect key="frame" x="291.33333333333331" y="30" width="20" height="20"/>
                                         <constraints>
                                             <constraint firstAttribute="height" constant="20" id="Mye-Qf-55w"/>
                                             <constraint firstAttribute="width" constant="20" id="OqB-JI-GrR"/>
                                         </constraints>
                                     </imageView>
                                     <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="العربية" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="aW2-h1-oL0">
-                                        <rect key="frame" x="237" y="32.666666666666657" width="42" height="15"/>
+                                        <rect key="frame" x="242.00000000000003" y="31.333333333333343" width="34.333333333333343" height="17.666666666666671"/>
                                         <fontDescription key="fontDescription" name="Tajawal-Regular" family="Tajawal" pointSize="15"/>
                                         <color key="textColor" white="0.33333333329999998" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                         <nil key="highlightedColor"/>
                                     </label>
                                     <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="ic_checked" translatesAutoresizingMaskIntoConstraints="NO" id="ov3-LE-0y8">
-                                        <rect key="frame" x="207" y="30" width="20" height="20"/>
+                                        <rect key="frame" x="212" y="30" width="20" height="20"/>
                                         <constraints>
                                             <constraint firstAttribute="width" constant="20" id="cI5-4y-Or2"/>
                                             <constraint firstAttribute="height" constant="20" id="lfm-Zt-Sdd"/>
@@ -28008,7 +28008,7 @@
             <size key="intrinsicContentSize" width="355" height="39.220703125"/>
         </designable>
         <designable name="90c-lM-y4l">
-            <size key="intrinsicContentSize" width="307" height="40.209671874999998"/>
+            <size key="intrinsicContentSize" width="307" height="38.823671875000002"/>
         </designable>
         <designable name="9x5-0P-Zxx">
             <size key="intrinsicContentSize" width="95" height="15"/>
@@ -28026,7 +28026,7 @@
             <size key="intrinsicContentSize" width="85" height="13"/>
         </designable>
         <designable name="N1t-JS-2FB">
-            <size key="intrinsicContentSize" width="190" height="40.209671874999998"/>
+            <size key="intrinsicContentSize" width="190" height="38.823671875000002"/>
         </designable>
         <designable name="OzZ-db-ahS">
             <size key="intrinsicContentSize" width="355" height="39.220703125"/>

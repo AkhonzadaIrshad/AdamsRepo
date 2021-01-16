@@ -98,6 +98,8 @@ class NotificationsVC: BaseViewController,LabasLocationManagerDelegate, AcceptBi
         
         refreshControl.addTarget(self, action: #selector(refresh), for: .valueChanged)
         self.tableView.addSubview(refreshControl)
+        self.updateNotifications()
+
     }
     
     override func viewDidAppear(_ animated: Bool) {
@@ -117,6 +119,7 @@ class NotificationsVC: BaseViewController,LabasLocationManagerDelegate, AcceptBi
             self.sortView.isHidden = false
             self.sortViewHeight.constant = 36
         }
+        self.updateNotifications()
     }
     
     // MARK: - Methodes - UI Actions

@@ -220,6 +220,9 @@ class AppDelegate: UIResponder, UIApplicationDelegate, MOLHResetable,MessagingDe
             
         }
         
+        let rootViewController = UIApplication.topViewController() as! BaseViewController
+        rootViewController.openViewControllerBasedOnIdentifier("NotificationsVC")
+
         /* Change root view controller to a specific viewcontroller */
         // let storyboard = UIStoryboard(name: "Main", bundle: nil)
         // let vc = storyboard.instantiateViewController(withIdentifier: "ViewControllerStoryboardID") as? ViewController
@@ -373,7 +376,10 @@ class AppDelegate: UIResponder, UIApplicationDelegate, MOLHResetable,MessagingDe
             if (notificationType == "902") {
                 self.reloadOrderPaymentMethod(method: 3)
             }
-            
+            if (notificationType == "1") {
+                let rootViewController = UIApplication.topViewController() as! BaseViewController
+                rootViewController.openViewControllerBasedOnIdentifier("NotificationsVC")
+            }
         }
         
         // Print full message.
