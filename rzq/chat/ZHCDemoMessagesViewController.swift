@@ -834,6 +834,7 @@ class ZHCDemoMessagesViewController: ZHCMessagesViewController, BillDelegate, Ch
             let item2 = ShopMenuItem(id: 1, name: "order_price", imageName: "", price: orderCost - deliveryCost, shopMenuItemDescription: "", count: 1, isOutOfStock: false)
             let item3 = ShopMenuItem(id: 2, name: "knet_commission", imageName: "", price: knetCommistion, shopMenuItemDescription: "", count: 1, isOutOfStock: false)
             vc.items.append(item)
+            vc.createDate = self.order?.createdDate
             vc.items.append(item2)
             vc.items.append(item3)
             vc.delegate = self

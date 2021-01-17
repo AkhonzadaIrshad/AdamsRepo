@@ -1527,6 +1527,16 @@ class ApiService : NSObject {
             mail = "rzq@app.com"
         }
         
+        let now = Date() // the current date/time
+        let expiredDate = Calendar.current.date(byAdding: .year, value: 1, to: now) // Tomorrow with same time of day as now
+        let dateString = "\(expiredDate ?? now)"
+//2021-01-01T09:28:01.271Z
+        let dateFormatter = DateFormatter()
+        dateFormatter.dateFormat = "yyyy-MM-dd'T'HH:mm:ssZ"
+        let date = dateFormatter.date(from: dateString)
+        dateFormatter.dateFormat = "MM-dd-yyyy"
+       // let expiredDateString = dateFormatter.string(from: date!)
+        
         let all : [String : Any] = ["PaymentMethodId" : 1,
                                     "CustomerName"  : user.data?.fullName ?? "",
                                     "DisplayCurrencyIso" : "KWD",
@@ -1541,7 +1551,7 @@ class ApiService : NSObject {
                                     "CustomerCivilId" : "Rzq_02",
                                     "UserDefinedField" : "Rzq_03",
                                     "CustomerAddress" : customerAddress,
-                                    "ExpiryDate" : "2021-01-01T09:28:01.271Z",
+                                    "ExpiryDate" : dateString,
                                     "InvoiceItems" : invoiceItems]
         
         
@@ -1563,7 +1573,6 @@ class ApiService : NSObject {
                 }
         }
     }
-    
     
     static func getPaymentStatus(invoiceId : String,  completion:@escaping(_ response : PaymentStatusResponse)-> Void) {
         

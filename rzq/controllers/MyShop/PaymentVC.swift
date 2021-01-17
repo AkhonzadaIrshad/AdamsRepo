@@ -24,14 +24,15 @@ class PaymentVC: BaseVC, WKNavigationDelegate, WKUIDelegate {
     var total : Double?
     var items = [ShopMenuItem]()
     var invoiceId : String?
+    var createDate: String?
     var delegate : PaymentDelegate?
     
     var activityIndicator: UIActivityIndicatorView!
     override func viewDidLoad() {
         super.viewDidLoad()
+      
         self.webView.addObserver(self, forKeyPath: "URL", options: .new, context: nil)
         self.webView.addObserver(self, forKeyPath: "estimatedProgress", options: .new, context: nil)
-        
       
         self.showLoading()
         ApiService.placePayment(user: DataManager.loadUser(), total: total ?? 0.0, items: self.items) { (response) in

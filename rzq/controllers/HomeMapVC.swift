@@ -123,6 +123,8 @@ class HomeMapVC: BaseViewController {
         }
         
         NotificationCenter.default.addObserver(self, selector: #selector(appCameToForeground), name: UIApplication.willEnterForegroundNotification, object: nil)
+        let notificationCenter = NotificationCenter.default
+           notificationCenter.addObserver(self, selector: #selector(appCameToForeground ), name: UIApplication.willResignActiveNotification, object: nil)
         
         self.validateDriverDueAmount()
         

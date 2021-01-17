@@ -206,8 +206,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate, MOLHResetable,MessagingDe
             
         }
         
-        if(application.applicationState == .inactive)
-        {
+        if(application.applicationState == .inactive) {
             print("user tapped the notification bar when the app is in background")
             let type = response.notification.request.content.userInfo["Type"] as? String ?? "0"
             let itemId = response.notification.request.content.userInfo["Id"] as? String ?? "0"
@@ -216,12 +215,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate, MOLHResetable,MessagingDe
             App.shared.notificationType = type
             App.shared.notificationValue = itemId
             App.shared.notificationDeliveryId = deliveryId
-            
-            
         }
-        
-        let rootViewController = UIApplication.topViewController() as! BaseViewController
-        rootViewController.openViewControllerBasedOnIdentifier("NotificationsVC")
 
         /* Change root view controller to a specific viewcontroller */
         // let storyboard = UIStoryboard(name: "Main", bundle: nil)
@@ -375,10 +369,6 @@ class AppDelegate: UIResponder, UIApplicationDelegate, MOLHResetable,MessagingDe
             }
             if (notificationType == "902") {
                 self.reloadOrderPaymentMethod(method: 3)
-            }
-            if (notificationType == "1") {
-                let rootViewController = UIApplication.topViewController() as! BaseViewController
-                rootViewController.openViewControllerBasedOnIdentifier("NotificationsVC")
             }
         }
         
