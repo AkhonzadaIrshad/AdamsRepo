@@ -36,7 +36,7 @@ class PaymentVC: BaseVC, WKNavigationDelegate, WKUIDelegate {
       
         self.showLoading()
         ApiService.placePayment(user: DataManager.loadUser(), total: total ?? 0.0, items: self.items) { (response) in
-            self.hideLoading()
+                    self.hideLoading()
             if (response.isSuccess ?? false) {
                 self.invoiceId = "\(response.paymentData?.invoiceID ?? 0)"
                 let link = URL(string:response.paymentData?.paymentURL ?? "")!

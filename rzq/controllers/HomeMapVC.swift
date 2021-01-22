@@ -101,12 +101,17 @@ class HomeMapVC: BaseViewController {
         NotificationCenter.default.addObserver(self, selector: #selector(willEnterForeground),
                                                name: UIApplication.willEnterForegroundNotification,
                                                   object: nil)
+        
         self.lblDeliverTo.text = "deliveryStep3.pickingView.to".localized
         self.navBar.delegate = self
         if DataManager.loadUser().data?.roles?.contains(find: "Driver") ?? false {
             self.navBar.isHidden = false
+            self.lblDeliverTo.text = "deliveryDriverStep3.pickingView.to".localized
+
         } else {
             self.navBar.isHidden = false
+            self.lblDeliverTo.text = "deliveryStep3.pickingView.to".localized
+
         }
         self.btnMenu.addTarget(self, action: #selector(BaseViewController.onSlideMenuButtonPressed(_:)), for: UIControl.Event.touchUpInside)
         
@@ -192,6 +197,9 @@ class HomeMapVC: BaseViewController {
                 self.viewOnTheWay.isHidden = false
                 self.locationPinView.isHidden = false
             } else {
+                self.driverCurentLocationLatitude = LabasLocationManager.shared.currentLocation?.coordinate.latitude ?? 0.0
+                self.driverCurentLocationLongitude =  LabasLocationManager.shared.currentLocation?.coordinate.longitude ?? 0.0
+                
                 self.displayDriverCurrentLocation(self.driverCurentLocationLatitude, longitude: self.driverCurentLocationLongitude)
                 self.locationPinView.isHidden = true
                 self.viewOnTheWay.isHidden = true
@@ -214,6 +222,11 @@ class HomeMapVC: BaseViewController {
         self.locationPinImageView.isHidden = false
 
         self.mapView?.animate(to: camera)
+      
+        self.driverCurentLocationLatitude = LabasLocationManager.shared.currentLocation?.coordinate.latitude ?? 0.0
+        self.driverCurentLocationLongitude =  LabasLocationManager.shared.currentLocation?.coordinate.longitude ?? 0.0
+        
+        self.displayDriverCurrentLocation(self.driverCurentLocationLatitude, longitude: self.driverCurentLocationLongitude)
     }
     
     @IBAction func openShopsFilter(_ sender: Any) {
@@ -1167,9 +1180,12 @@ extension HomeMapVC: LabasLocationManagerDelegate {
             longitude = LabasLocationManager.shared.currentLocation?.coordinate.longitude ?? 0
             driverCurentLocationLatitude = latitude
             driverCurentLocationLongitude = longitude
+            latitude = UserDefaults.standard.double(forKey: "lastSelectedLatitude")
+            longitude = UserDefaults.standard.double(forKey: "lastSelectedLongitude")
+
            
             if (self.isProvider()) {
-               // self.displayDriverCurrentLocation(latitude, longitude: longitude)
+                self.displayDriverCurrentLocation(latitude, longitude: longitude)
 
                 ApiService.updateLocation(Authorization: DataManager.loadUser().data?.accessToken ?? "", latitude: latitude, longitude: longitude) { (response) in
                 }
