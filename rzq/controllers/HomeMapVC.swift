@@ -1172,16 +1172,17 @@ extension HomeMapVC: FilterListDelegate {
 
 extension HomeMapVC: LabasLocationManagerDelegate {
     
-    func labasLocationManager(didUpdateLocation location:CLLocation) {
+    func labasLocationManager(didUpdateLocation location: CLLocation) {
         var latitude: Double
         var longitude: Double
         if DataManager.loadUser().data?.roles?.contains(find: "Driver") == true {
-            latitude = LabasLocationManager.shared.currentLocation?.coordinate.latitude ?? 0
-            longitude = LabasLocationManager.shared.currentLocation?.coordinate.longitude ?? 0
+
+            latitude = location.coordinate.latitude
+            longitude = location.coordinate.longitude
             driverCurentLocationLatitude = latitude
             driverCurentLocationLongitude = longitude
-            latitude = UserDefaults.standard.double(forKey: "lastSelectedLatitude")
-            longitude = UserDefaults.standard.double(forKey: "lastSelectedLongitude")
+//            latitude = UserDefaults.standard.double(forKey: "lastSelectedLatitude")
+//            longitude = UserDefaults.standard.double(forKey: "lastSelectedLongitude")
 
            
             if (self.isProvider()) {
