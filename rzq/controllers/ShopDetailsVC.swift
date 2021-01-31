@@ -391,6 +391,9 @@ class ShopDetailsVC: BaseVC, UITableViewDelegate, UITableViewDataSource, UIColle
         
         
         buo.getShortUrl(with: lp) { (url, error) in
+          print(url)
+            let sessionParams = Branch.getInstance().getLatestReferringParams()
+            print(sessionParams)
             buo.showShareSheet(with: lp, andShareText: shareText, from: self) { (activityType, completed) in
             }
             

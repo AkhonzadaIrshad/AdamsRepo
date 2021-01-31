@@ -1782,7 +1782,8 @@ extension DeliveryStep1: UICollectionViewDelegate, UICollectionViewDataSource, U
         self.clearFieldAction(self)
         if selectedCat.id == 0 {
             selectAllCategory = true
-            self.addShopsMarkers(useScale: false)
+            //self.addShopsMarkers(useScale: false)
+            showShopsList()
             //self.filterShopsMarkers(selectedShopTypeId: selectedCat.id ?? 0)
 
         } else {

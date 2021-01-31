@@ -67,7 +67,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate, MOLHResetable,MessagingDe
         
         
         //branch
-        // Branch.setUseTestBranchKey(true)
+       //  Branch.setUseTestBranchKey(true)
         // listener for Branch Deep Link data
         Branch.getInstance().initSession(launchOptions: launchOptions) { (params, error) in
             print(params as? [String: AnyObject] ?? {})
@@ -141,6 +141,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate, MOLHResetable,MessagingDe
     }
     //branch
     func application(_ application: UIApplication, continue userActivity: NSUserActivity, restorationHandler: @escaping ([UIUserActivityRestoring]?) -> Void) -> Bool {
+      
         // handler for Universal Links
         Branch.getInstance().continue(userActivity)
         return true
