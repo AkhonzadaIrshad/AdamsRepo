@@ -158,7 +158,7 @@ class ProfileVC: BaseVC {
         ApiService.postWithdraw(Authorization: DataManager.loadUser().data?.accessToken ?? "", userId: DataManager.loadUser().data?.userID ?? "", amount: Double(numberOf10 * 10)) { (result) in
             self.hideLoading()
             if result.errorCode == 0 {
-                self.showAlert(title: "alert".localized, message: "profile_updated_withow".localized, actionTitle: "OK", cancelTitle: "cancel".localized, actionHandler: {
+                self.showAlert(title: "alert".localized, message: "profile_updated_withow".localized, actionTitle: "done".localized, cancelTitle: "cancel".localized, actionHandler: {
                 })
             }
             print(result)
