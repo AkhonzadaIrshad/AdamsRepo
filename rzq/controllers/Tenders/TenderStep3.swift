@@ -295,7 +295,14 @@ class TenderStep3: BaseVC, UINavigationControllerDelegate, ImagePickerDelegate {
                     vc.type = 2
                     vc.modalPresentationStyle = .fullScreen
                     self.present(vc, animated: true, completion: nil)
-                }else {
+                }else if (response.errorCode == 18) {
+                    self.showBanner(title: "alert".localized, message: "account_inactive".localized, style: UIColor.INFO)
+                    if let vc = UIStoryboard(name: "Main", bundle: nil).instantiateViewController(withIdentifier: "LoginVC") as? LoginVC
+                    {
+                        vc.modalPresentationStyle = .fullScreen
+                        self.present(vc, animated: true, completion: nil)
+                    }
+                } else {
                     self.showBanner(title: "alert".localized, message: response.errorMessage ?? "", style: UIColor.INFO)
                 }
                 

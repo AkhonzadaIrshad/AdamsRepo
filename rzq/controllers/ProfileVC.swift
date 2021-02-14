@@ -159,7 +159,6 @@ class ProfileVC: BaseVC {
             self.hideLoading()
             if result.errorCode == 0 {
                 self.showAlert(title: "alert".localized, message: "profile_updated_withow".localized, actionTitle: "OK", cancelTitle: "cancel".localized, actionHandler: {
-                    
                 })
             }
             print(result)
@@ -194,6 +193,13 @@ class ProfileVC: BaseVC {
                     self.edtCoupon.text = ""
                     self.showBanner(title: "alert".localized, message: "coupon_added".localized, style: UIColor.SUCCESS)
                     self.loadProfileData()
+                }else if (response.errorCode == 18) {
+                    self.showBanner(title: "alert".localized, message: "account_inactive".localized, style: UIColor.INFO)
+                    if let vc = UIStoryboard(name: "Main", bundle: nil).instantiateViewController(withIdentifier: "LoginVC") as? LoginVC
+                    {
+                        vc.modalPresentationStyle = .fullScreen
+                        self.present(vc, animated: true, completion: nil)
+                    }
                 } else {
                        self.showBanner(title: "alert".localized, message: response.errorMessage ?? "", style: UIColor.INFO)
                 }

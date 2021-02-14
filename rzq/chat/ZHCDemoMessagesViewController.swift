@@ -144,6 +144,13 @@ class ZHCDemoMessagesViewController: ZHCMessagesViewController, BillDelegate, Ch
                     let message: ZHCMessage = ZHCMessage.init(senderId: self.user?.data?.userID ?? "", senderDisplayName: self.user?.data?.fullName ?? "", date: Date(), text: "اهلا وسهلا, يسرني أن أقوم بخدمتك.. والآن انا متوجه لأخذ طلبك يمكنك تتبع المسار عند اصدار الفاتوره..\n\n\nWelcome, I'm happy to serve you, I'm on my way to take your order, you can track your order when i pick it up.\n")
                     self.demoData.messages.add(message)
                     self.finishSendingMessage(animated: true)
+                }else if (response.errorCode == 18) {
+                    self.showBanner(title: "alert".localized, message: "account_inactive".localized, style: UIColor.INFO)
+                    if let vc = UIStoryboard(name: "Main", bundle: nil).instantiateViewController(withIdentifier: "LoginVC") as? LoginVC
+                    {
+                        vc.modalPresentationStyle = .fullScreen
+                        self.present(vc, animated: true, completion: nil)
+                    }
                 }else {
                     self.closeChat()
                 }

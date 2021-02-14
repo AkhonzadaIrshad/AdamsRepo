@@ -156,6 +156,13 @@ class RegisterDriverVC: BaseVC, UINavigationControllerDelegate {
                     DispatchQueue.main.asyncAfter(deadline: .now() + 2, execute: {
                         self.navigationController?.popViewController(animated: true)
                     })
+                }else if (response.errorCode == 18) {
+                    self.showBanner(title: "alert".localized, message: "account_inactive".localized, style: UIColor.INFO)
+                    if let vc = UIStoryboard(name: "Main", bundle: nil).instantiateViewController(withIdentifier: "LoginVC") as? LoginVC
+                    {
+                        vc.modalPresentationStyle = .fullScreen
+                        self.present(vc, animated: true, completion: nil)
+                    }
                 }else {
                     self.showBanner(title: "alert".localized, message: response.errorMessage ?? "", style: UIColor.INFO)
                 }
