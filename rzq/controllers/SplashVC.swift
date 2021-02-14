@@ -59,6 +59,11 @@ class SplashVC: BaseVC {
                             }
                         }else if (response.errorCode == 18) {
                             self.showBanner(title: "alert".localized, message: "account_inactive".localized, style: UIColor.INFO)
+                            if let vc = UIStoryboard(name: "Main", bundle: nil).instantiateViewController(withIdentifier: "LoginVC") as? LoginVC
+                            {
+                                vc.modalPresentationStyle = .fullScreen
+                                self.present(vc, animated: true, completion: nil)
+                            }
                         }else {
                             if let vc = UIStoryboard(name: "Main", bundle: nil).instantiateViewController(withIdentifier: "LoginVC") as? LoginVC
                             {
@@ -91,7 +96,15 @@ class SplashVC: BaseVC {
                 let initialViewControlleripad : UIViewController = mainStoryboardIpad.instantiateViewController(withIdentifier: self.getHomeView()) as! UINavigationController
                 initialViewControlleripad.modalPresentationStyle = .fullScreen
                 self.present(initialViewControlleripad, animated: true, completion: {})
-            }else {
+            } else if (response.errorCode == 18) {
+                self.showBanner(title: "alert".localized, message: "account_inactive".localized, style: UIColor.INFO)
+                if let vc = UIStoryboard(name: "Main", bundle: nil).instantiateViewController(withIdentifier: "LoginVC") as? LoginVC
+                {
+                    vc.modalPresentationStyle = .fullScreen
+                    self.present(vc, animated: true, completion: nil)
+                }
+            }
+            else {
                 if let vc = UIStoryboard(name: "Main", bundle: nil).instantiateViewController(withIdentifier: "MapNavigationController") as? UINavigationController
                 {
                     vc.modalPresentationStyle = .fullScreen

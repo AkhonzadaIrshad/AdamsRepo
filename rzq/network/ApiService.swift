@@ -1467,6 +1467,27 @@ class ApiService : NSObject {
         }
     }
     
+    static func postWithdraw(Authorization : String, userId: String, amount: Double, completion:@escaping(_ response : ProviderRatingRespones)-> Void) {
+        
+        let headers = [Constants.AUTH_HEADER: "bearer \(Authorization)",
+            Constants.LANG_HEADER : self.getLang()]
+        
+        let all : [String : Any] = ["DriverId" : userId,
+                                    "Amount" : amount]
+        
+        AFManager.request("\(Constants.BASE_URL)DriverRequest/DriverWithdrawRequest", method: .post, parameters: all ,encoding: JSONEncoding.default, headers: headers)
+            .responseJSON { response in
+                if let json = response.data {
+                    do {
+                        let decoder = JSONDecoder()
+                        let baseResponse = try decoder.decode(ProviderRatingRespones.self, from: json)
+                        completion(baseResponse)
+                    }catch let err{
+                        print(err)
+                    }
+                }
+        }
+    }
     
     
     static func getUserRatings(Authorization : String, userId: String, completion:@escaping(_ response : ProviderRatingRespones)-> Void) {

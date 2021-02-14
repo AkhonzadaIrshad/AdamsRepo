@@ -80,6 +80,7 @@
 "registered_to_shop" = "You have registered to shop successfully.";
 "unregistered_to_shop" = "You have unregistered to this shop.";
 "profile_updated_successfully" = "Profile has been updated successfully.";
+"profile_updated_withow" = "Request successfully sent.";
 
 "register_as_driver" = "Register As Driver";
 "working_orders" = "Working Orders";
@@ -265,6 +266,7 @@
 "no_ratings_desc" = "Ratings & reviews will appear here";
 "payment_method" = "Payment Method";
 "paid_successfully" = "Payment paid successfully.";
+
 
 
 "paid_cash" = "The user successfully paid in cash.";

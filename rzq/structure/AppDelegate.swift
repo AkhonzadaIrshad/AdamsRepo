@@ -62,9 +62,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate, MOLHResetable,MessagingDe
             application.registerUserNotificationSettings(settings)
         }
         
-        
         application.registerForRemoteNotifications()
-        
         
         //branch
        //  Branch.setUseTestBranchKey(true)

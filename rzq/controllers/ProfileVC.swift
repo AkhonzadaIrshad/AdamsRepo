@@ -15,8 +15,8 @@ class ProfileVC: BaseVC {
     @IBOutlet weak var ivProfile: CircleImage!
     @IBOutlet weak var ivDriverBadge: UIImageView!
     @IBOutlet weak var ivProviderBadge: UIImageView!
-    @IBOutlet weak var withrowButton: UIButton!
     
+    @IBOutlet weak var withrowButton: MyUIButton!
     @IBOutlet weak var ivHandle: UIImageView!
     
     @IBOutlet weak var lblName: MyUILabel!
@@ -125,8 +125,10 @@ class ProfileVC: BaseVC {
                 let finalTotal = total / 10.0
                 self.lblDueAmount.text = "\(response.dataProfileObj?.dueAmount ?? 0.0) \("currency".localized)"
                 
-                if response.dataProfileObj?.dueAmount ?? 0 >= -10 {
+                if response.dataProfileObj?.dueAmount ?? 0 <= -10 {
                     self.withrowButton.isHidden = false
+                    self.view.bringSubviewToFront(self.withrowButton)
+
                 } else {
                     self.withrowButton.isHidden = true
                 }
@@ -145,6 +147,30 @@ class ProfileVC: BaseVC {
             }
             
         }
+    }
+    
+    @IBAction func onWithrowButton(_ sender: Any) {
+        let powerOfTen: Int = abs(Int(( self.user?.dueAmount ?? 0)/10))
+        let numberOf10 = powerOfTen
+        print(Double(numberOf10 * 10))
+        self.showLoading()
+
+        ApiService.postWithdraw(Authorization: DataManager.loadUser().data?.accessToken ?? "", userId: DataManager.loadUser().data?.userID ?? "", amount: Double(numberOf10 * 10)) { (result) in
+            self.hideLoading()
+            if result.errorCode == 0 {
+                self.showAlert(title: "alert".localized, message: "profile_updated_withow".localized, actionTitle: "OK", cancelTitle: "cancel".localized, actionHandler: {
+                    
+                })
+            }
+            print(result)
+        }
+
+    }
+    
+    @IBAction func withrowAction(_ sender: Any) {
+        let powerOfTen:Double = pow(10.0, self.user?.dueAmount ?? 0.0)
+        print(powerOfTen)
+     
     }
     
     @IBAction func backAction(_ sender: Any) {
@@ -168,7 +194,7 @@ class ProfileVC: BaseVC {
                     self.edtCoupon.text = ""
                     self.showBanner(title: "alert".localized, message: "coupon_added".localized, style: UIColor.SUCCESS)
                     self.loadProfileData()
-                }else {
+                } else {
                        self.showBanner(title: "alert".localized, message: response.errorMessage ?? "", style: UIColor.INFO)
                 }
             }
@@ -225,4 +251,15 @@ extension ProfileVC: NavBarDelegate {
    func goToProfileScreen() {
        self.slideMenuItemSelectedAtIndex(12)
    }
+}
+
+extension Decimal {
+    func rounded(_ roundingMode: NSDecimalNumber.RoundingMode = .bankers) -> Decimal {
+        var result = Decimal()
+        var number = self
+        NSDecimalRound(&result, &number, 0, roundingMode)
+        return result
+    }
+    var whole: Decimal { self < 0 ? rounded(.up) : rounded(.down) }
+    var fraction: Decimal { self - whole }
 }
