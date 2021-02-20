@@ -92,6 +92,7 @@ class DeliveryStep1: BaseVC , Step3Delegate, AllShopDelegate, ImagePickerDelegat
         }
     }
     var selectAllCategory: Bool = false
+    var isFromSearch: Bool = false
     var fromdeepLink: Bool = false
     var shopeID: Int?
     var filterShops = [DataShop]()
@@ -114,7 +115,8 @@ class DeliveryStep1: BaseVC , Step3Delegate, AllShopDelegate, ImagePickerDelegat
 
     override func viewDidLoad() {
         super.viewDidLoad()
-
+        searchField.clearButtonMode = .whileEditing
+        
         var displayToolView =  UserDefaults.standard.value(forKey: "displayToolView") as? Int ?? 0
         if displayToolView < 2 {
             displayToolView += 1
@@ -458,11 +460,11 @@ class DeliveryStep1: BaseVC , Step3Delegate, AllShopDelegate, ImagePickerDelegat
             self.singleMarker?.position = CLLocationCoordinate2D(latitude: shop.latitude ?? 0.0, longitude: shop.longitude ?? 0.0)
             self.singleMarker?.title =  "\(shop.id ?? 0)"
             self.singleMarker?.snippet = ""
-            self.singleMarker?.icon = UIImage(named: "ic_shop_empty_selected")
+           // self.singleMarker?.icon = UIImage(named: "ic_shop_empty_selected")
             // snuff1
-            let url = URL(string: "\(Constants.IMAGE_URL)\(response.shopData?.type?.selectedIcon ?? "")")
+            let url = URL(string: "\(Constants.IMAGE_URL)\(response.shopData?.type?.image ?? "")")
             self.applyMarkerImage(from: url!, to: self.singleMarker!)
-            self.singleMarker?.map = self.gMap
+           // self.singleMarker?.map = self.gMap
             
             self.handleOpenNow(shop: response.shopData)
             
@@ -1287,6 +1289,7 @@ extension DeliveryStep1 : GMSMapViewDelegate {
     }
     
     func mapView(_ mapView: GMSMapView, idleAt position: GMSCameraPosition) {
+        if !isFromSearch {
         if selectAllCategory {
             if position.zoom >= 12 && isZoomed == false {
                  isZoomed = true
@@ -1304,7 +1307,9 @@ extension DeliveryStep1 : GMSMapViewDelegate {
                  filterShopsMarkers(selectedShopTypeId: self.selectdCategory?.id ?? 0, isScaled: false)
              }
         }
-      
+        } else {
+            isFromSearch = false
+        }
         print(position.zoom)
     }
     
@@ -2102,10 +2107,10 @@ extension DeliveryStep1: UITableViewDelegate, UITableViewDataSource {
     }
     
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
+        isFromSearch = true
         if indexPath.section == 0 {
             if tableView == searchByKeywordTableView {
                 getSelectedShopFromSearch(row: indexPath.row)
-              
             } else {
                 onSelect(shop: self.searchedShops[indexPath.row])
                 self.searchedText = ""
@@ -2127,6 +2132,7 @@ extension DeliveryStep1: UITableViewDelegate, UITableViewDataSource {
             }
         }
     }
+    
     func getSelectedShopFromSearch(row: Int) {
         // Just in case you need the item position
         self.edtOrderDetails.placeholder = "order_details".localized
@@ -2179,11 +2185,11 @@ extension DeliveryStep1: UITableViewDelegate, UITableViewDataSource {
         self.singleMarker?.position = CLLocationCoordinate2D(latitude: shop.latitude ?? 0.0, longitude: shop.longitude ?? 0.0)
         self.singleMarker?.title =  "\(shop.id ?? 0)"
         self.singleMarker?.snippet = "\(shop.phoneNumber ?? "")"
-        self.singleMarker?.icon = UIImage(named: "ic_shop_empty_selected")
+       // self.singleMarker?.icon = UIImage(named: "ic_shop_empty_selected")
         //snuff1
-        let url = URL(string: "\(Constants.IMAGE_URL)\(shop.type?.image ?? "")")
-        self.applyMarkerImage(from: url!, to: self.singleMarker!, ShopeName: shop.name ?? "")
-        self.singleMarker?.map = self.gMap
+       // let url = URL(string: "\(Constants.IMAGE_URL)\(shop.type?.image ?? "")")
+     
+       // self.singleMarker?.map = self.gMap
         
         
         self.viewShopDetails.isHidden = false
@@ -2213,6 +2219,9 @@ extension DeliveryStep1: UITableViewDelegate, UITableViewDataSource {
         self.viewPin.isHidden = false
         self.viewSuggest.isHidden = true
         
+        let url = URL(string: "\(Constants.IMAGE_URL)\(shop.type?.image ?? "")")
+
+        self.applyMarkerImage(from: url!, to: self.singleMarker!, ShopeName: shop.name ?? "")
         
         let camera = GMSCameraPosition.camera(withLatitude: self.orderModel?.pickUpLatitude ?? 0.0, longitude: self.orderModel?.pickUpLongitude ?? 0.0, zoom: 15.0)
         self.gMap?.animate(to: camera)
@@ -2243,20 +2252,14 @@ extension DeliveryStep1: UITableViewDelegate, UITableViewDataSource {
                         self.view.endEditing(true)
                         self.orderModel?.pickUpLatitude = lat
                         self.orderModel?.pickUpLongitude = lng
-                       // self.orderModel?.shop = shop
+                       //self.orderModel?.shop = shop
                         self.orderModel?.pickUpAddress = place.title ?? ""
                         self.singleMarker?.map = nil
                         self.singleMarker = GMSMarker()
                         self.singleMarker?.position = CLLocationCoordinate2D(latitude: lat , longitude: lng )
-                       // self.singleMarker?.title =  "\(place.placeId ?? 0)"
-                      //  self.singleMarker?.snippet = "\(place.phoneNumber ?? "")"
-                        self.singleMarker?.icon = UIImage(named: "ic_location_pin")
-                        //snuff1
-                      //  let url = URL(string: "\(Constants.IMAGE_URL)\(shop.type?.selectedIcon ?? "")")
-                       // self.applyMarkerImage(from: url!, to: self.singleMarker!)
-                        self.singleMarker?.map = self.gMap
-                        
-                        
+                       //self.singleMarker?.title =  "\(place.placeId ?? 0)"
+                      //self.singleMarker?.snippet = "\(place.phoneNumber ?? "")"
+                                           
                         self.viewShopDetails.isHidden = false
                         self.viewClearField.isHidden = false
                         
@@ -2281,7 +2284,12 @@ extension DeliveryStep1: UITableViewDelegate, UITableViewDataSource {
                         self.viewShopDetails.isHidden = true
                         self.viewClearField.isHidden = true
                         self.showActionSheet()
-
+                        self.singleMarker?.icon = UIImage(named: "ic_location_pin")
+                        //snuff1
+                      //  let url = URL(string: "\(Constants.IMAGE_URL)\(shop.type?.selectedIcon ?? "")")
+                       // self.applyMarkerImage(from: url!, to: self.singleMarker!)
+                        self.singleMarker?.map = self.gMap
+                        
                         let camera = GMSCameraPosition.camera(withLatitude: self.orderModel?.pickUpLatitude ?? 0.0, longitude: self.orderModel?.pickUpLongitude ?? 0.0, zoom: 15.0)
                         self.gMap?.animate(to: camera)
                     }

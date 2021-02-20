@@ -1161,9 +1161,13 @@ extension HomeMapVC: FilterListDelegate {
         let marker = GMSMarker()
         marker.position = CLLocationCoordinate2D(latitude: latitude, longitude: longitude)
         marker.title =  "my_location"
-        marker.icon = UIImage(named: "ic_map_driver")
         marker.snippet = ""
-        marker.map = mapView
+        if (self.isProvider()) {
+            marker.icon = UIImage(named: "ic_map_driver")
+            marker.map = mapView
+        } else {
+            marker.icon = nil
+        }
     }
     
 }
