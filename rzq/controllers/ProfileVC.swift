@@ -48,7 +48,7 @@ class ProfileVC: BaseVC {
     @IBOutlet weak var lblEarnings: MyUILabel!
     
     @IBOutlet weak var navBar: NavBar!
-    
+    var dueAmount: Double = 0.0
     var user : DataProfileObj?
     
     override func viewDidLoad() {
@@ -124,13 +124,21 @@ class ProfileVC: BaseVC {
                 let total = balance * perc
                 let finalTotal = total / 10.0
                 self.lblDueAmount.text = "\(response.dataProfileObj?.dueAmount ?? 0.0) \("currency".localized)"
-                
-                if response.dataProfileObj?.dueAmount ?? 0 <= -10 {
-                    self.withrowButton.isHidden = false
-                    self.view.bringSubviewToFront(self.withrowButton)
+                self.dueAmount = response.dataProfileObj?.dueAmount ?? 0.0
+                ApiService.canDriverWithdraw(Authorization: DataManager.loadUser().data?.accessToken ?? "", driverId: DataManager.loadUser().data?.userID ?? "") { (response) in
+                    if response.errorCode == 0 {
+                        if self.dueAmount <= -10 {
+                            self.withrowButton.isHidden = false
+                            self.view.bringSubviewToFront(self.withrowButton)
 
-                } else {
+                        } else {
+                            self.withrowButton.isHidden = true
+                        
+                    }
+
+                    } else {
                     self.withrowButton.isHidden = true
+                }
                 }
                 self.viewEarnings.isHidden = false
                 self.earningsHeight.constant = 51

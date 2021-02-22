@@ -1087,6 +1087,24 @@ class ApiService : NSObject {
         }
     }
     
+    static func canDriverWithdraw(Authorization: String, driverId : String, completion: @escaping(BaseResponse) -> Void) {
+    
+    let headers = [Constants.AUTH_HEADER: "bearer \(Authorization)",
+        Constants.LANG_HEADER : self.getLang()]
+    
+    AFManager.request("\(Constants.BASE_URL)DriverRequest/CanDriverWithdraw/id=\(driverId)", method: .get, parameters: nil ,encoding: JSONEncoding.default, headers: headers)
+        .responseJSON { response in
+            if let json = response.data {
+                do {
+                    let decoder = JSONDecoder()
+                    let baseResponse = try decoder.decode(BaseResponse.self, from: json)
+                    completion(baseResponse)
+                }catch let err {
+                    print(err)
+                }
+            }
+    }
+}
     
     static func getAllFAQs(completion:@escaping(_ response : FAQsResponse)-> Void) {
         
