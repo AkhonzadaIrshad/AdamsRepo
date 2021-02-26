@@ -16,20 +16,20 @@
             <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
             <subviews>
                 <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="Zzw-OM-hn9">
-                    <rect key="frame" x="0.0" y="267" width="437" height="2"/>
+                    <rect key="frame" x="0.0" y="302" width="437" height="2"/>
                     <color key="backgroundColor" white="0.66666666666666663" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                     <constraints>
                         <constraint firstAttribute="height" constant="2" id="XaV-zu-NH5"/>
                     </constraints>
                 </view>
                 <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="STd-iQ-n5P" customClass="CardView" customModule="rzq" customModuleProvider="target">
-                    <rect key="frame" x="0.0" y="0.0" width="437" height="247"/>
+                    <rect key="frame" x="0.0" y="0.0" width="437" height="282"/>
                     <subviews>
                         <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="Uk8-P7-rVd" customClass="CardView" customModule="rzq" customModuleProvider="target">
-                            <rect key="frame" x="1" y="1" width="435" height="245"/>
+                            <rect key="frame" x="1" y="1" width="435" height="280"/>
                             <subviews>
                                 <stackView opaque="NO" contentMode="scaleToFill" axis="vertical" spacing="10" translatesAutoresizingMaskIntoConstraints="NO" id="qnF-c9-ika">
-                                    <rect key="frame" x="10" y="10" width="415" height="225"/>
+                                    <rect key="frame" x="10" y="10" width="415" height="260"/>
                                     <subviews>
                                         <stackView opaque="NO" contentMode="scaleToFill" alignment="center" spacing="12" translatesAutoresizingMaskIntoConstraints="NO" id="Xms-aP-cPt">
                                             <rect key="frame" x="0.0" y="0.0" width="415" height="50"/>
@@ -50,6 +50,13 @@
                                                         <userDefinedRuntimeAttribute type="string" keyPath="font_type" value="17,4"/>
                                                     </userDefinedRuntimeAttributes>
                                                 </label>
+                                                <imageView hidden="YES" clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="VerfiedDriver" translatesAutoresizingMaskIntoConstraints="NO" id="lCK-3n-eyj">
+                                                    <rect key="frame" x="415" y="10" width="30" height="30"/>
+                                                    <constraints>
+                                                        <constraint firstAttribute="width" constant="30" id="R96-hY-8UU"/>
+                                                        <constraint firstAttribute="height" constant="30" id="VJG-Nz-1Ts"/>
+                                                    </constraints>
+                                                </imageView>
                                             </subviews>
                                             <constraints>
                                                 <constraint firstAttribute="height" constant="50" id="Nll-me-leD"/>
@@ -131,10 +138,10 @@
                                             </constraints>
                                         </stackView>
                                         <stackView opaque="NO" contentMode="scaleToFill" alignment="center" spacing="10" translatesAutoresizingMaskIntoConstraints="NO" id="AAH-kM-xHa">
-                                            <rect key="frame" x="0.0" y="130" width="415" height="60"/>
+                                            <rect key="frame" x="0.0" y="130" width="415" height="95"/>
                                             <subviews>
                                                 <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="I4G-Ou-ysn" customClass="RoundedView" customModule="rzq" customModuleProvider="target">
-                                                    <rect key="frame" x="0.0" y="0.0" width="60" height="60"/>
+                                                    <rect key="frame" x="0.0" y="17.5" width="60" height="60"/>
                                                     <subviews>
                                                         <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="lOv-0T-oqc">
                                                             <rect key="frame" x="0.0" y="30" width="60" height="0.0"/>
@@ -165,7 +172,7 @@
                                                     </userDefinedRuntimeAttributes>
                                                 </view>
                                                 <stackView opaque="NO" contentMode="scaleToFill" distribution="fillEqually" spacing="10" translatesAutoresizingMaskIntoConstraints="NO" id="xkA-fi-73i">
-                                                    <rect key="frame" x="70" y="10" width="285" height="40"/>
+                                                    <rect key="frame" x="70" y="27.5" width="285" height="40"/>
                                                     <subviews>
                                                         <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="MIY-NL-ivo" customClass="RoundedView" customModule="rzq" customModuleProvider="target">
                                                             <rect key="frame" x="0.0" y="0.0" width="137.5" height="40"/>
@@ -225,7 +232,7 @@
                                                     </constraints>
                                                 </stackView>
                                                 <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="system" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="kI4-lQ-q0D" customClass="MyUIButton" customModule="rzq" customModuleProvider="target">
-                                                    <rect key="frame" x="365" y="16" width="50" height="28"/>
+                                                    <rect key="frame" x="365" y="33.5" width="50" height="28"/>
                                                     <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                                     <constraints>
                                                         <constraint firstAttribute="width" constant="50" id="pQ4-jl-wke"/>
@@ -247,7 +254,7 @@
                                             </constraints>
                                         </stackView>
                                         <stackView opaque="NO" contentMode="scaleToFill" distribution="fillEqually" translatesAutoresizingMaskIntoConstraints="NO" id="RfG-Sj-A51">
-                                            <rect key="frame" x="0.0" y="200" width="415" height="25"/>
+                                            <rect key="frame" x="0.0" y="235" width="415" height="25"/>
                                             <subviews>
                                                 <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Label" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="TeR-XQ-HFE" customClass="MyUILabel" customModule="rzq" customModuleProvider="target">
                                                     <rect key="frame" x="0.0" y="0.0" width="207.5" height="25"/>
@@ -368,6 +375,7 @@
                 <outlet property="lblTime" destination="9o3-Yz-tg2" id="pxV-qm-tVa"/>
                 <outlet property="lblTitle" destination="DYP-lp-m7f" id="bdr-kP-KAz"/>
                 <outlet property="timeView" destination="tk3-JY-9BX" id="FH4-wG-eK2"/>
+                <outlet property="veriviedDriverImageView" destination="lCK-3n-eyj" id="FM2-nr-S6M"/>
                 <outlet property="vwAcceptBid" destination="tmp-dP-47J" id="Ujj-k0-Az9"/>
                 <outlet property="vwCountDown" destination="I4G-Ou-ysn" id="Pu1-RE-Hhm"/>
                 <outlet property="vwDeclineBid" destination="MIY-NL-ivo" id="TxY-dT-kq9"/>
@@ -376,6 +384,7 @@
         </view>
     </objects>
     <resources>
+        <image name="VerfiedDriver" width="128" height="128"/>
         <image name="ic_distance" width="18" height="18"/>
         <image name="ic_not_time" width="19" height="18"/>
         <image name="placeholder_order" width="105" height="105"/>

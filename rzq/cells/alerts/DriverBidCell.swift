@@ -10,6 +10,7 @@ import UIKit
 
 class DriverBidCell: UITableViewCell {
 
+    @IBOutlet weak var veriviedDriverImageView: UIImageView!
     @IBOutlet weak var bidCardView: CardView!
     @IBOutlet weak var bidContainerView: CardView!
     @IBOutlet weak var ivLogo: UIImageView!

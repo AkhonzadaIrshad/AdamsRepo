@@ -708,6 +708,12 @@ extension UISearchBar{
 }
 
 extension String {
+   
+    func toDate() -> Date? {
+        let formatter = DateFormatter()
+        formatter.dateFormat = "dd/MM/yyyy  hh:mm"
+        return formatter.date(from: self)
+    }
     
     func toDouble() -> Double? {
         return NumberFormatter().number(from: self)?.doubleValue

@@ -390,7 +390,7 @@ extension NotificationsVC: UITableViewDelegate, UITableViewDataSource {
     }
     
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
-        var item = DatumNot(id: 0, type: 0, createdDate: "", createdTime: "", data: "", userID: "", orderID: 0)
+        var item = DatumNot(id: 0, type: 0, createdDate: "", createdTime: "", data: "", userID: "", orderID: 0, isVerified: false)
         if (self.segmentControl.selectedSegmentIndex == 0) {
             item = self.alerts[indexPath.row]
         }else {
@@ -552,6 +552,16 @@ extension NotificationsVC {
            // cell.bidCardView.backgroundColor = UIColor.green.withAlphaComponent(0.1)
            // cell.bidContainerView.back
         }
+        if let isVerified = item.isVerified {
+            if isVerified {
+                cell.veriviedDriverImageView.isHidden = false
+            } else {
+                cell.veriviedDriverImageView.isHidden = true
+            }
+        } else {
+            cell.veriviedDriverImageView.isHidden = true
+        }
+        
          let dict = item.data?.convertToDictionary()
          let shopImage = dict?["ShopImage"] as? String ?? ""
          
