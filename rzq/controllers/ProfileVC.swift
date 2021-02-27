@@ -16,6 +16,7 @@ class ProfileVC: BaseVC {
     @IBOutlet weak var ivDriverBadge: UIImageView!
     @IBOutlet weak var ivProviderBadge: UIImageView!
     
+    @IBOutlet weak var isVerifiedImageView: UIImageView!
     @IBOutlet weak var withrowButton: MyUIButton!
     @IBOutlet weak var ivHandle: UIImageView!
     
@@ -60,8 +61,15 @@ class ProfileVC: BaseVC {
         }
         if DataManager.loadUser().data?.roles?.contains(find: "Driver") ?? false {
             self.navBar.isHidden = false
+            if DataManager.loadUser().data?.isVerified ?? false {
+                self.isVerifiedImageView.isHidden = false
+            } else {
+                self.isVerifiedImageView.isHidden = true
+            }
         } else {
             self.navBar.isHidden = false
+            self.isVerifiedImageView.isHidden = true
+
         }
         self.navBar.delegate = self        
     }
@@ -234,7 +242,7 @@ class ProfileVC: BaseVC {
     
     @IBAction func logoutAction(_ sender: Any) {
         self.showAlert(title: "alert".localized, message: "confirm_logout".localized, actionTitle: "logout".localized, cancelTitle: "cancel".localized, actionHandler: {
-             self.updateUser(self.getRealmUser(userProfile: VerifyResponse(data: DataClass(accessToken: "", phoneNumber: "", username: "", fullName: "", userID: "", dateOfBirth: "", profilePicture: "", email: "", gender: 0, rate: 0, roles: "", isOnline: false,exceededDueAmount: false, dueAmount: 0.0, earnings: 0.0, balance: 0.0), errorCode: 0, errorMessage: "")))
+            self.updateUser(self.getRealmUser(userProfile: VerifyResponse(data: DataClass(accessToken: "", phoneNumber: "", username: "", fullName: "", userID: "", dateOfBirth: "", profilePicture: "", email: "", gender: 0, rate: 0, roles: "", isOnline: false,exceededDueAmount: false, dueAmount: 0.0, earnings: 0.0, balance: 0.0, isVerified: false), errorCode: 0, errorMessage: "")))
             self.deleteUsers()
             if let vc = UIStoryboard(name: "Main", bundle: nil).instantiateViewController(withIdentifier: "LoginVC") as? LoginVC
             {

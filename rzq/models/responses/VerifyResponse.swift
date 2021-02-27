@@ -37,6 +37,7 @@ class DataClass: Codable {
     let dueAmount : Double?
     let earnings : Double?
     let balance: Double?
+    let isVerified: Bool?
     
     enum CodingKeys: String, CodingKey {
         case accessToken = "access_token"
@@ -55,9 +56,10 @@ class DataClass: Codable {
         case dueAmount = "DueAmount"
         case earnings = "Earnings"
         case balance = "Balance"
+        case isVerified = "IsVerified"
     }
     
-    init(accessToken: String?, phoneNumber: String?, username: String?, fullName: String?, userID: String?, dateOfBirth: String?, profilePicture: String?, email: String?, gender: Int?, rate: Double?, roles: String?, isOnline: Bool?, exceededDueAmount : Bool?, dueAmount : Double?, earnings : Double?, balance: Double?) {
+    init(accessToken: String?, phoneNumber: String?, username: String?, fullName: String?, userID: String?, dateOfBirth: String?, profilePicture: String?, email: String?, gender: Int?, rate: Double?, roles: String?, isOnline: Bool?, exceededDueAmount : Bool?, dueAmount : Double?, earnings : Double?, balance: Double?, isVerified: Bool?) {
         self.accessToken = accessToken
         self.phoneNumber = phoneNumber
         self.username = username
@@ -74,5 +76,6 @@ class DataClass: Codable {
         self.dueAmount = dueAmount
         self.earnings = earnings
         self.balance = balance
+        self.isVerified = isVerified
     }
 }

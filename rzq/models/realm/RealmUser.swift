@@ -28,6 +28,7 @@ class RealmUser : Object {
     @objc dynamic var dueAmount = 0.0
     @objc dynamic var earnings = 0.0
     @objc dynamic var balance = 0.0
+    @objc dynamic var isVerified = false
     
     override static func primaryKey() -> String? {
         return "userId"

@@ -309,7 +309,7 @@ class MenuViewController: BaseVC {
                                           exceededDueAmount: loadedUserData?.exceededDueAmount ?? false,
                                           dueAmount: loadedUserData?.dueAmount ?? 0.0,
                                           earnings: loadedUserData?.earnings ?? 0.0,
-                                          balance: loadedUserData?.balance ?? 0.0)
+                                          balance: loadedUserData?.balance ?? 0.0, isVerified: loadedUserData?.isVerified)
                 let verifyResponse = VerifyResponse(data: dataClass, errorCode: 0, errorMessage: "")
                 let newUser = self.getRealmUser(userProfile: verifyResponse)
                 self.updateUser(newUser)
@@ -334,7 +334,7 @@ class MenuViewController: BaseVC {
                                           exceededDueAmount: loadedUserData?.exceededDueAmount ?? false,
                                           dueAmount: loadedUserData?.dueAmount ?? 0.0,
                                           earnings: loadedUserData?.earnings ?? 0.0,
-                                          balance: loadedUserData?.balance ?? 0.0)
+                                          balance: loadedUserData?.balance ?? 0.0, isVerified: loadedUserData?.isVerified)
                 let verifyResponse = VerifyResponse(data: dataClass, errorCode: 0, errorMessage: "")
                 let newUser = self.getRealmUser(userProfile: verifyResponse)
                 self.updateUser(newUser)

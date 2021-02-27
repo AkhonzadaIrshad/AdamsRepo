@@ -329,13 +329,14 @@ class BaseViewController: UIViewController, SlideMenuDelegate {
         realmUser.dueAmount = userProfile.data?.dueAmount ?? 0.0
         realmUser.earnings = userProfile.data?.earnings ?? 0.0
         realmUser.balance = userProfile.data?.balance ?? 0.0
+        realmUser.isVerified = userProfile.data?.isVerified ?? false
         
         return realmUser
     }
     
     
     func getUser (realmUser  : RealmUser) -> VerifyResponse {
-        let userData = DataClass(accessToken: realmUser.access_token, phoneNumber: realmUser.phone_number, username: realmUser.user_name, fullName: realmUser.full_name, userID: realmUser.userId, dateOfBirth: realmUser.date_of_birth, profilePicture: realmUser.profile_picture, email: realmUser.email, gender: realmUser.gender, rate: realmUser.rate, roles: realmUser.roles, isOnline: realmUser.isOnline,exceededDueAmount : realmUser.exceeded_amount, dueAmount: realmUser.dueAmount, earnings: realmUser.earnings, balance: realmUser.balance)
+        let userData = DataClass(accessToken: realmUser.access_token, phoneNumber: realmUser.phone_number, username: realmUser.user_name, fullName: realmUser.full_name, userID: realmUser.userId, dateOfBirth: realmUser.date_of_birth, profilePicture: realmUser.profile_picture, email: realmUser.email, gender: realmUser.gender, rate: realmUser.rate, roles: realmUser.roles, isOnline: realmUser.isOnline,exceededDueAmount : realmUser.exceeded_amount, dueAmount: realmUser.dueAmount, earnings: realmUser.earnings, balance: realmUser.balance, isVerified: realmUser.isVerified)
         let verifyResponse = VerifyResponse(data: userData, errorCode: 0, errorMessage: "")
         
         return verifyResponse
@@ -355,7 +356,7 @@ class BaseViewController: UIViewController, SlideMenuDelegate {
         if (realmUser.count > 0) {
             return self.getUser(realmUser: realmUser[0])
         }else {
-            return VerifyResponse(data: DataClass(accessToken: "", phoneNumber: "", username: "", fullName: "", userID: "", dateOfBirth: "", profilePicture: "", email: "", gender: 1, rate: 0, roles: "", isOnline: false, exceededDueAmount: false, dueAmount: 0.0, earnings: 0.0, balance: 0.0), errorCode: 0, errorMessage: "")
+            return VerifyResponse(data: DataClass(accessToken: "", phoneNumber: "", username: "", fullName: "", userID: "", dateOfBirth: "", profilePicture: "", email: "", gender: 1, rate: 0, roles: "", isOnline: false, exceededDueAmount: false, dueAmount: 0.0, earnings: 0.0, balance: 0.0, isVerified: false), errorCode: 0, errorMessage: "")
         }
         
     }
