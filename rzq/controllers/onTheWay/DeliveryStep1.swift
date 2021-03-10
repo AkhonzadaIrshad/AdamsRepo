@@ -1896,7 +1896,7 @@ extension DeliveryStep1: UICollectionViewDelegate, UICollectionViewDataSource, U
             cell.makeOrderButton.layer.cornerRadius = 5
             cell.shopName.text = shop.name
             cell.ratingLabe.text = "\(shop.rate ?? 0.0)"
-            cell.ratingView.rating = shop.rate ?? 1
+            cell.ratingView.rating = shop.rate ?? 0
             
             cell.onMakeOrderAction = {
                 let id = shop.id ?? 0
