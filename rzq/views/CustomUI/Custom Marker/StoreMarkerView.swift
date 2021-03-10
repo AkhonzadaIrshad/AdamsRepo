@@ -12,6 +12,7 @@ class StoreMarkerView: UIView {
 
     @IBOutlet weak var storiImaView: UIImageView!
    
+    @IBOutlet weak var shopeMarkerImageView: UIImageView!
     @IBOutlet weak var shopNameHeightConstraint: NSLayoutConstraint!
     @IBOutlet weak var ShopNameStackView: UIStackView!
     @IBOutlet weak var shopeNameLabel: UILabel!

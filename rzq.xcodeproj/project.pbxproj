@@ -15,6 +15,10 @@
 		8A0878C82531272200C4D0C4 /* NearByTypes.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8A0878C72531272200C4D0C4 /* NearByTypes.swift */; };
 		8A3D9A4525642AB40012711C /* ToolTip.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8A3D9A4425642AB40012711C /* ToolTip.swift */; };
 		8A3D9A4825642B140012711C /* Extension.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8A3D9A4725642B140012711C /* Extension.swift */; };
+		8A62677825F6CF3F002D8E79 /* ScalingCarouselView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8A62677725F6CF3F002D8E79 /* ScalingCarouselView.swift */; };
+		8A62677B25F6CF92002D8E79 /* ScalingCarouselLayout.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8A62677A25F6CF92002D8E79 /* ScalingCarouselLayout.swift */; };
+		8A62677F25F6CFDC002D8E79 /* ScalingCarouselCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8A62677D25F6CFDC002D8E79 /* ScalingCarouselCell.swift */; };
+		8A62678025F6CFDC002D8E79 /* ScalingCarouselCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 8A62677E25F6CFDC002D8E79 /* ScalingCarouselCell.xib */; };
 		8A9C6C812588060C00592202 /* MarkerInfo.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8A9C6C802588060C00592202 /* MarkerInfo.swift */; };
 		8A9C6C842588061E00592202 /* MarkerInfo.xib in Resources */ = {isa = PBXBuildFile; fileRef = 8A9C6C832588061E00592202 /* MarkerInfo.xib */; };
 		8AE6E066258015AD00889D2C /* StoreMarkerView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8AE6E065258015AD00889D2C /* StoreMarkerView.swift */; };
@@ -250,6 +254,10 @@
 		8A0878C72531272200C4D0C4 /* NearByTypes.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NearByTypes.swift; sourceTree = "<group>"; };
 		8A3D9A4425642AB40012711C /* ToolTip.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ToolTip.swift; sourceTree = "<group>"; };
 		8A3D9A4725642B140012711C /* Extension.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Extension.swift; sourceTree = "<group>"; };
+		8A62677725F6CF3F002D8E79 /* ScalingCarouselView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ScalingCarouselView.swift; sourceTree = "<group>"; };
+		8A62677A25F6CF92002D8E79 /* ScalingCarouselLayout.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ScalingCarouselLayout.swift; sourceTree = "<group>"; };
+		8A62677D25F6CFDC002D8E79 /* ScalingCarouselCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ScalingCarouselCell.swift; sourceTree = "<group>"; };
+		8A62677E25F6CFDC002D8E79 /* ScalingCarouselCell.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = ScalingCarouselCell.xib; sourceTree = "<group>"; };
 		8A9C6C802588060C00592202 /* MarkerInfo.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MarkerInfo.swift; sourceTree = "<group>"; };
 		8A9C6C832588061E00592202 /* MarkerInfo.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = MarkerInfo.xib; sourceTree = "<group>"; };
 		8AE6E065258015AD00889D2C /* StoreMarkerView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = StoreMarkerView.swift; sourceTree = "<group>"; };
@@ -524,6 +532,17 @@
 			path = "Search Location";
 			sourceTree = "<group>";
 		};
+		8A62677625F6CF0B002D8E79 /* Custom Carousel */ = {
+			isa = PBXGroup;
+			children = (
+				8A62677725F6CF3F002D8E79 /* ScalingCarouselView.swift */,
+				8A62677A25F6CF92002D8E79 /* ScalingCarouselLayout.swift */,
+				8A62677D25F6CFDC002D8E79 /* ScalingCarouselCell.swift */,
+				8A62677E25F6CFDC002D8E79 /* ScalingCarouselCell.xib */,
+			);
+			path = "Custom Carousel";
+			sourceTree = "<group>";
+		};
 		8AE6E0642580157D00889D2C /* Custom Marker */ = {
 			isa = PBXGroup;
 			children = (
@@ -774,6 +793,7 @@
 		8B9CA8302250CA7700DE0DC4 /* CustomUI */ = {
 			isa = PBXGroup;
 			children = (
+				8A62677625F6CF0B002D8E79 /* Custom Carousel */,
 				8AE6E0642580157D00889D2C /* Custom Marker */,
 				C1F86AF224D75F86005698F4 /* Navbar */,
 				8B9CA8312250CA8400DE0DC4 /* MyUIButton.swift */,
@@ -1087,6 +1107,7 @@
 			files = (
 				8B2BCC8C224FCEB500CBC7D3 /* LaunchScreen.storyboard in Resources */,
 				8BCD8DEE2296DF8E00400D7B /* InfoPlist.strings in Resources */,
+				8A62678025F6CFDC002D8E79 /* ScalingCarouselCell.xib in Resources */,
 				8BF2222F2271AC05005BE71D /* arabic_medium.ttf in Resources */,
 				8BF222312271AC05005BE71D /* arabic_light.ttf in Resources */,
 				8B9CA8442250CCDF00DE0DC4 /* english_semibold.ttf in Resources */,
@@ -1246,6 +1267,7 @@
 				8BC13D2D23F3F5F500A78F88 /* AllShopsVC.swift in Sources */,
 				8BCB780F2254EF2400E52ED0 /* OrderDetailsVC.swift in Sources */,
 				8BC3B50022C68C6E008A9767 /* NormUpdateDialog.swift in Sources */,
+				8A62677B25F6CF92002D8E79 /* ScalingCarouselLayout.swift in Sources */,
 				8BD45FA022672BBC000FB47A /* OrderImageCell.swift in Sources */,
 				8BCD8DE92296BB9800400D7B /* SERVOrder.swift in Sources */,
 				8BC54AFF2268752100B70A97 /* ZHCDemoMessagesViewController.swift in Sources */,
@@ -1335,6 +1357,7 @@
 				8BF42431229B16990014596F /* AllTendersResponse.swift in Sources */,
 				8BC3B50222C68C7F008A9767 /* MandIUpdateDialog.swift in Sources */,
 				8BAE41E12299B15600C7D897 /* SelectServiceCell.swift in Sources */,
+				8A62677F25F6CFDC002D8E79 /* ScalingCarouselCell.swift in Sources */,
 				8BA815A322525ACD004EE1A8 /* DeliveryStep2.swift in Sources */,
 				8BEF649322537FD8003AE522 /* DialogImageCell.swift in Sources */,
 				8B30B10D22773261007930E0 /* RateDriverDialog.swift in Sources */,
@@ -1355,6 +1378,7 @@
 				8B1F91C02255F02100B639F1 /* AudioRecorderManager.swift in Sources */,
 				8A0878C82531272200C4D0C4 /* NearByTypes.swift in Sources */,
 				8BCB77FC2254BA6C00E52ED0 /* ShopDetailsVC.swift in Sources */,
+				8A62677825F6CF3F002D8E79 /* ScalingCarouselView.swift in Sources */,
 				8BC54AFC2268752100B70A97 /* ZHPhotoItem.swift in Sources */,
 				8BEF648D22536849003AE522 /* DeliveryStep3.swift in Sources */,
 				8BDF141323F965D3009056A9 /* Step1CatCell.swift in Sources */,

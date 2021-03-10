@@ -39,6 +39,7 @@
             </constraints>
             <freeformSimulatedSizeMetrics key="simulatedDestinationMetrics"/>
             <connections>
+                <outlet property="shopeMarkerImageView" destination="j5O-ZH-uZf" id="SE6-Xo-kCt"/>
                 <outlet property="storiImaView" destination="jPh-AY-dGk" id="egS-eZ-k1h"/>
             </connections>
             <point key="canvasLocation" x="-177.59999999999999" y="-175.41229385307346"/>

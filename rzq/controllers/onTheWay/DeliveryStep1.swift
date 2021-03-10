@@ -16,10 +16,13 @@ import AMPopTip
 import MarqueeLabel
 import MultilineTextField
 
+class Cell: ScalingCarouselCell {}
+
 class DeliveryStep1: BaseVC , Step3Delegate, AllShopDelegate, ImagePickerDelegate, UITextViewDelegate {
     
     // MARK: - Outlets
     
+    @IBOutlet weak var ShopsCarouselView: ScalingCarouselView!
     @IBOutlet weak var searchByKeyWordsBackgroundView: UIView!
     @IBOutlet weak var searchByKeywordTableView: UITableView!
     @IBOutlet weak var searchByKeyWordsView: UIView!
@@ -86,6 +89,11 @@ class DeliveryStep1: BaseVC , Step3Delegate, AllShopDelegate, ImagePickerDelegat
     var selectedLocation : CLLocation?
     var orderModel : OTWOrder?
     var toolTipView : ToolTipView?
+    var selectedCarouselShops = [DataShop]() {
+        didSet {
+            self.ShopsCarouselView.reloadData()
+        }
+    }
     var shops = [DataShop]() {
         didSet {
             self.shopsSearchTableView.reloadData()
@@ -112,11 +120,21 @@ class DeliveryStep1: BaseVC , Step3Delegate, AllShopDelegate, ImagePickerDelegat
 
 
     // MARK: - Methods
-
+ 
+    override func viewWillTransition(to size: CGSize, with coordinator: UIViewControllerTransitionCoordinator) {
+        super.viewWillTransition(to: size, with: coordinator)
+        ShopsCarouselView.deviceRotated()
+    }
+    override func viewDidLayoutSubviews() {
+        super.viewDidLayoutSubviews()
+        ShopsCarouselView.deviceRotated()
+    }
+    
     override func viewDidLoad() {
         super.viewDidLoad()
+
         searchField.clearButtonMode = .whileEditing
-        
+        ShopsCarouselView.backgroundColor = .clear
         var displayToolView =  UserDefaults.standard.value(forKey: "displayToolView") as? Int ?? 0
         if displayToolView < 2 {
             displayToolView += 1
@@ -130,6 +148,9 @@ class DeliveryStep1: BaseVC , Step3Delegate, AllShopDelegate, ImagePickerDelegat
         
         let nib = UINib.init(nibName: "FilterSearchCell", bundle: nil)
         searchByKeywordTableView?.register(nib, forCellReuseIdentifier: "filtersearchcell")
+      
+        let nibCarousel = UINib.init(nibName: "ScalingCarouselCell", bundle: nil)
+        ShopsCarouselView.register(nibCarousel, forCellWithReuseIdentifier: "ScalingCarouselCell")
         
         searchByKeywordTableView?.rowHeight = UITableView.automaticDimension
         searchByKeywordTableView?.estimatedRowHeight = 45.0
@@ -929,6 +950,9 @@ class DeliveryStep1: BaseVC , Step3Delegate, AllShopDelegate, ImagePickerDelegat
         self.singleMarker?.map = nil
         
         let selectedShops = self.shops.filter({$0.type?.id == selectedShopTypeId})
+        selectedCarouselShops.removeAll()
+        selectedCarouselShops = self.shops.filter({$0.type?.id == selectedShopTypeId})
+        self.ShopsCarouselView.scrollToItem(at: IndexPath(row: 1, section: 0), at: .left, animated: true)
         for center in selectedShops {
             let marker = GMSMarker()
             marker.position = CLLocationCoordinate2D(latitude: center.latitude ?? 0.0, longitude: center.longitude ?? 0.0)
@@ -1324,6 +1348,8 @@ extension DeliveryStep1 : GMSMapViewDelegate {
         }
         if (Int(id) ?? 0 > 0) {
             self.showLoading()
+            self.ShopsCarouselView.isHidden = true
+            self.buttomSheet.isHidden = false
             self.viewPin.isHidden = false
             self.viewSuggest.isHidden = true
             self.showActionSheet()
@@ -1742,78 +1768,256 @@ extension DeliveryStep1: ShopMenuDelegate {
     }
 }
 
-// MARK: - CollectionView delegates
 
+// MARK: - CollectionView delegates
+var oldSelectedShop: DataShop?
 extension DeliveryStep1: UICollectionViewDelegate, UICollectionViewDataSource, UICollectionViewDelegateFlowLayout {
+    
+    func scrollViewDidScroll(_ scrollView: UIScrollView) {
+        ShopsCarouselView.didScroll()
+        
+        guard let currentCenterIndex = ShopsCarouselView.currentCenterCellIndex?.row else { return }
+        let shop = selectedCarouselShops[currentCenterIndex]
+        
+        let url = URL(string: "\(Constants.IMAGE_URL)\(oldSelectedShop?.type?.image ?? "")")
+       
+        DispatchQueue.main.asyncAfter(deadline: .now() + .milliseconds(500), execute: {
+            let camera = GMSCameraPosition.camera(withLatitude: shop.latitude ?? 0.0, longitude: shop.longitude ?? 0.0, zoom: 11.0)
+            self.gMap?.animate(to: camera)
+            var selectedMarker = GMSMarker()
+            self.applyMarkerImage(from: url!, to:selectedMarker, ShopeName: oldSelectedShop?.name ?? "")
+            for marker in self.shopMarkers {
+                if let title = marker.title {
+                    let id = Int(title)
+                    if shop.id == id {
+                        selectedMarker = marker
+                        oldSelectedShop = shop
+                        let view = UIView(frame: CGRect(x: 0, y: 0, width: 30, height: 20))
+                        view.backgroundColor = .red
+                        if marker.iconView is StoreMarkerView {
+                            let markInfo = marker.iconView as! StoreMarkerView
+                            markInfo.shopeMarkerImageView.image = UIImage(named: "selectedMarkerIcon")
+                        }
+                    } else {
+                        if marker.iconView is StoreMarkerView {
+                            let markInfo = marker.iconView as! StoreMarkerView
+                            markInfo.shopeMarkerImageView.image = UIImage(named: "shopeMarker")
+                        }
+                    }
+                }
+            }
+            })
+        
+    }
     
     func numberOfSectionsInCollectionView(collectionView: UICollectionView) -> Int {
         return 1
     }
     
-    func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, sizeForItemAt indexPath: IndexPath) -> CGSize {
-        let label = UILabel(frame: CGRect.zero)
-        label.text = self.categories[indexPath.row].name ?? ""
-        label.sizeToFit()
-        return CGSize(width: label.bounds.width + 8, height: self.collectionCategories.bounds.height - 8)
-    }
+//    func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, sizeForItemAt indexPath: IndexPath) -> CGSize {
+//        if collectionView == ShopsCarouselView {
+//            return CGSize(width: 0, height: 0)
+//        } else {
+//            let label = UILabel(frame: CGRect.zero)
+//            label.text = self.categories[indexPath.row].name ?? ""
+//            label.sizeToFit()
+//            return CGSize(width: label.bounds.width + 8, height: self.collectionCategories.bounds.height - 8)
+//        }
+//
+//    }
     
-    func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, insetForSectionAt section: Int) -> UIEdgeInsets {
-        return UIEdgeInsets.zero
-    }
+//    func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, insetForSectionAt section: Int) -> UIEdgeInsets {
+//        return UIEdgeInsets.zero
+//    }
     
     func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, minimumInteritemSpacingForSectionAt section: Int) -> CGFloat {
-        return 10
-    }
+        if collectionView == ShopsCarouselView {
+            return 0
+        } else {
+            return 10
+        }    }
     
     func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, minimumLineSpacingForSectionAt section: Int) -> CGFloat {
-        return 10
+        if collectionView == ShopsCarouselView {
+            return 0
+        } else {
+            return 10
+        }
     }
     
     func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
-        return self.categories.count
+        if collectionView == ShopsCarouselView {
+            return self.selectedCarouselShops.count
+        } else {
+            return self.categories.count
+
+        }
     }
     
     func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
-        let selectedCat = self.categories[indexPath.row]
-        self.selectdCategory = selectedCat
-        if self.isArabic() {
-            self.searchShopsTextField.textAlignment = .right
+       
+        if collectionView == ShopsCarouselView {
+            
         } else {
-            self.searchShopsTextField.textAlignment = .left
-        }
-//        self.searchShopsTextField.placeholder = "step1.catFilter.search.placeholder".localized + " \(self.selectdCategory?.name ?? "")"
-        
-        self.catFilterSearchStack.isHidden = false
-        self.clearFieldAction(self)
-        if selectedCat.id == 0 {
-            selectAllCategory = true
-            //self.addShopsMarkers(useScale: false)
-            showShopsList()
-            //self.filterShopsMarkers(selectedShopTypeId: selectedCat.id ?? 0)
+            self.ShopsCarouselView.isHidden = false
+            self.buttomSheet.isHidden = true
+            let selectedCat = self.categories[indexPath.row]
+            self.selectdCategory = selectedCat
+            if self.isArabic() {
+                self.searchShopsTextField.textAlignment = .right
+            } else {
+                self.searchShopsTextField.textAlignment = .left
+            }
+    //        self.searchShopsTextField.placeholder = "step1.catFilter.search.placeholder".localized + " \(self.selectdCategory?.name ?? "")"
+            
+            self.catFilterSearchStack.isHidden = false
+            self.clearFieldAction(self)
+            if selectedCat.id == 0 {
+                selectAllCategory = true
+                //self.addShopsMarkers(useScale: false)
+                showShopsList()
+                //self.filterShopsMarkers(selectedShopTypeId: selectedCat.id ?? 0)
 
-        } else {
-            selectAllCategory = false
+            } else {
+                selectAllCategory = false
 
-            self.filterShopsMarkers(selectedShopTypeId: selectedCat.id ?? 0)
+                self.filterShopsMarkers(selectedShopTypeId: selectedCat.id ?? 0)
+            }
         }
+      
     }
     
     func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
-        let cell: Step1CatCell = collectionView.dequeueReusableCell(withReuseIdentifier: "Step1CatCell", for: indexPath as IndexPath) as! Step1CatCell
-        
-        let category = self.categories[indexPath.row]
-        cell.lblName.text = category.name ?? ""
-        if (self.isArabic()) {
-            cell.lblName.transform = CGAffineTransform(scaleX: -1.0, y: 1.0)
+        if collectionView == ShopsCarouselView {
+            let shop = selectedCarouselShops[indexPath.row]
+            let cell: ScalingCarouselCell = collectionView.dequeueReusableCell(withReuseIdentifier: "ScalingCarouselCell", for: indexPath as IndexPath) as! ScalingCarouselCell
+            cell.mainView.backgroundColor = .white
+            cell.cornerRadius = 15
+            cell.makeOrderButton.layer.cornerRadius = 5
+            cell.shopName.text = shop.name
+            cell.ratingLabe.text = "\(shop.rate ?? 0.0)"
+            cell.ratingView.rating = shop.rate ?? 1
+            
+            cell.onMakeOrderAction = {
+                let id = shop.id ?? 0
+                self.isZoomed = true
+               
+               
+                if (Int(id) > 0) {
+                    self.showLoading()
+                    self.ShopsCarouselView.isHidden = true
+                    self.buttomSheet.isHidden = false
+
+                    self.viewPin.isHidden = false
+                    self.viewSuggest.isHidden = true
+                    self.showActionSheet()
+                    self.edtOrderDetails.placeholder = "order_details".localized
+                    ApiService.getShopDetails(Authorization: DataManager.loadUser().data?.accessToken ?? "", id: id) { (response) in
+                        self.hideLoading()
+                        self.pinMarker?.map = nil
+                        self.lblPickupLocation.textColor = UIColor.appDarkBlue
+                        self.lblPickupLocation.text = response.shopData?.name ?? ""
+                        let dataShop = DataShop(id: response.shopData?.id ?? 0, name: response.shopData?.name ?? "", address: response.shopData?.address ?? "", latitude: response.shopData?.latitude ?? 0.0, longitude: response.shopData?.longitude ?? 0.0, phoneNumber: response.shopData?.phoneNumber ?? "", workingHours: response.shopData?.workingHours ?? "", images: response.shopData?.images ?? [String](), rate: response.shopData?.rate ?? 0.0, type: response.shopData?.type ?? TypeClass(id: 0, name: "",image: "", selectedIcon: "", icon: ""),ownerId: response.shopData?.ownerId ?? "", googlePlaceId: response.shopData?.googlePlaceId ?? "", openNow : response.shopData?.openNow ?? false, NearbyDriversCount : response.shopData?.nearbyDriversCount ?? 0)
+                        self.orderModel?.shop = dataShop
+                        self.orderModel?.pickUpAddress = response.shopData?.name ?? ""
+                        self.orderModel?.pickUpLatitude = response.shopData?.latitude ?? 0.0
+                        self.orderModel?.pickUpLongitude = response.shopData?.longitude ?? 0.0
+                        
+                        self.ivShop.isHidden = false
+                        self.shopNaleKabel.text = "\(response.shopData?.name ?? "")"
+                        self.shopNaleKabel.font_type = "15,5"
+                        self.lblSearch.isHidden = true
+                        self.viewShopDetails.isHidden = false
+                        self.viewClearField.isHidden = false
+                        
+                        self.edtMoreDetails = "\(response.shopData?.name ?? "")\n\(response.shopData?.address ?? "")"
+                        
+                        if (response.shopData?.images?.count ?? 0 > 0) {
+                            let url = URL(string: "\(Constants.IMAGE_URL)\(response.shopData?.images?[0] ?? "")")
+                            self.ivShop.kf.setImage(with: url)
+                        }else if (response.shopData?.type?.image?.count ?? 0 > 0){
+                            let url = URL(string: "\(Constants.IMAGE_URL)\(response.shopData?.type?.image ?? "")")
+                            self.ivShop.kf.setImage(with: url)
+                        }else {
+                            self.ivShop.image = UIImage(named: "ic_place_store")
+                        }
+                        
+                        for mark in self.shopMarkers {
+                            mark.map = nil
+                        }
+                        self.singleMarker?.map = nil
+                        self.singleMarker = GMSMarker()
+                        self.singleMarker?.position = CLLocationCoordinate2D(latitude: shop.latitude ?? 0.0, longitude: shop.longitude ?? 0.0)
+                        self.singleMarker?.title =  "\(id)"
+                        self.singleMarker?.snippet = ""
+                        self.singleMarker?.icon = UIImage(named: "ic_shop_empty_selected")
+                        // snuff1
+                        let url = URL(string: "\(Constants.IMAGE_URL)\(response.shopData?.type?.image ?? "")")
+                        self.applyMarkerImage(from: url!, to: self.singleMarker!, ShopeName: response.shopData?.name ?? "")
+                      //  self.singleMarker?.map = self.gMap
+                        
+                        self.handleOpenNow(shop: response.shopData)
+                        
+                        let camera = GMSCameraPosition.camera(withLatitude: self.orderModel?.pickUpLatitude ?? 0.0, longitude: self.orderModel?.pickUpLongitude ?? 0.0, zoom: 15.0)
+                        self.gMap?.animate(to: camera)
+                        
+                        if (self.orderModel?.shop?.id ?? 0 > 0) {
+                            self.btnCheckMenu.isHidden = false
+                            self.viewCheckMenu.isHidden = false
+                            self.handleCheckMenuAction(showPopUpIfEmpty: false)
+                        }else {
+                            self.btnCheckMenu.isHidden = true
+                            self.viewCheckMenu.isHidden = true
+                            
+                        }
+                        if (self.orderModel?.selectedItems?.count ?? 0 > 0) {
+                            self.selectedItems.append(contentsOf: self.orderModel?.selectedItems ?? [ShopMenuItem]())
+                        }
+                    }
+                } else {
+                    self.ShopsCarouselView.isHidden = false
+                    self.buttomSheet.isHidden = true
+                }
+            }
+            let url = URL(string: "\(Constants.IMAGE_URL)\(shop.images?.first ?? "")")
+            cell.shopeImageView.kf.setImage(with: url)
+            let urlString = "\(Constants.IMAGE_URL)\(shop.type?.image ?? "splash_logo_new")"
+            let fileUrl = URL(fileURLWithPath: urlString)
+           
+//            DispatchQueue.global(qos: .background).async {
+//                guard let data = try? Data(contentsOf: fileUrl),
+//                    // let image = UIImage(data: data)?.cropped()
+//                    let image = UIImage(data: data)
+//                    else { return }
+//                
+//                DispatchQueue.main.async {
+//                   // cell.shopeImageView.image = image
+//                }
+//            }
+
+            DispatchQueue.main.async {
+                cell.setNeedsLayout()
+                cell.layoutIfNeeded()
+            }
+            return cell
+        } else {
+            let cell: Step1CatCell = collectionView.dequeueReusableCell(withReuseIdentifier: "Step1CatCell", for: indexPath as IndexPath) as! Step1CatCell
+            
+            let category = self.categories[indexPath.row]
+            cell.lblName.text = category.name ?? ""
+            if (self.isArabic()) {
+                cell.lblName.transform = CGAffineTransform(scaleX: -1.0, y: 1.0)
+            }
+            
+            if (category.image?.count ?? 0 > 0) {
+                let url = URL(string: "\(Constants.IMAGE_URL)\(category.image ?? "")")
+                cell.ivLogo.kf.setImage(with: url)
+            }else {
+                cell.ivLogo.image = UIImage(named: "type_holder")
+            }
+            return cell
         }
-        
-        if (category.image?.count ?? 0 > 0) {
-            let url = URL(string: "\(Constants.IMAGE_URL)\(category.image ?? "")")
-            cell.ivLogo.kf.setImage(with: url)
-        }else {
-            cell.ivLogo.image = UIImage(named: "type_holder")
-        }
-        return cell
+      
     }
 }
 
