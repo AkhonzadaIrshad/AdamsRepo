@@ -1317,18 +1317,18 @@ extension DeliveryStep1 : GMSMapViewDelegate {
         if selectAllCategory {
             if position.zoom >= 12 && isZoomed == false {
                  isZoomed = true
-                addShopsInfoMarkers()
+               // addShopsInfoMarkers()
              } else if position.zoom < 12 && isZoomed == true {
                  isZoomed = false
-                addShopsMarkers()
+                //addShopsMarkers()
              }
         } else {
             if position.zoom >= 12 && isZoomed == false {
                  isZoomed = true
-                 filterShopsInfoMarkers(selectedShopTypeId: self.selectdCategory?.id ?? 0)
+               //  filterShopsInfoMarkers(selectedShopTypeId: self.selectdCategory?.id ?? 0)
              } else if position.zoom < 12 && isZoomed == true {
                  isZoomed = false
-                 filterShopsMarkers(selectedShopTypeId: self.selectdCategory?.id ?? 0, isScaled: false)
+               //  filterShopsMarkers(selectedShopTypeId: self.selectdCategory?.id ?? 0, isScaled: false)
              }
         }
         } else {

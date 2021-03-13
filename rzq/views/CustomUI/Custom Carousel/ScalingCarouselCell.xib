@@ -73,7 +73,7 @@
                                                 <rect key="frame" x="10" y="13" width="120" height="35"/>
                                                 <color key="backgroundColor" red="0.3668780029" green="0.69151961799999995" blue="0.59606987239999998" alpha="1" colorSpace="custom" customColorSpace="displayP3"/>
                                                 <constraints>
-                                                    <constraint firstAttribute="height" constant="35" id="Ykm-QT-E6s"/>
+                                                    <constraint firstAttribute="height" constant="35" id="bZG-kb-qqT"/>
                                                     <constraint firstAttribute="width" constant="120" id="gLn-Ag-PY8"/>
                                                 </constraints>
                                                 <state key="normal" title="Make Order">
@@ -83,10 +83,10 @@
                                                     <action selector="onMakeOrder:" destination="gTV-IL-0wX" eventType="touchUpInside" id="1EK-Zd-nHQ"/>
                                                 </connections>
                                             </button>
-                                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="system" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="p1p-hZ-htU">
+                                            <button opaque="NO" userInteractionEnabled="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="system" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="p1p-hZ-htU">
                                                 <rect key="frame" x="132" y="13" width="84" height="35"/>
                                                 <fontDescription key="fontDescription" name="HelveticaNeue-Bold" family="Helvetica Neue" pointSize="8"/>
-                                                <state key="normal" title="You own this place?">
+                                                <state key="normal">
                                                     <color key="titleColor" red="0.29878076910000001" green="0.29209664460000001" blue="0.39216876029999997" alpha="1" colorSpace="custom" customColorSpace="displayP3"/>
                                                 </state>
                                                 <connections>
@@ -94,16 +94,16 @@
                                                 </connections>
                                             </button>
                                         </subviews>
+                                        <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                         <edgeInsets key="layoutMargins" top="13" left="10" bottom="15" right="0.0"/>
                                     </stackView>
                                 </subviews>
                             </stackView>
                         </subviews>
-                        <color key="backgroundColor" systemColor="systemBackgroundColor"/>
+                        <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                         <constraints>
                             <constraint firstAttribute="trailing" secondItem="zIk-IL-UEg" secondAttribute="trailing" id="6an-fT-cGm"/>
                             <constraint firstItem="zIk-IL-UEg" firstAttribute="top" secondItem="ob3-2x-qZS" secondAttribute="top" id="D7v-J5-OaF"/>
-                            <constraint firstAttribute="bottom" secondItem="zIk-IL-UEg" secondAttribute="bottom" id="Iym-Ls-sYu"/>
                             <constraint firstItem="zIk-IL-UEg" firstAttribute="leading" secondItem="ob3-2x-qZS" secondAttribute="leading" id="feI-EA-F4W"/>
                         </constraints>
                     </view>
@@ -128,6 +128,11 @@
             <point key="canvasLocation" x="182.60869565217394" y="114.50892857142857"/>
         </collectionViewCell>
     </objects>
+    <designables>
+        <designable name="0ct-JF-e1W">
+            <size key="intrinsicContentSize" width="120" height="20"/>
+        </designable>
+    </designables>
     <resources>
         <systemColor name="systemBackgroundColor">
             <color white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
