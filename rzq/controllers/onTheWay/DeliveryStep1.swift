@@ -952,7 +952,7 @@ class DeliveryStep1: BaseVC , Step3Delegate, AllShopDelegate, ImagePickerDelegat
         let selectedShops = self.shops.filter({$0.type?.id == selectedShopTypeId})
         selectedCarouselShops.removeAll()
         selectedCarouselShops = self.shops.filter({$0.type?.id == selectedShopTypeId})
-        self.ShopsCarouselView.scrollToItem(at: IndexPath(row: 1, section: 0), at: .left, animated: true)
+        self.ShopsCarouselView.scrollToItem(at: IndexPath(row: 0, section: 0), at: .left, animated: true)
         for center in selectedShops {
             let marker = GMSMarker()
             marker.position = CLLocationCoordinate2D(latitude: center.latitude ?? 0.0, longitude: center.longitude ?? 0.0)
@@ -1895,8 +1895,8 @@ extension DeliveryStep1: UICollectionViewDelegate, UICollectionViewDataSource, U
             cell.cornerRadius = 15
             cell.makeOrderButton.layer.cornerRadius = 5
             cell.shopName.text = shop.name
-            cell.ratingLabe.text = "\(shop.rate ?? 0.0)"
-            cell.ratingView.rating = shop.rate ?? 0
+            cell.ratingLabe.text = "\(shop.rate ?? 4.0)"
+            cell.ratingView.rating = shop.rate ?? 4
             
             cell.onMakeOrderAction = {
                 let id = shop.id ?? 0

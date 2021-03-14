@@ -44,6 +44,8 @@ class ScalingCarouselCell: UICollectionViewCell {
     override open func layoutSubviews() {
         super.layoutSubviews()
         
+        makeOrderButton.setTitle("makeOrderCarosul.normalTitle".localized, for: .normal)
+       
         guard let carouselView = superview as? ScalingCarouselView else { return }
         
         scale(withCarouselInset: carouselView.inset)

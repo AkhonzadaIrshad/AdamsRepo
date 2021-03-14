@@ -19,6 +19,7 @@
 
 /* Class = "UIButton"; normalTitle = "Place Order"; ObjectID = "1CT-yu-bU4"; */
 "1CT-yu-bU4.normalTitle" = "أسعار التوصيل";
+"Hdd-1X-xvY.normalTitle" = "قم بالطلب";
 
 /* Class = "UILabel"; text = "Your Mood"; ObjectID = "bhM-LW-F70"; */
 "bhM-LW-F70.text" = "تفعيل تقديم الطلب";
@@ -1095,9 +1096,6 @@
 
 "bA1-eI-lPh.text" = "متاجري";
 "fTh-uW-jOF.text" = "متاجري";
-
-
-
 
 "0Y7-NU-UDK.text" = "جنس السائق";
 "inv-XX-6Pq.text" = "طريقة الدفع";

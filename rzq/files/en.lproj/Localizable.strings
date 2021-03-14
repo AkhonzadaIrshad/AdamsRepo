@@ -36,6 +36,7 @@
 "choose_drop_location" = "Choose drop off location on map first.";
 "enter_order_details" = "Enter order details first!";
 "enter_order_cost" = "Enter order estimated cost first!";
+"makeOrderCarosul.normalTitle" = "Make Order";
 
 "currency" = "KWD";
 "hours" = "Hour";

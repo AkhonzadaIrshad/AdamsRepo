@@ -27,6 +27,14 @@ open class ScalingCarouselLayout: UICollectionViewFlowLayout {
         self.inset = inset
     }
     
+    open override var flipsHorizontallyInOppositeLayoutDirection: Bool {
+           return false
+    }
+    
+    open override var developmentLayoutDirection: UIUserInterfaceLayoutDirection {
+           return UIUserInterfaceLayoutDirection.leftToRight
+    }
+    
     override open func prepare() {
         
         guard let collectionViewSize = collectionView?.frame.size else { return }
