@@ -49,7 +49,7 @@
                                     <stackView opaque="NO" contentMode="scaleToFill" semanticContentAttribute="forceLeftToRight" spacing="10" translatesAutoresizingMaskIntoConstraints="NO" id="tNG-ty-uCu">
                                         <rect key="frame" x="0.0" y="152" width="216" height="20"/>
                                         <subviews>
-                                            <view userInteractionEnabled="NO" contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="0ct-JF-e1W" customClass="CosmosView" customModule="Cosmos">
+                                            <view userInteractionEnabled="NO" contentMode="scaleToFill" semanticContentAttribute="forceLeftToRight" translatesAutoresizingMaskIntoConstraints="NO" id="0ct-JF-e1W" customClass="CosmosView" customModule="Cosmos">
                                                 <rect key="frame" x="10" y="0.0" width="121" height="20"/>
                                                 <color key="backgroundColor" systemColor="systemBackgroundColor"/>
                                                 <constraints>
@@ -57,7 +57,7 @@
                                                     <constraint firstAttribute="height" constant="20" id="Jjm-cs-Wha"/>
                                                 </constraints>
                                             </view>
-                                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="5" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="xs0-Tz-mTh">
+                                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" semanticContentAttribute="forceLeftToRight" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="5" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="xs0-Tz-mTh">
                                                 <rect key="frame" x="141" y="0.0" width="67" height="20"/>
                                                 <fontDescription key="fontDescription" name="HelveticaNeue-Bold" family="Helvetica Neue" pointSize="14"/>
                                                 <color key="textColor" red="0.23905837539999999" green="0.39140367510000001" blue="0.72160249949999999" alpha="1" colorSpace="custom" customColorSpace="displayP3"/>
@@ -128,11 +128,6 @@
             <point key="canvasLocation" x="182.60869565217394" y="114.50892857142857"/>
         </collectionViewCell>
     </objects>
-    <designables>
-        <designable name="0ct-JF-e1W">
-            <size key="intrinsicContentSize" width="120" height="20"/>
-        </designable>
-    </designables>
     <resources>
         <systemColor name="systemBackgroundColor">
             <color white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
