@@ -14,11 +14,11 @@
         <array key="Cairo-Regular.ttf">
             <string>Cairo-Regular</string>
         </array>
-        <array key="arabic_medium.ttf">
-            <string>Tajawal-Medium</string>
-        </array>
         <array key="arabic_regular.ttf">
             <string>Tajawal-Regular</string>
+        </array>
+        <array key="arabic_semibold.ttf">
+            <string>Tajawal-Medium</string>
         </array>
         <array key="english_regular.otf">
             <string>SFProDisplay-Regular</string>
@@ -2636,7 +2636,7 @@
                                                                 <userDefinedRuntimeAttribute type="string" keyPath="font_type" value="16,4"/>
                                                             </userDefinedRuntimeAttributes>
                                                         </label>
-                                                        <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="HEX-Q2-Cjr" customClass="ValueStepper" customModule="ValueStepper">
+                                                        <view contentMode="scaleToFill" ambiguous="YES" translatesAutoresizingMaskIntoConstraints="NO" id="HEX-Q2-Cjr" customClass="ValueStepper" customModule="ValueStepper">
                                                             <rect key="frame" x="82.666666666666686" y="32.333333333333336" width="115" height="29"/>
                                                             <color key="backgroundColor" systemColor="systemBackgroundColor"/>
                                                             <color key="tintColor" red="0.24313725489999999" green="0.01176470588" blue="0.4039215686" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
@@ -2692,7 +2692,7 @@
                                                                 <userDefinedRuntimeAttribute type="string" keyPath="font_type" value="16,4"/>
                                                             </userDefinedRuntimeAttributes>
                                                         </label>
-                                                        <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="qeV-kt-rWQ" customClass="CardView" customModule="rzq" customModuleProvider="target">
+                                                        <view contentMode="scaleToFill" ambiguous="YES" translatesAutoresizingMaskIntoConstraints="NO" id="qeV-kt-rWQ" customClass="CardView" customModule="rzq" customModuleProvider="target">
                                                             <rect key="frame" x="93" y="69.333333333333329" width="90" height="22"/>
                                                             <subviews>
                                                                 <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="price" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="RSQ-bf-tpe" customClass="MyUILabel" customModule="rzq" customModuleProvider="target">
@@ -12038,6 +12038,30 @@
                                     <constraint firstAttribute="height" constant="150" id="JuN-dC-xIB"/>
                                 </constraints>
                             </tableView>
+                            <collectionView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" semanticContentAttribute="forceLeftToRight" dataMode="prototypes" translatesAutoresizingMaskIntoConstraints="NO" id="dNd-I5-jol" customClass="ScalingCarouselView" customModule="rzq" customModuleProvider="target">
+                                <rect key="frame" x="0.0" y="542" width="375" height="270"/>
+                                <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                                <constraints>
+                                    <constraint firstAttribute="height" constant="270" id="Knx-4X-rHj"/>
+                                </constraints>
+                                <edgeInsets key="layoutMargins" top="8" left="8" bottom="8" right="8"/>
+                                <collectionViewFlowLayout key="collectionViewLayout" minimumLineSpacing="10" minimumInteritemSpacing="10" id="reF-IB-4H0">
+                                    <size key="itemSize" width="50" height="50"/>
+                                    <size key="headerReferenceSize" width="0.0" height="0.0"/>
+                                    <size key="footerReferenceSize" width="0.0" height="0.0"/>
+                                    <inset key="sectionInset" minX="0.0" minY="0.0" maxX="0.0" maxY="0.0"/>
+                                </collectionViewFlowLayout>
+                                <cells/>
+                                <userDefinedRuntimeAttributes>
+                                    <userDefinedRuntimeAttribute type="number" keyPath="inset">
+                                        <real key="value" value="55"/>
+                                    </userDefinedRuntimeAttribute>
+                                </userDefinedRuntimeAttributes>
+                                <connections>
+                                    <outlet property="dataSource" destination="7Sx-hp-CWV" id="3gA-Wb-VxK"/>
+                                    <outlet property="delegate" destination="7Sx-hp-CWV" id="YPY-AP-z8A"/>
+                                </connections>
+                            </collectionView>
                             <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="I8Q-pe-Ept" userLabel="seperator VW">
                                 <rect key="frame" x="0.0" y="160" width="375" height="1"/>
                                 <color key="backgroundColor" red="0.12549019610000001" green="0.0" blue="0.45098039220000002" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
@@ -12733,30 +12757,6 @@
                                     <constraint firstAttribute="width" constant="70" id="az4-uc-3mJ"/>
                                 </constraints>
                             </imageView>
-                            <collectionView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" semanticContentAttribute="forceLeftToRight" dataMode="prototypes" translatesAutoresizingMaskIntoConstraints="NO" id="dNd-I5-jol" customClass="ScalingCarouselView" customModule="rzq" customModuleProvider="target">
-                                <rect key="frame" x="0.0" y="542" width="375" height="270"/>
-                                <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
-                                <constraints>
-                                    <constraint firstAttribute="height" constant="270" id="Knx-4X-rHj"/>
-                                </constraints>
-                                <edgeInsets key="layoutMargins" top="8" left="8" bottom="8" right="8"/>
-                                <collectionViewFlowLayout key="collectionViewLayout" minimumLineSpacing="10" minimumInteritemSpacing="10" id="reF-IB-4H0">
-                                    <size key="itemSize" width="50" height="50"/>
-                                    <size key="headerReferenceSize" width="0.0" height="0.0"/>
-                                    <size key="footerReferenceSize" width="0.0" height="0.0"/>
-                                    <inset key="sectionInset" minX="0.0" minY="0.0" maxX="0.0" maxY="0.0"/>
-                                </collectionViewFlowLayout>
-                                <cells/>
-                                <userDefinedRuntimeAttributes>
-                                    <userDefinedRuntimeAttribute type="number" keyPath="inset">
-                                        <real key="value" value="55"/>
-                                    </userDefinedRuntimeAttribute>
-                                </userDefinedRuntimeAttributes>
-                                <connections>
-                                    <outlet property="dataSource" destination="7Sx-hp-CWV" id="3gA-Wb-VxK"/>
-                                    <outlet property="delegate" destination="7Sx-hp-CWV" id="YPY-AP-z8A"/>
-                                </connections>
-                            </collectionView>
                         </subviews>
                         <viewLayoutGuide key="safeArea" id="d5N-D6-syc"/>
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
@@ -28062,80 +28062,47 @@
         </scene>
     </scenes>
     <designables>
-        <designable name="2tF-5H-IPi">
-            <size key="intrinsicContentSize" width="250" height="46"/>
-        </designable>
         <designable name="5GO-LM-Dij">
-            <size key="intrinsicContentSize" width="355" height="39.220703125"/>
+            <size key="intrinsicContentSize" width="66" height="34"/>
         </designable>
         <designable name="6is-zz-e44">
-            <size key="intrinsicContentSize" width="355" height="39.220703125"/>
+            <size key="intrinsicContentSize" width="127" height="34"/>
         </designable>
         <designable name="90c-lM-y4l">
-            <size key="intrinsicContentSize" width="307" height="38.823671875000002"/>
-        </designable>
-        <designable name="9x5-0P-Zxx">
-            <size key="intrinsicContentSize" width="95" height="15"/>
+            <size key="intrinsicContentSize" width="59.666666666666664" height="34"/>
         </designable>
         <designable name="B1E-yb-xia">
-            <size key="intrinsicContentSize" width="355" height="39.220703125"/>
+            <size key="intrinsicContentSize" width="119.33333333333333" height="34"/>
         </designable>
         <designable name="Eve-f6-3rY">
-            <size key="intrinsicContentSize" width="355" height="39.220703125"/>
-        </designable>
-        <designable name="HEX-Q2-Cjr">
-            <size key="intrinsicContentSize" width="141" height="29"/>
-        </designable>
-        <designable name="HoH-2r-bXt">
-            <size key="intrinsicContentSize" width="85" height="13"/>
+            <size key="intrinsicContentSize" width="119.33333333333333" height="34"/>
         </designable>
         <designable name="N1t-JS-2FB">
-            <size key="intrinsicContentSize" width="190" height="38.823671875000002"/>
+            <size key="intrinsicContentSize" width="109" height="34"/>
         </designable>
         <designable name="OzZ-db-ahS">
-            <size key="intrinsicContentSize" width="355" height="39.220703125"/>
-        </designable>
-        <designable name="Qb3-oA-PjQ">
-            <size key="intrinsicContentSize" width="90" height="14"/>
+            <size key="intrinsicContentSize" width="66" height="34"/>
         </designable>
         <designable name="VLl-Pe-OvH">
-            <size key="intrinsicContentSize" width="355" height="39.220703125"/>
+            <size key="intrinsicContentSize" width="127" height="34"/>
         </designable>
         <designable name="WNE-Kv-mJf">
-            <size key="intrinsicContentSize" width="355" height="39.220703125"/>
+            <size key="intrinsicContentSize" width="127" height="34"/>
         </designable>
         <designable name="Xex-Z2-xZR">
-            <size key="intrinsicContentSize" width="355" height="39.220703125"/>
-        </designable>
-        <designable name="cuh-v7-0BO">
-            <size key="intrinsicContentSize" width="240" height="44"/>
-        </designable>
-        <designable name="dff-qk-xlK">
-            <size key="intrinsicContentSize" width="245" height="45"/>
+            <size key="intrinsicContentSize" width="119.33333333333333" height="34"/>
         </designable>
         <designable name="l9U-cg-OnC">
-            <size key="intrinsicContentSize" width="355" height="39.220703125"/>
+            <size key="intrinsicContentSize" width="119.33333333333333" height="34"/>
         </designable>
         <designable name="oQv-W2-GkD">
-            <size key="intrinsicContentSize" width="355" height="39.220703125"/>
-        </designable>
-        <designable name="opg-hq-AYY">
-            <size key="intrinsicContentSize" width="250" height="46"/>
-        </designable>
-        <designable name="qJd-E4-LQY">
-            <size key="intrinsicContentSize" width="160" height="28"/>
+            <size key="intrinsicContentSize" width="127" height="34"/>
         </designable>
         <designable name="qhJ-HP-SER">
-            <size key="intrinsicContentSize" width="355" height="39.220703125"/>
-        </designable>
-        <designable name="rQF-cZ-L2Y">
-            <size key="intrinsicContentSize" width="75" height="11"/>
-        </designable>
-        <designable name="ufK-cl-Eh2">
-            <size key="intrinsicContentSize" width="141" height="29"/>
+            <size key="intrinsicContentSize" width="66" height="34"/>
         </designable>
         <designable name="ynO-9o-kWx">
-            <size key="intrinsicContentSize" width="355" height="39.220703125"/>
+            <size key="intrinsicContentSize" width="66" height="34"/>
         </designable>
     </designables>
     <resources>
