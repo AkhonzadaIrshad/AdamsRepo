@@ -1530,6 +1530,9 @@ extension DeliveryStep1 : GMSMapViewDelegate {
     
     func addPickerOnDropOffLocation(coordinate: CLLocationCoordinate2D) {
         self.gMap?.clear()
+        self.ShopsCarouselView.isHidden = true
+        self.buttomSheet.isHidden = false
+
         if let currentLocation = self.locationManager.location {
             if CLLocation(latitude: coordinate.latitude, longitude: coordinate.longitude).distance(from: currentLocation ) < 65 {
                        self.edtOrderDetails.placeholder = "deliveryStep1.edtDetails.yourLocation.placeholder".localized
