@@ -700,9 +700,11 @@ class DeliveryStep1: BaseVC , Step3Delegate, AllShopDelegate, ImagePickerDelegat
     }
     
     func getShopsList(radius : Float, rating : Double) {
+        self.showLoading()
         ApiService.getShops(latitude: self.latitude ?? 0.0, longitude: self.longitude ?? 0.0, radius: radius, rating : rating, types : 0) { (response) in
             self.shops.removeAll()
             self.shops.append(contentsOf: response.dataShops ?? [DataShop]())
+            self.hideLoading()
 //            self.addShopsMarkers()
         }
     }
