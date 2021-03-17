@@ -956,6 +956,8 @@ class DeliveryStep1: BaseVC , Step3Delegate, AllShopDelegate, ImagePickerDelegat
         selectedCarouselShops = self.shops.filter({$0.type?.id == selectedShopTypeId})
         self.ShopsCarouselView.scrollToItem(at: IndexPath(row: 0, section: 0), at: .left, animated: true)
         for center in selectedShops {
+            self.ShopsCarouselView.isHidden = false
+            self.buttomSheet.isHidden = true
             let marker = GMSMarker()
             marker.position = CLLocationCoordinate2D(latitude: center.latitude ?? 0.0, longitude: center.longitude ?? 0.0)
             marker.title =  "\(center.id ?? 0)"
@@ -1864,8 +1866,7 @@ extension DeliveryStep1: UICollectionViewDelegate, UICollectionViewDataSource, U
         if collectionView == ShopsCarouselView {
             
         } else {
-            self.ShopsCarouselView.isHidden = false
-            self.buttomSheet.isHidden = true
+          
             let selectedCat = self.categories[indexPath.row]
             self.selectdCategory = selectedCat
             if self.isArabic() {
@@ -2357,7 +2358,8 @@ extension DeliveryStep1: UITableViewDelegate, UITableViewDataSource {
             self.searchShopsTextField.textAlignment = .left
         }
 //        self.searchShopsTextField.placeholder = "step1.catFilter.search.placeholder".localized + " \(self.selectdCategory?.name ?? "")"
-        
+        self.ShopsCarouselView.isHidden = true
+        self.buttomSheet.isHidden = false
         self.catFilterSearchStack.isHidden = false
         self.searchField.text = shop.name ?? ""
         self.shopNaleKabel.text = "\(shop.name ?? "")"
@@ -2445,7 +2447,8 @@ extension DeliveryStep1: UITableViewDelegate, UITableViewDataSource {
         input.keyword = autocompleteResults[row].placeId
         let lati = "\(self.latitude ?? 0)"
         let long = "\(self.longitude ?? 0)"
-        
+        self.ShopsCarouselView.isHidden = true
+        self.buttomSheet.isHidden = false
         GoogleApi.shared.callApi(.placeInformation,input: input,lati: lati, long: long) { (response) in
             if let place =  response.data as? GApiResponse.PlaceInfo, response.isValidFor(.placeInformation) {
                 DispatchQueue.main.async {
