@@ -440,6 +440,8 @@ class DeliveryStep1: BaseVC , Step3Delegate, AllShopDelegate, ImagePickerDelegat
         self.showLoading()
         self.viewPin.isHidden = false
         self.viewSuggest.isHidden = true
+        self.ShopsCarouselView.isHidden = true
+        self.buttomSheet.isHidden = false
         self.showActionSheet()
         ApiService.getShopDetails(Authorization: DataManager.loadUser().data?.accessToken ?? "", id: shop.id ?? 0) { (response) in
             self.hideLoading()
