@@ -32,6 +32,7 @@ class OrderCell: UITableViewCell {
     
     @IBOutlet weak var btnReorder: MyUIButton!
     
+    @IBOutlet weak var messagedReadImageView: UIImageView!
     
     var onTrack : (() -> Void)? = nil
     var onChat : (() -> Void)? = nil

@@ -48,6 +48,7 @@ class DatumDriverDel: Codable {
     let OrderPrice : Double?
     let KnetCommission: Double?
     let clientPhone: String?
+    let hasUnreadMessages: Bool?
     
     enum CodingKeys: String, CodingKey {
         case id = "Id"
@@ -79,9 +80,10 @@ class DatumDriverDel: Codable {
         case OrderPrice = "OrderPrice"
         case KnetCommission = "KnetCommission"
         case clientPhone = "ClientPhone"
+        case hasUnreadMessages = "hasUnreadMessages"
     }
     
-    init(id: Int?, title: String?, status: Int?, statusString: String?, image: String?, createdDate: String?, chatId: Int?, fromAddress: String?, fromLatitude: Double?, fromLongitude: Double?, toAddress: String?, toLatitude: Double?, toLongitude: Double?, providerID: String?, providerName: String?, providerImage: String?, providerRate: Double?, time: Int?, price: Double?, serviceName: String?, paymentMethod: Int?, items: [ShopMenuItem]?, isPaid : Bool?, invoiceId: String?, toFemaleOnly: Bool?, shopId : Int?,OrderPrice: Double?, KnetCommission: Double?,clientPhone: String?) {
+    init(id: Int?, title: String?, status: Int?, statusString: String?, image: String?, createdDate: String?, chatId: Int?, fromAddress: String?, fromLatitude: Double?, fromLongitude: Double?, toAddress: String?, toLatitude: Double?, toLongitude: Double?, providerID: String?, providerName: String?, providerImage: String?, providerRate: Double?, time: Int?, price: Double?, serviceName: String?, paymentMethod: Int?, items: [ShopMenuItem]?, isPaid : Bool?, invoiceId: String?, toFemaleOnly: Bool?, shopId : Int?,OrderPrice: Double?, KnetCommission: Double?,clientPhone: String?, hasUnreadMessages: Bool?) {
         self.id = id
         self.title = title
         self.status = status
@@ -111,5 +113,6 @@ class DatumDriverDel: Codable {
         self.OrderPrice = OrderPrice
         self.KnetCommission = KnetCommission
         self.clientPhone = clientPhone
+        self.hasUnreadMessages = hasUnreadMessages
     }
 }

@@ -124,6 +124,13 @@ class OrdersVC: BaseViewController, UITableViewDelegate, UITableViewDataSource {
                 cell.ivLogo.kf.setImage(with: url)
             }
             
+            if item.hasUnreadMessages ?? false {
+                cell.messagedReadImageView.isHidden = false
+                cell.messagedReadImageView.tintColor = #colorLiteral(red: 0, green: 0.5628422499, blue: 0.3188166618, alpha: 1)
+            } else {
+               // cell.messagedReadImageView.isHidden = true
+            }
+            
             cell.lblTitle.text = item.title ?? ""
             cell.lblOrderNumber.text = "\("order_number".localized) \(Constants.ORDER_NUMBER_PREFIX)\(item.id ?? 0)"
             cell.lblDeliveryDate.text = "\("delivery_date".localized) \(self.convertDate(isoDate: item.createdDate ?? ""))"
@@ -175,6 +182,7 @@ class OrdersVC: BaseViewController, UITableViewDelegate, UITableViewDataSource {
                 cell.ivLogo.kf.setImage(with: url)
             }
             
+            cell.messagedReadImageView.isHidden = true
             cell.lblTitle.text = item.title ?? ""
             cell.lblOrderNumber.text = "\("order_number".localized) \(Constants.ORDER_NUMBER_PREFIX)\(item.id ?? 0)"
             cell.lblDeliveryDate.text = "\("delivery_date".localized) \(self.convertDate(isoDate: item.createdDate ?? ""))"

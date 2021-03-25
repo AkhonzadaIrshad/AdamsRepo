@@ -54,6 +54,7 @@ class DataClassDelObj: Codable {
     let KnetCommission : Double?
     let ClientPhone : String?
     let ProviderPhone : String?
+    let hasUnreadMessages: Bool?
     
     enum CodingKeys: String, CodingKey {
         case type = "Type"
@@ -89,9 +90,10 @@ class DataClassDelObj: Codable {
         case KnetCommission = "KnetCommission"
         case ClientPhone = "ClientPhone"
         case ProviderPhone = "ProviderPhone"
+        case hasUnreadMessages = "hasUnreadMessages"
     }
     
-    init(type :Int?, id: Int?,driverId : String?, chatId : Int?, title: String?, fromAddress: String?, fromLatitude: Double?, fromLongitude: Double?, toAddress: String?, toLatitude: Double?, toLongitude: Double?, time: Int?, cost: Double?, status: Int?, canCancel: Bool?, canChat: Bool?, statusString: String?, images: [String]?,voiceFile : String?, createdDate: String?, pickUpDetails: String?,dropOffDetails: String?,desc: String?, paymentMethod: Int?, items: [ShopMenuItem]?, isPaid : Bool?, invoiceId: String?, toFemaleOnly : Bool?, shopId : Int?, orderPrice: Double?, KnetCommission: Double?, ClientPhone : String?, ProviderPhone: String?) {
+    init(type :Int?, id: Int?,driverId : String?, chatId : Int?, title: String?, fromAddress: String?, fromLatitude: Double?, fromLongitude: Double?, toAddress: String?, toLatitude: Double?, toLongitude: Double?, time: Int?, cost: Double?, status: Int?, canCancel: Bool?, canChat: Bool?, statusString: String?, images: [String]?,voiceFile : String?, createdDate: String?, pickUpDetails: String?,dropOffDetails: String?,desc: String?, paymentMethod: Int?, items: [ShopMenuItem]?, isPaid : Bool?, invoiceId: String?, toFemaleOnly : Bool?, shopId : Int?, orderPrice: Double?, KnetCommission: Double?, ClientPhone : String?, ProviderPhone: String?, hasUnreadMessages: Bool) {
         self.type = type
         self.id = id
         self.driverId = driverId
@@ -125,6 +127,7 @@ class DataClassDelObj: Codable {
         self.KnetCommission = KnetCommission
         self.ClientPhone = ClientPhone
         self.ProviderPhone = ProviderPhone
+        self.hasUnreadMessages = hasUnreadMessages
     }
     
 }

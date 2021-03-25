@@ -2636,7 +2636,7 @@
                                                                 <userDefinedRuntimeAttribute type="string" keyPath="font_type" value="16,4"/>
                                                             </userDefinedRuntimeAttributes>
                                                         </label>
-                                                        <view contentMode="scaleToFill" ambiguous="YES" translatesAutoresizingMaskIntoConstraints="NO" id="HEX-Q2-Cjr" customClass="ValueStepper" customModule="ValueStepper">
+                                                        <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="HEX-Q2-Cjr" customClass="ValueStepper" customModule="ValueStepper">
                                                             <rect key="frame" x="82.666666666666686" y="32.333333333333336" width="115" height="29"/>
                                                             <color key="backgroundColor" systemColor="systemBackgroundColor"/>
                                                             <color key="tintColor" red="0.24313725489999999" green="0.01176470588" blue="0.4039215686" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
@@ -2692,7 +2692,7 @@
                                                                 <userDefinedRuntimeAttribute type="string" keyPath="font_type" value="16,4"/>
                                                             </userDefinedRuntimeAttributes>
                                                         </label>
-                                                        <view contentMode="scaleToFill" ambiguous="YES" translatesAutoresizingMaskIntoConstraints="NO" id="qeV-kt-rWQ" customClass="CardView" customModule="rzq" customModuleProvider="target">
+                                                        <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="qeV-kt-rWQ" customClass="CardView" customModule="rzq" customModuleProvider="target">
                                                             <rect key="frame" x="93" y="69.333333333333329" width="90" height="22"/>
                                                             <subviews>
                                                                 <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="price" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="RSQ-bf-tpe" customClass="MyUILabel" customModule="rzq" customModuleProvider="target">
@@ -6626,6 +6626,14 @@
                                                                                         </userDefinedRuntimeAttribute>
                                                                                     </userDefinedRuntimeAttributes>
                                                                                 </view>
+                                                                                <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="checkmark.circle" catalog="system" translatesAutoresizingMaskIntoConstraints="NO" id="eky-OL-V9d">
+                                                                                    <rect key="frame" x="143" y="165.66666666666666" width="22" height="20.666666666666671"/>
+                                                                                    <color key="tintColor" white="0.66666666666666663" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                                                                                    <constraints>
+                                                                                        <constraint firstAttribute="height" constant="22" id="Gm0-me-pNf"/>
+                                                                                        <constraint firstAttribute="width" constant="22" id="x4O-Al-gbH"/>
+                                                                                    </constraints>
+                                                                                </imageView>
                                                                                 <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="system" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="3bd-cy-Fcb" customClass="MyUIButton" customModule="rzq" customModuleProvider="target">
                                                                                     <rect key="frame" x="187" y="163" width="52" height="25"/>
                                                                                     <constraints>
@@ -6652,6 +6660,7 @@
                                                                                 <constraint firstItem="8T3-dm-quA" firstAttribute="top" secondItem="w7S-L0-aEc" secondAttribute="bottom" constant="8" id="FCg-EM-ZCT"/>
                                                                                 <constraint firstAttribute="trailing" secondItem="NTj-Fw-QyM" secondAttribute="trailing" id="H3c-cE-yrN"/>
                                                                                 <constraint firstAttribute="bottom" secondItem="Qys-KC-Eqb" secondAttribute="bottom" id="KMh-9O-aDl"/>
+                                                                                <constraint firstItem="eky-OL-V9d" firstAttribute="centerY" secondItem="AuE-HL-wby" secondAttribute="centerY" id="MVq-Dm-Zc3"/>
                                                                                 <constraint firstAttribute="trailing" secondItem="q3C-tl-7cl" secondAttribute="trailing" id="Qtk-i6-9Wj"/>
                                                                                 <constraint firstItem="Qys-KC-Eqb" firstAttribute="leading" secondItem="pbx-Bf-dc5" secondAttribute="leading" id="RXA-lq-WLN"/>
                                                                                 <constraint firstItem="Dgx-Wg-IeZ" firstAttribute="top" secondItem="8T3-dm-quA" secondAttribute="bottom" constant="5" id="Svz-Ph-rU6"/>
@@ -6664,6 +6673,7 @@
                                                                                 <constraint firstAttribute="trailing" secondItem="3bd-cy-Fcb" secondAttribute="trailing" constant="8" id="eME-f3-dJu"/>
                                                                                 <constraint firstItem="NTj-Fw-QyM" firstAttribute="top" secondItem="q3C-tl-7cl" secondAttribute="bottom" constant="5" id="gV7-fz-Fdu"/>
                                                                                 <constraint firstItem="Dgx-Wg-IeZ" firstAttribute="leading" secondItem="pbx-Bf-dc5" secondAttribute="leading" id="ipO-pz-G2y"/>
+                                                                                <constraint firstItem="eky-OL-V9d" firstAttribute="leading" secondItem="AuE-HL-wby" secondAttribute="trailing" constant="8" id="mct-wd-J5s"/>
                                                                                 <constraint firstAttribute="trailing" secondItem="8T3-dm-quA" secondAttribute="trailing" id="mwK-RN-BAg"/>
                                                                                 <constraint firstAttribute="trailing" secondItem="Dgx-Wg-IeZ" secondAttribute="trailing" id="nnD-h6-PcA"/>
                                                                                 <constraint firstAttribute="trailing" secondItem="w7S-L0-aEc" secondAttribute="trailing" id="t60-p9-2tU"/>
@@ -6747,6 +6757,7 @@
                                                     <outlet property="lblOrderStatus" destination="u7S-ZW-Cu1" id="PZA-bf-Aaq"/>
                                                     <outlet property="lblTitle" destination="w7S-L0-aEc" id="B7V-Op-bIO"/>
                                                     <outlet property="lblTo" destination="NTj-Fw-QyM" id="2td-ie-GBj"/>
+                                                    <outlet property="messagedReadImageView" destination="eky-OL-V9d" id="sMc-1d-DUG"/>
                                                     <outlet property="statusColorView" destination="PLF-5Z-ZWs" id="rJv-Ga-TFE"/>
                                                     <outlet property="viewChat" destination="AuE-HL-wby" id="eZ2-EN-TrG"/>
                                                     <outlet property="viewTrack" destination="Qys-KC-Eqb" id="Wxg-QX-gXW"/>
@@ -6848,7 +6859,7 @@
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="XMX-ca-wtn" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="4239" y="1569"/>
+            <point key="canvasLocation" x="4237.6000000000004" y="1568.7192118226601"/>
         </scene>
         <!--Payment Method Sheet-->
         <scene sceneID="4OP-uH-aV4">
@@ -28062,47 +28073,80 @@
         </scene>
     </scenes>
     <designables>
+        <designable name="2tF-5H-IPi">
+            <size key="intrinsicContentSize" width="250" height="46"/>
+        </designable>
         <designable name="5GO-LM-Dij">
-            <size key="intrinsicContentSize" width="66" height="34"/>
+            <size key="intrinsicContentSize" width="355" height="39.220703125"/>
         </designable>
         <designable name="6is-zz-e44">
-            <size key="intrinsicContentSize" width="127" height="34"/>
+            <size key="intrinsicContentSize" width="355" height="39.220703125"/>
         </designable>
         <designable name="90c-lM-y4l">
-            <size key="intrinsicContentSize" width="65.666666666666671" height="34"/>
+            <size key="intrinsicContentSize" width="307" height="38.823671875000002"/>
+        </designable>
+        <designable name="9x5-0P-Zxx">
+            <size key="intrinsicContentSize" width="95" height="15"/>
         </designable>
         <designable name="B1E-yb-xia">
-            <size key="intrinsicContentSize" width="119.33333333333333" height="34"/>
+            <size key="intrinsicContentSize" width="355" height="39.220703125"/>
         </designable>
         <designable name="Eve-f6-3rY">
-            <size key="intrinsicContentSize" width="119.33333333333333" height="34"/>
+            <size key="intrinsicContentSize" width="355" height="39.220703125"/>
+        </designable>
+        <designable name="HEX-Q2-Cjr">
+            <size key="intrinsicContentSize" width="141" height="29"/>
+        </designable>
+        <designable name="HoH-2r-bXt">
+            <size key="intrinsicContentSize" width="85" height="13"/>
         </designable>
         <designable name="N1t-JS-2FB">
-            <size key="intrinsicContentSize" width="124.66666666666667" height="34"/>
+            <size key="intrinsicContentSize" width="190" height="38.823671875000002"/>
         </designable>
         <designable name="OzZ-db-ahS">
-            <size key="intrinsicContentSize" width="66" height="34"/>
+            <size key="intrinsicContentSize" width="355" height="39.220703125"/>
+        </designable>
+        <designable name="Qb3-oA-PjQ">
+            <size key="intrinsicContentSize" width="90" height="14"/>
         </designable>
         <designable name="VLl-Pe-OvH">
-            <size key="intrinsicContentSize" width="127" height="34"/>
+            <size key="intrinsicContentSize" width="355" height="39.220703125"/>
         </designable>
         <designable name="WNE-Kv-mJf">
-            <size key="intrinsicContentSize" width="127" height="34"/>
+            <size key="intrinsicContentSize" width="355" height="39.220703125"/>
         </designable>
         <designable name="Xex-Z2-xZR">
-            <size key="intrinsicContentSize" width="119.33333333333333" height="34"/>
+            <size key="intrinsicContentSize" width="355" height="39.220703125"/>
+        </designable>
+        <designable name="cuh-v7-0BO">
+            <size key="intrinsicContentSize" width="240" height="44"/>
+        </designable>
+        <designable name="dff-qk-xlK">
+            <size key="intrinsicContentSize" width="245" height="45"/>
         </designable>
         <designable name="l9U-cg-OnC">
-            <size key="intrinsicContentSize" width="119.33333333333333" height="34"/>
+            <size key="intrinsicContentSize" width="355" height="39.220703125"/>
         </designable>
         <designable name="oQv-W2-GkD">
-            <size key="intrinsicContentSize" width="127" height="34"/>
+            <size key="intrinsicContentSize" width="355" height="39.220703125"/>
+        </designable>
+        <designable name="opg-hq-AYY">
+            <size key="intrinsicContentSize" width="250" height="46"/>
+        </designable>
+        <designable name="qJd-E4-LQY">
+            <size key="intrinsicContentSize" width="160" height="28"/>
         </designable>
         <designable name="qhJ-HP-SER">
-            <size key="intrinsicContentSize" width="66" height="34"/>
+            <size key="intrinsicContentSize" width="355" height="39.220703125"/>
+        </designable>
+        <designable name="rQF-cZ-L2Y">
+            <size key="intrinsicContentSize" width="75" height="11"/>
+        </designable>
+        <designable name="ufK-cl-Eh2">
+            <size key="intrinsicContentSize" width="141" height="29"/>
         </designable>
         <designable name="ynO-9o-kWx">
-            <size key="intrinsicContentSize" width="66" height="34"/>
+            <size key="intrinsicContentSize" width="355" height="39.220703125"/>
         </designable>
     </designables>
     <resources>
@@ -28126,6 +28170,7 @@
         <image name="bg_verification" width="243" height="198"/>
         <image name="chat_cancelorder" width="20" height="24"/>
         <image name="chat_track" width="25" height="25"/>
+        <image name="checkmark.circle" catalog="system" width="128" height="121"/>
         <image name="empty_notifications" width="263" height="231"/>
         <image name="empty_orders" width="292" height="269"/>
         <image name="empty_shops" width="300" height="246"/>

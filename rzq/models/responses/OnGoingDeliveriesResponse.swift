@@ -48,7 +48,8 @@ class DatumDel: Codable {
     let OrderPrice : Double?
     let KnetCommission : Double?
     let ClientPhone : String?
-      let ProviderPhone : String?
+    let ProviderPhone : String?
+    let hasUnreadMessages: Bool?
     
     enum CodingKeys: String, CodingKey {
         case id = "Id"
@@ -82,10 +83,11 @@ class DatumDel: Codable {
         
         case ClientPhone = "ClientPhone"
         case ProviderPhone = "ProviderPhone"
+        case hasUnreadMessages = "hasUnreadMessages"
     }
     
     
-    init(id: Int?, title: String?, status: Int?, statusString: String?, image: String?, createdDate: String?, chatId: Int?, fromAddress: String?, fromLatitude: Double?, fromLongitude: Double?, toAddress: String?, toLatitude: Double?, toLongitude: Double?, providerID: String?, providerName: String?, providerImage: String?, providerRate: Double?, time: Int?, price: Double?, serviceName: String?, paymentMethod: Int?, items : [ShopMenuItem]?, isPaid : Bool?, invoiceId: String?, toFemaleOnly: Bool?, shopId: Int?, OrderPrice: Double?, KnetCommission: Double?, ClientPhone : String?, ProviderPhone : String?) {
+    init(id: Int?, title: String?, status: Int?, statusString: String?, image: String?, createdDate: String?, chatId: Int?, fromAddress: String?, fromLatitude: Double?, fromLongitude: Double?, toAddress: String?, toLatitude: Double?, toLongitude: Double?, providerID: String?, providerName: String?, providerImage: String?, providerRate: Double?, time: Int?, price: Double?, serviceName: String?, paymentMethod: Int?, items : [ShopMenuItem]?, isPaid : Bool?, invoiceId: String?, toFemaleOnly: Bool?, shopId: Int?, OrderPrice: Double?, KnetCommission: Double?, ClientPhone : String?, ProviderPhone : String?, hasUnreadMessages: Bool?) {
         self.id = id
         self.title = title
         self.status = status
@@ -116,5 +118,6 @@ class DatumDel: Codable {
         self.KnetCommission = KnetCommission
         self.ClientPhone = ClientPhone
         self.ProviderPhone = ProviderPhone
+        self.hasUnreadMessages = hasUnreadMessages
     }
 }
