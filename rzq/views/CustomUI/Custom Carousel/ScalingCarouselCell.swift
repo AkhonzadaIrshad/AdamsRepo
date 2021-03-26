@@ -16,8 +16,11 @@ class ScalingCarouselCell: UICollectionViewCell {
     @IBOutlet weak var shopeImageView: UIImageView!
     @IBOutlet weak var ratingLabe: UILabel!
     @IBOutlet weak var makeOrderButton: UIButton!
+    @IBOutlet weak var ownThisShopButton: UIButton!
     
     var onMakeOrderAction: (() -> Void)? = nil
+    var onYourplaceAction: (() -> Void)? = nil
+
 
     // MARK: - Properties (Public)
     
@@ -106,6 +109,9 @@ class ScalingCarouselCell: UICollectionViewCell {
     }
     
     @IBAction func onYourplace(_ sender: Any) {
+        if let onYourplaceAction = self.onYourplaceAction {
+            onYourplaceAction()
+        }
     }
     
 }

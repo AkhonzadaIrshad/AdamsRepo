@@ -494,7 +494,7 @@ class DeliveryStep2: BaseVC, Step3Delegate {
             var filterItems = [SearchTextFieldItem]()
             self.filterShops.removeAll()
             for prediction in response.results ?? [Result]() {
-                let dataShop = DataShop(id: 0, name: prediction.name ?? "", address: prediction.vicinity ?? "", latitude: prediction.geometry?.location?.lat ?? 0.0, longitude: prediction.geometry?.location?.lng ?? 0.0, phoneNumber: "", workingHours: "", images: [String](), rate: prediction.rating ?? 0.0, type: TypeClass(id: 0, name: prediction.types?[0] ?? "", image: "", selectedIcon: "", icon: ""), ownerId: "", googlePlaceId:  prediction.placeID ?? "", openNow: prediction.openingHours?.openNow ?? false, NearbyDriversCount :  0)
+                let dataShop = DataShop(id: 0, name: prediction.name ?? "", address: prediction.vicinity ?? "", latitude: prediction.geometry?.location?.lat ?? 0.0, longitude: prediction.geometry?.location?.lng ?? 0.0, phoneNumber: "", workingHours: "", images: [String](), rate: prediction.rating ?? 0.0, type: TypeClass(id: 0, name: prediction.types?[0] ?? "", image: "", selectedIcon: "", icon: ""), ownerId: "", googlePlaceId:  prediction.placeID ?? "", openNow: prediction.openingHours?.openNow ?? false, NearbyDriversCount :  0, hasOwner: true)
                 dataShop.placeId = prediction.id ?? ""
                 
                 self.filterShops.append(dataShop)

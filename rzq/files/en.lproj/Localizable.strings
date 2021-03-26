@@ -37,6 +37,7 @@
 "enter_order_details" = "Enter order details first!";
 "enter_order_cost" = "Enter order estimated cost first!";
 "makeOrderCarosul.normalTitle" = "Make Order";
+"carousel.ownThisPlace" = "You own this place";
 
 "currency" = "KWD";
 "hours" = "Hour";

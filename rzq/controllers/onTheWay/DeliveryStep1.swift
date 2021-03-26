@@ -237,7 +237,8 @@ class DeliveryStep1: BaseVC , Step3Delegate, AllShopDelegate, ImagePickerDelegat
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
         handleImagesView()
-        
+        self.ShopsCarouselView.isHidden = true
+        self.buttomSheet.isHidden = false
         
         if CLLocationManager.locationServicesEnabled() {
             switch CLLocationManager.authorizationStatus() {
@@ -387,7 +388,7 @@ class DeliveryStep1: BaseVC , Step3Delegate, AllShopDelegate, ImagePickerDelegat
             self.pinMarker?.map = nil
             self.lblPickupLocation.textColor = UIColor.appDarkBlue
             self.lblPickupLocation.text = response.shopData?.name ?? ""
-            let dataShop = DataShop(id: response.shopData?.id ?? 0, name: response.shopData?.name ?? "", address: response.shopData?.address ?? "", latitude: response.shopData?.latitude ?? 0.0, longitude: response.shopData?.longitude ?? 0.0, phoneNumber: response.shopData?.phoneNumber ?? "", workingHours: response.shopData?.workingHours ?? "", images: response.shopData?.images ?? [String](), rate: response.shopData?.rate ?? 0.0, type: response.shopData?.type ?? TypeClass(id: 0, name: "",image: "", selectedIcon: "", icon: ""),ownerId: response.shopData?.ownerId ?? "", googlePlaceId: response.shopData?.googlePlaceId ?? "", openNow : response.shopData?.openNow ?? false, NearbyDriversCount : response.shopData?.nearbyDriversCount ?? 0)
+            let dataShop = DataShop(id: response.shopData?.id ?? 0, name: response.shopData?.name ?? "", address: response.shopData?.address ?? "", latitude: response.shopData?.latitude ?? 0.0, longitude: response.shopData?.longitude ?? 0.0, phoneNumber: response.shopData?.phoneNumber ?? "", workingHours: response.shopData?.workingHours ?? "", images: response.shopData?.images ?? [String](), rate: response.shopData?.rate ?? 0.0, type: response.shopData?.type ?? TypeClass(id: 0, name: "",image: "", selectedIcon: "", icon: ""),ownerId: response.shopData?.ownerId ?? "", googlePlaceId: response.shopData?.googlePlaceId ?? "", openNow : response.shopData?.openNow ?? false, NearbyDriversCount : response.shopData?.nearbyDriversCount ?? 0, hasOwner: response.shopData?.hasOwner ?? true)
             self.orderModel?.shop = dataShop
             self.orderModel?.pickUpAddress = response.shopData?.name ?? ""
             self.orderModel?.pickUpLatitude = response.shopData?.latitude ?? 0.0
@@ -448,7 +449,7 @@ class DeliveryStep1: BaseVC , Step3Delegate, AllShopDelegate, ImagePickerDelegat
             self.pinMarker?.map = nil
             self.lblPickupLocation.textColor = UIColor.appDarkBlue
             self.lblPickupLocation.text = response.shopData?.name ?? ""
-            let dataShop = DataShop(id: response.shopData?.id ?? 0, name: response.shopData?.name ?? "", address: response.shopData?.address ?? "", latitude: response.shopData?.latitude ?? 0.0, longitude: response.shopData?.longitude ?? 0.0, phoneNumber: response.shopData?.phoneNumber ?? "", workingHours: response.shopData?.workingHours ?? "", images: response.shopData?.images ?? [String](), rate: response.shopData?.rate ?? 0.0, type: response.shopData?.type ?? TypeClass(id: 0, name: "",image: "", selectedIcon: "", icon: ""),ownerId: response.shopData?.ownerId ?? "", googlePlaceId: response.shopData?.googlePlaceId ?? "", openNow : response.shopData?.openNow ?? false, NearbyDriversCount : response.shopData?.nearbyDriversCount ?? 0)
+            let dataShop = DataShop(id: response.shopData?.id ?? 0, name: response.shopData?.name ?? "", address: response.shopData?.address ?? "", latitude: response.shopData?.latitude ?? 0.0, longitude: response.shopData?.longitude ?? 0.0, phoneNumber: response.shopData?.phoneNumber ?? "", workingHours: response.shopData?.workingHours ?? "", images: response.shopData?.images ?? [String](), rate: response.shopData?.rate ?? 0.0, type: response.shopData?.type ?? TypeClass(id: 0, name: "",image: "", selectedIcon: "", icon: ""),ownerId: response.shopData?.ownerId ?? "", googlePlaceId: response.shopData?.googlePlaceId ?? "", openNow : response.shopData?.openNow ?? false, NearbyDriversCount : response.shopData?.nearbyDriversCount ?? 0, hasOwner: response.shopData?.hasOwner ?? true)
             self.orderModel?.shop = dataShop
             self.orderModel?.pickUpAddress = response.shopData?.name ?? ""
             self.orderModel?.pickUpLatitude = response.shopData?.latitude ?? 0.0
@@ -833,7 +834,7 @@ class DeliveryStep1: BaseVC , Step3Delegate, AllShopDelegate, ImagePickerDelegat
             var filterItems = [SearchTextFieldItem]()
             self.filterShops.removeAll()
             for prediction in response.results ?? [Result]() {
-                let dataShop = DataShop(id: 0, name: prediction.name ?? "", address: prediction.vicinity ?? "", latitude: prediction.geometry?.location?.lat ?? 0.0, longitude: prediction.geometry?.location?.lng ?? 0.0, phoneNumber: "", workingHours: "", images: [String](), rate: prediction.rating ?? 0.0, type: TypeClass(id: 0, name: prediction.types?[0] ?? "", image: "", selectedIcon: "", icon: ""), ownerId: "", googlePlaceId: prediction.placeID ?? "", openNow: prediction.openingHours?.openNow ?? false, NearbyDriversCount : 0)
+                let dataShop = DataShop(id: 0, name: prediction.name ?? "", address: prediction.vicinity ?? "", latitude: prediction.geometry?.location?.lat ?? 0.0, longitude: prediction.geometry?.location?.lng ?? 0.0, phoneNumber: "", workingHours: "", images: [String](), rate: prediction.rating ?? 0.0, type: TypeClass(id: 0, name: prediction.types?[0] ?? "", image: "", selectedIcon: "", icon: ""), ownerId: "", googlePlaceId: prediction.placeID ?? "", openNow: prediction.openingHours?.openNow ?? false, NearbyDriversCount : 0, hasOwner: true)
                 dataShop.placeId = prediction.id ?? ""
                 self.filterShops.append(dataShop)
             }
@@ -1301,7 +1302,7 @@ class DeliveryStep1: BaseVC , Step3Delegate, AllShopDelegate, ImagePickerDelegat
             vc.latitude = self.latitude ?? 0.0
             vc.longitude = self.longitude ?? 0.0
             
-            let shopData = ShopData(nearbyDriversCount: 0, id: self.orderModel?.shop?.id ?? 0, name: self.orderModel?.shop?.name ?? "", address: self.orderModel?.shop?.address ?? "", latitude: self.orderModel?.shop?.latitude ?? 0.0, longitude: self.orderModel?.shop?.longitude ?? 0.0, phoneNumber: self.orderModel?.shop?.phoneNumber ?? "", workingHours: self.orderModel?.shop?.workingHours ?? "", images: self.orderModel?.shop?.images ?? [String](), rate: self.orderModel?.shop?.rate ?? 0.0, type: self.orderModel?.shop?.type ?? TypeClass(id: 0, name: "",image: "", selectedIcon: "", icon: ""), ownerId: self.orderModel?.shop?.ownerId ?? "",googlePlaceId:  self.orderModel?.shop?.googlePlaceId ?? "", openNow: self.orderModel?.shop?.openNow ?? false)
+            let shopData = ShopData(nearbyDriversCount: 0, id: self.orderModel?.shop?.id ?? 0, name: self.orderModel?.shop?.name ?? "", address: self.orderModel?.shop?.address ?? "", latitude: self.orderModel?.shop?.latitude ?? 0.0, longitude: self.orderModel?.shop?.longitude ?? 0.0, phoneNumber: self.orderModel?.shop?.phoneNumber ?? "", workingHours: self.orderModel?.shop?.workingHours ?? "", images: self.orderModel?.shop?.images ?? [String](), rate: self.orderModel?.shop?.rate ?? 0.0, type: self.orderModel?.shop?.type ?? TypeClass(id: 0, name: "",image: "", selectedIcon: "", icon: ""), ownerId: self.orderModel?.shop?.ownerId ?? "",googlePlaceId:  self.orderModel?.shop?.googlePlaceId ?? "", openNow: self.orderModel?.shop?.openNow ?? false, hasOwner: self.orderModel?.shop?.hasOwner ?? true)
             shopData.placeId = self.orderModel?.shop?.placeId ?? ""
             
             vc.shop = shopData
@@ -1365,7 +1366,7 @@ extension DeliveryStep1 : GMSMapViewDelegate {
                 self.pinMarker?.map = nil
                 self.lblPickupLocation.textColor = UIColor.appDarkBlue
                 self.lblPickupLocation.text = response.shopData?.name ?? ""
-                let dataShop = DataShop(id: response.shopData?.id ?? 0, name: response.shopData?.name ?? "", address: response.shopData?.address ?? "", latitude: response.shopData?.latitude ?? 0.0, longitude: response.shopData?.longitude ?? 0.0, phoneNumber: response.shopData?.phoneNumber ?? "", workingHours: response.shopData?.workingHours ?? "", images: response.shopData?.images ?? [String](), rate: response.shopData?.rate ?? 0.0, type: response.shopData?.type ?? TypeClass(id: 0, name: "",image: "", selectedIcon: "", icon: ""),ownerId: response.shopData?.ownerId ?? "", googlePlaceId: response.shopData?.googlePlaceId ?? "", openNow : response.shopData?.openNow ?? false, NearbyDriversCount : response.shopData?.nearbyDriversCount ?? 0)
+                let dataShop = DataShop(id: response.shopData?.id ?? 0, name: response.shopData?.name ?? "", address: response.shopData?.address ?? "", latitude: response.shopData?.latitude ?? 0.0, longitude: response.shopData?.longitude ?? 0.0, phoneNumber: response.shopData?.phoneNumber ?? "", workingHours: response.shopData?.workingHours ?? "", images: response.shopData?.images ?? [String](), rate: response.shopData?.rate ?? 0.0, type: response.shopData?.type ?? TypeClass(id: 0, name: "",image: "", selectedIcon: "", icon: ""),ownerId: response.shopData?.ownerId ?? "", googlePlaceId: response.shopData?.googlePlaceId ?? "", openNow : response.shopData?.openNow ?? false, NearbyDriversCount : response.shopData?.nearbyDriversCount ?? 0, hasOwner: response.shopData?.hasOwner ?? true)
                 self.orderModel?.shop = dataShop
                 self.orderModel?.pickUpAddress = response.shopData?.name ?? ""
                 self.orderModel?.pickUpLatitude = response.shopData?.latitude ?? 0.0
@@ -1905,7 +1906,23 @@ extension DeliveryStep1: UICollectionViewDelegate, UICollectionViewDataSource, U
             cell.shopName.text = shop.name
             cell.ratingLabe.text = "\(shop.rate ?? 4.0)"
             cell.ratingView.rating = shop.rate ?? 4
+            if shop.hasOwner ?? true {
+                cell.ownThisShopButton.setTitle("", for: .normal)
+                cell.ownThisShopButton.isUserInteractionEnabled = false
+            } else {
+                cell.ownThisShopButton.isUserInteractionEnabled = true
+                cell.ownThisShopButton.setTitle("carousel.ownThisPlace".localized, for: .normal)
+            }
             
+            cell.onYourplaceAction = {
+                if let vc = UIStoryboard(name: "Main", bundle: nil).instantiateViewController(withIdentifier: "SuggestShopVC") as? SuggestShopVC
+                {
+                    vc.latitude = shop.latitude ?? 0.0
+                    vc.longitude = shop.longitude ?? 0.0
+                    self.navigationController?.pushViewController(vc, animated: true)
+                }
+
+            }
             cell.onMakeOrderAction = {
                 let id = shop.id ?? 0
                 self.isZoomed = true
@@ -1925,7 +1942,7 @@ extension DeliveryStep1: UICollectionViewDelegate, UICollectionViewDataSource, U
                         self.pinMarker?.map = nil
                         self.lblPickupLocation.textColor = UIColor.appDarkBlue
                         self.lblPickupLocation.text = response.shopData?.name ?? ""
-                        let dataShop = DataShop(id: response.shopData?.id ?? 0, name: response.shopData?.name ?? "", address: response.shopData?.address ?? "", latitude: response.shopData?.latitude ?? 0.0, longitude: response.shopData?.longitude ?? 0.0, phoneNumber: response.shopData?.phoneNumber ?? "", workingHours: response.shopData?.workingHours ?? "", images: response.shopData?.images ?? [String](), rate: response.shopData?.rate ?? 0.0, type: response.shopData?.type ?? TypeClass(id: 0, name: "",image: "", selectedIcon: "", icon: ""),ownerId: response.shopData?.ownerId ?? "", googlePlaceId: response.shopData?.googlePlaceId ?? "", openNow : response.shopData?.openNow ?? false, NearbyDriversCount : response.shopData?.nearbyDriversCount ?? 0)
+                        let dataShop = DataShop(id: response.shopData?.id ?? 0, name: response.shopData?.name ?? "", address: response.shopData?.address ?? "", latitude: response.shopData?.latitude ?? 0.0, longitude: response.shopData?.longitude ?? 0.0, phoneNumber: response.shopData?.phoneNumber ?? "", workingHours: response.shopData?.workingHours ?? "", images: response.shopData?.images ?? [String](), rate: response.shopData?.rate ?? 0.0, type: response.shopData?.type ?? TypeClass(id: 0, name: "",image: "", selectedIcon: "", icon: ""),ownerId: response.shopData?.ownerId ?? "", googlePlaceId: response.shopData?.googlePlaceId ?? "", openNow : response.shopData?.openNow ?? false, NearbyDriversCount : response.shopData?.nearbyDriversCount ?? 0, hasOwner: response.shopData?.hasOwner ?? true)
                         self.orderModel?.shop = dataShop
                         self.orderModel?.pickUpAddress = response.shopData?.name ?? ""
                         self.orderModel?.pickUpLatitude = response.shopData?.latitude ?? 0.0

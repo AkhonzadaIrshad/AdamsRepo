@@ -760,7 +760,7 @@ class OrderDetailsVC: PaymentViewController, UICollectionViewDelegate, UICollect
             model.paymentMethod = self.order?.paymentMethod ?? Constants.PAYMENT_METHOD_CASH
             model.isFemale = self.order?.toFemaleOnly ?? false
             
-            let shop = DataShop(id: response.shopData?.id ?? 0, name: response.shopData?.name ?? "", address: response.shopData?.address ?? "", latitude: response.shopData?.latitude ?? 0.0, longitude: response.shopData?.longitude ?? 0.0, phoneNumber: response.shopData?.phoneNumber ?? "", workingHours: response.shopData?.workingHours ?? "", images: response.shopData?.images ?? [String](), rate: response.shopData?.rate ?? 0.0, type: response.shopData?.type!, ownerId: response.shopData?.ownerId ?? "", googlePlaceId: response.shopData?.googlePlaceId ?? "", openNow: response.shopData?.openNow ?? true, NearbyDriversCount : response.shopData?.nearbyDriversCount ?? 0)
+            let shop = DataShop(id: response.shopData?.id ?? 0, name: response.shopData?.name ?? "", address: response.shopData?.address ?? "", latitude: response.shopData?.latitude ?? 0.0, longitude: response.shopData?.longitude ?? 0.0, phoneNumber: response.shopData?.phoneNumber ?? "", workingHours: response.shopData?.workingHours ?? "", images: response.shopData?.images ?? [String](), rate: response.shopData?.rate ?? 0.0, type: response.shopData?.type!, ownerId: response.shopData?.ownerId ?? "", googlePlaceId: response.shopData?.googlePlaceId ?? "", openNow: response.shopData?.openNow ?? true, NearbyDriversCount : response.shopData?.nearbyDriversCount ?? 0, hasOwner: response.shopData?.hasOwner ?? true)
             
             model.shop = shop
             

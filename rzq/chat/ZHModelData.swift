@@ -32,8 +32,8 @@ class ZHModelData: NSObject {
     var senderImage : ZHCMessagesAvatarImage?
     var receiverImage : ZHCMessagesAvatarImage?
     
-    var outgoingBubbleImageData: ZHCMessagesBubbleImage?;
-    var incomingBubbleImageData: ZHCMessagesBubbleImage?;
+    var outgoingBubbleImageData: ZHCMessagesBubbleImage?
+    var incomingBubbleImageData: ZHCMessagesBubbleImage?
     
 //    func loadMessages() -> Void {
 //        let avatarFactory: ZHCMessagesAvatarImageFactory = ZHCMessagesAvatarImageFactory.init(diameter: UInt(kZHCMessagesTableViewCellAvatarSizeDefault));
@@ -85,7 +85,7 @@ class ZHModelData: NSObject {
 //            self.users = [kZHCDemoAvatarIdJobs : kZHCDemoAvatarDisplayNameJobs,kZHCDemoAvatarIdCook : kZHCDemoAvatarDisplayNameCook]
             
             let bubbleFactory: ZHCMessagesBubbleImageFactory = ZHCMessagesBubbleImageFactory.init();
-            self.outgoingBubbleImageData = bubbleFactory.outgoingMessagesBubbleImage(with: UIColor.colorPrimary)
+            self.outgoingBubbleImageData = bubbleFactory.outgoingMessagesBubbleImage(with: UIColor.blue)
             self.incomingBubbleImageData = bubbleFactory.incomingMessagesBubbleImage(with: UIColor.processing)
             
             let muArray: NSMutableArray = [];
@@ -110,7 +110,7 @@ class ZHModelData: NSObject {
                 muArray.add(model)
             }
             
-            for i in 0 ..< muArray.count{
+            for i in 0 ..< muArray.count {
                 let model: ZHUserModel = muArray.object(at: i) as! ZHUserModel
                 let avatarId: String?
                 let displayName: String?

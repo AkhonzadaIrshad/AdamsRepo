@@ -13,6 +13,8 @@ import MOLH
 import BRYXBanner
 import SVProgressHUD
 import SwiftyGif
+import Kingfisher
+import ImageSlideshow
 
 class ZHCDemoMessagesViewController: ZHCMessagesViewController, BillDelegate, ChatDelegate,UINavigationControllerDelegate, LabasLocationManagerDelegate, PaymentStatusDelegate, OrderChatDelegate, RateDriverDelegate {
     
@@ -1265,8 +1267,8 @@ class ZHCDemoMessagesViewController: ZHCMessagesViewController, BillDelegate, Ch
     
     override func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         let cell: ZHCMessagesTableViewCell = super.tableView(tableView, cellForRowAt: indexPath) as! ZHCMessagesTableViewCell;
-        self.configureCell(cell, atIndexPath: indexPath);
-        return cell;
+        self.configureCell(cell, atIndexPath: indexPath)
+        return cell
     }
     
     //MARK:Configure Cell Data
@@ -1280,6 +1282,29 @@ class ZHCDemoMessagesViewController: ZHCMessagesViewController, BillDelegate, Ch
                     self.order?.isPaid = true
                 }
                 cell.textView?.textColor = UIColor.black;
+            }
+        } else {
+            var images = [String]()
+
+            //  let str = message.media.mediaData?() as? String ?? ""
+            let str = message.senderDisplayName
+            images.append(str)
+            cell.textView?.text = "bla bla bla bla "
+
+            for str in images {
+                
+                if (str.contains(find: "jpg") || str.contains(find: "jpeg") || str.contains(find: "png")) {
+                  
+                        let alamofireSource = KingfisherSource(urlString: "\(Constants.IMAGE_URL)\(str)")!
+                    alamofireSource.load(to: cell.messageBubbleImageView ?? UIImageView()) { (image) in
+                        //cell.imageView?.image = image
+                        DispatchQueue.main.async {
+                            cell.messageBubbleImageView?.image = image
+                            cell.textView?.isHidden = true
+                            cell.backgroundColor = .yellow
+                        }
+                    }
+                }
             }
         }
     }

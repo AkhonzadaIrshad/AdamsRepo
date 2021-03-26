@@ -43,6 +43,7 @@ class DataShop: Codable {
     var googlePlaceId : String?
     var openNow : Bool?
     var NearbyDriversCount : Int?
+    var hasOwner: Bool?
     
     enum CodingKeys: String, CodingKey {
         case id = "Id"
@@ -59,9 +60,10 @@ class DataShop: Codable {
         case googlePlaceId = "GooglePlaceId"
         case openNow = "OpenNow"
         case NearbyDriversCount = "NearbyDriversCount"
+        case hasOwner = "HasOwner"
     }
     
-    init(id: Int?, name: String?, address: String?, latitude: Double?, longitude: Double?, phoneNumber: String?, workingHours: String?, images: [String]?, rate: Double?, type: TypeClass?, ownerId : String?, googlePlaceId : String?, openNow : Bool?, NearbyDriversCount : Int?) {
+    init(id: Int?, name: String?, address: String?, latitude: Double?, longitude: Double?, phoneNumber: String?, workingHours: String?, images: [String]?, rate: Double?, type: TypeClass?, ownerId : String?, googlePlaceId : String?, openNow : Bool?, NearbyDriversCount : Int?, hasOwner: Bool?) {
         self.id = id
         self.name = name
         self.address = address
@@ -76,5 +78,6 @@ class DataShop: Codable {
         self.googlePlaceId = googlePlaceId
         self.openNow = openNow
         self.NearbyDriversCount = NearbyDriversCount
+        self.hasOwner = hasOwner
     }
 }

@@ -66,7 +66,7 @@
                                         </subviews>
                                         <edgeInsets key="layoutMargins" top="0.0" left="10" bottom="0.0" right="8"/>
                                     </stackView>
-                                    <stackView opaque="NO" contentMode="scaleToFill" semanticContentAttribute="forceLeftToRight" spacing="2" translatesAutoresizingMaskIntoConstraints="NO" id="zgn-DN-Lbh">
+                                    <stackView opaque="NO" contentMode="scaleToFill" semanticContentAttribute="forceLeftToRight" spacing="5" translatesAutoresizingMaskIntoConstraints="NO" id="zgn-DN-Lbh">
                                         <rect key="frame" x="0.0" y="177" width="216" height="63"/>
                                         <subviews>
                                             <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="system" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="Hdd-1X-xvY">
@@ -83,10 +83,10 @@
                                                     <action selector="onMakeOrder:" destination="gTV-IL-0wX" eventType="touchUpInside" id="1EK-Zd-nHQ"/>
                                                 </connections>
                                             </button>
-                                            <button opaque="NO" userInteractionEnabled="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="system" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="p1p-hZ-htU">
-                                                <rect key="frame" x="132" y="13" width="84" height="35"/>
+                                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="system" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="p1p-hZ-htU">
+                                                <rect key="frame" x="135" y="13" width="81" height="35"/>
                                                 <fontDescription key="fontDescription" name="HelveticaNeue-Bold" family="Helvetica Neue" pointSize="8"/>
-                                                <state key="normal">
+                                                <state key="normal" title="Own this Shop">
                                                     <color key="titleColor" red="0.29878076910000001" green="0.29209664460000001" blue="0.39216876029999997" alpha="1" colorSpace="custom" customColorSpace="displayP3"/>
                                                 </state>
                                                 <connections>
@@ -120,6 +120,7 @@
             <connections>
                 <outlet property="mainView" destination="ob3-2x-qZS" id="1hR-5O-MbA"/>
                 <outlet property="makeOrderButton" destination="Hdd-1X-xvY" id="BX5-bX-uzS"/>
+                <outlet property="ownThisShopButton" destination="p1p-hZ-htU" id="v9R-7f-Xxy"/>
                 <outlet property="ratingLabe" destination="xs0-Tz-mTh" id="1AB-Qc-wQ2"/>
                 <outlet property="ratingView" destination="0ct-JF-e1W" id="M87-Y2-GBr"/>
                 <outlet property="shopName" destination="IQR-TE-Qvy" id="mji-qv-gN1"/>
@@ -128,6 +129,11 @@
             <point key="canvasLocation" x="182.60869565217394" y="114.50892857142857"/>
         </collectionViewCell>
     </objects>
+    <designables>
+        <designable name="0ct-JF-e1W">
+            <size key="intrinsicContentSize" width="120" height="20"/>
+        </designable>
+    </designables>
     <resources>
         <systemColor name="systemBackgroundColor">
             <color white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>

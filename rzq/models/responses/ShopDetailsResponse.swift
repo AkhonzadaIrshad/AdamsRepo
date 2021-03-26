@@ -38,6 +38,7 @@ class ShopData: Codable {
     var ownerId : String?
     var googlePlaceId : String?
     var openNow : Bool?
+    var hasOwner: Bool?
     
     enum CodingKeys: String, CodingKey {
         case nearbyDriversCount = "NearbyDriversCount"
@@ -54,9 +55,10 @@ class ShopData: Codable {
         case ownerId = "OwnerId"
         case googlePlaceId = "GooglePlaceId"
         case openNow = "OpenNow"
+        case hasOwner = "HasOwner"
     }
     
-    init(nearbyDriversCount: Int?, id: Int?, name: String?, address: String?, latitude: Double?, longitude: Double?, phoneNumber: String?, workingHours: String?, images: [String]?, rate: Double?, type: TypeClass?, ownerId: String?, googlePlaceId: String?, openNow : Bool?) {
+    init(nearbyDriversCount: Int?, id: Int?, name: String?, address: String?, latitude: Double?, longitude: Double?, phoneNumber: String?, workingHours: String?, images: [String]?, rate: Double?, type: TypeClass?, ownerId: String?, googlePlaceId: String?, openNow : Bool?, hasOwner: Bool?) {
         self.nearbyDriversCount = nearbyDriversCount
         self.id = id
         self.name = name
@@ -71,6 +73,7 @@ class ShopData: Codable {
         self.ownerId = ownerId
         self.googlePlaceId = googlePlaceId
         self.openNow = openNow
+        self.hasOwner = hasOwner
     }
 }
 
