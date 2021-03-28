@@ -1266,7 +1266,8 @@ class ZHCDemoMessagesViewController: ZHCMessagesViewController, BillDelegate, Ch
     }
     
     override func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
-        let cell: ZHCMessagesTableViewCell = super.tableView(tableView, cellForRowAt: indexPath) as! ZHCMessagesTableViewCell;
+        let cell: ZHCMessagesTableViewCell = super.tableView(tableView, cellForRowAt: indexPath) as! ZHCMessagesTableViewCell
+        
         self.configureCell(cell, atIndexPath: indexPath)
         return cell
     }
@@ -1299,9 +1300,15 @@ class ZHCDemoMessagesViewController: ZHCMessagesViewController, BillDelegate, Ch
                     alamofireSource.load(to: cell.messageBubbleImageView ?? UIImageView()) { (image) in
                         //cell.imageView?.image = image
                         DispatchQueue.main.async {
-                            cell.messageBubbleImageView?.image = image
+                            let imageView = UIImageView(image: image)
+                            imageView.frame = CGRect(x: -2, y: -4, width: 210, height: 150)
+                                //imageView.translatesAutoresizingMaskIntoConstraints = false
+                            cell.messageBubbleTopLabel?.isHidden = true
+                            cell.messageBubbleContainerView?.addSubview(imageView)
+                            cell.bringSubviewToFront(cell.mediaView ?? cell)
+                            
+                            cell.mediaView?.isHidden = false
                             cell.textView?.isHidden = true
-                            cell.backgroundColor = .yellow
                         }
                     }
                 }

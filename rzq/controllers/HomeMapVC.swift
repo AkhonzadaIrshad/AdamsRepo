@@ -283,6 +283,9 @@ class HomeMapVC: BaseViewController {
                 vc.orderModel?.dropOffAddress = address
                 vc.orderModel?.dropOffLatitude = self.latitude
                 vc.orderModel?.dropOffLongitude = self.longitude
+                vc.latitude = self.latitude
+                vc.longitude = self.longitude
+                
                 vc.fromHome = true
                 self.navigationController?.pushViewController(vc, animated: true)
             }

@@ -189,8 +189,9 @@ class DeliveryStep1: BaseVC , Step3Delegate, AllShopDelegate, ImagePickerDelegat
             latitude = LabasLocationManager.shared.currentLocation?.coordinate.latitude ?? 0
             longitude = LabasLocationManager.shared.currentLocation?.coordinate.longitude ?? 0
         } else {
-                self.latitude = UserDefaults.standard.value(forKey: Constants.LAST_LATITUDE) as? Double ?? 0.0
-                self.longitude = UserDefaults.standard.value(forKey: Constants.LAST_LONGITUDE) as? Double ?? 0.0
+                setUpGoogleMap()
+               // self.latitude = UserDefaults.standard.value(forKey: Constants.LAST_LATITUDE) as? Double ?? 0.0
+               // self.longitude = UserDefaults.standard.value(forKey: Constants.LAST_LONGITUDE) as? Double ?? 0.0
         }
     }
     
@@ -591,21 +592,38 @@ class DeliveryStep1: BaseVC , Step3Delegate, AllShopDelegate, ImagePickerDelegat
     }
     
     func setUpGoogleMap() {
-        let camera = GMSCameraPosition.camera(withLatitude: self.latitude ?? 0.0, longitude: self.longitude ?? 0.0, zoom: 11.0)
-        gMap = GMSMapView.map(withFrame: CGRect(x: 0, y: 0, width: self.mapView.frame.width, height: self.mapView.frame.height), camera: camera)
-        gMap?.delegate = self
-        gMap?.isMyLocationEnabled = true
-//        let marker = GMSMarker()
-//        marker.position = CLLocationCoordinate2D(latitude: self.latitude ?? 0.0, longitude: self.longitude ?? 0.0)
-//        marker.title =  ""
-//        marker.snippet = ""
-//       // marker.map = gMap
         
-        self.mapView.addSubview(gMap!)
-        gMap?.bindFrameToSuperviewBounds()
-        self.view.layoutSubviews()
-        
-        self.getShopsList(radius: Float(Constants.DEFAULT_RADIUS), rating: 0)
+        if DataManager.loadUser().data?.roles?.contains(find: "Driver") == true {
+            let camera = GMSCameraPosition.camera(withLatitude: self.latitude ?? 0.0, longitude: self.longitude ?? 0.0, zoom: 11.0)
+            gMap = GMSMapView.map(withFrame: CGRect(x: 0, y: 0, width: self.mapView.frame.width, height: self.mapView.frame.height), camera: camera)
+            gMap?.delegate = self
+            gMap?.isMyLocationEnabled = true
+            
+            
+            self.mapView.addSubview(gMap!)
+            gMap?.bindFrameToSuperviewBounds()
+            self.view.layoutSubviews()
+            
+            self.getShopsList(radius: Float(Constants.DEFAULT_RADIUS), rating: 0)
+
+        } else {
+            let camera = GMSCameraPosition.camera(withLatitude: self.latitude ?? 0.0, longitude: self.longitude ?? 0.0, zoom: 15.0)
+            gMap = GMSMapView.map(withFrame: CGRect(x: 0, y: 0, width: self.mapView.frame.width, height: self.mapView.frame.height), camera: camera)
+            gMap?.delegate = self
+            let marker = GMSMarker()
+            marker.position = CLLocationCoordinate2D(latitude: self.latitude ?? 0.0, longitude: self.longitude ?? 0.0)
+            marker.title =  ""
+            marker.snippet = ""
+            marker.map = gMap
+            
+            
+            self.mapView.addSubview(gMap!)
+            gMap?.bindFrameToSuperviewBounds()
+            self.view.layoutSubviews()
+            
+            self.getShopsList(radius: Float(Constants.DEFAULT_RADIUS), rating: 0)
+        }
+
     }
     
 
