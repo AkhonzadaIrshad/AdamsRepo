@@ -95,6 +95,7 @@ open class ScalingCarouselView: UICollectionView {
     
     override public init(frame: CGRect, collectionViewLayout layout: UICollectionViewLayout) {
         super.init(frame: frame, collectionViewLayout: layout)
+        self.semanticContentAttribute = .forceLeftToRight
     }
     
     required public init?(coder aDecoder: NSCoder) {
@@ -110,6 +111,7 @@ open class ScalingCarouselView: UICollectionView {
         self.init(frame: frame, collectionViewLayout: ScalingCarouselLayout(withCarouselInset: inset))
         
         self.inset = inset
+        
     }
     
     // MARK: - Overrides

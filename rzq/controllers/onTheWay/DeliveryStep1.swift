@@ -237,6 +237,16 @@ class DeliveryStep1: BaseVC , Step3Delegate, AllShopDelegate, ImagePickerDelegat
     
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
+        
+        ApiService.getAllTypes { (response) in
+            let category = TypeClass(id: 0, name: "all_shops".localized, image: "", selectedIcon: "", icon: "")
+            category.isChecked = true
+            self.categories.removeAll()
+            self.categories.append(category)
+            self.categories.append(contentsOf: response.data ?? [TypeClass]())
+            self.collectionCategories.reloadData()
+        }
+
         handleImagesView()
         self.ShopsCarouselView.isHidden = true
         self.buttomSheet.isHidden = false
@@ -284,7 +294,7 @@ class DeliveryStep1: BaseVC , Step3Delegate, AllShopDelegate, ImagePickerDelegat
             //  self.ivHandle.image = UIImage(named: "ic_back_arabic")
             self.ivIndicator.image = UIImage(named: "ic_arrow_login_white_arabic")
             self.collectionCategories.semanticContentAttribute = UISemanticContentAttribute.forceRightToLeft
-            
+            self.ShopsCarouselView.semanticContentAttribute = .forceLeftToRight
             self.collectionCategories.transform = CGAffineTransform(scaleX: -1.0, y: 1.0)
         }
         if (self.orderModel == nil) {
@@ -363,15 +373,8 @@ class DeliveryStep1: BaseVC , Step3Delegate, AllShopDelegate, ImagePickerDelegat
         self.collectionCategories.delegate = self
         self.collectionCategories.dataSource = self
         
-        ApiService.getAllTypes { (response) in
-            let category = TypeClass(id: 0, name: "all_shops".localized, image: "", selectedIcon: "", icon: "")
-            category.isChecked = true
-            self.categories.removeAll()
-            self.categories.append(category)
-            self.categories.append(contentsOf: response.data ?? [TypeClass]())
-            self.collectionCategories.reloadData()
-        }
     }
+    
     func openShopList() {
         if let vc = UIStoryboard(name: "Main", bundle: nil).instantiateViewController(withIdentifier: "AllShopsVC") as? AllShopsVC
         {
@@ -379,6 +382,7 @@ class DeliveryStep1: BaseVC , Step3Delegate, AllShopDelegate, ImagePickerDelegat
             self.navigationController?.pushViewController(vc, animated: true)
         }
     }
+    
     func displayShop(shopId: Int) {
         self.showLoading()
         self.viewPin.isHidden = false

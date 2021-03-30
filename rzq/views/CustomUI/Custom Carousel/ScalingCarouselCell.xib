@@ -129,6 +129,11 @@
             <point key="canvasLocation" x="182.60869565217394" y="114.50892857142857"/>
         </collectionViewCell>
     </objects>
+    <designables>
+        <designable name="0ct-JF-e1W">
+            <size key="intrinsicContentSize" width="120" height="20"/>
+        </designable>
+    </designables>
     <resources>
         <systemColor name="systemBackgroundColor">
             <color white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
