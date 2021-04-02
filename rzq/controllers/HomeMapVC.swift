@@ -719,7 +719,7 @@ class HomeMapVC: BaseViewController {
         
         currentZoom = 15
         
-        let camera : GMSCameraPosition = GMSCameraPosition.camera(withLatitude: latitude, longitude: longitude, zoom: 25, bearing: 3, viewingAngle: 0)
+        let camera : GMSCameraPosition = GMSCameraPosition.camera(withLatitude: latitude, longitude: longitude, zoom: 25, bearing: 0, viewingAngle: 0)
         
         mapView.camera = camera
         mapView.delegate = self
@@ -854,15 +854,20 @@ extension HomeMapVC : GMSMapViewDelegate {
     func mapView(_ mapView: GMSMapView, didChange position: GMSCameraPosition) {
         self.fullAdressTextView.text = "Loading".localized
         self.lblLocation.text = "Loading".localized
+        self.getAddressForMapCenter()
     }
     
     func mapView(_ mapView: GMSMapView, idleAt position: GMSCameraPosition) {
         self.fullAdressTextView.text = "Loading".localized
         self.lblLocation.text = "Loading".localized
-        self.getAddressForMapCenter()
     }
     
     fileprivate func getAddressForMapCenter() {
+        var origin: CGPoint = locationPinView.frame.origin
+        origin.x = locationPinView.frame.origin.x
+
+        origin.y = locationPinView.frame.origin.y
+
         let point : CGPoint = mapView.center
         let coordinate : CLLocationCoordinate2D = mapView.projection.coordinate(for: point)
         let location =  CLLocation.init(latitude: coordinate.latitude, longitude: coordinate.longitude)

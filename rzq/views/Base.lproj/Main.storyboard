@@ -14,11 +14,11 @@
         <array key="Cairo-Regular.ttf">
             <string>Cairo-Regular</string>
         </array>
+        <array key="arabic_medium.ttf">
+            <string>Tajawal-Medium</string>
+        </array>
         <array key="arabic_regular.ttf">
             <string>Tajawal-Regular</string>
-        </array>
-        <array key="arabic_semibold.ttf">
-            <string>Tajawal-Medium</string>
         </array>
         <array key="english_regular.otf">
             <string>SFProDisplay-Regular</string>
@@ -4030,6 +4030,24 @@
                         <rect key="frame" x="0.0" y="0.0" width="375" height="812"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
+                            <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="uRS-wK-seh" customClass="GMSMapView">
+                                <rect key="frame" x="0.0" y="0.0" width="375" height="812"/>
+                                <subviews>
+                                    <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="Dyc-oX-ydW">
+                                        <rect key="frame" x="0.0" y="0.0" width="375" height="812"/>
+                                        <color key="backgroundColor" systemColor="systemBackgroundColor"/>
+                                    </view>
+                                </subviews>
+                                <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                                <constraints>
+                                    <constraint firstAttribute="bottom" secondItem="Dyc-oX-ydW" secondAttribute="bottom" id="6Aq-xh-3Bz"/>
+                                    <constraint firstItem="Dyc-oX-ydW" firstAttribute="leading" secondItem="uRS-wK-seh" secondAttribute="leading" id="JfX-J6-OE5"/>
+                                    <constraint firstAttribute="trailing" secondItem="Dyc-oX-ydW" secondAttribute="trailing" id="Lba-PN-oXs"/>
+                                    <constraint firstItem="Dyc-oX-ydW" firstAttribute="height" secondItem="uRS-wK-seh" secondAttribute="height" id="brB-TN-96T"/>
+                                    <constraint firstItem="Dyc-oX-ydW" firstAttribute="width" secondItem="uRS-wK-seh" secondAttribute="width" id="hv0-t7-pPM"/>
+                                    <constraint firstItem="Dyc-oX-ydW" firstAttribute="top" secondItem="uRS-wK-seh" secondAttribute="top" id="jhU-FK-nME"/>
+                                </constraints>
+                            </view>
                             <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="Cze-Ol-CeJ" customClass="CardView" customModule="rzq" customModuleProvider="target">
                                 <rect key="frame" x="0.0" y="0.0" width="375" height="82"/>
                                 <subviews>
@@ -4123,29 +4141,12 @@
                                     </userDefinedRuntimeAttribute>
                                 </userDefinedRuntimeAttributes>
                             </view>
-                            <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="uRS-wK-seh" customClass="GMSMapView">
-                                <rect key="frame" x="0.0" y="82" width="375" height="696"/>
-                                <subviews>
-                                    <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="Dyc-oX-ydW">
-                                        <rect key="frame" x="0.0" y="0.0" width="375" height="696"/>
-                                        <color key="backgroundColor" systemColor="systemBackgroundColor"/>
-                                    </view>
-                                </subviews>
-                                <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
-                                <constraints>
-                                    <constraint firstAttribute="bottom" secondItem="Dyc-oX-ydW" secondAttribute="bottom" id="6Aq-xh-3Bz"/>
-                                    <constraint firstItem="Dyc-oX-ydW" firstAttribute="leading" secondItem="uRS-wK-seh" secondAttribute="leading" id="JfX-J6-OE5"/>
-                                    <constraint firstAttribute="trailing" secondItem="Dyc-oX-ydW" secondAttribute="trailing" id="Lba-PN-oXs"/>
-                                    <constraint firstItem="Dyc-oX-ydW" firstAttribute="height" secondItem="uRS-wK-seh" secondAttribute="height" id="brB-TN-96T"/>
-                                    <constraint firstItem="Dyc-oX-ydW" firstAttribute="width" secondItem="uRS-wK-seh" secondAttribute="width" id="hv0-t7-pPM"/>
-                                    <constraint firstItem="Dyc-oX-ydW" firstAttribute="top" secondItem="uRS-wK-seh" secondAttribute="top" id="jhU-FK-nME"/>
-                                </constraints>
-                            </view>
                             <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="dQ2-ig-382">
-                                <rect key="frame" x="167.66666666666666" y="386" width="40" height="40"/>
+                                <rect key="frame" x="167.66666666666666" y="366" width="40" height="40"/>
                                 <subviews>
                                     <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="ic_location_pin" translatesAutoresizingMaskIntoConstraints="NO" id="jBL-4C-5BE">
                                         <rect key="frame" x="0.0" y="0.0" width="40" height="40"/>
+                                        <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                         <constraints>
                                             <constraint firstAttribute="height" constant="40" id="XMg-ct-UiF"/>
                                             <constraint firstAttribute="width" constant="40" id="waI-Jh-tys"/>
@@ -4157,12 +4158,11 @@
                                     <constraint firstAttribute="height" constant="40" id="0ej-qL-aQb"/>
                                     <constraint firstAttribute="trailing" secondItem="jBL-4C-5BE" secondAttribute="trailing" id="Ji7-Ee-cEY"/>
                                     <constraint firstItem="jBL-4C-5BE" firstAttribute="leading" secondItem="dQ2-ig-382" secondAttribute="leading" id="iJf-jk-jZz"/>
-                                    <constraint firstItem="jBL-4C-5BE" firstAttribute="top" secondItem="dQ2-ig-382" secondAttribute="top" id="qZd-7s-8be"/>
                                     <constraint firstAttribute="bottom" secondItem="jBL-4C-5BE" secondAttribute="bottom" id="t00-yK-iPu"/>
                                 </constraints>
                             </view>
                             <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="3Mw-39-5Ni">
-                                <rect key="frame" x="45" y="92" width="285" height="125"/>
+                                <rect key="frame" x="45" y="120" width="285" height="125"/>
                                 <subviews>
                                     <stackView opaque="NO" contentMode="scaleToFill" axis="vertical" alignment="center" spacing="10" translatesAutoresizingMaskIntoConstraints="NO" id="ps3-EK-KiC">
                                         <rect key="frame" x="0.0" y="0.0" width="285" height="125"/>
@@ -4372,7 +4372,7 @@
                                 </userDefinedRuntimeAttributes>
                             </view>
                             <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="UN8-RI-HiB">
-                                <rect key="frame" x="335" y="92" width="30" height="30"/>
+                                <rect key="frame" x="335" y="120" width="30" height="30"/>
                                 <constraints>
                                     <constraint firstAttribute="width" constant="30" id="IMs-yt-nEB"/>
                                     <constraint firstAttribute="height" constant="30" id="LwN-27-hm7"/>
@@ -4692,27 +4692,29 @@
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                         <constraints>
                             <constraint firstItem="ybM-2d-5HM" firstAttribute="top" secondItem="p6j-oS-mdW" secondAttribute="bottom" constant="2" id="1qy-GZ-eyi"/>
-                            <constraint firstItem="3Mw-39-5Ni" firstAttribute="top" secondItem="uRS-wK-seh" secondAttribute="top" constant="10" id="3NE-py-D8t"/>
-                            <constraint firstItem="uRS-wK-seh" firstAttribute="top" secondItem="Cze-Ol-CeJ" secondAttribute="bottom" id="6PC-jF-R6a"/>
+                            <constraint firstItem="3Mw-39-5Ni" firstAttribute="top" secondItem="uRS-wK-seh" secondAttribute="top" constant="120" id="3NE-py-D8t"/>
+                            <constraint firstItem="uRS-wK-seh" firstAttribute="top" secondItem="Mhb-lB-0j9" secondAttribute="top" id="6PC-jF-R6a"/>
                             <constraint firstItem="UN8-RI-HiB" firstAttribute="leading" secondItem="3Mw-39-5Ni" secondAttribute="trailing" constant="5" id="6ob-Dl-hER"/>
                             <constraint firstItem="p6j-oS-mdW" firstAttribute="leading" secondItem="ghU-bQ-LbU" secondAttribute="leading" constant="5" id="7tf-zk-eZL"/>
                             <constraint firstItem="ghU-bQ-LbU" firstAttribute="trailing" secondItem="UN8-RI-HiB" secondAttribute="trailing" constant="10" id="89Z-7M-lVy"/>
+                            <constraint firstItem="uRS-wK-seh" firstAttribute="centerX" secondItem="Mhb-lB-0j9" secondAttribute="centerX" id="FJU-bG-Ha7"/>
                             <constraint firstItem="ghU-bQ-LbU" firstAttribute="trailing" secondItem="ybM-2d-5HM" secondAttribute="trailing" id="FKN-6R-gt5"/>
                             <constraint firstItem="ghU-bQ-LbU" firstAttribute="bottom" secondItem="375-2a-tr6" secondAttribute="bottom" id="J0y-Jg-Q9b"/>
                             <constraint firstAttribute="bottom" secondItem="ybM-2d-5HM" secondAttribute="bottom" id="MGe-tJ-8hC"/>
-                            <constraint firstItem="ghU-bQ-LbU" firstAttribute="bottom" secondItem="uRS-wK-seh" secondAttribute="bottom" id="NAb-hA-RjV"/>
+                            <constraint firstAttribute="bottom" secondItem="uRS-wK-seh" secondAttribute="bottom" id="NAb-hA-RjV"/>
                             <constraint firstItem="uRS-wK-seh" firstAttribute="leading" secondItem="ghU-bQ-LbU" secondAttribute="leading" id="Oji-qf-T4y"/>
                             <constraint firstItem="ghU-bQ-LbU" firstAttribute="trailing" secondItem="p6j-oS-mdW" secondAttribute="trailing" constant="5" id="VLm-SL-Rph"/>
                             <constraint firstItem="3Mw-39-5Ni" firstAttribute="centerX" secondItem="Mhb-lB-0j9" secondAttribute="centerX" id="dME-f7-r6i"/>
                             <constraint firstItem="ghU-bQ-LbU" firstAttribute="trailing" secondItem="uRS-wK-seh" secondAttribute="trailing" id="dTL-gp-BMr"/>
-                            <constraint firstItem="dQ2-ig-382" firstAttribute="centerX" secondItem="Mhb-lB-0j9" secondAttribute="centerX" id="gZ2-96-YSh"/>
+                            <constraint firstItem="uRS-wK-seh" firstAttribute="centerY" secondItem="Mhb-lB-0j9" secondAttribute="centerY" id="dbY-8i-MqA"/>
                             <constraint firstItem="375-2a-tr6" firstAttribute="leading" secondItem="ghU-bQ-LbU" secondAttribute="leading" constant="15" id="gnJ-wu-WoT"/>
                             <constraint firstItem="ybM-2d-5HM" firstAttribute="leading" secondItem="ghU-bQ-LbU" secondAttribute="leading" id="hEs-hK-yyp"/>
                             <constraint firstItem="ghU-bQ-LbU" firstAttribute="trailing" secondItem="375-2a-tr6" secondAttribute="trailing" constant="15" id="jck-Nz-C1F"/>
                             <constraint firstItem="Cze-Ol-CeJ" firstAttribute="top" secondItem="Mhb-lB-0j9" secondAttribute="top" id="jgZ-da-JP0"/>
-                            <constraint firstItem="dQ2-ig-382" firstAttribute="centerY" secondItem="Mhb-lB-0j9" secondAttribute="centerY" id="jmU-aJ-H9p"/>
                             <constraint firstItem="UN8-RI-HiB" firstAttribute="top" secondItem="3Mw-39-5Ni" secondAttribute="top" id="kIr-x4-K14"/>
                             <constraint firstItem="Cze-Ol-CeJ" firstAttribute="leading" secondItem="ghU-bQ-LbU" secondAttribute="leading" id="l7r-ku-Djd"/>
+                            <constraint firstItem="dQ2-ig-382" firstAttribute="centerY" secondItem="Mhb-lB-0j9" secondAttribute="centerY" constant="-20" id="mBJ-1h-qLB"/>
+                            <constraint firstItem="dQ2-ig-382" firstAttribute="centerX" secondItem="Mhb-lB-0j9" secondAttribute="centerX" id="nSo-BC-5FW"/>
                             <constraint firstItem="ghU-bQ-LbU" firstAttribute="trailing" secondItem="Cze-Ol-CeJ" secondAttribute="trailing" id="y8e-8g-2eg"/>
                         </constraints>
                     </view>
@@ -28075,28 +28077,31 @@
     </scenes>
     <designables>
         <designable name="5GO-LM-Dij">
-            <size key="intrinsicContentSize" width="66" height="34"/>
+            <size key="intrinsicContentSize" width="355" height="39.220703125"/>
         </designable>
         <designable name="6is-zz-e44">
             <size key="intrinsicContentSize" width="127" height="34"/>
         </designable>
         <designable name="90c-lM-y4l">
-            <size key="intrinsicContentSize" width="65.666666666666671" height="34"/>
+            <size key="intrinsicContentSize" width="307" height="40.209671874999998"/>
+        </designable>
+        <designable name="9x5-0P-Zxx">
+            <size key="intrinsicContentSize" width="95" height="15"/>
         </designable>
         <designable name="B1E-yb-xia">
             <size key="intrinsicContentSize" width="119.33333333333333" height="34"/>
         </designable>
         <designable name="Eve-f6-3rY">
-            <size key="intrinsicContentSize" width="119.33333333333333" height="34"/>
+            <size key="intrinsicContentSize" width="355" height="39.220703125"/>
         </designable>
         <designable name="N1t-JS-2FB">
-            <size key="intrinsicContentSize" width="124.66666666666667" height="34"/>
+            <size key="intrinsicContentSize" width="190" height="40.209671874999998"/>
         </designable>
         <designable name="OzZ-db-ahS">
             <size key="intrinsicContentSize" width="66" height="34"/>
         </designable>
         <designable name="VLl-Pe-OvH">
-            <size key="intrinsicContentSize" width="127" height="34"/>
+            <size key="intrinsicContentSize" width="355" height="39.220703125"/>
         </designable>
         <designable name="WNE-Kv-mJf">
             <size key="intrinsicContentSize" width="127" height="34"/>
@@ -28104,14 +28109,23 @@
         <designable name="Xex-Z2-xZR">
             <size key="intrinsicContentSize" width="119.33333333333333" height="34"/>
         </designable>
+        <designable name="cuh-v7-0BO">
+            <size key="intrinsicContentSize" width="240" height="44"/>
+        </designable>
         <designable name="l9U-cg-OnC">
             <size key="intrinsicContentSize" width="119.33333333333333" height="34"/>
         </designable>
         <designable name="oQv-W2-GkD">
             <size key="intrinsicContentSize" width="127" height="34"/>
         </designable>
+        <designable name="opg-hq-AYY">
+            <size key="intrinsicContentSize" width="250" height="46"/>
+        </designable>
         <designable name="qhJ-HP-SER">
             <size key="intrinsicContentSize" width="66" height="34"/>
+        </designable>
+        <designable name="rQF-cZ-L2Y">
+            <size key="intrinsicContentSize" width="75" height="11"/>
         </designable>
         <designable name="ynO-9o-kWx">
             <size key="intrinsicContentSize" width="66" height="34"/>
