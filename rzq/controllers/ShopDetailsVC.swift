@@ -162,7 +162,7 @@ class ShopDetailsVC: BaseVC, UITableViewDelegate, UITableViewDataSource, UIColle
                 
                 let hoursWithoutSpace = hours?[dayWeek].replacingOccurrences(of: " ", with: "")
                 let hoursSplit = hoursWithoutSpace?.split(separator: "-")
-                
+                if hoursWithoutSpace?.contains(find: "Open24") == false {
                 if (hoursSplit?.count ?? 0 > 0) {
                     let fromHour = hoursSplit?[0]
                     let toHour = hoursSplit?[1]
@@ -187,7 +187,9 @@ class ShopDetailsVC: BaseVC, UITableViewDelegate, UITableViewDataSource, UIColle
                     self.lblWorkingHours.text = "---"
                     self.handleOpenNowViews(isOpen: false, show: false)
                 }
-                
+                } else {
+                    self.handleOpenNowViews(isOpen: true, show: true)
+                }
             }else if (hours?.count ?? 0 > 0) {
                 self.lblWorkingHours.text = "---"
                 self.handleOpenNowViews(isOpen: false, show: false)

@@ -117,6 +117,7 @@ class DeliveryStep1: BaseVC , Step3Delegate, AllShopDelegate, ImagePickerDelegat
     var edtMoreDetails: String?
     var autocompleteResults :[GApiResponse.Autocomplete] = []
     var myscale = CGFloat()
+    let dispatchGroup = DispatchGroup()
 
 
     // MARK: - Methods
@@ -183,7 +184,6 @@ class DeliveryStep1: BaseVC , Step3Delegate, AllShopDelegate, ImagePickerDelegat
         } else {
             displayShop(shopId: shopeID ?? 0)
         }
-        self.getShopsList(radius: Float(Constants.DEFAULT_RADIUS), rating: 0)
 
         if DataManager.loadUser().data?.roles?.contains(find: "Driver") == true {
             latitude = LabasLocationManager.shared.currentLocation?.coordinate.latitude ?? 0
@@ -237,7 +237,7 @@ class DeliveryStep1: BaseVC , Step3Delegate, AllShopDelegate, ImagePickerDelegat
     
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
-        
+        dispatchGroup.enter()
         ApiService.getAllTypes { (response) in
             let category = TypeClass(id: 0, name: "all_shops".localized, image: "", selectedIcon: "", icon: "")
             category.isChecked = true
@@ -245,7 +245,10 @@ class DeliveryStep1: BaseVC , Step3Delegate, AllShopDelegate, ImagePickerDelegat
             self.categories.append(category)
             self.categories.append(contentsOf: response.data ?? [TypeClass]())
             self.collectionCategories.reloadData()
+            self.dispatchGroup.leave()
         }
+
+        self.getShopsList(radius: Float(Constants.DEFAULT_RADIUS), rating: 0)
 
         handleImagesView()
         self.ShopsCarouselView.isHidden = true
@@ -726,11 +729,17 @@ class DeliveryStep1: BaseVC , Step3Delegate, AllShopDelegate, ImagePickerDelegat
     
     func getShopsList(radius : Float, rating : Double) {
         self.showLoading()
+        dispatchGroup.enter()
         ApiService.getShops(latitude: self.latitude ?? 0.0, longitude: self.longitude ?? 0.0, radius: radius, rating : rating, types : 0) { (response) in
             self.shops.removeAll()
             self.shops.append(contentsOf: response.dataShops ?? [DataShop]())
             self.hideLoading()
 //            self.addShopsMarkers()
+        }
+        dispatchGroup.enter()
+        
+        dispatchGroup.notify(queue: .main) {
+            self.collectionCategories.reloadData()
         }
     }
     
@@ -1459,7 +1468,7 @@ extension DeliveryStep1 : GMSMapViewDelegate {
             if (isOpen == false) {
                 self.showBanner(title: "alert".localized, message: "this_shop_is_closed".localized, style: UIColor.INFO)
             }
-        }else {
+        } else {
             let hours = shop?.workingHours?.split(separator: ",")
             let dayWeek = self.getWeekDay(shop : shop)
             if (hours?.count ?? 0 > dayWeek) {
@@ -1467,6 +1476,7 @@ extension DeliveryStep1 : GMSMapViewDelegate {
                 let hoursWithoutSpace = hours?[dayWeek].replacingOccurrences(of: " ", with: "")
                 let hoursSplit = hoursWithoutSpace?.split(separator: "-")
                 
+                if hoursWithoutSpace?.contains(find: "Open24") == false {
                 if (hoursSplit?.count ?? 0 > 0) {
                     let fromHour = hoursSplit?[0]
                     let toHour = hoursSplit?[1]
@@ -1488,6 +1498,8 @@ extension DeliveryStep1 : GMSMapViewDelegate {
                         
                     }
                 }else {
+                    
+                } } else {
                     
                 }
                 

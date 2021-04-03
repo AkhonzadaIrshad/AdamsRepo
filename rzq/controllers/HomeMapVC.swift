@@ -651,7 +651,7 @@ class HomeMapVC: BaseViewController {
         if fromLatitude ?? 0.0 > 0.0 && fromLongitude ?? 0.0 > 0.0 {
             bounds = bounds.includingCoordinate(self.pickMarker?.position ?? CLLocationCoordinate2D(latitude: self.latitude ?? 0.0, longitude: self.longitude ?? 0.0))
            // bounds = bounds.includingCoordinate(self.dropMarker?.position ?? CLLocationCoordinate2D(latitude: self.latitude ?? 0.0, longitude: self.longitude ?? 0.0))
-            let camera : GMSCameraPosition = GMSCameraPosition.camera(withLatitude: fromLatitude ?? 0.0, longitude: longitude ?? 0.0, zoom: 15, bearing: 3, viewingAngle: 0)
+            let camera : GMSCameraPosition = GMSCameraPosition.camera(withLatitude: fromLatitude ?? 0.0, longitude: longitude ?? 0.0, zoom: 13, bearing: 3, viewingAngle: 0)
             
             mapView.camera = camera
         } else {
@@ -860,6 +860,7 @@ extension HomeMapVC : GMSMapViewDelegate {
     func mapView(_ mapView: GMSMapView, idleAt position: GMSCameraPosition) {
         self.fullAdressTextView.text = "Loading".localized
         self.lblLocation.text = "Loading".localized
+        self.getAddressForMapCenter()
     }
     
     fileprivate func getAddressForMapCenter() {
