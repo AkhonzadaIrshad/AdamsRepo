@@ -243,23 +243,8 @@ class DeliveryStep1: BaseVC , Step3Delegate, AllShopDelegate, ImagePickerDelegat
     
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
-        dispatchGroup.enter()
-        ApiService.getAllTypes { (response) in
-            let category = TypeClass(id: 0, name: "all_shops".localized, image: "", selectedIcon: "", icon: "")
-            category.isChecked = true
-            self.categories.removeAll()
-            self.categories.append(category)
-            self.categories.append(contentsOf: response.data ?? [TypeClass]())
-            self.collectionCategories.reloadData()
-            if self.shops.count > 0 {
-            }
-            self.dispatchGroup.leave()
-        }
-
-        if self.shops.count > 0 {
-        } else {
-            self.getShopsList(radius: Float(Constants.DEFAULT_RADIUS), rating: 0)
-        }
+        
+        self.getShopsList(radius: Float(Constants.DEFAULT_RADIUS), rating: 0)
 
         handleImagesView()
         self.ShopsCarouselView.isHidden = true
@@ -740,17 +725,44 @@ class DeliveryStep1: BaseVC , Step3Delegate, AllShopDelegate, ImagePickerDelegat
     
     func getShopsList(radius : Float, rating : Double) {
         self.showLoading()
-        dispatchGroup.enter()
-        ApiService.getShops(latitude: self.latitude ?? 0.0, longitude: self.longitude ?? 0.0, radius: radius, rating : rating, types : 0) { (response) in
+        ApiService.getAllTypes { (response) in
+            let category = TypeClass(id: 0, name: "all_shops".localized, image: "", selectedIcon: "", icon: "")
+            category.isChecked = true
+            self.categories.removeAll()
+            self.categories.append(category)
+            self.categories.append(contentsOf: response.data ?? [TypeClass]())
+        }
+ 
+        ApiService.getShops(latitude: self.latitude ?? 29.306856, longitude: self.longitude ?? 47.698692, radius: radius, rating : rating, types : 0) { (response) in
             self.shops.removeAll()
             self.shops.append(contentsOf: response.dataShops ?? [DataShop]())
             print("shops : \(self.shops.count)")
+            if self.categories.count > 0 {
+                self.hideLoading()
+                self.collectionCategories.reloadData()
+            } else {
+                ApiService.getAllTypes { (response) in
+                    let category = TypeClass(id: 0, name: "all_shops".localized, image: "", selectedIcon: "", icon: "")
+                    category.isChecked = true
+                    self.categories.removeAll()
+                    self.categories.append(category)
+                    self.categories.append(contentsOf: response.data ?? [TypeClass]())
+                    self.collectionCategories.reloadData()
+                    
+                    if self.shops.count > 0 {
+                        self.hideLoading()
+                    } else {
+                        ApiService.getShops(latitude: self.latitude ?? 29.306856, longitude: self.longitude ?? 47.698692, radius: radius, rating : rating, types : 0) { (response) in
+                            self.shops.removeAll()
+                            self.shops.append(contentsOf: response.dataShops ?? [DataShop]())
+                            self.hideLoading()
+
+                        }
+                    }
+                }
+
+            }
 //            self.addShopsMarkers()
-        }
-        dispatchGroup.leave()
-        
-        dispatchGroup.notify(queue: .main) {
-            self.hideLoading()
         }
     }
     
@@ -2120,7 +2132,7 @@ extension DeliveryStep1: CLLocationManagerDelegate {
     
     
     func locationManager(_ manager: CLLocationManager, didUpdateLocations locations: [CLLocation]) {
-        self.hideLoading()
+    
         if (self.latitude ?? 0.0 == 0.0 || self.longitude ?? 0.0 == 0.0) {
             self.setUpGoogleMap()
         }
