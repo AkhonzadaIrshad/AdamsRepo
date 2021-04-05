@@ -18,8 +18,8 @@ import MultilineTextField
 
 class Cell: ScalingCarouselCell {}
 
-class DeliveryStep1: BaseVC , Step3Delegate, AllShopDelegate, ImagePickerDelegate, UITextViewDelegate {
-    
+class DeliveryStep1: BaseVC , Step3Delegate, AllShopDelegate, ImagePickerDelegate, UITextViewDelegate, LabasLocationManagerDelegate {
+   
     // MARK: - Outlets
     
     @IBOutlet weak var ShopsCarouselView: ScalingCarouselView!
@@ -189,7 +189,13 @@ class DeliveryStep1: BaseVC , Step3Delegate, AllShopDelegate, ImagePickerDelegat
             latitude = LabasLocationManager.shared.currentLocation?.coordinate.latitude ?? 0
             longitude = LabasLocationManager.shared.currentLocation?.coordinate.longitude ?? 0
         } else {
-                setUpGoogleMap()
+            if (self.latitude ?? 0.0 == 0.0 || self.longitude ?? 0.0 == 0.0) {
+                self.showLoading()
+                LabasLocationManager.shared.delegate = self
+                LabasLocationManager.shared.startUpdatingLocation()
+            }else {
+                self.setUpGoogleMap()
+            }
                // self.latitude = UserDefaults.standard.value(forKey: Constants.LAST_LATITUDE) as? Double ?? 0.0
                // self.longitude = UserDefaults.standard.value(forKey: Constants.LAST_LONGITUDE) as? Double ?? 0.0
         }
@@ -245,10 +251,15 @@ class DeliveryStep1: BaseVC , Step3Delegate, AllShopDelegate, ImagePickerDelegat
             self.categories.append(category)
             self.categories.append(contentsOf: response.data ?? [TypeClass]())
             self.collectionCategories.reloadData()
+            if self.shops.count > 0 {
+            }
             self.dispatchGroup.leave()
         }
 
-        self.getShopsList(radius: Float(Constants.DEFAULT_RADIUS), rating: 0)
+        if self.shops.count > 0 {
+        } else {
+            self.getShopsList(radius: Float(Constants.DEFAULT_RADIUS), rating: 0)
+        }
 
         handleImagesView()
         self.ShopsCarouselView.isHidden = true
@@ -611,7 +622,7 @@ class DeliveryStep1: BaseVC , Step3Delegate, AllShopDelegate, ImagePickerDelegat
             gMap?.bindFrameToSuperviewBounds()
             self.view.layoutSubviews()
             
-            self.getShopsList(radius: Float(Constants.DEFAULT_RADIUS), rating: 0)
+            //self.getShopsList(radius: Float(Constants.DEFAULT_RADIUS), rating: 0)
 
         } else {
             let camera = GMSCameraPosition.camera(withLatitude: self.latitude ?? 0.0, longitude: self.longitude ?? 0.0, zoom: 15.0)
@@ -628,7 +639,7 @@ class DeliveryStep1: BaseVC , Step3Delegate, AllShopDelegate, ImagePickerDelegat
             gMap?.bindFrameToSuperviewBounds()
             self.view.layoutSubviews()
             
-            self.getShopsList(radius: Float(Constants.DEFAULT_RADIUS), rating: 0)
+          //  self.getShopsList(radius: Float(Constants.DEFAULT_RADIUS), rating: 0)
         }
 
     }
@@ -733,13 +744,13 @@ class DeliveryStep1: BaseVC , Step3Delegate, AllShopDelegate, ImagePickerDelegat
         ApiService.getShops(latitude: self.latitude ?? 0.0, longitude: self.longitude ?? 0.0, radius: radius, rating : rating, types : 0) { (response) in
             self.shops.removeAll()
             self.shops.append(contentsOf: response.dataShops ?? [DataShop]())
-            self.hideLoading()
+            print("shops : \(self.shops.count)")
 //            self.addShopsMarkers()
         }
-        dispatchGroup.enter()
+        dispatchGroup.leave()
         
         dispatchGroup.notify(queue: .main) {
-            self.collectionCategories.reloadData()
+            self.hideLoading()
         }
     }
     
@@ -1914,7 +1925,30 @@ extension DeliveryStep1: UICollectionViewDelegate, UICollectionViewDataSource, U
     //        self.searchShopsTextField.placeholder = "step1.catFilter.search.placeholder".localized + " \(self.selectdCategory?.name ?? "")"
             
             self.catFilterSearchStack.isHidden = false
-            self.clearFieldAction(self)
+            self.hideActionSheet()
+            self.orderModel?.reset()
+            
+            self.ivShop.image = nil
+            self.ivShop.isHidden = true
+            self.lblSearch.isHidden = true
+            self.shopNaleKabel.text = ""
+            self.edtMoreDetails = ""
+            self.lblPickupLocation.text = ""
+            self.searchField.text = ""
+            
+            self.viewShopDetails.isHidden = true
+            self.viewClearField.isHidden = true
+            self.gMap?.clear()
+            
+          //  self.lblShopName.text = ""
+           // self.shopNameHeight.constant = 0
+            self.viewPin.isHidden = false
+            self.viewSuggest.isHidden = true
+            
+            let camera = GMSCameraPosition.camera(withLatitude: self.latitude ?? 0.0, longitude: self.longitude ?? 0.0, zoom: 11.0)
+            self.gMap?.animate(to: camera)
+            self.viewCheckMenu.isHidden = true
+            self.selectedItems.removeAll()
             if selectedCat.id == 0 {
                 selectAllCategory = true
                 //self.addShopsMarkers(useScale: false)
@@ -2293,6 +2327,21 @@ extension DeliveryStep1 {
             }
         }
         
+    func labasLocationManager(didUpdateLocation location: CLLocation) {
+        if (self.latitude ?? 0.0 == 0.0 || self.longitude ?? 0.0 == 0.0) {
+            
+            self.latitude = location.coordinate.latitude
+            self.longitude = location.coordinate.longitude
+            
+            UserDefaults.standard.setValue(self.latitude, forKey: Constants.LAST_LATITUDE)
+            UserDefaults.standard.setValue(self.longitude, forKey: Constants.LAST_LONGITUDE)
+//            self.latitude = 29.273551
+//            self.longitude = 47.936161
+            
+            self.setUpGoogleMap()
+            
+        }
+    }
 }
 
 

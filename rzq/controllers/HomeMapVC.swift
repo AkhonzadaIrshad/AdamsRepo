@@ -668,7 +668,7 @@ class HomeMapVC: BaseViewController {
         ApiService.getShops(latitude: self.latitude ?? 0.0, longitude: self.longitude ?? 0.0, radius: radius, rating : rating, types : types) { (response) in
             self.shops.removeAll()
             self.shops.append(contentsOf: response.dataShops ?? [DataShop]())
-            self.addShopsMarkers()
+           // self.addShopsMarkers()
         }
     }
     
@@ -718,7 +718,7 @@ class HomeMapVC: BaseViewController {
         let longitude : CLLocationDegrees = UserDefaults.standard.double(forKey: "lastSelectedLongitude")
         
         currentZoom = 15
-        
+        self.getShopsList(radius: Float(Constants.DEFAULT_RADIUS), rating: 0, types: 0)
         let camera : GMSCameraPosition = GMSCameraPosition.camera(withLatitude: latitude, longitude: longitude, zoom: 25, bearing: 0, viewingAngle: 0)
         
         mapView.camera = camera
@@ -1122,6 +1122,7 @@ extension HomeMapVC: ShopSheetDelegate {
                 UserDefaults.standard.set(self.latitude, forKey: "lastSelectedLatitude")
                 UserDefaults.standard.set(self.longitude, forKey: "lastSelectedLongitude")
                 vc.fromHome = true
+                vc.shops = self.shops
                 self.navigationController?.pushViewController(vc, animated: true)
             }
         }
