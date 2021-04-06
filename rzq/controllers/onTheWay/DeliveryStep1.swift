@@ -1924,7 +1924,7 @@ extension DeliveryStep1: UICollectionViewDelegate, UICollectionViewDataSource, U
     func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
        
         if collectionView == ShopsCarouselView {
-            
+            print("test click")
         } else {
           
             let selectedCat = self.categories[indexPath.row]
@@ -2084,9 +2084,15 @@ extension DeliveryStep1: UICollectionViewDelegate, UICollectionViewDataSource, U
                     self.buttomSheet.isHidden = true
                 }
             }
-            let url = URL(string: "\(Constants.IMAGE_URL)\(shop.images?.first ?? "")")
-            cell.shopeImageView.kf.setImage(with: url)
-            let urlString = "\(Constants.IMAGE_URL)\(shop.type?.image ?? "splash_logo_new")"
+            if let image = shop.images?.first {
+                let url = URL(string: "\(Constants.IMAGE_URL)\(image)")
+               // cell.shopeImageView.kf.setImage(with: url)
+                cell.shopeImageView.kf.setImage(with: url, placeholder: UIImage(named: "splash_logo"))
+            } else {
+                cell.shopeImageView.image = UIImage(named: "splash_logo")
+            }
+          
+            let urlString = "\(Constants.IMAGE_URL)\(shop.type?.image ?? "splash_logo")"
             let fileUrl = URL(fileURLWithPath: urlString)
            
 //            DispatchQueue.global(qos: .background).async {
