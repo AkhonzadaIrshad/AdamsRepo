@@ -13,8 +13,12 @@ class CustomAlert: UIView {
     @IBOutlet weak var title: UILabel!
     @IBOutlet weak var lblDescription: UILabel!
     @IBOutlet weak var btnOK: UIButton!
+    @IBOutlet weak var containerMessageView: UIView!
+    @IBOutlet weak var okContainer: RoundedView!
     
     let nibName = "CustomAlert"
+    var onOk: (() -> Void)? = nil
+
     
     required init?(coder aDecoder: NSCoder) {
         super.init(coder: aDecoder)
@@ -39,9 +43,20 @@ class CustomAlert: UIView {
     
     @IBAction func btnOK_Clicked(_ sender: Any) {
         self.isHidden = true
+        if let onOk = self.onOk {
+            onOk()
+        }
+    }
+    @IBAction func onOwnThisShop(_ sender: Any) {
+        self.isHidden = true
+        if let onOk = self.onOk {
+            onOk()
+        }
     }
     
     func configureAsStep1() {
+        okContainer.isHidden = false
+        containerMessageView.isHidden = true
         self.title.text = "steps.popup.title".localized
         self.lblDescription.text = "step1.popup.description".localized
         if UserDefaults.standard.bool(forKey: "step1AlreadyShowed") {
@@ -52,6 +67,8 @@ class CustomAlert: UIView {
     }
     
     func configureAsStep2() {
+        okContainer.isHidden = false
+        containerMessageView.isHidden = true
         self.title.text = "steps.popup.title".localized
         self.lblDescription.text = "step2.popup.description".localized
         if UserDefaults.standard.bool(forKey: "step2AlreadyShowed") {
@@ -59,5 +76,13 @@ class CustomAlert: UIView {
         } else {
             UserDefaults.standard.set(true, forKey: "step2AlreadyShowed")
         }
+    }
+    
+    func ownThisShop() {
+        okContainer.isHidden = true
+        containerMessageView.isHidden = false
+        self.isHidden = false
+        self.title.text = "غير مسجل؟💬"
+        self.lblDescription.text = "بعدها يطلع هذا التكست!!! (هذا المتجر مو مسجل بالتطبيق بس لاتحاتي تقدر تطلب منه ونوصلك منه"
     }
 }

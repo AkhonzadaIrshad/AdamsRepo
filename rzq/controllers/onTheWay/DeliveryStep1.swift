@@ -1987,22 +1987,24 @@ extension DeliveryStep1: UICollectionViewDelegate, UICollectionViewDataSource, U
             cell.ratingLabe.text = "\(shop.rate ?? 4.0)"
             cell.ratingView.rating = shop.rate ?? 4
             if shop.hasOwner ?? true {
-                cell.ownThisShopButton.setTitle("", for: .normal)
+               // cell.ownThisShopButton.setTitle("", for: .normal)
                 cell.ownThisShopButton.isUserInteractionEnabled = false
             } else {
                 cell.ownThisShopButton.isUserInteractionEnabled = true
-                cell.ownThisShopButton.setTitle("carousel.ownThisPlace".localized, for: .normal)
+               // cell.ownThisShopButton.setTitle("carousel.ownThisPlace".localized, for: .normal)
             }
             
             cell.onYourplaceAction = {
-                if let vc = UIStoryboard(name: "Main", bundle: nil).instantiateViewController(withIdentifier: "SuggestShopVC") as? SuggestShopVC
-                {
-                    vc.latitude = shop.latitude ?? 0.0
-                    vc.longitude = shop.longitude ?? 0.0
-                    self.navigationController?.pushViewController(vc, animated: true)
+                self.customAlert.ownThisShop()
+                self.customAlert.onOk = {
+                if let vc = UIStoryboard(name: "Main", bundle: nil).instantiateViewController(withIdentifier: "SuggestShopVC") as? SuggestShopVC {
+                            vc.latitude = shop.latitude ?? 0.0
+                            vc.longitude = shop.longitude ?? 0.0
+                            self.navigationController?.pushViewController(vc, animated: true)
                 }
-
+                }
             }
+            
             cell.onMakeOrderAction = {
                 let id = shop.id ?? 0
                 self.isZoomed = true
