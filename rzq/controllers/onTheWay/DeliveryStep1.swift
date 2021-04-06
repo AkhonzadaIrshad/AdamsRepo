@@ -1989,7 +1989,9 @@ extension DeliveryStep1: UICollectionViewDelegate, UICollectionViewDataSource, U
             if shop.hasOwner ?? true {
                // cell.ownThisShopButton.setTitle("", for: .normal)
                 cell.ownThisShopButton.isUserInteractionEnabled = false
+                cell.ownThisShopButton.isHidden = true
             } else {
+                cell.ownThisShopButton.isHidden = false
                 cell.ownThisShopButton.isUserInteractionEnabled = true
                // cell.ownThisShopButton.setTitle("carousel.ownThisPlace".localized, for: .normal)
             }

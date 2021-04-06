@@ -85,6 +85,7 @@ class HomeMapVC: BaseViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
     
+        self.lblLocation.text = "home.navigation.description".localized
         
         if let street = UserDefaults.standard.string(forKey: "street") {
             self.streetTextField.text = street
@@ -853,13 +854,13 @@ extension HomeMapVC : GMSMapViewDelegate {
     
     func mapView(_ mapView: GMSMapView, didChange position: GMSCameraPosition) {
         self.fullAdressTextView.text = "Loading".localized
-        self.lblLocation.text = "Loading".localized
+        //self.lblLocation.text = "Loading".localized
         self.getAddressForMapCenter()
     }
     
     func mapView(_ mapView: GMSMapView, idleAt position: GMSCameraPosition) {
         self.fullAdressTextView.text = "Loading".localized
-        self.lblLocation.text = "Loading".localized
+       // self.lblLocation.text = "Loading".localized
         self.getAddressForMapCenter()
     }
     
@@ -928,7 +929,7 @@ extension HomeMapVC : GMSMapViewDelegate {
                         self.fullAdressTextView.text = strAddresMain
                         UserDefaults.standard.set(strAddresMain, forKey: "MainAdress")
 
-                        self.lblLocation.text = strAddresMain
+                       // self.lblLocation.text = strAddresMain
                         self.latitude = location.coordinate.latitude
                         self.longitude = location.coordinate.longitude
                     }
@@ -939,12 +940,12 @@ extension HomeMapVC : GMSMapViewDelegate {
                 }
                 else {
                     self.fullAdressTextView.text = "Loading".localized
-                    self.lblLocation.text = "Loading".localized
+                  //  self.lblLocation.text = "Loading".localized
                 }
             }
             else {
                 self.fullAdressTextView.text = "Loading".localized
-                self.lblLocation.text = "Loading".localized
+               // self.lblLocation.text = "Loading".localized
             }
         }
     }
@@ -1238,7 +1239,7 @@ extension HomeMapVC: GMSAutocompleteViewControllerDelegate {
         dismiss(animated: true, completion: {
             self.mapView.animate(to: camera)
             self.fullAdressTextView.text = place.formattedAddress
-            self.lblLocation.text = place.formattedAddress
+           // self.lblLocation.text = place.formattedAddress
         })
     }
     

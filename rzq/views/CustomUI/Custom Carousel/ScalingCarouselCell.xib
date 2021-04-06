@@ -66,7 +66,7 @@
                                         </subviews>
                                         <edgeInsets key="layoutMargins" top="0.0" left="10" bottom="0.0" right="8"/>
                                     </stackView>
-                                    <stackView opaque="NO" contentMode="scaleToFill" semanticContentAttribute="forceLeftToRight" spacing="5" translatesAutoresizingMaskIntoConstraints="NO" id="zgn-DN-Lbh">
+                                    <stackView opaque="NO" contentMode="scaleToFill" semanticContentAttribute="forceLeftToRight" alignment="center" spacing="5" translatesAutoresizingMaskIntoConstraints="NO" id="zgn-DN-Lbh">
                                         <rect key="frame" x="0.0" y="177" width="216" height="63"/>
                                         <subviews>
                                             <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="system" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="Hdd-1X-xvY">
@@ -83,16 +83,29 @@
                                                     <action selector="onMakeOrder:" destination="gTV-IL-0wX" eventType="touchUpInside" id="1EK-Zd-nHQ"/>
                                                 </connections>
                                             </button>
-                                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="p1p-hZ-htU">
+                                            <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="dGX-1G-DLG">
                                                 <rect key="frame" x="135" y="13" width="81" height="35"/>
-                                                <color key="tintColor" red="0.1158920303" green="0.078187696639999998" blue="0.29413545130000002" alpha="1" colorSpace="custom" customColorSpace="displayP3"/>
-                                                <state key="normal" image="info.circle.fill" catalog="system">
-                                                    <color key="titleColor" red="0.29878076910000001" green="0.29209664460000001" blue="0.39216876029999997" alpha="1" colorSpace="custom" customColorSpace="displayP3"/>
-                                                </state>
-                                                <connections>
-                                                    <action selector="onYourplace:" destination="gTV-IL-0wX" eventType="touchUpInside" id="hAz-S0-ITp"/>
-                                                </connections>
-                                            </button>
+                                                <subviews>
+                                                    <button hidden="YES" opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="p1p-hZ-htU">
+                                                        <rect key="frame" x="0.0" y="0.0" width="81" height="35"/>
+                                                        <color key="tintColor" red="0.1158920303" green="0.078187696639999998" blue="0.29413545130000002" alpha="1" colorSpace="custom" customColorSpace="displayP3"/>
+                                                        <state key="normal" image="info.circle.fill" catalog="system">
+                                                            <color key="titleColor" red="0.29878076910000001" green="0.29209664460000001" blue="0.39216876029999997" alpha="1" colorSpace="custom" customColorSpace="displayP3"/>
+                                                        </state>
+                                                        <connections>
+                                                            <action selector="onYourplace:" destination="gTV-IL-0wX" eventType="touchUpInside" id="hAz-S0-ITp"/>
+                                                        </connections>
+                                                    </button>
+                                                </subviews>
+                                                <color key="backgroundColor" systemColor="systemBackgroundColor"/>
+                                                <constraints>
+                                                    <constraint firstItem="p1p-hZ-htU" firstAttribute="top" secondItem="dGX-1G-DLG" secondAttribute="top" id="B85-hQ-EoL"/>
+                                                    <constraint firstAttribute="height" constant="35" id="BVX-G1-lh6"/>
+                                                    <constraint firstItem="p1p-hZ-htU" firstAttribute="leading" secondItem="dGX-1G-DLG" secondAttribute="leading" id="Mwg-0X-TU3"/>
+                                                    <constraint firstAttribute="trailing" secondItem="p1p-hZ-htU" secondAttribute="trailing" id="cKK-YT-2L5"/>
+                                                    <constraint firstAttribute="bottom" secondItem="p1p-hZ-htU" secondAttribute="bottom" id="lae-6p-x2Y"/>
+                                                </constraints>
+                                            </view>
                                         </subviews>
                                         <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                         <edgeInsets key="layoutMargins" top="13" left="10" bottom="15" right="0.0"/>
