@@ -1278,7 +1278,7 @@ class DeliveryStep1: BaseVC , Step3Delegate, AllShopDelegate, ImagePickerDelegat
         self.viewCheckMenu.isHidden = true
         self.gMap?.clear()
         self.getShopsList(radius: Float(Constants.DEFAULT_RADIUS), rating: 0)
-        
+        self.shopNaleKabel.text = ""
         //self.lblShopName.text = ""
         // self.shopNameHeight.constant = 0
         self.viewPin.isHidden = false

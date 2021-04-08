@@ -78,6 +78,10 @@ class CustomAlert: UIView {
         }
     }
     
+    @IBAction func onCloseButton(_ sender: Any) {
+        self.isHidden = true
+    }
+    
     func ownThisShop() {
         okContainer.isHidden = true
         containerMessageView.isHidden = false

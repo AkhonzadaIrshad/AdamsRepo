@@ -103,10 +103,10 @@ class SendingOrderVC: BaseVC {
             isFemale : self.isFemale ?? false,
             menuItems : self.selectedItems,
             invoiceId : invoiceId) { (response) in
+            self.hideLoading()
             if (response.data ?? 0 > 0) {
                 self.handleUploadingMedia(id : response.data ?? 0)
             }else {
-                self.hideLoading()
                 self.showBanner(title: "alert".localized, message: response.errorMessage ?? "", style: UIColor.INFO)
             }
         }
@@ -120,10 +120,10 @@ class SendingOrderVC: BaseVC {
         ApiService.createDelivery(Authorization: DataManager.loadUser().data?.accessToken ?? "",
                                   desc: self.orderModel?.orderDetails ?? "",
                                   fromLongitude: self.orderModel?.pickUpLongitude ?? 0.0, fromLatitude: self.orderModel?.pickUpLatitude ?? 0.0, toLongitude: self.orderModel?.dropOffLongitude ?? 0.0, toLatitude: self.orderModel?.dropOffLatitude ?? 0.0, time: self.selectedTime ?? 0, estimatedPrice: "\(self.getCost())", fromAddress: self.orderModel?.pickUpAddress ?? "", toAddress: self.orderModel?.dropOffAddress ?? "", shopId: self.orderModel?.shop?.id ?? 0, pickUpDetails : self.orderModel?.pickUpDetails ?? "", dropOffDetails : self.orderModel?.dropOffDetails ?? "",paymentMethod : paymentMethod, isFemale : self.isFemale ?? false, invoiceId: invoiceId) { (response) in
+            self.hideLoading()
             if (response.data ?? 0 > 0) {
                 self.handleUploadingMedia(id : response.data ?? 0)
             }else {
-                self.hideLoading()
                 self.showBanner(title: "alert".localized, message: response.errorMessage ?? "", style: UIColor.INFO)
             }
         }
