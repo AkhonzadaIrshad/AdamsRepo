@@ -349,3 +349,5 @@ If you want to change it, use the search above or by long pressin on the map to 
 "tool.message" = "Please press the button to send Anything from you actual location";
 
 "home.navigation.description" = "Specify where you want to receive the order, then click New Order";
+
+"addShop.alert.message" = "The registration has been completed, Rzq team will contact you soon to complete the registration!";

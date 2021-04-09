@@ -71,9 +71,9 @@ class EditShopVC: BaseVC, SelectLocationDelegate,UINavigationControllerDelegate,
         self.edtName.contentInset = UIEdgeInsets(top: 0, left: 10, bottom: 0, right: 10)
         // Do any additional setup after loading the view.
         
-        if (self.latitude ?? 0.0 > 0.0 && self.longitude ?? 0.0 > 0.0) {
-            let location =  CLLocation.init(latitude: self.latitude ?? 0.0, longitude: self.longitude ?? 0.0)
-            self.selectedLocation = CLLocation.init(latitude: self.latitude ?? 0.0, longitude: self.longitude ?? 0.0)
+        if (self.shop?.latitude ?? 0.0 > 0.0 && self.shop?.longitude ?? 0.0 > 0.0) {
+            let location =  CLLocation.init(latitude: self.shop?.latitude ?? 0.0, longitude: self.shop?.longitude ?? 0.0)
+            self.selectedLocation = CLLocation.init(latitude: self.shop?.latitude ?? 0.0, longitude: self.shop?.longitude ?? 0.0)
             self.GetAnnotationUsingCoordinated(location)
         }
        

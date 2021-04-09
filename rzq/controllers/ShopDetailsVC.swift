@@ -595,8 +595,8 @@ class ShopDetailsVC: BaseVC, UITableViewDelegate, UITableViewDataSource, UIColle
         if let vc = UIStoryboard(name: "Main", bundle: nil).instantiateViewController(withIdentifier: "EditShopVC") as? EditShopVC
         {
             vc.shop = self.shop
-            vc.latitude = self.latitude ?? 0.0
-            vc.longitude = self.longitude ?? 0.0
+            vc.latitude = self.shop?.latitude ?? 0.0
+            vc.longitude = self.shop?.longitude ?? 0.0
             self.navigationController?.pushViewController(vc, animated: true)
         }
     }

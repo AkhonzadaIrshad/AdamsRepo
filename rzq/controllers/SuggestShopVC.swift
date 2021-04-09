@@ -229,6 +229,7 @@ class SuggestShopVC: BaseVC, SelectLocationDelegate,UINavigationControllerDelega
             ApiService.suggestShop(Authorization: DataManager.loadUser().data?.accessToken ?? "", address: self.edtAddress.text ?? "", latitude: self.selectedLocation?.coordinate.latitude ?? 0.0, longitude: self.selectedLocation?.coordinate.longitude ?? 0.0, phoneNumber: DataManager.loadUser().data?.phoneNumber ?? "", workingHours: self.chosenHours ?? "", name: self.edtName.text ?? "", type: self.selectedType?.id ?? 0) { (response) in
                 self.hideLoading()
                 if (response.errorCode == 0) {
+                    self.showAlert(title: "", message: "addShop.alert.message".localized)
                    self.handleUploadingMedia(id : response.data ?? 0)
                 }else {
                     self.showBanner(title: "alert".localized, message: response.errorMessage ?? "", style: UIColor.INFO)
@@ -272,7 +273,7 @@ class SuggestShopVC: BaseVC, SelectLocationDelegate,UINavigationControllerDelega
         
         GMSGeocoder().reverseGeocodeCoordinate(location.coordinate) { (response, error) in
             
-            var strAddresMain : String = ""
+                var strAddresMain : String = ""
             
             if let address : GMSAddress = response?.firstResult() {
                 if let lines = address.lines  {
