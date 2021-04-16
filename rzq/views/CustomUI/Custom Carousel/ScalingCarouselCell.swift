@@ -20,7 +20,7 @@ class ScalingCarouselCell: UICollectionViewCell {
     
     var onMakeOrderAction: (() -> Void)? = nil
     var onYourplaceAction: (() -> Void)? = nil
-
+    var onShareShop: (() -> Void)? = nil
 
     // MARK: - Properties (Public)
     
@@ -111,6 +111,12 @@ class ScalingCarouselCell: UICollectionViewCell {
     @IBAction func onYourplace(_ sender: Any) {
         if let onYourplaceAction = self.onYourplaceAction {
             onYourplaceAction()
+        }
+    }
+    
+    @IBAction func onShareShop(_ sender: Any) {
+        if let onShareShop = self.onShareShop {
+            onShareShop()
         }
     }
     

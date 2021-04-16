@@ -7,6 +7,7 @@
 //
 
 import UIKit
+import Cosmos
 
 class AllTypeCell: UICollectionViewCell {
     
@@ -16,4 +17,6 @@ class AllTypeCell: UICollectionViewCell {
     
     @IBOutlet weak var ivLogo: CircleImage!
     
+    @IBOutlet weak var ratingLabel: UILabel!
+    @IBOutlet weak var ratingView: CosmosView!
 }

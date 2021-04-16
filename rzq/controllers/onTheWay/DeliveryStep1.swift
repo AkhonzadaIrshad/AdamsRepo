@@ -15,6 +15,7 @@ import Firebase
 import AMPopTip
 import MarqueeLabel
 import MultilineTextField
+import Branch
 
 class Cell: ScalingCarouselCell {}
 
@@ -1996,6 +1997,10 @@ extension DeliveryStep1: UICollectionViewDelegate, UICollectionViewDataSource, U
                // cell.ownThisShopButton.setTitle("carousel.ownThisPlace".localized, for: .normal)
             }
             
+            cell.onShareShop = {
+                self.generateDeepLink(shop: shop)
+            }
+            
             cell.onYourplaceAction = {
                 self.customAlert.ownThisShop()
                 self.customAlert.onOk = {
@@ -2134,6 +2139,42 @@ extension DeliveryStep1: UICollectionViewDelegate, UICollectionViewDataSource, U
         }
       
     }
+    
+    func generateDeepLink(shop: DataShop) {
+        
+        var shareText = ""
+        shareText = "shop_on_rzq".localized
+        
+        
+        let buo = BranchUniversalObject.init(canonicalIdentifier: "rzqapp/\(shop.id ?? 0)")
+        buo.title = "\(shop.name ?? "")"
+        buo.contentDescription = shareText
+        if (shop.images?.count ?? 0 > 0) {
+            buo.imageUrl = "\(Constants.IMAGE_URL)\(shop.images?[0] ?? "")"
+        }
+        buo.publiclyIndex = true
+        buo.locallyIndex = true
+        buo.contentMetadata.customMetadata["ShopId"] = shop.id ?? 0
+        
+        
+        let lp: BranchLinkProperties = BranchLinkProperties()
+        lp.channel = ""
+        lp.feature = "sharing"
+        lp.campaign = "Rzq App"
+        lp.tags = ["Rzq App"]
+        
+        
+        buo.getShortUrl(with: lp) { (url, error) in
+            print(url as Any)
+            let sessionParams = Branch.getInstance().getLatestReferringParams()
+            print(sessionParams as Any)
+            buo.showShareSheet(with: lp, andShareText: shareText, from: self) { (activityType, completed) in
+            }
+            
+        }
+        
+    }
+
 }
 
 // MARK: - CLLocationManagerDelegate

@@ -83,7 +83,6 @@ class AppDelegate: UIResponder, UIApplicationDelegate, MOLHResetable,MessagingDe
             App.shared.notificationType = type
             App.shared.notificationValue = chatId
             App.shared.notificationDeliveryId = deliveryId
-            
         }
         
         let configuration = URLSessionConfiguration.default

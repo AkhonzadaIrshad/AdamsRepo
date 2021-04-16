@@ -171,7 +171,6 @@ UITableViewDelegate, UITableViewDataSource {
             cell.viewLine.isHidden = true
             cell.lblName.textColor = UIColor.appLightGray
         }
-        
         if (category.image?.count ?? 0 > 0) {
             let url = URL(string: "\(Constants.IMAGE_URL)\(category.image ?? "")")
             cell.ivLogo.kf.setImage(with: url)
@@ -207,7 +206,9 @@ UITableViewDelegate, UITableViewDataSource {
                 cell.lblShopAddress.text = String(hours[day - 1])
             }
         }
+        cell.ratingLabe.text = "\(shop?.rate ?? 4.0)"
         
+        cell.ratingView.rating = shop?.rate ?? 4.0
         let myLatLng = CLLocation(latitude: self.latitude ?? 0.0, longitude: self.longitude ?? 0.0)
         let driverLatLng = CLLocation(latitude: shop?.latitude ?? 0.0, longitude: shop?.longitude ?? 0.0)
         let distanceInMeters = driverLatLng.distance(from: myLatLng)

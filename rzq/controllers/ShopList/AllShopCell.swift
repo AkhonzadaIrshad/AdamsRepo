@@ -7,11 +7,15 @@
 //
 
 import UIKit
+import Cosmos
 
 class AllShopCell: UITableViewCell {
 
     @IBOutlet weak var ivLogo: CircleImage!
-     @IBOutlet weak var lblShopName: MyUILabel!
-     @IBOutlet weak var lblShopAddress: MyUILabel!
-     @IBOutlet weak var lblDistance: UILabel!
+    @IBOutlet weak var lblShopName: MyUILabel!
+    @IBOutlet weak var lblShopAddress: MyUILabel!
+    @IBOutlet weak var lblDistance: UILabel!
+    @IBOutlet weak var ratingLabe: UILabel!
+    @IBOutlet weak var ratingView: CosmosView!
+
 }

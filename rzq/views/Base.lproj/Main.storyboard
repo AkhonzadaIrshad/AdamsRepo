@@ -27950,7 +27950,7 @@
                                                             </constraints>
                                                         </imageView>
                                                         <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="shop name" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="geA-Oe-wY1" customClass="MyUILabel" customModule="rzq" customModuleProvider="target">
-                                                            <rect key="frame" x="68" y="15" width="269" height="21"/>
+                                                            <rect key="frame" x="68" y="14.999999999999998" width="269" height="20.333333333333329"/>
                                                             <fontDescription key="fontDescription" type="system" pointSize="17"/>
                                                             <nil key="textColor"/>
                                                             <nil key="highlightedColor"/>
@@ -27959,7 +27959,7 @@
                                                             </userDefinedRuntimeAttributes>
                                                         </label>
                                                         <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="shop address" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="2gg-FM-Woa" customClass="MyUILabel" customModule="rzq" customModuleProvider="target">
-                                                            <rect key="frame" x="68" y="44" width="262" height="17"/>
+                                                            <rect key="frame" x="68" y="43.333333333333336" width="262" height="17"/>
                                                             <fontDescription key="fontDescription" type="system" pointSize="14"/>
                                                             <color key="textColor" red="0.59215686270000001" green="0.59215686270000001" blue="0.59215686270000001" alpha="1" colorSpace="calibratedRGB"/>
                                                             <nil key="highlightedColor"/>
@@ -28001,16 +28001,42 @@
                                                                 </userDefinedRuntimeAttribute>
                                                             </userDefinedRuntimeAttributes>
                                                         </view>
+                                                        <stackView opaque="NO" contentMode="scaleToFill" alignment="center" spacing="5" translatesAutoresizingMaskIntoConstraints="NO" id="1Nh-6t-8XK">
+                                                            <rect key="frame" x="143" y="72.666666666666671" width="136.66666666666663" height="21"/>
+                                                            <subviews>
+                                                                <view userInteractionEnabled="NO" contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="vb9-q2-w4A" customClass="CosmosView" customModule="Cosmos">
+                                                                    <rect key="frame" x="0.0" y="0.0" width="121" height="21"/>
+                                                                    <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                                                                    <constraints>
+                                                                        <constraint firstAttribute="width" constant="121" id="O9v-be-TQ9"/>
+                                                                        <constraint firstAttribute="height" constant="21" id="n1C-bE-7iq"/>
+                                                                    </constraints>
+                                                                    <userDefinedRuntimeAttributes>
+                                                                        <userDefinedRuntimeAttribute type="number" keyPath="rating">
+                                                                            <real key="value" value="4"/>
+                                                                        </userDefinedRuntimeAttribute>
+                                                                    </userDefinedRuntimeAttributes>
+                                                                </view>
+                                                                <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="4" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="H87-gX-Pq1">
+                                                                    <rect key="frame" x="126.00000000000001" y="0.3333333333333286" width="10.666666666666671" height="20.333333333333332"/>
+                                                                    <fontDescription key="fontDescription" type="system" pointSize="17"/>
+                                                                    <nil key="textColor"/>
+                                                                    <nil key="highlightedColor"/>
+                                                                </label>
+                                                            </subviews>
+                                                        </stackView>
                                                     </subviews>
                                                     <color key="backgroundColor" red="0.96470588239999999" green="0.96470588239999999" blue="0.96470588239999999" alpha="1" colorSpace="calibratedRGB"/>
                                                     <constraints>
                                                         <constraint firstAttribute="trailing" secondItem="geA-Oe-wY1" secondAttribute="trailing" constant="8" id="0Et-wH-Kph"/>
                                                         <constraint firstItem="AEi-jY-7F6" firstAttribute="leading" secondItem="lxz-tQ-TvR" secondAttribute="leading" constant="10" id="CTE-m2-Svw"/>
+                                                        <constraint firstItem="1Nh-6t-8XK" firstAttribute="leading" secondItem="t9z-3I-XjP" secondAttribute="trailing" constant="10" id="Dbw-I1-X64"/>
                                                         <constraint firstAttribute="trailing" secondItem="2gg-FM-Woa" secondAttribute="trailing" constant="15" id="EUe-va-cpL"/>
                                                         <constraint firstItem="2gg-FM-Woa" firstAttribute="top" secondItem="geA-Oe-wY1" secondAttribute="bottom" constant="8" id="Khy-My-cfz"/>
                                                         <constraint firstItem="2gg-FM-Woa" firstAttribute="leading" secondItem="AEi-jY-7F6" secondAttribute="trailing" constant="8" id="Mo1-67-BwA"/>
                                                         <constraint firstItem="t9z-3I-XjP" firstAttribute="leading" secondItem="AEi-jY-7F6" secondAttribute="trailing" constant="8" id="jrq-qV-H43"/>
                                                         <constraint firstAttribute="bottom" secondItem="t9z-3I-XjP" secondAttribute="bottom" constant="15" id="mdE-wg-qJh"/>
+                                                        <constraint firstItem="1Nh-6t-8XK" firstAttribute="centerY" secondItem="w4C-OE-9Ga" secondAttribute="centerY" id="sWU-Dm-EXu"/>
                                                         <constraint firstItem="geA-Oe-wY1" firstAttribute="top" secondItem="lxz-tQ-TvR" secondAttribute="top" constant="15" id="uNB-x5-pcQ"/>
                                                         <constraint firstItem="geA-Oe-wY1" firstAttribute="leading" secondItem="AEi-jY-7F6" secondAttribute="trailing" constant="8" id="w1B-R8-gHP"/>
                                                         <constraint firstItem="AEi-jY-7F6" firstAttribute="centerY" secondItem="lxz-tQ-TvR" secondAttribute="centerY" id="xCD-3b-Vak"/>
@@ -28043,6 +28069,8 @@
                                             <outlet property="lblDistance" destination="w4C-OE-9Ga" id="CJa-ZH-vZ7"/>
                                             <outlet property="lblShopAddress" destination="2gg-FM-Woa" id="sDA-U1-oPk"/>
                                             <outlet property="lblShopName" destination="geA-Oe-wY1" id="Pjz-Aj-vEJ"/>
+                                            <outlet property="ratingLabe" destination="H87-gX-Pq1" id="jSJ-PJ-GKG"/>
+                                            <outlet property="ratingView" destination="vb9-q2-w4A" id="IHR-ei-vVE"/>
                                         </connections>
                                     </tableViewCell>
                                 </prototypes>
