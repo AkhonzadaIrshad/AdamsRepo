@@ -1656,6 +1656,50 @@ class ApiService : NSObject {
         }
     }
     
+    static func createAdress(Authorization : String, latitude: Double, longitude: Double, placeName: String, completion:@escaping(_ response : UserAdressResponse)-> Void) {
+        let headers = [Constants.AUTH_HEADER: "bearer \(Authorization)",
+            Constants.LANG_HEADER : self.getLang()]
+        
+        let all = ["Latitude":latitude,
+             "longitude": longitude,
+             "Name":placeName] as [String : Any]
+        let jsonData = try? JSONSerialization.data(withJSONObject: all)
+        
+        AFManager.request("\(Constants.BASE_URL)/User/CreateAddress", method: .post, parameters: all ,encoding: URLEncoding.httpBody, headers: headers)
+            
+            .responseJSON { response in
+                if let json = response.data {
+                    do {
+                        let decoder = JSONDecoder()
+                        let baseResponse = try decoder.decode(UserAdressResponse.self, from: json)
+                        completion(baseResponse)
+                    }catch let err{
+                        print(err)
+                        completion(UserAdressResponse(errorCode: 500, message: "", userAdressData: nil))
+                    }
+                }
+        }
+    }
+
+    static func getAddress(Authorization : String, completion:@escaping(_ response : UserAdressResponse)-> Void) {
+        
+        let headers = [Constants.AUTH_HEADER: "bearer \(Authorization)",
+            Constants.LANG_HEADER : self.getLang()]
+        
+        AFManager.request("\(Constants.BASE_URL)/User/GetAddress", method: .get, parameters: nil ,encoding: JSONEncoding.default, headers: headers)
+            .responseJSON { response in
+                if let json = response.data {
+                    do {
+                        let decoder = JSONDecoder()
+                        let baseResponse = try decoder.decode(UserAdressResponse.self, from: json)
+                        completion(baseResponse)
+                    }catch let err {
+                        print(err)
+                        completion(UserAdressResponse(errorCode: 500, message: "", userAdressData: nil))
+                    }
+                }
+        }
+    }
     
     static func getMenuByShopId(Authorization : String, id: Int, completion:@escaping(_ response : MenuDetailsByShopResponse)-> Void) {
         

@@ -20,6 +20,7 @@ class HomeMapVC: BaseViewController {
     
     // MARK: - Outlets
     
+    @IBOutlet weak var openLocationStackView: UIStackView!
     @IBOutlet weak var edtSearch: MyUITextField!
     
     @IBOutlet weak var mapView: GMSMapView!
@@ -48,7 +49,7 @@ class HomeMapVC: BaseViewController {
     
     private var driverCurentLocationLatitude: Double = 0.0
     private var driverCurentLocationLongitude: Double = 0.0
-    
+    private var place: GMSPlace?
     var driverLocation: LocationData?
 
     let cameraZoom : Float = 15.0
@@ -85,6 +86,10 @@ class HomeMapVC: BaseViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
     
+        self.openLocationStackView.layer.cornerRadius = 10
+        self.openLocationStackView.layer.borderWidth = 0.5
+        self.openLocationStackView.layer.borderColor = UIColor.lightGray.cgColor
+        
         self.lblLocation.text = "home.navigation.description".localized
         
         if let street = UserDefaults.standard.string(forKey: "street") {
@@ -265,6 +270,8 @@ class HomeMapVC: BaseViewController {
                     address = ""
                 } else {
                     address = self.fullAdressTextView.text
+                    UserDefaults.standard.set(address, forKey: "MainAdress")  //String
+
                 }
                
                 if let street = self.streetTextField.text, !street.isEmpty {
@@ -286,7 +293,7 @@ class HomeMapVC: BaseViewController {
                 vc.orderModel?.dropOffLongitude = self.longitude
                 vc.latitude = self.latitude
                 vc.longitude = self.longitude
-                
+                vc.place = self.place
                 vc.fromHome = true
                 self.navigationController?.pushViewController(vc, animated: true)
             }
@@ -303,6 +310,30 @@ class HomeMapVC: BaseViewController {
         }
     }
     
+    private func setupSelectAdressView() {
+        
+        // Init Graph View
+        let selectAdressView = SelectAdressView.instantiate() as! SelectAdressView
+        selectAdressView.delegate = self
+        selectAdressView.translatesAutoresizingMaskIntoConstraints = false
+        
+        // Add it to pointsGraphView
+        self.view.addSubview(selectAdressView)
+        
+        // Set Constraints
+        NSLayoutConstraint.activate([
+            selectAdressView.leadingAnchor.constraint(equalTo: view.leadingAnchor),
+            selectAdressView.topAnchor.constraint(equalTo: view.topAnchor),
+            selectAdressView.trailingAnchor.constraint(equalTo: view.trailingAnchor, constant: 0),
+            selectAdressView.bottomAnchor.constraint(equalTo: view.bottomAnchor)
+        ])
+        
+        self.view.layoutIfNeeded()
+    }
+    
+    @IBAction func onChangeAdress(_ sender: Any) {
+        setupSelectAdressView()
+    }
     @IBAction func tendersAction(_ sender: Any) {
         if (self.isLoggedIn()) {
             if let vc = UIStoryboard(name: "Main", bundle: nil).instantiateViewController(withIdentifier: "TenderStep1") as? TenderStep1 {
@@ -1124,6 +1155,7 @@ extension HomeMapVC: ShopSheetDelegate {
                 UserDefaults.standard.set(self.longitude, forKey: "lastSelectedLongitude")
                 vc.fromHome = true
                 vc.shops = self.shops
+                vc.place = self.place
                 self.navigationController?.pushViewController(vc, animated: true)
             }
         }
@@ -1236,9 +1268,12 @@ extension HomeMapVC: LabasLocationManagerDelegate {
 extension HomeMapVC: GMSAutocompleteViewControllerDelegate {
     func viewController(_ viewController: GMSAutocompleteViewController, didAutocompleteWith place: GMSPlace) {
         let camera = GMSCameraPosition.camera(withLatitude:place.coordinate.latitude, longitude:place.coordinate.longitude, zoom: 17.0)
+        self.place = place
         dismiss(animated: true, completion: {
             self.mapView.animate(to: camera)
             self.fullAdressTextView.text = place.formattedAddress
+            self.latitude = place.coordinate.latitude
+            self.longitude = place.coordinate.longitude
            // self.lblLocation.text = place.formattedAddress
         })
     }
@@ -1258,4 +1293,24 @@ extension HomeMapVC: GMSAutocompleteViewControllerDelegate {
     func didUpdateAutocompletePredictions(_ viewController: GMSAutocompleteViewController) {
         UIApplication.shared.isNetworkActivityIndicatorVisible = false
     }
+}
+
+extension HomeMapVC: SelectAdressViewDelegate {
+   
+    func selectedAdress(userAdressData: userAdressData?) {
+        self.fullAdressTextView.text = userAdressData?.name ?? ""
+        self.latitude = userAdressData?.latitude ?? 0.0
+        self.longitude = userAdressData?.longitude ?? 0.0
+    }
+    func onClose() {
+        
+    }
+    
+    func onAddNewAdress() {
+        let autocompleteController = GMSAutocompleteViewController()
+        autocompleteController.delegate = self
+        present(autocompleteController, animated: true, completion: nil)
+    }
+    
+    
 }

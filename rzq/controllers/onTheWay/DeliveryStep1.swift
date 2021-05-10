@@ -45,6 +45,7 @@ class DeliveryStep1: BaseVC , Step3Delegate, AllShopDelegate, ImagePickerDelegat
     var selectedImages = [UIImage]()
     let recorder = KAudioRecorder.shared
     var isZoomed: Bool = false
+    var place: GMSPlace?
 
     @IBOutlet weak var lblPickupLocation: MyUILabel!
     @IBOutlet weak var mapView: UIView!
@@ -730,8 +731,9 @@ class DeliveryStep1: BaseVC , Step3Delegate, AllShopDelegate, ImagePickerDelegat
             let category = TypeClass(id: 0, name: "all_shops".localized, image: "", selectedIcon: "", icon: "")
             category.isChecked = true
             self.categories.removeAll()
-            self.categories.append(category)
             self.categories.append(contentsOf: response.data ?? [TypeClass]())
+            self.categories.append(category)
+
         }
  
         ApiService.getShops(latitude: self.latitude ?? 29.306856, longitude: self.longitude ?? 47.698692, radius: radius, rating : rating, types : 0) { (response) in
@@ -1147,6 +1149,7 @@ class DeliveryStep1: BaseVC , Step3Delegate, AllShopDelegate, ImagePickerDelegat
                 vc.longitude = self.longitude
                 vc.orderModel = self.orderModel
                 vc.delegate = self
+                vc.place = self.place
                 self.navigationController?.pushViewController(vc, animated: true)
             }
         }
@@ -1171,6 +1174,7 @@ class DeliveryStep1: BaseVC , Step3Delegate, AllShopDelegate, ImagePickerDelegat
                 vc.longitude = self.longitude == 0 ? LabasLocationManager.shared.currentLocation?.coordinate.longitude : self.longitude
                 vc.orderModel = self.orderModel
                 vc.delegate = self
+                vc.place = self.place
                 self.navigationController?.pushViewController(vc, animated: true)
             }
         }

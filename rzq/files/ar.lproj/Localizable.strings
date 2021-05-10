@@ -5,6 +5,10 @@
   Created by Zaid najjar on 4/1/19.
   Copyright © 2019 technzone. All rights reserved.
 */
+"addAdress.title" = "اختر عنوانك";
+"address.button.title" = "أضف عنوانًا جديدًا";
+"address.or.title" = "أو";
+
 "DeliveryStep1.listView" = "عرض القائمة";
 "bidCell.Accept" = "قبول";
 "bidCell.Decline" = "رفض";

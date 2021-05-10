@@ -9,6 +9,8 @@
 import UIKit
 import SwiftyGif
 import Firebase
+import GoogleMaps
+import GooglePlaces
 
 class SendingOrderVC: BaseVC {
     
@@ -27,6 +29,8 @@ class SendingOrderVC: BaseVC {
     var isFemale : Bool?
     var selectedImages: [UIImage] = []
     var isAboveTen : Bool?
+    var place: GMSPlace?
+
 
     
     @IBOutlet weak var getMyOrderButton: MyUIButton!
@@ -59,7 +63,12 @@ class SendingOrderVC: BaseVC {
         }else {
             self.generatePaymentUrl()
         }
-        
+      
+        if let place = self.place {
+            ApiService.createAdress(Authorization: DataManager.loadUser().data?.accessToken ?? "", latitude: place.coordinate.latitude, longitude: place.coordinate.longitude, placeName: place.name ?? "") { (response) in
+            }
+        }
+     
         ApiService.updateRegId(Authorization: DataManager.loadUser().data?.accessToken ?? "", regId: Messaging.messaging().fcmToken ?? "not_avaliable") { (response) in
             
             

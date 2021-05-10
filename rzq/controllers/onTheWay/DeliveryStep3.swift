@@ -48,6 +48,8 @@ class DeliveryStep3: BaseVC {
     var delegate : Step3Delegate?
            
     var selectedTime : Int?
+    var place: GMSPlace?
+
     
     
     @IBOutlet weak var btnGender: MyUIButton!
@@ -256,7 +258,7 @@ class DeliveryStep3: BaseVC {
         vc.isFemale = self.isFemale
         vc.selectedImages = self.selectedImages
         vc.isAboveTen = self.isAboveTen
-
+        vc.place = self.place
         vc.modalPresentationStyle = .fullScreen
         self.present(vc, animated: true, completion: nil)
 //        if (self.isCash ?? false) {

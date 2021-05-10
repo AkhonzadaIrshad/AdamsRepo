@@ -19,6 +19,14 @@
 		8A62677B25F6CF92002D8E79 /* ScalingCarouselLayout.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8A62677A25F6CF92002D8E79 /* ScalingCarouselLayout.swift */; };
 		8A62677F25F6CFDC002D8E79 /* ScalingCarouselCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8A62677D25F6CFDC002D8E79 /* ScalingCarouselCell.swift */; };
 		8A62678025F6CFDC002D8E79 /* ScalingCarouselCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 8A62677E25F6CFDC002D8E79 /* ScalingCarouselCell.xib */; };
+		8A776E5C2647687A00AFA01D /* UserAdressResponse.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8A776E5B2647687A00AFA01D /* UserAdressResponse.swift */; };
+		8A89BAC82640AE65008D5F72 /* SelectAdressView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8A89BAC72640AE65008D5F72 /* SelectAdressView.swift */; };
+		8A89BACC2640AE73008D5F72 /* SelectAdressView.xib in Resources */ = {isa = PBXBuildFile; fileRef = 8A89BACB2640AE73008D5F72 /* SelectAdressView.xib */; };
+		8A89BACF2640B242008D5F72 /* CheckMarkView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8A89BACE2640B242008D5F72 /* CheckMarkView.swift */; };
+		8A89BAD32640B6C5008D5F72 /* AdressCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8A89BAD12640B6C5008D5F72 /* AdressCell.swift */; };
+		8A89BAD42640B6C5008D5F72 /* AdressCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 8A89BAD22640B6C5008D5F72 /* AdressCell.xib */; };
+		8A89BAD72640C068008D5F72 /* UINib+Loader.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8A89BAD62640C068008D5F72 /* UINib+Loader.swift */; };
+		8A89BADA2640C16B008D5F72 /* UITableView+Extension.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8A89BAD92640C16A008D5F72 /* UITableView+Extension.swift */; };
 		8A9C6C812588060C00592202 /* MarkerInfo.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8A9C6C802588060C00592202 /* MarkerInfo.swift */; };
 		8A9C6C842588061E00592202 /* MarkerInfo.xib in Resources */ = {isa = PBXBuildFile; fileRef = 8A9C6C832588061E00592202 /* MarkerInfo.xib */; };
 		8AE6E066258015AD00889D2C /* StoreMarkerView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8AE6E065258015AD00889D2C /* StoreMarkerView.swift */; };
@@ -258,6 +266,14 @@
 		8A62677A25F6CF92002D8E79 /* ScalingCarouselLayout.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ScalingCarouselLayout.swift; sourceTree = "<group>"; };
 		8A62677D25F6CFDC002D8E79 /* ScalingCarouselCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ScalingCarouselCell.swift; sourceTree = "<group>"; };
 		8A62677E25F6CFDC002D8E79 /* ScalingCarouselCell.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = ScalingCarouselCell.xib; sourceTree = "<group>"; };
+		8A776E5B2647687A00AFA01D /* UserAdressResponse.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UserAdressResponse.swift; sourceTree = "<group>"; };
+		8A89BAC72640AE65008D5F72 /* SelectAdressView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SelectAdressView.swift; sourceTree = "<group>"; };
+		8A89BACB2640AE73008D5F72 /* SelectAdressView.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = SelectAdressView.xib; sourceTree = "<group>"; };
+		8A89BACE2640B242008D5F72 /* CheckMarkView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CheckMarkView.swift; sourceTree = "<group>"; };
+		8A89BAD12640B6C5008D5F72 /* AdressCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AdressCell.swift; sourceTree = "<group>"; };
+		8A89BAD22640B6C5008D5F72 /* AdressCell.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = AdressCell.xib; sourceTree = "<group>"; };
+		8A89BAD62640C068008D5F72 /* UINib+Loader.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UINib+Loader.swift"; sourceTree = "<group>"; };
+		8A89BAD92640C16A008D5F72 /* UITableView+Extension.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UITableView+Extension.swift"; sourceTree = "<group>"; };
 		8A9C6C802588060C00592202 /* MarkerInfo.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MarkerInfo.swift; sourceTree = "<group>"; };
 		8A9C6C832588061E00592202 /* MarkerInfo.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = MarkerInfo.xib; sourceTree = "<group>"; };
 		8AE6E065258015AD00889D2C /* StoreMarkerView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = StoreMarkerView.swift; sourceTree = "<group>"; };
@@ -543,6 +559,20 @@
 			path = "Custom Carousel";
 			sourceTree = "<group>";
 		};
+		8A89BAC62640AE2E008D5F72 /* Rzq Select Adress View */ = {
+			isa = PBXGroup;
+			children = (
+				8A89BAC72640AE65008D5F72 /* SelectAdressView.swift */,
+				8A89BACB2640AE73008D5F72 /* SelectAdressView.xib */,
+				8A89BACE2640B242008D5F72 /* CheckMarkView.swift */,
+				8A89BAD12640B6C5008D5F72 /* AdressCell.swift */,
+				8A89BAD22640B6C5008D5F72 /* AdressCell.xib */,
+				8A89BAD62640C068008D5F72 /* UINib+Loader.swift */,
+				8A89BAD92640C16A008D5F72 /* UITableView+Extension.swift */,
+			);
+			path = "Rzq Select Adress View";
+			sourceTree = "<group>";
+		};
 		8AE6E0642580157D00889D2C /* Custom Marker */ = {
 			isa = PBXGroup;
 			children = (
@@ -697,6 +727,7 @@
 		8B2BCC95224FCEE600CBC7D3 /* views */ = {
 			isa = PBXGroup;
 			children = (
+				8A89BAC62640AE2E008D5F72 /* Rzq Select Adress View */,
 				8B9CA8302250CA7700DE0DC4 /* CustomUI */,
 				8B2BCC8A224FCEB500CBC7D3 /* LaunchScreen.storyboard */,
 				8B2BCC85224FCEB400CBC7D3 /* Main.storyboard */,
@@ -966,6 +997,7 @@
 				8BE56884236C73DE00793484 /* ProviderRatingRespones.swift */,
 				8BE56886236C7B0E00793484 /* ShopOrdersResponse.swift */,
 				8B85BE3823704C44000E35C4 /* PaymentStatusResponse.swift */,
+				8A776E5B2647687A00AFA01D /* UserAdressResponse.swift */,
 			);
 			path = responses;
 			sourceTree = "<group>";
@@ -1108,6 +1140,7 @@
 				8B2BCC8C224FCEB500CBC7D3 /* LaunchScreen.storyboard in Resources */,
 				8BCD8DEE2296DF8E00400D7B /* InfoPlist.strings in Resources */,
 				8A62678025F6CFDC002D8E79 /* ScalingCarouselCell.xib in Resources */,
+				8A89BAD42640B6C5008D5F72 /* AdressCell.xib in Resources */,
 				8BF2222F2271AC05005BE71D /* arabic_medium.ttf in Resources */,
 				8BF222312271AC05005BE71D /* arabic_light.ttf in Resources */,
 				8B9CA8442250CCDF00DE0DC4 /* english_semibold.ttf in Resources */,
@@ -1127,6 +1160,7 @@
 				8B2BCC89224FCEB500CBC7D3 /* Assets.xcassets in Resources */,
 				8B84A167225A300B0090CB5D /* GoogleService-Info.plist in Resources */,
 				8BC54B062268771500B70A97 /* Imgs in Resources */,
+				8A89BACC2640AE73008D5F72 /* SelectAdressView.xib in Resources */,
 				8BDA8B7B2385623200BAFDC3 /* pending_ar.gif in Resources */,
 				8BC54B042268767F00B70A97 /* zhc_messages_sample.m4a in Resources */,
 				8BCD198D2284420900AFB878 /* FilterSearchCell.xib in Resources */,
@@ -1272,6 +1306,7 @@
 				8BCD8DE92296BB9800400D7B /* SERVOrder.swift in Sources */,
 				8BC54AFF2268752100B70A97 /* ZHCDemoMessagesViewController.swift in Sources */,
 				8BD45FA4226736C8000FB47A /* WorkingOrdersVC.swift in Sources */,
+				8A89BACF2640B242008D5F72 /* CheckMarkView.swift in Sources */,
 				8BC23284228AD70A00CD086F /* YRipple.swift in Sources */,
 				8BF6DCBB23706D2A00E9B80B /* PaymentStatusDialog.swift in Sources */,
 				8BF222372271D0BA005BE71D /* ShopType.swift in Sources */,
@@ -1345,6 +1380,7 @@
 				8BDAA8B92275912A00F59D5E /* KingfisherSource.swift in Sources */,
 				8BD99C62225A1E2E00E00A0A /* RegisterDriverVC.swift in Sources */,
 				8B5EB8B02250EC6E00DC657C /* MenuViewController.swift in Sources */,
+				8A89BAD72640C068008D5F72 /* UINib+Loader.swift in Sources */,
 				8BF2223D2271FEDF005BE71D /* RegisterAsDriverMenuVC.swift in Sources */,
 				8B121BA72265E8190083069F /* ContactUsVC.swift in Sources */,
 				8BDB970F225B3A3E0036E801 /* Intro3.swift in Sources */,
@@ -1355,7 +1391,9 @@
 				8BCB78052254DE1B00E52ED0 /* DriverBidCell.swift in Sources */,
 				8BCB77FE2254C12F00E52ED0 /* OrdersVC.swift in Sources */,
 				8BF42431229B16990014596F /* AllTendersResponse.swift in Sources */,
+				8A89BADA2640C16B008D5F72 /* UITableView+Extension.swift in Sources */,
 				8BC3B50222C68C7F008A9767 /* MandIUpdateDialog.swift in Sources */,
+				8A89BAC82640AE65008D5F72 /* SelectAdressView.swift in Sources */,
 				8BAE41E12299B15600C7D897 /* SelectServiceCell.swift in Sources */,
 				8A62677F25F6CFDC002D8E79 /* ScalingCarouselCell.swift in Sources */,
 				8BA815A322525ACD004EE1A8 /* DeliveryStep2.swift in Sources */,
@@ -1386,6 +1424,7 @@
 				8B3DC29A236042150089B35A /* MenuDetailsResponse.swift in Sources */,
 				8B112074235DA0F2005F2122 /* ShopMenuTabCell.swift in Sources */,
 				8BD329BC225C8C790060900A /* BaseResponse.swift in Sources */,
+				8A776E5C2647687A00AFA01D /* UserAdressResponse.swift in Sources */,
 				8B1F91CB225629F500B639F1 /* ToolTipView.swift in Sources */,
 				8B9BA6BE235C45460058BAF8 /* MyShopCell.swift in Sources */,
 				8BE1FA8E228C420800B98E5E /* AddHoursVC.swift in Sources */,
@@ -1393,6 +1432,7 @@
 				8B121B992265CD8B0083069F /* SettingsVC.swift in Sources */,
 				8BCD8DDF2296B13A00400D7B /* ServiceStep1.swift in Sources */,
 				8B9CA8342250CA9C00DE0DC4 /* MyUILabel.swift in Sources */,
+				8A89BAD32640B6C5008D5F72 /* AdressCell.swift in Sources */,
 				8BDB970D225B3A360036E801 /* Intro2.swift in Sources */,
 				8B9CA85D2250E1E900DE0DC4 /* CardView.swift in Sources */,
 				8B9BA6C2235C51E00058BAF8 /* MyShopPendingOrdersVC.swift in Sources */,
