@@ -6497,31 +6497,31 @@
                                         <rect key="frame" x="0.0" y="0.0" width="355" height="585"/>
                                         <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                         <prototypes>
-                                            <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" preservesSuperviewLayoutMargins="YES" selectionStyle="none" indentationWidth="10" reuseIdentifier="ordercell" rowHeight="235" id="7HA-V8-99j" customClass="OrderCell" customModule="rzq" customModuleProvider="target">
-                                                <rect key="frame" x="0.0" y="28" width="355" height="235"/>
+                                            <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" preservesSuperviewLayoutMargins="YES" selectionStyle="none" indentationWidth="10" reuseIdentifier="ordercell" rowHeight="241" id="7HA-V8-99j" customClass="OrderCell" customModule="rzq" customModuleProvider="target">
+                                                <rect key="frame" x="0.0" y="28" width="355" height="241"/>
                                                 <autoresizingMask key="autoresizingMask"/>
                                                 <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" preservesSuperviewLayoutMargins="YES" insetsLayoutMarginsFromSafeArea="NO" tableViewCell="7HA-V8-99j" id="A1h-Na-gSR">
-                                                    <rect key="frame" x="0.0" y="0.0" width="355" height="235"/>
+                                                    <rect key="frame" x="0.0" y="0.0" width="355" height="241"/>
                                                     <autoresizingMask key="autoresizingMask"/>
                                                     <subviews>
                                                         <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="OEU-f6-95Q" customClass="CardView" customModule="rzq" customModuleProvider="target">
-                                                            <rect key="frame" x="0.0" y="0.0" width="355" height="220"/>
+                                                            <rect key="frame" x="0.0" y="0.0" width="355" height="226"/>
                                                             <subviews>
                                                                 <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="d5T-uq-WY4" customClass="CardView" customModule="rzq" customModuleProvider="target">
-                                                                    <rect key="frame" x="1" y="1" width="353" height="218"/>
+                                                                    <rect key="frame" x="1" y="1" width="353" height="224"/>
                                                                     <subviews>
                                                                         <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleAspectFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="placeholder_order" translatesAutoresizingMaskIntoConstraints="NO" id="3cL-U6-zOF" customClass="CircleImage" customModule="rzq" customModuleProvider="target">
-                                                                            <rect key="frame" x="21" y="81.666666666666671" width="55" height="55.000000000000014"/>
+                                                                            <rect key="frame" x="21" y="84.666666666666671" width="55" height="55.000000000000014"/>
                                                                             <constraints>
                                                                                 <constraint firstAttribute="width" constant="55" id="d2S-Kn-8Ig"/>
                                                                                 <constraint firstAttribute="height" constant="55" id="dPn-tg-le5"/>
                                                                             </constraints>
                                                                         </imageView>
                                                                         <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="pbx-Bf-dc5">
-                                                                            <rect key="frame" x="91" y="15" width="247" height="188"/>
+                                                                            <rect key="frame" x="91" y="15" width="247" height="199"/>
                                                                             <subviews>
                                                                                 <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Label" textAlignment="natural" lineBreakMode="tailTruncation" numberOfLines="2" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="w7S-L0-aEc" customClass="MyUILabel" customModule="rzq" customModuleProvider="target">
-                                                                                    <rect key="frame" x="0.0" y="0.0" width="247" height="40"/>
+                                                                                    <rect key="frame" x="0.0" y="0.0" width="247" height="33"/>
                                                                                     <fontDescription key="fontDescription" type="system" pointSize="19"/>
                                                                                     <nil key="textColor"/>
                                                                                     <nil key="highlightedColor"/>
@@ -6530,7 +6530,7 @@
                                                                                     </userDefinedRuntimeAttributes>
                                                                                 </label>
                                                                                 <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="252" text="delivery date" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="8T3-dm-quA" customClass="MyUILabel" customModule="rzq" customModuleProvider="target">
-                                                                                    <rect key="frame" x="0.0" y="48" width="247" height="18"/>
+                                                                                    <rect key="frame" x="0.0" y="41" width="247" height="18"/>
                                                                                     <fontDescription key="fontDescription" type="system" pointSize="15"/>
                                                                                     <color key="textColor" red="0.57647058823529407" green="0.59999999999999998" blue="0.63921568627450975" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                                                                                     <nil key="highlightedColor"/>
@@ -6539,7 +6539,7 @@
                                                                                     </userDefinedRuntimeAttributes>
                                                                                 </label>
                                                                                 <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="253" text="order number" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="Dgx-Wg-IeZ" customClass="MyUILabel" customModule="rzq" customModuleProvider="target">
-                                                                                    <rect key="frame" x="0.0" y="71" width="247" height="18"/>
+                                                                                    <rect key="frame" x="0.0" y="64" width="247" height="18"/>
                                                                                     <fontDescription key="fontDescription" type="system" pointSize="15"/>
                                                                                     <color key="textColor" red="0.57647058819999997" green="0.59999999999999998" blue="0.63921568630000003" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                                                                                     <nil key="highlightedColor"/>
@@ -6548,7 +6548,7 @@
                                                                                     </userDefinedRuntimeAttributes>
                                                                                 </label>
                                                                                 <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="255" text="From" textAlignment="natural" lineBreakMode="tailTruncation" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="q3C-tl-7cl" customClass="MyUILabel" customModule="rzq" customModuleProvider="target">
-                                                                                    <rect key="frame" x="0.0" y="94" width="247" height="18"/>
+                                                                                    <rect key="frame" x="0.0" y="87" width="247" height="18"/>
                                                                                     <fontDescription key="fontDescription" type="system" pointSize="15"/>
                                                                                     <color key="textColor" red="0.57647058819999997" green="0.59999999999999998" blue="0.63921568630000003" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                                                                                     <nil key="highlightedColor"/>
@@ -6557,7 +6557,7 @@
                                                                                     </userDefinedRuntimeAttributes>
                                                                                 </label>
                                                                                 <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="254" text="To" textAlignment="natural" lineBreakMode="tailTruncation" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="NTj-Fw-QyM" customClass="MyUILabel" customModule="rzq" customModuleProvider="target">
-                                                                                    <rect key="frame" x="0.0" y="117" width="247" height="18"/>
+                                                                                    <rect key="frame" x="0.0" y="110" width="247" height="18"/>
                                                                                     <fontDescription key="fontDescription" type="system" pointSize="15"/>
                                                                                     <color key="textColor" red="0.57647058819999997" green="0.59999999999999998" blue="0.63921568630000003" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                                                                                     <nil key="highlightedColor"/>
@@ -6565,8 +6565,11 @@
                                                                                         <userDefinedRuntimeAttribute type="string" keyPath="font_type" value="15,2"/>
                                                                                     </userDefinedRuntimeAttributes>
                                                                                 </label>
-                                                                                <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="256" text="Order status" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="u7S-ZW-Cu1" customClass="MyUILabel" customModule="rzq" customModuleProvider="target">
-                                                                                    <rect key="frame" x="0.0" y="140" width="247" height="18"/>
+                                                                                <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="256" text="" textAlignment="natural" lineBreakMode="tailTruncation" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="u7S-ZW-Cu1" customClass="MyUILabel" customModule="rzq" customModuleProvider="target">
+                                                                                    <rect key="frame" x="0.0" y="133" width="247" height="36"/>
+                                                                                    <constraints>
+                                                                                        <constraint firstAttribute="height" constant="36" id="hjS-ri-2dh"/>
+                                                                                    </constraints>
                                                                                     <fontDescription key="fontDescription" type="system" pointSize="15"/>
                                                                                     <color key="textColor" red="1" green="0.7725490196" blue="0.015686274510000001" alpha="1" colorSpace="calibratedRGB"/>
                                                                                     <nil key="highlightedColor"/>
@@ -6575,7 +6578,7 @@
                                                                                     </userDefinedRuntimeAttributes>
                                                                                 </label>
                                                                                 <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="Qys-KC-Eqb" customClass="CardView" customModule="rzq" customModuleProvider="target">
-                                                                                    <rect key="frame" x="0.0" y="163" width="60" height="25"/>
+                                                                                    <rect key="frame" x="0.0" y="174" width="60" height="25"/>
                                                                                     <subviews>
                                                                                         <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="system" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="lxD-LV-M1f">
                                                                                             <rect key="frame" x="0.0" y="0.0" width="60" height="25"/>
@@ -6613,7 +6616,7 @@
                                                                                     </userDefinedRuntimeAttributes>
                                                                                 </view>
                                                                                 <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="AuE-HL-wby" customClass="CardView" customModule="rzq" customModuleProvider="target">
-                                                                                    <rect key="frame" x="75" y="163" width="60" height="25"/>
+                                                                                    <rect key="frame" x="75" y="174" width="60" height="25"/>
                                                                                     <subviews>
                                                                                         <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="system" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="XI6-bJ-t4n">
                                                                                             <rect key="frame" x="0.0" y="0.0" width="60" height="25"/>
@@ -6651,7 +6654,7 @@
                                                                                     </userDefinedRuntimeAttributes>
                                                                                 </view>
                                                                                 <imageView hidden="YES" clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="circle.fill" catalog="system" translatesAutoresizingMaskIntoConstraints="NO" id="eky-OL-V9d">
-                                                                                    <rect key="frame" x="143" y="169" width="15" height="13.666666666666671"/>
+                                                                                    <rect key="frame" x="143" y="180" width="15" height="13.666666666666671"/>
                                                                                     <color key="tintColor" white="0.66666666666666663" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                                                                     <constraints>
                                                                                         <constraint firstAttribute="height" constant="15" id="Gm0-me-pNf"/>
@@ -6660,7 +6663,7 @@
                                                                                     <edgeInsets key="layoutMargins" top="10" left="10" bottom="10" right="10"/>
                                                                                 </imageView>
                                                                                 <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="system" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="3bd-cy-Fcb" customClass="MyUIButton" customModule="rzq" customModuleProvider="target">
-                                                                                    <rect key="frame" x="187" y="163" width="52" height="25"/>
+                                                                                    <rect key="frame" x="187" y="174" width="52" height="25"/>
                                                                                     <constraints>
                                                                                         <constraint firstAttribute="height" constant="25" id="2AA-WU-gHx"/>
                                                                                     </constraints>
@@ -6708,7 +6711,7 @@
                                                                             </constraints>
                                                                         </view>
                                                                         <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="PLF-5Z-ZWs">
-                                                                            <rect key="frame" x="0.0" y="45" width="6" height="128"/>
+                                                                            <rect key="frame" x="0.0" y="45" width="6" height="134"/>
                                                                             <color key="backgroundColor" red="1" green="0.7725490196" blue="0.015686274510000001" alpha="1" colorSpace="calibratedRGB"/>
                                                                             <constraints>
                                                                                 <constraint firstAttribute="width" constant="6" id="mDR-B2-FBC"/>
@@ -6725,7 +6728,7 @@
                                                                         <constraint firstAttribute="trailing" secondItem="pbx-Bf-dc5" secondAttribute="trailing" constant="15" id="Z0k-DY-4ac"/>
                                                                         <constraint firstItem="PLF-5Z-ZWs" firstAttribute="leading" secondItem="d5T-uq-WY4" secondAttribute="leading" id="ZOj-Ag-gH9"/>
                                                                         <constraint firstItem="3cL-U6-zOF" firstAttribute="centerY" secondItem="d5T-uq-WY4" secondAttribute="centerY" id="gHv-ZW-EIY"/>
-                                                                        <constraint firstAttribute="bottom" secondItem="pbx-Bf-dc5" secondAttribute="bottom" constant="15" id="u0q-vW-qJ9"/>
+                                                                        <constraint firstAttribute="bottom" secondItem="pbx-Bf-dc5" secondAttribute="bottom" constant="10" id="u0q-vW-qJ9"/>
                                                                     </constraints>
                                                                     <userDefinedRuntimeAttributes>
                                                                         <userDefinedRuntimeAttribute type="number" keyPath="cornerRadius">
@@ -28136,7 +28139,7 @@
             <size key="intrinsicContentSize" width="355" height="39.220703125"/>
         </designable>
         <designable name="90c-lM-y4l">
-            <size key="intrinsicContentSize" width="307" height="38.823671875000002"/>
+            <size key="intrinsicContentSize" width="307" height="40.209671874999998"/>
         </designable>
         <designable name="9x5-0P-Zxx">
             <size key="intrinsicContentSize" width="95" height="15"/>
@@ -28154,7 +28157,7 @@
             <size key="intrinsicContentSize" width="85" height="13"/>
         </designable>
         <designable name="N1t-JS-2FB">
-            <size key="intrinsicContentSize" width="190" height="38.823671875000002"/>
+            <size key="intrinsicContentSize" width="190" height="40.209671874999998"/>
         </designable>
         <designable name="OzZ-db-ahS">
             <size key="intrinsicContentSize" width="355" height="39.220703125"/>

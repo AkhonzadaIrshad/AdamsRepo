@@ -8,7 +8,7 @@
 "addAdress.title" = "اختر عنوانك";
 "address.button.title" = "أضف عنوانًا جديدًا";
 "address.or.title" = "أو";
-
+"order.status.title" = "لم يتم الطلب (!) لازم توافق على عرض توصيل من احد المناديب";
 "DeliveryStep1.listView" = "عرض القائمة";
 "bidCell.Accept" = "قبول";
 "bidCell.Decline" = "رفض";

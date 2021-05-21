@@ -136,7 +136,11 @@ class OrdersVC: BaseViewController, UITableViewDelegate, UITableViewDataSource {
             cell.lblDeliveryDate.text = "\("delivery_date".localized) \(self.convertDate(isoDate: item.createdDate ?? ""))"
             cell.lblFrom.text = "\("from".localized) \(item.fromAddress ?? "")"
             cell.lblTo.text = "\("to".localized) \(item.toAddress ?? "")"
-            cell.lblOrderStatus.text = item.statusString ?? ""
+            if item.status == 6 {
+                cell.lblOrderStatus.text = "order.status.title".localized
+            } else {
+                cell.lblOrderStatus.text = item.statusString ?? ""
+            }
             
             cell.lblOrderStatus.textColor = self.getStatusColor(status: item.status ?? Constants.ORDER_PENDING)
             cell.statusColorView.backgroundColor = self.getStatusColor(status: item.status ?? Constants.ORDER_PENDING)
@@ -188,8 +192,12 @@ class OrdersVC: BaseViewController, UITableViewDelegate, UITableViewDataSource {
             cell.lblDeliveryDate.text = "\("delivery_date".localized) \(self.convertDate(isoDate: item.createdDate ?? ""))"
             cell.lblFrom.text = "\("from".localized) \(item.fromAddress ?? "")"
             cell.lblTo.text = "\("to".localized) \(item.toAddress ?? "")"
-            cell.lblOrderStatus.text = item.statusString ?? ""
-            
+          //  cell.lblOrderStatus.text = item.statusString ?? ""
+            if item.status == 6 {
+                cell.lblOrderStatus.text = "order.status.title".localized
+            } else {
+                cell.lblOrderStatus.text = item.statusString ?? ""
+            }
             cell.viewTrack.isHidden = true
             cell.viewChat.isHidden = true
             
