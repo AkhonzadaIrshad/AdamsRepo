@@ -101,6 +101,7 @@ class DeliveryStep1: BaseVC , Step3Delegate, AllShopDelegate, ImagePickerDelegat
             self.shopsSearchTableView.reloadData()
         }
     }
+    var allShops = [DataShop]()
     var selectAllCategory: Bool = false
     var isFromSearch: Bool = false
     var fromdeepLink: Bool = false
@@ -739,6 +740,7 @@ class DeliveryStep1: BaseVC , Step3Delegate, AllShopDelegate, ImagePickerDelegat
         ApiService.getShops(latitude: self.latitude ?? 29.306856, longitude: self.longitude ?? 47.698692, radius: radius, rating : rating, types : 0) { (response) in
             self.shops.removeAll()
             self.shops.append(contentsOf: response.dataShops ?? [DataShop]())
+            self.allShops = self.shops
             print("shops : \(self.shops.count)")
             if self.categories.count > 0 {
                 self.hideLoading()
@@ -1645,6 +1647,12 @@ extension DeliveryStep1 : GMSMapViewDelegate {
 // MARK: UITextFieldDelegate
 
 extension DeliveryStep1: UITextFieldDelegate {
+    func textFieldShouldClear(_ textField: UITextField) -> Bool {
+        hideResults()
+        self.shops = allShops
+        return true
+    }
+    
 //    func textFieldShouldReturn(_ textField: UITextField) -> Bool {
 //        textField.resignFirstResponder()
 //        hideResults() ; return true
@@ -1657,7 +1665,7 @@ extension DeliveryStep1: UITextFieldDelegate {
             // We're deleting
              if searchText.count <= 3 {
                 hideResults()
-                
+                self.shops = allShops
             }
           }
           else
@@ -1670,7 +1678,9 @@ extension DeliveryStep1: UITextFieldDelegate {
               
             }else if searchText.count < 5 {
                 hideResults()
+                self.shops = allShops
             }
+
           }
 
         return true

@@ -1223,7 +1223,7 @@
 "ujZ-qU-0g6.normalTitle" = "رجوع";
 
 /* Class = "UITextField"; placeholder = "Search for pickup location"; ObjectID = "uoN-4e-Qtq"; */
-"uoN-4e-Qtq.placeholder" = "ابحث عن مكان آخر";
+"uoN-4e-Qtq.placeholder" = "ابحث بالاسم عن محل،مطعم،قهوة،أي مكان بخاطرك";
 
 /* Class = "UILabel"; text = "Label"; ObjectID = "vNJ-fR-wCx"; */
 "vNJ-fR-wCx.text" = "Label";
