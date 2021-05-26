@@ -23,6 +23,7 @@ class HomeMapVC: BaseViewController {
     @IBOutlet weak var openLocationStackView: UIStackView!
     @IBOutlet weak var edtSearch: MyUITextField!
     
+    @IBOutlet weak var houseStackView: UIStackView!
     @IBOutlet weak var mapView: GMSMapView!
     @IBOutlet weak var btnMenu: UIButton!
     
@@ -785,6 +786,7 @@ class HomeMapVC: BaseViewController {
                 }
             }
             if (self.items.count > 0) {
+                self.fullAdressTextView.isHidden = true
                 self.collectionView.isHidden = false
                 self.collectionView.delegate = self
                 self.collectionView.dataSource = self
@@ -804,10 +806,9 @@ class HomeMapVC: BaseViewController {
                        self.locationPartTextField.isHidden = true
                    }
                 } else {
+                    self.houseStackView.isHidden = true
                     self.viewOnTheWay.isHidden = false
-                }
-                
-                
+                }                
                 
                 //snuff33
                 let itm = self.items[0]
@@ -815,6 +816,11 @@ class HomeMapVC: BaseViewController {
                     self.getDriverLocation(item: itm)
                 }
             }else {
+                self.fullAdressTextView.isHidden = false
+                if self.isProvider() {} else {
+                    self.houseStackView.isHidden = false
+                }
+                
                 self.stopTimer()
                 self.collectionView.isHidden = true
                 self.polyline?.map = nil
