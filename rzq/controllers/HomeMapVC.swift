@@ -1307,9 +1307,11 @@ extension HomeMapVC: SelectAdressViewDelegate {
         self.fullAdressTextView.text = userAdressData?.name ?? ""
         self.latitude = userAdressData?.latitude ?? 0.0
         self.longitude = userAdressData?.longitude ?? 0.0
+        
+        let camera = GMSCameraPosition.camera(withLatitude:  userAdressData?.latitude ?? 0.0, longitude: userAdressData?.longitude ?? 0.0, zoom: 17.0)
+            self.mapView.animate(to: camera)
     }
     func onClose() {
-        
     }
     
     func onAddNewAdress() {
