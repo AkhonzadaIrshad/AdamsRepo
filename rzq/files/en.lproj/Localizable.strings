@@ -13,6 +13,8 @@
 "bidCell.Decline" = "Decline";
 "order.status.title" = "The Order has not been completed (!). You must agree to a delivery offer from one of the delegates";
 "km" = "Km";
+"away" = "away";
+"priceOfDelivery" = "delivery price";
 "Loading" = "Loading";
 "Driverbid/AlreadyBidedd" = "You have placed a bid already";
 "add_image_pic_title" = "Add Pictures";

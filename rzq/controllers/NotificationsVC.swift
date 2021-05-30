@@ -564,7 +564,9 @@ extension NotificationsVC {
         
          let dict = item.data?.convertToDictionary()
          let shopImage = dict?["ShopImage"] as? String ?? ""
-         
+         let orderCount = dict?["OrderCount"] as? Int ?? 0
+         cell.numberOfOrdersLabel.text = "\(orderCount) \("orders".localized)"
+
          if (shopImage.count > 0) {
              let url = URL(string: "\(Constants.IMAGE_URL)\(shopImage)")
              cell.ivLogo.kf.setImage(with: url)
@@ -577,7 +579,7 @@ extension NotificationsVC {
          }
          let distance = dict?["Distance"] as? Double ?? 0.0
          cell.lblTitle.text = desc
-        cell.lblMoney.text = "price".localized + " \(dict?["Price"] as? Double ?? 0.0) \("currency".localized)"
+        cell.lblMoney.text = "priceOfDelivery".localized + " \(dict?["Price"] as? Double ?? 0.0) \("currency".localized)"
          let time = dict?["Time"] as? Int ?? 0
          if (time > 0) {
              cell.lblTime.text = "\(dict?["Time"] as? Int ?? 0) \("hours".localized)"
@@ -587,7 +589,7 @@ extension NotificationsVC {
          
          let distanceStr = String(format: "%.2f", (distance))
          
-         cell.lblDistance.text = "\(distanceStr) \("km".localized)"
+         cell.lblDistance.text = "\("away".localized) \(distanceStr) \("km".localized)"
          
          let vc = UIStoryboard(name: "Main", bundle: nil).instantiateViewController(withIdentifier: "AcceptBidDialog") as! AcceptBidDialog
          self.definesPresentationContext = true

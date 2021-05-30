@@ -13,6 +13,7 @@
 		8A0878C22531260C00C4D0C4 /* LocationAPIHelper.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8A0878C12531260C00C4D0C4 /* LocationAPIHelper.swift */; };
 		8A0878C52531269000C4D0C4 /* LocationAPIHelper+Nearby.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8A0878C42531269000C4D0C4 /* LocationAPIHelper+Nearby.swift */; };
 		8A0878C82531272200C4D0C4 /* NearByTypes.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8A0878C72531272200C4D0C4 /* NearByTypes.swift */; };
+		8A2971B7266449DB00D0B0AA /* DriverBidCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 8A2971B9266449DB00D0B0AA /* DriverBidCell.xib */; };
 		8A3D9A4525642AB40012711C /* ToolTip.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8A3D9A4425642AB40012711C /* ToolTip.swift */; };
 		8A3D9A4825642B140012711C /* Extension.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8A3D9A4725642B140012711C /* Extension.swift */; };
 		8A62677825F6CF3F002D8E79 /* ScalingCarouselView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8A62677725F6CF3F002D8E79 /* ScalingCarouselView.swift */; };
@@ -243,7 +244,6 @@
 		8BF42431229B16990014596F /* AllTendersResponse.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8BF42430229B16990014596F /* AllTendersResponse.swift */; };
 		8BF6DCBB23706D2A00E9B80B /* PaymentStatusDialog.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8BF6DCBA23706D2A00E9B80B /* PaymentStatusDialog.swift */; };
 		8BFF8E06229DC5C500472F27 /* ShopImageCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8BFF8E05229DC5C500472F27 /* ShopImageCell.swift */; };
-		C12DF48F250195A10001D42D /* DriverBidCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = C12DF48E250195A10001D42D /* DriverBidCell.xib */; };
 		C185A56724CCD614001B6B10 /* CustomAlert.swift in Sources */ = {isa = PBXBuildFile; fileRef = C185A56624CCD614001B6B10 /* CustomAlert.swift */; };
 		C185A56924CCD65E001B6B10 /* CustomAlert.xib in Resources */ = {isa = PBXBuildFile; fileRef = C185A56824CCD65E001B6B10 /* CustomAlert.xib */; };
 		C185A56C24CDC17A001B6B10 /* Cairo-Bold.ttf in Resources */ = {isa = PBXBuildFile; fileRef = C185A56A24CDC17A001B6B10 /* Cairo-Bold.ttf */; };
@@ -260,6 +260,9 @@
 		8A0878C12531260C00C4D0C4 /* LocationAPIHelper.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LocationAPIHelper.swift; sourceTree = "<group>"; };
 		8A0878C42531269000C4D0C4 /* LocationAPIHelper+Nearby.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "LocationAPIHelper+Nearby.swift"; sourceTree = "<group>"; };
 		8A0878C72531272200C4D0C4 /* NearByTypes.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NearByTypes.swift; sourceTree = "<group>"; };
+		8A2971B8266449DB00D0B0AA /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.xib; name = Base; path = Base.lproj/DriverBidCell.xib; sourceTree = "<group>"; };
+		8A2971BC266449E400D0B0AA /* en */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = en; path = en.lproj/DriverBidCell.strings; sourceTree = "<group>"; };
+		8A2971BE266449E600D0B0AA /* ar */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = ar; path = ar.lproj/DriverBidCell.strings; sourceTree = "<group>"; };
 		8A3D9A4425642AB40012711C /* ToolTip.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ToolTip.swift; sourceTree = "<group>"; };
 		8A3D9A4725642B140012711C /* Extension.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Extension.swift; sourceTree = "<group>"; };
 		8A62677725F6CF3F002D8E79 /* ScalingCarouselView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ScalingCarouselView.swift; sourceTree = "<group>"; };
@@ -498,7 +501,6 @@
 		8BF42430229B16990014596F /* AllTendersResponse.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AllTendersResponse.swift; sourceTree = "<group>"; };
 		8BF6DCBA23706D2A00E9B80B /* PaymentStatusDialog.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PaymentStatusDialog.swift; sourceTree = "<group>"; };
 		8BFF8E05229DC5C500472F27 /* ShopImageCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ShopImageCell.swift; sourceTree = "<group>"; };
-		C12DF48E250195A10001D42D /* DriverBidCell.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = DriverBidCell.xib; sourceTree = "<group>"; };
 		C185A56624CCD614001B6B10 /* CustomAlert.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CustomAlert.swift; sourceTree = "<group>"; };
 		C185A56824CCD65E001B6B10 /* CustomAlert.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = CustomAlert.xib; sourceTree = "<group>"; };
 		C185A56A24CDC17A001B6B10 /* Cairo-Bold.ttf */ = {isa = PBXFileReference; lastKnownFileType = file; path = "Cairo-Bold.ttf"; sourceTree = "<group>"; };
@@ -943,7 +945,7 @@
 				8BCB78022254DE0B00E52ED0 /* DriverOrderCell.swift */,
 				8BCB78042254DE1B00E52ED0 /* DriverBidCell.swift */,
 				8BCB78062254DE2B00E52ED0 /* RegularAlertCell.swift */,
-				C12DF48E250195A10001D42D /* DriverBidCell.xib */,
+				8A2971B9266449DB00D0B0AA /* DriverBidCell.xib */,
 			);
 			path = alerts;
 			sourceTree = "<group>";
@@ -1171,7 +1173,7 @@
 				C1F86AF124D75F58005698F4 /* NavBar.xib in Resources */,
 				8BF222322271AC05005BE71D /* arabic_regular.ttf in Resources */,
 				8B9CA8452250CCDF00DE0DC4 /* english_light.ttf in Resources */,
-				C12DF48F250195A10001D42D /* DriverBidCell.xib in Resources */,
+				8A2971B7266449DB00D0B0AA /* DriverBidCell.xib in Resources */,
 				8B2BCC87224FCEB400CBC7D3 /* Main.storyboard in Resources */,
 				C185A56924CCD65E001B6B10 /* CustomAlert.xib in Resources */,
 			);
@@ -1466,6 +1468,16 @@
 /* End PBXSourcesBuildPhase section */
 
 /* Begin PBXVariantGroup section */
+		8A2971B9266449DB00D0B0AA /* DriverBidCell.xib */ = {
+			isa = PBXVariantGroup;
+			children = (
+				8A2971B8266449DB00D0B0AA /* Base */,
+				8A2971BC266449E400D0B0AA /* en */,
+				8A2971BE266449E600D0B0AA /* ar */,
+			);
+			name = DriverBidCell.xib;
+			sourceTree = "<group>";
+		};
 		8B2BCC85224FCEB400CBC7D3 /* Main.storyboard */ = {
 			isa = PBXVariantGroup;
 			children = (

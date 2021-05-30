@@ -16,6 +16,8 @@
 
 "km" = "كم";
 "Loading" = "جاري التحميل";
+"away" = "يبعد";
+"priceOfDelivery" = "سعرالتوصيل";
 
 "add_image_pic_title" = "اضف صور";
 "add_salon_pic_message" = "اضف صور من الحافظة او قم بالتقاط صور جديدة";

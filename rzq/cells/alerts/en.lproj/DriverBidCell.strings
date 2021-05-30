@@ -1,0 +1,33 @@
+
+/* Class = "UILabel"; text = "Label"; ObjectID = "9o3-Yz-tg2"; */
+"9o3-Yz-tg2.text" = "Label";
+
+/* Class = "UIButton"; normalTitle = "accept"; ObjectID = "BgZ-8t-TM5"; */
+"BgZ-8t-TM5.normalTitle" = "accept";
+
+/* Class = "UILabel"; text = "Label"; ObjectID = "C97-on-swg"; */
+"C97-on-swg.text" = "Label";
+
+/* Class = "UILabel"; text = "Label"; ObjectID = "DYP-lp-m7f"; */
+"DYP-lp-m7f.text" = "Label";
+
+/* Class = "UILabel"; text = "5"; ObjectID = "Dc3-pk-yFL"; */
+"Dc3-pk-yFL.text" = "5";
+
+/* Class = "UILabel"; text = "Number Of Orders"; ObjectID = "JnS-Gy-hok"; */
+"JnS-Gy-hok.text" = "Number Of Orders";
+
+/* Class = "UILabel"; text = "Label"; ObjectID = "TeR-XQ-HFE"; */
+"TeR-XQ-HFE.text" = "Label";
+
+/* Class = "UIButton"; normalTitle = "deny"; ObjectID = "Z9q-Yp-woy"; */
+"Z9q-Yp-woy.normalTitle" = "deny";
+
+/* Class = "UIButton"; normalTitle = "more"; ObjectID = "kI4-lQ-q0D"; */
+"kI4-lQ-q0D.normalTitle" = "more";
+
+/* Class = "UILabel"; text = "Label"; ObjectID = "rqe-Qf-77u"; */
+"rqe-Qf-77u.text" = "Label";
+
+/* Class = "UILabel"; text = "Label"; ObjectID = "sYu-cM-NIX"; */
+"sYu-cM-NIX.text" = "Label";
