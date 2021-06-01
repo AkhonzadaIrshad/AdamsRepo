@@ -1026,7 +1026,7 @@ class DeliveryStep1: BaseVC , Step3Delegate, AllShopDelegate, ImagePickerDelegat
             marker.snippet = "\(center.phoneNumber ?? "")"
             //self.singleMarker?.icon = UIImage(named: "ic_shop_empty")
             // snuff1
-            let url = URL(string: "\(Constants.IMAGE_URL)\(center.type?.image ?? "")")
+            let url = URL(string: "\(Constants.IMAGE_URL)\(center.type?.icon ?? "")")
             self.applyMarkerImage(from: url!, to: marker, isScaled: isScaled, dispalyShopeName: dispalyShopeName, ShopeName: center.name ?? "")
 
           //  self.singleMarker?.map = self.gMap
@@ -1068,7 +1068,7 @@ class DeliveryStep1: BaseVC , Step3Delegate, AllShopDelegate, ImagePickerDelegat
         
         let storeView = StoreMarkerView.instanceFromNib()
         
-        DispatchQueue.main.async {
+     //   DispatchQueue.main.async {
             if isScaled {
             storeView.transform = CGAffineTransform.identity.scaledBy(x: self.myscale, y: self.myscale);
             }
@@ -1076,7 +1076,7 @@ class DeliveryStep1: BaseVC , Step3Delegate, AllShopDelegate, ImagePickerDelegat
             storeView.storiImaView.layer.cornerRadius = 14
             marker.iconView = storeView
             marker.map = self.gMap
-        }
+       // }
         
         DispatchQueue.global(qos: .background).async {
             guard let data = try? Data(contentsOf: url),
@@ -1086,7 +1086,7 @@ class DeliveryStep1: BaseVC , Step3Delegate, AllShopDelegate, ImagePickerDelegat
             
             DispatchQueue.main.async {
                // marker.icon = self.imageWithImage(image: image, scaledToSize: CGSize(width: 48.0, height: 48.0))
-                let image = self.imageWithImage(image: image, scaledToSize: CGSize(width: 48.0, height: 48.0))
+//                let image = self.imageWithImage(image: image, scaledToSize: CGSize(width: 48.0, height: 48.0))
                 storeView.storiImaView.image = image
             }
         }
