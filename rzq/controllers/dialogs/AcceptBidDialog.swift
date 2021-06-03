@@ -87,7 +87,7 @@ class AcceptBidDialog: PaymentViewController, PaymentDelegate {
             self.deliveryId = dict?["OrderId"] as? Int ?? 0
             self.bidId = dict?["BidId"] as? Int ?? 0
             let orderCount = dict?["OrderCount"] as? Int ?? 0
-            
+
             let url = URL(string: "\(Constants.IMAGE_URL)\(driverImage)")
             self.ivLogo.kf.setImage(with: url)
             

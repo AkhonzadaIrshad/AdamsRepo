@@ -7,6 +7,9 @@
 //
 
 import UIKit
+import Cosmos
+import CoreLocation
+import MFSDK
 
 class DriverBidCell: UITableViewCell {
 
@@ -18,14 +21,16 @@ class DriverBidCell: UITableViewCell {
     @IBOutlet weak var lblMoney: MyUILabel!
     @IBOutlet weak var numberOfOrdersLabel: UILabel!
     @IBOutlet weak var lblTime: MyUILabel!
-    
+    @IBOutlet weak var userProfilImage: CircleImage!
+
     @IBOutlet weak var lblDistance: MyUILabel!
     @IBOutlet weak var lblNotificationDate: MyUILabel!
     @IBOutlet weak var lblNotificationTime: MyUILabel!
     
     @IBOutlet weak var timeView: UIView!
     @IBOutlet weak var counterLbl: UILabel!
-    
+    @IBOutlet weak var rateView: CosmosView!
+
     @IBOutlet weak var btnCheckBid: MyUIButton!
     @IBOutlet weak var vwDeclineBid: RoundedView!
     @IBOutlet weak var vwAcceptBid: RoundedView!

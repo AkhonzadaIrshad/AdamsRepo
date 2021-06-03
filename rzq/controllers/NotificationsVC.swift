@@ -571,6 +571,8 @@ extension NotificationsVC {
              let url = URL(string: "\(Constants.IMAGE_URL)\(shopImage)")
              cell.ivLogo.kf.setImage(with: url)
          }
+        let driver = dict?["Driver"] as? String ?? ""
+
          var desc = ""
          if (self.isArabic()) {
              desc = dict?["ArabicBody"] as? String ?? ""
@@ -578,8 +580,15 @@ extension NotificationsVC {
              desc = dict?["EnglishBody"] as? String ?? ""
          }
          let distance = dict?["Distance"] as? Double ?? 0.0
-         cell.lblTitle.text = desc
+        let longestWordRange = (desc as NSString).range(of: driver)
+
+        let attributedString = NSMutableAttributedString(string: desc, attributes: [NSAttributedString.Key.font : UIFont.systemFont(ofSize: 15)])
+
+        attributedString.setAttributes([NSAttributedString.Key.font : UIFont.boldSystemFont(ofSize: 18), NSAttributedString.Key.foregroundColor : UIColor.appLogoColor], range: longestWordRange)
+        cell.lblTitle.attributedText = attributedString
+        // cell.lblTitle.text = desc
         cell.lblMoney.text = "priceOfDelivery".localized + " \(dict?["Price"] as? Double ?? 0.0) \("currency".localized)"
+     
          let time = dict?["Time"] as? Int ?? 0
          if (time > 0) {
              cell.lblTime.text = "\(dict?["Time"] as? Int ?? 0) \("hours".localized)"
@@ -590,7 +599,13 @@ extension NotificationsVC {
          let distanceStr = String(format: "%.2f", (distance))
          
          cell.lblDistance.text = "\("away".localized) \(distanceStr) \("km".localized)"
-         
+        let driverImage = dict?["ProviderImage"] as? String ?? ""
+        let driverRate = dict?["ProviderRate"] as? Double ?? 0.0
+
+        let url = URL(string: "\(Constants.IMAGE_URL)\(driverImage)")
+        cell.userProfilImage.kf.setImage(with: url)
+        cell.rateView.rating = driverRate
+
          let vc = UIStoryboard(name: "Main", bundle: nil).instantiateViewController(withIdentifier: "AcceptBidDialog") as! AcceptBidDialog
          self.definesPresentationContext = true
          vc.modalPresentationStyle = UIModalPresentationStyle.overCurrentContext
