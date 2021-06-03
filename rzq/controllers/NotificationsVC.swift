@@ -600,7 +600,7 @@ extension NotificationsVC {
          
          cell.lblDistance.text = "\("away".localized) \(distanceStr) \("km".localized)"
         let driverImage = dict?["ProviderImage"] as? String ?? ""
-        let driverRate = dict?["ProviderRate"] as? Double ?? 0.0
+        let driverRate = dict?["ProviderRate"] as? Double ?? 4.0
 
         let url = URL(string: "\(Constants.IMAGE_URL)\(driverImage)")
         cell.userProfilImage.kf.setImage(with: url)
