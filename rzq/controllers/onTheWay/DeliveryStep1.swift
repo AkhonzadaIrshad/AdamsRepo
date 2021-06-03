@@ -1026,7 +1026,7 @@ class DeliveryStep1: BaseVC , Step3Delegate, AllShopDelegate, ImagePickerDelegat
             marker.snippet = "\(center.phoneNumber ?? "")"
             //self.singleMarker?.icon = UIImage(named: "ic_shop_empty")
             // snuff1
-            let url = URL(string: "\(Constants.IMAGE_URL)\(center.type?.icon ?? "")")
+            let url = URL(string: "\(Constants.IMAGE_URL)\(center.type?.image ?? "")")
             self.applyMarkerImage(from: url!, to: marker, isScaled: isScaled, dispalyShopeName: dispalyShopeName, ShopeName: center.name ?? "")
 
           //  self.singleMarker?.map = self.gMap

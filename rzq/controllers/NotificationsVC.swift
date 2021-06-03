@@ -601,6 +601,7 @@ extension NotificationsVC {
          cell.lblDistance.text = "\("away".localized) \(distanceStr) \("km".localized)"
         let driverImage = dict?["ProviderImage"] as? String ?? ""
         let driverRate = dict?["ProviderRate"] as? Double ?? 4.0
+        let providerId = dict?["ProviderId"] as? String
 
         let url = URL(string: "\(Constants.IMAGE_URL)\(driverImage)")
         cell.userProfilImage.kf.setImage(with: url)
@@ -626,6 +627,14 @@ extension NotificationsVC {
              vc.applyAcceptBidAcion()
          }
          
+        cell.onViewReviews = {
+            let storyboard = UIStoryboard(name: "Main", bundle: nil)
+            let vc : ProviderRatingsVC = storyboard.instantiateViewController(withIdentifier: "ProviderRatingsVC") as! ProviderRatingsVC
+            vc.providerId = providerId ?? ""
+            vc.modalPresentationStyle = .fullScreen
+            self.present(vc, animated: true, completion: nil)
+        }
+        
          cell.lblNotificationDate.text = self.convertDate(isoDate: item.createdDate ?? "")
          if (item.createdTime?.count ?? 0 > 0) {
              cell.timeView.isHidden = false

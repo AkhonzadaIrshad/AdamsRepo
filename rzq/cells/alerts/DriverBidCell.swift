@@ -22,7 +22,8 @@ class DriverBidCell: UITableViewCell {
     @IBOutlet weak var numberOfOrdersLabel: UILabel!
     @IBOutlet weak var lblTime: MyUILabel!
     @IBOutlet weak var userProfilImage: CircleImage!
-
+    @IBOutlet weak var ViewReviews: MyUIButton!
+    
     @IBOutlet weak var lblDistance: MyUILabel!
     @IBOutlet weak var lblNotificationDate: MyUILabel!
     @IBOutlet weak var lblNotificationTime: MyUILabel!
@@ -42,6 +43,8 @@ class DriverBidCell: UITableViewCell {
     var onCheck : (() -> Void)? = nil
     var onDecline: (() -> Void)? = nil
     var onAccept: (() -> Void)? = nil
+    var onViewReviews: (() -> Void)? = nil
+
     var count = 120
     var seconds = 1
     var secondTimer:Timer?
@@ -53,6 +56,9 @@ class DriverBidCell: UITableViewCell {
     }
     @IBAction func btnDeclineClicked(_ sender: Any) {
         self.onDecline?()
+    }
+    @IBAction func onViewReviews(_ sender: Any) {
+        self.onViewReviews?()
     }
     
     @IBAction func btnAcceptClicked(_ sender: Any) {
