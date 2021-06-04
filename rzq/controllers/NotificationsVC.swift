@@ -599,8 +599,8 @@ extension NotificationsVC {
          let distanceStr = String(format: "%.2f", (distance))
          
          cell.lblDistance.text = "\("away".localized) \(distanceStr) \("km".localized)"
-        let driverImage = dict?["ProviderImage"] as? String ?? ""
-        let driverRate = dict?["ProviderRate"] as? Double ?? 4.0
+        let driverImage = dict?["DriverImage"] as? String ?? ""
+        let driverRate = dict?["DriverRate"] as? Double ?? 4.0
         let providerId = dict?["ProviderId"] as? String
 
         let url = URL(string: "\(Constants.IMAGE_URL)\(driverImage)")
