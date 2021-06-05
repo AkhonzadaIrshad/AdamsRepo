@@ -70,33 +70,41 @@
                                                 <constraint firstAttribute="height" constant="50" id="Nll-me-leD"/>
                                             </constraints>
                                         </stackView>
-                                        <stackView opaque="NO" contentMode="scaleToFill" alignment="center" spacing="10" translatesAutoresizingMaskIntoConstraints="NO" id="5pa-0n-YGk">
-                                            <rect key="frame" x="0.0" y="60" width="415" height="37"/>
+                                        <stackView opaque="NO" contentMode="scaleToFill" axis="vertical" alignment="top" translatesAutoresizingMaskIntoConstraints="NO" id="qgN-qR-Cw7">
+                                            <rect key="frame" x="0.0" y="60" width="280" height="37"/>
                                             <subviews>
-                                                <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="1ar-lH-wnm" customClass="CosmosView" customModule="Cosmos">
+                                                <stackView opaque="NO" contentMode="scaleToFill" distribution="equalSpacing" alignment="center" spacing="10" translatesAutoresizingMaskIntoConstraints="NO" id="5pa-0n-YGk">
                                                     <rect key="frame" x="0.0" y="0.0" width="280" height="37"/>
-                                                    <color key="backgroundColor" systemColor="systemBackgroundColor"/>
-                                                </view>
-                                                <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="cKC-y1-Nof" customClass="MyUIButton" customModule="rzq" customModuleProvider="target">
-                                                    <rect key="frame" x="290" y="1.5" width="125" height="34"/>
-                                                    <color key="backgroundColor" red="0.64313725489999995" green="0.64313725489999995" blue="0.93333333330000001" alpha="1" colorSpace="custom" customColorSpace="displayP3"/>
+                                                    <subviews>
+                                                        <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="1ar-lH-wnm" customClass="CosmosView" customModule="Cosmos">
+                                                            <rect key="frame" x="0.0" y="0.0" width="180" height="37"/>
+                                                            <color key="backgroundColor" systemColor="systemBackgroundColor"/>
+                                                        </view>
+                                                        <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="cKC-y1-Nof" customClass="MyUIButton" customModule="rzq" customModuleProvider="target">
+                                                            <rect key="frame" x="190" y="3.5" width="90" height="30"/>
+                                                            <color key="backgroundColor" red="0.64313725489999995" green="0.64313725489999995" blue="0.93333333330000001" alpha="1" colorSpace="custom" customColorSpace="displayP3"/>
+                                                            <constraints>
+                                                                <constraint firstAttribute="width" constant="90" id="4ZY-Qp-StJ"/>
+                                                                <constraint firstAttribute="height" constant="30" id="B6R-L6-AJb"/>
+                                                            </constraints>
+                                                            <state key="normal" title="View Reviews">
+                                                                <color key="titleColor" red="0.1797233224" green="0.1677487791" blue="0.43923974040000002" alpha="1" colorSpace="custom" customColorSpace="displayP3"/>
+                                                            </state>
+                                                            <userDefinedRuntimeAttributes>
+                                                                <userDefinedRuntimeAttribute type="string" keyPath="font_type" value="11,2"/>
+                                                                <userDefinedRuntimeAttribute type="number" keyPath="cornerRadius">
+                                                                    <integer key="value" value="8"/>
+                                                                </userDefinedRuntimeAttribute>
+                                                            </userDefinedRuntimeAttributes>
+                                                            <connections>
+                                                                <action selector="onViewReviews:" destination="iN0-l3-epB" eventType="touchUpInside" id="hLN-Rm-4lm"/>
+                                                            </connections>
+                                                        </button>
+                                                    </subviews>
                                                     <constraints>
-                                                        <constraint firstAttribute="width" constant="125" id="4ZY-Qp-StJ"/>
-                                                        <constraint firstAttribute="height" constant="34" id="B6R-L6-AJb"/>
+                                                        <constraint firstItem="1ar-lH-wnm" firstAttribute="leading" secondItem="5pa-0n-YGk" secondAttribute="leading" id="hOf-wh-8Tr"/>
                                                     </constraints>
-                                                    <state key="normal" title="View Reviews">
-                                                        <color key="titleColor" red="0.1797233224" green="0.1677487791" blue="0.43923974040000002" alpha="1" colorSpace="custom" customColorSpace="displayP3"/>
-                                                    </state>
-                                                    <userDefinedRuntimeAttributes>
-                                                        <userDefinedRuntimeAttribute type="string" keyPath="font_type" value="11,3"/>
-                                                        <userDefinedRuntimeAttribute type="number" keyPath="cornerRadius">
-                                                            <integer key="value" value="8"/>
-                                                        </userDefinedRuntimeAttribute>
-                                                    </userDefinedRuntimeAttributes>
-                                                    <connections>
-                                                        <action selector="onViewReviews:" destination="iN0-l3-epB" eventType="touchUpInside" id="hLN-Rm-4lm"/>
-                                                    </connections>
-                                                </button>
+                                                </stackView>
                                             </subviews>
                                         </stackView>
                                         <stackView opaque="NO" contentMode="scaleToFill" axis="vertical" spacing="10" translatesAutoresizingMaskIntoConstraints="NO" id="IFU-NE-7qO">
