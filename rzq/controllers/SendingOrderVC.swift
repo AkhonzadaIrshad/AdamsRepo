@@ -161,7 +161,7 @@ class SendingOrderVC: BaseVC {
                     self.getMyOrderButton.isHidden = false
                     self.getMyOrderView.isHidden = false
 
-                }else {
+                } else {
                     self.showBanner(title: "alert".localized, message: response.errorMessage ?? "", style: UIColor.INFO)
                     self.getMyOrderButton.isHidden = false
                     self.getMyOrderView.isHidden = false

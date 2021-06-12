@@ -1349,12 +1349,34 @@ class DeliveryStep1: BaseVC , Step3Delegate, AllShopDelegate, ImagePickerDelegat
     }
     
     @IBAction func myLocationAction(_ sender: Any) {
-        let camera = GMSCameraPosition.camera(withLatitude: self.locationManager.location?.coordinate.latitude ?? 0.0, longitude: self.locationManager.location?.coordinate.longitude ?? 0.0, zoom: 20.0)
+        var bounds = GMSCoordinateBounds()
+        var locationArray = [[String: Double]]()
+        locationArray.append(["latitude": self.latitude ?? 0.0, "longitude": self.longitude ?? 0.0])
+        locationArray.append(["latitude": self.locationManager.location?.coordinate.latitude ?? 0.0, "longitude": self.locationManager.location?.coordinate.longitude ?? 0.0])
         
-        if let coordinate = self.locationManager.location?.coordinate {
-            self.addPickerOnDropOffLocation(coordinate: coordinate)
+        for location in locationArray
+        {
+            let latitude = location["latitude"]
+            let longitude = location["longitude"]
+
+            let marker = GMSMarker()
+            marker.position = CLLocationCoordinate2D(latitude: latitude ?? 0.0, longitude: longitude ?? 0.0)
+            marker.map = self.gMap
+            bounds = bounds.includingCoordinate(marker.position)
         }
-        self.gMap?.animate(to: camera)
+
+        self.gMap?.setMinZoom(1, maxZoom: 15)//prevent to over zoom on fit and animate if bounds be too small
+
+        let update = GMSCameraUpdate.fit(bounds, withPadding: 50)
+        self.gMap?.animate(with: update)
+
+        self.gMap?.setMinZoom(1, maxZoom: 20) // allow the user zoom in more than level 15 again
+//        let camera = GMSCameraPosition.camera(withLatitude: c, longitude: self.locationManager.location?.coordinate.longitude ?? 0.0, zoom: 10.0)
+//
+//        if let coordinate = self.locationManager.location?.coordinate {
+//            self.addPickerOnDropOffLocation(coordinate: coordinate)
+//        }
+//        self.gMap?.animate(to: camera)
     }
     
     @IBAction func shopDetailsAction(_ sender: Any) {
