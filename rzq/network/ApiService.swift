@@ -1092,7 +1092,7 @@ class ApiService : NSObject {
     let headers = [Constants.AUTH_HEADER: "bearer \(Authorization)",
         Constants.LANG_HEADER : self.getLang()]
     
-    AFManager.request("\(Constants.BASE_URL)DriverRequest/CanDriverWithdraw/id=\(driverId)", method: .get, parameters: nil ,encoding: JSONEncoding.default, headers: headers)
+    AFManager.request("\(Constants.BASE_URL)DriverRequest/CanDriverWithdraw?id=\(driverId)", method: .get, parameters: nil ,encoding: JSONEncoding.default, headers: headers)
         .responseJSON { response in
             if let json = response.data {
                 do {
