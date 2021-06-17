@@ -1350,18 +1350,25 @@ class DeliveryStep1: BaseVC , Step3Delegate, AllShopDelegate, ImagePickerDelegat
     
     @IBAction func myLocationAction(_ sender: Any) {
         var bounds = GMSCoordinateBounds()
-        var locationArray = [[String: Double]]()
-        locationArray.append(["latitude": self.latitude ?? 0.0, "longitude": self.longitude ?? 0.0])
-        locationArray.append(["latitude": self.locationManager.location?.coordinate.latitude ?? 0.0, "longitude": self.locationManager.location?.coordinate.longitude ?? 0.0])
+        var locationArray = [[String: Any]]()
+        locationArray.append(["latitude": self.latitude ?? 0.0,
+                              "longitude": self.longitude ?? 0.0,
+                              "image": "fromLocation"])
+        locationArray.append(["latitude": self.locationManager.location?.coordinate.latitude ?? 0.0, "longitude": self.locationManager.location?.coordinate.longitude ?? 0.0,
+                              "image": "toLocation"])
         
         for location in locationArray
         {
-            let latitude = location["latitude"]
-            let longitude = location["longitude"]
-
+            let latitude = location["latitude"] as! Double
+            let longitude = location["longitude"] as! Double
+            let icon = location["image"] as! String
+           
+            let image = self.imageWithImage(image: UIImage(named: icon)!, scaledToSize: CGSize(width: 48.0, height: 48.0))
+            
             let marker = GMSMarker()
-            marker.position = CLLocationCoordinate2D(latitude: latitude ?? 0.0, longitude: longitude ?? 0.0)
+            marker.position = CLLocationCoordinate2D(latitude: latitude , longitude: longitude)
             marker.map = self.gMap
+            marker.icon = image
             bounds = bounds.includingCoordinate(marker.position)
         }
 

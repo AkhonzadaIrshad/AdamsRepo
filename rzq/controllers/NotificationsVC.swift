@@ -621,7 +621,10 @@ extension NotificationsVC {
          }
          
          cell.onDecline = {
+            self.actions.remove(at: indexPath.row)
              vc.applyDeclineAction()
+            self.tableView.reloadData()
+
          }
          cell.onAccept = {
              vc.applyAcceptBidAcion()

@@ -136,24 +136,23 @@ class AcceptBidDialog: PaymentViewController, PaymentDelegate {
     }
     
     func applyDeclineAction() {
-        self.showLoading()
+    
         ApiService.declineBid(Authorization: DataManager.loadUser().data?.accessToken ?? "", bidId: self.bidId ?? 0) { (response) in
-            self.hideLoading()
             if (response.errorCode == 0) {
-                self.showBanner(title: "alert".localized, message: "bid_declined_successfully".localized, style: UIColor.SUCCESS)
+//                self.showBanner(title: "alert".localized, message: "bid_declined_successfully".localized, style: UIColor.SUCCESS)
                 self.delegate?.refreshNotifications()
                 DispatchQueue.main.asyncAfter(deadline: .now() + 2, execute: {
                     self.dismiss(animated: true, completion: nil)
                 })
             }else if (response.errorCode == 18) {
-                self.showBanner(title: "alert".localized, message: "account_inactive".localized, style: UIColor.INFO)
+//                self.showBanner(title: "alert".localized, message: "account_inactive".localized, style: UIColor.INFO)
                 if let vc = UIStoryboard(name: "Main", bundle: nil).instantiateViewController(withIdentifier: "LoginVC") as? LoginVC
                 {
                     vc.modalPresentationStyle = .fullScreen
                     self.present(vc, animated: true, completion: nil)
                 }
             }else {
-                self.showBanner(title: "alert".localized, message: response.errorMessage ?? "", style: UIColor.INFO)
+//                self.showBanner(title: "alert".localized, message: response.errorMessage ?? "", style: UIColor.INFO)
             }
         }
     }

@@ -20,6 +20,10 @@ class HomeMapVC: BaseViewController {
     
     // MARK: - Outlets
     
+    @IBOutlet weak var locationPlaceHolderLabel: UILabel!
+    @IBOutlet weak var streetPlaceHolderLabel: UILabel!
+    @IBOutlet weak var housePlaceHolderLabel: UILabel!
+    
     @IBOutlet weak var openLocationStackView: UIStackView!
     @IBOutlet weak var edtSearch: MyUITextField!
     
@@ -356,6 +360,10 @@ class HomeMapVC: BaseViewController {
         self.houseTextField.placeholder = "homeMapVC.house.placeholder".localized
         self.locationPartTextField.placeholder = "homeMapVC.piece.placeholder".localized
         self.streetTextField.placeholder = "homeMapVC.street.placeholder".localized
+       
+        self.housePlaceHolderLabel.text = "homeMapVC.house.placeholder".localized
+        self.streetPlaceHolderLabel.text = "homeMapVC.piece.placeholder".localized
+        self.locationPlaceHolderLabel.text = "homeMapVC.street.placeholder".localized
     }
     
     func getDriverOnGoingDeliveries() {
