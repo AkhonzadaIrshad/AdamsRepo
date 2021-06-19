@@ -362,8 +362,8 @@ class HomeMapVC: BaseViewController {
         self.streetTextField.placeholder = "homeMapVC.street.placeholder".localized
        
         self.housePlaceHolderLabel.text = "homeMapVC.house.placeholder".localized
-        self.streetPlaceHolderLabel.text = "homeMapVC.piece.placeholder".localized
-        self.locationPlaceHolderLabel.text = "homeMapVC.street.placeholder".localized
+        self.locationPlaceHolderLabel.text = "homeMapVC.piece.placeholder".localized
+        self.streetPlaceHolderLabel.text = "homeMapVC.street.placeholder".localized
     }
     
     func getDriverOnGoingDeliveries() {
