@@ -1365,11 +1365,11 @@ class DeliveryStep1: BaseVC , Step3Delegate, AllShopDelegate, ImagePickerDelegat
             let icon = location["image"] as! String
            
             let image = self.imageWithImage(image: UIImage(named: icon)!, scaledToSize: CGSize(width: 48.0, height: 48.0))
-            
+            let imagewithShadow = image.withShadow()
             let marker = GMSMarker()
             marker.position = CLLocationCoordinate2D(latitude: latitude , longitude: longitude)
             marker.map = self.gMap
-            marker.icon = image
+            marker.icon = imagewithShadow
             bounds = bounds.includingCoordinate(marker.position)
         }
 
