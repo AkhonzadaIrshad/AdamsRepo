@@ -42,12 +42,15 @@ class NotificationsVC: BaseViewController,LabasLocationManagerDelegate, AcceptBi
     var refreshControl = UIRefreshControl()
     @IBOutlet weak var navbarHeightConstraint: NSLayoutConstraint!
     
+    @IBOutlet weak var refreshNotificationButton: UIButton!
+    
     // MARK: - Methodes - public - life cycle
     
     override func viewDidLoad() {
         super.viewDidLoad()
         self.navBar.delegate = self
         SVProgressHUD.setDefaultMaskType(.clear)
+        refreshNotificationButton.setTitle("refreshNotification.button.title".localized, for: .normal)
         if DataManager.loadUser().data?.roles?.contains(find: "Driver") ?? false {
             self.navBar.isHidden = false
             navbarHeightConstraint.constant = 80
@@ -123,6 +126,10 @@ class NotificationsVC: BaseViewController,LabasLocationManagerDelegate, AcceptBi
     }
     
     // MARK: - Methodes - UI Actions
+    
+    @IBAction func onRefreshNotification(_ sender: Any) {
+        self.refreshNotifications()
+    }
     
     @IBAction func sortByAction(_ sender: Any) {
         let actionSheet = createSortSheet()

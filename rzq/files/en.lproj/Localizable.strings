@@ -5,6 +5,8 @@
   Created by Zaid najjar on 4/1/19.
   Copyright © 2019 technzone. All rights reserved.
 */
+
+"refreshNotification.button.title" = "Please click to refresh";
 "addAdress.title" = "SELECT YOUR ADDRESS";
 "address.button.title" = "ADD NEW ADDRESS";
 "address.or.title" = "Or";

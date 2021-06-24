@@ -5,6 +5,7 @@
   Created by Zaid najjar on 4/1/19.
   Copyright © 2019 technzone. All rights reserved.
 */
+"refreshNotification.button.title" = "اضغط هنا لتحديث الاشعارات";
 "addAdress.title" = "اختر عنوانك";
 "address.button.title" = "أضف عنوانًا جديدًا";
 "address.or.title" = "أو";

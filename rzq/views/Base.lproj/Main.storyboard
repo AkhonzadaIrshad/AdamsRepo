@@ -14,11 +14,11 @@
         <array key="Cairo-Regular.ttf">
             <string>Cairo-Regular</string>
         </array>
-        <array key="arabic_medium.ttf">
-            <string>Tajawal-Medium</string>
-        </array>
         <array key="arabic_regular.ttf">
             <string>Tajawal-Regular</string>
+        </array>
+        <array key="arabic_semibold.ttf">
+            <string>Tajawal-Medium</string>
         </array>
         <array key="english_regular.otf">
             <string>SFProDisplay-Regular</string>
@@ -9165,6 +9165,19 @@
                                     <view hidden="YES" contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="B9D-hO-Hh4" customClass="EmptyView" customModule="rzq" customModuleProvider="target">
                                         <rect key="frame" x="10" y="88" width="335" height="352"/>
                                         <subviews>
+                                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="yYK-ES-u9T">
+                                                <rect key="frame" x="80" y="297" width="175" height="35"/>
+                                                <constraints>
+                                                    <constraint firstAttribute="height" constant="35" id="WMs-bd-hyk"/>
+                                                </constraints>
+                                                <fontDescription key="fontDescription" name="HelveticaNeue" family="Helvetica Neue" pointSize="15"/>
+                                                <state key="normal" title="اضغط هنا لتحديث الاشعارات ">
+                                                    <color key="titleColor" red="0.1797233224" green="0.1677487791" blue="0.43923974040000002" alpha="1" colorSpace="custom" customColorSpace="displayP3"/>
+                                                </state>
+                                                <connections>
+                                                    <action selector="onRefreshNotification:" destination="zxF-dq-3Oj" eventType="touchUpInside" id="0vp-FU-8iL"/>
+                                                </connections>
+                                            </button>
                                             <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Notifications will appear here." textAlignment="center" lineBreakMode="tailTruncation" numberOfLines="3" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="DIS-ZJ-rPI" customClass="MyUILabel" customModule="rzq" customModuleProvider="target">
                                                 <rect key="frame" x="20" y="264" width="295" height="18"/>
                                                 <fontDescription key="fontDescription" type="system" pointSize="15"/>
@@ -9195,13 +9208,16 @@
                                         <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                         <constraints>
                                             <constraint firstItem="DIS-ZJ-rPI" firstAttribute="leading" secondItem="FDW-An-Xam" secondAttribute="leading" constant="20" id="8vi-dV-onq"/>
+                                            <constraint firstItem="yYK-ES-u9T" firstAttribute="leading" secondItem="FDW-An-Xam" secondAttribute="leading" constant="80" id="GwR-QV-RtU"/>
                                             <constraint firstItem="FDW-An-Xam" firstAttribute="trailing" secondItem="DIS-ZJ-rPI" secondAttribute="trailing" constant="20" id="Myk-6H-nyl"/>
                                             <constraint firstItem="DIS-ZJ-rPI" firstAttribute="top" secondItem="opX-fr-VEN" secondAttribute="bottom" constant="20" id="OxJ-Et-VJX"/>
                                             <constraint firstItem="opX-fr-VEN" firstAttribute="leading" secondItem="FDW-An-Xam" secondAttribute="leading" constant="20" id="Pv5-6k-LIH"/>
                                             <constraint firstItem="5GM-Wb-3eg" firstAttribute="centerX" secondItem="B9D-hO-Hh4" secondAttribute="centerX" id="iqL-Dq-MNY"/>
                                             <constraint firstItem="FDW-An-Xam" firstAttribute="trailing" secondItem="opX-fr-VEN" secondAttribute="trailing" constant="20" id="kQi-nE-zDw"/>
+                                            <constraint firstItem="FDW-An-Xam" firstAttribute="trailing" secondItem="yYK-ES-u9T" secondAttribute="trailing" constant="80" id="mST-1Z-0nY"/>
                                             <constraint firstItem="FDW-An-Xam" firstAttribute="bottom" secondItem="DIS-ZJ-rPI" secondAttribute="bottom" constant="70" id="pvF-rc-ejK"/>
                                             <constraint firstItem="opX-fr-VEN" firstAttribute="top" secondItem="5GM-Wb-3eg" secondAttribute="bottom" constant="20" id="tG8-pU-oQO"/>
+                                            <constraint firstItem="yYK-ES-u9T" firstAttribute="top" secondItem="DIS-ZJ-rPI" secondAttribute="bottom" constant="15" id="yI9-8N-QN3"/>
                                         </constraints>
                                     </view>
                                 </subviews>
@@ -9255,6 +9271,7 @@
                         <outlet property="lblSortBy" destination="HUm-F0-Xmy" id="Vlu-KG-HHp"/>
                         <outlet property="navBar" destination="5zf-83-dOH" id="Jfp-a5-Cnf"/>
                         <outlet property="navbarHeightConstraint" destination="KOk-We-XFb" id="yfn-2z-Uke"/>
+                        <outlet property="refreshNotificationButton" destination="yYK-ES-u9T" id="Dh7-yq-VRg"/>
                         <outlet property="segmentControl" destination="cfg-Ln-2ey" id="Kt3-z6-4Bx"/>
                         <outlet property="sortView" destination="ALB-Mc-rvX" id="SkH-RA-TLh"/>
                         <outlet property="sortViewHeight" destination="SnK-kO-0rB" id="5nj-cy-Vt1"/>
