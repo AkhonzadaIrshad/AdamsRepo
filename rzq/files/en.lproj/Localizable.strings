@@ -240,6 +240,8 @@
 "closed_now" = "Closed Now";
 
 "searchfield_tooltip" = "Search from place or shop you want to order from.";
+"notification_No_Bids_Exist" = "There is no bids right now";
+
 
 "more_10" = "More than 10";
 "less_10" = "Less than 10";

@@ -1358,6 +1358,9 @@ class DeliveryStep1: BaseVC , Step3Delegate, AllShopDelegate, ImagePickerDelegat
         locationArray.append(["latitude": self.locationManager.location?.coordinate.latitude ?? 0.0, "longitude": self.locationManager.location?.coordinate.longitude ?? 0.0,
                               "image": "toLocation"])
         
+        self.orderModel?.pickUpLatitude = self.locationManager.location?.coordinate.latitude ?? 0.0
+        self.orderModel?.pickUpLongitude = self.locationManager.location?.coordinate.longitude ?? 0.0
+        self.GetAnnotationUsingCoordinated(self.locationManager.location ?? CLLocation(latitude: 0.0, longitude: 0.0))
         for location in locationArray
         {
             let latitude = location["latitude"] as! Double

@@ -128,7 +128,45 @@ class NotificationsVC: BaseViewController,LabasLocationManagerDelegate, AcceptBi
     // MARK: - Methodes - UI Actions
     
     @IBAction func onRefreshNotification(_ sender: Any) {
-        self.refreshNotifications()
+        self.showLoading()
+        ApiService.getAllNotifications(Authorization: DataManager.loadUser().data?.accessToken ?? "", sortBy: self.sortBy ?? 1) { (response) in
+            self.alerts.removeAll()
+            self.actions.removeAll()
+            
+            for not in response.data ?? [DatumNot]() {
+                if (not.type == Constants.DELIVERY_CREATED || not.type == Constants.SERVICE_CREATED || not.type == Constants.BID_CREATED || not.type == Constants.SERVICE_BID_CREATED) {
+                    self.actions.append(not)
+                }else {
+                    self.alerts.append(not)
+                }
+            }
+                self.hideLoading()
+                if self.actions.count == 0 {
+                    self.showBanner(title: "alert".localized, message: "notification_No_Bids_Exist".localized, style: UIColor.INFO)
+                }
+            self.tableView.reloadData()
+            
+            if (self.segmentControl.selectedSegmentIndex == 0) {
+                if (self.alerts.count > 0) {
+                    self.emptyView.isHidden = true
+                    self.tableView.delegate = self
+                    self.tableView.dataSource = self
+                    self.tableView.reloadData()
+                }else {
+                    self.emptyView.isHidden = false
+                }
+            }else {
+                if (self.actions.count > 0) {
+                    self.emptyView.isHidden = true
+                    self.tableView.delegate = self
+                    self.tableView.dataSource = self
+                    self.tableView.reloadData()
+                }else {
+                    self.emptyView.isHidden = false
+                }
+            }
+        }
+
     }
     
     @IBAction func sortByAction(_ sender: Any) {

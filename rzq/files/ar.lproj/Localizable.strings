@@ -243,7 +243,7 @@
 "closed_now" = "مغلق الان";
 
 "searchfield_tooltip" = "ابحث عن المكان الذي تريد ان تطلب او ترسل منه";
-
+"notification_No_Bids_Exist" = "لاتوجد اي عروض حاليا";
 "more_10" = "اكثر من ١٠";
 "less_10" = "اقل من ١٠";
 
