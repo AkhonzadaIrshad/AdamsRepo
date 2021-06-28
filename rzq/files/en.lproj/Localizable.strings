@@ -142,6 +142,7 @@
 "saturday" = "Saturday";
 "sunday" = "Sunday";
 "order_details" = "Write your order here";
+"order_details_dorToDor" = "اكتب هنا ماذا تريد ان ترسل مثال( ابي ارسل ملابس،تلفزيون،واير شحن،كرتون،كيس اغراض...من منطقة الاندلس الى القرين) ثم اضغط التالي";
 "feedback_comments" = "Feedback/ Comments";
 "account_inactive" = "Your account is not active.";
 "asap" = "ASAP";

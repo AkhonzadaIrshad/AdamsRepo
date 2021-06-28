@@ -1350,6 +1350,7 @@ class DeliveryStep1: BaseVC , Step3Delegate, AllShopDelegate, ImagePickerDelegat
     
     @IBAction func myLocationAction(_ sender: Any) {
         self.showActionSheet()
+        edtOrderDetails.placeholder = "order_details_dorToDor".localized
         var bounds = GMSCoordinateBounds()
         var locationArray = [[String: Any]]()
         locationArray.append(["latitude": self.latitude ?? 0.0,
