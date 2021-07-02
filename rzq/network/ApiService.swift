@@ -859,7 +859,7 @@ class ApiService : NSObject {
     }
     
     
-    static func suggestShop(Authorization: String,address: String, latitude : Double,longitude : Double, phoneNumber : String, workingHours : String, name : String, type : Int,completion:@escaping(_ response : DeliveryCreatedResponse)-> Void) {
+    static func suggestShop(Authorization: String,address: String, latitude : Double,longitude : Double, phoneNumber: String, workingHours: String, name: String, type: Int, email: String, completion:@escaping(_ response : DeliveryCreatedResponse)-> Void) {
         
         let headers = [Constants.AUTH_HEADER: "bearer \(Authorization)",
             Constants.LANG_HEADER : self.getLang()]
@@ -870,7 +870,8 @@ class ApiService : NSObject {
                                     "PhoneNumber" : phoneNumber,
                                     "WorkingHours" : workingHours,
                                     "Name" : name,
-                                    "Type" : type]
+                                    "Type" : type,
+                                    "email": email]
         
         AFManager.request("\(Constants.BASE_URL)Shop/Suggest", method: .post, parameters: all ,encoding: JSONEncoding.default, headers: headers)
             .responseJSON { response in

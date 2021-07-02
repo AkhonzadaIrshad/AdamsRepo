@@ -95,6 +95,7 @@
 "register_as_driver" = "Register As Driver";
 "working_orders" = "Working Orders";
 
+"addShop.email.title" = "Address Email";
 "deliveryDriverStep3.pickingView.to" = "My Location";
 "not_logged_in" = "You're not logged in to RZQ.";
 "login" = "Login";

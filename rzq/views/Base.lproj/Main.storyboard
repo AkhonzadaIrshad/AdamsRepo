@@ -19406,7 +19406,7 @@
                                 <rect key="frame" x="10" y="82" width="355" height="784"/>
                                 <subviews>
                                     <stackView opaque="NO" contentMode="scaleToFill" axis="vertical" translatesAutoresizingMaskIntoConstraints="NO" id="01r-Zv-8SB">
-                                        <rect key="frame" x="0.0" y="10" width="355" height="660"/>
+                                        <rect key="frame" x="0.0" y="10" width="355" height="750"/>
                                         <subviews>
                                             <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="rff-C5-ciz">
                                                 <rect key="frame" x="0.0" y="0.0" width="355" height="100"/>
@@ -19578,8 +19578,50 @@
                                                     <constraint firstAttribute="trailing" secondItem="Ehb-g5-eMY" secondAttribute="trailing" id="yWC-iX-tuh"/>
                                                 </constraints>
                                             </view>
-                                            <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="kb9-Fy-ztP">
+                                            <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="TV5-Ex-0ey">
                                                 <rect key="frame" x="0.0" y="280" width="355" height="90"/>
+                                                <subviews>
+                                                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Email" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="bCJ-BG-lBT" customClass="MyUILabel" customModule="rzq" customModuleProvider="target">
+                                                        <rect key="frame" x="0.0" y="0.0" width="51.333333333333336" height="26.333333333333332"/>
+                                                        <fontDescription key="fontDescription" type="system" pointSize="22"/>
+                                                        <color key="textColor" red="0.1137254902" green="0.14901960780000001" blue="0.17254901959999999" alpha="1" colorSpace="calibratedRGB"/>
+                                                        <nil key="highlightedColor"/>
+                                                        <userDefinedRuntimeAttributes>
+                                                            <userDefinedRuntimeAttribute type="string" keyPath="font_type" value="22,2"/>
+                                                        </userDefinedRuntimeAttributes>
+                                                    </label>
+                                                    <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="NHz-VX-WBi">
+                                                        <rect key="frame" x="0.0" y="35" width="355" height="45"/>
+                                                        <subviews>
+                                                            <textField opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" textAlignment="natural" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="k2M-gW-56I">
+                                                                <rect key="frame" x="1" y="1" width="353" height="43"/>
+                                                                <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                                                                <fontDescription key="fontDescription" type="system" pointSize="14"/>
+                                                                <textInputTraits key="textInputTraits"/>
+                                                            </textField>
+                                                        </subviews>
+                                                        <color key="backgroundColor" white="0.66666666669999997" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                                                        <constraints>
+                                                            <constraint firstAttribute="height" constant="45" id="GfN-gm-rPV"/>
+                                                            <constraint firstItem="k2M-gW-56I" firstAttribute="leading" secondItem="NHz-VX-WBi" secondAttribute="leading" constant="1" id="WwD-YD-8sk"/>
+                                                            <constraint firstAttribute="trailing" secondItem="k2M-gW-56I" secondAttribute="trailing" constant="1" id="Yat-Qa-3lv"/>
+                                                            <constraint firstItem="k2M-gW-56I" firstAttribute="top" secondItem="NHz-VX-WBi" secondAttribute="top" constant="1" id="Zom-ze-Poz"/>
+                                                            <constraint firstAttribute="bottom" secondItem="k2M-gW-56I" secondAttribute="bottom" constant="1" id="lcl-x1-8zD"/>
+                                                        </constraints>
+                                                    </view>
+                                                </subviews>
+                                                <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                                                <constraints>
+                                                    <constraint firstAttribute="height" constant="90" id="1Vv-t4-nVE"/>
+                                                    <constraint firstAttribute="trailing" secondItem="NHz-VX-WBi" secondAttribute="trailing" id="AF8-Bk-lYa"/>
+                                                    <constraint firstItem="bCJ-BG-lBT" firstAttribute="top" secondItem="TV5-Ex-0ey" secondAttribute="top" id="Emm-5D-xcG"/>
+                                                    <constraint firstItem="bCJ-BG-lBT" firstAttribute="leading" secondItem="TV5-Ex-0ey" secondAttribute="leading" id="rjl-s0-NVQ"/>
+                                                    <constraint firstAttribute="bottom" secondItem="NHz-VX-WBi" secondAttribute="bottom" constant="10" id="vGh-LB-HT1"/>
+                                                    <constraint firstItem="NHz-VX-WBi" firstAttribute="leading" secondItem="TV5-Ex-0ey" secondAttribute="leading" id="w0r-uQ-MtJ"/>
+                                                </constraints>
+                                            </view>
+                                            <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="kb9-Fy-ztP">
+                                                <rect key="frame" x="0.0" y="370" width="355" height="90"/>
                                                 <subviews>
                                                     <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Working Hours" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="fTM-p2-csh" customClass="MyUILabel" customModule="rzq" customModuleProvider="target">
                                                         <rect key="frame" x="0.0" y="0.0" width="355" height="23"/>
@@ -19636,7 +19678,7 @@
                                                 </constraints>
                                             </view>
                                             <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="OQ8-wV-rwf">
-                                                <rect key="frame" x="0.0" y="370" width="355" height="220"/>
+                                                <rect key="frame" x="0.0" y="460" width="355" height="220"/>
                                                 <subviews>
                                                     <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Place Images" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="1cQ-t2-rCZ" customClass="MyUILabel" customModule="rzq" customModuleProvider="target">
                                                         <rect key="frame" x="0.0" y="0.0" width="355" height="23"/>
@@ -19756,7 +19798,7 @@
                                                 </constraints>
                                             </view>
                                             <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="AFL-gi-Xef">
-                                                <rect key="frame" x="0.0" y="590" width="355" height="70"/>
+                                                <rect key="frame" x="0.0" y="680" width="355" height="70"/>
                                                 <subviews>
                                                     <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="RrB-AA-ai9" customClass="CardView" customModule="rzq" customModuleProvider="target">
                                                         <rect key="frame" x="0.0" y="10" width="355" height="50"/>
@@ -19833,9 +19875,11 @@
                     </view>
                     <size key="freeformSize" width="375" height="900"/>
                     <connections>
+                        <outlet property="addressEmailLabel" destination="bCJ-BG-lBT" id="D5P-Kq-Tfr"/>
                         <outlet property="collectionView" destination="96n-f3-QKf" id="zzT-zg-jMh"/>
                         <outlet property="edtAddress" destination="Hsr-vh-ud0" id="Qtn-jm-nZY"/>
                         <outlet property="edtName" destination="C9P-Bh-RcO" id="9dd-Ni-kc2"/>
+                        <outlet property="emailTextField" destination="k2M-gW-56I" id="lEi-K0-m9b"/>
                         <outlet property="ivHandle" destination="2Io-N0-Yma" id="nJr-nx-Yn8"/>
                         <outlet property="ivIndicator1" destination="2mH-D0-2yV" id="Axp-aQ-agR"/>
                         <outlet property="ivIndicator2" destination="RHj-BC-3gi" id="IYw-PX-SWk"/>

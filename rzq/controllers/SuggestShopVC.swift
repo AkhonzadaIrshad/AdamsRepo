@@ -24,6 +24,8 @@ class SuggestShopVC: BaseVC, SelectLocationDelegate,UINavigationControllerDelega
     
     @IBOutlet weak var lblSelectedCategory: MyUILabel!
     
+    @IBOutlet weak var addressEmailLabel: MyUILabel!
+    @IBOutlet weak var emailTextField: UITextField!
     @IBOutlet weak var ivHandle: UIImageView!
     
     
@@ -56,7 +58,7 @@ class SuggestShopVC: BaseVC, SelectLocationDelegate,UINavigationControllerDelega
             self.ivIndicator1.image = UIImage(named: "ic_indicator_arabic")
             self.ivIndicator2.image = UIImage(named: "ic_indicator_arabic")
         }
-        
+        self.addressEmailLabel.text = "addShop.email.title".localized
         self.collectionView.delegate = self
         self.collectionView.dataSource = self
         self.collectionView.reloadData()
@@ -226,7 +228,7 @@ class SuggestShopVC: BaseVC, SelectLocationDelegate,UINavigationControllerDelega
     @IBAction func submitAction(_ sender: Any) {
         if (self.validate()) {
             self.showLoading()
-            ApiService.suggestShop(Authorization: DataManager.loadUser().data?.accessToken ?? "", address: self.edtAddress.text ?? "", latitude: self.selectedLocation?.coordinate.latitude ?? 0.0, longitude: self.selectedLocation?.coordinate.longitude ?? 0.0, phoneNumber: DataManager.loadUser().data?.phoneNumber ?? "", workingHours: self.chosenHours ?? "", name: self.edtName.text ?? "", type: self.selectedType?.id ?? 0) { (response) in
+            ApiService.suggestShop(Authorization: DataManager.loadUser().data?.accessToken ?? "", address: self.edtAddress.text ?? "", latitude: self.selectedLocation?.coordinate.latitude ?? 0.0, longitude: self.selectedLocation?.coordinate.longitude ?? 0.0, phoneNumber: DataManager.loadUser().data?.phoneNumber ?? "", workingHours: self.chosenHours ?? "", name: self.edtName.text ?? "", type: self.selectedType?.id ?? 0, email: self.emailTextField.text ?? "") { (response) in
                 self.hideLoading()
                 if (response.errorCode == 0) {
                     self.showAlert(title: "", message: "addShop.alert.message".localized)
