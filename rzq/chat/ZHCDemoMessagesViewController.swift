@@ -240,18 +240,19 @@ class ZHCDemoMessagesViewController: ZHCMessagesViewController, BillDelegate, Ch
         if  self.user?.data?.roles?.contains(find: "Driver") == true {
             self.paybutton.isHidden = true
         }else {
-//            // if (self.isPay ?? false) {
-//            if (self.orderInfo?.paymentMethod == Constants.PAYMENT_METHOD_KNET && (self.orderInfo?.isPaid ?? false) == false) {
-//                if (self.orderInfo?.status == Constants.ORDER_PENDING || self.orderInfo?.status == Constants.ORDER_PROCESSING || self.orderInfo?.status == Constants.ORDER_ON_THE_WAY) {
-//                    //for testing
-//                    self.paybutton.isHidden = false
-//                }else {
-//                    self.paybutton.isHidden = true
-//                }
-//            }else {
-//                self.paybutton.isHidden = true
-//            }
-            self.paybutton.isHidden = false
+            // if (self.isPay ?? false) {
+            if (self.order?.paymentMethod == Constants.PAYMENT_METHOD_KNET && (self.order?.isPaid ?? false) == false) {
+                if (self.order?.status == Constants.ORDER_PENDING || self.order?.status == Constants.ORDER_PROCESSING || self.order?.status == Constants.ORDER_ON_THE_WAY) {
+                    //for testing
+                    self.paybutton.isHidden = false
+                }else {
+                    self.paybutton.isHidden = true
+                }
+            }else {
+                self.paybutton.isHidden = true
+            }
+            
+           // self.paybutton.isHidden = false
         }
     }
     
