@@ -32,6 +32,7 @@
 		8A9C6C842588061E00592202 /* MarkerInfo.xib in Resources */ = {isa = PBXBuildFile; fileRef = 8A9C6C832588061E00592202 /* MarkerInfo.xib */; };
 		8AE6E066258015AD00889D2C /* StoreMarkerView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8AE6E065258015AD00889D2C /* StoreMarkerView.swift */; };
 		8AE6E06A258015B900889D2C /* StoreMarkerView.xib in Resources */ = {isa = PBXBuildFile; fileRef = 8AE6E069258015B900889D2C /* StoreMarkerView.xib */; };
+		8AE7BE6326AB76AD004375B8 /* MenuTabBarViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8AE7BE6226AB76AD004375B8 /* MenuTabBarViewController.swift */; };
 		8B05CDC42361BD8700E0FF9B /* ShopOwnerMenuResponse.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8B05CDC32361BD8700E0FF9B /* ShopOwnerMenuResponse.swift */; };
 		8B05CDC62361C00F00E0FF9B /* OwnerShopListResponse.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8B05CDC52361C00F00E0FF9B /* OwnerShopListResponse.swift */; };
 		8B112074235DA0F2005F2122 /* ShopMenuTabCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8B112073235DA0F2005F2122 /* ShopMenuTabCell.swift */; };
@@ -281,6 +282,7 @@
 		8A9C6C832588061E00592202 /* MarkerInfo.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = MarkerInfo.xib; sourceTree = "<group>"; };
 		8AE6E065258015AD00889D2C /* StoreMarkerView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = StoreMarkerView.swift; sourceTree = "<group>"; };
 		8AE6E069258015B900889D2C /* StoreMarkerView.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = StoreMarkerView.xib; sourceTree = "<group>"; };
+		8AE7BE6226AB76AD004375B8 /* MenuTabBarViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MenuTabBarViewController.swift; sourceTree = "<group>"; };
 		8B05CDC32361BD8700E0FF9B /* ShopOwnerMenuResponse.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ShopOwnerMenuResponse.swift; sourceTree = "<group>"; };
 		8B05CDC52361C00F00E0FF9B /* OwnerShopListResponse.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = OwnerShopListResponse.swift; sourceTree = "<group>"; };
 		8B112073235DA0F2005F2122 /* ShopMenuTabCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ShopMenuTabCell.swift; sourceTree = "<group>"; };
@@ -586,6 +588,14 @@
 			path = "Custom Marker";
 			sourceTree = "<group>";
 		};
+		8AE7BE6126AB7679004375B8 /* Tab bar Menu */ = {
+			isa = PBXGroup;
+			children = (
+				8AE7BE6226AB76AD004375B8 /* MenuTabBarViewController.swift */,
+			);
+			path = "Tab bar Menu";
+			sourceTree = "<group>";
+		};
 		8B1F91C522561DFB00B639F1 /* models */ = {
 			isa = PBXGroup;
 			children = (
@@ -642,6 +652,7 @@
 		8B2BCC93224FCED500CBC7D3 /* controllers */ = {
 			isa = PBXGroup;
 			children = (
+				8AE7BE6126AB7679004375B8 /* Tab bar Menu */,
 				8A08787D252F623500C4D0C4 /* Search Location */,
 				8BC13D2B23F3F5E700A78F88 /* ShopList */,
 				8BA88851235B5F8300EEB63B /* MyShop */,
@@ -1278,6 +1289,7 @@
 				8B9BA6CA235C77F90058BAF8 /* MenuCategoryCell.swift in Sources */,
 				8BBEA59A2260BC7A00FBEBFC /* CreateBidResponse.swift in Sources */,
 				8B121BAD2265FB780083069F /* FAQsVC.swift in Sources */,
+				8AE7BE6326AB76AD004375B8 /* MenuTabBarViewController.swift in Sources */,
 				8B9CA85B2250E00D00DE0DC4 /* LoginVC.swift in Sources */,
 				8BC13D3123F3F62E00A78F88 /* AllShopCell.swift in Sources */,
 				8BF42429229B13740014596F /* TenderStep2.swift in Sources */,

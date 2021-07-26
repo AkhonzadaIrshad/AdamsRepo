@@ -58,14 +58,15 @@ class ApiService : NSObject {
         }
     }
     
-    static func registerUser(phoneNumber:String ,fullName : String, email : String, birthDate : String, gender : Int,isResend : Bool, completion:@escaping(_ response : RegisterResponse)-> Void) {
+    static func registerUser(phoneNumber: String ,fullName: String, email: String, birthDate: String, gender: Int, isResend: Bool, password: String, completion:@escaping(_ response : RegisterResponse)-> Void) {
         
         let all : [String : Any] = ["PhoneNumber" : phoneNumber,
                                     "FullName" : fullName,
                                     "Email" : email,
                                     "DateOfBirth" : birthDate,
                                     "Gender" : gender,
-                                    "IsResend" : isResend]
+                                    "IsResend" : isResend,
+                                    "password": password]
         
         AFManager.request("\(Constants.BASE_URL)User/Register", method: .post, parameters: all ,encoding: JSONEncoding.default, headers: nil)
             .responseJSON { response in
@@ -1591,7 +1592,7 @@ class ApiService : NSObject {
                                     "CustomerCivilId" : "Rzq_02",
                                     "UserDefinedField" : "Rzq_03",
                                     "CustomerAddress" : customerAddress,
-                                    "ExpiryDate" : dateString,
+                                    "ExpiryDate" : "2045-11-15T06:38:12.356Z",
                                     "InvoiceItems" : invoiceItems]
         
         

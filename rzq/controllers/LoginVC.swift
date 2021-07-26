@@ -14,21 +14,17 @@ import SVProgressHUD
 class LoginVC: BaseVC, CountryPickerViewDataSource, CountryPickerViewDelegate, PhoneVerificationDelegate {
     
     @IBOutlet weak var edtUserName: SkyFloatingLabelTextField!
-    
     @IBOutlet weak var edtMobileNumber: SkyFloatingLabelTextField!
-    
     @IBOutlet weak var ivHandle: UIImageView!
-    
     @IBOutlet weak var lblTerms: MyUILabel!
-    
     @IBOutlet weak var countryPicker: CountryPickerView!
-    
-    var attributedString = NSMutableAttributedString(string:"")
-    
-    
+    @IBOutlet weak var userTypeSegmentedControl: UISegmentedControl!
+    @IBOutlet weak var passwordTextField: SkyFloatingLabelTextField!
     @IBOutlet weak var lblGender: MyUILabel!
     @IBOutlet weak var genderSegment: UISegmentedControl!
-    
+   
+    var attributedString = NSMutableAttributedString(string:"")
+
     override func viewDidLoad() {
         super.viewDidLoad()
         
@@ -81,14 +77,18 @@ class LoginVC: BaseVC, CountryPickerViewDataSource, CountryPickerViewDelegate, P
         
         self.genderSegment.setTitle("female".localized, forSegmentAt: 0)
         self.genderSegment.setTitle("male".localized, forSegmentAt: 1)
-        
+      
+        self.userTypeSegmentedControl.setTitle("login.segmented.customer".localized, forSegmentAt: 0)
+        self.userTypeSegmentedControl.setTitle("login.segmented.driver".localized, forSegmentAt: 1)
         
         let titleTextAttributes = [NSAttributedString.Key.foregroundColor: UIColor.white]
         let titleTextAttributes2 = [NSAttributedString.Key.foregroundColor: UIColor.black]
         
         self.genderSegment.setTitleTextAttributes(titleTextAttributes2, for: .normal)
         self.genderSegment.setTitleTextAttributes(titleTextAttributes, for: .selected)
-        
+       
+        self.userTypeSegmentedControl.setTitleTextAttributes(titleTextAttributes2, for: .normal)
+        self.userTypeSegmentedControl.setTitleTextAttributes(titleTextAttributes, for: .selected)
 //        if (flag == true) {
 //            self.lblGender.isHidden = true
 //            self.genderSegment.isHidden = true
@@ -99,7 +99,14 @@ class LoginVC: BaseVC, CountryPickerViewDataSource, CountryPickerViewDelegate, P
 //    
 }
 
-
+    @IBAction func onUserTypeSelected(_ sender: Any) {
+        if userTypeSegmentedControl.selectedSegmentIndex == 1 {
+            self.passwordTextField.isHidden = false
+        } else {
+            self.passwordTextField.isHidden = true
+        }
+    }
+    
 func checkForUpdates() {
     let appVersion = Bundle.main.infoDictionary?["CFBundleShortVersionString"] as? String ?? "0.0".replacedArabicDigitsWithEnglish
     let doubleAppVersion : Double = appVersion.toDouble() ?? 0.0
@@ -186,7 +193,7 @@ func sectionTitleForPreferredCountries(in countryPickerView: CountryPickerView) 
         if (self.genderSegment.selectedSegmentIndex == 1) {
             gender = 1
         }
-        ApiService.registerUser(phoneNumber: "\(code)\(mobile)", fullName: self.edtUserName.text ?? "", email: "", birthDate: "", gender: gender, isResend: false) { (response) in
+        ApiService.registerUser(phoneNumber: "\(code)\(mobile)", fullName: self.edtUserName.text ?? "", email: "", birthDate: "", gender: gender, isResend: false, password: passwordTextField.text ?? "") { (response) in
             self.hideLoading()
             if (response.errorCode == 0) {
                 self.showLoading()
@@ -200,6 +207,7 @@ func sectionTitleForPreferredCountries(in countryPickerView: CountryPickerView) 
                         self.deleteUsers()
                         self.updateUser(self.getRealmUser(userProfile: response!))
                         self.checkUsersubscriptiontoShops()
+                      //  if let vc = UIStoryboard(name: "Main", bundle: nil).instantiateViewController(withIdentifier: "MenuTabBarViewController") as? MenuTabBarViewController
                         if let vc = UIStoryboard(name: "Main", bundle: nil).instantiateViewController(withIdentifier: "HomeMapVC") as? HomeMapVC
                         {
                             vc.modalPresentationStyle = .fullScreen
@@ -254,7 +262,7 @@ func resend() {
     if (mobile.starts(with: "0")) {
         mobile = String(mobile.dropFirst())
     }
-    ApiService.registerUser(phoneNumber: "\(code)\(mobile)", fullName: self.edtUserName.text ?? "", email: "", birthDate: "", gender: 1, isResend: true) { (response) in
+    ApiService.registerUser(phoneNumber: "\(code)\(mobile)", fullName: self.edtUserName.text ?? "", email: "", birthDate: "", gender: 1, isResend: true, password: passwordTextField.text ?? "") { (response) in
         
     }
 }

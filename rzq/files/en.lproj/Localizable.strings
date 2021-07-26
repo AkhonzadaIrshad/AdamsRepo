@@ -184,7 +184,8 @@
 
 "rate_driver" = "Rate Driver";
 "rate_provider" = "Rate Provider";
-
+"login.segmented.driver" = "driver";
+"login.segmented.customer" = "customer";
 "cant_add_more_images" = "You can't add more than 5 images.";
 
 "call_us" = "Call Us";
