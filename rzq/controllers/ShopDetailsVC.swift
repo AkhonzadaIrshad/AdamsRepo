@@ -369,37 +369,45 @@ class ShopDetailsVC: BaseVC, UITableViewDelegate, UITableViewDataSource, UIColle
     }
     
     func generateDeepLink() {
-        
-        var shareText = ""
-        shareText = "shop_on_rzq".localized
-        
-        
-        let buo = BranchUniversalObject.init(canonicalIdentifier: "rzqapp/\(self.shop?.id ?? 0)")
-        buo.title = "\(self.shop?.name ?? "")"
-        buo.contentDescription = shareText
+        var imageURL = ""
         if (self.shop?.images?.count ?? 0 > 0) {
-          buo.imageUrl = "\(Constants.IMAGE_URL)\(self.shop?.images?[0] ?? "")"
+            imageURL = "\(Constants.IMAGE_URL)\(self.shop?.images?[0] ?? "")"
         }
-        buo.publiclyIndex = true
-        buo.locallyIndex = true
-        buo.contentMetadata.customMetadata["ShopId"] = self.shop?.id ?? 0
         
+        let deeplinkURL = "com.rzqapp.link://\(self.shop?.id ?? 0)"
+        let data = ["shop_on_rzq".localized, imageURL, deeplinkURL ] as [Any]
+        UIApplication.share(data)
         
-        let lp: BranchLinkProperties = BranchLinkProperties()
-        lp.channel = ""
-        lp.feature = "sharing"
-        lp.campaign = "Rzq App"
-        lp.tags = ["Rzq App"]
-        
-        
-        buo.getShortUrl(with: lp) { (url, error) in
-          print(url)
-            let sessionParams = Branch.getInstance().getLatestReferringParams()
-            print(sessionParams)
-            buo.showShareSheet(with: lp, andShareText: shareText, from: self) { (activityType, completed) in
-            }
-            
-        }
+//        var shareText = ""
+//        shareText = "shop_on_rzq".localized
+//
+//
+//        let buo = BranchUniversalObject.init(canonicalIdentifier: "rzqapp/\(self.shop?.id ?? 0)")
+//        buo.title = "\(self.shop?.name ?? "")"
+//        buo.contentDescription = shareText
+//        if (self.shop?.images?.count ?? 0 > 0) {
+//          buo.imageUrl = "\(Constants.IMAGE_URL)\(self.shop?.images?[0] ?? "")"
+//        }
+//        buo.publiclyIndex = true
+//        buo.locallyIndex = true
+//        buo.contentMetadata.customMetadata["ShopId"] = self.shop?.id ?? 0
+//
+//
+//        let lp: BranchLinkProperties = BranchLinkProperties()
+//        lp.channel = ""
+//        lp.feature = "sharing"
+//        lp.campaign = "Rzq App"
+//        lp.tags = ["Rzq App"]
+//
+//
+//        buo.getShortUrl(with: lp) { (url, error) in
+//          print(url)
+//            let sessionParams = Branch.getInstance().getLatestReferringParams()
+//            print(sessionParams)
+//            buo.showShareSheet(with: lp, andShareText: shareText, from: self) { (activityType, completed) in
+//            }
+//
+//        }
         
     }
     
@@ -660,4 +668,35 @@ extension ShopDetailsVC : GMSMapViewDelegate {
         return true
     }
     
+}
+
+extension UIApplication {
+    class var topViewController: UIViewController? { return getTopViewController() }
+    private class func getTopViewController(base: UIViewController? = UIApplication.shared.keyWindow?.rootViewController) -> UIViewController? {
+        if let nav = base as? UINavigationController { return getTopViewController(base: nav.visibleViewController) }
+        if let tab = base as? UITabBarController {
+            if let selected = tab.selectedViewController { return getTopViewController(base: selected) }
+        }
+        if let presented = base?.presentedViewController { return getTopViewController(base: presented) }
+        return base
+    }
+
+    private class func _share(_ data: [Any],
+                              applicationActivities: [UIActivity]?,
+                              setupViewControllerCompletion: ((UIActivityViewController) -> Void)?) {
+        let activityViewController = UIActivityViewController(activityItems: data, applicationActivities: nil)
+        setupViewControllerCompletion?(activityViewController)
+        UIApplication.topViewController?.present(activityViewController, animated: true, completion: nil)
+    }
+
+    class func share(_ data: Any...,
+                     applicationActivities: [UIActivity]? = nil,
+                     setupViewControllerCompletion: ((UIActivityViewController) -> Void)? = nil) {
+        _share(data, applicationActivities: applicationActivities, setupViewControllerCompletion: setupViewControllerCompletion)
+    }
+    class func share(_ data: [Any],
+                     applicationActivities: [UIActivity]? = nil,
+                     setupViewControllerCompletion: ((UIActivityViewController) -> Void)? = nil) {
+        _share(data, applicationActivities: applicationActivities, setupViewControllerCompletion: setupViewControllerCompletion)
+    }
 }

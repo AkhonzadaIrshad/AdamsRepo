@@ -66,9 +66,9 @@ class ApiService : NSObject {
                                     "DateOfBirth" : birthDate,
                                     "Gender" : gender,
                                     "IsResend" : isResend,
-                                    "password": password]
+                                    "Password": password]
         
-        AFManager.request("\(Constants.BASE_URL)User/Register", method: .post, parameters: all ,encoding: JSONEncoding.default, headers: nil)
+        AFManager.request("\(Constants.BASE_URL)User/RegisterWithPassword", method: .post, parameters: all ,encoding: JSONEncoding.default, headers: nil)
             .responseJSON { response in
                 if let json = response.data {
                     do {

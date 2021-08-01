@@ -185,6 +185,7 @@ class DeliveryStep1: BaseVC , Step3Delegate, AllShopDelegate, ImagePickerDelegat
             self.hideActionSheet()
 
         } else {
+            self.setUpGoogleMap()
             displayShop(shopId: shopeID ?? 0)
         }
 

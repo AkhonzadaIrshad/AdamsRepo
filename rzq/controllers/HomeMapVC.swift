@@ -91,6 +91,8 @@ class HomeMapVC: BaseViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
     
+        NotificationCenter.default.addObserver(self, selector: #selector(self.ReceivedNotification(notification:)), name: Notification.Name("openAppFromDeepLink"), object: nil)
+
         self.openLocationStackView.layer.cornerRadius = 10
         self.openLocationStackView.layer.borderWidth = 0.5
         self.openLocationStackView.layer.borderColor = UIColor.lightGray.cgColor
@@ -375,22 +377,31 @@ class HomeMapVC: BaseViewController {
     }
     
     func checkForDeepLinkValues() {
-        if (App.shared.deepLinkShopId != nil && Int(App.shared.deepLinkShopId ?? "0") ?? 0 > 0) {
+        let deepLinkShopId = UserDefaults.standard.value(forKey: "deepLinkShopId") as? String ?? "0"
+        if (deepLinkShopId != nil && Int(deepLinkShopId ?? "0") ?? 0 > 0) {
             //open shop
-            ApiService.getShopDetails(Authorization: DataManager.loadUser().data?.accessToken ?? "", id: Int(App.shared.deepLinkShopId ?? "0")!) { (response) in
+            ApiService.getShopDetails(Authorization: DataManager.loadUser().data?.accessToken ?? "", id: Int(deepLinkShopId )!) { (response) in
                // DispatchQueue.main.async {
-                if let vc = UIStoryboard(name: "Main", bundle: nil).instantiateViewController(withIdentifier: "DeliveryStep1") as? DeliveryStep1 {
-                    vc.fromdeepLink = true
-                    let shop: ShopData = response.shopData!
-                    vc.shopeID = shop.id
-                    self.navigationController?.pushViewController(vc, animated: true)
-                    //}
+                if response.errorCode == 0 {
+                    if let vc = UIStoryboard(name: "Main", bundle: nil).instantiateViewController(withIdentifier: "DeliveryStep1") as? DeliveryStep1 {
+                        vc.fromdeepLink = true
+                        let shop: ShopData = response.shopData!
+                        vc.shopeID = shop.id
+                        self.navigationController?.pushViewController(vc, animated: true)
+                        //}
+                    }
                 }
+
             }
+            UserDefaults.standard.set("0", forKey: "deepLinkShopId")
+
             App.shared.deepLinkShopId = "0"
         }
     }
     
+    @objc func ReceivedNotification(notification: Notification) {
+        self.checkForDeepLinkValues()
+    }
     
     @objc func appCameToForeground() {
         self.handleNotification()

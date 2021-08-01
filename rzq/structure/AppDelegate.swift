@@ -141,11 +141,31 @@ class AppDelegate: UIResponder, UIApplicationDelegate, MOLHResetable,MessagingDe
         defaults.setValue(notificationCount, forKey: Constants.NOTIFICATION_COUNT)
     }
     
-    //branch
-    func application(_ app: UIApplication, open url: URL, options: [UIApplication.OpenURLOptionsKey : Any] = [:]) -> Bool {
-        Branch.getInstance().application(app, open: url, options: options)
+    func application(_ app: UIApplication, open url: URL,
+                     options: [UIApplication.OpenURLOptionsKey : Any] = [:]) -> Bool {
+        if let scheme = url.scheme,
+            scheme.localizedCaseInsensitiveCompare("com.rzqapp.link") == .orderedSame,
+            let shopID = url.host {
+            App.shared.deepLinkShopId = shopID
+            UserDefaults.standard.set(shopID, forKey: "deepLinkShopId")
+            NotificationCenter.default.post(name: Notification.Name("openAppFromDeepLink"), object: nil, userInfo: ["shopID":shopID])
+
+            var parameters: [String: String] = [:]
+            URLComponents(url: url, resolvingAgainstBaseURL: false)?.queryItems?.forEach {
+                parameters[$0.name] = $0.value
+            }
+            
+           // redirect(to: view, with: parameters)
+        }
         return true
     }
+   
+//    //branch
+//    func application(_ app: UIApplication, open url: URL, options: [UIApplication.OpenURLOptionsKey : Any] = [:]) -> Bool {
+//        Branch.getInstance().application(app, open: url, options: options)
+//        return true
+//    }
+   
     //branch
     func application(_ application: UIApplication, continue userActivity: NSUserActivity, restorationHandler: @escaping ([UIUserActivityRestoring]?) -> Void) -> Bool {
       
